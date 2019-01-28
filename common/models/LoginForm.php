@@ -49,9 +49,9 @@ class LoginForm extends Model
     }
 
     /**
-     * Logs in a user using the provided username and password.
+     * Logs in a security using the provided username and password.
      *
-     * @return bool whether the user is logged in successfully
+     * @return bool whether the security is logged in successfully
      */
     public function login()
     {
@@ -63,7 +63,7 @@ class LoginForm extends Model
     }
 
     /**
-     * Finds user by [[username]]
+     * Finds security by [[username]]
      *
      * @return User|null
      */

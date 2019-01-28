@@ -37,7 +37,7 @@ class SignupForm extends Model
     }
 
     /**
-     * Signs user up.
+     * Signs security up.
      *
      * @return User|null the saved model or null if saving fails
      */

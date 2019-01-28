@@ -17,15 +17,6 @@ $this->title = 'My Yii Application';
     </div>
 
     <div class="body-content">
-
-        <a href = "<?=Url::to(['company/company/index']);?>">Работодатели</a><br/>
-        <a href = "<?=Url::to(['employer/employer/index']);?>">Сотрудники</a><br/>
-        <a href = "<?=Url::to(['resume/resume/index']);?>">Резюме</a><br/>
-        <a href = "<?=Url::to(['vacancy/vacancy/index']);?>">Вакансии</a><br/>
-        <a href = "<?=Url::to(['experience/experience/index']);?>">Опыт</a><br/>
-        <a href = "<?=Url::to(['education/education/index']);?>">Образование</a><br/>
-        <a href = "<?=Url::to(['schedule/schedule/index']);?>">Расписания</a><br/>
-        <a href = "<?=Url::to(['skill/skill/index']);?>">Умения</a><br/>
         <div class="row">
             <div class="col-lg-4">
                 <h2>Heading</h2>

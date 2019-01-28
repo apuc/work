@@ -91,8 +91,13 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionTest()
+    {
+        return $this->render('admin');
+    }
+
     /**
-     * Logs in a user.
+     * Logs in a security.
      *
      * @return mixed
      */
@@ -115,7 +120,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Logs out the current user.
+     * Logs out the current security.
      *
      * @return mixed
      */
@@ -160,7 +165,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Signs user up.
+     * Signs security up.
      *
      * @return mixed
      */

@@ -12,10 +12,10 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
-        'user' => [
-            // following line will restrict access to profile, recovery, registration and settings controllers from backend
-            'as backend' => 'dektrium\user\filters\BackendFilter',
-        ],
+//        'security' => [
+//            // following line will restrict access to profile, recovery, registration and settings controllers from backend
+//
+//        ],
         'company' => [
             'class' => 'backend\modules\company\Company',
         ],
@@ -40,12 +40,17 @@ return [
         'skill' => [
             'class' => 'backend\modules\skill\Skill',
         ],
+        'user' => [
+            'class'  => 'dektrium\user\Module',
+            'admins' => ['test'],
+            'as backend' => 'dektrium\user\filters\BackendFilter',
+        ],
     ],
     'components' => [
 //        'request' => [
 //            'csrfParam' => '_csrf-backend',
 //        ],
-//        'user' => [
+//        'security' => [
 //            'identityClass' => 'common\models\User',
 //            'enableAutoLogin' => true,
 //            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
@@ -60,6 +65,13 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                ],
+            ],
+        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@vendor/dektrium/user/views' => '@backend/views'
                 ],
             ],
         ],

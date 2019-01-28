@@ -9,9 +9,16 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+//        'view' => [
+//            'theme' => [
+//                'pathMap' => [
+//                    //'@dektrium/user/views' => '@backend/views'
+//                ],
+//            ],
+//        ],
     ],
     'modules' => [
-        'user' => [
+        'User' => [
             'class' => 'dektrium\user\Module'
         ],
         'rbac' => 'dektrium\rbac\RbacWebModule',

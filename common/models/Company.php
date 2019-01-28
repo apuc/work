@@ -14,7 +14,7 @@ use yii\db\ActiveRecord;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property User $user
+ * @property User $security
  * @property Vacancy[] $vacancy
  */
 class Company extends ActiveRecord

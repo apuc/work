@@ -14,7 +14,11 @@ return [
     'modules' => [
         'user' => [
             // following line will restrict access to admin controller from frontend application
+            'class' => 'dektrium\user\Module',
             'as frontend' => 'dektrium\user\filters\FrontendFilter',
+        ],
+        'personal_area' => [
+            'class' => 'frontend\modules\personal_area\PersonalArea',
         ],
         'rbac' => 'dektrium\rbac\RbacWebModule',
     ],
@@ -26,7 +30,7 @@ return [
             //'class' => 'app\components\User',
             'identityClass' => 'dektrium\user\models\User',
         ],
-//        'user' => [
+//        'security' => [
 //            'identityClass' => 'common\models\User',
 //            'enableAutoLogin' => true,
 //            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
