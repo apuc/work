@@ -12,8 +12,8 @@ class m190117_073640_add_foreign_keys extends Migration
      */
     public function safeUp()
     {
-        $this->addForeignKey('employer_user', 'employer', 'user_id', 'security', 'id');
-        $this->addForeignKey('company_user', 'company', 'user_id', 'security', 'id');
+        $this->addForeignKey('employer_user', 'employer', 'user_id', 'user', 'id');
+        $this->addForeignKey('company_user', 'company', 'user_id', 'user', 'id');
         $this->addForeignKey('resume_employer', 'resume', 'employer_id', 'employer', 'id');
         $this->addForeignKey('resume_employment_type', 'resume', 'employment_type_id', 'employment_type', 'id');
         $this->addForeignKey('resume_schedule', 'resume', 'schedule_id', 'schedule', 'id');
