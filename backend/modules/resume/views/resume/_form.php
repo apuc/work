@@ -27,11 +27,39 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'salary')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'description')->textarea() ?>
 
-    <?= $form->field($model, 'employment_type_id')->dropDownList(ArrayHelper::map(\common\models\EmploymentType::find()->all(), 'id', 'name'), [ 'class' => 'form-control', 'prompt' => '' ] ) ?>
-
-    <?= $form->field($model, 'schedule_id')->textInput() ?>
+    <?= $form->field($model, 'category')->widget(Select2::className(),
+        [
+            'data' => ArrayHelper::map(\common\models\Category::find()->all(), 'id', 'name'),
+            'options' => ['placeholder' => 'Начните вводить название категории ...', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]
+    ); ?>
+    <?= $form->field($model, 'employment_type')->widget(Select2::className(),
+        [
+            'data' => ArrayHelper::map(\common\models\EmploymentType::find()->all(), 'id', 'name'),
+            'options' => ['placeholder' => 'Начните вводить тип занятости ...', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]
+    ); ?>
+    <?= $form->field($model, 'skill')->widget(Select2::className(),
+        [
+            'data' => ArrayHelper::map(\common\models\Skill::find()->all(), 'id', 'name'),
+            'options' => ['placeholder' => 'Начните вводить умение ...', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]
+    ); ?>
 
     <?= $form->field($model, 'status')->dropDownList([
         Resume::STATUS_ACTIVE => 'Активно',

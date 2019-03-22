@@ -30,6 +30,11 @@ class Skill extends ActiveRecord
         ];
     }
 
+    public function extraFields()
+    {
+        return ['resume', 'vacancy', 'resume_skill', 'vacancy_skill'];
+    }
+
     /**
      * @inheritdoc
      */

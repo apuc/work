@@ -33,6 +33,11 @@ class Schedule extends ActiveRecord
         ];
     }
 
+    public function extraFields()
+    {
+        return ['resume', 'vacancy'];
+    }
+
     /**
      * @inheritdoc
      */

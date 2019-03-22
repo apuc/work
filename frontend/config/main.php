@@ -21,6 +21,12 @@ return [
             'class' => 'frontend\modules\personal_area\PersonalArea',
         ],
         'rbac' => 'dektrium\rbac\RbacWebModule',
+        'request' => [
+            'class' => 'frontend\modules\request\Request',
+        ],
+        'main_page' => [
+            'class' => 'frontend\modules\main_page\MainPage',
+        ],
     ],
     'components' => [
 //        'request' => [
@@ -60,6 +66,21 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'about' => 'site/about',
+                ['class' => 'yii\rest\UrlRule', 'controller' =>
+                    [
+                        'request/category',
+                        'request/company',
+                        'request/education',
+                        'request/employer',
+                        'request/employment-type',
+                        'request/experience',
+                        'request/resume',
+                        'request/schedule',
+                        'request/skill',
+                        'request/vacancy',
+                    ],
+                    'pluralize'=>false],
+
             ],
         ],
     ],

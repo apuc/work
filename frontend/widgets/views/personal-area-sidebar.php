@@ -13,6 +13,12 @@ use yii\helpers\Url;
         <div class="mdc-list-group">
             <nav class="mdc-list mdc-drawer-menu">
                 <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="<?=Url::to(['/personal_area/resume/index']);?>">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">desktop_mac</i>
+                        Резюме
+                    </a>
+                </div>
+                <div class="mdc-list-item mdc-drawer-item">
                     <a class="mdc-drawer-link" href="<?=Url::to(['/personal_area/personal-area/index']);?>">
                         <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">desktop_mac</i>
                         Dashboard

@@ -18,7 +18,7 @@ class EducationSearch extends Education
     {
         return [
             [['id', 'resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'period', 'description'], 'safe'],
+            [['name', 'period', 'description', 'city', 'faculty'], 'safe'],
         ];
     }
 
@@ -66,6 +66,8 @@ class EducationSearch extends Education
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'city', $this->city])
+            ->andFilterWhere(['like', 'faculty', $this->faculty])
             ->andFilterWhere(['like', 'period', $this->period])
             ->andFilterWhere(['like', 'description', $this->description]);
 

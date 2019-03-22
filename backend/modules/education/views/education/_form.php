@@ -27,9 +27,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'faculty')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'period')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'description')->textArea() ?>
 
     <?= $form->field($model, 'status')->dropDownList([
         Education::STATUS_ACTIVE => 'Активен',

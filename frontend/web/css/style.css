@@ -17036,7 +17036,7 @@ footer {
       display: flex;
       -webkit-align-items: center;
       align-items: center;
-      font-size: 0.8125rem;
+      font-size: 14px;
       font-weight: 400;
       text-decoration: none;
       color: #212121; }
@@ -17077,19 +17077,23 @@ body {
   padding: 0;
   margin: 0; }
 
+.resume-index, .resume-view, .resume-create, .resume-update {
+  padding: 30px;
+}
 .body-wrapper {
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: row;
   flex-direction: row; }
   .body-wrapper .page-wrapper {
+    padding-left: 260px;
     width: 100%;
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column; }
     .body-wrapper .page-wrapper .content-wrapper {
-      padding: 30px 0px 0px 255px;
+      padding: 30px 0px 0px 0px;
       min-height: calc(100vh - 64px - 40px);
       background: #f6f6f6;
       -webkit-flex-grow: 1;

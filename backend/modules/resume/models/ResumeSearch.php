@@ -2,22 +2,28 @@
 
 namespace backend\modules\resume\models;
 
+use common\classes\Debug;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Resume;
 
 /**
  * ResumeSearch represents the model behind the search form of `common\models\Resume`.
+ *
+ * @property int $employment_type_id
  */
 class ResumeSearch extends Resume
 {
+    public $employment_type_id;
+    public $category_id;
+    public $skill_id;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'employer_id', 'employment_type_id', 'schedule_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'category_id', 'skill_id'], 'integer'],
             [['title', 'description'], 'safe'],
         ];
     }
@@ -41,6 +47,9 @@ class ResumeSearch extends Resume
     public function search($params)
     {
         $query = Resume::find();
+        $query->joinWith(['employment_type']);
+        $query->joinWith(['skill']);
+        $query->joinWith(['category']);
 
         // add conditions that should always apply here
 
@@ -49,7 +58,7 @@ class ResumeSearch extends Resume
         ]);
 
         $this->load($params);
-
+        //Debug::dd($this->employment_type_id);
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -60,16 +69,16 @@ class ResumeSearch extends Resume
         $query->andFilterWhere([
             'id' => $this->id,
             'employer_id' => $this->employer_id,
-            'employment_type_id' => $this->employment_type_id,
-            'schedule_id' => $this->schedule_id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'employment_type.id' => $this->employment_type_id,
+            'skill.id' => $this->skill_id,
+            'category.id' => $this->category_id
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description]);
-
         return $dataProvider;
     }
 }

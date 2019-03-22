@@ -51,6 +51,11 @@ class Company extends ActiveRecord
         ];
     }
 
+    public function extraFields()
+    {
+        return ['user', 'vacancy'];
+    }
+
     /**
      * @inheritdoc
      */

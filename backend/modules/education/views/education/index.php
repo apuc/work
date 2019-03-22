@@ -48,6 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'name',
             'period',
+            'city',
+            'faculty',
             'description',
             [
                 'attribute' => 'status',

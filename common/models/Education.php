@@ -10,6 +10,8 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property integer $resume_id
  * @property string $name
+ * @property string $city
+ * @property string $faculty
  * @property string $period
  * @property string $description
  * @property integer $status
@@ -49,9 +51,15 @@ class Education extends ActiveRecord
     {
         return [
             [['resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'period', 'description'], 'string', 'max' => 255],
+            [['name', 'period', 'city', 'faculty'], 'string', 'max' => 255],
+            [['description'], 'string'],
             [['resume_id', 'name'], 'required'],
         ];
+    }
+
+    public function extraFields()
+    {
+        return ['resume'];
     }
 
     /**
@@ -63,6 +71,8 @@ class Education extends ActiveRecord
             'id' => 'ID',
             'resume_id' => 'Резюме',
             'name' => 'Название',
+            'city' => 'Город',
+            'faculty' => 'Факультет',
             'period' => 'Период',
             'description' => 'Описание',
             'status' => 'Статус',

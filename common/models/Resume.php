@@ -10,19 +10,21 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property integer $employer_id
  * @property string $title
+ * @property float salary
+ * @property string $city
  * @property string $description
- * @property integer $employment_type_id
- * @property integer $schedule_id
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  *
  * @property Employer $employer
- * @property EmploymentType $employmentType
- * @property Schedule $schedule
  * @property Experience[] $experience
  * @property Education[] $education
- * @property VacancySkill[] $vacancy_skill
+ * @property ResumeCategory[] $resume_category
+ * @property Category[] $category
+ * @property ResumeEmploymentType[] $resume_employment_type
+ * @property EmploymentType[] $employment_type
+ * @property ResumeSkill[] $resume_skill
  * @property Skill[] $skill
  */
 class Resume extends ActiveRecord
@@ -53,11 +55,17 @@ class Resume extends ActiveRecord
     public function rules()
     {
         return [
-            [['employer_id', 'employment_type_id', 'schedule_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['title'], 'string', 'max' => 255],
+            [['employer_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'city'], 'string', 'max' => 255],
             [['description'], 'string'],
+            [['salary'], 'safe'],
             [['employer_id', 'title'], 'required'],
         ];
+    }
+
+    public function extraFields()
+    {
+        return ['employer', 'experience', 'education', 'resume_skill', 'skill', 'resume_category', 'category', 'resume_employment_type', 'employment_type'];
     }
 
     /**
@@ -69,9 +77,9 @@ class Resume extends ActiveRecord
             'id' => 'ID',
             'employer_id' => 'Сотрудник',
             'title' => 'Заголовок',
+            'salary' => 'Заработная плата',
+            'city' => 'Город',
             'description' => 'Описание',
-            'employment_type_id' => 'Вид занятости',
-            'schedule_id' => 'Расписание',
             'status' => 'Статус',
             'created_at' => 'Создано',
             'updated_at' => 'Изменено'
@@ -84,22 +92,6 @@ class Resume extends ActiveRecord
     public function getEmployer()
     {
         return $this->hasOne(Employer::className(), ['id' => 'employer_id']);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getEmployment_type()
-    {
-        return $this->hasOne(EmploymentType::className(), ['id' => 'employment_type_id']);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getSchedule()
-    {
-        return $this->hasOne(Schedule::className(), ['id' => 'schedule_id']);
     }
 
     /**
@@ -133,5 +125,39 @@ class Resume extends ActiveRecord
     {
         return $this->hasMany(Skill::className(), ['id' => 'skill_id'])
             ->viaTable('resume_skill', ['resume_id' => 'id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getResume_category()
+    {
+        return $this->hasMany(ResumeCategory::className(), ['resume_id' => 'id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCategory()
+    {
+        return $this->hasMany(Category::className(), ['id' => 'category_id'])
+            ->viaTable('resume_category', ['resume_id' => 'id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getResume_employment_type()
+    {
+        return $this->hasMany(ResumeEmploymentType::className(), ['resume_id' => 'id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEmployment_type()
+    {
+        return $this->hasMany(EmploymentType::className(), ['id' => 'employment_type_id'])
+            ->viaTable('resume_employment_type', ['resume_id' => 'id']);
     }
 }

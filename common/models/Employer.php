@@ -54,6 +54,11 @@ class Employer extends ActiveRecord
         ];
     }
 
+    public function extraFields()
+    {
+        return ['resume', 'user'];
+    }
+
     /**
      * @inheritdoc
      */

@@ -24,6 +24,11 @@ class EmploymentType extends ActiveRecord
         ];
     }
 
+    public function extraFields()
+    {
+        return ['resume', 'vacancy'];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -37,7 +42,8 @@ class EmploymentType extends ActiveRecord
      */
     public function getResume()
     {
-        return $this->hasMany(Resume::className(), ['employment_type_id' => 'id']);
+        return $this->hasMany(Resume::className(), ['id' => 'resume_id'])
+            ->viaTable('resume_employment_type', ['employment_type_id' => 'id']);
     }
 
 }

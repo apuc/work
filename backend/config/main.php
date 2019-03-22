@@ -40,6 +40,9 @@ return [
         'skill' => [
             'class' => 'backend\modules\skill\Skill',
         ],
+        'category' => [
+            'class' => 'backend\modules\category\Category',
+        ],
         'user' => [
             'class'  => 'dektrium\user\Module',
             'admins' => ['test'],
