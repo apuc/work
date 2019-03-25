@@ -59,6 +59,9 @@ return [
         ],
         'request' => [
             'baseUrl' => '',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
             //'class' => 'frontend\components\LangRequest',
         ],
         'urlManager' => [
@@ -66,6 +69,8 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'about' => 'site/about',
+                '/' => 'main_page/default/index',
+                'resume/view/<id>' => 'main_page/resume/view',
                 ['class' => 'yii\rest\UrlRule', 'controller' =>
                     [
                         'request/category',
@@ -82,6 +87,10 @@ return [
                     'pluralize'=>false],
 
             ],
+        ],
+        'formatter' => [
+
+            'locale' => 'ru-RU'
         ],
     ],
     'params' => $params,
