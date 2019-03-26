@@ -10,9 +10,15 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property integer $employer_id
  * @property string $title
- * @property float salary
+ * @property string $image_url
+ * @property float $min_salary
+ * @property float $max_salary
  * @property string $city
  * @property string $description
+ * @property string $skype
+ * @property string $instagram
+ * @property string $facebook
+ * @property string $vk
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -56,9 +62,9 @@ class Resume extends ActiveRecord
     {
         return [
             [['employer_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'city', 'image_url'], 'string', 'max' => 255],
+            [['title', 'city', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
             [['description'], 'string'],
-            [['salary'], 'safe'],
+            [['min_salary', 'max_salary'], 'safe'],
             [['employer_id', 'title'], 'required'],
         ];
     }
@@ -77,9 +83,14 @@ class Resume extends ActiveRecord
             'id' => 'ID',
             'employer_id' => 'Сотрудник',
             'title' => 'Заголовок',
-            'salary' => 'Заработная плата',
+            'min_salary' => 'Минимальная заработная плата',
+            'max_salary' => 'Максимальная заработная плата',
             'city' => 'Город',
             'description' => 'Описание',
+            'skype' => 'Skype',
+            'instagram' => 'Instagram',
+            'facebook' => 'Facebook',
+            'vk' => 'VK',
             'status' => 'Статус',
             'created_at' => 'Создано',
             'updated_at' => 'Изменено'

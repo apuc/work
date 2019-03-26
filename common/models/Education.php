@@ -10,10 +10,11 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property integer $resume_id
  * @property string $name
- * @property string $city
  * @property string $faculty
- * @property string $period
- * @property string $description
+ * @property integer $year_from
+ * @property integer $year_to
+ * @property string $academic_degree
+ * @property string $specialisation
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -50,9 +51,8 @@ class Education extends ActiveRecord
     public function rules()
     {
         return [
-            [['resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'period', 'city', 'faculty'], 'string', 'max' => 255],
-            [['description'], 'string'],
+            [['resume_id', 'year_from', 'year_to', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'faculty', 'academic_degree', 'specialisation'], 'string', 'max' => 255],
             [['resume_id', 'name'], 'required'],
         ];
     }
@@ -71,10 +71,11 @@ class Education extends ActiveRecord
             'id' => 'ID',
             'resume_id' => 'Резюме',
             'name' => 'Название',
-            'city' => 'Город',
             'faculty' => 'Факультет',
-            'period' => 'Период',
-            'description' => 'Описание',
+            'year_from' => 'Год начала',
+            'year_to' => 'Год окончания',
+            'academic_degree' => 'Академическая степень',
+            'specialisation' => 'Спецаильность',
             'status' => 'Статус',
             'created_at' => 'Создан',
             'updated_at' => 'Изменен'
