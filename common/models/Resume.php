@@ -56,7 +56,7 @@ class Resume extends ActiveRecord
     {
         return [
             [['employer_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'city'], 'string', 'max' => 255],
+            [['title', 'city', 'image_url'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['salary'], 'safe'],
             [['employer_id', 'title'], 'required'],
