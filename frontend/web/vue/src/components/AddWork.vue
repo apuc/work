@@ -17,6 +17,7 @@
                      :rules="input.rules"
                      :items="input.items"
                      item-text="name"
+                     item-value="id"
                      :class="input.class"
                      :type="input.type"
                      v-model="value[index][input.name]"
@@ -85,40 +86,52 @@
             component: VSelect,
             items: [
               {
-                name: 'Январь'
+                name: 'Январь',
+                id: '1'
               },
               {
-                name: 'Февраль'
+                name: 'Февраль',
+                id: '2'
               },
               {
-                name: 'Март'
+                name: 'Март',
+                id: '3'
               },
               {
-                name: 'Апрель'
+                name: 'Апрель',
+                id: '4'
               },
               {
-                name: 'Май'
+                name: 'Май',
+                id: '5'
               },
               {
-                name: 'Июнь'
+                name: 'Июнь',
+                id: '6'
               },
               {
-                name: 'Июль'
+                name: 'Июль',
+                id: '7'
               },
               {
-                name: 'Август'
+                name: 'Август',
+                id: '8'
               },
               {
-                name: 'Сентябрь'
+                name: 'Сентябрь',
+                id: '9'
               },
               {
-                name: 'Октябрь'
+                name: 'Октябрь',
+                id: '10'
               },
               {
                 name: 'Ноябрь',
+                id: '11'
               },
               {
-                name: 'Декабрь'
+                name: 'Декабрь',
+                id: '12'
               },
             ],
           }),
@@ -140,39 +153,51 @@
             items: [
               {
                 name: 'Январь',
+                id: '1'
               },
               {
-                name: 'Февраль'
+                name: 'Февраль',
+                id: '2'
               },
               {
-                name: 'Март'
+                name: 'Март',
+                id: '3'
               },
               {
-                name: 'Апрель'
+                name: 'Апрель',
+                id: '4'
               },
               {
-                name: 'Май'
+                name: 'Май',
+                id: '5'
               },
               {
-                name: 'Июнь'
+                name: 'Июнь',
+                id: '6'
               },
               {
-                name: 'Июль'
+                name: 'Июль',
+                id: '7'
               },
               {
-                name: 'Август'
+                name: 'Август',
+                id: '8'
               },
               {
-                name: 'Сентябрь'
+                name: 'Сентябрь',
+                id: '9'
               },
               {
-                name: 'Октябрь'
+                name: 'Октябрь',
+                id: '10'
               },
               {
-                name: 'Ноябрь'
+                name: 'Ноябрь',
+                id: '11'
               },
               {
-                name: 'Декабрь'
+                name: 'Декабрь',
+                id: '12'
               },
             ],
           }),

@@ -11,12 +11,12 @@ export default {
     rules: [v => !!v  || 'Желаемая должность обязателена к заполнению'],
     component: VTextField,
   }),
-  careerObjectiveCheckbox: Object.assign({}, Field, {
-    name: 'careerObjectiveCheckbox',
-    label: 'Показать желаемую должность в резюме',
-    rules: [],
-    component: VCheckbox,
-  }),
+  // careerObjectiveCheckbox: Object.assign({}, Field, {
+  //   name: 'careerObjectiveCheckbox',
+  //   label: 'Показать желаемую должность в резюме',
+  //   rules: [],
+  //   component: VCheckbox,
+  // }),
   salaryFrom: Object.assign({}, Field, {
     name: 'salaryFrom',
     label: 'Зарплата в месяц от',

@@ -64,7 +64,6 @@
     methods: {
       saveData() {
         let data = {
-          employer_id: 1,
           image_url: '',
           title: this.formData.careerObjective,
           min_salary: this.formData.salaryFrom,

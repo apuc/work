@@ -30,7 +30,6 @@
       // ...mapActions(['getItems']),
       saveData() {
         let data = {
-          company_id: 1,
           post: this.formData.post,
           responsibilities: this.formData.duties,
           employment_type_id: this.formData.typeOfEmployment,
