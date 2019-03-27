@@ -14,7 +14,7 @@ use yii\db\ActiveRecord;
  * @property integer $year_from
  * @property integer $year_to
  * @property string $academic_degree
- * @property string $specialisation
+ * @property string $specialization
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -52,7 +52,7 @@ class Education extends ActiveRecord
     {
         return [
             [['resume_id', 'year_from', 'year_to', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'faculty', 'academic_degree', 'specialisation'], 'string', 'max' => 255],
+            [['name', 'faculty', 'academic_degree', 'specialization'], 'string', 'max' => 255],
             [['resume_id', 'name'], 'required'],
         ];
     }
@@ -75,7 +75,7 @@ class Education extends ActiveRecord
             'year_from' => 'Год начала',
             'year_to' => 'Год окончания',
             'academic_degree' => 'Академическая степень',
-            'specialisation' => 'Спецаильность',
+            'specialization' => 'Спецаильность',
             'status' => 'Статус',
             'created_at' => 'Создан',
             'updated_at' => 'Изменен'

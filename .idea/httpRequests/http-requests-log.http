@@ -1,3 +1,143 @@
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"2","year_from":"456456","month_to":"2","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"2","year_from":"123123","year_to":"12312","month_to":"5"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T110800.201.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"2","year_from":"456456","month_to":"2","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"2","year_from":"123123","year_to":"12312","month_to":"5"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T110700.201.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"2","year_from":"456456","month_to":"2","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"2","year_from":"123123","year_to":"12312","month_to":"5"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T110631.500.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"2","year_from":"456456","month_to":"2","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"2","year_from":"123123","year_to":"12312","month_to":"5"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T110111.201.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T105841.422.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T105602.201.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T105531.201.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T105110.201.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T105042.500.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T104228.201.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T104149.422.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T103528.200.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T103446.422.json
+
+###
+
+POST http://work.loc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+<> 2019-03-27T103004.200.json
+
+###
+
+POST http://work.lc/request/resume
+Content-Type: application/json; charset=UTF-8
+
+{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"Февраль","year_from":"456456","month_to":"Февраль","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"Февраль","year_from":"123123","year_to":"12312","month_to":"Май"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
+
+###
+
 POST http://work.lc/request/resume
 Content-Type: application/json; charset=UTF-8
 
