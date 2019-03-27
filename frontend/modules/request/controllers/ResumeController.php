@@ -4,12 +4,14 @@ namespace frontend\modules\request\controllers;
 
 use common\classes\Debug;
 use common\models\Education;
+use common\models\Employer;
 use common\models\Experience;
 use common\models\Resume;
 use common\models\ResumeSkill;
 use common\models\Skill;
 use Yii;
 use yii\rest\ActiveController;
+use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
 class ResumeController extends MyActiveController
@@ -27,11 +29,18 @@ class ResumeController extends MyActiveController
     /**
      * @throws \yii\base\InvalidConfigException
      * @throws ServerErrorHttpException
+     * @throws HttpException
      */
     public function actionCreate(){
         $model = new Resume();
         $params = Yii::$app->getRequest()->getBodyParams();
+        if(Yii::$app->user->isGuest)
+            throw new HttpException(400, 'Пользователь не авторизирован');
+        $employer = Employer::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
+        if(!$employer)
+            throw new HttpException(400, 'Вы не являетесь соискателем');
         $model->load($params, '');
+        $model->employer_id = $employer->id;
         if($model->save()){
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
