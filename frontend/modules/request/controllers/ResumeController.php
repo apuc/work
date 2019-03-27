@@ -2,7 +2,6 @@
 
 namespace frontend\modules\request\controllers;
 
-use common\classes\Debug;
 use common\models\Education;
 use common\models\Employer;
 use common\models\Experience;
@@ -10,7 +9,6 @@ use common\models\Resume;
 use common\models\ResumeSkill;
 use common\models\Skill;
 use Yii;
-use yii\rest\ActiveController;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
@@ -20,7 +18,6 @@ class ResumeController extends MyActiveController
 
     public function actions()
     {
-
         $actions = parent::actions();
         unset($actions['create']);
         return $actions;
