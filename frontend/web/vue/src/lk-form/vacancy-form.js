@@ -24,19 +24,30 @@ export default {
     label: 'Тип занятости*',
     rules: [v => !!v || 'Тип занятости обязателен к заполнению'],
     component: VSelect,
-    items: ['Полный рабочий день', 'Удаленная работа', 'Студент'],
-  }),
-  schedule: Object.assign({}, Field, {
-    name: 'Schedule',
-    label: 'График работы*',
-    rules: [v => !!v || 'График работы обязателен к заполнению'],
-    component: VSelect,
     items: [
-      'Полный рабочий день',
-      'Удаленная работа',
-      'Студент'
+      {
+        name: '',
+        id: ''
+      }
     ],
   }),
+  // schedule: Object.assign({}, Field, {
+  //   name: 'Schedule',
+  //   label: 'График работы*',
+  //   rules: [v => !!v || 'График работы обязателен к заполнению'],
+  //   component: VSelect,
+  //   items: [
+  //     {
+  //       name: 'Полный рабочий день'
+  //     },
+  //     {
+  //       name: 'Удаленная работа'
+  //     },
+  //     {
+  //       name: 'Студент'
+  //     }
+  //   ],
+  // }),
   salaryFrom: Object.assign({}, Field, {
     name: 'salaryFrom',
     label: 'Зарплата в месяц от',
@@ -64,10 +75,18 @@ export default {
     component: VSelect,
     rules: [],
     items: [
-      'Не имеет значения',
-      'Менее года',
-      '1 год',
-      '2 года',
+      {
+        name: 'Не имеет значения'
+      },
+      {
+        name: 'Менее года'
+      },
+      {
+        name: '1 год'
+      },
+      {
+        name: '2 года'
+      },
     ],
   }),
   education: Object.assign({}, Field, {
@@ -76,10 +95,18 @@ export default {
     component: VSelect,
     rules: [],
     items: [
-      'Не имеет значения',
-      'Среднее',
-      'Неполное высшее',
-      'Высшее',
+      {
+        name: 'Не имеет значения'
+      },
+      {
+        name: 'Среднее'
+      },
+      {
+        name: 'Неполное высшее'
+      },
+      {
+        name: 'Высшее'
+      },
     ],
   }),
   workingConditions: Object.assign({}, Field, {
@@ -95,8 +122,8 @@ export default {
     rules: [],
     component: VTextField,
   }),
-  officeAdress: Object.assign({}, Field, {
-    name: 'officeAdress',
+  officeAddress: Object.assign({}, Field, {
+    name: 'officeAddress',
     label: 'Адрес офиса',
     rules: [v => (v && v.length >= 5) || 'Больше 5 символов'],
     component: VTextField,

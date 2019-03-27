@@ -5,42 +5,6 @@ import AddEducation from "../components/AddEducation";
 import AddSocial from "../components/AddSocial";
 
 export default {
-  name: Object.assign({}, Field, {
-    name: 'name',
-    label: 'Имя*',
-    rules: [
-      v => !!v || 'Имя обязательно к заполнению',
-      v => (v && v.length >= 3) || 'Больше 3 символов'
-    ],
-    counter: 15,
-    component: VTextField,
-  }),
-  surname: Object.assign({}, Field, {
-    name: 'surname',
-    label: 'Фамилия*',
-    rules: [v => !!v || 'Фамилия обязательна к заполнению',],
-    counter: 20,
-    component: VTextField,
-  }),
-  email: Object.assign({}, Field, {
-    name: 'email',
-    label: 'E-mail*',
-    rules: [
-      v => !!v || 'E-mail обязателен к заполнению',
-      v => /.+@.+/.test(v) || 'Введите правильный E-mail'
-    ],
-    component: VTextField,
-  }),
-  phoneNumber: Object.assign({}, Field, {
-    name: 'phoneNumber',
-    label: 'Мобильный*',
-    rules: [
-      v => !!v || 'Мобильный обязателен к заполнению',
-      v => (v && v.length >= 11) || 'Введите 11 символов'
-    ],
-    component: VTextField,
-    maskPhone: '+# (###) ## - ## - ###',
-  }),
   careerObjective: Object.assign({}, Field, {
     name: 'careerObjective',
     label: 'Желаемая должность*',
@@ -52,6 +16,20 @@ export default {
     label: 'Показать желаемую должность в резюме',
     rules: [],
     component: VCheckbox,
+  }),
+  salaryFrom: Object.assign({}, Field, {
+    name: 'salaryFrom',
+    label: 'Зарплата в месяц от',
+    rules: [v => /^\d+$/.test(v) || 'Только цыфры'],
+    component: VTextField,
+    prefix: "₽",
+  }),
+  salaryBefore: Object.assign({}, Field, {
+    name: 'salaryBefore',
+    label: 'Зарплата в месяц до',
+    rules: [v => /^\d+$/.test(v) || 'Только цыфры'],
+    component: VTextField,
+    prefix: "₽",
   }),
   aboutMe: Object.assign({}, Field, {
     name: 'aboutMe',
@@ -82,36 +60,42 @@ export default {
     name: 'duties1',
     label: '1.',
     rules: [],
+    class: 'duties',
     component: VTextField,
   }),
   duties2: Object.assign({}, Field, {
     name: 'duties2',
     label: '2.',
     rules: [],
+    class: 'duties',
     component: VTextField,
   }),
   duties3: Object.assign({}, Field, {
     name: 'duties3',
     label: '3.',
     rules: [],
+    class: 'duties',
     component: VTextField,
   }),
   duties4: Object.assign({}, Field, {
     name: 'duties4',
     label: '4.',
     rules: [],
+    class: 'duties',
     component: VTextField,
   }),
   duties5: Object.assign({}, Field, {
     name: 'duties5',
     label: '5.',
     rules: [],
+    class: 'duties',
     component: VTextField,
   }),
   duties6: Object.assign({}, Field, {
     name: 'duties6',
     label: '6.',
     rules: [],
+    class: 'duties',
     component: VTextField,
   }),
 }

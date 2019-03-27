@@ -31,7 +31,7 @@
     },
     props: {
       value: {
-        type: [String,Number,Boolean,Array,Object],
+        type: [Object],
       }
     },
     components: {Social},

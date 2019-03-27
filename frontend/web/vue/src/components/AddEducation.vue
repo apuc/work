@@ -19,6 +19,7 @@
                      :label="input.label"
                      :rules="input.rules"
                      :items="input.items"
+                     item-text="name"
                      :class="input.class"
                      :type="input.type"
                      v-model="value[index][input.name]"
@@ -42,7 +43,6 @@
   import FormEducation from '../lk-form/education';
   import Field from '../models/Field';
   import {VTextField, VSelect} from 'vuetify/lib'
-
   export default {
     name: "AddEducation",
     data() {
@@ -63,14 +63,14 @@
       },
       addNewEducation() {
         const template = {
-          universityName: Object.assign({}, Field, {
-            name: `universityName${this.education.length}`,
+          name: Object.assign({}, Field, {
+            name: 'name',
             label: 'Название университета*',
             component: VTextField,
             rules: [v => !!v  || 'Название университета обязателено к заполнению'],
           }),
-          admissionYear0: Object.assign({}, Field, {
-            name: `admissionYear${this.education.length}`,
+          year_from: Object.assign({}, Field, {
+            name: 'year_from',
             label: 'Год поступления*',
             component: VTextField,
             type: 'number',
@@ -79,8 +79,8 @@
               v => /^\d+$/.test(v) || 'Только цыфры'
             ],
           }),
-          yearOfEnding0: Object.assign({}, Field, {
-            name: `yearOfEnding${this.education.length}`,
+          year_to: Object.assign({}, Field, {
+            name: 'year_to',
             label: 'Год окончания*',
             component: VTextField,
             type: 'number',
@@ -89,24 +89,28 @@
               v => /^\d+$/.test(v) || 'Только цыфры'
             ],
           }),
-          academicDegree0: Object.assign({}, Field, {
-            name: `academicDegree${this.education.length}`,
+          academic_degree: Object.assign({}, Field, {
+            name: 'academic_degree',
             label: 'Академ степень',
             rules: [],
             component: VSelect,
             items: [
-              'Бакалавр',
-              'Магистр',
+              {
+                name: 'Бакалавр'
+              },
+              {
+                name: 'Магистр'
+              },
             ],
           }),
-          faculty0: Object.assign({}, Field, {
-            name: `faculty${this.education.length}`,
+          faculty: Object.assign({}, Field, {
+            name: 'faculty',
             label: 'Факультет*',
             rules: [v => !!v  || 'Факультет обязателен к заполнению'],
             component: VTextField,
           }),
-          specialization0: Object.assign({}, Field, {
-            name: `specialization${this.education.length}`,
+          specialization: Object.assign({}, Field, {
+            name: 'specialization',
             label: 'Специализация',
             rules: [],
             component: VTextField,

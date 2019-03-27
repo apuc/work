@@ -21,11 +21,15 @@ export default {
       linkMenu: [
         {
           title: 'Вакансия',
-          url: '/FormVacancy'
+          url: '/vacancy'
         },
         {
           title: 'Резюме',
-          url: '/FormResume'
+          url: '/resume'
+        },
+        {
+          title: 'Компания',
+          url: '/company'
         },
       ],
     }

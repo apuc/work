@@ -2,14 +2,14 @@ import Field from '../models/Field';
 import {VTextField, VSelect} from 'vuetify/lib'
 
 export default {
-  universityName: Object.assign({}, Field, {
-    name: 'universityName',
+  name: Object.assign({}, Field, {
+    name: 'name',
     label: 'Название университета*',
     component: VTextField,
     rules: [v => !!v  || 'Название университета обязателено к заполнению'],
   }),
-  admissionYear: Object.assign({}, Field, {
-    name: 'admissionYear',
+  year_from: Object.assign({}, Field, {
+    name: 'year_from',
     label: 'Год поступления*',
     component: VTextField,
     type: 'number',
@@ -18,8 +18,8 @@ export default {
       v => /^\d+$/.test(v) || 'Только цыфры'
     ],
   }),
-  yearOfEnding: Object.assign({}, Field, {
-    name: 'yearOfEnding',
+  year_to: Object.assign({}, Field, {
+    name: 'year_to',
     label: 'Год окончания*',
     component: VTextField,
     type: 'number',
@@ -28,14 +28,18 @@ export default {
       v => /^\d+$/.test(v) || 'Только цыфры'
     ],
   }),
-  academicDegree: Object.assign({}, Field, {
-    name: 'academicDegree',
+  academic_degree: Object.assign({}, Field, {
+    name: 'academic_degree',
     label: 'Академ степень',
     rules: [],
     component: VSelect,
     items: [
-      'Бакалавр',
-      'Магистр',
+      {
+        name: 'Бакалавр'
+      },
+      {
+        name: 'Магистр'
+      },
     ],
   }),
   faculty: Object.assign({}, Field, {

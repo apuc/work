@@ -11,5 +11,4 @@ export default {
     class: null,
     type: null,
     id: null,
-    // addWork: (event) => {}
 }

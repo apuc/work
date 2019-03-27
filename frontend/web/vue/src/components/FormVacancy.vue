@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FormTemplate :paramsFile="getFormData()" v-model="formData">
+    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
     </FormTemplate>
   </div>
 </template>
@@ -8,18 +8,59 @@
 <script>
   import FormVacancy from '../lk-form/vacancy-form';
   import FormTemplate from "./FormTemplate";
+
   export default {
     name: "FormVacancy",
     components: {FormTemplate},
     data() {
-        return {
-            formData: {}
+       return {
+         formData: {}
+       }
+    },
+    created() {
+      this.getEmploymentType().then(response => {
+        FormVacancy.typeOfEmployment.items = response.data;
+        for (let i = 0; i < response.data.length; i++) {
+          this.$set(FormVacancy.typeOfEmployment.items, i, response.data[i]);
         }
+      });
+      // this.getItems();
     },
     methods: {
+      // ...mapActions(['getItems']),
+      saveData() {
+        let data = {
+          company_id: 1,
+          post: this.formData.post,
+          responsibilities: this.formData.duties,
+          employment_type_id: this.formData.typeOfEmployment,
+          // schedule_id: this.formData.schedule,
+          min_salary: this.formData.salaryFrom,
+          max_salary: this.formData.salaryBefore,
+          qualification_requirements: this.formData.qualificationRequirements,
+          work_experience: this.formData.experience,
+          education: this.formData.education,
+          working_conditions: this.formData.workingConditions,
+          video: this.formData.vacancyVideo,
+          address: this.formData.officeAddress,
+          home_number: this.formData.houseNumber,
+        };
+        this.$http.post(`${process.env.VUE_APP_API_URL}/request/vacancy`, data)
+          .then(response => {
+              console.log(response);
+              console.log('Форма успешно отправлена');
+            }, response => {
+              console.log(response);
+              console.log('Форма не отправлена');
+            }
+          )
+      },
       getFormData() {
         return FormVacancy;
       },
+      async getEmploymentType() {
+        return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employment-type`)
+      }
     },
   }
 </script>
