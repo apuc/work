@@ -65,7 +65,7 @@
       saveData() {
         let data = {
           employer_id: 1,
-          image_url: this.image.name,
+          image_url: '',
           title: this.formData.careerObjective,
           min_salary: this.formData.salaryFrom,
           max_salary: this.formData.salaryBefore,
@@ -78,6 +78,11 @@
           work: this.formData.workBlock,
           skills: [],
         };
+        let image = document.querySelector('.fileinput');
+        if(image.classList.contains('fileinput--loaded')) {
+          data.image_url = this.image.name;
+        }
+
         let dutiesVal = document.querySelectorAll('.duties input');
         for (let i = 0; i < dutiesVal.length; i++) {
           if (dutiesVal[i].value !== '') {

@@ -56,15 +56,12 @@
         return this.paramsFile;
       },
       validate () {
-        // if (this.$refs.form.validate()) {
-        //   this.snackbar = true;
+        if (this.$refs.form.validate()) {
+          this.snackbar = true;
           this.sendForm();
-        // }
+        }
       },
     },
-    // mounted() {
-    //   this.sendForm();
-    // }
   }
 </script>
 
