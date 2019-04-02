@@ -9,7 +9,16 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property integer $user_id
- * @property string $title
+ * @property string $name
+ * @property string $website
+ * @property string $activity_field
+ * @property string $vk
+ * @property string $facebook
+ * @property string $instagram
+ * @property string $skype
+ * @property string $description
+ * @property string $contact_person
+ * @property string $phone
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -46,9 +55,15 @@ class Company extends ActiveRecord
     {
         return [
             [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['title'], 'string', 'max' => 255],
-            [['user_id', 'title'], 'required'],
+            [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person', 'phone'], 'string', 'max' => 255],
+            [['activity_field', 'description'], 'string'],
+            [['user_id', 'name'], 'required'],
         ];
+    }
+
+    public function extraFields()
+    {
+        return ['user', 'vacancy'];
     }
 
     /**
@@ -59,7 +74,16 @@ class Company extends ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'Пользователь',
-            'title' => 'Название',
+            'name' => 'Название',
+            'website' => 'Сайт',
+            'activity_field' => 'Сфера деятельности',
+            'vk' => 'VK',
+            'facebook' => 'Facebook',
+            'instagram' => 'Instagram',
+            'skype' => 'Skype',
+            'description' => 'О компании',
+            'contact_person' => 'Контактное лицо',
+            'phone' => 'Телефон',
             'status' => 'Статус',
             'created_at' => 'Создан',
             'updated_at' => 'Изменен'

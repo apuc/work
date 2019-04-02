@@ -21,6 +21,12 @@ return [
             'class' => 'frontend\modules\personal_area\PersonalArea',
         ],
         'rbac' => 'dektrium\rbac\RbacWebModule',
+        'request' => [
+            'class' => 'frontend\modules\request\Request',
+        ],
+        'main_page' => [
+            'class' => 'frontend\modules\main_page\MainPage',
+        ],
     ],
     'components' => [
 //        'request' => [
@@ -53,6 +59,9 @@ return [
         ],
         'request' => [
             'baseUrl' => '',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
             //'class' => 'frontend\components\LangRequest',
         ],
         'urlManager' => [
@@ -60,7 +69,28 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'about' => 'site/about',
+                '/' => 'main_page/default/index',
+                'resume/view/<id>' => 'main_page/resume/view',
+                ['class' => 'yii\rest\UrlRule', 'controller' =>
+                    [
+                        'request/category',
+                        'request/company',
+                        'request/education',
+                        'request/employer',
+                        'request/employment-type',
+                        'request/experience',
+                        'request/resume',
+                        'request/schedule',
+                        'request/skill',
+                        'request/vacancy',
+                    ],
+                    'pluralize'=>false],
+
             ],
+        ],
+        'formatter' => [
+
+            'locale' => 'ru-RU'
         ],
     ],
     'params' => $params,

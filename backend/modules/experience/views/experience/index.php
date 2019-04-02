@@ -47,6 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ])
             ],
             'name',
+            'city',
             'period',
             'post',
             'responsibility',

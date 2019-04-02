@@ -38,27 +38,38 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             'title',
+            'city',
+            'salary',
             'description:ntext',
             [
-                'attribute' => 'employment_type.name',
+                'value' => function ($model) {
+                    $multiple_res = '';
+                    foreach($model->employment_type as $type){
+                        $multiple_res .= ($multiple_res?', ':'').$type->name;
+                    }
+                    return $multiple_res;
+                },
                 'label' => 'Тип занятости'
             ],
-            'schedule_id',
             [
                 'label' => 'Умения',
-                'value' => function($model){
-                    $string = '';
-                    $first = true;
+                'value' => function ($model) {
+                    $multiple_res = '';
                     foreach($model->skill as $skill){
-                        if($first){
-                            $string .= $skill->name;
-                            $first = false;
-                        }
-                        else
-                            $string .= ', ' . $skill->name;
+                        $multiple_res .= ($multiple_res?', ':'').$skill->name;
                     }
-                    return $string;
-                }
+                    return $multiple_res;
+                },
+            ],
+            [
+                'label' => 'Категории',
+                'value' => function ($model) {
+                    $multiple_res = '';
+                    foreach($model->category as $category){
+                        $multiple_res .= ($multiple_res?', ':'').$category->name;
+                    }
+                    return $multiple_res;
+                },
             ],
             [
                 'attribute' => 'status',

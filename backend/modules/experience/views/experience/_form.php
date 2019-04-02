@@ -27,11 +27,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'period')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'post')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'responsibility')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'responsibility')->textarea() ?>
 
     <?= $form->field($model, 'status')->dropDownList([
         Experience::STATUS_ACTIVE => 'Активен',

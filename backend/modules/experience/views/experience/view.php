@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Резюме'
             ],
             'name',
+            'city',
             'period',
             'post',
             'responsibility',

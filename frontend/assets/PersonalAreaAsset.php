@@ -17,10 +17,11 @@ class PersonalAreaAsset extends AssetBundle
     ];
     public $js = [
         'node_modules/material-components-web/dist/material-components-web.min.js',
-        'node_modules/jquery/dist/jquery.min.js',
         'js/misc.js',
         'js/material.js',
     ];
     public $depends = [
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
     ];
 }

@@ -55,16 +55,52 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'attribute' => 'employment_type_id',
+                'label' => 'Виды занятости',
+                'attribute' => 'employment_type',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return EmploymentType::findOne($model->employment_type_id)->name;
+                    $multiple_res = '';
+                    foreach($model->employment_type as $type){
+                        $multiple_res .= ($multiple_res?', ':'').$type->name;
+                    }
+                    return $multiple_res;
                 },
                 'filter'    => Html::activeDropDownList( $searchModel, 'employment_type_id',
                     \yii\helpers\ArrayHelper::map(EmploymentType::find()->asArray()->all(),'id', 'name'),
                     [ 'class' => 'form-control', 'prompt' => '' ] ),
             ],
-            'schedule_id',
+            [
+                'label' => 'Умения',
+                'attribute' => 'skill',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $multiple_res = '';
+                    foreach($model->skill as $skill){
+                        $multiple_res .= ($multiple_res?', ':'').$skill->name;
+                    }
+                    return $multiple_res;
+                },
+                'filter'    => Html::activeDropDownList( $searchModel, 'skill_id',
+                    \yii\helpers\ArrayHelper::map(\common\models\Skill::find()->asArray()->all(),'id', 'name'),
+                    [ 'class' => 'form-control', 'prompt' => '' ] ),
+            ],
+            [
+                'label' => 'Категории',
+                'attribute' => 'category',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $multiple_res = '';
+                    foreach($model->category as $category){
+                        $multiple_res .= ($multiple_res?', ':'').$category->name;
+                    }
+                    return $multiple_res;
+                },
+                'filter'    => Html::activeDropDownList( $searchModel, 'category_id',
+                    \yii\helpers\ArrayHelper::map(\common\models\Category::find()->asArray()->all(),'id', 'name'),
+                    [ 'class' => 'form-control', 'prompt' => '' ] ),
+            ],
+
+
             [
                 'attribute' => 'status',
                 'format' => 'raw',

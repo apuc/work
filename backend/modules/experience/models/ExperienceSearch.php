@@ -18,7 +18,7 @@ class ExperienceSearch extends Experience
     {
         return [
             [['id', 'resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'period', 'post', 'responsibility'], 'safe'],
+            [['name', 'period', 'city', 'post', 'responsibility'], 'safe'],
         ];
     }
 
@@ -66,6 +66,7 @@ class ExperienceSearch extends Experience
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'city', $this->city])
             ->andFilterWhere(['like', 'period', $this->period])
             ->andFilterWhere(['like', 'post', $this->post])
             ->andFilterWhere(['like', 'responsibility', $this->responsibility]);
