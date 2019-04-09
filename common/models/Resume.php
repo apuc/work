@@ -28,8 +28,7 @@ use yii\db\ActiveRecord;
  * @property Education[] $education
  * @property ResumeCategory[] $resume_category
  * @property Category[] $category
- * @property ResumeEmploymentType[] $resume_employment_type
- * @property EmploymentType[] $employment_type
+ * @property EmploymentType $employment_type
  * @property ResumeSkill[] $resume_skill
  * @property Skill[] $skill
  */
@@ -61,7 +60,7 @@ class Resume extends ActiveRecord
     public function rules()
     {
         return [
-            [['employer_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['employer_id', 'employment_type_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['title', 'city', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['min_salary', 'max_salary'], 'safe'],
@@ -71,7 +70,7 @@ class Resume extends ActiveRecord
 
     public function extraFields()
     {
-        return ['employer', 'experience', 'education', 'resume_skill', 'skill', 'resume_category', 'category', 'resume_employment_type', 'employment_type'];
+        return ['employer', 'experience', 'education', 'resume_skill', 'skill', 'resume_category', 'category', 'employment_type'];
     }
 
     /**
@@ -83,6 +82,7 @@ class Resume extends ActiveRecord
             'id' => 'ID',
             'employer_id' => 'Сотрудник',
             'title' => 'Заголовок',
+            'employment_type_id' => 'Вид занятости',
             'min_salary' => 'Минимальная заработная плата',
             'max_salary' => 'Максимальная заработная плата',
             'city' => 'Город',
@@ -158,17 +158,8 @@ class Resume extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function getResume_employment_type()
-    {
-        return $this->hasMany(ResumeEmploymentType::className(), ['resume_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getEmployment_type()
     {
-        return $this->hasMany(EmploymentType::className(), ['id' => 'employment_type_id'])
-            ->viaTable('resume_employment_type', ['resume_id' => 'id']);
+        return $this->hasOne(EmploymentType::className(), ['id' => 'employment_type_id']);
     }
 }

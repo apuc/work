@@ -48,6 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     ])
             ],
             'title',
+            'min_salary',
+            'max_salary',
+            'city',
             [
                 'attribute' => 'description',
                 'value' => function ($model) {
@@ -55,19 +58,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'label' => 'Виды занятости',
-                'attribute' => 'employment_type',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    $multiple_res = '';
-                    foreach($model->employment_type as $type){
-                        $multiple_res .= ($multiple_res?', ':'').$type->name;
-                    }
-                    return $multiple_res;
-                },
-                'filter'    => Html::activeDropDownList( $searchModel, 'employment_type_id',
-                    \yii\helpers\ArrayHelper::map(EmploymentType::find()->asArray()->all(),'id', 'name'),
-                    [ 'class' => 'form-control', 'prompt' => '' ] ),
+                'label' => 'Социальные сети',
+                'value' =>
+                    function ($model) {
+                        /** @var Resume $model */
+                        return 'VK: '.$model->vk.
+                            'Facebook: ' . $model->facebook.
+                            'Instagram: ' . $model->instagram.
+                            'Skype: ' . $model->skype;
+                }
             ],
             [
                 'label' => 'Умения',

@@ -71,6 +71,7 @@ return [
                 'about' => 'site/about',
                 '/' => 'main_page/default/index',
                 'resume/view/<id>' => 'main_page/resume/view',
+                'personal-area/<action>' => 'personal_area/personal-area/index',
                 ['class' => 'yii\rest\UrlRule', 'controller' =>
                     [
                         'request/category',

@@ -3,7 +3,8 @@
 /* @var $model \common\models\Resume */
 
 $this->title = $model->title;
-?>
+
+use common\models\Experience; ?>
 
 <div class="root">
     <header class="header-wrap jsHeaderIndex">
@@ -14,7 +15,7 @@ $this->title = $model->title;
             <div class="header">
                 <div class="home__main-top">
                     <div class="home__main-header">
-                        <nav class="home__nav"><a class="home__nav-item" href="index.html">Главная</a><a
+                        <nav class="home__nav"><a class="home__nav-item" href="/">Главная</a><a
                                     class="home__nav-item" href="resume.html">Резюме</a>
                             <button class="home__nav-item jsLogin">Вход
                             </button>
@@ -90,7 +91,7 @@ $this->title = $model->title;
                             <tr>
                                 <th>Занятость:
                                 </th>
-                                <td>частичная занятость, проектная работа, полная занятость
+                                <td><?=$model->employment_type->name?>
                                 </td>
                             </tr>
                             <tr>
@@ -102,7 +103,7 @@ $this->title = $model->title;
                             <tr>
                                 <th>Город:
                                 </th>
-                                <td>Горловка
+                                <td><?=$model->city?>
                                 </td>
                             </tr>
                             </tbody>
@@ -114,40 +115,31 @@ $this->title = $model->title;
                         <div class="resume-description__item">
                             <div class="resume-description__main-head">
                                 <h4 class="resume-description__title-main">Опыт работы
-                                </h4><span class="resume-description__experience">6 лет 9 месяцев</span>
+                                </h4><span class="resume-description__experience"><?=Experience::getPeriod_string(Experience::getPeriod_sum($model->experience))?></span>
                             </div>
-                            <h4 class="resume-description__title-bold">Механик участка филиала в Туркменистане
+                            <?php foreach ($model->experience as $experience):?>
+                            <h4 class="resume-description__title-bold"><?=$experience->name?>
                             </h4>
-                            <p class="resume-description__text">с 07.2015 по 12.2016 (1 год 5 месяцев)
-                            </p>
-                            <p class="resume-description__text">Дорожное строительство"Альтком", Туркменабад (Дорожное
-                                строительство)
-                            </p>
-                            <h4 class="resume-description__title-bold">Главный инженер
-                            </h4>
-                            <p class="resume-description__text">с 04.2012 по 07.2015 (3 года 3 месяца)
+                            <p class="resume-description__text">с <?=$experience->month_from>=10?$experience->month_from:('0'.$experience->month_from)?>.<?=$experience->year_from?>
+                                по
+                                <?=$experience->month_to>=10?$experience->month_to:('0'.$experience->month_to)?>.<?=$experience->year_to?> (<?=Experience::getPeriod_string($experience->getPeriod())?>)
                             </p>
                             <p class="resume-description__text">
-                                ГП" Артемуголь", Горловка (Мат-но тех.снабж. и вспомогательное пр-во(автобаза(самосвалы,
-                                краны,вышки, бульдозера, экскаваторы), строй уч-ок, лесные склады с переработкой сырья,
-                                РММ, тушение профилактика териконов и рекультив. земель)
+                                <?=$experience->responsibility?>
                             </p>
-                            <h4 class="resume-description__title-bold">Начальник
-                            </h4>
-                            <p class="resume-description__text">с 07.2011 по 04.2012 (9 месяцев)
-                            </p>
-                            <p class="resume-description__text">ГП" Артемуголь", Горловка (Ремонтно строительный
-                                участок)
-                            </p>
+                            <?php endforeach;?>
                         </div>
                         <div class="resume-description__item">
                             <h4 class="resume-description__title-main">Образование
                             </h4>
-                            <h4 class="resume-description__title-bold">Горловский жилищно-комунальный техникум
-                            </h4>
-                            <p class="resume-description__text">Горловка <br>Среднее специальное, <br>с 09.1995 по
-                                03.1999 (3 года 6 месяцев)
-                            </p>
+                            <?php foreach ($model->education as $education):?>
+                                <h4 class="resume-description__title-bold">
+                                    <?=$education->name?>
+                                </h4>
+                                <p class="resume-description__text">Горловка <br><?=$education->academic_degree?>, <br>с <?=$education->year_from?> по
+                                    <?=$education->year_to?>г.
+                                </p>
+                            <?php endforeach;?>
                         </div>
                         <div class="resume-description__item">
                             <h4 class="resume-description__title-main">Профессиональные и другие навык
@@ -176,11 +168,7 @@ $this->title = $model->title;
                             <h4 class="resume-description__title-main">Дополнительная информация
                             </h4>
                             <p class="resume-description__text">
-                                Здоровый образ жизни, спорт, самообучение, участие в обучающих программах и тренингах,
-                                основной приоритетв трудовой деятельности - увлеченность работой приносящей результат и
-                                самореализация. Готовность к проектам высокого уровня сложности .
-                                Рассматриваю предложения с оплатой по конкретным результатам работы. Возможность
-                                использования личного авто.
+                                <?=$model->description?>
                             </p>
                         </div>
                     </div>
