@@ -69,7 +69,7 @@ use common\models\Experience; ?>
                     </ul>
                     <div class="resume-results__date">
                         <p>Резюме от
-                        </p><span><!--6 марта 2019--><?= Yii::$app->formatter->asDate($model->created_at, 'dd MM yyyy')?></span>
+                        </p><span><?= Yii::$app->formatter->asDate($model->created_at, 'dd MM yyyy')?></span>
                     </div>
                 </div>
                 <div class="resume-top"><img class="resume-top__left" src="/images/resume_image_1.png" alt=""
@@ -85,7 +85,7 @@ use common\models\Experience; ?>
                             </p>
                         </div>
                         <h3 class="resume-top__head"><?=$model->title?>
-                        </h3><span class="resume-top__price">260-400 EUR</span>
+                        </h3><span class="resume-top__price"><?=$model->min_salary?>-<?=$model->max_salary?> RUB</span>
                         <table class="resume-top__text">
                             <tbody>
                             <tr>
@@ -97,7 +97,7 @@ use common\models\Experience; ?>
                             <tr>
                                 <th>Возраст:
                                 </th>
-                                <td>38 лет
+                                <td><?=$model->employer->age?>
                                 </td>
                             </tr>
                             <tr>
@@ -182,18 +182,20 @@ use common\models\Experience; ?>
                                 <h4>Контактная информация
                                 </h4>
                                 <p>Телефон:
-                                </p><a href="tel:0508798669">050-879-86-69</a><a href="tel:0713406501">071-340-65-01</a>
+                                </p>
+                                <?php foreach ($model->employer->phone as $phone):?>
+                                    <a href="tel:<?=$phone->number?>"><?=$phone->number?></a>
+                                <?php endforeach ?>
                                 <p>Почта:
-                                </p><a href="mailto:ansa@mail.ru">ansa@mail.ru</a>
+                                </p><a href="mailto:<?=$model->employer->email?>"><?=$model->employer->email?></a>
                             </div>
                             <div class="resume-info__soc">
-                                <p>Написать соискателю в сетях
-                                </p><a class="vk-bg" href="#"><img src="/images/vk.svg" alt=""
-                                                                   role="presentation"/></a><a class="ok-bg"
-                                                                                               href="#"><img
-                                            src="/images/ok.svg" alt="" role="presentation"/></a><a class="fb-bg"
-                                                                                                    href="#"><img
-                                            src="/images/fb.svg" alt="" role="presentation"/></a>
+                                <?php if($model->hasSocials()):?>
+                                    <p>Написать соискателю в сетях</p>
+                                    <?php if($model->vk):?><a class="vk-bg" href="<?=$model->vk?>"><img src="/images/vk.svg" alt="" role="presentation"/></a><?php endif?>
+                                    <?php if($model->facebook):?><a class="fb-bg" href="<?=$model->facebook?>"><img src="/images/fb.svg" alt="" role="presentation"/></a><?php endif?>
+                                    <?php if($model->instagram):?><a class="fb-bg" href="<?=$model->instagram?>"><img src="/images/fb.svg" alt="" role="presentation"/></a><?php endif?>
+                                <?php endif ?>
                             </div>
                             <button class="resume-info__btn">написать сообщение
                             </button>

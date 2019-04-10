@@ -29,9 +29,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'period')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'post')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'month_from')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'year_from')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'month_to')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'year_to')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'department')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'responsibility')->textarea() ?>
 

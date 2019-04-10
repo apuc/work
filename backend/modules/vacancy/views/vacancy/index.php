@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'    => 'text',
                 'value' => function($model)
                 {
-                    return Company::findOne($model->company_id)->title;
+                    return Company::findOne($model->company_id)->name;
                 },
                 'filter'    => \kartik\select2\Select2::widget(
                     [
@@ -47,12 +47,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ])
             ],
-            'title',
+            'post',
             [
-                'attribute' => 'description',
+                'attribute' => 'responsibilities',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return mb_substr($model->description, 0, 10) . '...';
+                    return mb_substr($model->responsibilities, 0, 10) . '...';
                 },
             ],
             [
@@ -66,6 +66,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     [ 'class' => 'form-control', 'prompt' => '' ] ),
             ],
             'schedule_id',
+            'min_salary',
+            'max_salary',
+            'qualification_requirements',
+            'work_experience',
+            'education',
+            'working_conditions',
+            'video',
+            'address',
+            'home_number',
             [
                 'attribute' => 'status',
                 'format' => 'raw',

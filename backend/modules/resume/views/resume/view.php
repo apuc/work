@@ -38,19 +38,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             'title',
+            'image_url',
+            'min_salary',
+            'max_salary',
             'city',
-            'salary',
             'description:ntext',
-            [
-                'value' => function ($model) {
-                    $multiple_res = '';
-                    foreach($model->employment_type as $type){
-                        $multiple_res .= ($multiple_res?', ':'').$type->name;
-                    }
-                    return $multiple_res;
-                },
-                'label' => 'Тип занятости'
-            ],
+            'skype',
+            'instagram',
+            'facebook',
+            'vk',
             [
                 'label' => 'Умения',
                 'value' => function ($model) {

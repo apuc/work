@@ -1,7 +1,11 @@
 <?php
 namespace common\models;
 
+use DateTime;
+use Exception;
+use phpDocumentor\Reflection\Types\Integer;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -12,12 +16,16 @@ use yii\db\ActiveRecord;
  * @property string $first_name
  * @property string $second_name
  * @property string $patronymic
+ * @property string $email
+ * @property string $birth_date
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $age
  *
  * @property User $security
  * @property Resume[] $resume
+ * @property Phone[] $phone
  */
 class Employer extends ActiveRecord
 {
@@ -49,14 +57,14 @@ class Employer extends ActiveRecord
     {
         return [
             [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['first_name', 'second_name', 'patronymic'], 'string', 'max' => 255],
-            [['user_id', 'first_name', 'second_name', 'patronymic'], 'required'],
+            [['first_name', 'second_name', 'patronymic', 'email', 'birth_date'], 'string', 'max' => 255],
+            [['user_id', 'first_name', 'second_name'], 'required'],
         ];
     }
 
     public function extraFields()
     {
-        return ['resume', 'user'];
+        return ['resume', 'user', 'phone'];
     }
 
     /**
@@ -70,6 +78,8 @@ class Employer extends ActiveRecord
             'first_name' => 'Имя',
             'second_name' => 'Фамилия',
             'patronymic' => 'Отчество',
+            'email' => 'Email',
+            'birth_date' => 'Дата рождения',
             'status' => 'Статус',
             'created_at' => 'Создан',
             'updated_at' => 'Изменен'
@@ -77,7 +87,7 @@ class Employer extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -85,10 +95,28 @@ class Employer extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getResume()
     {
         return $this->hasMany(Resume::className(), ['employer_id' => 'id']);
     }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getPhone()
+    {
+        return $this->hasMany(Phone::className(), ['employer_id' => 'id']);
+    }
+
+    /**
+     * @return Integer
+     * @throws Exception
+     */
+    public function getAge()
+    {
+        return date_diff(new DateTime($this->birth_date), date_create('now'))->y;
+    }
+
 }

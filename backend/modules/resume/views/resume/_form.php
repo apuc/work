@@ -27,25 +27,28 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'image_url')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'min_salary')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'max_salary')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'salary')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'description')->textarea() ?>
+
+    <?= $form->field($model, 'skype')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'instagram')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'facebook')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'vk')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'category')->widget(Select2::className(),
         [
             'data' => ArrayHelper::map(\common\models\Category::find()->all(), 'id', 'name'),
             'options' => ['placeholder' => 'Начните вводить название категории ...', 'multiple' => true],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ]
-    ); ?>
-    <?= $form->field($model, 'employment_type')->widget(Select2::className(),
-        [
-            'data' => ArrayHelper::map(\common\models\EmploymentType::find()->all(), 'id', 'name'),
-            'options' => ['placeholder' => 'Начните вводить тип занятости ...', 'multiple' => true],
             'pluginOptions' => [
                 'allowClear' => true
             ],

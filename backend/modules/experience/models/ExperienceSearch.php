@@ -17,8 +17,8 @@ class ExperienceSearch extends Experience
     public function rules()
     {
         return [
-            [['id', 'resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'period', 'city', 'post', 'responsibility'], 'safe'],
+            [['id', 'resume_id', 'month_from', 'month_to', 'year_from', 'year_to', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'city', 'post', 'responsibility', 'department'], 'safe'],
         ];
     }
 
@@ -60,6 +60,10 @@ class ExperienceSearch extends Experience
         $query->andFilterWhere([
             'id' => $this->id,
             'resume_id' => $this->resume_id,
+            'month_from' => $this->month_from,
+            'month_to' => $this->month_to,
+            'year_from' => $this->year_from,
+            'year_to' => $this->year_to,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -67,9 +71,9 @@ class ExperienceSearch extends Experience
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'city', $this->city])
-            ->andFilterWhere(['like', 'period', $this->period])
             ->andFilterWhere(['like', 'post', $this->post])
-            ->andFilterWhere(['like', 'responsibility', $this->responsibility]);
+            ->andFilterWhere(['like', 'responsibility', $this->responsibility])
+            ->andFilterWhere(['like', 'department', $this->department]);
 
         return $dataProvider;
     }

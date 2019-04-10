@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property string $name
  *
+ * @property int $vacancy_count
  * @property ResumeCategory[] $resumeCategories
  */
 class Category extends \yii\db\ActiveRecord
@@ -64,5 +65,30 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Resume::className(), ['id' => 'resume_id'])
             ->viaTable('resume_category', ['category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVacancyCategories()
+    {
+        return $this->hasMany(VacancyCategory::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVacancy()
+    {
+        return $this->hasMany(Vacancy::className(), ['id' => 'vacancy_id'])
+            ->viaTable('vacancy_category', ['category_id' => 'id']);
+    }
+
+    /**
+     * @return int|string
+     */
+    public function getVacancy_count()
+    {
+        return $this->getVacancyCategories()->count();
     }
 }

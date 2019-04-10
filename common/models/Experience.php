@@ -56,7 +56,9 @@ class Experience extends ActiveRecord
     public function rules()
     {
         return [
-            [['resume_id', 'month_from', 'month_to', 'year_from', 'year_to', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['month_from', 'month_to'], 'integer', 'max' => 12],
+            [['year_from', 'year_to'], 'integer', 'max' => date('Y')],
             [['name', 'city', 'post', 'month_from', 'department'], 'string', 'max' => 255],
             [['responsibility'], 'string'],
             [['resume_id', 'name'], 'required'],

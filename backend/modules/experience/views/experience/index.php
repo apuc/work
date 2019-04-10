@@ -2,6 +2,7 @@
 
 use common\models\Experience;
 use common\models\Resume;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -35,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 {
                     return Resume::findOne($model->resume_id)->title;
                 },
-                'filter'    => \kartik\select2\Select2::widget(
+                'filter'    => Select2::widget(
                     [
                         'model' => $searchModel,
                         'attribute' => 'resume_id',
@@ -48,9 +49,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'name',
             'city',
-            'period',
             'post',
             'responsibility',
+            'month_from',
+            'year_from',
+            'month_to',
+            'year_to',
+            'department',
             [
                 'attribute' => 'status',
                 'format' => 'raw',

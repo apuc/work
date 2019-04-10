@@ -7,9 +7,9 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Vacancy */
 
-$this->title = $model->title;
+$this->title = $model->post;
 $this->params['breadcrumbs'][] = ['label' => 'Вакансии', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $model->post;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="vacancy-view">
@@ -32,16 +32,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             [
-                'attribute' => 'company.title',
+                'attribute' => 'company.name',
                 'label' => 'Работодатель'
             ],
-            'title',
-            'description:ntext',
+            'post',
+            'responsibilities:ntext',
             [
                 'attribute' => 'employment_type.name',
                 'label' => 'Тип занятости'
             ],
-            'schedule_id',
+            [
+                'attribute' => 'schedule.name',
+                'label' => 'Расписание'
+            ],
+            'min_salary',
+            'max_salary',
+            'qualification_requirements',
+            'work_experience',
+            'education',
+            'working_conditions',
+            'video',
+            'address',
+            'home_number',
             [
                 'label' => 'Умения',
                 'value' => function($model){

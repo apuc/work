@@ -18,19 +18,23 @@ use yii\db\ActiveRecord;
  * @property string $education
  * @property string $working_conditions
  * @property string $video
+ * @property string $city
  * @property string $address
  * @property string $home_number
  * @property integer $employment_type_id
  * @property integer $schedule_id
+ * @property integer $views
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  *
  * @property Company $company
- * @property EmploymentType $employmentType
+ * @property EmploymentType $employment_type
  * @property Schedule $schedule
  * @property VacancySkill[] $vacancy_skill
  * @property Skill[] $skill
+ * @property Category[] $category
+ * @property VacancyCategory[] $vacancy_category
  */
 class Vacancy extends ActiveRecord
 {
@@ -61,7 +65,7 @@ class Vacancy extends ActiveRecord
     {
         return [
             [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['post', 'work_experience', 'education', 'video', 'address', 'home_number'], 'string', 'max' => 255],
+            [['post', 'work_experience', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions'], 'string'],
             [['company_id', 'post'], 'required'],
         ];
@@ -89,6 +93,7 @@ class Vacancy extends ActiveRecord
             'education' => 'Образование',
             'working_conditions' => 'Условия работы',
             'video' => 'Видео о вакансии',
+            'city' => 'Город',
             'address' => 'Адрес офиса',
             'home_number' => 'Номер дома',
             'employment_type_id' => 'Вид занятости',
@@ -138,4 +143,22 @@ class Vacancy extends ActiveRecord
         return $this->hasMany(Skill::className(), ['id' => 'skill_id'])
             ->viaTable('vacancy_skill', ['vacancy_id' => 'id']);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getVacancy_category()
+    {
+        return $this->hasMany(VacancyCategory::className(), ['vacancy_id' => 'id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCategory()
+    {
+        return $this->hasMany(Category::className(), ['id' => 'category_id'])
+            ->viaTable('vacancy_category', ['vacancy_id' => 'id']);
+    }
+
 }

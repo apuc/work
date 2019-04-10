@@ -36,10 +36,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Резюме'
             ],
             'name',
-            'city',
             'faculty',
-            'period',
-            'description',
+            'year_from',
+            'year_to',
+            'academic_degree',
+            'specialization',
             [
                 'attribute' => 'status',
                 'value' => function ($model) {

@@ -51,7 +51,8 @@ class Education extends ActiveRecord
     public function rules()
     {
         return [
-            [['resume_id', 'year_from', 'year_to', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['year_from', 'year_to'], 'integer', 'max' => date('Y')],
             [['name', 'faculty', 'academic_degree', 'specialization'], 'string', 'max' => 255],
             [['resume_id', 'name'], 'required'],
         ];
@@ -75,7 +76,7 @@ class Education extends ActiveRecord
             'year_from' => 'Год начала',
             'year_to' => 'Год окончания',
             'academic_degree' => 'Академическая степень',
-            'specialization' => 'Спецаильность',
+            'specialization' => 'Специальность',
             'status' => 'Статус',
             'created_at' => 'Создан',
             'updated_at' => 'Изменен'

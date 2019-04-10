@@ -17,8 +17,8 @@ class EducationSearch extends Education
     public function rules()
     {
         return [
-            [['id', 'resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'period', 'description', 'city', 'faculty'], 'safe'],
+            [['id', 'resume_id', 'year_from', 'year_to', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'academic_degree', 'specialization', 'faculty'], 'safe'],
         ];
     }
 
@@ -60,16 +60,17 @@ class EducationSearch extends Education
         $query->andFilterWhere([
             'id' => $this->id,
             'resume_id' => $this->resume_id,
+            'year_from' => $this->year_from,
+            'year_to' => $this->year_to,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'city', $this->city])
             ->andFilterWhere(['like', 'faculty', $this->faculty])
-            ->andFilterWhere(['like', 'period', $this->period])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'academic_degree', $this->academic_degree])
+            ->andFilterWhere(['like', 'specialization', $this->specialization]);
 
         return $dataProvider;
     }

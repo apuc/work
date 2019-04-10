@@ -1,6 +1,8 @@
 <?php
 namespace common\models;
 
+use Exception;
+use phpDocumentor\Reflection\Types\Boolean;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -9,6 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property integer $employer_id
+ * @property integer $employment_type_id
  * @property string $title
  * @property string $image_url
  * @property float $min_salary
@@ -19,16 +22,17 @@ use yii\db\ActiveRecord;
  * @property string $instagram
  * @property string $facebook
  * @property string $vk
+ * @property integer $views
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  *
  * @property Employer $employer
+ * @property EmploymentType $employment_type
  * @property Experience[] $experience
  * @property Education[] $education
  * @property ResumeCategory[] $resume_category
  * @property Category[] $category
- * @property EmploymentType $employment_type
  * @property ResumeSkill[] $resume_skill
  * @property Skill[] $skill
  */
@@ -60,7 +64,7 @@ class Resume extends ActiveRecord
     public function rules()
     {
         return [
-            [['employer_id', 'employment_type_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id'], 'integer'],
             [['title', 'city', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['min_salary', 'max_salary'], 'safe'],
@@ -81,8 +85,8 @@ class Resume extends ActiveRecord
         return [
             'id' => 'ID',
             'employer_id' => 'Сотрудник',
-            'title' => 'Заголовок',
             'employment_type_id' => 'Вид занятости',
+            'title' => 'Заголовок',
             'min_salary' => 'Минимальная заработная плата',
             'max_salary' => 'Максимальная заработная плата',
             'city' => 'Город',
@@ -103,6 +107,14 @@ class Resume extends ActiveRecord
     public function getEmployer()
     {
         return $this->hasOne(Employer::className(), ['id' => 'employer_id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEmployment_type()
+    {
+        return $this->hasOne(EmploymentType::className(), ['id' => 'employment_type_id']);
     }
 
     /**
@@ -156,10 +168,13 @@ class Resume extends ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * @return bool
      */
-    public function getEmployment_type()
+    public function hasSocials()
     {
-        return $this->hasOne(EmploymentType::className(), ['id' => 'employment_type_id']);
+        if($this->vk) return true;
+        if($this->instagram) return true;
+        if($this->facebook) return true;
+        return false;
     }
 }
