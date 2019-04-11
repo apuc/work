@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -26,10 +27,15 @@ use yii\db\ActiveRecord;
  * @property Vacancy[] $vacancy
  * @property Phone[] $phone
  */
-class Company extends ActiveRecord
+class Company extends WorkActiveRecord
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
+
+    public function getRelateDeleteList()
+    {
+        return ['vacancy', 'phone'];
+    }
 
     /**
      * @inheritdoc

@@ -49,6 +49,11 @@ class Vacancy extends ActiveRecord
         return 'vacancy';
     }
 
+    public function getRelateDeleteList()
+    {
+        return ['vacancy_skill', 'vacancy_category'];
+    }
+
     /**
      * {@inheritdoc}
      */

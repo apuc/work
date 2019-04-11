@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use Exception;
 use phpDocumentor\Reflection\Types\Boolean;
 use yii\behaviors\TimestampBehavior;
@@ -36,10 +37,15 @@ use yii\db\ActiveRecord;
  * @property ResumeSkill[] $resume_skill
  * @property Skill[] $skill
  */
-class Resume extends ActiveRecord
+class Resume extends WorkActiveRecord
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
+
+    public function getRelateDeleteList()
+    {
+        return ['experience', 'education', 'resume_category', 'resume_skill'];
+    }
 
     /**
      * @inheritdoc

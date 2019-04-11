@@ -40,6 +40,11 @@ class Employer extends ActiveRecord
         return 'employer';
     }
 
+    public function getRelateDeleteList()
+    {
+        return ['resume', 'phone'];
+    }
+
     /**
      * {@inheritdoc}
      */
