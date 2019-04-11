@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use DateTime;
 use Exception;
 use phpDocumentor\Reflection\Types\Integer;
@@ -27,7 +28,7 @@ use yii\db\ActiveRecord;
  * @property Resume[] $resume
  * @property Phone[] $phone
  */
-class Employer extends ActiveRecord
+class Employer extends WorkActiveRecord
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;

@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -36,7 +37,7 @@ use yii\db\ActiveRecord;
  * @property Category[] $category
  * @property VacancyCategory[] $vacancy_category
  */
-class Vacancy extends ActiveRecord
+class Vacancy extends WorkActiveRecord
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
