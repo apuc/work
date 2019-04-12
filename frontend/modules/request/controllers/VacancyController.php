@@ -17,6 +17,7 @@ class VacancyController extends MyActiveController
     {
         $actions = parent::actions();
         unset($actions['create']);
+        unset($actions['update']);
         return $actions;
     }
 
