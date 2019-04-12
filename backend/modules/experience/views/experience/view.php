@@ -37,9 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'name',
             'city',
-            'period',
             'post',
             'responsibility',
+            'month_from',
+            'year_from',
+            'month_to',
+            'year_to',
+            'department',
             [
                 'attribute' => 'status',
                 'value' => function ($model) {

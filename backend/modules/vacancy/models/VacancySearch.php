@@ -17,8 +17,8 @@ class VacancySearch extends Vacancy
     public function rules()
     {
         return [
-            [['id', 'company_id', 'employment_type_id', 'schedule_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'description'], 'safe'],
+            [['id', 'company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['post', 'responsibilities', 'qualification_requirements', 'work_experience', 'education', 'working_conditions', 'video', 'address', 'home_number'], 'safe'],
         ];
     }
 
@@ -60,6 +60,8 @@ class VacancySearch extends Vacancy
         $query->andFilterWhere([
             'id' => $this->id,
             'company_id' => $this->company_id,
+            'min_salary' => $this->min_salary,
+            'max_salary' => $this->max_salary,
             'employment_type_id' => $this->employment_type_id,
             'schedule_id' => $this->schedule_id,
             'status' => $this->status,
@@ -67,8 +69,15 @@ class VacancySearch extends Vacancy
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'post', $this->post])
+            ->andFilterWhere(['like', 'responsibilities', $this->responsibilities])
+            ->andFilterWhere(['like', 'qualification_requirements', $this->qualification_requirements])
+            ->andFilterWhere(['like', 'work_experience', $this->work_experience])
+            ->andFilterWhere(['like', 'education', $this->education])
+            ->andFilterWhere(['like', 'working_conditions', $this->working_conditions])
+            ->andFilterWhere(['like', 'video', $this->video])
+            ->andFilterWhere(['like', 'address', $this->address])
+            ->andFilterWhere(['like', 'home_number', $this->home_number]);
 
         return $dataProvider;
     }

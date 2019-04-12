@@ -7,6 +7,9 @@ $params = array_merge(
 );
 
 return [
+    'aliases' => [
+        '@dektrium/user' => '@vendor/dektrium/yii2-user'
+    ],
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -71,6 +74,8 @@ return [
                 'about' => 'site/about',
                 '/' => 'main_page/default/index',
                 'resume/view/<id>' => 'main_page/resume/view',
+                'vacancy/view/<id>' => 'main_page/vacancy/view',
+                'vacancy/search' => 'main_page/vacancy/search',
                 'personal-area/<action>' => 'personal_area/personal-area/index',
                 ['class' => 'yii\rest\UrlRule', 'controller' =>
                     [

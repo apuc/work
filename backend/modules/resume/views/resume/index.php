@@ -1,7 +1,6 @@
 <?php
 
 use common\models\Employer;
-use common\models\EmploymentType;
 use common\models\Resume;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -48,6 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ])
             ],
             'title',
+            'image_url',
             'min_salary',
             'max_salary',
             'city',

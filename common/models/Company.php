@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -18,18 +19,23 @@ use yii\db\ActiveRecord;
  * @property string $skype
  * @property string $description
  * @property string $contact_person
- * @property string $phone
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  *
  * @property User $security
  * @property Vacancy[] $vacancy
+ * @property Phone[] $phone
  */
-class Company extends ActiveRecord
+class Company extends WorkActiveRecord
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
+
+    public function getRelateDeleteList()
+    {
+        return ['vacancy', 'phone'];
+    }
 
     /**
      * @inheritdoc
@@ -55,7 +61,7 @@ class Company extends ActiveRecord
     {
         return [
             [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person', 'phone'], 'string', 'max' => 255],
+            [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person'], 'string', 'max' => 255],
             [['activity_field', 'description'], 'string'],
             [['user_id', 'name'], 'required'],
         ];
@@ -63,7 +69,7 @@ class Company extends ActiveRecord
 
     public function extraFields()
     {
-        return ['user', 'vacancy'];
+        return ['user', 'vacancy', 'phone'];
     }
 
     /**
@@ -104,5 +110,24 @@ class Company extends ActiveRecord
     public function getVacancy()
     {
         return $this->hasMany(Vacancy::className(), ['company_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhone()
+    {
+        return $this->hasMany(Phone::className(), ['company_id' => 'id']);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSocials()
+    {
+        if($this->vk) return true;
+        if($this->instagram) return true;
+        if($this->facebook) return true;
+        return false;
     }
 }

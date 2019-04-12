@@ -47,10 +47,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     ])
             ],
             'name',
-            'period',
-            'city',
             'faculty',
-            'description',
+            'year_from',
+            'year_to',
+            'academic_degree',
+            'specialization',
             [
                 'attribute' => 'status',
                 'format' => 'raw',

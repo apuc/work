@@ -24,7 +24,6 @@ MainAsset::register($this);
 </head>
 <body>
 <div class="root">
-<?=SecondHeader::widget()?>
 <?php $this->beginBody() ?>
     <?=$content?>
 </div>
