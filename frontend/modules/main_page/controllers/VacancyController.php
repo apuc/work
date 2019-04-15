@@ -32,7 +32,7 @@ class VacancyController extends Controller
             'min_salary' => \Yii::$app->request->get('min_salary'),
             'max_salary' => \Yii::$app->request->get('max_salary'),
             'days' => \Yii::$app->request->get('days'),
-            'page' => \Yii::$app->request->get('page')
+            'page' => \Yii::$app->request->get('page'),
         ];
         $categories = Category::find()->all();
         $employment_types = EmploymentType::find()->all();

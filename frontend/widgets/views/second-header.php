@@ -33,18 +33,19 @@
                     </div>
                 </div>
                 <div class="home__main-content">
-                    <form class="home__form"><input class="home__form-input" placeholder="Я ищу..." type="text"/>
+                    <?= Html::beginForm(['/main_page/default/search'], 'post', ['class' => 'home__form']) ?>
+                        <input name="search_text" class="home__form-input" placeholder="Я ищу..." type="text"/>
                         <div class="home__form-select">
-                            <select class="home__form-select-js">
-                                <option></option>
-                                <option>Пункт 1</option>
-                                <option>Пункт 2</option>
-                                <option>Пункт 3</option>
+                            <select name="search_type" class="home__form-select-js">
+                                <option value="vacancy">Работу</option>
+                                <option value="resume">Сотрудников</option>
                             </select>
                         </div>
-                        <button class="home__search btn-red" type="submit"><i class="fa fa-search"></i>
-                        </button>
-                    </form>
+                    <?= Html::submitButton(
+                        '<i class="fa fa-search"></i>',
+                        ['class' => 'home__search btn-red']
+                    ) ?>
+                    <?= Html::endForm() ?>
                     <a class="btn btn-red mr20" href="#">разместить резюме</a><a class="btn btn-red"
                                                                                  href="/vacancy/search">Найти
                         вакансии</a>

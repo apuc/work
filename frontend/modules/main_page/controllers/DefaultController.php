@@ -19,9 +19,15 @@ class DefaultController extends Controller
         $categories = Category::find()->all();
         $vacancies = Vacancy::find()->limit(10)->orderBy('id DESC')->all();
         return $this->render('index', [
-            'model' => $model,
             'categories' => $categories,
             'vacancies' => $vacancies
         ]);
+    }
+
+    public function actionSearch()
+    {
+        if(\Yii::$app->request->post('search_type') === 'vacancy'){
+            return $this->redirect('/vacancy/search');
+        }
     }
 }
