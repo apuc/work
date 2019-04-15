@@ -20,16 +20,24 @@ export default {
     return {
       linkMenu: [
         {
-          title: 'Вакансия',
-          url: '/vacancy'
+          title: 'Главная',
+          url: '/'
         },
         {
-          title: 'Резюме',
-          url: '/resume'
+          title: 'Добавить вакансию',
+          url: '/add-vacancy'
         },
         {
-          title: 'Компания',
-          url: '/company'
+          title: 'Добавить резюме',
+          url: '/add-resume'
+        },
+        {
+          title: 'Добавить компания',
+          url: '/add-company'
+        },
+        {
+          title: 'Все резюме',
+          url: '/all-resume'
         },
       ],
     }

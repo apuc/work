@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FormTemplate :paramsFile="getFormData()" v-model="formData">
+    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
 
       <image-uploader
         class="input-file"
@@ -26,7 +26,7 @@
   import FormCompany from '../lk-form/company-form';
   import FormTemplate from "./FormTemplate";
   export default {
-    name: "FormVacancy",
+    name: "FormCompany",
     components: {FormTemplate},
     data() {
       return {
@@ -43,6 +43,35 @@
       }
     },
     methods: {
+      saveData() {
+        let data = {
+          user_id: '2',
+          image_url: '',
+          name: this.formData.nameCompany,
+          website: this.formData.site,
+          max_salary: this.formData.scopeOfTheCompany,
+          vk: this.formData.addSocial.vkontakte,
+          facebook: this.formData.addSocial.facebook,
+          instagram: this.formData.addSocial.instagram,
+          skype: this.formData.addSocial.skype,
+          description: this.formData.aboutCompany,
+          contact_person: this.formData.contactPerson,
+          phone: this.formData.companyPhone,
+        };
+        let image = document.querySelector('.fileinput');
+        if(image.classList.contains('fileinput--loaded')) {
+          data.image_url = this.image.name;
+        }
+        this.$http.post(`${process.env.VUE_APP_API_URL}/request/company`, data)
+          .then(response => {
+              console.log(response);
+              console.log('Форма успешно отправлена');
+            }, response => {
+              console.log(response);
+              console.log('Форма не отправлена');
+            }
+          )
+      },
       getFormData() {
         return FormCompany;
       },

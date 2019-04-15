@@ -23,51 +23,18 @@
 <script>
   import FormResume from '../lk-form/resume-form';
   import FormTemplate from "./FormTemplate";
+  import Resume from "../mixins/resume";
   export default {
-    data() {
-      return {
-        hasImage: false,
-        image: null,
-        formData: {
-          workBlock: [
-            {
-              name: '',
-              post: '',
-              department: '',
-              month_from: '',
-              year_from: '',
-              month_to: '',
-              year_to: '',
-            }
-          ],
-          educationBlock: [
-            {
-              name: '',
-              year_from: '',
-              year_to: '',
-              academic_degree: '',
-              faculty: '',
-              specialisation: '',
-            }
-          ],
-          addSocial: {
-            vkontakte: '',
-            facebook: '',
-            instagram: '',
-            skype: '',
-          },
-        },
-      };
-    },
-    name: "FormVacancy",
+    name: 'FormResume',
+    mixins: [Resume],
     components: {FormTemplate},
     methods: {
       saveData() {
         let data = {
           image_url: '',
           title: this.formData.careerObjective,
-          min_salary: this.formData.salaryFrom,
-          max_salary: this.formData.salaryBefore,
+          min_salary: this.formData.salaryFrom.replace(",","."),
+          max_salary: this.formData.salaryBefore.replace(",","."),
           description: this.formData.aboutMe,
           vk: this.formData.addSocial.vkontakte,
           facebook: this.formData.addSocial.facebook,
@@ -104,7 +71,11 @@
       setImage: function(output) {
         this.hasImage = true;
         this.image = output;
-      }
+      },
+      // setValue(data) {
+      //   console.log('setValue --->', data)
+      //   this.formData.careerObjective = data.title;
+      // }
     },
   }
 </script>

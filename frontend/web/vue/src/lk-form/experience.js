@@ -14,12 +14,6 @@ export default {
     component: VTextField,
     rules: [v => !!v || 'Должность обязателена к заполнению'],
   }),
-  department: Object.assign({}, Field, {
-    name: 'department',
-    label: 'Отдел',
-    component: VTextField,
-    rules: [],
-  }),
   month_from: Object.assign({}, Field, {
     name: 'month_from',
     label: 'Месяц начала*',
@@ -28,51 +22,51 @@ export default {
     items: [
       {
         name: 'Январь',
-        id: '1'
+        id: 1
       },
       {
         name: 'Февраль',
-        id: '2'
+        id: 2
       },
       {
         name: 'Март',
-        id: '3'
+        id: 3
       },
       {
         name: 'Апрель',
-        id: '4'
+        id: 4
       },
       {
         name: 'Май',
-        id: '5'
+        id: 5
       },
       {
         name: 'Июнь',
-        id: '6'
+        id: 6
       },
       {
         name: 'Июль',
-        id: '7'
+        id: 7
       },
       {
         name: 'Август',
-        id: '8'
+        id: 8
       },
       {
         name: 'Сентябрь',
-        id: '9'
+        id: 9
       },
       {
         name: 'Октябрь',
-        id: '10'
+        id: 10
       },
       {
         name: 'Ноябрь',
-        id: '11'
+        id: 11
       },
       {
         name: 'Декабрь',
-        id: '12'
+        id: 12
       },
     ],
   }),
@@ -94,51 +88,51 @@ export default {
     items: [
       {
         name: 'Январь',
-        id: '1'
+        id: 1
       },
       {
         name: 'Февраль',
-        id: '2'
+        id: 2
       },
       {
         name: 'Март',
-        id: '3'
+        id: 3
       },
       {
         name: 'Апрель',
-        id: '4'
+        id: 4
       },
       {
         name: 'Май',
-        id: '5'
+        id: 5
       },
       {
         name: 'Июнь',
-        id: '6'
+        id: 6
       },
       {
         name: 'Июль',
-        id: '7'
+        id: 7
       },
       {
         name: 'Август',
-        id: '8'
+        id: 8
       },
       {
         name: 'Сентябрь',
-        id: '9'
+        id: 9
       },
       {
         name: 'Октябрь',
-        id: '10'
+        id: 10
       },
       {
         name: 'Ноябрь',
-        id: '11'
+        id: 11
       },
       {
         name: 'Декабрь',
-        id: '12'
+        id: 12
       },
     ],
   }),

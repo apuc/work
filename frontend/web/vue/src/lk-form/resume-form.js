@@ -20,14 +20,14 @@ export default {
   salaryFrom: Object.assign({}, Field, {
     name: 'salaryFrom',
     label: 'Зарплата в месяц от',
-    rules: [v => /^\d+$/.test(v) || 'Только цыфры'],
+    rules: [v => /^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры'],
     component: VTextField,
     prefix: "₽",
   }),
   salaryBefore: Object.assign({}, Field, {
     name: 'salaryBefore',
     label: 'Зарплата в месяц до',
-    rules: [v => /^\d+$/.test(v) || 'Только цыфры'],
+    rules: [v => /^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры'],
     component: VTextField,
     prefix: "₽",
   }),
