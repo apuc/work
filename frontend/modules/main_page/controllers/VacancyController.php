@@ -32,6 +32,7 @@ class VacancyController extends Controller
             'min_salary' => \Yii::$app->request->get('min_salary'),
             'max_salary' => \Yii::$app->request->get('max_salary'),
             'days' => \Yii::$app->request->get('days'),
+            'text' => \Yii::$app->request->get('text'),
             'page' => \Yii::$app->request->get('page'),
         ];
         $categories = Category::find()->all();
@@ -56,6 +57,9 @@ class VacancyController extends Controller
         if($params['days']){
             $vacancies_query->andWhere(['>=', 'created_at', time()-86400*$params['days']]);
         }
+        if($params['text']){
+            $vacancies_query->andWhere(['like', 'post', $params['text']]);
+        }
 
         $vacancies_query->limit($per_page);
         if($params['page'])
@@ -68,6 +72,7 @@ class VacancyController extends Controller
             'category_ids' => $params['category_ids'],
             'employment_type_ids' => $params['employment_type_ids'],
             'experience_ids' => $params['experience_ids'],
+            'search_text' => $params['text'],
             'vacancies' => $vacancies,
             'categories' => $categories,
             'employment_types' => $employment_types,

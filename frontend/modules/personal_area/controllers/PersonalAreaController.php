@@ -7,7 +7,9 @@ class PersonalAreaController extends \yii\web\Controller
     public $layout = '@frontend/views/layouts/personal-area.php';
     public function actionIndex()
     {
-        return $this->renderFile('@frontend/web/vue/dist/index.html');
+        if(!\Yii::$app->user->isGuest)
+            return $this->renderFile('@frontend/web/vue/dist/index.html');
+        return $this->redirect('/');
     }
     public function actionCharts()
     {

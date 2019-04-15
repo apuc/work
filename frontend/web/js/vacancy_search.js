@@ -20,13 +20,13 @@ $(document).ready(function(){
         var max_salary = $("input[name='max_salary']");
 
         var days = $("#days-select");
-
         window.location.href="/vacancy/search?" +
             "experience_ids=" + JSON.stringify(experienceIds) +
             "&category_ids=" + JSON.stringify(categoryIds) +
             "&employment_type_ids="+JSON.stringify(employment_typeIds) +
             "&min_salary="+min_salary.val() +
             "&max_salary="+max_salary.val() +
-            "&days="+days.val();
+            "&days="+days.val() +
+            "&text="+search_text;
     });
 });

@@ -29,11 +29,11 @@ use yii\widgets\ActiveForm;
                     <div class="single-card__tr">
                     </div>
                     <div>
-                        <a class="btn-card btn-card-small btn-gray" href="#">
-                            <?php foreach ($vacancy->category as $category): ?>
-                                <?= $category->name ?>
-                            <?php endforeach; ?>
+                        <?php foreach ($vacancy->category as $category): ?>
+                        <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>">
+                            <?= $category->name ?>
                         </a>
+                        <?php endforeach; ?>
                     </div>
                     <h3 class="single-card__title mt5 mb0"><?= $vacancy->post ?></h3>
                     <div class="single-card__info-second">

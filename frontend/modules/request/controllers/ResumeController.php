@@ -10,6 +10,7 @@ use common\models\ResumeSkill;
 use common\models\Skill;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\rest\IndexAction;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
@@ -97,6 +98,8 @@ class ResumeController extends MyActiveController
         $employer = Employer::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
         if(!$employer)
             throw new HttpException(400, 'Вы не являетесь соискателем');
+        if($employer != $model->employer_id)
+            throw new HttpException(400, 'У вас нет прав для редактирования этого резюме');
         $model->load($params, '');
         $model->employer_id = $employer->id;
         if($model->save()){

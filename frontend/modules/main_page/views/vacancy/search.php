@@ -8,6 +8,7 @@
 /* @var $employment_type_ids array */
 /* @var $min_salary int */
 /* @var $max_salary int */
+/* @var $search_text string */
 /* @var $days int */
 
 /* @var $employment_types EmploymentType[] */
@@ -20,6 +21,9 @@ use yii\web\View;
 $this->title = 'Поиск вакансий';
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [\frontend\assets\MainAsset::className()]]);
 ?>
+<script>
+    var search_text = '<?=$search_text?>';
+</script>
 <section class="all-vacancies"><img class="all-vacancies__dots2" src="/images/bg-dots.png" alt=""
                                     role="presentation"/>
     <div class="all-vacancies__circle">

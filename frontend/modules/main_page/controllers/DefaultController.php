@@ -2,9 +2,9 @@
 
 namespace frontend\modules\main_page\controllers;
 
+use common\classes\Debug;
 use common\models\Category;
 use common\models\Vacancy;
-use dektrium\user\models\LoginForm;
 use yii\web\Controller;
 
 /**
@@ -26,8 +26,9 @@ class DefaultController extends Controller
 
     public function actionSearch()
     {
+        //Debug::dd(\Yii::$app->request->post());
         if(\Yii::$app->request->post('search_type') === 'vacancy'){
-            return $this->redirect('/vacancy/search');
+            return $this->redirect('/vacancy/search?text='.\Yii::$app->request->post('search_text'));
         }
     }
 }

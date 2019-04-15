@@ -59,7 +59,7 @@ class Experience extends ActiveRecord
             [['resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['month_from', 'month_to'], 'integer', 'max' => 12],
             [['year_from', 'year_to'], 'integer', 'max' => date('Y')],
-            [['name', 'city', 'post', 'month_from', 'department'], 'string', 'max' => 255],
+            [['name', 'city', 'post', 'department'], 'string', 'max' => 255],
             [['responsibility'], 'string'],
             [['resume_id', 'name'], 'required'],
         ];
