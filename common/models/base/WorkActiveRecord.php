@@ -17,7 +17,6 @@ class WorkActiveRecord extends \yii\db\ActiveRecord
             foreach($list as $relation){
                 if($this->$relation){
                     foreach($this->$relation as $item){
-                        //Debug::dd($item);
                         $item->delete();
                     }
                 }

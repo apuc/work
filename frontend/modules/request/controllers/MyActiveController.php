@@ -9,10 +9,48 @@
 namespace frontend\modules\request\controllers;
 
 
+use common\models\Employer;
+use common\models\Resume;
+use Yii;
+use yii\base\InvalidConfigException;
+use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
+use yii\web\HttpException;
 
 class MyActiveController extends ActiveController
 {
+    /**
+     * Метод, описывающий логику запроса, для получения сущностей, принадлежащих текущему пользователю
+     */
+    public function myQuery(){
+        return $this->modelClass::find();
+    }
+
+    /**
+     * Запрос, показывающий сущности, принадлежащие пользователю
+     * @return object
+     * @throws HttpException
+     * @throws InvalidConfigException
+     */
+    public function actionMyIndex(){
+        if(Yii::$app->user->isGuest)
+            throw new HttpException(201, 'Пользователь не авторизирован');
+        $requestParams = Yii::$app->getRequest()->getBodyParams();
+        if (empty($requestParams)) {
+            $requestParams = Yii::$app->getRequest()->getQueryParams();
+        }
+        return Yii::createObject([
+            'class' => ActiveDataProvider::className(),
+            'query' => $this->myQuery(),
+            'pagination' => [
+                'params' => $requestParams,
+            ],
+            'sort' => [
+                'params' => $requestParams,
+            ],
+        ]);
+    }
+
     public function behaviors() {
         $behaviors = parent::behaviors();
         $behaviors['corsFilter'] =  [

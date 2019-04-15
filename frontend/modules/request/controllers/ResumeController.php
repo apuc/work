@@ -10,6 +10,7 @@ use common\models\ResumeSkill;
 use common\models\Skill;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\data\ActiveDataProvider;
 use yii\rest\IndexAction;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
@@ -24,6 +25,17 @@ class ResumeController extends MyActiveController
         unset($actions['create']);
         unset($actions['update']);
         return $actions;
+    }
+
+    /**
+     * @return void|\yii\db\ActiveQuery
+     * @throws HttpException
+     */
+    public function myQuery(){
+        $employer = Employer::find()->where(['user_id' => Yii::$app->user->getId()])->one();
+        if(!$employer)
+            throw new HttpException(201, 'Ошибка');
+        return Resume::find()->where(['employer_id' => $employer->id]);
     }
 
     /**

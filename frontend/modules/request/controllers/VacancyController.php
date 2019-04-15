@@ -22,6 +22,13 @@ class VacancyController extends MyActiveController
     }
 
     /**
+     * @return void|\yii\db\ActiveQuery
+     */
+    public function myQuery(){
+        return Vacancy::find()->where(['user_id' => Yii::$app->user->id]);
+    }
+
+    /**
      * @throws InvalidConfigException
      * @throws HttpException
      */
@@ -34,6 +41,7 @@ class VacancyController extends MyActiveController
         if(!$company)
             throw new HttpException(400, 'Вы не являетесь работодателем');
         $model->load($params, '');
+        $model->work_experience = Vacancy::getExperienceId($params['work_experience']);
         $model->company_id = $company->id;
         if($model->save()){
             $response = Yii::$app->getResponse();
@@ -61,6 +69,7 @@ class VacancyController extends MyActiveController
         if(!$company)
             throw new HttpException(400, 'Вы не являетесь работодателем');
         $model->load($params, '');
+        $model->work_experience = Vacancy::getExperienceId($params['work_experience']);
         $model->company_id = $company->id;
         if($model->save()){
             $response = Yii::$app->getResponse();

@@ -72,28 +72,39 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                             <div class="vl-block__check jsCheckBlock">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="experience" data-id="1"/>
+                                    <input type="checkbox"
+                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
+                                            <?=in_array(0, $experience_ids)?'checked':''?>
+                                        <?php endif ?>
+                                           name="experience" data-id="0"/>
+                                    <div class="checkbox__text">Не имеет значения
+                                    </div>
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox"
+                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
+                                            <?=in_array(1, $experience_ids)?'checked':''?>
+                                        <?php endif ?>
+                                           name="experience" data-id="1"/>
                                     <div class="checkbox__text">Менее года
                                     </div>
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="experience" data-id="2"/>
-                                    <div class="checkbox__text">1-2 года
+                                    <input type="checkbox"
+                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
+                                            <?=in_array(2, $experience_ids)?'checked':''?>
+                                        <?php endif ?>
+                                           name="experience" data-id="2"/>
+                                    <div class="checkbox__text">1 год
                                     </div>
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="experience" data-id="3"/>
-                                    <div class="checkbox__text">2-3 года
-                                    </div>
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="experience" data-id="4"/>
-                                    <div class="checkbox__text">3-4 года
-                                    </div>
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="experience" data-id="5"/>
-                                    <div class="checkbox__text">Более 4 лет
+                                    <input type="checkbox"
+                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
+                                            <?=in_array(3, $experience_ids)?'checked':''?>
+                                        <?php endif ?>
+                                           name="experience" data-id="3"/>
+                                    <div class="checkbox__text">2 года
                                     </div>
                                 </label>
                             </div>

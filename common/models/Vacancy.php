@@ -42,6 +42,10 @@ class Vacancy extends WorkActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
+    public static $experineces = [
+      'Не имеет значения', 'Менее года', '1 год', '2 года'
+    ];
+
     /**
      * @inheritdoc
      */
@@ -70,8 +74,8 @@ class Vacancy extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['post', 'work_experience', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
+            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'work_experience', 'created_at', 'updated_at'], 'integer'],
+            [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions'], 'string'],
             [['company_id', 'post'], 'required'],
         ];
@@ -117,6 +121,7 @@ class Vacancy extends WorkActiveRecord
     {
         return $this->hasOne(Company::className(), ['id' => 'company_id']);
     }
+
     /**
      * @inheritdoc
      */
@@ -165,6 +170,15 @@ class Vacancy extends WorkActiveRecord
     {
         return $this->hasMany(Category::className(), ['id' => 'category_id'])
             ->viaTable('vacancy_category', ['vacancy_id' => 'id']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public static function getExperienceId($experience)
+    {
+        return array_search($experience, self::$experineces);
     }
 
 }

@@ -39,6 +39,9 @@ class VacancyController extends Controller
         $employment_types = EmploymentType::find()->all();
 
         $vacancies_query = Vacancy::find();
+        if($params['experience_ids']) {
+            $vacancies_query->andWhere(['work_experience' => $params['experience_ids']]);
+        }
         if($params['category_ids']) {
             $vacancies_query->joinWith(['category']);
             $vacancies_query->andWhere(['category.id' => $params['category_ids']]);
