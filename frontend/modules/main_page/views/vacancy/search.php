@@ -171,7 +171,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                             <div>
                                 <?php foreach ($vacancy->category as $category): ?>
-                                    <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
+                                    <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id]), 'days' => 30])?>"><?= $category->name ?></a>
                                 <?php endforeach ?>
                             </div>
                             <h3 class="single-card__title mt5 mb0"><?= $vacancy->post ?></h3>

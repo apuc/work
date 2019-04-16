@@ -12,6 +12,7 @@ return [
     ],
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
+    'language' => 'ru-RU',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
@@ -98,6 +99,14 @@ return [
         'formatter' => [
 
             'locale' => 'ru-RU'
+        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/languages',
+                ],
+            ],
         ],
     ],
     'params' => $params,

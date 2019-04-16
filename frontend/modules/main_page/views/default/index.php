@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
                     </div>
                     <div>
                         <?php foreach ($vacancy->category as $category): ?>
-                        <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>">
+                        <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id]), 'days' => 30])?>">
                             <?= $category->name ?>
                         </a>
                         <?php endforeach; ?>
