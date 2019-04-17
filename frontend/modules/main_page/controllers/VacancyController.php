@@ -7,6 +7,7 @@ use common\models\Category;
 use common\models\EmploymentType;
 use common\models\Resume;
 use common\models\Vacancy;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 
 class VacancyController extends Controller
@@ -67,7 +68,13 @@ class VacancyController extends Controller
         $vacancies_query->limit($per_page);
         if($params['page'])
             $vacancies_query->offset(($params['page']-1)*$per_page);
-        $vacancies = $vacancies_query->all();
+        $vacancies = new ActiveDataProvider([
+            'query' => $vacancies_query,
+            'pagination' => [
+                'pageSize' => 2
+            ]
+        ]);
+        //$vacancies_query->all();
         return $this->render('search', [
             'days' => $params['days'],
             'min_salary' => $params['min_salary'],

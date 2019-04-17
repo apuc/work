@@ -2,7 +2,7 @@
 
 /* @var $this View */
 /* @var $categories Category[] */
-/* @var $vacancies Vacancy[] */
+/* @var $vacancies \yii\data\ActiveDataProvider */
 /* @var $category_ids array */
 /* @var $experience_ids array */
 /* @var $employment_type_ids array */
@@ -16,10 +16,14 @@
 use common\models\Category;
 use common\models\EmploymentType;
 use common\models\Vacancy;
+use frontend\assets\MainAsset;
+use yii\helpers\StringHelper;
+use yii\helpers\Url;
 use yii\web\View;
+use yii\widgets\LinkPager;
 
 $this->title = 'Поиск вакансий';
-$this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [\frontend\assets\MainAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
 ?>
 <script>
     var search_text = '<?=$search_text?>';
@@ -165,13 +169,14 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         <p>Нет результатов поиска</p>
                     </div>
                     <?php endif ?>
-                    <?php foreach ($vacancies as $vacancy): ?>
+                    <?php /** @var Vacancy $vacancy */
+                    foreach ($vacancies->models as $vacancy): ?>
                         <div class="single-card">
                             <div class="single-card__tr">
                             </div>
                             <div>
                                 <?php foreach ($vacancy->category as $category): ?>
-                                    <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id]), 'days' => 30])?>"><?= $category->name ?></a>
+                                    <a class="btn-card btn-card-small btn-gray" href="<?=Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id]), 'days' => 30])?>"><?= $category->name ?></a>
                                 <?php endforeach ?>
                             </div>
                             <h3 class="single-card__title mt5 mb0"><?= $vacancy->post ?></h3>
@@ -192,7 +197,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                             <span class="single-card__price"><?= $vacancy->min_salary ?>-<?= $vacancy->max_salary ?> RUB</span>
                             <div class="single-card__info">
-                                <p><?= \yii\helpers\StringHelper::truncate($vacancy->responsibilities, 80, '...') ?></p>
+                                <p><?= StringHelper::truncate($vacancy->responsibilities, 80, '...') ?></p>
                             </div>
                             <div class="d-flex flex-wrap align-items-center mt-auto justify-content-between">
                                 <?php if($vacancy->company->hasSocials()): ?>
@@ -214,6 +219,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                         </div>
                     <?php endforeach ?>
+                    <?= LinkPager::widget([
+                    'pagination' => $vacancies->pagination,
+                    ]);?>
                 </div>
                 <div class="soc-sidebar" id="sidebar-vr">
                     <div class="sidebar-inner">

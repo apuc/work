@@ -52,7 +52,7 @@
         let dutiesVal = document.querySelectorAll('.duties input');
         for (let i = 0; i < dutiesVal.length; i++) {
           if (dutiesVal[i].value !== '') {
-            data.skills.push({name: dutiesVal[i].value})
+            data.skill.push({name: dutiesVal[i].value})
           }
         }
         this.$http.post(`${process.env.VUE_APP_API_URL}/request/resume`, data)

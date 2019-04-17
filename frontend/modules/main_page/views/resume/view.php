@@ -21,8 +21,7 @@ use common\models\Experience; ?>
                     </li>
                     <li><a href="#"><?= $model->city ?></a>
                     </li>
-                    <li><a href="#"><?= $model->title ?></a>
-                    </li>
+                    <li><?= $model->title ?></li>
                 </ul>
                 <div class="resume-results__date">
                     <p>Резюме от
@@ -32,15 +31,15 @@ use common\models\Experience; ?>
             <div class="resume-top"><img class="resume-top__left" src="/images/resume_image_1.png" alt=""
                                          role="presentation"/>
                 <div class="resume-top__right">
-                    <div class="resume-top__header">
-                        <button class="resume-top__download"><img src="/images/resume_download.png" alt=""
-                                                                  role="presentation"/><span>Скачать<br> резюме</span>
-                        </button>
-                        <button class="resume-top__save">Сохранить в отклики
-                        </button>
-                        <p class="resume-top__status vr-head">Онлайн
-                        </p>
-                    </div>
+<!--                    <div class="resume-top__header">-->
+<!--                        <button class="resume-top__download"><img src="/images/resume_download.png" alt=""-->
+<!--                                                                  role="presentation"/><span>Скачать<br> резюме</span>-->
+<!--                        </button>-->
+<!--                        <button class="resume-top__save">Сохранить в отклики-->
+<!--                        </button>-->
+<!--                        <p class="resume-top__status vr-head">Онлайн-->
+<!--                        </p>-->
+<!--                    </div>-->
                     <h3 class="resume-top__head"><?= $model->title ?>
                     </h3><span class="resume-top__price"><?= $model->min_salary ?>-<?= $model->max_salary ?> RUB</span>
                     <table class="resume-top__text">

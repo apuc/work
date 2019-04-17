@@ -51,10 +51,10 @@ use yii\widgets\ActiveForm;
                         <p><?= $vacancy->responsibilities ?></p>
                     </div>
                     <div class="d-flex flex-wrap align-items-center justify-content-end mt-auto">
-                        <a class="single-card__like mt5 mb5" href="#">
-                            <i class="fa fa-heart-o"></i>
-                            <span>В избранное</span>
-                        </a>
+<!--                        <a class="single-card__like mt5 mb5" href="#">-->
+<!--                            <i class="fa fa-heart-o"></i>-->
+<!--                            <span>В избранное</span>-->
+<!--                        </a>-->
                         <a class="btn-card btn-red mt5 mb5 ml15">Посмотреть полностью</a>
                     </div>
                 </div>
