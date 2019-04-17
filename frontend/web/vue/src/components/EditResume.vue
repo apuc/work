@@ -44,7 +44,32 @@
             this.formData.addSocial.skype = response.data.skype;
             this.formData.educationBlock = response.data.education;
             this.formData.workBlock = response.data.experience;
-            this.formData.skills = response.data.skill;
+            this.formData.skill = response.data.skill;
+						if(response.data.experience.length > 1) {
+              document.querySelector('.btnWork').click();
+              if(response.data.experience.length > 2) {
+                document.querySelector('.btnWork').click();
+                if(response.data.experience.length > 3) {
+                  document.querySelector('.btnWork').click();
+                  if(response.data.experience.length > 4) {
+                    document.querySelector('.btnWork').click();
+                  }
+                }
+              }
+						}
+          if(response.data.education.length > 1) {
+            document.querySelector('.btnEducation').click();
+            if(response.data.education.length > 2) {
+              document.querySelector('.btnEducation').click();
+              if(response.data.education.length > 3) {
+                document.querySelector('.btnEducation').click();
+                if(response.data.education.length > 4) {
+                  document.querySelector('.btnEducation').click();
+                }
+              }
+            }
+          }
+            console.log(response.data.experience.length);
             console.log('Форма успешно получена');
           }, response => {
             console.log(response);

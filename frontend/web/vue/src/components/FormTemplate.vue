@@ -49,7 +49,6 @@
       value: {
         type: Object,
       },
-
     },
     methods: {
       formTemplate() {

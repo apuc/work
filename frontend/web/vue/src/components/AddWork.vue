@@ -73,12 +73,6 @@
             component: VTextField,
             rules: [v => !!v || 'Должность обязателена к заполнению'],
           }),
-          department: Object.assign({}, Field, {
-            name: 'department',
-            label: 'Отдел',
-            component: VTextField,
-            rules: [],
-          }),
           month_from: Object.assign({}, Field, {
             name: 'month_from',
             label: 'Месяц начала*',

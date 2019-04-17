@@ -2,6 +2,25 @@ import Field from '../models/Field';
 import {VTextarea, VTextField, VSelect} from 'vuetify/lib'
 
 export default {
+  city: Object.assign({}, Field, {
+    name: 'city',
+    label: 'Город*',
+    rules: [
+      v => !!v || 'Город обязателен к заполнению'],
+    component: VTextField,
+  }),
+  companyName: Object.assign({}, Field, {
+    name: 'companyName',
+    label: 'Компания*',
+    rules: [v => !!v || 'Компания обязателен к заполнению'],
+    component: VSelect,
+    items: [
+      {
+        name: '',
+        id: ''
+      }
+    ],
+  }),
   post: Object.assign({}, Field, {
     name: 'post',
     label: 'Должность*',
@@ -31,23 +50,6 @@ export default {
       }
     ],
   }),
-  // schedule: Object.assign({}, Field, {
-  //   name: 'Schedule',
-  //   label: 'График работы*',
-  //   rules: [v => !!v || 'График работы обязателен к заполнению'],
-  //   component: VSelect,
-  //   items: [
-  //     {
-  //       name: 'Полный рабочий день'
-  //     },
-  //     {
-  //       name: 'Удаленная работа'
-  //     },
-  //     {
-  //       name: 'Студент'
-  //     }
-  //   ],
-  // }),
   salaryFrom: Object.assign({}, Field, {
     name: 'salaryFrom',
     label: 'Зарплата в месяц от',

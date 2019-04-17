@@ -58,7 +58,7 @@
     name: "AllResume",
 		data() {
       return {
-        editLink: '/edit-resume',
+        editLink: '/personal-area/edit-resume',
         getAllResume: [],
 				paginationPageCount: 1,
 				paginationCurrentPage: 1,
@@ -122,9 +122,6 @@
 </script>
 
 <style scoped>
-	.all-resume {
-		margin-top: 30px;
-	}
 	.all-resume .theme--light.v-list {
 		background-color: transparent;
 	}

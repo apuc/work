@@ -31,7 +31,7 @@
     methods: {
       saveData() {
         let data = {
-          image_url: '',
+          image: this.image,
           title: this.formData.careerObjective,
           min_salary: this.formData.salaryFrom.replace(",","."),
           max_salary: this.formData.salaryBefore.replace(",","."),
@@ -42,12 +42,12 @@
           skype: this.formData.addSocial.skype,
           education: this.formData.educationBlock,
           work: this.formData.workBlock,
-          skills: [],
+          skill: [],
         };
-        let image = document.querySelector('.fileinput');
-        if(image.classList.contains('fileinput--loaded')) {
-          data.image_url = this.image.name;
-        }
+        // let image = document.querySelector('.fileinput');
+        // if(image.classList.contains('fileinput--loaded')) {
+        //   data.image_url = this.image.name;
+        // }
 
         let dutiesVal = document.querySelectorAll('.duties input');
         for (let i = 0; i < dutiesVal.length; i++) {
@@ -85,7 +85,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-top: 20px;
   }
   #fileInput {
     display: none;

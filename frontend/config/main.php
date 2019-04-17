@@ -77,6 +77,7 @@ return [
                 'vacancy/view/<id>' => 'main_page/vacancy/view',
                 'vacancy/search' => 'main_page/vacancy/search',
                 'personal-area/<action>' => 'personal_area/personal-area/index',
+                'personal-area/<action>/<id>' => 'personal_area/personal-area/index',
                 'personal-area' => 'personal_area/personal-area/index',
                 ['class' => 'yii\rest\UrlRule', 'controller' =>
                     [

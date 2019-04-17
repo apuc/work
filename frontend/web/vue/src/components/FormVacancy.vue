@@ -24,7 +24,12 @@
           this.$set(FormVacancy.typeOfEmployment.items, i, response.data[i]);
         }
       });
-      // this.getItems();
+      this.getCompanyName().then(response => {
+        FormVacancy.companyName.items = response.data;
+        for (let i = 0; i < response.data.length; i++) {
+          this.$set(FormVacancy.companyName.items, i, response.data[i]);
+        }
+      });
     },
     methods: {
       // ...mapActions(['getItems']),
@@ -33,7 +38,6 @@
           post: this.formData.post,
           responsibilities: this.formData.duties,
           employment_type_id: this.formData.typeOfEmployment,
-          // schedule_id: this.formData.schedule,
           min_salary: this.formData.salaryFrom,
           max_salary: this.formData.salaryBefore,
           qualification_requirements: this.formData.qualificationRequirements,
@@ -59,6 +63,9 @@
       },
       async getEmploymentType() {
         return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employment-type`)
+      },
+      async getCompanyName() {
+        return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index`)
       }
     },
   }

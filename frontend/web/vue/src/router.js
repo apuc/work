@@ -12,27 +12,27 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/add-vacancy',
+      path: '/personal-area/add-vacancy',
       name: 'add-vacancy',
       component: FormVacancy
     },
     {
-      path: '/add-resume',
+      path: '/personal-area/add-resume',
       name: 'add-resume',
       component: FormResume
     },
     {
-      path: '/add-company',
+      path: '/personal-area/add-company',
       name: 'add-company',
       component: FormCompany
     },
     {
-      path: '/all-resume',
+      path: '/personal-area/all-resume',
       name: 'all-resume',
       component: AllResume,
     },
     {
-      path: '/edit-resume/:id',
+      path: '/personal-area/edit-resume/:id',
       name: 'edit-resume/id',
       component: EditResume
     }
