@@ -2374,6 +2374,7 @@ button {
               align-items: center; } }
   .resume-top__left {
     height: 100%;
+    width: 166px;
     margin-right: 25px;
     -o-object-fit: cover;
        object-fit: cover; }
