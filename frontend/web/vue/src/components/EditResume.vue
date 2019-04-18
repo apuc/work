@@ -29,47 +29,46 @@
     mixins: [Resume],
     components: {FormTemplate},
     created() {
-      this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skill')
+      document.title = this.$route.meta.title;
+
+      this.getEmploymentType()
         .then(response => {
-            console.log(response.data);
-            // this.$emit('inputs-data', response.data)
-            // this.$refs.formResume.setValue(response.data);
-            this.formData.careerObjective = response.data.title;
-            this.formData.salaryFrom = response.data.min_salary;
-            this.formData.salaryBefore = response.data.max_salary;
-            this.formData.aboutMe = response.data.description;
-            this.formData.addSocial.vkontakte = response.data.vk;
-            this.formData.addSocial.facebook = response.data.facebook;
-            this.formData.addSocial.instagram = response.data.instagram;
-            this.formData.addSocial.skype = response.data.skype;
-            this.formData.educationBlock = response.data.education;
-            this.formData.workBlock = response.data.experience;
-            this.formData.skill = response.data.skill;
-						if(response.data.experience.length > 1) {
-              document.querySelector('.btnWork').click();
-              if(response.data.experience.length > 2) {
-                document.querySelector('.btnWork').click();
-                if(response.data.experience.length > 3) {
-                  document.querySelector('.btnWork').click();
-                  if(response.data.experience.length > 4) {
-                    document.querySelector('.btnWork').click();
-                  }
-                }
-              }
-						}
-          if(response.data.education.length > 1) {
-            document.querySelector('.btnEducation').click();
-            if(response.data.education.length > 2) {
-              document.querySelector('.btnEducation').click();
-              if(response.data.education.length > 3) {
-                document.querySelector('.btnEducation').click();
-                if(response.data.education.length > 4) {
-                  document.querySelector('.btnEducation').click();
-                }
-              }
-            }
+          FormResume.categoriesResume.items = response.data;
+          for (let i = 0; i < response.data.length; i++) {
+            this.$set(FormResume.categoriesResume.items, i, response.data[i]);
           }
-            console.log(response.data.experience.length);
+        })
+
+      this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skill,category')
+        .then(response => {
+					console.log(response.data);
+					this.formData.careerObjective = response.data.title;
+          this.formData.categoriesResume = response.data.category;
+					this.formData.salaryFrom = response.data.min_salary;
+					this.formData.salaryBefore = response.data.max_salary;
+					this.formData.aboutMe = response.data.description;
+					this.formData.addSocial.vkontakte = response.data.vk;
+					this.formData.addSocial.facebook = response.data.facebook;
+					this.formData.addSocial.instagram = response.data.instagram;
+					this.formData.addSocial.skype = response.data.skype;
+					this.formData.educationBlock = response.data.education;
+					this.formData.workBlock = response.data.experience;
+					this.formData.skill = response.data.skill;
+
+          if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
+            document.querySelector('.social-block button').click();
+          }
+
+          let workLength = response.data.experience.length - 1;
+          for (let i = 0; i < workLength; i++) {
+            document.querySelector('.btnWork').click();
+          }
+
+          let educationLength = response.data.education.length - 1;
+          for (let i = 0; i < educationLength; i++) {
+            document.querySelector('.btnEducation').click();
+          }
+
             console.log('Форма успешно получена');
           }, response => {
             console.log(response);
@@ -116,6 +115,9 @@
       },
       getFormData() {
         return FormResume;
+      },
+      async getEmploymentType() {
+        return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`)
       },
       setImage: function(output) {
         this.hasImage = true;

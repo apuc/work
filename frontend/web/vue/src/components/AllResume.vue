@@ -65,6 +65,7 @@
 			}
 		},
 		created() {
+      document.title = this.$route.meta.title;
         this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume`)
           .then(response => {
               console.log(response);

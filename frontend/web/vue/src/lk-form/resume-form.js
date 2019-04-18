@@ -11,6 +11,21 @@ export default {
     rules: [v => !!v  || 'Желаемая должность обязателена к заполнению'],
     component: VTextField,
   }),
+  categoriesResume: Object.assign({}, Field, {
+    name: 'categoriesResume',
+    label: 'Категория',
+    rules: [v => !!v  || 'Категория обязателена к заполнению'],
+    component: VSelect,
+    items: [
+      {
+        name: '',
+        id: ''
+      }
+    ],
+    attach: 'attach',
+    chips: 'chips',
+    multiple: 'multiple'
+  }),
   // careerObjectiveCheckbox: Object.assign({}, Field, {
   //   name: 'careerObjectiveCheckbox',
   //   label: 'Показать желаемую должность в резюме',
@@ -56,43 +71,43 @@ export default {
     class: 'input-head',
     component: VSubheader,
   }),
+  duties0: Object.assign({}, Field, {
+    name: 'duties0',
+    label: '1.',
+    rules: [],
+    class: 'duties',
+    component: VTextField,
+  }),
   duties1: Object.assign({}, Field, {
     name: 'duties1',
-    label: '1.',
+    label: '2.',
     rules: [],
     class: 'duties',
     component: VTextField,
   }),
   duties2: Object.assign({}, Field, {
     name: 'duties2',
-    label: '2.',
+    label: '3.',
     rules: [],
     class: 'duties',
     component: VTextField,
   }),
   duties3: Object.assign({}, Field, {
     name: 'duties3',
-    label: '3.',
+    label: '4.',
     rules: [],
     class: 'duties',
     component: VTextField,
   }),
   duties4: Object.assign({}, Field, {
     name: 'duties4',
-    label: '4.',
+    label: '5.',
     rules: [],
     class: 'duties',
     component: VTextField,
   }),
   duties5: Object.assign({}, Field, {
     name: 'duties5',
-    label: '5.',
-    rules: [],
-    class: 'duties',
-    component: VTextField,
-  }),
-  duties6: Object.assign({}, Field, {
-    name: 'duties6',
     label: '6.',
     rules: [],
     class: 'duties',

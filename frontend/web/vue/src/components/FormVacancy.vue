@@ -18,6 +18,7 @@
        }
     },
     created() {
+      document.title = this.$route.meta.title;
       this.getEmploymentType().then(response => {
         FormVacancy.typeOfEmployment.items = response.data;
         for (let i = 0; i < response.data.length; i++) {

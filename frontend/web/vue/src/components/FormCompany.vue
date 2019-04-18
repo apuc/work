@@ -42,6 +42,9 @@
         }
       }
     },
+    created() {
+      document.title = this.$route.meta.title;
+    },
     methods: {
       saveData() {
         let data = {

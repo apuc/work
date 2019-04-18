@@ -14,26 +14,31 @@ export default new Router({
     {
       path: '/personal-area/add-vacancy',
       name: 'add-vacancy',
+      meta: {title: 'Создать вакансию'},
       component: FormVacancy
     },
     {
       path: '/personal-area/add-resume',
       name: 'add-resume',
+      meta: {title: 'Создать резюме'},
       component: FormResume
     },
     {
       path: '/personal-area/add-company',
       name: 'add-company',
+      meta: {title: 'Создать компанию'},
       component: FormCompany
     },
     {
       path: '/personal-area/all-resume',
       name: 'all-resume',
+      meta: {title: 'Все резюме'},
       component: AllResume,
     },
     {
       path: '/personal-area/edit-resume/:id',
       name: 'edit-resume/id',
+      meta: {title: 'Редактировать резюме'},
       component: EditResume
     }
   ]

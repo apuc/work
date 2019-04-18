@@ -28,11 +28,21 @@
     name: 'FormResume',
     mixins: [Resume],
     components: {FormTemplate},
+    created() {
+      document.title = this.$route.meta.title;
+      this.getEmploymentType().then(response => {
+        FormResume.categoriesResume.items = response.data;
+        for (let i = 0; i < response.data.length; i++) {
+          this.$set(FormResume.categoriesResume.items, i, response.data[i]);
+        }
+      });
+    },
     methods: {
       saveData() {
         let data = {
-          image: this.image,
+          image: {},
           title: this.formData.careerObjective,
+          category: this.formData.categoriesResume,
           min_salary: this.formData.salaryFrom.replace(",","."),
           max_salary: this.formData.salaryBefore.replace(",","."),
           description: this.formData.aboutMe,
@@ -44,15 +54,15 @@
           work: this.formData.workBlock,
           skill: [],
         };
-        // let image = document.querySelector('.fileinput');
-        // if(image.classList.contains('fileinput--loaded')) {
-        //   data.image_url = this.image.name;
-        // }
+        let image = document.querySelector('.fileinput');
+        if(image.classList.contains('fileinput--loaded')) {
+          data.image = this.image;
+        }
 
         let dutiesVal = document.querySelectorAll('.duties input');
         for (let i = 0; i < dutiesVal.length; i++) {
           if (dutiesVal[i].value !== '') {
-            data.skills.push({name: dutiesVal[i].value})
+            data.skill.push({name: dutiesVal[i].value})
           }
         }
         this.$http.post(`${process.env.VUE_APP_API_URL}/request/resume`, data)
@@ -68,14 +78,13 @@
       getFormData() {
         return FormResume;
       },
+      async getEmploymentType() {
+        return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`);
+      },
       setImage: function(output) {
         this.hasImage = true;
         this.image = output;
       },
-      // setValue(data) {
-      //   console.log('setValue --->', data)
-      //   this.formData.careerObjective = data.title;
-      // }
     },
   }
 </script>

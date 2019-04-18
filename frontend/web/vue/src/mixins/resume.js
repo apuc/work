@@ -5,6 +5,7 @@ const resume = {
       image: null,
       formData: {
         careerObjective: '',
+        categoriesResume: [],
         salaryFrom: '',
         salaryBefore: '',
         aboutMe: '',
@@ -35,6 +36,12 @@ const resume = {
           instagram: '',
           skype: '',
         },
+        duties0: '',
+        duties1: '',
+        duties2: '',
+        duties3: '',
+        duties4: '',
+        duties5: '',
       },
     };
   }
