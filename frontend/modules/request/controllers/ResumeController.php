@@ -52,7 +52,7 @@ class ResumeController extends MyActiveController
 
 
         $image = base64_decode($data[1]);
-        $dir = '__DIR__ ../../../web/media/'.Yii::$app->user->id.'/';
+        $dir = __DIR__ . '/../../../web/media/'.Yii::$app->user->id.'/';
         $file_name = time();
         $file_type = explode('/', $params['image']['type'])[1];
         if(!file_exists($dir))
@@ -131,7 +131,7 @@ class ResumeController extends MyActiveController
         $data = explode(',', $params['image']['dataUrl']);
 
         $image = base64_decode($data[1]);
-        $dir = '__DIR__ ../../../web/media/'.Yii::$app->user->id.'/';
+        $dir = __DIR__ . '/../../../web/media/'.Yii::$app->user->id.'/';
         $file_name = time();
         $file_type = explode('/', $params['image']['type'])[1];
         if(!file_exists($dir))
