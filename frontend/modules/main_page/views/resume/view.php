@@ -28,7 +28,7 @@ use common\models\Experience; ?>
                     </p><span><?= Yii::$app->formatter->asDate($model->created_at, 'dd MM yyyy') ?></span>
                 </div>
             </div>
-            <div class="resume-top"><img class="resume-top__left" src="/images/resume_image_1.png" alt=""
+            <div class="resume-top"><img class="resume-top__left" src="<?=$model->image_url?$model->image_url:'/images/empty_user.jpg'?>" alt=""
                                          role="presentation"/>
                 <div class="resume-top__right">
 <!--                    <div class="resume-top__header">-->
