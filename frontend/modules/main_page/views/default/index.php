@@ -7,6 +7,7 @@
 
 use dektrium\user\models\RegistrationForm;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 ?>
@@ -30,7 +31,7 @@ use yii\widgets\ActiveForm;
                     </div>
                     <div>
                         <?php foreach ($vacancy->category as $category): ?>
-                        <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id]), 'days' => 30])?>">
+                        <a class="btn-card btn-card-small btn-gray" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id]), 'days' => 30])?>">
                             <?= $category->name ?>
                         </a>
                         <?php endforeach; ?>
@@ -55,7 +56,7 @@ use yii\widgets\ActiveForm;
 <!--                            <i class="fa fa-heart-o"></i>-->
 <!--                            <span>В избранное</span>-->
 <!--                        </a>-->
-                        <a class="btn-card btn-red mt5 mb5 ml15">Посмотреть полностью</a>
+                        <a class="btn-card btn-red mt5 mb5 ml15" href="<?=Url::to(['/vacancy/default/view', 'id'=>$vacancy->id])?>">Посмотреть полностью</a>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -128,7 +129,7 @@ use yii\widgets\ActiveForm;
                     </button>
                 </form>
                 <a class="btn btn-red mr20" href="#">разместить резюме</a><a class="btn btn-red"
-                                                                             href="/vacancy/search">Найти
+                                                                             href="<?=Url::to(['/vacancy/default/search'])?>">Найти
                     вакансии</a>
             </div>
         </div>

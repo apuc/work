@@ -47,7 +47,7 @@
                     ) ?>
                     <?= Html::endForm() ?>
                     <a class="btn btn-red mr20" href="#">разместить резюме</a><a class="btn btn-red"
-                                                                                 href="/vacancy/search">Найти
+                                                                                 href="<?=\yii\helpers\Url::to(['/vacancy/default/search'])?>">Найти
                         вакансии</a>
                 </div>
             </div>

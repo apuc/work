@@ -9,7 +9,6 @@
 /* @var $min_salary int */
 /* @var $max_salary int */
 /* @var $search_text string */
-/* @var $days int */
 
 /* @var $employment_types EmploymentType[] */
 
@@ -51,13 +50,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                     <p class="vacancies-days__text">Все вакансии Донецка за
                     </p>
                     <select class="home__form-select-js" id="days-select">
-                        <option <?=$days==1?'selected':''?> value="1">1 день
+                        <option value="1">1 день
                         </option>
-                        <option <?=$days==5?'selected':''?> value="5">5 дней
+                        <option value="5">5 дней
                         </option>
-                        <option <?=$days==10?'selected':''?> value="10">10 дней
+                        <option value="10">10 дней
                         </option>
-                        <option <?=$days==30?'selected':''?> value="30">30 дней
+                        <option value="30">30 дней
                         </option>
                     </select>
                 </div>

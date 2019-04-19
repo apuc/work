@@ -31,6 +31,12 @@ return [
         'main_page' => [
             'class' => 'frontend\modules\main_page\MainPage',
         ],
+        'vacancy' => [
+            'class' => 'frontend\modules\vacancy\Vacancy',
+        ],
+        'resume' => [
+            'class' => 'frontend\modules\resume\Resume',
+        ],
     ],
     'components' => [
 //        'request' => [
@@ -74,12 +80,12 @@ return [
             'rules' => [
                 'about' => 'site/about',
                 '/' => 'main_page/default/index',
-                'resume/view/<id>' => 'main_page/resume/view',
-                'vacancy/view/<id>' => 'main_page/vacancy/view',
-                'vacancy/search' => 'main_page/vacancy/search',
-                'personal-area/<action>' => 'personal_area/personal-area/index',
-                'personal-area/<action>/<id>' => 'personal_area/personal-area/index',
-                'personal-area' => 'personal_area/personal-area/index',
+                'resume/view/<id>' => 'resume/default/view',
+                'vacancy/view/<id>' => 'vacancy/default/view',
+                'vacancy/search' => 'vacancy/default/search',
+                'personal-area/<action>' => 'personal_area/default/index',
+                'personal-area/<action>/<id>' => 'personal_area/default/index',
+                'personal-area' => 'personal_area/default/index',
                 ['class' => 'yii\rest\UrlRule', 'controller' =>
                     [
                         'request/category',

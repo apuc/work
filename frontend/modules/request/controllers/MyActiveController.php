@@ -1,19 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Дмитрий
- * Date: 25.03.2019
- * Time: 14:23
- */
 
 namespace frontend\modules\request\controllers;
 
 
-use common\models\Employer;
-use common\models\Resume;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
+use yii\filters\Cors;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 
@@ -54,7 +47,7 @@ class MyActiveController extends ActiveController
     public function behaviors() {
         $behaviors = parent::behaviors();
         $behaviors['corsFilter'] =  [
-            'class' => \yii\filters\Cors::className(),
+            'class' => Cors::className(),
             'cors'  => [
                 // restrict access to domains:
                 'Origin'                           => ['*'],

@@ -2,7 +2,6 @@
 
 namespace frontend\modules\request\controllers;
 
-use common\classes\Debug;
 use common\models\Education;
 use common\models\Employer;
 use common\models\Experience;
@@ -11,11 +10,8 @@ use common\models\ResumeSkill;
 use common\models\Skill;
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\data\ActiveDataProvider;
-use yii\rest\IndexAction;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
-use yii\web\UploadedFile;
 
 class ResumeController extends MyActiveController
 {
@@ -48,25 +44,28 @@ class ResumeController extends MyActiveController
     public function actionCreate(){
         $model = new Resume();
         $params = Yii::$app->getRequest()->getBodyParams();
-        $data = explode(',', $params['image']['dataUrl']);
-
-
-        $image = base64_decode($data[1]);
-        $dir = __DIR__ . '/../../../web/media/'.Yii::$app->user->id.'/';
-        $file_name = time();
-        $file_type = explode('/', $params['image']['type'])[1];
-        if(!file_exists($dir))
-            mkdir($dir);
-        $file = fopen($dir.$file_name.'.'.$file_type, "wb");
-        fwrite($file, $image);
-        fclose($file);
         if(Yii::$app->user->isGuest)
             throw new HttpException(400, 'Пользователь не авторизирован');
         $employer = Employer::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
         if(!$employer)
             throw new HttpException(400, 'Вы не являетесь соискателем');
         $model->load($params, '');
-        $model->image_url = '/media/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
+        if($params['image']){
+            $data = explode(',', $params['image']['dataUrl']);
+            $image = base64_decode($data[1]);
+            $dir = __DIR__ . '/../../../web/media/resume';
+            if(!file_exists($dir))
+                mkdir($dir);
+            $dir .= '/' . Yii::$app->user->id.'/';
+            $file_name = time();
+            $file_type = explode('/', $params['image']['type'])[1];
+            if(!file_exists($dir))
+                mkdir($dir);
+            $file = fopen($dir.$file_name.'.'.$file_type, "wb");
+            fwrite($file, $image);
+            fclose($file);
+            $model->image_url = '/media/resume/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
+        }
         $model->employer_id = $employer->id;
         if($model->save()){
             $response = Yii::$app->getResponse();
@@ -131,7 +130,10 @@ class ResumeController extends MyActiveController
         $data = explode(',', $params['image']['dataUrl']);
 
         $image = base64_decode($data[1]);
-        $dir = __DIR__ . '/../../../web/media/'.Yii::$app->user->id.'/';
+        $dir = __DIR__ . '/../../../web/media/resume';
+        if(!file_exists($dir))
+            mkdir($dir);
+        $dir .= '/' . Yii::$app->user->id.'/';
         $file_name = time();
         $file_type = explode('/', $params['image']['type'])[1];
         if(!file_exists($dir))
@@ -142,7 +144,7 @@ class ResumeController extends MyActiveController
 
 
         $model->load($params, '');
-        $model->image_url = '/media/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
+        $model->image_url = '/media/resume/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
         $model->employer_id = $employer->id;
         if($model->save()){
             $response = Yii::$app->getResponse();
@@ -186,9 +188,5 @@ class ResumeController extends MyActiveController
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
         return $model;
-    }
-
-    public function actionTest(){
-        return \Yii::$app->user->identity;
     }
 }
