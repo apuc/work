@@ -127,24 +127,23 @@ class ResumeController extends MyActiveController
         if($employer != $model->employer_id)
             throw new HttpException(400, 'У вас нет прав для редактирования этого резюме');
 
-        $data = explode(',', $params['image']['dataUrl']);
-
-        $image = base64_decode($data[1]);
-        $dir = __DIR__ . '/../../../web/media/resume';
-        if(!file_exists($dir))
-            mkdir($dir);
-        $dir .= '/' . Yii::$app->user->id.'/';
-        $file_name = time();
-        $file_type = explode('/', $params['image']['type'])[1];
-        if(!file_exists($dir))
-            mkdir($dir);
-        $file = fopen($dir.$file_name.'.'.$file_type, "wb");
-        fwrite($file, $image);
-        fclose($file);
-
-
         $model->load($params, '');
-        $model->image_url = '/media/resume/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
+        if(!isset($params['image']['changeImg'])){
+            $data = explode(',', $params['image']['dataUrl']);
+            $image = base64_decode($data[1]);
+            $dir = __DIR__ . '/../../../web/media/resume';
+            if(!file_exists($dir))
+                mkdir($dir);
+            $dir .= '/' . Yii::$app->user->id.'/';
+            $file_name = time();
+            $file_type = explode('/', $params['image']['type'])[1];
+            if(!file_exists($dir))
+                mkdir($dir);
+            $file = fopen($dir.$file_name.'.'.$file_type, "wb");
+            fwrite($file, $image);
+            fclose($file);
+            $model->image_url = '/media/resume/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
+        }
         $model->employer_id = $employer->id;
         if($model->save()){
             $response = Yii::$app->getResponse();
