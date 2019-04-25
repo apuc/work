@@ -22,13 +22,6 @@ class VacancyController extends MyActiveController
     }
 
     /**
-     * @return void|\yii\db\ActiveQuery
-     */
-    public function myQuery(){
-        return Vacancy::find()->where(['user_id' => Yii::$app->user->id]);
-    }
-
-    /**
      * @throws InvalidConfigException
      * @throws HttpException
      */
@@ -61,6 +54,7 @@ class VacancyController extends MyActiveController
      */
     public function actionUpdate($id){
         $model = Vacancy::findOne($id);
+        $this->checkAccess($this->action->id, $model);
         if(!$model) throw new HttpException(400, 'Такой вакансии не существует');
         $params = Yii::$app->getRequest()->getBodyParams();
         if(Yii::$app->user->isGuest)

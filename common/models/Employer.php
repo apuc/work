@@ -62,7 +62,7 @@ class Employer extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['user_id', 'status', 'created_at', 'updated_at', 'owner'], 'integer'],
             [['first_name', 'second_name', 'patronymic', 'email', 'birth_date'], 'string', 'max' => 255],
             [['user_id', 'first_name', 'second_name'], 'required'],
         ];

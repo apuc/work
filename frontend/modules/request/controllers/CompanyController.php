@@ -28,13 +28,6 @@ class CompanyController extends MyActiveController
     }
 
     /**
-     * @return void|\yii\db\ActiveQuery
-     */
-    public function myQuery(){
-        return Company::find()->where(['user_id' => Yii::$app->user->id]);
-    }
-
-    /**
      * @throws InvalidConfigException
      * @throws ServerErrorHttpException
      * @throws HttpException

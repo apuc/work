@@ -6,19 +6,13 @@ namespace frontend\modules\request\controllers;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveRecord;
 use yii\filters\Cors;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 
 class MyActiveController extends ActiveController
 {
-    /**
-     * Метод, описывающий логику запроса, для получения сущностей, принадлежащих текущему пользователю
-     */
-    public function myQuery(){
-        return $this->modelClass::find();
-    }
-
     /**
      * Запрос, показывающий сущности, принадлежащие пользователю
      * @return object
@@ -34,7 +28,7 @@ class MyActiveController extends ActiveController
         }
         return Yii::createObject([
             'class' => ActiveDataProvider::className(),
-            'query' => $this->myQuery(),
+            'query' => $this->modelClass::find()->where(['owner'=>Yii::$app->user->id]),
             'pagination' => [
                 'params' => $requestParams,
             ],
@@ -42,6 +36,22 @@ class MyActiveController extends ActiveController
                 'params' => $requestParams,
             ],
         ]);
+    }
+
+    public function actionCheckIsMine(){
+        if(Yii::$app->user->isGuest)
+            return false;
+        $id=Yii::$app->request->get('id');
+        if(!$model = $this->modelClass::findOne($id)){
+            return false;
+        }
+        if(!$model->hasAttribute('owner'))
+            return false;
+        if($model->owner == Yii::$app->user->id)
+            return true;
+        else return false;
+
+
     }
 
     public function behaviors() {
@@ -59,5 +69,22 @@ class MyActiveController extends ActiveController
             ],
         ];
         return $behaviors;
+    }
+
+    /**
+     * @param string $action
+     * @param ActiveRecord $model
+     * @param array $params
+     */
+    public function checkAccess($action, $model = null, $params = [])
+    {
+        if($action === 'update' || $action === 'delete'){
+            if(Yii::$app->user->isGuest)
+                throw new HttpException(403, 'Вы не авторизированы');
+            if(!$model->hasAttribute('owner'))
+                throw new HttpException(403, 'У вас нет прав для редактирования этой записи');
+            if($model->owner != Yii::$app->user->id)
+                throw new HttpException(403, 'У вас нет прав для редактирования этой записи');
+        }
     }
 }

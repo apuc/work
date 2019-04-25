@@ -21,7 +21,7 @@ class ResumeSkill extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['resume_id', 'skill_id'], 'integer'],
+            [['resume_id', 'skill_id', 'owner'], 'integer'],
             [['resume_id', 'skill_id'], 'required'],
         ];
     }

@@ -52,7 +52,7 @@ class Education extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['resume_id', 'status', 'created_at', 'updated_at', 'owner'], 'integer'],
             [['year_from', 'year_to'], 'integer', 'max' => date('Y')],
             [['name', 'faculty', 'academic_degree', 'specialization'], 'string', 'max' => 255],
             [['resume_id', 'name'], 'required'],
