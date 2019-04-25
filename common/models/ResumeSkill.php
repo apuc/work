@@ -1,7 +1,7 @@
 <?php
 namespace common\models;
 
-use yii\db\ActiveRecord;
+use common\models\base\WorkActiveRecord;
 
 /**
  * This is the model class for table "resume_skill".
@@ -13,7 +13,7 @@ use yii\db\ActiveRecord;
  * @property Skill $skill
  * @property Resume $resume
  */
-class ResumeSkill extends ActiveRecord
+class ResumeSkill extends WorkActiveRecord
 {
     /**
      * @inheritdoc

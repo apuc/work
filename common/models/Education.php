@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -21,7 +22,7 @@ use yii\db\ActiveRecord;
  *
  * @property Resume $resume
  */
-class Education extends ActiveRecord
+class Education extends WorkActiveRecord
 {
 
     const STATUS_ACTIVE = 1;

@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use phpDocumentor\Reflection\Types\Array_;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -26,7 +27,7 @@ use yii\db\ActiveRecord;
  *
  * @property Resume $resume
  */
-class Experience extends ActiveRecord
+class Experience extends WorkActiveRecord
 {
 
     const STATUS_ACTIVE = 1;

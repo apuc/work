@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use Yii;
 
 /**
@@ -14,7 +15,7 @@ use Yii;
  * @property Category $category
  * @property Vacancy $vacancy
  */
-class VacancyCategory extends \yii\db\ActiveRecord
+class VacancyCategory extends WorkActiveRecord
 {
     /**
      * {@inheritdoc}
