@@ -38,6 +38,9 @@ class MyActiveController extends ActiveController
         ]);
     }
 
+    /**
+     * Запрос, проверяющий, принадлежит ли сущность текущему пользователю
+     */
     public function actionCheckIsMine(){
         if(Yii::$app->user->isGuest)
             return false;

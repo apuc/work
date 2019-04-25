@@ -106,8 +106,8 @@ class ResumeController extends MyActiveController
      */
     public function actionUpdate($id){
         $model = Resume::findOne($id);
-        $this->checkAccess($this->action->id, $model);
         if(!$model) throw new HttpException(400, 'Такого резюме не существует');
+        $this->checkAccess($this->action->id, $model);
         $params = Yii::$app->getRequest()->getBodyParams();
         $employer = Employer::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
 

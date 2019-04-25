@@ -54,14 +54,10 @@ class VacancyController extends MyActiveController
      */
     public function actionUpdate($id){
         $model = Vacancy::findOne($id);
-        $this->checkAccess($this->action->id, $model);
         if(!$model) throw new HttpException(400, 'Такой вакансии не существует');
+        $this->checkAccess($this->action->id, $model);
         $params = Yii::$app->getRequest()->getBodyParams();
-        if(Yii::$app->user->isGuest)
-            throw new HttpException(400, 'Пользователь не авторизирован');
         $company = Company::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
-        if(!$company)
-            throw new HttpException(400, 'Вы не являетесь работодателем');
         $model->load($params, '');
         $model->work_experience = Vacancy::getExperienceId($params['work_experience']);
         $model->company_id = $company->id;
