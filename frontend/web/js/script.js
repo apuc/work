@@ -196,5 +196,13 @@ $(document).ready(function () {
       $('.jsBtnReg').prop('disabled', false);
     }
   });
+
+  $('.jsOpenMenu').mouseenter(function () {
+    $('.jsShowMenu').fadeIn();
+  });
+
+  $('.jsShowMenu').mouseleave(function () {
+    $('.jsShowMenu').fadeOut();
+  });
 });
 //# sourceMappingURL=script.js.map

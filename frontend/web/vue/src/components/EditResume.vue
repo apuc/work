@@ -104,7 +104,7 @@
           }
         });
 
-      this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skill,category')
+      this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skills,category')
         .then(response => {
             console.log(response.data);
 
@@ -124,8 +124,8 @@
             this.formData.educationBlock = response.data.education;
             this.formData.workBlock = response.data.experience;
 
-            for (let i = 0; i < response.data.skill.length; i++) {
-              this.formData['duties' + i] = response.data.skill[i].name;
+            for (let i = 0; i < response.data.skills.length; i++) {
+              this.formData['duties' + i] = response.data.skills[i].name;
             }
 
             if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {

@@ -91,19 +91,27 @@ use yii\widgets\ActiveForm;
             <div class="home__main-header">
                 <nav class="home__nav"><a class="home__nav-item" href="/">Главная</a><a class="home__nav-item"
                                                                                         href="resume.html">Резюме</a>
-                    <button class="home__nav-item jsLogin">
+
                         <?php if (Yii::$app->user->isGuest): ?>
+													<button class="home__nav-item jsLogin">
                             Вход
+										</button>
                         <?php else: ?>
-                            <?= Yii::$app->user->identity->username ?>
-                            <?= Html::beginForm(['/site/logout'], 'post') ?>
-                            <?= Html::submitButton(
-                                'Logout (' . Yii::$app->user->identity->username . ')',
-                                ['class' => 'btn btn-link logout']
-                            ) ?>
-                            <?= Html::endForm() ?>
+													<span class="home__nav-item open-menu jsOpenMenu">
+																	<?= Yii::$app->user->identity->username ?>
+																	<div class="dropdown-menu jsShowMenu">
+																		<a href="/personal-area" class="home__nav-item">Личный кабинект</a>
+																		<?= Html::beginForm(['/site/logout'], 'post', ['class' => 'form-logout']) ?>
+                                      <?= Html::submitButton(
+                                          'Logout (' . Yii::$app->user->identity->username . ')',
+                                          ['class' => 'btn-logout']
+                                      ) ?>
+                                      <?= Html::endForm() ?>
+																	</div>
+															</span>
+
                         <?php endif ?>
-                    </button>
+
 
                 </nav>
                 <div class="home__main-email d-flex align-items-center"><span class="home__main-ico">@</span><a

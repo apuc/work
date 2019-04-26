@@ -80,7 +80,7 @@ class Resume extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['employer', 'experience', 'education', 'resume_skill', 'skill', 'resume_category', 'category', 'employment_type'];
+        return ['employer', 'experience', 'education', 'resume_skill', 'skills', 'resume_category', 'category', 'employment_type'];
     }
 
     /**
@@ -150,7 +150,7 @@ class Resume extends WorkActiveRecord
     /**
      * @inheritdoc
      */
-    public function getSkill()
+    public function getSkills()
     {
         return $this->hasMany(Skill::className(), ['id' => 'skill_id'])
             ->viaTable('resume_skill', ['resume_id' => 'id']);
