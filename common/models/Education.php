@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -21,7 +22,7 @@ use yii\db\ActiveRecord;
  *
  * @property Resume $resume
  */
-class Education extends ActiveRecord
+class Education extends WorkActiveRecord
 {
 
     const STATUS_ACTIVE = 1;
@@ -51,7 +52,7 @@ class Education extends ActiveRecord
     public function rules()
     {
         return [
-            [['resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['resume_id', 'status', 'created_at', 'updated_at', 'owner'], 'integer'],
             [['year_from', 'year_to'], 'integer', 'max' => date('Y')],
             [['name', 'faculty', 'academic_degree', 'specialization'], 'string', 'max' => 255],
             [['resume_id', 'name'], 'required'],

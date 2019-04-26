@@ -22,13 +22,6 @@ class VacancyController extends MyActiveController
     }
 
     /**
-     * @return void|\yii\db\ActiveQuery
-     */
-    public function myQuery(){
-        return Vacancy::find()->where(['user_id' => Yii::$app->user->id]);
-    }
-
-    /**
      * @throws InvalidConfigException
      * @throws HttpException
      */
@@ -62,12 +55,9 @@ class VacancyController extends MyActiveController
     public function actionUpdate($id){
         $model = Vacancy::findOne($id);
         if(!$model) throw new HttpException(400, 'Такой вакансии не существует');
+        $this->checkAccess($this->action->id, $model);
         $params = Yii::$app->getRequest()->getBodyParams();
-        if(Yii::$app->user->isGuest)
-            throw new HttpException(400, 'Пользователь не авторизирован');
         $company = Company::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
-        if(!$company)
-            throw new HttpException(400, 'Вы не являетесь работодателем');
         $model->load($params, '');
         $model->work_experience = Vacancy::getExperienceId($params['work_experience']);
         $model->company_id = $company->id;

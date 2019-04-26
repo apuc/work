@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use Yii;
 
 /**
@@ -14,7 +15,7 @@ use Yii;
  * @property EmploymentType $employmentType
  * @property Resume $resume
  */
-class ResumeEmploymentType extends \yii\db\ActiveRecord
+class ResumeEmploymentType extends WorkActiveRecord
 {
     /**
      * {@inheritdoc}

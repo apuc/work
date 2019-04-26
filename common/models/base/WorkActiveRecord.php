@@ -1,10 +1,9 @@
 <?php
 namespace common\models\base;
 
-use common\classes\Debug;
-use yii\web\HttpException;
+use yii\db\ActiveRecord;
 
-class WorkActiveRecord extends \yii\db\ActiveRecord
+class WorkActiveRecord extends ActiveRecord
 {
     /**
      * @return bool|void
@@ -33,4 +32,14 @@ class WorkActiveRecord extends \yii\db\ActiveRecord
     {
         return [];
     }
+
+    public function beforeSave($insert)
+    {
+        parent::beforeSave($insert);
+        if ($insert && $this->hasAttribute('owner')){
+            $this->owner = \Yii::$app->user->id;
+        }
+        return true;
+    }
+
 }

@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use yii\db\ActiveRecord;
 
 /**
@@ -13,7 +14,7 @@ use yii\db\ActiveRecord;
  * @property Skill $skill
  * @property Vacancy $vacancy
  */
-class VacancySkill extends ActiveRecord
+class VacancySkill extends WorkActiveRecord
 {
     /**
      * @inheritdoc

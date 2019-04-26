@@ -26,17 +26,6 @@ class ResumeController extends MyActiveController
     }
 
     /**
-     * @return void|\yii\db\ActiveQuery
-     * @throws HttpException
-     */
-    public function myQuery(){
-        $employer = Employer::find()->where(['user_id' => Yii::$app->user->getId()])->one();
-        if(!$employer)
-            throw new HttpException(201, 'Ошибка');
-        return Resume::find()->where(['employer_id' => $employer->id]);
-    }
-
-    /**
      * @throws InvalidConfigException
      * @throws ServerErrorHttpException
      * @throws HttpException
@@ -102,7 +91,7 @@ class ResumeController extends MyActiveController
                     }
                 }
             }
-        } elseif (!$model->hasErrors()) {
+        } elseif ($model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
         return $model;
@@ -118,14 +107,9 @@ class ResumeController extends MyActiveController
     public function actionUpdate($id){
         $model = Resume::findOne($id);
         if(!$model) throw new HttpException(400, 'Такого резюме не существует');
+        $this->checkAccess($this->action->id, $model);
         $params = Yii::$app->getRequest()->getBodyParams();
-        if(Yii::$app->user->isGuest)
-            throw new HttpException(400, 'Пользователь не авторизирован');
         $employer = Employer::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
-        if(!$employer)
-            throw new HttpException(400, 'Вы не являетесь соискателем');
-        if($employer != $model->employer_id)
-            throw new HttpException(400, 'У вас нет прав для редактирования этого резюме');
 
         $model->load($params, '');
         if(!isset($params['image']['changeImg'])){
