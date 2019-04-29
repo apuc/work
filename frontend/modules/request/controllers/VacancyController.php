@@ -69,4 +69,17 @@ class VacancyController extends MyActiveController
         }
         return $model;
     }
+
+    public function actionUpdateTime(){
+        $id = Yii::$app->request->post('id');
+        $model = Vacancy::findOne($id);
+        if(!$model)
+            throw new HttpException(400, 'Такой вакансии не существует');
+        if($model->owner != Yii::$app->user->id)
+            throw new HttpException(400, 'У вас нет прав для совершения этого действия');
+        if(!$model->can_update)
+            throw new HttpException(400, 'Достаточно количество времени не прошло');
+        $model->update_time = time();
+        $model->save();
+    }
 }
