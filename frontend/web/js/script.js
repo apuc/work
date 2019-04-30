@@ -198,10 +198,6 @@ $(document).ready(function () {
     }
   });
 
-  if($('.jsCitiesSelect').length > 0) {
-    $('.jsCitiesSelect').select2();
-  }
-
 
   $('.jsOpenMenu').mouseenter(function () {
     $('.jsShowMenu').fadeIn().css('display', 'flex');
@@ -217,4 +213,7 @@ $(document).ready(function () {
     }
   });
 });
+if($('.jsCitiesSelect').length > 0) {
+  $('.jsCitiesSelect').select2();
+}
 //# sourceMappingURL=script.js.map

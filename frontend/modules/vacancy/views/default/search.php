@@ -46,20 +46,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         <span class="logo__text">Актуальных вакансий сейчас</span>
                     </div>
                 </div>
-                <div class="vacancies-days">
-                    <p class="vacancies-days__text">Все вакансии Донецка за
-                    </p>
-                    <select class="home__form-select-js" id="days-select">
-                        <option value="1">1 день
-                        </option>
-                        <option value="5">5 дней
-                        </option>
-                        <option value="10">10 дней
-                        </option>
-                        <option value="30">30 дней
-                        </option>
-                    </select>
-                </div>
+							<div class="search"><input type="text" placeholder="Поиск"/>
+								<button class="btn-red"><i class="fa fa-search"></i>
+								</button>
+							</div>
             </div>
             <div class="v-content-bottom container-for-sidebar">
                 <div class="filter-overlay jsFilterOverlay">
@@ -68,6 +58,34 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                     <div class="filter-close jsHideFilter"><span></span><span></span>
                     </div>
                     <div class="sidebar-inner">
+												<div class="vl-block">
+														<select class="vl-block__cities jsCitiesSelect">
+																<option>Донецк
+																</option>
+																<option>Макеевка
+																</option>
+																<option>Луганск
+																</option>
+																<option>Луганск
+																</option>
+																<option>Луганск
+																</option>
+																<option>Луганск
+																</option>
+																<option>Луганск
+																</option>
+																<option>Луганск
+																</option>
+																<option>Луганск
+																</option>
+																<option>Луганск
+																</option>
+																<option>Луганск
+																</option>
+																<option>Луганск
+																</option>
+														</select>
+												</div>
                         <div class="vl-block">
                             <div class="vl-block__head jsOpenCheck">
                                 <p>Требуемый опыт
