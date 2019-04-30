@@ -28,6 +28,8 @@ use yii\db\ActiveRecord;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $owner
+ * @property integer $update_time
  *
  * @property Company $company
  * @property EmploymentType $employment_type
@@ -36,11 +38,14 @@ use yii\db\ActiveRecord;
  * @property Skill[] $skill
  * @property Category[] $category
  * @property VacancyCategory[] $vacancy_category
+ * @property bool $can_update
  */
 class Vacancy extends WorkActiveRecord
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
+
+    const UPDATE_MIN_SEC_PASSED = 86400;
 
     public static $experiences = [
       'Не имеет значения', 'Менее года', '1 год', '2 года'
@@ -74,7 +79,7 @@ class Vacancy extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'work_experience', 'created_at', 'updated_at'], 'integer'],
+            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time'], 'integer'],
             [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions'], 'string'],
             [['company_id', 'post'], 'required'],
@@ -83,7 +88,7 @@ class Vacancy extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['company', 'schedule', 'employment_type', 'vacancy_skill', 'skill'];
+        return ['company', 'schedule', 'employment_type', 'vacancy_skill', 'skill', 'can_update'];
     }
 
     /**
@@ -181,4 +186,11 @@ class Vacancy extends WorkActiveRecord
         return array_search($experience, self::$experiences);
     }
 
+    /**
+     * @return bool
+     */
+    public function getCan_update()
+    {
+        return (time()-self::UPDATE_MIN_SEC_PASSED) > $this->update_time;
+    }
 }

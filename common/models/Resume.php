@@ -27,6 +27,8 @@ use yii\db\ActiveRecord;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $owner
+ * @property integer $update_time
  *
  * @property Employer $employer
  * @property EmploymentType $employment_type
@@ -36,11 +38,14 @@ use yii\db\ActiveRecord;
  * @property Category[] $category
  * @property ResumeSkill[] $resume_skill
  * @property Skill[] $skill
+ * @property bool $can_update
  */
 class Resume extends WorkActiveRecord
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
+
+    const UPDATE_MIN_SEC_PASSED = 86400;
 
     public function getRelateDeleteList()
     {
@@ -70,7 +75,7 @@ class Resume extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner'], 'integer'],
+            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time'], 'integer'],
             [['title', 'city', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['min_salary', 'max_salary'], 'safe'],
@@ -80,7 +85,7 @@ class Resume extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['employer', 'experience', 'education', 'resume_skill', 'skills', 'resume_category', 'category', 'employment_type'];
+        return ['employer', 'experience', 'education', 'resume_skill', 'skills', 'resume_category', 'category', 'employment_type', 'can_update'];
     }
 
     /**
@@ -182,5 +187,13 @@ class Resume extends WorkActiveRecord
         if($this->instagram) return true;
         if($this->facebook) return true;
         return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCan_update()
+    {
+        return (time()-self::UPDATE_MIN_SEC_PASSED) > $this->update_time;
     }
 }
