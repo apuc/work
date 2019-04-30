@@ -17,17 +17,13 @@
 
       <v-navigation-drawer
         v-model="drawer"
+        permanent
         absolute
-        temporary
       >
         <v-list class="pa-1">
           <v-list-tile avatar>
-            <v-list-tile-avatar>
-              <img src="https://randomuser.me/api/portraits/men/85.jpg">
-            </v-list-tile-avatar>
-
             <v-list-tile-content>
-              <v-list-tile-title>John Leider</v-list-tile-title>
+              <v-list-tile-title>{{firstName}} {{secondName}}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -41,10 +37,6 @@
             :to="link.url"
             @click=""
           >
-            <!--<v-list-tile-action>-->
-              <!--<v-icon>{{ item.icon }}</v-icon>-->
-            <!--</v-list-tile-action>-->
-
             <v-list-tile-content>
               <v-list-tile-title>{{ link.title }}</v-list-tile-title>
             </v-list-tile-content>
@@ -53,11 +45,6 @@
       </v-navigation-drawer>
     </v-layout>
     <v-container>
-      <!--<ul class="nav-menu">-->
-        <!--<li v-for="link in linkMenu" :key="link.title">-->
-          <!--<router-link :to="link.url">{{ link.title }}</router-link>-->
-        <!--</li>-->
-      <!--</ul>-->
       <router-view></router-view>
     </v-container>
   </v-app>
@@ -70,7 +57,9 @@ export default {
   components: {},
   data () {
     return {
-      drawer: null,
+      drawer: true,
+      firstName: '',
+      secondName: '',
       linkMenu: [
         {
           title: 'Добавить вакансию',
@@ -96,9 +85,26 @@ export default {
           title: 'Все компании',
           url: '/personal-area/all-company'
         },
+        {
+          title: 'Редактировать профиль',
+          url: '/personal-area/edit-profile'
+        },
       ],
     }
   },
+  created() {
+    this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index`)
+      .then(response => {
+          console.log(response);
+          this.firstName = response.data[0].first_name;
+          this.secondName = response.data[0].second_name;
+          console.log('Форма успешно отправлена');
+        }, response => {
+          console.log(response);
+          console.log('Форма не отправлена');
+        }
+      );
+  }
 }
 </script>
 <style scoped>

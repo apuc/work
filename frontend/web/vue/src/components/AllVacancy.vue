@@ -16,7 +16,7 @@
 
 					<v-list-tile-content>
 						<v-list-tile-title class="mt-auto mb-auto"> {{ item.post }} </v-list-tile-title>
-						<v-list-tile-sub-title class="mt-auto mb-auto"> {{ item.updated_at }} </v-list-tile-sub-title>
+						<v-list-tile-sub-title class="mt-auto mb-auto"> {{ item.update_time }} </v-list-tile-sub-title>
 						<v-divider style="width: 100%;"></v-divider>
 					</v-list-tile-content>
 					<router-link :to="`${editLink}/${item.id}`">
@@ -29,9 +29,17 @@
 						</v-btn>
 					</router-link>
 					<v-btn outline small fab
+								 v-bind:disabled="item.can_update == false"
 								 class="edit-btn"
 								 type="button"
-								 @click="removeResume(index, item.id)"
+								 @click="updateVacancy(index, item.id)"
+					>
+						<v-icon>arrow_upward </v-icon>
+					</v-btn>
+					<v-btn outline small fab
+								 class="edit-btn"
+								 type="button"
+								 @click="removeVacancy(index, item.id)"
 					>
 						<v-icon>delete</v-icon>
 					</v-btn>
@@ -66,15 +74,15 @@
     },
     created() {
       document.title = this.$route.meta.title;
-      this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy`)
+      this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/my-index?expand=can_update&sort=-update_time`)
         .then(response => {
             console.log(response);
             this.getAllVacancy = response.data;
             this.getAllVacancy.forEach((element) => {
-              let timestamp = element.updated_at;
+              let timestamp = element.update_time;
               let date = new Date();
               date.setTime(timestamp * 1000);
-              element.updated_at = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+              element.update_time = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
             });
             this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
 
@@ -89,9 +97,26 @@
 
     },
     methods: {
-      removeResume(index, resumeId) {
+      updateVacancy(index, vacancyId) {
+        this.$http.post(`${process.env.VUE_APP_API_URL}/request/vacancy/update-time`, {id: vacancyId})
+          .then(response => {
+              this.getAllVacancy.splice(index, 1);
+              let newData = response.data;
+              let date = new Date();
+              date.setTime(newData.update_time * 1000);
+              newData.update_time = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+              this.getAllVacancy.unshift(newData);
+              console.log(response);
+              console.log('Форма успешно удалена');
+            }, response => {
+              console.log(response);
+              console.log('Форма не удалена');
+            }
+          );
+      },
+      removeVacancy(index, vacancyId) {
         this.getAllVacancy.splice(index, 1);
-        this.$http.delete(`${process.env.VUE_APP_API_URL}/request/vacancy/` + resumeId)
+        this.$http.delete(`${process.env.VUE_APP_API_URL}/request/vacancy/` + vacancyId)
           .then(response => {
               console.log(response);
               console.log('Форма успешно удалена');
@@ -103,7 +128,7 @@
       },
       changePage(paginationCurrentPage) {
         console.log(paginationCurrentPage);
-        this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy?page=` + paginationCurrentPage)
+        this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/my-index?page=` + paginationCurrentPage)
           .then(response => {
               console.log(response);
               this.getAllVacancy = response.data;

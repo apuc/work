@@ -34,6 +34,7 @@ class VacancyController extends MyActiveController
         if(!$company)
             throw new HttpException(400, 'Вы не являетесь работодателем');
         $model->load($params, '');
+        $model->update_time = time();
         $model->company_id = $company->id;
         if($model->save()){
             $response = Yii::$app->getResponse();
@@ -79,6 +80,9 @@ class VacancyController extends MyActiveController
             throw new HttpException(400, 'Достаточно количество времени не прошло');
         $model->update_time = time();
         $model->save();
+        $return = Vacancy::find()->asArray()->where(['id' => $id])->one();
+        $return['can_update'] = false;
+        return $return;
     }
 
     public function actionGetExperiences(){

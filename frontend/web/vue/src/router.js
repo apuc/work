@@ -9,6 +9,7 @@ import AllResume from './components/AllResume.vue'
 import EditResume from './components/EditResume.vue'
 import AllCompany from './components/AllCompany.vue'
 import EditCompany from './components/EditCompany.vue'
+import EditProfile from './components/EditProfile.vue'
 
 Vue.use(Router);
 
@@ -68,6 +69,12 @@ export default new Router({
       name: 'edit-company/id',
       meta: {title: 'Редактировать компанию'},
       component: EditCompany
+    },
+    {
+      path: '/personal-area/edit-profile',
+      name: 'edit-profile',
+      meta: {title: 'Редактировать профиль'},
+      component: EditProfile
     }
   ]
 })

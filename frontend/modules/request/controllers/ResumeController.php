@@ -39,6 +39,7 @@ class ResumeController extends MyActiveController
         $params = Yii::$app->getRequest()->getBodyParams();
 
         $model->load($params, '');
+        $model->update_time = time();
         if($params['image']){
             $data = explode(',', $params['image']['dataUrl']);
             $image = base64_decode($data[1]);
@@ -184,6 +185,9 @@ class ResumeController extends MyActiveController
             throw new HttpException(400, 'Достаточно количество времени не прошло');
         $model->update_time = time();
         $model->save();
+        $return = Resume::find()->asArray()->where(['id' => $id])->one();
+        $return['can_update'] = false;
+        return $return;
     }
 
 }

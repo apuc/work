@@ -66,7 +66,7 @@
     },
     mounted() {
       document.title = this.$route.meta.title;
-      this.$http.get(`${process.env.VUE_APP_API_URL}/request/company`)
+      this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index`)
         .then(response => {
             console.log(response);
             this.getAllCompany = response.data;
@@ -103,7 +103,7 @@
       },
       changePage(paginationCurrentPage) {
         console.log(paginationCurrentPage);
-        this.$http.get(`${process.env.VUE_APP_API_URL}/request/company?page=` + paginationCurrentPage)
+        this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index?page=` + paginationCurrentPage)
           .then(response => {
               console.log(response);
               this.getAllCompany = response.data;

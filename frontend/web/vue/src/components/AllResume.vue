@@ -16,7 +16,7 @@
 
 				<v-list-tile-content>
 					<v-list-tile-title class="mt-auto mb-auto"> {{ item.title }} </v-list-tile-title>
-					<v-list-tile-sub-title class="mt-auto mb-auto"> {{ item.updated_at }} </v-list-tile-sub-title>
+					<v-list-tile-sub-title class="mt-auto mb-auto"> {{ item.update_time }} </v-list-tile-sub-title>
 					<v-divider style="width: 100%;"></v-divider>
 				</v-list-tile-content>
 				<router-link :to="`${editLink}/${item.id}`">
@@ -29,18 +29,20 @@
 					</v-btn>
 				</router-link>
 				<v-btn outline small fab
+							 v-bind:disabled="item.can_update == false"
 							 class="edit-btn"
 							 type="button"
-							 @click="updateResume(item.id)"
+							 @click="updateResume(index, item.id)"
 				>
-					<v-icon>arrow_upward</v-icon>
+					<v-icon>arrow_upward </v-icon>
 				</v-btn>
 				<v-btn outline small fab
 							 class="edit-btn"
 							 type="button"
-							 @click="removeResume(index, item.id)"
+							 @click="removeResume( item.id)"
 				>
 					<v-icon>delete</v-icon>
+
 				</v-btn>
 			</v-list-tile>
 			</v-list>
@@ -68,12 +70,12 @@
         editLink: '/personal-area/edit-resume',
         getAllResume: [],
 				paginationPageCount: 1,
-				paginationCurrentPage: 1,
+				paginationCurrentPage: 1
 			}
 		},
 		created() {
       document.title = this.$route.meta.title;
-        this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume`)
+        this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/my-index?expand=can_update&sort=-update_time`)
           .then(response => {
               console.log(response);
 
@@ -83,10 +85,10 @@
 
 						this.getAllResume = response.data;
 						this.getAllResume.forEach((element) => {
-						let timestamp = element.updated_at;
+						let timestamp = element.update_time;
 						let date = new Date();
 						date.setTime(timestamp * 1000);
-						element.updated_at = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+						element.update_time = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
 						});
 						this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
 
@@ -101,9 +103,23 @@
 
 		},
 		methods: {
-      // updateResume(resumeId) {
-			//
-			// },
+      updateResume(index, resumeId) {
+        this.$http.post(`${process.env.VUE_APP_API_URL}/request/resume/update-time`, {id: resumeId})
+          .then(response => {
+            this.getAllResume.splice(index, 1);
+            let newData = response.data;
+            let date = new Date();
+            date.setTime(newData.update_time * 1000);
+            newData.update_time = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+            this.getAllResume.unshift(newData);
+              console.log(response);
+              console.log('Форма успешно удалена');
+            }, response => {
+              console.log(response);
+              console.log('Форма не удалена');
+            }
+          );
+			},
       removeResume(index, resumeId) {
         this.getAllResume.splice(index, 1);
         this.$http.delete(`${process.env.VUE_APP_API_URL}/request/resume/` + resumeId)
@@ -117,7 +133,7 @@
           );
 			},
       async changePage(paginationCurrentPage) {
-        await this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume?page=` + paginationCurrentPage)
+        await this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/my-index?page=` + paginationCurrentPage)
           .then(response => {
               console.log(response);
               this.getAllResume = response.data;
