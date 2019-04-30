@@ -27,11 +27,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
 <script>
     var search_text = '<?=$search_text?>';
 </script>
-<section class="all-vacancies"><img class="all-vacancies__dots2" src="/images/bg-dots.png" alt=""
+<section class="all-block all-vacancies"><img class="all-block__dots2" src="/images/bg-dots.png" alt=""
                                     role="presentation"/>
-    <div class="all-vacancies__circle">
+    <div class="all-block__circle">
     </div>
-    <div class="all-vacancies__content">
+    <div class="all-block__content">
         <button class="filter-btn jsShowFilter">Фильтр
         </button>
         <div class="container">
@@ -219,7 +219,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         </div>
                     <?php endforeach ?>
                     <?= LinkPager::widget([
-                    'pagination' => $vacancies->pagination,
+                    		'pagination' => $vacancies->pagination,
+												'options' => ['class' => 'search-pagination'],
+												'maxButtonCount' => 5,
+												'firstPageLabel' => '<<',
+												'lastPageLabel' => '>>',
+												'nextPageLabel' => '>',
+												'prevPageLabel' => '<',
                     ]);?>
                 </div>
                 <div class="soc-sidebar" id="sidebar-vr">

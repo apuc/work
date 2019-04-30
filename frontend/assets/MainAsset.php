@@ -17,6 +17,7 @@ class MainAsset extends AssetBundle
         'css/bootstrap-grid.min.css',
         'js/slick/slick.css',
         'css/main_style.css',
+        'css/back-styles.css',
     ];
     public $js = [
         'js/jquery-3.3.1.min.js',

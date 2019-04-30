@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property integer $user_id
+ * @property string $image_url
  * @property string $name
  * @property string $website
  * @property string $activity_field
@@ -61,7 +62,7 @@ class Company extends WorkActiveRecord
     {
         return [
             [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person'], 'string', 'max' => 255],
+            [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person', 'image_url'], 'string', 'max' => 255],
             [['activity_field', 'description'], 'string'],
             [['user_id', 'name'], 'required'],
         ];

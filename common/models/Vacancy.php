@@ -42,7 +42,7 @@ class Vacancy extends WorkActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
-    public static $experineces = [
+    public static $experiences = [
       'Не имеет значения', 'Менее года', '1 год', '2 года'
     ];
 
@@ -178,7 +178,7 @@ class Vacancy extends WorkActiveRecord
      */
     public static function getExperienceId($experience)
     {
-        return array_search($experience, self::$experineces);
+        return array_search($experience, self::$experiences);
     }
 
 }

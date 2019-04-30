@@ -93,7 +93,7 @@
     name: 'FormResume',
     mixins: [Resume],
     components: {FormTemplate},
-    created() {
+    mounted() {
       document.title = this.$route.meta.title;
 
       this.getEmploymentType()
@@ -154,6 +154,7 @@
         let data = {
           image: {},
           title: this.formData.careerObjective,
+          category: this.formData.categoriesResume,
           min_salary: this.formData.salaryFrom,
           max_salary: this.formData.salaryBefore,
           description: this.formData.aboutMe,

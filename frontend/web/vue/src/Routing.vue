@@ -81,12 +81,20 @@ export default {
           url: '/personal-area/add-resume'
         },
         {
-          title: 'Добавить компания',
+          title: 'Добавить компанию',
           url: '/personal-area/add-company'
+        },
+        {
+          title: 'Все вакансии',
+          url: '/personal-area/all-vacancy'
         },
         {
           title: 'Все резюме',
           url: '/personal-area/all-resume'
+        },
+        {
+          title: 'Все компании',
+          url: '/personal-area/all-company'
         },
       ],
     }

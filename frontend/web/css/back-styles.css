@@ -1,0 +1,30 @@
+.search-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 0;
+  list-style: none;
+}
+
+.search-pagination li a, .search-pagination li span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.search-pagination li a:hover {
+  background-color: #86dfff;
+}
+
+.search-pagination li span {
+  background-color: #b6c3ca;
+}

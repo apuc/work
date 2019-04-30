@@ -31,13 +31,13 @@ class ResumeController extends MyActiveController
      * @throws HttpException
      */
     public function actionCreate(){
-        $model = new Resume();
-        $params = Yii::$app->getRequest()->getBodyParams();
         if(Yii::$app->user->isGuest)
-            throw new HttpException(400, 'Пользователь не авторизирован');
-        $employer = Employer::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
+            throw new HttpException(400, 'Пользователь не авторизирован');$employer = Employer::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
         if(!$employer)
             throw new HttpException(400, 'Вы не являетесь соискателем');
+        $model = new Resume();
+        $params = Yii::$app->getRequest()->getBodyParams();
+
         $model->load($params, '');
         if($params['image']){
             $data = explode(',', $params['image']['dataUrl']);

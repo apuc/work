@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
-    </FormTemplate>
-  </div>
+	<FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
+	</FormTemplate>
 </template>
 
 <script>
@@ -11,12 +9,13 @@
   import Vacancy from "../mixins/vacancy";
 
   export default {
-    name: "FormVacancy",
-    components: {FormTemplate},
+    name: 'FormResume',
     mixins: [Vacancy],
+    components: {FormTemplate},
     created() {
       document.title = this.$route.meta.title;
       this.getEmploymentType().then(response => {
+        console.log(response);
         FormVacancy.typeOfEmployment.items = response.data;
         for (let i = 0; i < response.data.length; i++) {
           this.$set(FormVacancy.typeOfEmployment.items, i, response.data[i]);
@@ -29,11 +28,38 @@
         }
       });
       this.getExperience().then(response => {
+        console.log(response);
         FormVacancy.experience.items = response.data;
         for (let i = 0; i < response.data.length; i++) {
           this.$set(FormVacancy.experience.items, i, response.data[i]);
         }
       });
+    },
+		mounted(){
+      this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id + '?expand=employment-type')
+        .then(response => {
+            console.log(response.data);
+            this.formData.city = response.data.city;
+            this.formData.companyName = response.data.company_id;
+            this.formData.post = response.data.post;
+            this.formData.duties = response.data.responsibilities;
+            this.formData.typeOfEmployment = response.data.employment_type_id;
+            this.formData.salaryFrom = response.data.min_salary;
+            this.formData.salaryBefore = response.data.max_salary;
+            this.formData.qualificationRequirements = response.data.qualification_requirements;
+            this.formData.experience = response.data.work_experience;
+            this.formData.education = response.data.education;
+            this.formData.workingConditions = response.data.working_conditions;
+            this.formData.vacancyVideo = response.data.video;
+            this.formData.officeAddress = response.data.address;
+            this.formData.houseNumber = response.data.home_number;
+
+            console.log('Форма успешно получена');
+          }, response => {
+            console.log(response);
+            console.log('Форма не получена');
+          }
+        )
     },
     methods: {
       saveData() {
@@ -53,7 +79,8 @@
           address: this.formData.officeAddress,
           home_number: this.formData.houseNumber,
         };
-        this.$http.post(`${process.env.VUE_APP_API_URL}/request/vacancy`, data)
+
+        this.$http.patch(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id, data)
           .then(response => {
               console.log(response);
               console.log('Форма успешно отправлена');
@@ -79,5 +106,6 @@
   }
 </script>
 
-<style scoped>
+<style>
+
 </style>

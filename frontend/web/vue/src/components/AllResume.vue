@@ -11,7 +11,7 @@
 				style="margin-top: 20px;"
 			>
 				<v-list-tile-avatar>
-					<img src="https://cdn.vuetifyjs.com/images/lists/1.jpg" alt="">
+					<img :src="'http://work.loc' + item.image_url" alt="">
 				</v-list-tile-avatar>
 
 				<v-list-tile-content>
@@ -28,6 +28,13 @@
 
 					</v-btn>
 				</router-link>
+				<v-btn outline small fab
+							 class="edit-btn"
+							 type="button"
+							 @click="updateResume(item.id)"
+				>
+					<v-icon>arrow_upward</v-icon>
+				</v-btn>
 				<v-btn outline small fab
 							 class="edit-btn"
 							 type="button"
@@ -69,14 +76,19 @@
         this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume`)
           .then(response => {
               console.log(response);
-							this.getAllResume = response.data;
-							this.getAllResume.forEach((element) => {
-              let timestamp = element.updated_at;
-              let date = new Date();
-              date.setTime(timestamp * 1000);
-              element.updated_at = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-							});
-            	this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
+
+            if (response.data.image_url) {
+              this.imageUrl = 'http://work.loc' + response.data.image_url;
+            }
+
+						this.getAllResume = response.data;
+						this.getAllResume.forEach((element) => {
+						let timestamp = element.updated_at;
+						let date = new Date();
+						date.setTime(timestamp * 1000);
+						element.updated_at = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+						});
+						this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
 
             console.log(this.getAllResume);
             console.log('Форма успешно отправлена');
@@ -89,6 +101,9 @@
 
 		},
 		methods: {
+      // updateResume(resumeId) {
+			//
+			// },
       removeResume(index, resumeId) {
         this.getAllResume.splice(index, 1);
         this.$http.delete(`${process.env.VUE_APP_API_URL}/request/resume/` + resumeId)
@@ -101,14 +116,11 @@
             }
           );
 			},
-      changePage(paginationCurrentPage) {
-        console.log(paginationCurrentPage);
-        this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume?page=` + paginationCurrentPage)
+      async changePage(paginationCurrentPage) {
+        await this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume?page=` + paginationCurrentPage)
           .then(response => {
               console.log(response);
               this.getAllResume = response.data;
-              this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
-              this.paginationCurrentPage = response.headers.map['x-pagination-current-page'][0];
               console.log(this.paginationPageCount);
               console.log(this.paginationCurrentPage);
               console.log('Форма успешно отправлена');
@@ -117,6 +129,7 @@
               console.log('Форма не отправлена');
             }
           );
+        console.log(this.paginationCurrentPage);
 			}
 		}
   }

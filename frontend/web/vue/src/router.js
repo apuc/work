@@ -3,8 +3,12 @@ import Router from 'vue-router'
 import FormVacancy from './components/FormVacancy.vue'
 import FormResume from './components/FormResume.vue'
 import FormCompany from './components/FormCompany.vue'
+import AllVacancy from './components/AllVacancy.vue'
+import EditVacancy from './components/EditVacancy'
 import AllResume from './components/AllResume.vue'
 import EditResume from './components/EditResume.vue'
+import AllCompany from './components/AllCompany.vue'
+import EditCompany from './components/EditCompany.vue'
 
 Vue.use(Router);
 
@@ -30,6 +34,18 @@ export default new Router({
       component: FormCompany
     },
     {
+      path: '/personal-area/all-vacancy',
+      name: 'all-vacancy',
+      meta: {title: 'Все вакансии'},
+      component: AllVacancy,
+    },
+    {
+      path: '/personal-area/edit-vacancy/:id',
+      name: 'edit-vacancy/id',
+      meta: {title: 'Редактировать вакансию'},
+      component: EditVacancy
+    },
+    {
       path: '/personal-area/all-resume',
       name: 'all-resume',
       meta: {title: 'Все резюме'},
@@ -40,6 +56,18 @@ export default new Router({
       name: 'edit-resume/id',
       meta: {title: 'Редактировать резюме'},
       component: EditResume
+    },
+    {
+      path: '/personal-area/all-company',
+      name: 'all-company',
+      meta: {title: 'Все компании'},
+      component: AllCompany,
+    },
+    {
+      path: '/personal-area/edit-company/:id',
+      name: 'edit-company/id',
+      meta: {title: 'Редактировать компанию'},
+      component: EditCompany
     }
   ]
 })

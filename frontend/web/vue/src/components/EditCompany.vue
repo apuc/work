@@ -1,23 +1,24 @@
 <template>
-  <div>
-    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
+	<FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
 
-      <image-uploader
-        class="input-file"
-        :preview="true"
-        :className="['fileinput', { 'fileinput--loaded': hasImage }]"
-        capture="environment"
-        :debug="1"
-        doNotResize="gif"
-        :autoRotate="true"
-        outputFormat="verbose"
-        @input="setImage"
-      >
-        <label for="fileInput" slot="upload-label">
-          <span class="upload-caption">
-            Загрузить логотип
-            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-						 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+		<img class="my-avatar" v-if="formData.image_url" :src="formData.image_url"/>
+		<image-uploader
+			class="input-file"
+			:preview="true"
+			:className="['fileinput', { 'fileinput--loaded': hasImage }]"
+			capture="environment"
+			:debug="1"
+			accept="video/*,image/*"
+			doNotResize="gif"
+			:autoRotate="true"
+			outputFormat="verbose"
+			@input="setImage"
+		>
+			<label for="fileInput" slot="upload-label">
+				<span class="upload-caption">
+					Выбрать фото
+					<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 						<g>
 							<g>
 								<g>
@@ -76,12 +77,11 @@
 						<g>
 						</g>
 					</svg>
-          </span>
-        </label>
-      </image-uploader>
+				</span>
+			</label>
+		</image-uploader>
 
-    </FormTemplate>
-  </div>
+	</FormTemplate>
 </template>
 
 <script>
@@ -90,11 +90,41 @@
   import Company from "../mixins/company";
 
   export default {
-    name: "FormCompany",
-    components: {FormTemplate},
+    name: 'FormResume',
     mixins: [Company],
-    created() {
+    components: {FormTemplate},
+    mounted() {
       document.title = this.$route.meta.title;
+
+      this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id)
+        .then(response => {
+            console.log(response.data);
+
+            if (response.data.image_url) {
+              this.formData.image_url = 'http://work.loc' + response.data.image_url;
+            }
+
+            this.formData.nameCompany = response.data.name;
+            this.formData.site = response.data.website;
+            this.formData.scopeOfTheCompany = response.data.activity_field;
+            this.formData.addSocial.vkontakte = response.data.vk;
+            this.formData.addSocial.facebook = response.data.facebook;
+            this.formData.addSocial.instagram = response.data.instagram;
+            this.formData.addSocial.skype = response.data.skype;
+            this.formData.aboutCompany = response.data.description;
+            this.formData.contactPerson = response.data.contact_person;
+            this.formData.companyPhone = response.data.phone;
+
+            if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
+              document.querySelector('.social-block button').click();
+            }
+
+            console.log('Форма успешно получена');
+          }, response => {
+            console.log(response);
+            console.log('Форма не получена');
+          }
+        )
     },
     methods: {
       saveData() {
@@ -111,9 +141,12 @@
           contact_person: this.formData.contactPerson,
           phone: this.formData.companyPhone,
         };
-        let image = document.querySelector('.fileinput');
-        if(image.classList.contains('fileinput--loaded')) {
+        if (this.hasImage) {
           data.image = this.image;
+        } else {
+          data.image = {
+            changeImg: false
+          }
         }
         this.$http.post(`${process.env.VUE_APP_API_URL}/request/company`, data)
           .then(response => {
@@ -128,13 +161,16 @@
       getFormData() {
         return FormCompany;
       },
-      setImage: function(output) {
+      setImage: function (output) {
         this.hasImage = true;
         this.image = output;
-      }
+        let img = document.querySelector('.my-avatar');
+        img.classList.add('hide');
+      },
     },
   }
 </script>
 
-<style scoped>
+<style>
+
 </style>

@@ -14,19 +14,22 @@
                                 Вход
 														</button>
                             <?php else: ?>
-															<span class="home__nav-item open-menu jsOpenMenu">
+															<div class="dropdown jsMenu">
+																<span class="home__nav-item jsOpenMenu">
 																	<?= Yii::$app->user->identity->username ?>
-																	<div class="dropdown-menu jsShowMenu">
-																		<a href="/personal-area" class="home__nav-item">Личный кабинект</a>
-																		<?= Html::beginForm(['/site/logout'], 'post', ['class' => 'form-logout']) ?>
-                                      <?= Html::submitButton(
-                                          'Logout (' . Yii::$app->user->identity->username . ')',
-                                          ['class' => 'btn-logout']
-                                      ) ?>
-                                      <?= Html::endForm() ?>
-																	</div>
-															</span>
-
+																</span>
+																<div class="dropdown__menu jsShowMenu">
+																	<a class="home__nav-item" href="/personal-area">
+																		Личный кабинект
+																	</a>
+                                    <?= Html::beginForm(['/site/logout'], 'post', ['class' => 'form-logout']) ?>
+                                    <?= Html::submitButton(
+                                        'Logout (' . Yii::$app->user->identity->username . ')',
+                                        ['class' => 'btn-logout']
+                                    ) ?>
+                                    <?= Html::endForm() ?>
+																</div>
+															</div>
                             <?php endif ?>
                     </nav>
                     <div class="home__main-email d-flex align-items-center"><span class="home__main-ico">@</span><a

@@ -78,17 +78,9 @@ export default {
     rules: [],
     items: [
       {
-        name: 'Не имеет значения'
-      },
-      {
-        name: 'Менее года'
-      },
-      {
-        name: '1 год'
-      },
-      {
-        name: '2 года'
-      },
+        name: '',
+        id: ''
+      }
     ],
   }),
   education: Object.assign({}, Field, {

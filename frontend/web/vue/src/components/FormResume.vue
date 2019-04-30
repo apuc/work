@@ -90,7 +90,7 @@
     name: 'FormResume',
     mixins: [Resume],
     components: {FormTemplate},
-    created() {
+    mounted() {
       document.title = this.$route.meta.title;
       this.getEmploymentType().then(response => {
         FormResume.categoriesResume.items = response.data;
