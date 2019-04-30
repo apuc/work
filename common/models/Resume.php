@@ -38,6 +38,7 @@ use yii\db\ActiveRecord;
  * @property Category[] $category
  * @property ResumeSkill[] $resume_skill
  * @property Skill[] $skill
+ * @property Experience $lastExperience
  * @property bool $can_update
  */
 class Resume extends WorkActiveRecord
@@ -195,5 +196,10 @@ class Resume extends WorkActiveRecord
     public function getCan_update()
     {
         return (time()-self::UPDATE_MIN_SEC_PASSED) > $this->update_time;
+    }
+
+    public function getLastExperience()
+    {
+        return Experience::find()->where(['resume_id' => $this->id])->orderBy('year_to DESC, month_to DESC')->one();
     }
 }

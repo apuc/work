@@ -9,6 +9,7 @@
 /* @var $min_salary int */
 /* @var $max_salary int */
 /* @var $search_text string */
+/* @var $city string */
 
 /* @var $employment_types EmploymentType[] */
 
@@ -24,9 +25,6 @@ use yii\widgets\LinkPager;
 $this->title = 'Поиск вакансий';
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
 ?>
-<script>
-    var search_text = '<?=$search_text?>';
-</script>
 <section class="all-block all-vacancies"><img class="all-block__dots2" src="/images/bg-dots.png" alt=""
                                     role="presentation"/>
     <div class="all-block__circle">
@@ -46,8 +44,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         <span class="logo__text">Актуальных вакансий сейчас</span>
                     </div>
                 </div>
-							<div class="search"><input type="text" placeholder="Поиск"/>
-								<button class="btn-red"><i class="fa fa-search"></i>
+							<div class="search">
+                                <input type="text" name="vacancy_search_text" placeholder="Поиск" value="<?=$search_text?>"/>
+								<button class="btn-red" id="search">
+                                    <i class="fa fa-search"></i>
 								</button>
 							</div>
             </div>
@@ -57,35 +57,15 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                 <div class="v-content-bottom__left sidebar jsOpenFilter" id="sidebar">
                     <div class="filter-close jsHideFilter"><span></span><span></span>
                     </div>
+                    <?php $cities = ['Донецк', 'Макеевка', 'Луганск', 'Харьков', 'Киев', 'Одесса', 'Львов', 'Мариуполь', 'Днепропетровск']; ?>
                     <div class="sidebar-inner">
-												<div class="vl-block">
-														<select class="vl-block__cities jsCitiesSelect">
-																<option>Донецк
-																</option>
-																<option>Макеевка
-																</option>
-																<option>Луганск
-																</option>
-																<option>Луганск
-																</option>
-																<option>Луганск
-																</option>
-																<option>Луганск
-																</option>
-																<option>Луганск
-																</option>
-																<option>Луганск
-																</option>
-																<option>Луганск
-																</option>
-																<option>Луганск
-																</option>
-																<option>Луганск
-																</option>
-																<option>Луганск
-																</option>
-														</select>
-												</div>
+                        <div class="vl-block">
+                            <select class="vl-block__cities jsCitiesSelect">
+                                <?php foreach($cities as $sel_city):?>
+                                <option <?=$sel_city == $city?'selected':''?>><?=$sel_city?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
                         <div class="vl-block">
                             <div class="vl-block__head jsOpenCheck">
                                 <p>Требуемый опыт
@@ -193,7 +173,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                             <div>
                                 <?php foreach ($vacancy->category as $category): ?>
-                                    <a class="btn-card btn-card-small btn-gray" href="<?=Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id]), 'days' => 30])?>"><?= $category->name ?></a>
+                                    <a class="btn-card btn-card-small btn-gray" href="<?=Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
                                 <?php endforeach ?>
                             </div>
                             <h3 class="single-card__title mt5 mb0"><?= $vacancy->post ?></h3>
@@ -203,7 +183,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                                                     src="/images/icon-eye.png" alt=""
                                                                     role="presentation"/><span><?= $vacancy->views ?></span>
                                 </div>
-                                <a class="d-flex align-items-center ml-auto mt5 mb5" href="#"><img
+                                <a class="d-flex align-items-center ml-auto mt5 mb5" href="<?=Url::toRoute(['/vacancy/search', 'city' => $vacancy->city])?>"><img
                                             class="single-card__icon"
                                             src="/images/arr-place.png"
                                             alt=""

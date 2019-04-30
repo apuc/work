@@ -83,6 +83,7 @@ return [
                 'resume/view/<id>' => 'resume/default/view',
                 'vacancy/view/<id>' => 'vacancy/default/view',
                 'vacancy/search' => 'vacancy/default/search',
+                'resume/search' => 'resume/default/search',
                 'personal-area/<action>' => 'personal_area/default/index',
                 'personal-area/<action>/<id>' => 'personal_area/default/index',
                 'personal-area' => 'personal_area/default/index',
