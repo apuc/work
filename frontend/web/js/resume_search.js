@@ -18,9 +18,9 @@ $(document).ready(function(){
 
         var min_salary = $("input[name='min_salary']");
         var max_salary = $("input[name='max_salary']");
-        var search_text = $("input[name='vacancy_search_text']");
+        var search_text = $("input[name='resume_search_text']");
         var jsCitiesSelect = $(".jsCitiesSelect");
-        window.location.href="/vacancy/search?" +
+        window.location.href="/resume/search?" +
             "experience_ids=" + JSON.stringify(experienceIds) +
             "&category_ids=" + JSON.stringify(categoryIds) +
             "&employment_type_ids="+JSON.stringify(employment_typeIds) +

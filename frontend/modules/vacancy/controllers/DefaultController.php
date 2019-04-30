@@ -24,16 +24,14 @@ class DefaultController extends Controller
 
     public function actionSearch()
     {
-        $per_page = 20;
-
         $params = [
             'category_ids' => json_decode(\Yii::$app->request->get('category_ids')),
             'employment_type_ids' => json_decode(\Yii::$app->request->get('employment_type_ids')),
             'experience_ids' => json_decode(\Yii::$app->request->get('experience_ids')),
             'min_salary' => \Yii::$app->request->get('min_salary'),
             'max_salary' => \Yii::$app->request->get('max_salary'),
-            'text' => \Yii::$app->request->get('text'),
-            'page' => \Yii::$app->request->get('page'),
+            'search_text' => \Yii::$app->request->get('search_text'),
+            'city' => \Yii::$app->request->get('city'),
         ];
         $categories = Category::find()->all();
         $employment_types = EmploymentType::find()->all();
@@ -57,8 +55,11 @@ class DefaultController extends Controller
         if($params['max_salary']){
             $vacancies_query->andWhere(['<=', 'min_salary', $params['max_salary']]);
         }
-        if($params['text']){
-            $vacancies_query->andWhere(['like', 'post', $params['text']]);
+        if($params['search_text']){
+            $vacancies_query->andWhere(['like', 'post', $params['search_text']]);
+        }
+        if($params['city']){
+            $vacancies_query->andWhere(['like', 'city', $params['city']]);
         }
         $vacancies_query->orderBy('created_at DESC');
         $vacancies = new ActiveDataProvider([
@@ -67,14 +68,14 @@ class DefaultController extends Controller
                 'pageSize' => 2
             ]
         ]);
-        //$vacancies_query->all();
         return $this->render('search', [
             'min_salary' => $params['min_salary'],
             'max_salary' => $params['max_salary'],
             'category_ids' => $params['category_ids'],
             'employment_type_ids' => $params['employment_type_ids'],
             'experience_ids' => $params['experience_ids'],
-            'search_text' => $params['text'],
+            'search_text' => $params['search_text'],
+            'city' => $params['city'],
             'vacancies' => $vacancies,
             'categories' => $categories,
             'employment_types' => $employment_types,

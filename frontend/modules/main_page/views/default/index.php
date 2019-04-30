@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
                     </div>
                     <div>
                         <?php foreach ($vacancy->category as $category): ?>
-                        <a class="btn-card btn-card-small btn-gray" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id]), 'days' => 30])?>">
+                        <a class="btn-card btn-card-small btn-gray" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>">
                             <?= $category->name ?>
                         </a>
                         <?php endforeach; ?>
@@ -158,7 +158,7 @@ use yii\widgets\ActiveForm;
     </div>
     <div class="home__footer">
         <?php foreach ($categories as $category): ?>
-            <a class="home__footer-item" href="#"><?= $category->name ?> <?= $category->vacancy_count ?></a>
+            <a class="home__footer-item" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?> <?= $category->vacancy_count ?></a>
         <?php endforeach ?>
     </div>
     <img class="home__dots1" src="images/bg-dots.png" alt="" role="presentation"/><img class="home__dots2"
