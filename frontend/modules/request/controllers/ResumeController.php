@@ -39,6 +39,7 @@ class ResumeController extends MyActiveController
         $params = Yii::$app->getRequest()->getBodyParams();
 
         $model->load($params, '');
+        $model->years_of_exp = Resume::getFullExperience($params['work']);
         $model->update_time = time();
         if($params['image']){
             $data = explode(',', $params['image']['dataUrl']);
@@ -130,6 +131,7 @@ class ResumeController extends MyActiveController
             $model->image_url = '/media/resume/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
         }
         $model->employer_id = $employer->id;
+        $model->years_of_exp = Resume::getFullExperience($params['work']);
         if($model->save()){
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);

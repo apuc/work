@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property float $max_salary
  * @property string $city
  * @property string $description
+ * @property integer $years_of_exp
  * @property string $skype
  * @property string $instagram
  * @property string $facebook
@@ -76,7 +77,7 @@ class Resume extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time'], 'integer'],
+            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp'], 'integer'],
             [['title', 'city', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['min_salary', 'max_salary'], 'safe'],
@@ -103,6 +104,7 @@ class Resume extends WorkActiveRecord
             'max_salary' => 'Максимальная заработная плата',
             'city' => 'Город',
             'description' => 'Описание',
+            'years_of_exp' => 'Количество полных лет опыта',
             'skype' => 'Skype',
             'instagram' => 'Instagram',
             'facebook' => 'Facebook',
@@ -201,5 +203,26 @@ class Resume extends WorkActiveRecord
     public function getLastExperience()
     {
         return Experience::find()->where(['resume_id' => $this->id])->orderBy('year_to DESC, month_to DESC')->one();
+    }
+
+    public static function getFullExperience($experiences){
+        if(!empty($experiences)){
+            $years = 0;
+            $months = 0;
+            foreach ($experiences as $experience){
+                $years += $experience['year_to'] - $experience['year_from'];
+                $tmp_months = $experience['month_to'] - $experience['month_from'];
+                if($tmp_months >= 0){
+                    $months += $tmp_months;
+                }
+                else {
+                    $years--;
+                    $months += 12-$experience['month_from']+$experience['month_to'];
+                }
+            }
+            return $years + (int)($months/12);
+        } else {
+          return 0;
+        }
     }
 }
