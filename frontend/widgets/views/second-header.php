@@ -1,3 +1,8 @@
+<?php
+
+use yii\helpers\Html;
+
+?>
 <header class="header-wrap jsHeaderIndex">
     <img class="header-wrap__emblem" src="/images/img2.png" alt="" role="presentation"/>
     <div class="container">
@@ -6,9 +11,8 @@
                 <div class="home__main-header">
                     <nav class="home__nav">
                         <a class="home__nav-item" href="/">Главная</a>
-												<a class="home__nav-item" href="resume.html">Резюме</a>
-                            <?php use yii\helpers\Html;
-
+												<a class="home__nav-item" href="<?=yii\helpers\Url::to('/resume/search')?>">Резюме</a>
+                            <?php
                             if (Yii::$app->user->isGuest): ?>
 														<button class="home__nav-item jsLogin">
                                 Вход

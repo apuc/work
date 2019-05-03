@@ -90,7 +90,7 @@ use yii\widgets\ActiveForm;
         <div class="home__main-top">
             <div class="home__main-header">
                 <nav class="home__nav"><a class="home__nav-item" href="/">Главная</a><a class="home__nav-item"
-                                                                                        href="resume.html">Резюме</a>
+                                                                                        href="<?=Url::to('resume/search')?>">Резюме</a>
 
                         <?php if (Yii::$app->user->isGuest): ?>
 													<button class="home__nav-item jsLogin">
