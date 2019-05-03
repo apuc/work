@@ -4,6 +4,7 @@ namespace frontend\modules\vacancy\controllers;
 
 use common\classes\Debug;
 use common\models\Category;
+use common\models\City;
 use common\models\EmploymentType;
 use common\models\Resume;
 use common\models\Vacancy;
@@ -35,6 +36,7 @@ class DefaultController extends Controller
         ];
         $categories = Category::find()->all();
         $employment_types = EmploymentType::find()->all();
+        $cities = City::find()->all();
 
         $vacancies_query = Vacancy::find();
         if($params['experience_ids']) {
@@ -69,6 +71,7 @@ class DefaultController extends Controller
             ]
         ]);
         return $this->render('search', [
+            'cities' => $cities,
             'min_salary' => $params['min_salary'],
             'max_salary' => $params['max_salary'],
             'category_ids' => $params['category_ids'],

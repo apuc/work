@@ -4,6 +4,8 @@
 /* @var $resumes \yii\data\ActiveDataProvider */
 /* @var $employment_types \common\models\EmploymentType[] */
 /* @var $city string */
+/* @var $search_text string */
+/* @var $cities \common\models\City[] */
 
 use common\models\Category;
 use common\models\Experience;
@@ -29,7 +31,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         <div class="logo__img"><img class="logo__main" src="/images/logo.png" alt="" role="presentation"/><img class="logo__info" src="/images/ico-i.png" alt="" role="presentation"/>
                         </div><span class="logo__text">Актуальных вакансий сейчас</span>
                     </div>
-                    <div class="search"><input type="text" placeholder="Поиск" name="resume_search_text" value="<?=$search_text?>"/>
+                    <div class="search"><input type="text" placeholder="Поиск" name="resume_search_text" <?php if(isset($search_text)):?>value="<?=$search_text?>"/><?php endif ?>
                         <button id="search" class="btn-red"><i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -41,12 +43,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                 <div class="v-content-bottom__left sidebar jsOpenFilter" id="sidebar">
                     <div class="filter-close jsHideFilter"><span></span><span></span>
                     </div>
-                    <?php $cities = ['Донецк', 'Макеевка', 'Луганск', 'Харьков', 'Киев', 'Одесса', 'Львов', 'Мариуполь', 'Днепропетровск']; ?>
                     <div class="sidebar-inner">
                         <div class="vl-block">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <?php foreach($cities as $sel_city):?>
-                                    <option <?=$sel_city == $city?'selected':''?>><?=$sel_city?></option>
+                                    <option <?=$sel_city->name == $city?'selected':''?>><?=$sel_city->name?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>

@@ -3,6 +3,7 @@
 namespace frontend\modules\resume\controllers;
 
 use common\models\Category;
+use common\models\City;
 use common\models\EmploymentType;
 use common\models\Resume;
 use yii\data\ActiveDataProvider;
@@ -36,6 +37,7 @@ class DefaultController extends Controller
         ];
         $categories = Category::find()->all();
         $employment_types = EmploymentType::find()->all();
+        $cities = City::find()->all();
 
         $resume_query = Resume::find();
 
@@ -67,6 +69,7 @@ class DefaultController extends Controller
             ]
         ]);
         return $this->render('search', [
+            'cities' => $cities,
             'resumes' => $resumes,
             'categories' => $categories,
             'employment_types' => $employment_types,

@@ -7,6 +7,7 @@ use common\models\Company;
 use common\models\Education;
 use common\models\Employer;
 use common\models\Experience;
+use common\models\Phone;
 use common\models\Resume;
 use common\models\ResumeSkill;
 use common\models\Skill;
@@ -57,6 +58,12 @@ class CompanyController extends MyActiveController
         $model->image_url = '/media/company/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
         $model->user_id = Yii::$app->user->id;
         if($model->save()){
+            if($params['phone']){
+                $phone = new Phone();
+                $phone->company_id = $model->id;
+                $phone->number = $params['phone'];
+                $phone->save();
+            }
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
         } elseif (!$model->hasErrors()) {
@@ -66,9 +73,11 @@ class CompanyController extends MyActiveController
     }
 
     /**
+     * @param $id
+     * @return Company|null
+     * @throws HttpException
      * @throws InvalidConfigException
      * @throws ServerErrorHttpException
-     * @throws HttpException
      */
     public function actionUpdate($id){
         $model = Company::findOne($id);
@@ -97,6 +106,13 @@ class CompanyController extends MyActiveController
         }
         $model->user_id = Yii::$app->user->id;
         if($model->save()){
+            Phone::deleteAll(['company_id' => $model->id]);
+            if($params['phone']){
+                $phone = new Phone();
+                $phone->company_id = $model->id;
+                $phone->number = $params['phone'];
+                $phone->save();
+            }
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
         } elseif (!$model->hasErrors()) {

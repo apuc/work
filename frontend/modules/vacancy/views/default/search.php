@@ -12,6 +12,7 @@
 /* @var $city string */
 
 /* @var $employment_types EmploymentType[] */
+/* @var $cities City[] */
 
 use common\models\Category;
 use common\models\EmploymentType;
@@ -57,12 +58,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                 <div class="v-content-bottom__left sidebar jsOpenFilter" id="sidebar">
                     <div class="filter-close jsHideFilter"><span></span><span></span>
                     </div>
-                    <?php $cities = ['Донецк', 'Макеевка', 'Луганск', 'Харьков', 'Киев', 'Одесса', 'Львов', 'Мариуполь', 'Днепропетровск']; ?>
                     <div class="sidebar-inner">
                         <div class="vl-block">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <?php foreach($cities as $sel_city):?>
-                                <option <?=$sel_city == $city?'selected':''?>><?=$sel_city?></option>
+                                <option <?=$sel_city->name == $city?'selected':''?>><?=$sel_city->name?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
