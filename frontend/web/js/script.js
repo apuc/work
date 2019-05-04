@@ -180,29 +180,7 @@ $(document).ready(function () {
     $('.jsModalLogin').fadeOut(1);
     $('.jsModalReg').fadeOut();
     $('.jsModalMessage').fadeOut();
-    $('.jsBtn').prop('disabled', true);
     $('body').removeClass('body-overflow');
-  });
-
-  var nameTest = /^([A-Z])(.+)/;
-  var mailTest = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
-  var passTest = /^([A-Z])(.+)/;
-
-  $('.jsModalLoginForm input').on('input', function () {
-    var mail = $('.jsModalLoginForm .jsMail').val();
-    var pass = $('.jsModalLoginForm .jsPass').val();
-    if (mailTest.test(mail) && passTest.test(pass)) {
-      $('.jsBtnLogin').prop('disabled', false);
-    }
-  });
-  $('.jsModalRegForm input').on('input', function () {
-    var name = $('.jsModalRegForm .jsName').val();
-    var surname = $('.jsModalRegForm .jsSurname').val();
-    var mail = $('.jsModalRegForm .jsMail').val();
-    var pass = $('.jsModalRegForm .jsPass').val();
-    if (mailTest.test(mail) && passTest.test(pass) && nameTest.test(name) && nameTest.test(surname)) {
-      $('.jsBtnReg').prop('disabled', false);
-    }
   });
 
   $('.jsOpenMenu').mouseenter(function () {

@@ -82,8 +82,10 @@ use yii\widgets\ActiveForm;
 				<div class="modal-style modal-send-message jsModalMessage">
 						<h2>Написать нам
 						</h2>
-						<form class="jsModalRegForm"><input class="jsName" type="text" name="name" placeholder="Имя"/><textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение"></textarea>
-								<button class="jsBtnReg jsBtn" type="submit" disabled="disabled">Отправить
+						<form class="jsModalMessageForm">
+								<input class="jsName" type="text" name="name" placeholder="Имя"/>
+								<textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение"></textarea>
+								<button class="jsBtnReg jsBtn" type="submit">Отправить
 								</button>
 						</form>
 				</div>
