@@ -18,6 +18,8 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         $model = Vacancy::findOne($id);
+        $model->views++;
+        $model->save();
         return $this->render('view', [
             'model' => $model
         ]);

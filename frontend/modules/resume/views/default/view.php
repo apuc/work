@@ -4,7 +4,8 @@
 
 $this->title = $model->title;
 
-use common\models\Experience; ?>
+use common\models\Experience;
+use yii\helpers\Url; ?>
 
 
 <section class="resume"><img class="resume__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
@@ -17,9 +18,9 @@ use common\models\Experience; ?>
             </button>
             <div class="resume-results">
                 <ul class="breadcrumbs">
-                    <li><a href="#">К результатам поиска</a>
+                    <li><a href="<?=Url::to('/resume/search')?>">К результатам поиска</a>
                     </li>
-                    <li><a href="#"><?= $model->city ?></a>
+                    <li><a href="<?=Url::to(['/resume/search', 'city' => $model->city])?>"><?= $model->city ?></a>
                     </li>
                     <li><?= $model->title ?></li>
                 </ul>
