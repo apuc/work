@@ -79,5 +79,13 @@ use yii\widgets\ActiveForm;
             </div>
             <span class="modal-style__error-text">Вы ввели не верные данные вернитесь и заполните форму верное</span>
         </div>
+				<div class="modal-style modal-send-message jsModalMessage">
+						<h2>Написать нам
+						</h2>
+						<form class="jsModalRegForm"><input class="jsName" type="text" name="name" placeholder="Имя"/><textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение"></textarea>
+								<button class="jsBtnReg jsBtn" type="submit" disabled="disabled">Отправить
+								</button>
+						</form>
+				</div>
     </div>
 </div>

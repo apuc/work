@@ -170,10 +170,17 @@ $(document).ready(function () {
     $('.jsModalReg').fadeOut(1);
     $('.jsModalLogin').fadeIn();
   });
+  $('.jsSendMessage').click(function () {
+    $('.jsModal').fadeIn();
+    $('.jsModalMessage').fadeIn();
+    $('body').addClass('body-overflow');
+  });
   $('.jsModalClose').click(function () {
     $('.jsModal').fadeOut();
     $('.jsModalLogin').fadeOut(1);
     $('.jsModalReg').fadeOut();
+    $('.jsModalMessage').fadeOut();
+    $('.jsBtn').prop('disabled', true);
     $('body').removeClass('body-overflow');
   });
 
@@ -198,7 +205,6 @@ $(document).ready(function () {
     }
   });
 
-
   $('.jsOpenMenu').mouseenter(function () {
     $('.jsShowMenu').fadeIn().css('display', 'flex');
   });
@@ -213,7 +219,8 @@ $(document).ready(function () {
     }
   });
 });
-if($('.jsCitiesSelect').length > 0) {
+
+if ($('.jsCitiesSelect').length > 0) {
   $('.jsCitiesSelect').select2();
 }
 //# sourceMappingURL=script.js.map

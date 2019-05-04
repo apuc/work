@@ -163,7 +163,7 @@ use yii\helpers\Url; ?>
                                             src="/images/fb.svg" alt="" role="presentation"/></a><?php endif ?>
                             <?php endif ?>
                         </div>
-                        <button class="resume-info__btn">написать сообщение
+                        <button class="resume-info__btn jsSendMessage">написать сообщение
                         </button>
                         <a class="resume-info__complain" href="#">Пожаловаться на<br>это резюме</a>
                     </div>
