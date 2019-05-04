@@ -6,6 +6,7 @@
   margin: 20px auto;
   padding: 0;
   list-style: none;
+  z-index: 1;
 }
 
 .search-pagination li a, .search-pagination li span {
@@ -27,4 +28,15 @@
 
 .search-pagination li span {
   background-color: #b6c3ca;
+}
+
+.v-content-top {
+  margin-left: 0;
+  justify-content: center;
+}
+
+@media (max-width: 992px) {
+  .v-content-bottom__center {
+    width: 100%;
+  }
 }

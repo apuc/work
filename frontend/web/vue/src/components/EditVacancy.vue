@@ -12,7 +12,7 @@
     name: 'FormResume',
     mixins: [Vacancy],
     components: {FormTemplate},
-    created() {
+    mounted() {
       document.title = this.$route.meta.title;
       this.getEmploymentType().then(response => {
         console.log(response);

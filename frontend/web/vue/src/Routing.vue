@@ -1,10 +1,39 @@
 <template>
   <v-app>
+    <v-navigation-drawer
+      v-model="drawer"
+      fixed
+      app
+    >
+      <v-list class="pa-1">
+        <v-list-tile avatar>
+          <v-list-tile-content>
+            <v-list-tile-title>{{firstName}} {{secondName}}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+
+      <v-list class="pt-0" dense>
+        <v-divider></v-divider>
+
+        <v-list-tile
+          v-for="link in linkMenu"
+          :key="link.title"
+          :to="link.url"
+          @click=""
+        >
+          <v-list-tile-content>
+            <v-list-tile-title>{{ link.title }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
     <v-layout
       wrap
+      main
     >
       <v-container>
-        <v-layout justify-start>
+        <v-layout justify-start menu>
           <v-btn
             color="pink"
             dark
@@ -13,40 +42,9 @@
             Меню
           </v-btn>
         </v-layout>
+        <router-view></router-view>
       </v-container>
-
-      <v-navigation-drawer
-        v-model="drawer"
-        permanent
-        absolute
-      >
-        <v-list class="pa-1">
-          <v-list-tile avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>{{firstName}} {{secondName}}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-
-        <v-list class="pt-0" dense>
-          <v-divider></v-divider>
-
-          <v-list-tile
-            v-for="link in linkMenu"
-            :key="link.title"
-            :to="link.url"
-            @click=""
-          >
-            <v-list-tile-content>
-              <v-list-tile-title>{{ link.title }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-      </v-navigation-drawer>
     </v-layout>
-    <v-container>
-      <router-view></router-view>
-    </v-container>
   </v-app>
 </template>
 
@@ -104,6 +102,9 @@ export default {
           console.log('Форма не отправлена');
         }
       );
+    if (window.innerWidth < 1265) {
+      this.drawer = false;
+    }
   }
 }
 </script>
@@ -123,5 +124,19 @@ export default {
   .v-list__tile__title a {
     color: inherit;
     text-decoration: none;
+  }
+  .main {
+    padding-left: 300px;
+  }
+  .menu {
+    display: none;
+  }
+  @media (max-width: 1265px) {
+    .main {
+      padding-left: 0;
+    }
+    .menu {
+      display: flex;
+    }
   }
 </style>
