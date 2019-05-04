@@ -19,7 +19,7 @@ $this->title = $model->post;
             <div class="single-block__left">
                 <div class="single-block__left__first">
                     <?php foreach ($model->category as $category): ?>
-                        <a class="btn-card btn-card-small btn-gray" href="#"><?= $category->name ?></a>
+                        <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::to(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
                     <?php endforeach ?>
                     <span>Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd MM yyyy') ?></span>
                     <div class="single-block__left__first__view"><img class="single-block__icon mr5"
@@ -27,7 +27,7 @@ $this->title = $model->post;
                                                                       role="presentation"/><span><?= $model->views ?></span>
                     </div>
                     <a class="single-block__left__first__city d-flex align-items-center ml-auto mt5 mb5"
-                       href="#"><img class="single-block__icon" src="/images/arr-place.png" alt=""
+                       href="<?=\yii\helpers\Url::to(['/vacancy/search', 'city' => $model->city])?>"><img class="single-block__icon" src="/images/arr-place.png" alt=""
                                      role="presentation"/><span class="ml5"><?= $model->city ?></span></a>
                 </div>
                 <h3 class="single-block__left__head"><?= $model->post ?>
@@ -104,10 +104,10 @@ $this->title = $model->post;
                             <?php endforeach ?>
                         </div>
                     </div>
-                    <div class="sr-btn">
-                        <button class="sr-btn__btn btn btn-red">Отправить резюме
-                        </button>
-                    </div>
+<!--                    <div class="sr-btn">-->
+<!--                        <button class="sr-btn__btn btn btn-red">Отправить резюме-->
+<!--                        </button>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
