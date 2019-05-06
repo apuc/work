@@ -38,24 +38,23 @@ class CompanyController extends MyActiveController
             throw new HttpException(400, 'Пользователь не авторизирован');
         $model = new Company();
         $params = Yii::$app->getRequest()->getBodyParams();
-        $data = explode(',', $params['image']['dataUrl']);
-
-
-        $image = base64_decode($data[1]);
-        $dir = '__DIR__ ../../../web/media/company';
-        if(!file_exists($dir))
-            mkdir($dir);
-        $dir .= '/'.Yii::$app->user->id.'/';
-        $file_name = time();
-        $file_type = explode('/', $params['image']['type'])[1];
-        if(!file_exists($dir))
-            mkdir($dir);
-        $file = fopen($dir.$file_name.'.'.$file_type, "wb");
-        fwrite($file, $image);
-        fclose($file);
-
         $model->load($params, '');
-        $model->image_url = '/media/company/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
+        if($params['image']) {
+            $data = explode(',', $params['image']['dataUrl']);
+            $image = base64_decode($data[1]);
+            $dir = '__DIR__ ../../../web/media/company';
+            if (!file_exists($dir))
+                mkdir($dir);
+            $dir .= '/' . Yii::$app->user->id . '/';
+            $file_name = time();
+            $file_type = explode('/', $params['image']['type'])[1];
+            if (!file_exists($dir))
+                mkdir($dir);
+            $file = fopen($dir . $file_name . '.' . $file_type, "wb");
+            fwrite($file, $image);
+            fclose($file);
+            $model->image_url = '/media/company/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
+        }
         $model->user_id = Yii::$app->user->id;
         if($model->save()){
             if($params['phone']){

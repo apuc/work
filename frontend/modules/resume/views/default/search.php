@@ -136,6 +136,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                 </div>
                 <div class="v-content-bottom__center">
                     <?php /** @var Resume $resume */
+                    if($resumes->models):
                     foreach ($resumes->models as $resume):?>
                     <div class="single-card-resume">
                         <div class="single-card-resume__top"><img class="single-card-resume__left-img" src="<?=$resume->image_url?>" alt="" role="presentation"/>
@@ -189,6 +190,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         'nextPageLabel' => '>',
                         'prevPageLabel' => '<',
                     ]);?>
+                    <?php else: ?>
+                        <div class="single-card-resume">
+                            <p>По вашему запросу не найдено результатов.</p>
+                        </div>
+                    <?php endif ?>
                 </div>
 <!--                <div class="soc-sidebar" id="sidebar-vr">-->
 <!--                    <div class="sidebar-inner">-->

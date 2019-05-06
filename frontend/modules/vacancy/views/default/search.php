@@ -167,7 +167,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         <p>Нет результатов поиска</p>
                     </div>
                     <?php endif ?>
-                    <?php /** @var Vacancy $vacancy */
+                    <?php if($vacancies->models):
+                    /** @var Vacancy $vacancy */
                     foreach ($vacancies->models as $vacancy): ?>
                         <div class="single-card">
                             <div class="single-card__tr">
@@ -216,16 +217,22 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                     полностью</a>
                             </div>
                         </div>
-                    <?php endforeach ?>
-                    <?= LinkPager::widget([
-                    		'pagination' => $vacancies->pagination,
-												'options' => ['class' => 'search-pagination'],
-												'maxButtonCount' => 5,
-												'firstPageLabel' => '<<',
-												'lastPageLabel' => '>>',
-												'nextPageLabel' => '>',
-												'prevPageLabel' => '<',
-                    ]);?>
+                    <?php endforeach; ?>
+                     <?php LinkPager::widget([
+                         'pagination' => $vacancies->pagination,
+                         'options' => ['class' => 'search-pagination'],
+                         'maxButtonCount' => 5,
+                         'firstPageLabel' => '<<',
+                         'lastPageLabel' => '>>',
+                         'nextPageLabel' => '>',
+                         'prevPageLabel' => '<',
+                     ]);?>
+                    <?php else: ?>
+                        <div class="single-card">
+                            <p>По вашему запросу не найдено результатов.</p>
+                        </div>
+                    <?php endif ?>
+
                 </div>
 <!--                <div class="soc-sidebar" id="sidebar-vr">-->
 <!--                    <div class="sidebar-inner">-->
