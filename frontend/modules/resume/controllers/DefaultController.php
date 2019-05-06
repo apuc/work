@@ -6,6 +6,7 @@ use common\classes\Debug;
 use common\models\Category;
 use common\models\City;
 use common\models\EmploymentType;
+use common\models\Message;
 use common\models\Resume;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -23,6 +24,21 @@ class DefaultController extends Controller
         return $this->render('view', [
             'model' => $model
         ]);
+    }
+
+    public function actionSendMessage(){
+        $post = \Yii::$app->request->post();
+        if($resume = Resume::findOne($post['resume_id'])){
+            $message = new Message();
+            $message->text = $post['message'];
+            $message->sender_id = \Yii::$app->user->id;
+            $message->subject = 'Resume';
+            $message->subject_id = $resume->id;
+            $message->receiver_id = $resume->employer->user_id;
+            $message->save();
+        }
+        return $this->goBack();
+
     }
 
     public function actionSearch()
