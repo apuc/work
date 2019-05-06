@@ -26,7 +26,7 @@ use yii\db\ActiveRecord;
  *
  * @property User $security
  * @property Vacancy[] $vacancy
- * @property Phone[] $phone
+ * @property Phone $phone
  */
 class Company extends WorkActiveRecord
 {
@@ -118,7 +118,7 @@ class Company extends WorkActiveRecord
      */
     public function getPhone()
     {
-        return $this->hasMany(Phone::className(), ['company_id' => 'id']);
+        return $this->hasOne(Phone::className(), ['company_id' => 'id']);
     }
 
     /**
