@@ -129,11 +129,8 @@
         }
         this.$http.post(`${process.env.VUE_APP_API_URL}/request/resume`, data)
           .then(response => {
-              console.log(response);
-              console.log('Форма успешно отправлена');
+            this.$router.push('/personal-area/all-resume')
             }, response => {
-              console.log(response);
-              console.log('Форма не отправлена');
             }
           )
       },

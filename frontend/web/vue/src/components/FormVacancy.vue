@@ -55,11 +55,8 @@
         };
         this.$http.post(`${process.env.VUE_APP_API_URL}/request/vacancy`, data)
           .then(response => {
-              console.log(response);
-              console.log('Форма успешно отправлена');
+            this.$router.push('/personal-area/all-vacancy')
             }, response => {
-              console.log(response);
-              console.log('Форма не отправлена');
             }
           )
       },
