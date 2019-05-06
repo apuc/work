@@ -96,7 +96,7 @@
     mounted() {
       document.title = this.$route.meta.title;
 
-      this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id)
+      this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id + '?expand=phone')
         .then(response => {
             console.log(response.data);
 
@@ -113,7 +113,7 @@
             this.formData.addSocial.skype = response.data.skype;
             this.formData.aboutCompany = response.data.description;
             this.formData.contactPerson = response.data.contact_person;
-            this.formData.companyPhone = response.data.phone;
+            this.formData.companyPhone = response.data.phone.number;
 
             if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
               document.querySelector('.social-block button').click();
@@ -148,7 +148,7 @@
             changeImg: false
           }
         }
-        this.$http.post(`${process.env.VUE_APP_API_URL}/request/company`, data)
+        this.$http.patch(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id, data)
           .then(response => {
               console.log(response);
               console.log('Форма успешно отправлена');
