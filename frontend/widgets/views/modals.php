@@ -6,7 +6,7 @@
 use common\classes\Debug;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
 ?>
 <div class="modal-block jsModal">
     <div class="modal-overlay jsModalClose">
@@ -82,9 +82,7 @@ use yii\widgets\ActiveForm;
             </div>
             <span class="modal-style__error-text">Вы ввели не верные данные вернитесь и заполните форму верное</span>
         </div>
-        <?php if (Yii::$app->controller->uniqueId === 'resume/default'):
-            Yii::$app->user->setReturnUrl('/resume/view/'. Yii::$app->request->get('id'));
-            ?>
+        <?php if (Yii::$app->controller->uniqueId === 'resume/default'):?>
             <div class="modal-style modal-send-message jsModalMessage">
                 <h2>Сообщение</h2>
                 <?= Html::beginForm(['/resume/default/send-message'], 'post', ['class' => 'jsModalMessageForm']) ?>
