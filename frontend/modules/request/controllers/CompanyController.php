@@ -42,7 +42,7 @@ class CompanyController extends MyActiveController
         if($params['image']) {
             $data = explode(',', $params['image']['dataUrl']);
             $image = base64_decode($data[1]);
-            $dir = '__DIR__ ../../../web/media/company';
+            $dir = Yii::getAlias('@frontend/web/media/company');
             if (!file_exists($dir))
                 mkdir($dir);
             $dir .= '/' . Yii::$app->user->id . '/';
@@ -89,7 +89,7 @@ class CompanyController extends MyActiveController
 
 
             $image = base64_decode($data[1]);
-            $dir = '__DIR__ ../../../web/media/company';
+            $dir = Yii::getAlias('@frontend/web/media/company');
             if (!file_exists($dir))
                 mkdir($dir);
             $dir .= '/' . Yii::$app->user->id . '/';
