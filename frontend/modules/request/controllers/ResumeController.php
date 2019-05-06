@@ -44,7 +44,7 @@ class ResumeController extends MyActiveController
         if($params['image']){
             $data = explode(',', $params['image']['dataUrl']);
             $image = base64_decode($data[1]);
-            $dir = __DIR__ . '/../../../web/media/resume';
+            $dir = Yii::getAlias('@frontend/web/media/resume');
             if(!file_exists($dir))
                 mkdir($dir);
             $dir .= '/' . Yii::$app->user->id.'/';
@@ -117,7 +117,7 @@ class ResumeController extends MyActiveController
         if(!isset($params['image']['changeImg'])){
             $data = explode(',', $params['image']['dataUrl']);
             $image = base64_decode($data[1]);
-            $dir = __DIR__ . '/../../../web/media/resume';
+            $dir = Yii::getAlias('@frontend/web/media/resume');
             if(!file_exists($dir))
                 mkdir($dir);
             $dir .= '/' . Yii::$app->user->id.'/';

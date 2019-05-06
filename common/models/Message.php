@@ -33,8 +33,8 @@ class Message extends ActiveRecord
     public function rules()
     {
         return [
-            [['receiver_id', 'sender_id', 'subject', 'subject_id'], 'integer'],
-            [['text'], 'string'],
+            [['receiver_id', 'sender_id', 'subject_id'], 'integer'],
+            [['text', 'subject'], 'string'],
             [['title'], 'string', 'max'=>255],
             [['created_at', 'updated_at'], 'safe'],
         ];

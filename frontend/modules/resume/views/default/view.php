@@ -5,6 +5,7 @@
 $this->title = $model->title;
 
 use common\models\Experience;
+use yii\helpers\Html;
 use yii\helpers\Url; ?>
 
 
@@ -146,9 +147,9 @@ use yii\helpers\Url; ?>
                             </h4>
                             <p>Телефон:
                             </p>
-                            <?php foreach ($model->employer->phone as $phone): ?>
-                                <a href="tel:<?= $phone->number ?>"><?= $phone->number ?></a>
-                            <?php endforeach ?>
+                            <?php if($model->employer->phone): ?>
+                                <a href="tel:<?= $model->employer->phone->number ?>"><?= $model->employer->phone->number ?></a>
+                            <?php endif ?>
                             <p>Почта:
                             </p><a href="mailto:<?= $model->employer->email ?>"><?= $model->employer->email ?></a>
                         </div>
@@ -163,9 +164,11 @@ use yii\helpers\Url; ?>
                                             src="/images/fb.svg" alt="" role="presentation"/></a><?php endif ?>
                             <?php endif ?>
                         </div>
+                        <?php if(!Yii::$app->user->isGuest): ?>
                         <button class="resume-info__btn jsSendMessage">написать сообщение
                         </button>
-                        <a class="resume-info__complain" href="#">Пожаловаться на<br>это резюме</a>
+                        <?php endif ?>
+<!--                        <a class="resume-info__complain" href="#">Пожаловаться на<br>это резюме</a>-->
                     </div>
                 </div>
             </div>
@@ -416,5 +419,12 @@ use yii\helpers\Url; ?>
 <!--                </div>-->
 <!--            </div>-->
 <!--        </div>-->
+    </div>
+    <div class="modal-style modal-send-message jsModalMessage">
+        <h2>Сообщение</h2>
+        <?= Html::beginForm(['/resume/default/send-message'], 'post', ['class' => 'jsModalMessageForm']) ?>
+        <textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение" required></textarea>
+        <button class="jsBtnReg jsBtn" type="submit">Отправить</button>
+        <?= Html::endForm() ?>
     </div>
 </section>

@@ -99,12 +99,6 @@ class SiteController extends Controller
         //Debug::dd(\common\models\skill::find()->with(['resume', 'vacancy'])->one());
         return $this->render('index');
     }
-
-    public function actionTest()
-    {
-        return $this->render('admin');
-    }
-
     /**
      * Logs in a security.
      *

@@ -1,9 +1,12 @@
 <?php
 /* @var $login_form \dektrium\user\models\LoginForm */
+
 /* @var $registration_form \dektrium\user\models\RegistrationForm */
+
+use common\classes\Debug;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
 ?>
 <div class="modal-block jsModal">
     <div class="modal-overlay jsModalClose">
@@ -24,7 +27,7 @@ use yii\widgets\ActiveForm;
                 'validateOnBlur' => false,
                 'validateOnType' => false,
                 'validateOnChange' => false,
-            ]);?>
+            ]); ?>
 
 
             <?= $form->field($login_form, 'login',
@@ -39,7 +42,7 @@ use yii\widgets\ActiveForm;
             ?>
             <?= Html::submitButton(
                 Yii::t('user', 'Войти'),
-                ['class' => 'jsBtnLogin jsBtn', 'tabindex' => '4'])?>
+                ['class' => 'jsBtnLogin jsBtn', 'tabindex' => '4']) ?>
             <?php ActiveForm::end(); ?>
             <div class="modal-style__text"><span>Забыли пароль?</span>
                 <button class="jsRegForm">Зарегистрироваться
@@ -49,11 +52,11 @@ use yii\widgets\ActiveForm;
         <div class="modal-style modal-reg jsModalReg">
             <h2>Регистрация </h2>
             <?php $form = ActiveForm::begin([
-            'id' => 'registration-form',
-            'action' => '/registration/register',
-            'enableAjaxValidation' => true,
-            'enableClientValidation' => false,
-            'class' => 'jsModalRegForm'
+                'id' => 'registration-form',
+                'action' => '/registration/register',
+                'enableAjaxValidation' => true,
+                'enableClientValidation' => false,
+                'class' => 'jsModalRegForm'
             ]); ?>
             <input class="jsName" type="text" name="first_name" placeholder="Имя"/>
             <input class="jsSurname" type="text" name="second_name" placeholder="Фамилия"/>
@@ -68,7 +71,7 @@ use yii\widgets\ActiveForm;
             <?= Html::submitButton('Зарегистрироваться', ['class' => 'jsBtnReg jsBtn']) ?>
             <?php ActiveForm::end(); ?>
             <div class="modal-style__text"><span>Есть учетная запись?</span>
-                <button class="jsLoginForm">Войти </button>
+                <button class="jsLoginForm">Войти</button>
             </div>
         </div>
         <div class="modal-style modal-error jsModalError">
@@ -79,15 +82,15 @@ use yii\widgets\ActiveForm;
             </div>
             <span class="modal-style__error-text">Вы ввели не верные данные вернитесь и заполните форму верное</span>
         </div>
-				<div class="modal-style modal-send-message jsModalMessage">
-						<h2>Написать нам
-						</h2>
-						<form class="jsModalMessageForm">
-								<input class="jsName" type="text" name="name" placeholder="Имя"/>
-								<textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение"></textarea>
-								<button class="jsBtnReg jsBtn" type="submit">Отправить
-								</button>
-						</form>
-				</div>
+        <?php if (Yii::$app->controller->uniqueId === 'resume/default'):?>
+            <div class="modal-style modal-send-message jsModalMessage">
+                <h2>Сообщение</h2>
+                <?= Html::beginForm(['/resume/default/send-message'], 'post', ['class' => 'jsModalMessageForm']) ?>
+                <input name="resume_id" type="hidden" value="<?= Yii::$app->request->get('id') ?>">
+                <textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение" required></textarea>
+                <button class="jsBtnReg jsBtn" type="submit">Отправить</button>
+                <?= Html::endForm() ?>
+            </div>
+        <?php endif ?>
     </div>
 </div>
