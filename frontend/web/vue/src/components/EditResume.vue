@@ -106,7 +106,6 @@
 
       this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skills,category')
         .then(response => {
-            console.log(response.data);
 
             if (response.data.image_url) {
               this.formData.image_url = 'http://work.loc' + response.data.image_url;
@@ -141,11 +140,7 @@
             for (let i = 0; i < educationLength; i++) {
               document.querySelector('.btnEducation').click();
             }
-
-            console.log('Форма успешно получена');
           }, response => {
-            console.log(response);
-            console.log('Форма не получена');
           }
         )
     },
@@ -182,11 +177,8 @@
         }
         this.$http.patch(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id, data)
           .then(response => {
-              console.log(response);
-              console.log('Форма успешно отправлена');
+            this.$router.push('/personal-area/all-resume')
             }, response => {
-              console.log(response);
-              console.log('Форма не отправлена');
             }
           )
       },

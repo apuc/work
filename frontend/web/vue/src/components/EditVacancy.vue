@@ -15,7 +15,6 @@
     mounted() {
       document.title = this.$route.meta.title;
       this.getEmploymentType().then(response => {
-        console.log(response);
         FormVacancy.typeOfEmployment.items = response.data;
         for (let i = 0; i < response.data.length; i++) {
           this.$set(FormVacancy.typeOfEmployment.items, i, response.data[i]);
@@ -28,7 +27,6 @@
         }
       });
       this.getExperience().then(response => {
-        console.log(response);
         FormVacancy.experience.items = response.data;
         for (let i = 0; i < response.data.length; i++) {
           this.$set(FormVacancy.experience.items, i, response.data[i]);
@@ -38,7 +36,6 @@
 		mounted(){
       this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id + '?expand=employment-type')
         .then(response => {
-            console.log(response.data);
             this.formData.city = response.data.city;
             this.formData.companyName = response.data.company_id;
             this.formData.post = response.data.post;
@@ -53,11 +50,7 @@
             this.formData.vacancyVideo = response.data.video;
             this.formData.officeAddress = response.data.address;
             this.formData.houseNumber = response.data.home_number;
-
-            console.log('Форма успешно получена');
           }, response => {
-            console.log(response);
-            console.log('Форма не получена');
           }
         )
     },
@@ -82,11 +75,8 @@
 
         this.$http.patch(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id, data)
           .then(response => {
-              console.log(response);
-              console.log('Форма успешно отправлена');
+            this.$router.push('/personal-area/all-vacancy')
             }, response => {
-              console.log(response);
-              console.log('Форма не отправлена');
             }
           )
       },

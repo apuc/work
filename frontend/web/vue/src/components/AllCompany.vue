@@ -68,7 +68,6 @@
       document.title = this.$route.meta.title;
       this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index`)
         .then(response => {
-            console.log(response);
             this.getAllCompany = response.data;
             this.getAllCompany.forEach((element) => {
               let timestamp = element.updated_at;
@@ -77,15 +76,9 @@
               element.updated_at = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
             });
             this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
-
-            console.log(this.getAllCompany);
-            console.log('Форма успешно отправлена');
           }, response => {
-            console.log(response);
-            console.log('Форма не отправлена');
           }
         );
-      console.log(this.$http.headers);
 
     },
     methods: {
@@ -93,26 +86,15 @@
         this.getAllCompany.splice(index, 1);
         this.$http.delete(`${process.env.VUE_APP_API_URL}/request/company/` + resumeId)
           .then(response => {
-              console.log(response);
-              console.log('Форма успешно удалена');
             }, response => {
-              console.log(response);
-              console.log('Форма не удалена');
             }
           );
       },
       changePage(paginationCurrentPage) {
-        console.log(paginationCurrentPage);
         this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index?page=` + paginationCurrentPage)
           .then(response => {
-              console.log(response);
               this.getAllCompany = response.data;
-              console.log(this.paginationPageCount);
-              console.log(this.paginationCurrentPage);
-              console.log('Форма успешно отправлена');
             }, response => {
-              console.log(response);
-              console.log('Форма не отправлена');
             }
           );
       }

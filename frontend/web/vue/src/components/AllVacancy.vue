@@ -76,7 +76,6 @@
       document.title = this.$route.meta.title;
       this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/my-index?expand=can_update&sort=-update_time`)
         .then(response => {
-            console.log(response);
             this.getAllVacancy = response.data;
             this.getAllVacancy.forEach((element) => {
               let timestamp = element.update_time;
@@ -85,15 +84,9 @@
               element.update_time = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
             });
             this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
-
-            console.log(this.getAllVacancy);
-            console.log('Форма успешно отправлена');
           }, response => {
-            console.log(response);
-            console.log('Форма не отправлена');
           }
         );
-      console.log(this.$http.headers);
 
     },
     methods: {
@@ -106,11 +99,7 @@
               date.setTime(newData.update_time * 1000);
               newData.update_time = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
               this.getAllVacancy.unshift(newData);
-              console.log(response);
-              console.log('Форма успешно удалена');
             }, response => {
-              console.log(response);
-              console.log('Форма не удалена');
             }
           );
       },
@@ -118,26 +107,15 @@
         this.getAllVacancy.splice(index, 1);
         this.$http.delete(`${process.env.VUE_APP_API_URL}/request/vacancy/` + vacancyId)
           .then(response => {
-              console.log(response);
-              console.log('Форма успешно удалена');
             }, response => {
-              console.log(response);
-              console.log('Форма не удалена');
             }
           );
       },
       changePage(paginationCurrentPage) {
-        console.log(paginationCurrentPage);
         this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/my-index?page=` + paginationCurrentPage)
           .then(response => {
-              console.log(response);
               this.getAllVacancy = response.data;
-              console.log(this.paginationPageCount);
-              console.log(this.paginationCurrentPage);
-              console.log('Форма успешно отправлена');
             }, response => {
-              console.log(response);
-              console.log('Форма не отправлена');
             }
           );
       }

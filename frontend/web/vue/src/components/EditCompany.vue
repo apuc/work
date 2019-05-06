@@ -98,7 +98,6 @@
 
       this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id + '?expand=phone')
         .then(response => {
-            console.log(response.data);
 
             if (response.data.image_url) {
               this.formData.image_url = 'http://work.loc' + response.data.image_url;
@@ -118,11 +117,7 @@
             if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
               document.querySelector('.social-block button').click();
             }
-
-            console.log('Форма успешно получена');
           }, response => {
-            console.log(response);
-            console.log('Форма не получена');
           }
         )
     },
@@ -150,11 +145,8 @@
         }
         this.$http.patch(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id, data)
           .then(response => {
-              console.log(response);
-              console.log('Форма успешно отправлена');
+            this.$router.push('/personal-area/all-company')
             }, response => {
-              console.log(response);
-              console.log('Форма не отправлена');
             }
           )
       },

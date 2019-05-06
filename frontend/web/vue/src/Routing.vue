@@ -15,7 +15,9 @@
 
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
-
+        <div class="main-page">
+          <a href="/">Главная</a>
+        </div>
         <v-list-tile
           v-for="link in linkMenu"
           :key="link.title"
@@ -26,6 +28,9 @@
             <v-list-tile-title>{{ link.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <form class="logout-btn" action="/site/logout" method="post">
+          <button type="submit">Выход</button>
+        </form>
       </v-list>
     </v-navigation-drawer>
     <v-layout
@@ -93,13 +98,9 @@ export default {
   created() {
     this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index`)
       .then(response => {
-          console.log(response);
           this.firstName = response.data[0].first_name;
           this.secondName = response.data[0].second_name;
-          console.log('Форма успешно отправлена');
         }, response => {
-          console.log(response);
-          console.log('Форма не отправлена');
         }
       );
     if (window.innerWidth < 1265) {
@@ -138,5 +139,45 @@ export default {
     .menu {
       display: flex;
     }
+  }
+  .logout-btn, .main-page {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: inherit;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 16px;
+    font-weight: 400;
+    height: 48px;
+    margin: 0;
+    padding: 0 16px;
+    position: relative;
+    text-decoration: none;
+    -webkit-transition: background .3s cubic-bezier(.25,.8,.5,1);
+    transition: background .3s cubic-bezier(.25,.8,.5,1);
+    transition: none;
+    font-weight: 500;
+    height: 40px;
+  }
+  .logout-btn button, .main-page a {
+    height: 24px;
+    line-height: 24px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: rgba(0,0,0,.87);
+    -webkit-transition: .3s cubic-bezier(.25,.8,.5,1);
+    transition: .3s cubic-bezier(.25,.8,.5,1);
+    width: 100%;
+    font-size: 13px;
+    outline: none;
+  }
+  .logout-btn:hover, .main-page:hover {
+    background: rgba(0,0,0,.04);
   }
 </style>
