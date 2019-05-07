@@ -69,7 +69,7 @@ class DefaultController extends Controller
         $vacancies = new ActiveDataProvider([
             'query' => $vacancies_query,
             'pagination' => [
-                'pageSize' => 2
+                'pageSize' => 10
             ]
         ]);
         return $this->render('search', [

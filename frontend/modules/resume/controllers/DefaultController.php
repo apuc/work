@@ -94,7 +94,7 @@ class DefaultController extends Controller
         $resumes = new ActiveDataProvider([
             'query' => $resume_query,
             'pagination' => [
-                'pageSize' => 2
+                'pageSize' => 10
             ]
         ]);
         return $this->render('search', [
