@@ -39,13 +39,7 @@
     >
       <v-container>
         <v-layout justify-start menu>
-          <v-btn
-            color="pink"
-            dark
-            @click.stop="drawer = !drawer"
-          >
-            Меню
-          </v-btn>
+          <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         </v-layout>
         <router-view></router-view>
       </v-container>
@@ -110,6 +104,9 @@ export default {
 }
 </script>
 <style scoped>
+  .container {
+    margin: 0 auto;
+  }
   .nav-menu {
     display: flex;
     align-items: center;

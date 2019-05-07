@@ -44,13 +44,14 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         </div>
                         <span class="logo__text">Актуальных вакансий сейчас</span>
                     </div>
+									<div class="search">
+										<input type="text" name="vacancy_search_text" placeholder="Поиск" value="<?=$search_text?>"/>
+										<button class="btn-red" id="search">
+											<i class="fa fa-search"></i>
+										</button>
+									</div>
                 </div>
-							<div class="search">
-                                <input type="text" name="vacancy_search_text" placeholder="Поиск" value="<?=$search_text?>"/>
-								<button class="btn-red" id="search">
-                                    <i class="fa fa-search"></i>
-								</button>
-							</div>
+
             </div>
             <div class="v-content-bottom container-for-sidebar">
                 <div class="filter-overlay jsFilterOverlay">
