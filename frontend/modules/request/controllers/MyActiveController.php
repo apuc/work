@@ -63,7 +63,7 @@ class MyActiveController extends ActiveController
             'class' => Cors::className(),
             'cors'  => [
                 // restrict access to domains:
-                'Origin'                           => ['*'],
+                'Origin'                           => Yii::$app->params['Cors_origin'],
                 'Access-Control-Request-Method'    => ['POST', 'GET','PUT','DELETE','PATCH','OPTIONS'],
                 'Access-Control-Allow-Credentials' => true,
                 'Access-Control-Request-Headers' => ['Origin', 'Content-Type', 'Accept', 'Authorization'],
