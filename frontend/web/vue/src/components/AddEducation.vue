@@ -1,6 +1,11 @@
 <template>
   <div class="item-block">
-    <v-subheader class="input-head" v-on:click="show = !show">Образование</v-subheader>
+    <v-subheader class="input-head" v-on:click="show = !show">
+      Образование
+      <i class="material-icons">
+      keyboard_arrow_down
+      </i>
+    </v-subheader>
     <transition name="fade">
       <div v-if="!show">
         <div class="education-block" v-for="(item, index) in education" :key="index">

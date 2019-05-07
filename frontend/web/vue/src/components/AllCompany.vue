@@ -40,13 +40,15 @@
 
 		</div>
 
-		<div class="text-xs-center">
-			<v-pagination
-				v-model="paginationCurrentPage"
-				:length="paginationPageCount"
-				@input="changePage"
-			></v-pagination>
-		</div>
+		<template v-if="paginationPageCount > 1">
+			<div class="text-xs-center">
+				<v-pagination
+					v-model="paginationCurrentPage"
+					:length="paginationPageCount"
+					@input="changePage"
+				></v-pagination>
+			</div>
+		</template>
 
 	</div>
 

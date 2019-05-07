@@ -1,6 +1,11 @@
 <template>
   <div class="item-block">
-    <v-subheader class="input-head" v-on:click="show = !show">Опыт работы</v-subheader>
+    <v-subheader class="input-head" v-on:click="show = !show">
+      Опыт работы
+      <i class="material-icons">
+        keyboard_arrow_down
+      </i>
+    </v-subheader>
     <transition name="fade">
       <div v-if="!show">
         <div class="work-block" v-for="(item, index) in works" :key="index">

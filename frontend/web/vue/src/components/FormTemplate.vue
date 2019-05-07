@@ -68,12 +68,15 @@
 </script>
 
 <style>
+  .theme--light.v-subheader.input-head {
+    color: rgba(0,0,0,0.74);
+  }
   .input-head {
     margin-top: 10px;
     margin-bottom: 15px;
     padding: 0;
     font-size: 22px;
-    border-bottom: 1px solid rgba(0,0,0,0.54);
+    border-bottom: 3px solid rgba(0,0,0,0.74);
   }
   .input-file img {
     width: auto;
