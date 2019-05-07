@@ -38,8 +38,9 @@
                     ['label' => 'Вакансии', 'url' => ['/vacancy/vacancy/index']],
                     ['label' => 'Опыт', 'url' => ['/experience/experience/index']],
                     ['label' => 'Образование', 'url' => ['/education/education/index']],
-                    ['label' => 'Расписания', 'url' => ['/schedule/schedule/index']],
                     ['label' => 'Умения', 'url' => ['/skill/skill/index']],
+                    ['label' => 'Категории', 'url' => ['/category/category/index']],
+                    ['label' => 'Переменные', 'url' => ['/key_value/key-value/index']],
                 ],
             ]
         ) ?>

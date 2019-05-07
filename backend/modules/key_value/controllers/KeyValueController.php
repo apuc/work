@@ -1,19 +1,18 @@
 <?php
 
-namespace backend\modules\company\controllers;
+namespace backend\modules\key_value\controllers;
 
-use common\classes\Debug;
 use Yii;
-use common\models\Company;
-use backend\modules\company\models\CompanySearch;
+use common\models\KeyValue;
+use backend\modules\key_value\models\KeyValueSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CompanyController implements the CRUD actions for Company model.
+ * KeyValueController implements the CRUD actions for KeyValue model.
  */
-class CompanyController extends Controller
+class KeyValueController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,12 +30,12 @@ class CompanyController extends Controller
     }
 
     /**
-     * Lists all Company models.
+     * Lists all KeyValue models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CompanySearch();
+        $searchModel = new KeyValueSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * Displays a single Company model.
+     * Displays a single KeyValue model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -59,17 +58,15 @@ class CompanyController extends Controller
     }
 
     /**
-     * Creates a new Company model.
+     * Creates a new KeyValue model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Company();
+        $model = new KeyValue();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->phone->number = Yii::$app->request->post('Phone')['number'];
-            $model->phone->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -79,7 +76,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * Updates an existing Company model.
+     * Updates an existing KeyValue model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -90,8 +87,6 @@ class CompanyController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->phone->number = Yii::$app->request->post('Phone')['number'];
-            $model->phone->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -101,7 +96,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * Deletes an existing Company model.
+     * Deletes an existing KeyValue model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -115,15 +110,15 @@ class CompanyController extends Controller
     }
 
     /**
-     * Finds the Company model based on its primary key value.
+     * Finds the KeyValue model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Company the loaded model
+     * @return KeyValue the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Company::findOne($id)) !== null) {
+        if (($model = KeyValue::findOne($id)) !== null) {
             return $model;
         }
 

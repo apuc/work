@@ -39,8 +39,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'year_to')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'department')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'responsibility')->textarea() ?>
 
     <?= $form->field($model, 'status')->dropDownList([

@@ -32,7 +32,7 @@ use yii\helpers\Html;
 																	</a>
                                     <?= Html::beginForm(['/site/logout'], 'post', ['class' => 'form-logout']) ?>
                                     <?= Html::submitButton(
-                                        'Logout (' . Yii::$app->user->identity->username . ')',
+                                        'Выйти',
                                         ['class' => 'btn-logout']
                                     ) ?>
                                     <?= Html::endForm() ?>

@@ -47,8 +47,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'employment_type_id')->dropDownList(ArrayHelper::map(\common\models\EmploymentType::find()->all(), 'id', 'name'), [ 'class' => 'form-control', 'prompt' => '' ] ) ?>
 
-    <?= $form->field($model, 'schedule_id')->dropDownList(ArrayHelper::map(\common\models\Schedule::find()->all(), 'id', 'name'), [ 'class' => 'form-control', 'prompt' => '' ] ) ?>
-
     <?= $form->field($model, 'status')->dropDownList([
         Vacancy::STATUS_ACTIVE => 'Активна',
         Vacancy::STATUS_INACTIVE => 'Не активна',

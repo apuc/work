@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Experience;
+use common\models\Resume;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -32,8 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             [
-                'attribute' => 'resume.title',
-                'label' => 'Резюме'
+                'label' => 'Резюме',
+                'format'    => 'html',
+                'value' => function($model)
+                {
+                    $resume = Resume::findOne($model->resume_id);
+                    return '<a href="'.\yii\helpers\Url::to(['/resume/resume/view', 'id' => $resume->id]).'">'.$resume->title.'</a>';
+                },
             ],
             'name',
             'city',

@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Умения',
                 'value' => function ($model) {
                     $multiple_res = '';
-                    foreach($model->skill as $skill){
+                    foreach($model->skills as $skill){
                         $multiple_res .= ($multiple_res?', ':'').$skill->name;
                     }
                     return $multiple_res;

@@ -47,7 +47,7 @@ class ResumeSearch extends Resume
     public function search($params)
     {
         $query = Resume::find();
-        $query->joinWith(['skill']);
+        $query->joinWith(['skills']);
         $query->joinWith(['category']);
 
         // add conditions that should always apply here
@@ -71,7 +71,7 @@ class ResumeSearch extends Resume
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'skill.id' => $this->skill_id,
+            'skills.id' => $this->skill_id,
             'category.id' => $this->category_id
         ]);
 

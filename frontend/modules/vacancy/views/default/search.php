@@ -16,6 +16,7 @@
 
 use common\models\Category;
 use common\models\EmploymentType;
+use common\models\KeyValue;
 use common\models\Vacancy;
 use frontend\assets\MainAsset;
 use yii\helpers\StringHelper;
@@ -23,7 +24,10 @@ use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
-$this->title = 'Поиск вакансий';
+
+$this->title=KeyValue::findValueByKey('vacancy_search_page_title')?:"Поиск Вакансий";
+$this->registerMetaTag(['description' => KeyValue::findValueByKey('vacancy_search_page_description')]);
+
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
 ?>
 <section class="all-block all-vacancies"><img class="all-block__dots2" src="/images/bg-dots.png" alt=""

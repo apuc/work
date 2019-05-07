@@ -10,12 +10,14 @@
 
 use common\models\Category;
 use common\models\Experience;
+use common\models\KeyValue;
 use common\models\Resume;
 use frontend\assets\MainAsset;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
-$this->title = 'Поиск резюме';
+$this->title=KeyValue::findValueByKey('resume_search_page_title')?:"Поиск резюме";
+$this->registerMetaTag(['description' => KeyValue::findValueByKey('resume_search_page_description')]);
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['depends' => [MainAsset::className()]]);
 ?>
 

@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Employer;
+use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -30,6 +31,12 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'second_name')->textInput(['maxlength' => true])?>
 
     <?= $form->field($model, 'patronymic')->textInput(['maxlength' => true])?>
+
+    <?= $form->field($model, 'birth_date')->widget(DatePicker::className(), [
+            'pluginOptions' => [
+                'format' => 'yyyy-mm-dd',
+            ]
+    ])?>
 
     <?= $form->field($model, 'status')->dropDownList([
         Employer::STATUS_ACTIVE => 'Активен',

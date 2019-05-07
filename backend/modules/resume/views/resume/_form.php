@@ -54,7 +54,7 @@ use yii\widgets\ActiveForm;
             ],
         ]
     ); ?>
-    <?= $form->field($model, 'skill')->widget(Select2::className(),
+    <?= $form->field($model, 'skills')->widget(Select2::className(),
         [
             'data' => ArrayHelper::map(\common\models\Skill::find()->all(), 'id', 'name'),
             'options' => ['placeholder' => 'Начните вводить умение ...', 'multiple' => true],
