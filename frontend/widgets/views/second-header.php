@@ -9,7 +9,11 @@ use yii\helpers\Html;
         <div class="header">
             <div class="home__main-top">
                 <div class="home__main-header">
-                    <nav class="home__nav">
+										<button class="mobile-nav-btn jsOpenNavMenu"><span></span><span></span><span></span>
+										</button>
+										<div class="filter-overlay nav-overlay jsNavOverlay">
+										</div>
+                    <nav class="home__nav jsNavMenu">
                         <a class="home__nav-item" href="/">Главная</a>
 												<a class="home__nav-item" href="<?=yii\helpers\Url::to('/resume/search')?>">Резюме</a>
                             <?php

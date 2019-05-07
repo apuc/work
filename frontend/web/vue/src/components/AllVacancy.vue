@@ -10,10 +10,6 @@
 					:key="index"
 					style="margin-top: 20px;"
 				>
-					<v-list-tile-avatar>
-						<img src="https://cdn.vuetifyjs.com/images/lists/1.jpg" alt="">
-					</v-list-tile-avatar>
-
 					<v-list-tile-content>
 						<v-list-tile-title class="mt-auto mb-auto"> {{ item.post }} </v-list-tile-title>
 						<v-list-tile-sub-title class="mt-auto mb-auto"> {{ item.update_time }} </v-list-tile-sub-title>

@@ -11,7 +11,7 @@
 				style="margin-top: 20px;"
 			>
 				<v-list-tile-avatar>
-					<img :src="'http://work.loc' + item.image_url" alt="">
+					<img :src="item.image_url" alt="">
 				</v-list-tile-avatar>
 
 				<v-list-tile-content>
@@ -70,17 +70,15 @@
         editLink: '/personal-area/edit-resume',
         getAllResume: [],
 				paginationPageCount: 1,
-				paginationCurrentPage: 1
+				paginationCurrentPage: 1,
 			}
 		},
 		created() {
       document.title = this.$route.meta.title;
         this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/my-index?expand=can_update&sort=-update_time`)
           .then(response => {
-            if (response.data.image_url) {
-              this.imageUrl = 'http://work.loc' + response.data.image_url;
-            }
-
+            console.log(response);
+            console.log(`${process.env.VUE_APP_API_URL}`);
 						this.getAllResume = response.data;
 						this.getAllResume.forEach((element) => {
 						let timestamp = element.update_time;

@@ -100,7 +100,7 @@
         .then(response => {
 
             if (response.data.image_url) {
-              this.formData.image_url = 'http://work.loc' + response.data.image_url;
+              this.formData.image_url =  response.data.image_url;
             }
 
             this.formData.nameCompany = response.data.name;

@@ -11,7 +11,7 @@
 					style="margin-top: 20px;"
 				>
 					<v-list-tile-avatar>
-						<img :src="'http://work.loc' + item.image_url" alt="">
+						<img :src="item.image_url" alt="">
 					</v-list-tile-avatar>
 
 					<v-list-tile-content>
@@ -61,7 +61,7 @@
         editLink: '/personal-area/edit-company',
         getAllCompany: [],
         paginationPageCount: 1,
-        paginationCurrentPage: 1,
+        paginationCurrentPage: 1
       }
     },
     mounted() {
