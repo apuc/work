@@ -39,15 +39,15 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
             $user = User::find()->where(['email' => $post['register-form']['email']])->one();
             $user->confirmed_at = time();
             $user->save();
+            $login_form = \Yii::createObject(LoginForm::className());
+            $login_form->login = $post['register-form']['username'];
+            $login_form->password = $post['register-form']['password'];
+            $login_form->login();
             $employer = new Employer();
             $employer->first_name = $post['first_name'];
             $employer->second_name = $post['second_name'];
             $employer->user_id = $user->id;
             $employer->save();
-            $login_form = \Yii::createObject(LoginForm::className());
-            $login_form->login = $post['register-form']['username'];
-            $login_form->password = $post['register-form']['password'];
-            $login_form->login();
         }
         return $this->goBack();
     }

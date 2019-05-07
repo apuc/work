@@ -27,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             [
                 'attribute' => 'employer_id',
                 'format'    => 'text',
@@ -46,8 +45,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ])
             ],
+            [
+                'attribute' => 'image_url',
+                'format'    => 'html',
+                'value' => function($model)
+                {
+                    return '<img width="100px" src="'.$model->image_url.'">';
+                },
+            ],
             'title',
-            'image_url',
             'min_salary',
             'max_salary',
             'city',
@@ -70,11 +76,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'Умения',
-                'attribute' => 'skill',
+                'attribute' => 'skills',
                 'format' => 'raw',
                 'value' => function ($model) {
                     $multiple_res = '';
-                    foreach($model->skill as $skill){
+                    foreach($model->skills as $skill){
                         $multiple_res .= ($multiple_res?', ':'').$skill->name;
                     }
                     return $multiple_res;

@@ -69,8 +69,24 @@ class ResumeController extends Controller
     public function actionCreate()
     {
         $model = new Resume();
-
+        $post = Yii::$app->request->post();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if($post['Resume']['category']){
+                foreach ($post['Resume']['category'] as $category){
+                    $resume_category = new ResumeCategory();
+                    $resume_category->resume_id = $model->id;
+                    $resume_category->category_id = $category;
+                    $resume_category->save();
+                }
+            }
+            if($post['Resume']['skills']){
+                foreach ($post['Resume']['skills'] as $skill){
+                    $resume_skill = new ResumeSkill();
+                    $resume_skill->resume_id = $model->id;
+                    $resume_skill->skill_id = $skill;
+                    $resume_skill->save();
+                }
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -89,7 +105,6 @@ class ResumeController extends Controller
     public function actionUpdate($id)
     {
         $post = Yii::$app->request->post();
-        //Debug::dd();
         $model = $this->findModel($id);
 
         if ($model->load($post) && $model->save()) {
@@ -104,22 +119,11 @@ class ResumeController extends Controller
                     $resume_category->save();
                 }
             }
-            if($post['Resume']['employment_type']){
-                foreach($model->resume_employment_type as $employment_type){
-                    $employment_type->delete();
-                }
-                foreach ($post['Resume']['employment_type'] as $employment_type){
-                    $resume_employment_type = new ResumeEmploymentType();
-                    $resume_employment_type->resume_id = $model->id;
-                    $resume_employment_type->employment_type_id = $employment_type;
-                    $resume_employment_type->save();
-                }
-            }
-            if($post['Resume']['skill']){
+            if($post['Resume']['skills']){
                 foreach($model->resume_skill as $skill){
                     $skill->delete();
                 }
-                foreach ($post['Resume']['skill'] as $skill){
+                foreach ($post['Resume']['skills'] as $skill){
                     $resume_skill = new ResumeSkill();
                     $resume_skill->resume_id = $model->id;
                     $resume_skill->skill_id = $skill;

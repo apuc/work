@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Company;
 use common\models\Vacancy;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -32,8 +33,13 @@ $this->params['breadcrumbs'][] = $model->post;
         'attributes' => [
             'id',
             [
-                'attribute' => 'company.name',
-                'label' => 'Работодатель'
+                'label' => 'Работодатель',
+                'format' => 'html',
+                'value' => function($model)
+                {
+                    $company=Company::findOne($model->company_id);
+                    return '<a href="'.\yii\helpers\Url::to(['/company/company/view', 'id' => $company->id]).'">'.$company->name.'</a>';
+                },
             ],
             'post',
             'responsibilities:ntext',
@@ -41,10 +47,7 @@ $this->params['breadcrumbs'][] = $model->post;
                 'attribute' => 'employment_type.name',
                 'label' => 'Тип занятости'
             ],
-            [
-                'attribute' => 'schedule.name',
-                'label' => 'Расписание'
-            ],
+            'views',
             'min_salary',
             'max_salary',
             'qualification_requirements',

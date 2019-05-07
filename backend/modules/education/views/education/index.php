@@ -27,13 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             [
                 'attribute' => 'resume_id',
-                'format'    => 'text',
+                'format'    => 'html',
                 'value' => function($model)
                 {
-                    return Resume::findOne($model->resume_id)->title;
+                    $resume = Resume::findOne($model->resume_id);
+                    return '<a href="'.\yii\helpers\Url::to(['/resume/resume/view', 'id'=>$resume->id]).'">'.$resume->title.'</a>';
                 },
                 'filter'    => \kartik\select2\Select2::widget(
                     [

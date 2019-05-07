@@ -4,6 +4,7 @@ use common\models\Company;
 use dektrium\user\models\User;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\modules\company\models\CompanySearch */
@@ -26,8 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+            [
+                'attribute' => 'image_url',
+                'format'    => 'html',
+                'value' => function($model)
+                {
+                    return '<img width="100px" src="'.$model->image_url.'">';
+                },
+            ],
             [
                 'attribute' => 'user_id',
                 'format'    => 'text',
@@ -46,7 +53,28 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ])
             ],
-            'title',
+            'name',
+            'website',
+            [
+                'attribute' => 'activity_field',
+                'format' => 'text',
+                'value' => function ($model) {
+                    return StringHelper::truncate($model->activity_field, 100);
+                }
+            ],
+            [
+                'attribute' => 'description',
+                'format' => 'text',
+                'value' => function ($model) {
+                    return StringHelper::truncate($model->description, 100);
+                }
+            ],
+            'contact_person',
+            [
+                'attribute' => 'phone.number',
+                'format' => 'text',
+                'filter'    => Html::textInput('CompanySearch[phone_number]', $searchModel->phone_number)
+            ],
             [
                 'attribute' => 'status',
                 'format' => 'raw',

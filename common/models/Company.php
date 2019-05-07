@@ -82,6 +82,7 @@ class Company extends WorkActiveRecord
             'id' => 'ID',
             'user_id' => 'Пользователь',
             'name' => 'Название',
+            'image_url' => 'Фотография',
             'website' => 'Сайт',
             'activity_field' => 'Сфера деятельности',
             'vk' => 'VK',
@@ -90,7 +91,6 @@ class Company extends WorkActiveRecord
             'skype' => 'Skype',
             'description' => 'О компании',
             'contact_person' => 'Контактное лицо',
-            'phone' => 'Телефон',
             'status' => 'Статус',
             'created_at' => 'Создан',
             'updated_at' => 'Изменен'

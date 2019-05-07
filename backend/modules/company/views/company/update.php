@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Company */
 
-$this->title = 'Изменить работодателя: ' . $model->title;
+$this->title = 'Изменить работодателя: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Работодатели', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Изменить';
 ?>
 <div class="company-update">

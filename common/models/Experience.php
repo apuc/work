@@ -102,7 +102,6 @@ class Experience extends WorkActiveRecord
             'month_to' => 'Месяц окончания',
             'year_from' => 'Год начала',
             'year_to' => 'Год окончания',
-            'department' => 'Обязанности',
             'status' => 'Статус',
             'created_at' => 'Создан',
             'updated_at' => 'Изменен'

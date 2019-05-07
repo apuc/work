@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'first_name',
             'second_name',
             'patronymic',
+            'birth_date',
             [
                 'attribute' => 'status',
                 'value' => function ($model) {

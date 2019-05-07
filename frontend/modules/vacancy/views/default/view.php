@@ -98,10 +98,10 @@ $this->title = $model->post;
                             <p class="sr-block__text__cont-name"><?= $model->company->contact_person ?>
                             </p>
                             <h3 class="sr-block__text__phone">Телефон:</h3>
-                            <?php foreach ($model->company->phone as $phone): ?>
+                            <?php if ($model->company->phone): ?>
                                 <a class="sr-block__text__p-num"
-                                   href="tel:<?= $phone->number ?>"><?= $phone->number ?></a>
-                            <?php endforeach ?>
+                                   href="tel:<?= $model->company->phone->number ?>"><?= $model->company->phone->number ?></a>
+                            <?php endif ?>
                         </div>
                     </div>
 <!--                    <div class="sr-btn">-->

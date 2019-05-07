@@ -28,13 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             [
                 'attribute' => 'company_id',
-                'format'    => 'text',
+                'format'    => 'html',
                 'value' => function($model)
                 {
-                    return Company::findOne($model->company_id)->name;
+                    $company=Company::findOne($model->company_id);
+                    return '<a href="'.\yii\helpers\Url::to(['/company/company/view', 'id' => $company->id]).'">'.$company->name.'</a>';
                 },
                 'filter'    => \kartik\select2\Select2::widget(
                     [
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     \yii\helpers\ArrayHelper::map(EmploymentType::find()->asArray()->all(),'id', 'name'),
                     [ 'class' => 'form-control', 'prompt' => '' ] ),
             ],
-            'schedule_id',
+            'views',
             'min_salary',
             'max_salary',
             'qualification_requirements',

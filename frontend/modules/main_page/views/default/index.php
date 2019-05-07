@@ -5,11 +5,11 @@
 /* @var $vacancies \common\models\Vacancy[] */
 
 
-use dektrium\user\models\RegistrationForm;
+use common\models\KeyValue;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
-
+$this->title=KeyValue::findValueByKey('main_page_title')?:'Работа: главная';
+$this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_description')]);
 ?>
 
 <section class="home">
@@ -107,7 +107,7 @@ use yii\widgets\ActiveForm;
 															</a>
                                 <?= Html::beginForm(['/site/logout'], 'post', ['class' => 'form-logout']) ?>
                                 <?= Html::submitButton(
-                                    'Logout (' . Yii::$app->user->identity->username . ')',
+                                    'Выйти',
                                     ['class' => 'btn-logout']
                                 ) ?>
                                 <?= Html::endForm() ?>

@@ -43,6 +43,9 @@ return [
         'category' => [
             'class' => 'backend\modules\category\Category',
         ],
+        'key_value' => [
+            'class' => 'backend\modules\key_value\KeyValue',
+        ],
         'user' => [
             'class'  => 'dektrium\user\Module',
             'admins' => ['test'],

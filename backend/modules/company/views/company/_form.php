@@ -25,7 +25,25 @@ use yii\widgets\ActiveForm;
         ]
     ); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'website')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'activity_field')->textarea() ?>
+
+    <?= $form->field($model, 'vk')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'facebook')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'instagram')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'skype')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'description')->textArea() ?>
+
+    <?= $form->field($model, 'contact_person')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model->phone, 'number')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->dropDownList([
         Company::STATUS_ACTIVE => 'Активен',

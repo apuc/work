@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Company */
 
-$this->title = $model->title;
+$this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Работодатели', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -32,12 +32,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             [
-                'attribute' => 'user_id',
-                'value' => function ($model) {
-                    return $model->user->username;
+                'attribute' => 'user.username',
+                'label' => 'Пользователь'
+            ],
+            [
+                'attribute' => 'image_url',
+                'format'    => 'html',
+                'value' => function($model)
+                {
+                    return '<img width="300px" src="'.$model->image_url.'">';
                 },
             ],
-            'title',
+            'name',
+            'website',
+            'activity_field',
+            'vk',
+            'facebook',
+            'instagram',
+            'skype',
+            'description',
+            'contact_person',
+            'phone.number',
             [
                 'attribute' => 'status',
                 'value' => function ($model) {

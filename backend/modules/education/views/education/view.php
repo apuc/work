@@ -1,7 +1,10 @@
 <?php
 
 use common\models\Education;
+use common\models\Resume;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -10,7 +13,7 @@ use yii\widgets\DetailView;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Образование', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="education-view">
 
@@ -33,7 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             [
                 'attribute' => 'resume.title',
-                'label' => 'Резюме'
+                'label' => 'Резюме',
+                'format' => 'html',
+                'value' => function($model)
+                {
+                    $resume = Resume::findOne($model->resume_id);
+                    return '<a href="'.Url::to(['/resume/resume/view', 'id'=>$resume->id]).'">'.$resume->title.'</a>';
+                },
             ],
             'name',
             'faculty',
@@ -48,7 +57,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         case Education::STATUS_ACTIVE: return 'Активно';
                         case Education::STATUS_INACTIVE: return 'Не активно';
                     }
-                },
+                    return 'Не активно';
+                }
             ],
             [
                 'attribute' => 'created_at',
