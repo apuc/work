@@ -2,12 +2,12 @@
 
 namespace frontend\modules\resume\controllers;
 
-use common\classes\Debug;
 use common\models\Category;
 use common\models\City;
 use common\models\EmploymentType;
 use common\models\Message;
 use common\models\Resume;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 
@@ -27,15 +27,21 @@ class DefaultController extends Controller
     }
 
     public function actionSendMessage(){
-        $post = \Yii::$app->request->post();
+        $post = Yii::$app->request->post();
         if($resume = Resume::findOne($post['resume_id'])){
             $message = new Message();
             $message->text = $post['message'];
-            $message->sender_id = \Yii::$app->user->id;
+            $message->sender_id = Yii::$app->user->id;
             $message->subject = 'Resume';
             $message->subject_id = $resume->id;
             $message->receiver_id = $resume->employer->user_id;
             $message->save();
+            Yii::$app->mailer->compose()
+                ->setFrom('noreply@work.art-craft.xyz')
+                ->setTo(Yii::$app->user->email)
+                ->setSubject('Ответ на ваше резюме '. $resume->title.'.')
+                ->setTextBody($message->text)
+                ->send();
         }
         return $this->goBack();
 
@@ -47,10 +53,10 @@ class DefaultController extends Controller
             'category_ids' => json_decode(\Yii::$app->request->get('category_ids')),
             'employment_type_ids' => json_decode(\Yii::$app->request->get('employment_type_ids')),
             'experience_ids' => json_decode(\Yii::$app->request->get('experience_ids')),
-            'min_salary' => \Yii::$app->request->get('min_salary'),
-            'max_salary' => \Yii::$app->request->get('max_salary'),
-            'search_text' => \Yii::$app->request->get('search_text'),
-            'city' => \Yii::$app->request->get('city'),
+            'min_salary' => Yii::$app->request->get('min_salary'),
+            'max_salary' => Yii::$app->request->get('max_salary'),
+            'search_text' => Yii::$app->request->get('search_text'),
+            'city' => Yii::$app->request->get('city'),
         ];
         $categories = Category::find()->all();
         $employment_types = EmploymentType::find()->all();

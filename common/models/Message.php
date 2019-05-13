@@ -10,12 +10,14 @@ use yii\db\ActiveRecord;
  * This is the model class for table "message".
  *
  * @property int $id
+ * @property string $title
+ * @property string $text
  * @property int $receiver_id
  * @property int $sender_id
- * @property int $subject
+ * @property string $subject
  * @property int $subject_id
- * @property string $created_at
- * @property string $updated_at
+ * @property int $created_at
+ * @property int $updated_at
  */
 class Message extends ActiveRecord
 {
@@ -34,8 +36,8 @@ class Message extends ActiveRecord
     {
         return [
             [['receiver_id', 'sender_id', 'subject_id'], 'integer'],
-            [['text', 'subject'], 'string'],
-            [['title'], 'string', 'max'=>255],
+            [['text'], 'string'],
+            [['title', 'subject'], 'string', 'max'=>255],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
