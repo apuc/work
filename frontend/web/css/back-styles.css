@@ -40,3 +40,7 @@
     width: 100%;
   }
 }
+
+.select2-results__option {
+  min-height: 28px;
+}
