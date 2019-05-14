@@ -201,20 +201,20 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                             <span class="single-card__price"><?= $vacancy->min_salary ?>-<?= $vacancy->max_salary ?> RUB</span>
                             <div class="single-card__info">
-                                <p><?= StringHelper::truncate($vacancy->responsibilities, 80, '...') ?></p>
+                                <p><?= nl2br(StringHelper::truncate($vacancy->responsibilities, 80, '...')) ?></p>
                             </div>
                             <div class="d-flex flex-wrap align-items-center mt-auto justify-content-between">
                                 <?php if($vacancy->company->hasSocials()): ?>
                                 <div class="single-card__info__soc">
                                     <span>Написать соискателю в сетях</span>
                                     <?php if($vacancy->company->vk):?>
-                                    <a class="vk-bg" href="<?=$vacancy->company->vk?>"><img src="/images/vk.svg" alt="" role="presentation"/></a>
+                                    <a target="_blank" class="vk-bg" href="<?=$vacancy->company->vk?>"><img src="/images/vk.svg" alt="" role="presentation"/></a>
                                     <?php endif ?>
                                     <?php if($vacancy->company->instagram):?>
-                                    <a class="ok-bg" href="<?=$vacancy->company->instagram?>"><img src="/images/ok.svg" alt="" role="presentation"/></a>
+                                    <a target="_blank" class="ok-bg" href="<?=$vacancy->company->instagram?>"><img src="/images/ok.svg" alt="" role="presentation"/></a>
                                     <?php endif ?>
                                     <?php if($vacancy->company->facebook):?>
-                                    <a class="fb-bg" href="<?=$vacancy->company->facebook?>"><img src="/images/fb.svg" alt="" role="presentation"/></a>
+                                    <a target="_blank" class="fb-bg" href="<?=$vacancy->company->facebook?>"><img src="/images/fb.svg" alt="" role="presentation"/></a>
                                     <?php endif ?>
                                 </div>
                                 <?php endif ?>

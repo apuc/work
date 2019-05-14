@@ -132,7 +132,7 @@ use yii\helpers\Url; ?>
                         <h4 class="resume-description__title-main">Дополнительная информация
                         </h4>
                         <p class="resume-description__text">
-                            <?= $model->description ?>
+                            <?= nl2br($model->description) ?>
                         </p>
                     </div>
                 </div>
@@ -156,11 +156,11 @@ use yii\helpers\Url; ?>
                         <div class="resume-info__soc">
                             <?php if ($model->hasSocials()): ?>
                                 <p>Написать соискателю в сетях</p>
-                                <?php if ($model->vk): ?><a class="vk-bg" href="<?= $model->vk ?>"><img
+                                <?php if ($model->vk): ?><a class="vk-bg" target="_blank" href="<?= $model->vk ?>"><img
                                             src="/images/vk.svg" alt="" role="presentation"/></a><?php endif ?>
-                                <?php if ($model->facebook): ?><a class="fb-bg" href="<?= $model->facebook ?>"><img
+                                <?php if ($model->facebook): ?><a class="fb-bg" target="_blank" href="<?= $model->facebook ?>"><img
                                             src="/images/fb.svg" alt="" role="presentation"/></a><?php endif ?>
-                                <?php if ($model->instagram): ?><a class="fb-bg" href="<?= $model->instagram ?>"><img
+                                <?php if ($model->instagram): ?><a class="fb-bg" target="_blank" href="<?= $model->instagram ?>"><img
                                             src="/images/fb.svg" alt="" role="presentation"/></a><?php endif ?>
                             <?php endif ?>
                         </div>

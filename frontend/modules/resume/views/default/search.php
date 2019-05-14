@@ -162,8 +162,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                         <p class="single-card-resume__name"><?= $resume->employer->second_name ?> <?= $resume->employer->first_name ?>
                                             · возраст - <?= $resume->employer->age ?> · <?= $resume->city ?>
                                         </p>
+                                        <?php if($resume->employment_type): ?>
                                         <p class="single-card-resume__employment"><?= $resume->employment_type->name ?>
                                         </p>
+                                        <?php endif ?>
                                         <p class="single-card-resume__last-work">Последнее место работы
                                         </p>
                                         <p class="single-card-resume__name-work"><?= $resume->lastExperience->post ?>
@@ -184,16 +186,16 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             </p>
                                             <div class="single-card-resume__soc-block">
                                                 <?php if ($resume->vk): ?>
-                                                    <a class="vk-bg" href="<?= $resume->vk ?>"><img src="/images/vk.svg"
+                                                    <a class="vk-bg" target="_blank" href="<?= $resume->vk ?>"><img src="/images/vk.svg"
                                                                                                     alt=""
                                                                                                     role="presentation"/></a>
                                                 <?php endif ?>
                                                 <?php if ($resume->facebook): ?>
-                                                    <a class="fb-bg" href="<?= $resume->facebook ?>"><img
+                                                    <a class="fb-bg" target="_blank" href="<?= $resume->facebook ?>"><img
                                                                 src="/images/fb.svg" alt="" role="presentation"/></a>
                                                 <?php endif ?>
                                                 <?php if ($resume->instagram): ?>
-                                                    <a class="inst-bg" href="<?= $resume->instagram ?>"><img
+                                                    <a class="inst-bg" target="_blank" href="<?= $resume->instagram ?>"><img
                                                                 src="/images/instagram.svg" alt="" role="presentation"/></a>
                                                 <?php endif ?>
                                             </div>

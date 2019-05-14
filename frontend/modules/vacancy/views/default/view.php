@@ -3,7 +3,8 @@
 /* @var $model \common\models\Vacancy */
 
 $this->title = $model->post;
-?>
+
+use yii\helpers\StringHelper; ?>
 
 <section class="single-vacancy"><img class="single-vacancy__dots2" src="/images/bg-dots.png" alt=""
                                      role="presentation"/>
@@ -37,12 +38,12 @@ $this->title = $model->post;
                     <div class="single-block__left__price__soc">
                         <?php if ($model->company->hasSocials()): ?>
                             <span>Написать соискателю в сетях</span>
-                            <?php if ($model->company->vk): ?><a class="vk-bg" href="<?= $model->company->vk ?>"><img
+                            <?php if ($model->company->vk): ?><a class="vk-bg" target="_blank" href="<?= $model->company->vk ?>"><img
                                         src="/images/vk.svg" alt="" role="presentation"/></a><?php endif ?>
-                            <?php if ($model->company->instagram): ?><a class="ok-bg"
+                            <?php if ($model->company->instagram): ?><a class="ok-bg" target="_blank"
                                                                         href="<?= $model->company->instagram ?>"><img
                                             src="/images/ok.svg" alt="" role="presentation"/></a><?php endif ?>
-                            <?php if ($model->company->facebook): ?><a class="fb-bg"
+                            <?php if ($model->company->facebook): ?><a class="fb-bg" target="_blank"
                                                                        href="<?= $model->company->facebook ?>"><img
                                             src="/images/fb.svg" alt="" role="presentation"/></a><?php endif ?>
                         <?php endif ?>
@@ -62,17 +63,17 @@ $this->title = $model->post;
                 <div class="single-block__left__requirements">
                     <h3 class="single-block__left__requirements__head">Требования:
                     </h3>
-                    <p class="single-block__left__requirements__text"><?= $model->qualification_requirements ?></p>
+                    <p class="single-block__left__requirements__text"><?= nl2br($model->qualification_requirements) ?></p>
                 </div>
                 <div class="single-block__left__duties">
                     <h3 class="single-block__left__duties__head">Обязаности
                     </h3>
-                    <p class="single-block__left__duties__text"><?= $model->responsibilities ?></p>
+                    <p class="single-block__left__duties__text"><?= nl2br($model->responsibilities) ?></p>
                 </div>
                 <div class="single-block__left__conditions">
                     <h3 class="single-block__left__conditions__head">Условия работы:
                     </h3>
-                    <p class="single-block__left__conditions__text"><?= $model->working_conditions ?></p>
+                    <p class="single-block__left__conditions__text"><?= nl2br($model->working_conditions) ?></p>
                 </div>
             </div>
             <div class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">
