@@ -63,7 +63,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         <div class="vl-block">
                             <div class="vl-block__head jsOpenCheck">
                                 <p>Требуемый опыт
-                                </p><span class="jsBtnPlus">+</span><span class="jsBtnMinus btn-active">-</span>
+                                </p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
                             </div>
                             <div class="vl-block__check jsCheckBlock">
                                 <label class="checkbox">
@@ -95,7 +95,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         <div class="vl-block">
                             <div class="vl-block__head jsOpenCheck">
                                 <p>Категория
-                                </p><span class="jsBtnPlus">+</span><span class="jsBtnMinus btn-active">-</span>
+                                </p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
                             </div>
                             <div class="vl-block__check jsCheckBlock">
                                 <?php foreach ($categories as $category): ?>
@@ -113,7 +113,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         <div class="vl-block">
                             <div class="vl-block__head jsOpenCheck">
                                 <p>Вид занятости
-                                </p><span class="jsBtnPlus">+</span><span class="jsBtnMinus btn-active">-</span>
+                                </p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
                             </div>
                             <div class="vl-block__check jsCheckBlock">
                                 <?php foreach ($employment_types as $employment_type): ?>
@@ -131,7 +131,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         <div class="vl-block no-border">
                             <div class="vl-block__head jsOpenCheck">
                                 <p>Зарплата
-                                </p><span class="jsBtnPlus">+</span><span class="jsBtnMinus btn-active">-</span>
+                                </p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
                             </div>
                             <div class="vl-block__inputs jsCheckBlock">
                                 <input type="text" name="min_salary"
