@@ -7,6 +7,7 @@
 
 use common\models\KeyValue;
 use yii\helpers\Html;
+use yii\helpers\StringHelper;
 use yii\helpers\Url;
 $this->title=KeyValue::findValueByKey('main_page_title')?:'Работа: главная';
 $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_description')]);
@@ -49,7 +50,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                         </a>
                     </div>
                     <div class="single-card__info">
-                        <p><?= $vacancy->responsibilities ?></p>
+                        <p><?= nl2br(StringHelper::truncate($vacancy->responsibilities, 300, '...')) ?></p>
                     </div>
                     <div class="d-flex flex-wrap align-items-center justify-content-end mt-auto">
 <!--                        <a class="single-card__like mt5 mb5" href="#">-->
