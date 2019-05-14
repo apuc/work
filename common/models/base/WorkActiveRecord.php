@@ -15,8 +15,12 @@ class WorkActiveRecord extends ActiveRecord
         if(is_array($list) && $list !=[]){
             foreach($list as $relation){
                 if($this->$relation){
-                    foreach($this->$relation as $item){
-                        $item->delete();
+                    if(is_array($this->$relation)){
+                        foreach($this->$relation as $item){
+                            $item->delete();
+                        }
+                    } else {
+                        $this->$relation->delete();
                     }
                 }
             }
