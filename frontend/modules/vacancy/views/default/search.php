@@ -173,8 +173,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                     </div>
                     <?php endif ?>
                     <?php if($vacancies->models):
-                    /** @var Vacancy $vacancy */
-                    foreach ($vacancies->models as $vacancy): ?>
+                        foreach ($vacancies->models as $vacancy): ?>
+                        <?php /** @var Vacancy $vacancy */ ?>
                         <div class="single-card">
                             <div class="single-card__tr">
                             </div>
@@ -196,7 +196,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                             alt=""
                                             role="presentation"/><span
                                             class="ml5"><?= $vacancy->city ?></span></a><img
-                                        class="single-card__info-second__image" src="/images/logo_company.svg" alt=""
+                                        class="single-card__info-second__image" src="<?=$vacancy->company->image_url?>" alt=""
                                         role="presentation"/>
                             </div>
                             <span class="single-card__price"><?= $vacancy->min_salary ?>-<?= $vacancy->max_salary ?> RUB</span>
@@ -223,7 +223,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                         </div>
                     <?php endforeach; ?>
-                     <?php LinkPager::widget([
+                     <?= LinkPager::widget([
                          'pagination' => $vacancies->pagination,
                          'options' => ['class' => 'search-pagination'],
                          'maxButtonCount' => 5,
