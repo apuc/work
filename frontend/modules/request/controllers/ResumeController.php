@@ -2,6 +2,7 @@
 
 namespace frontend\modules\request\controllers;
 
+use common\classes\FileHandler;
 use common\models\Education;
 use common\models\Employer;
 use common\models\Experience;
@@ -42,20 +43,7 @@ class ResumeController extends MyActiveController
         $model->years_of_exp = Resume::getFullExperience($params['work']);
         $model->update_time = time();
         if($params['image']){
-            $data = explode(',', $params['image']['dataUrl']);
-            $image = base64_decode($data[1]);
-            $dir = Yii::getAlias('@frontend/web/media/resume');
-            if(!file_exists($dir))
-                mkdir($dir);
-            $dir .= '/' . Yii::$app->user->id.'/';
-            $file_name = time();
-            $file_type = explode('/', $params['image']['type'])[1];
-            if(!file_exists($dir))
-                mkdir($dir);
-            $file = fopen($dir.$file_name.'.'.$file_type, "wb");
-            fwrite($file, $image);
-            fclose($file);
-            $model->image_url = '/media/resume/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
+            $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'resume');
         }
         $model->employer_id = $employer->id;
         if($model->save()){
@@ -115,20 +103,7 @@ class ResumeController extends MyActiveController
 
         $model->load($params, '');
         if(!isset($params['image']['changeImg'])){
-            $data = explode(',', $params['image']['dataUrl']);
-            $image = base64_decode($data[1]);
-            $dir = Yii::getAlias('@frontend/web/media/resume');
-            if(!file_exists($dir))
-                mkdir($dir);
-            $dir .= '/' . Yii::$app->user->id.'/';
-            $file_name = time();
-            $file_type = explode('/', $params['image']['type'])[1];
-            if(!file_exists($dir))
-                mkdir($dir);
-            $file = fopen($dir.$file_name.'.'.$file_type, "wb");
-            fwrite($file, $image);
-            fclose($file);
-            $model->image_url = '/media/resume/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
+            $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'resume');
         }
         $model->employer_id = $employer->id;
         $model->years_of_exp = Resume::getFullExperience($params['work']);
@@ -151,7 +126,6 @@ class ResumeController extends MyActiveController
                     $experience->load($s_experience, '');
                     $experience->resume_id = $model->id;
                     $experience->save();
-                    //return $experience;
                 }
             }
             ResumeSkill::deleteAll(['resume_id' => $model->id]);
@@ -176,6 +150,10 @@ class ResumeController extends MyActiveController
         return $model;
     }
 
+    /**
+     * @return array|null
+     * @throws HttpException
+     */
     public function actionUpdateTime(){
         $id = Yii::$app->request->post('id');
         $model = Resume::findOne($id);

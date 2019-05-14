@@ -83,7 +83,7 @@ $this->title = $model->post;
                                 src="/images/add-contact.svg" alt="" role="presentation"/>
                     </button>
                     <div class="sr-block">
-                        <div class="sr-block__image"><img src="/images/logo_company.svg" alt=""
+                        <div class="sr-block__image"><img src="<?=$model->company->image_url?>" alt=""
                                                           role="presentation"/>
                         </div>
                         <div class="sr-block__text">

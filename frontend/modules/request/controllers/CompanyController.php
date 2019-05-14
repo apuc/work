@@ -3,6 +3,7 @@
 namespace frontend\modules\request\controllers;
 
 
+use common\classes\FileHandler;
 use common\models\Company;
 use common\models\Education;
 use common\models\Employer;
@@ -40,20 +41,7 @@ class CompanyController extends MyActiveController
         $params = Yii::$app->getRequest()->getBodyParams();
         $model->load($params, '');
         if($params['image']) {
-            $data = explode(',', $params['image']['dataUrl']);
-            $image = base64_decode($data[1]);
-            $dir = Yii::getAlias('@frontend/web/media/company');
-            if (!file_exists($dir))
-                mkdir($dir);
-            $dir .= '/' . Yii::$app->user->id . '/';
-            $file_name = time();
-            $file_type = explode('/', $params['image']['type'])[1];
-            if (!file_exists($dir))
-                mkdir($dir);
-            $file = fopen($dir . $file_name . '.' . $file_type, "wb");
-            fwrite($file, $image);
-            fclose($file);
-            $model->image_url = '/media/company/'.Yii::$app->user->id.'/'.$file_name.'.'.$file_type;
+            $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'company');
         }
         $model->user_id = Yii::$app->user->id;
         if($model->save()){
@@ -85,23 +73,7 @@ class CompanyController extends MyActiveController
         $params = Yii::$app->getRequest()->getBodyParams();
         $model->load($params, '');
         if(!isset($params['image']['changeImg'])) {
-            $data = explode(',', $params['image']['dataUrl']);
-
-
-            $image = base64_decode($data[1]);
-            $dir = Yii::getAlias('@frontend/web/media/company');
-            if (!file_exists($dir))
-                mkdir($dir);
-            $dir .= '/' . Yii::$app->user->id . '/';
-            $file_name = time();
-            $file_type = explode('/', $params['image']['type'])[1];
-            if (!file_exists($dir))
-                mkdir($dir);
-            $file = fopen($dir . $file_name . '.' . $file_type, "wb");
-            fwrite($file, $image);
-            fclose($file);
-
-            $model->image_url = '/media/company/' . Yii::$app->user->id . '/' . $file_name . '.' . $file_type;
+            $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'company');
         }
         $model->user_id = Yii::$app->user->id;
         if($model->save()){
