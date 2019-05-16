@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'    => 'html',
                 'value' => function($model)
                 {
-                    return '<img width="300px" src="'.$model->image_url.'">';
+                    return '<img alt="" width="300px" src="'.$model->image_url.'">';
                 },
             ],
             'name',

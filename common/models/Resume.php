@@ -100,6 +100,7 @@ class Resume extends WorkActiveRecord
             'employer_id' => 'Сотрудник',
             'employment_type_id' => 'Вид занятости',
             'title' => 'Заголовок',
+            'image_url' => 'Картинка',
             'min_salary' => 'Минимальная заработная плата',
             'max_salary' => 'Максимальная заработная плата',
             'city' => 'Город',

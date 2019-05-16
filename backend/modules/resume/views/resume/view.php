@@ -38,7 +38,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             'title',
-            'image_url',
+            [
+                'attribute' => 'image_url',
+                'format'    => 'html',
+                'value' => function($model)
+                {
+                    return '<img alt="" width="100px" src="'.$model->image_url.'">';
+                },
+            ],
             'min_salary',
             'max_salary',
             'city',

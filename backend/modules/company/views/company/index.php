@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'    => 'html',
                 'value' => function($model)
                 {
-                    return '<img width="100px" src="'.$model->image_url.'">';
+                    return '<img alt="" width="100px" src="'.$model->image_url.'">';
                 },
             ],
             [
@@ -58,6 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'activity_field',
                 'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;'],
                 'value' => function ($model) {
                     return StringHelper::truncate($model->activity_field, 100);
                 }
@@ -65,6 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'description',
                 'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;'],
                 'value' => function ($model) {
                     return StringHelper::truncate($model->description, 100);
                 }

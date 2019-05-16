@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'    => 'html',
                 'value' => function($model)
                 {
-                    return '<img width="100px" src="'.$model->image_url.'">';
+                    return '<img alt="" width="100px" src="'.$model->image_url.'">';
                 },
             ],
             'title',
@@ -59,23 +59,32 @@ $this->params['breadcrumbs'][] = $this->title;
             'city',
             [
                 'attribute' => 'description',
+                'contentOptions' => ['style' => 'width:400px; white-space: normal;'],
                 'value' => function ($model) {
-                    return mb_substr($model->description, 0, 100) . '...';
+                    return nl2br(\yii\helpers\StringHelper::truncate($model->description, 100, '...'));
                 },
             ],
             [
                 'label' => 'Социальные сети',
+                'format' => 'html',
                 'value' =>
                     function ($model) {
                         /** @var Resume $model */
-                        return 'VK: '.$model->vk.
-                            'Facebook: ' . $model->facebook.
-                            'Instagram: ' . $model->instagram.
-                            'Skype: ' . $model->skype;
+                        $result = '';
+                        if($model->vk)
+                            $result.='VK: '.$model->vk.'<br>';
+                        if($model->facebook)
+                            $result.='Facebook: '.$model->facebook.'<br>';
+                        if($model->instagram)
+                            $result.='Instagram: '.$model->instagram.'<br>';
+                        if($model->skype)
+                            $result.='Skype: '.$model->skype;
+                        return $result;
                 }
             ],
             [
                 'label' => 'Умения',
+                'contentOptions' => ['style' => 'width:400px; white-space: normal;'],
                 'attribute' => 'skills',
                 'format' => 'raw',
                 'value' => function ($model) {
@@ -91,6 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'Категории',
+                'contentOptions' => ['style' => 'width:400px; white-space: normal;'],
                 'attribute' => 'category',
                 'format' => 'raw',
                 'value' => function ($model) {

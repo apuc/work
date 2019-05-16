@@ -50,9 +50,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'post',
             [
                 'attribute' => 'responsibilities',
+                'contentOptions' => ['style' => 'white-space: normal;'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return mb_substr($model->responsibilities, 0, 10) . '...';
+                    return \yii\helpers\StringHelper::truncate($model->responsibilities, 100, '...');
                 },
             ],
             [
@@ -68,7 +69,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'views',
             'min_salary',
             'max_salary',
-            'qualification_requirements',
+            [
+                'attribute' => 'qualification_requirements',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
             'work_experience',
             'education',
             'working_conditions',
