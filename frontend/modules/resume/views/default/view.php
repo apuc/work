@@ -108,24 +108,10 @@ use yii\helpers\Url; ?>
                     <div class="resume-description__item">
                         <h4 class="resume-description__title-main">Профессиональные и другие навык
                         </h4>
-                        <h4 class="resume-description__title-bold">Навыки работы с компьютером
-                        </h4>
-                        <p class="resume-description__text">Отличное знаение и владение 1С 8, 1 С ЗУП, Программы
-                            Клиент- банк, MEDoc,MS Office, e-mail Востановление данных после двух вирусов.
-                        </p>
-                        <h4 class="resume-description__title-bold resume-description__title-bold_mb">Relationship
-                            building, Goal setting, Business communication
-                        </h4>
-                        <p class="resume-description__text resume-description__text_mb">(15 лет опыта)
-                        </p>
-                        <p class="resume-description__text">Свободно, использую в настоящее время.
-                        </p>
-                        <h4 class="resume-description__title-bold resume-description__title-bold_mb">International
-                            contracts, International logistics
-                        </h4>
-                        <p class="resume-description__text resume-description__text_mb">(15 лет опыта)
-                        </p>
-                        <p class="resume-description__text">Свободно, использую в настоящее время.
+                        <p class="resume-description__text">
+                            <?php foreach ($model->skills as $skill): ?>
+                            <?= $skill->name . ' ';?>
+                            <?php endforeach ?>
                         </p>
                     </div>
                     <div class="resume-description__item">

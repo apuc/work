@@ -38,7 +38,7 @@ use yii\db\ActiveRecord;
  * @property ResumeCategory[] $resume_category
  * @property Category[] $category
  * @property ResumeSkill[] $resume_skill
- * @property Skill[] $skill
+ * @property Skill[] $skills
  * @property Experience $lastExperience
  * @property bool $can_update
  */
