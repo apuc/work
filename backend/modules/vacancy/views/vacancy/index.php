@@ -75,7 +75,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'work_experience',
             'education',
-            'working_conditions',
+            [
+                'attribute' => 'working_conditions',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
             'video',
             'address',
             'home_number',
