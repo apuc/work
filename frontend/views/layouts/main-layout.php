@@ -4,8 +4,10 @@
 /* @var $content string */
 
 use frontend\assets\MainAsset;
+use frontend\widgets\GoogleAnalytics;
 use frontend\widgets\Modals;
 use frontend\widgets\SecondHeader;
+use frontend\widgets\YandexMetrika;
 use yii\helpers\Html;
 
 MainAsset::register($this);
@@ -21,6 +23,8 @@ MainAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <link rel="shortcut icon" href="../images/favicon.png" />
+    <?=YandexMetrika::widget()?>
+    <?=GoogleAnalytics::widget()?>
 </head>
 <body>
 <div class="root">
