@@ -42,7 +42,13 @@ class DefaultController extends Controller
 
         $vacancies_query = Vacancy::find();
         if($params['experience_ids']) {
-            $vacancies_query->andWhere(['work_experience' => $params['experience_ids']]);
+            if(!in_array(0,$params['experience_ids'])) {
+                $or = ['or'];
+                foreach ($params['experience_ids'] as $experience_id){
+                    $or[] = ['<=', 'work_experience', $experience_id];
+                }
+                $vacancies_query->andWhere($or);
+            }
         }
         if($params['category_ids']) {
             $vacancies_query->joinWith(['category']);

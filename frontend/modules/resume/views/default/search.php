@@ -5,6 +5,7 @@
 /* @var $employment_types \common\models\EmploymentType[] */
 /* @var $city string */
 /* @var $search_text string */
+/* @var $experience_ids array */
 
 /* @var $cities \common\models\City[] */
 
@@ -68,25 +69,25 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                             <div class="vl-block__check jsCheckBlock">
                                 <label class="checkbox">
                                     <input type="checkbox"
-                                           name="experience" data-id="0"/>
+                                           name="experience" data-id="0" <?= in_array(0, $experience_ids)?'checked':''?>/>
                                     <div class="checkbox__text">Не имеет значения
                                     </div>
                                 </label>
                                 <label class="checkbox">
                                     <input type="checkbox"
-                                           name="experience" data-id="1"/>
+                                           name="experience" data-id="1" <?= in_array(1, $experience_ids)?'checked':''?>/>
                                     <div class="checkbox__text">Менее года
                                     </div>
                                 </label>
                                 <label class="checkbox">
                                     <input type="checkbox"
-                                           name="experience" data-id="2"/>
+                                           name="experience" data-id="2" <?= in_array(2, $experience_ids)?'checked':''?>/>
                                     <div class="checkbox__text">1 год
                                     </div>
                                 </label>
                                 <label class="checkbox">
                                     <input type="checkbox"
-                                           name="experience" data-id="3"/>
+                                           name="experience" data-id="3" <?= in_array(3, $experience_ids)?'checked':''?>/>
                                     <div class="checkbox__text">2 года
                                     </div>
                                 </label>

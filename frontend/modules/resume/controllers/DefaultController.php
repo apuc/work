@@ -63,17 +63,17 @@ class DefaultController extends Controller
         $cities = City::find()->all();
 
         $resume_query = Resume::find();
-        if($params['experience_ids']){
-            if(!in_array(0,$params['experience_ids'])){
-                $array = [];
-                foreach ($params['experience_ids'] as $experience_id){
-                    $array[] = $experience_id-1;
+        if($params['experience_ids']) {
+            if(!in_array(0,$params['experience_ids'])) {
+                $tmp_exp_ids = [];
+                foreach ($params['experience_ids'] as $value){
+                    $tmp_exp_ids[] = $value-1;
                 }
-                if(in_array(3,$params['experience_ids'])) {
-                    $resume_query->andWhere(['years_of_exp' => $array]);
-                } else {
-                    $resume_query->andWhere(['years_of_exp' => $array]);
+                $or = ['or'];
+                foreach ($tmp_exp_ids as $experience_id){
+                    $or[] = ['>=', 'years_of_exp', $experience_id];
                 }
+                $resume_query->andWhere($or);
             }
         }
         if($params['category_ids']) {
