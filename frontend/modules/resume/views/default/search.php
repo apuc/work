@@ -69,25 +69,41 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                             <div class="vl-block__check jsCheckBlock">
                                 <label class="checkbox">
                                     <input type="checkbox"
-                                           name="experience" data-id="0" <?= in_array(0, $experience_ids)?'checked':''?>/>
+                                           name="experience" data-id="0"
+                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
+                                            <?= in_array(0, $experience_ids)?'checked':''?>
+                                        <?php endif ?>
+                                    />
                                     <div class="checkbox__text">Не имеет значения
                                     </div>
                                 </label>
                                 <label class="checkbox">
                                     <input type="checkbox"
-                                           name="experience" data-id="1" <?= in_array(1, $experience_ids)?'checked':''?>/>
+                                           name="experience" data-id="1"
+                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
+                                            <?= in_array(1, $experience_ids)?'checked':''?>
+                                        <?php endif ?>
+                                    />
                                     <div class="checkbox__text">Менее года
                                     </div>
                                 </label>
                                 <label class="checkbox">
                                     <input type="checkbox"
-                                           name="experience" data-id="2" <?= in_array(2, $experience_ids)?'checked':''?>/>
+                                           name="experience" data-id="2"
+                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
+                                            <?= in_array(2, $experience_ids)?'checked':''?>
+                                        <?php endif ?>
+                                    />
                                     <div class="checkbox__text">1 год
                                     </div>
                                 </label>
                                 <label class="checkbox">
                                     <input type="checkbox"
-                                           name="experience" data-id="3" <?= in_array(3, $experience_ids)?'checked':''?>/>
+                                           name="experience" data-id="3"
+                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
+                                            <?= in_array(3, $experience_ids)?'checked':''?>
+                                        <?php endif ?>
+                                    />
                                     <div class="checkbox__text">2 года
                                     </div>
                                 </label>
