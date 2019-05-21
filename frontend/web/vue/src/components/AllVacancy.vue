@@ -1,59 +1,67 @@
 <template>
 
 	<div>
-		<div class="all-resume">
-
-			<v-list two-line>
-
-				<v-list-tile
-					v-for="(item, index) in getAllVacancy"
-					:key="index"
-					style="margin-top: 20px;"
-				>
-					<v-list-tile-content>
-						<v-list-tile-title class="mt-auto mb-auto"> {{ item.post }} </v-list-tile-title>
-						<v-list-tile-sub-title class="mt-auto mb-auto"> {{ item.update_time }} </v-list-tile-sub-title>
-						<v-divider style="width: 100%;"></v-divider>
-					</v-list-tile-content>
-					<router-link :to="`${editLink}/${item.id}`">
-						<v-btn outline small fab
-									 class="edit-btn"
-									 type="button"
-						>
-							<v-icon>edit</v-icon>
-
-						</v-btn>
-					</router-link>
-					<v-btn outline small fab
-								 v-bind:disabled="item.can_update == false"
-								 class="edit-btn"
-								 type="button"
-								 @click="updateVacancy(index, item.id)"
-					>
-						<v-icon>arrow_upward </v-icon>
-					</v-btn>
-					<v-btn outline small fab
-								 class="edit-btn"
-								 type="button"
-								 @click="removeVacancy(index, item.id)"
-					>
-						<v-icon>delete</v-icon>
-					</v-btn>
-				</v-list-tile>
-			</v-list>
-
-		</div>
-
-		<template v-if="paginationPageCount > 1">
-			<div class="text-xs-center">
-				<v-pagination
-					v-model="paginationCurrentPage"
-					:length="paginationPageCount"
-					@input="changePage"
-				></v-pagination>
-			</div>
+		<template v-if="getAllVacancy.length === 0">
+			<v-subheader>У вас нет вакансий</v-subheader>
 		</template>
 
+		<template v-else>
+			<div>
+				<div class="all-resume">
+
+					<v-list two-line>
+
+						<v-list-tile
+							v-for="(item, index) in getAllVacancy"
+							:key="index"
+							style="margin-top: 20px;"
+						>
+							<v-list-tile-content>
+								<v-list-tile-title class="mt-auto mb-auto"> {{ item.post }} </v-list-tile-title>
+								<v-list-tile-sub-title class="mt-auto mb-auto"> {{ item.update_time }} </v-list-tile-sub-title>
+								<v-divider style="width: 100%;"></v-divider>
+							</v-list-tile-content>
+							<router-link :to="`${editLink}/${item.id}`">
+								<v-btn outline small fab
+											 class="edit-btn"
+											 type="button"
+								>
+									<v-icon>edit</v-icon>
+
+								</v-btn>
+							</router-link>
+							<v-btn outline small fab
+										 v-bind:disabled="item.can_update == false"
+										 class="edit-btn"
+										 type="button"
+										 @click="updateVacancy(index, item.id)"
+							>
+								<v-icon>arrow_upward </v-icon>
+							</v-btn>
+							<v-btn outline small fab
+										 class="edit-btn"
+										 type="button"
+										 @click="removeVacancy(index, item.id)"
+							>
+								<v-icon>delete</v-icon>
+							</v-btn>
+						</v-list-tile>
+					</v-list>
+
+				</div>
+
+				<template v-if="paginationPageCount > 1">
+					<div class="text-xs-center">
+						<v-pagination
+							v-model="paginationCurrentPage"
+							:length="paginationPageCount"
+							@input="changePage"
+						></v-pagination>
+					</div>
+				</template>
+
+			</div>
+		</template>
 	</div>
 
 </template>

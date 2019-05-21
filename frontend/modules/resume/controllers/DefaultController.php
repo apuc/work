@@ -20,7 +20,9 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
-        $model = Resume::find()->where(['id'=>$id])->one();
+        $model = Resume::findOne($id);
+        $model->views++;
+        $model->save();
         return $this->render('view', [
             'model' => $model
         ]);

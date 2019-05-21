@@ -5,6 +5,12 @@ import AddEducation from "../components/AddEducation";
 import AddSocial from "../components/AddSocial";
 
 export default {
+  resumeCity: Object.assign({}, Field, {
+    name: 'resumeCity',
+    label: 'Город*',
+    rules: [v => !!v  || 'Город обязателен к заполнению'],
+    component: VTextField,
+  }),
   careerObjective: Object.assign({}, Field, {
     name: 'careerObjective',
     label: 'Желаемая должность*',

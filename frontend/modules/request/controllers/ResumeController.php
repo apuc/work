@@ -3,10 +3,12 @@
 namespace frontend\modules\request\controllers;
 
 use common\classes\FileHandler;
+use common\models\Category;
 use common\models\Education;
 use common\models\Employer;
 use common\models\Experience;
 use common\models\Resume;
+use common\models\ResumeCategory;
 use common\models\ResumeSkill;
 use common\models\Skill;
 use Yii;
@@ -81,6 +83,16 @@ class ResumeController extends MyActiveController
                     }
                 }
             }
+            if($params['category']){
+                foreach($params['category'] as $category){
+                    if(Category::findOne($category)){
+                        $resume_category = new ResumeCategory();
+                        $resume_category->resume_id=$model->id;
+                        $resume_category->category_id=$category;
+                        $resume_category->save();
+                    }
+                }
+            }
         } elseif ($model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
@@ -141,6 +153,17 @@ class ResumeController extends MyActiveController
                         $resume_skill->resume_id = $model->id;
                         $resume_skill->skill_id = $skill->id;
                         $resume_skill->save();
+                    }
+                }
+            }
+            ResumeCategory::deleteAll(['resume_id'=>$model->id]);
+            if($params['category']){
+                foreach($params['category'] as $category){
+                    if(Category::findOne($category)){
+                        $resume_category = new ResumeCategory();
+                        $resume_category->resume_id=$model->id;
+                        $resume_category->category_id=$category;
+                        $resume_category->save();
                     }
                 }
             }

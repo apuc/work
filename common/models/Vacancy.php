@@ -88,7 +88,7 @@ class Vacancy extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['company', 'schedule', 'employment_type', 'vacancy_skill', 'skill', 'can_update'];
+        return ['company', 'schedule', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category'];
     }
 
     /**

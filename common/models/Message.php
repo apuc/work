@@ -21,12 +21,21 @@ use yii\db\ActiveRecord;
  */
 class Message extends ActiveRecord
 {
+
+    const SUBJECT_RESUME = 'Resume';
+    const SUBJECT_VACANCY = 'Vacancy';
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'message';
+    }
+
+    public function extraFields()
+    {
+        return ['receiver', 'sender', 'subject0'];
     }
 
     /**
@@ -69,4 +78,20 @@ class Message extends ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+
+    public function getSender(){
+        return $this->hasOne(User::className(), ['id'=>'sender_id']);
+    }
+
+    public function getReceiver(){
+        return $this->hasOne(User::className(), ['id'=>'receiver_id']);
+    }
+
+    public function getSubject0(){
+        if($this->subject === self::SUBJECT_RESUME)
+            return $this->hasOne(Resume::className(), ['id'=>'subject_id']);
+        if($this->subject === self::SUBJECT_VACANCY)
+            return $this->hasOne(Vacancy::className(), ['id'=>'subject_id']);
+    }
+
 }

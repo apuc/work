@@ -44,3 +44,12 @@
 .select2-results__option {
   min-height: 28px;
 }
+
+.v-content-bottom__center .single-card .btn-card {
+  margin-bottom: 5px;
+}
+
+.resume-top__left {
+  width: 166px;
+  height: auto;
+}

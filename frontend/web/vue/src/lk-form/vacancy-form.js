@@ -21,6 +21,21 @@ export default {
       }
     ],
   }),
+  categoriesVacancy: Object.assign({}, Field, {
+    name: 'categoriesVacancy',
+    label: 'Категория',
+    rules: [v => !!v  || 'Категория обязателена к заполнению'],
+    component: VSelect,
+    items: [
+      {
+        name: '',
+        id: ''
+      }
+    ],
+    attach: 'attach',
+    chips: 'chips',
+    multiple: 'multiple'
+  }),
   post: Object.assign({}, Field, {
     name: 'post',
     label: 'Должность*',

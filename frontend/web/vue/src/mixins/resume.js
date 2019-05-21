@@ -4,6 +4,7 @@ const resume = {
       hasImage: false,
       image: null,
       formData: {
+        resumeCity: '',
         image_url: '',
         careerObjective: '',
         categoriesResume: [],

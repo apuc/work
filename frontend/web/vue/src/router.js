@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import MainPage from './components/MainPage.vue'
+import MyMessage from './components/MyMessage.vue'
 import FormVacancy from './components/FormVacancy.vue'
 import FormResume from './components/FormResume.vue'
 import FormCompany from './components/FormCompany.vue'
@@ -16,6 +18,18 @@ Vue.use(Router);
 export default new Router({
   mode: 'history',
   routes: [
+    {
+      path: '/personal-area/',
+      name: 'main',
+      meta: {title: 'Статистика'},
+      component: MainPage
+    },
+    {
+      path: '/personal-area/my-message',
+      name: 'my-message',
+      meta: {title: 'Сообщения'},
+      component: MyMessage
+    },
     {
       path: '/personal-area/add-vacancy',
       name: 'add-vacancy',

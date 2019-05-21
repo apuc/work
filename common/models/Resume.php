@@ -77,7 +77,7 @@ class Resume extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp'], 'integer'],
+            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'views'], 'integer'],
             [['title', 'city', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['min_salary', 'max_salary'], 'safe'],
@@ -110,6 +110,7 @@ class Resume extends WorkActiveRecord
             'instagram' => 'Instagram',
             'facebook' => 'Facebook',
             'vk' => 'VK',
+            'views' => 'Просмотры',
             'status' => 'Статус',
             'created_at' => 'Создано',
             'updated_at' => 'Изменено'

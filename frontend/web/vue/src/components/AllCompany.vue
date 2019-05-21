@@ -1,55 +1,63 @@
 <template>
-
 	<div>
-		<div class="all-resume">
 
-			<v-list two-line>
-
-				<v-list-tile
-					v-for="(item, index) in getAllCompany"
-					:key="index"
-					style="margin-top: 20px;"
-				>
-					<v-list-tile-avatar>
-						<img :src="item.image_url" alt="">
-					</v-list-tile-avatar>
-
-					<v-list-tile-content>
-						<v-list-tile-title class="mt-auto mb-auto"> {{ item.name }} </v-list-tile-title>
-						<v-list-tile-sub-title class="mt-auto mb-auto"> {{ item.updated_at }} </v-list-tile-sub-title>
-						<v-divider style="width: 100%;"></v-divider>
-					</v-list-tile-content>
-					<router-link :to="`${editLink}/${item.id}`">
-						<v-btn outline small fab
-									 class="edit-btn"
-									 type="button"
-						>
-							<v-icon>edit</v-icon>
-
-						</v-btn>
-					</router-link>
-					<v-btn outline small fab
-								 class="edit-btn"
-								 type="button"
-								 @click="removeResume(index, item.id)"
-					>
-						<v-icon>delete</v-icon>
-					</v-btn>
-				</v-list-tile>
-			</v-list>
-
-		</div>
-
-		<template v-if="paginationPageCount > 1">
-			<div class="text-xs-center">
-				<v-pagination
-					v-model="paginationCurrentPage"
-					:length="paginationPageCount"
-					@input="changePage"
-				></v-pagination>
-			</div>
+		<template v-if="getAllCompany.length === 0">
+			<v-subheader>У вас нет компаний</v-subheader>
 		</template>
 
+		<template v-else>
+			<div>
+				<div class="all-resume">
+
+					<v-list two-line>
+
+						<v-list-tile
+							v-for="(item, index) in getAllCompany"
+							:key="index"
+							style="margin-top: 20px;"
+						>
+							<v-list-tile-avatar>
+								<img :src="item.image_url" alt="">
+							</v-list-tile-avatar>
+
+							<v-list-tile-content>
+								<v-list-tile-title class="mt-auto mb-auto"> {{ item.name }} </v-list-tile-title>
+								<v-list-tile-sub-title class="mt-auto mb-auto"> {{ item.updated_at }} </v-list-tile-sub-title>
+								<v-divider style="width: 100%;"></v-divider>
+							</v-list-tile-content>
+							<router-link :to="`${editLink}/${item.id}`">
+								<v-btn outline small fab
+											 class="edit-btn"
+											 type="button"
+								>
+									<v-icon>edit</v-icon>
+
+								</v-btn>
+							</router-link>
+							<v-btn outline small fab
+										 class="edit-btn"
+										 type="button"
+										 @click="removeResume(index, item.id)"
+							>
+								<v-icon>delete</v-icon>
+							</v-btn>
+						</v-list-tile>
+					</v-list>
+
+				</div>
+
+				<template v-if="paginationPageCount > 1">
+					<div class="text-xs-center">
+						<v-pagination
+							v-model="paginationCurrentPage"
+							:length="paginationPageCount"
+							@input="changePage"
+						></v-pagination>
+					</div>
+				</template>
+
+			</div>
+		</template>
 	</div>
 
 </template>

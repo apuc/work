@@ -35,6 +35,11 @@ class User extends ActiveRecord implements IdentityInterface
         return '{{%user}}';
     }
 
+    public function extraFields()
+    {
+        return ['employer'];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -185,5 +190,9 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function getEmployer(){
+        return $this->hasOne(Employer::className(), ['user_id'=>'id']);
     }
 }

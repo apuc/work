@@ -2,8 +2,10 @@
 
 namespace frontend\modules\request\controllers;
 
+use common\models\Category;
 use common\models\Company;
 use common\models\Vacancy;
+use common\models\VacancyCategory;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\web\HttpException;
@@ -42,6 +44,16 @@ class VacancyController extends MyActiveController
         } elseif (!$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
+        if($params['category']){
+            foreach($params['category'] as $category){
+                if(Category::findOne($category)){
+                    $resume_category = new VacancyCategory();
+                    $resume_category->vacancy_id=$model->id;
+                    $resume_category->category_id=$category;
+                    $resume_category->save();
+                }
+            }
+        }
         return $model;
     }
 
@@ -65,6 +77,17 @@ class VacancyController extends MyActiveController
             $response->setStatusCode(201);
         } elseif (!$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+        }
+        VacancyCategory::deleteAll(['vacancy_id'=>$model->id]);
+        if($params['category']){
+            foreach($params['category'] as $category){
+                if(Category::findOne($category)){
+                    $resume_category = new VacancyCategory();
+                    $resume_category->vacancy_id=$model->id;
+                    $resume_category->category_id=$category;
+                    $resume_category->save();
+                }
+            }
         }
         return $model;
     }

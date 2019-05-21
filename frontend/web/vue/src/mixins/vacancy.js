@@ -1,9 +1,11 @@
 const vacancy = {
   data() {
     return {
+      lengthCompany: 0,
       formData: {
         city: '',
         companyName: [],
+        categoriesVacancy: [],
         post: '',
         duties: '',
         typeOfEmployment: [],

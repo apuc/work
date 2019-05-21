@@ -19,9 +19,11 @@ use yii\helpers\StringHelper; ?>
             </button>
             <div class="single-block__left">
                 <div class="single-block__left__first">
-                    <?php foreach ($model->category as $category): ?>
-                        <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::to(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
-                    <?php endforeach ?>
+                    <div class="category-block">
+                        <?php foreach ($model->category as $category): ?>
+                            <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::to(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
+                        <?php endforeach ?>
+                    </div>
                     <span>Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd MM yyyy') ?></span>
                     <div class="single-block__left__first__view"><img class="single-block__icon mr5"
                                                                       src="/images/icon-eye.png" alt=""

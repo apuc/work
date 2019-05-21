@@ -33,7 +33,7 @@ class VacancyCategory extends WorkActiveRecord
         return [
             [['vacancy_id', 'category_id'], 'integer'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['vacancy_id'], 'exist', 'skipOnError' => true, 'targetClass' => Resume::className(), 'targetAttribute' => ['vacancy_id' => 'id']],
+            [['vacancy_id'], 'exist', 'skipOnError' => true, 'targetClass' => Vacancy::className(), 'targetAttribute' => ['vacancy_id' => 'id']],
         ];
     }
 

@@ -1,24 +1,25 @@
 <template>
-	<FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
+    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
 
-		<img class="my-avatar" v-if="formData.image_url" :src="formData.image_url"/>
-		<image-uploader
-			class="input-file"
-			:preview="true"
-			:className="['fileinput', { 'fileinput--loaded': hasImage }]"
-			capture="environment"
-			:debug="1"
-			accept="video/*,image/*"
-			doNotResize="gif"
-			:autoRotate="true"
-			outputFormat="verbose"
-			@input="setImage"
-		>
-			<label for="fileInput" slot="upload-label">
+        <img class="my-avatar" v-if="formData.image_url" :src="formData.image_url"/>
+        <image-uploader
+                class="input-file"
+                :preview="true"
+                :className="['fileinput', { 'fileinput--loaded': hasImage }]"
+                capture="environment"
+                :debug="1"
+                accept="video/*,image/*"
+                doNotResize="gif"
+                :autoRotate="true"
+                outputFormat="verbose"
+                @input="setImage"
+        >
+            <label for="fileInput" slot="upload-label">
 				<span class="upload-caption">
 					Выбрать фото
-					<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-						 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+					<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 						<g>
 							<g>
 								<g>
@@ -78,124 +79,127 @@
 						</g>
 					</svg>
 				</span>
-			</label>
-		</image-uploader>
+            </label>
+        </image-uploader>
 
-	</FormTemplate>
+    </FormTemplate>
 </template>
 
 <script>
-  import FormResume from '../lk-form/resume-form';
-  import FormTemplate from "./FormTemplate";
-  import Resume from "../mixins/resume";
+    import FormResume from '../lk-form/resume-form';
+    import FormTemplate from "./FormTemplate";
+    import Resume from "../mixins/resume";
 
-  export default {
-    name: 'FormResume',
-    mixins: [Resume],
-    components: {FormTemplate},
-    mounted() {
-      document.title = this.$route.meta.title;
+    export default {
+        name: 'FormResume',
+        mixins: [Resume],
+        components: {FormTemplate},
+        mounted() {
+            document.title = this.$route.meta.title;
 
-      this.getEmploymentType()
-        .then(response => {
-          FormResume.categoriesResume.items = response.data;
-          for (let i = 0; i < response.data.length; i++) {
-            this.$set(FormResume.categoriesResume.items, i, response.data[i]);
-          }
-        });
+            this.getEmploymentType()
+                .then(response => {
+                    FormResume.categoriesResume.items = response.data;
+                    for (let i = 0; i < response.data.length; i++) {
+                        this.$set(FormResume.categoriesResume.items, i, response.data[i]);
+                    }
+                });
 
-      this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skills,category')
-        .then(response => {
+            this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skills,category')
+                .then(response => {
 
-            if (response.data.image_url) {
-              this.formData.image_url = response.data.image_url;
-            }
+                        this.formData.resumeCity = response.data.city;
 
-            this.formData.careerObjective = response.data.title;
-            this.formData.categoriesResume = response.data.category;
-            this.formData.salaryFrom = response.data.min_salary;
-            this.formData.salaryBefore = response.data.max_salary;
-            this.formData.aboutMe = response.data.description;
-            this.formData.addSocial.vkontakte = response.data.vk;
-            this.formData.addSocial.facebook = response.data.facebook;
-            this.formData.addSocial.instagram = response.data.instagram;
-            this.formData.addSocial.skype = response.data.skype;
-            this.formData.educationBlock = response.data.education;
-            this.formData.workBlock = response.data.experience;
+                        if (response.data.image_url) {
+                            this.formData.image_url = response.data.image_url;
+                        }
 
-            for (let i = 0; i < response.data.skills.length; i++) {
-              this.formData['duties' + i] = response.data.skills[i].name;
-            }
+                        this.formData.careerObjective = response.data.title;
+                        this.formData.categoriesResume = response.data.category;
+                        this.formData.salaryFrom = response.data.min_salary;
+                        this.formData.salaryBefore = response.data.max_salary;
+                        this.formData.aboutMe = response.data.description;
+                        this.formData.addSocial.vkontakte = response.data.vk;
+                        this.formData.addSocial.facebook = response.data.facebook;
+                        this.formData.addSocial.instagram = response.data.instagram;
+                        this.formData.addSocial.skype = response.data.skype;
+                        this.formData.educationBlock = response.data.education;
+                        this.formData.workBlock = response.data.experience;
 
-            if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
-              document.querySelector('.social-block button').click();
-            }
+                        for (let i = 0; i < response.data.skills.length; i++) {
+                            this.formData['duties' + i] = response.data.skills[i].name;
+                        }
 
-            let workLength = response.data.experience.length - 1;
-            for (let i = 0; i < workLength; i++) {
-              document.querySelector('.btnWork').click();
-            }
+                        if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
+                            document.querySelector('.social-block button').click();
+                        }
 
-            let educationLength = response.data.education.length - 1;
-            for (let i = 0; i < educationLength; i++) {
-              document.querySelector('.btnEducation').click();
-            }
-          }, response => {
-          }
-        )
-    },
-    methods: {
-      saveData() {
-        let data = {
-          image: {},
-          title: this.formData.careerObjective,
-          category: this.formData.categoriesResume,
-          min_salary: this.formData.salaryFrom,
-          max_salary: this.formData.salaryBefore,
-          description: this.formData.aboutMe,
-          vk: this.formData.addSocial.vkontakte,
-          facebook: this.formData.addSocial.facebook,
-          instagram: this.formData.addSocial.instagram,
-          skype: this.formData.addSocial.skype,
-          education: this.formData.educationBlock,
-          work: this.formData.workBlock,
-          skills: [],
-        };
-        if (this.hasImage) {
-          data.image = this.image;
-        } else {
-          data.image = {
-            changeImg: false
-          }
-        }
+                        let workLength = response.data.experience.length - 1;
+                        for (let i = 0; i < workLength; i++) {
+                            document.querySelector('.btnWork').click();
+                        }
 
-        let dutiesVal = document.querySelectorAll('.duties input');
-        for (let i = 0; i < dutiesVal.length; i++) {
-          if (dutiesVal[i].value !== '') {
-            data.skills.push({name: dutiesVal[i].value})
-          }
-        }
-        this.$http.patch(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id, data)
-          .then(response => {
-            this.$router.push('/personal-area/all-resume')
-            }, response => {
-            }
-          )
-      },
-      getFormData() {
-        return FormResume;
-      },
-      async getEmploymentType() {
-        return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`)
-      },
-      setImage: function (output) {
-        this.hasImage = true;
-        this.image = output;
-        let img = document.querySelector('.my-avatar');
-        img.classList.add('hide');
-      },
-    },
-  }
+                        let educationLength = response.data.education.length - 1;
+                        for (let i = 0; i < educationLength; i++) {
+                            document.querySelector('.btnEducation').click();
+                        }
+                    }, response => {
+                    }
+                )
+        },
+        methods: {
+            saveData() {
+                let data = {
+                    city: this.formData.resumeCity,
+                    image: {},
+                    title: this.formData.careerObjective,
+                    category: this.formData.categoriesResume,
+                    min_salary: this.formData.salaryFrom,
+                    max_salary: this.formData.salaryBefore,
+                    description: this.formData.aboutMe,
+                    vk: this.formData.addSocial.vkontakte,
+                    facebook: this.formData.addSocial.facebook,
+                    instagram: this.formData.addSocial.instagram,
+                    skype: this.formData.addSocial.skype,
+                    education: this.formData.educationBlock,
+                    work: this.formData.workBlock,
+                    skills: [],
+                };
+                if (this.hasImage) {
+                    data.image = this.image;
+                } else {
+                    data.image = {
+                        changeImg: false
+                    }
+                }
+
+                let dutiesVal = document.querySelectorAll('.duties input');
+                for (let i = 0; i < dutiesVal.length; i++) {
+                    if (dutiesVal[i].value !== '') {
+                        data.skills.push({name: dutiesVal[i].value})
+                    }
+                }
+                this.$http.patch(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id, data)
+                    .then(response => {
+                            this.$router.push('/personal-area/all-resume')
+                        }, response => {
+                        }
+                    )
+            },
+            getFormData() {
+                return FormResume;
+            },
+            async getEmploymentType() {
+                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`)
+            },
+            setImage: function (output) {
+                this.hasImage = true;
+                this.image = output;
+                let img = document.querySelector('.my-avatar');
+                img.classList.add('hide');
+            },
+        },
+    }
 </script>
 
 <style>
