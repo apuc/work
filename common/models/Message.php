@@ -16,6 +16,8 @@ use yii\db\ActiveRecord;
  * @property int $sender_id
  * @property string $subject
  * @property int $subject_id
+ * @property string $subject_from
+ * @property int $subject_from_id
  * @property int $created_at
  * @property int $updated_at
  */
@@ -44,9 +46,9 @@ class Message extends ActiveRecord
     public function rules()
     {
         return [
-            [['receiver_id', 'sender_id', 'subject_id'], 'integer'],
+            [['receiver_id', 'sender_id', 'subject_id', 'subject_from_id'], 'integer'],
             [['text'], 'string'],
-            [['title', 'subject'], 'string', 'max'=>255],
+            [['title', 'subject', 'subject_from'], 'string', 'max'=>255],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -92,6 +94,12 @@ class Message extends ActiveRecord
             return $this->hasOne(Resume::className(), ['id'=>'subject_id']);
         if($this->subject === self::SUBJECT_VACANCY)
             return $this->hasOne(Vacancy::className(), ['id'=>'subject_id']);
+    }
+    public function getSubject_from(){
+        if($this->subject_from === self::SUBJECT_RESUME)
+            return $this->hasOne(Resume::className(), ['id'=>'subject_from_id']);
+        if($this->subject_from === self::SUBJECT_VACANCY)
+            return $this->hasOne(Vacancy::className(), ['id'=>'subject_from_id']);
     }
 
 }
