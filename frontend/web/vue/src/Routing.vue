@@ -67,7 +67,7 @@ export default {
         {
           title: 'Статистика',
           url: '/personal-area/',
-          img: `${process.env.VUE_APP_API_URL}`+'/vue/public/lk-image/mail.png'
+          img: `${process.env.VUE_APP_API_URL}`+'/vue/public/lk-image/analysis.png'
         },
         {
           title: 'Сообщения',

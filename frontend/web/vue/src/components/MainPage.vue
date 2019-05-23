@@ -55,8 +55,6 @@
         data() {
             return {
                 allRecords: '',
-                // isResume: false,
-                // isVacancy: false,
             }
         },
         computed: {
