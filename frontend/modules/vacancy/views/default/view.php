@@ -107,10 +107,10 @@ use yii\helpers\StringHelper; ?>
                             <?php endif ?>
                         </div>
                     </div>
-<!--                    <div class="sr-btn">-->
-<!--                        <button class="sr-btn__btn btn btn-red">Отправить резюме-->
-<!--                        </button>-->
-<!--                    </div>-->
+                    <div class="sr-btn">
+                        <button class="sr-btn__btn btn btn-red jsVacancyModal">Отправить резюме
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

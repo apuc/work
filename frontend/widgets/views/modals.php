@@ -86,11 +86,36 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             <div class="modal-style modal-send-message jsModalMessage">
                 <h2>Сообщение</h2>
                 <?= Html::beginForm(['/resume/default/send-message'], 'post', ['class' => 'jsModalMessageForm']) ?>
+                <select class="jsModalSelectResume">
+                    <option>1
+                    </option>
+                    <option>2
+                    </option>
+                    <option>3
+                    </option>
+                </select>
                 <input name="resume_id" type="hidden" value="<?= Yii::$app->request->get('id') ?>">
                 <textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение" required></textarea>
                 <button class="jsBtnReg jsBtn" type="submit">Отправить</button>
                 <?= Html::endForm() ?>
             </div>
         <?php endif ?>
+        <div class="modal-style modal-send-message jsModalMessageVacancy">
+            <h2>Написать нам
+            </h2>
+            <form class="jsModalRegForm">
+                <select class="jsModalSelectVacancy">
+                    <option>1
+                    </option>
+                    <option>2
+                    </option>
+                    <option>3
+                    </option>
+                </select>
+                <textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение"></textarea>
+                <button class="jsBtnReg jsBtn" type="submit" disabled="disabled">Отправить
+                </button>
+            </form>
+        </div>
     </div>
 </div>

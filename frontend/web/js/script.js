@@ -86,6 +86,20 @@ if ($('.home__form-select-js').length > 0) {
   });
 }
 
+if ($('.jsModalSelectResume').length > 0) {
+  $('.jsModalSelectResume').select2({
+    placeholder: "Выберите резюме",
+    minimumResultsForSearch: Infinity
+  });
+}
+
+if ($('.jsModalSelectVacancy').length > 0) {
+  $('.jsModalSelectVacancy').select2({
+    placeholder: "Выберите вакансию",
+    minimumResultsForSearch: Infinity
+  });
+}
+
 $(document).ready(function () {
   if ($('#sidebar').length > 0 && window.innerWidth > 993) {
     var stickySidebar = new StickySidebar('#sidebar', {
@@ -176,11 +190,17 @@ $(document).ready(function () {
     $('.jsModalMessage').fadeIn();
     $('body').addClass('body-overflow');
   });
+  $('.jsVacancyModal').click(function () {
+    $('.jsModal').fadeIn();
+    $('.jsModalMessageVacancy').fadeIn();
+    $('body').addClass('body-overflow');
+  });
   $('.jsModalClose').click(function () {
     $('.jsModal').fadeOut();
     $('.jsModalLogin').fadeOut(1);
     $('.jsModalReg').fadeOut();
     $('.jsModalMessage').fadeOut();
+    $('.jsModalMessageVacancy').fadeOut();
     $('.jsBtn').prop('disabled', true);
     $('body').removeClass('body-overflow');
   });
