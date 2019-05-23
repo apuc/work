@@ -6,9 +6,12 @@ use common\classes\Debug;
 use common\models\Category;
 use common\models\City;
 use common\models\EmploymentType;
+use common\models\Message;
 use common\models\Resume;
 use common\models\Vacancy;
+use Yii;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\Controller;
 
 class DefaultController extends Controller
@@ -23,6 +26,34 @@ class DefaultController extends Controller
         return $this->render('view', [
             'model' => $model
         ]);
+    }
+
+    public function actionSendMessage(){
+        $post = Yii::$app->request->post();
+        $resume = Resume::findOne($post['resume_id']);
+        $vacancy = Vacancy::findOne($post['vacancy_id']);
+        if($resume && $vacancy ){
+            $message = new Message();
+            $message->text = $post['message'];
+            $message->sender_id = Yii::$app->user->id;
+            $message->subject = 'Vacancy';
+            $message->subject_id = $vacancy->id;
+            $message->receiver_id = $vacancy->company->user_id;
+            $message->subject_from = 'Resume';
+            $message->subject_from_id = $post['resume_id'];
+            $message->save();
+
+            $text = 'Пользователь '.$resume->employer->second_name.' '.$resume->employer->first_name.' заинтересовался вашей вакансией "'.$vacancy->post.'" 
+            и прилагает своё резюме '.$resume->title.'. '. Url::base(true).'/resume/view/'.$resume->id.'. '.$message->text;
+            Yii::$app->mailer->compose()
+                ->setFrom('noreply@rabota.today')
+                ->setTo(Yii::$app->user->identity->email)
+                ->setSubject('Ответ на вашу вакансию '. $vacancy->post.'.')
+                ->setTextBody($text)
+                ->send();
+        }
+        return $this->goBack();
+
     }
 
     public function actionSearch()

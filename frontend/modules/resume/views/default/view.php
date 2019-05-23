@@ -150,7 +150,7 @@ use yii\helpers\Url; ?>
                                             src="/images/fb.svg" alt="" role="presentation"/></a><?php endif ?>
                             <?php endif ?>
                         </div>
-                        <?php if(!Yii::$app->user->isGuest): ?>
+                        <?php if(!Yii::$app->user->isGuest && $model->owner != Yii::$app->user->id): ?>
                         <button class="resume-info__btn jsSendMessage">написать сообщение
                         </button>
                         <?php endif ?>
@@ -405,12 +405,5 @@ use yii\helpers\Url; ?>
 <!--                </div>-->
 <!--            </div>-->
 <!--        </div>-->
-    </div>
-    <div class="modal-style modal-send-message jsModalMessage">
-        <h2>Сообщение</h2>
-        <?= Html::beginForm(['/resume/default/send-message'], 'post', ['class' => 'jsModalMessageForm']) ?>
-        <textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение" required></textarea>
-        <button class="jsBtnReg jsBtn" type="submit">Отправить</button>
-        <?= Html::endForm() ?>
     </div>
 </section>
