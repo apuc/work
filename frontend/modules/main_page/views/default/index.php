@@ -152,7 +152,6 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
         </div>
     </div>
     <div class="nhome__footer">
-    </div>
 
     <?php
     $i=0;
