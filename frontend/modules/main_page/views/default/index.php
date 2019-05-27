@@ -136,7 +136,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                 </div>
                 <div class="single-card__info">
                     <p><?=$vacancy->employment_type->name?>.</p>
-                    <p><?=StringHelper::truncate($vacancy->company->description, 80, '...')?></p>
+                    <p><?=StringHelper::truncate($vacancy->responsibilities, 80, '...')?></p>
                 </div>
                 <?php if(!Yii::$app->user->isGuest):?>
                 <div class="d-flex flex-wrap align-items-center justify-content-start mt-auto">
