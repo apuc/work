@@ -139,7 +139,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                     <p><?=StringHelper::truncate($vacancy->company->description, 80, '...')?></p>
                 </div>
                 <?php if(!Yii::$app->user->isGuest):?>
-                <div class="d-flex flex-wrap align-items-center justify-content-start mt10">
+                <div class="d-flex flex-wrap align-items-center justify-content-start mt-auto">
                     <a class="btn-card btn-red jsVacancyModal" data-id="<?=$vacancy->id?>">Откликнуться</a>
 <!--                    <a class="single-card__like" href="#">-->
 <!--                        <i class="fa fa-heart-o"></i>-->
@@ -166,7 +166,8 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
     $i++;
     endforeach; ?>
         <a class="nhome__footer-item" href="#"></a>
+	<img class="nhome__dots1" src="/images/bg-dots.png" alt="" role="presentation"/>
+	<img class="nhome__circle" src="/images/circle.png" alt="" role="presentation"/>
     </div>
-    <img class="nhome__dots1" src="/images/bg-dots.png" alt="" role="presentation"/>
-    <img class="nhome__circle" src="/images/circle.png" alt="" role="presentation"/>
+
 </div>
