@@ -53,7 +53,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                     <a class="nhome__nav-item" href="<?=Url::to(['/resume/default/search'])?>">Поиск резюме</a>
                     <a class="nhome__nav-item" href="<?=Url::to(['/vacancy/default/search'])?>">Поиск вакансий</a>
                     <?php if (Yii::$app->user->isGuest): ?>
-                    <button class="home__nav-item jsLogin">
+                    <button class="nhome__nav-item nav-btn jsLogin">
                         Вход
                     </button>
                     <?php else: ?>
