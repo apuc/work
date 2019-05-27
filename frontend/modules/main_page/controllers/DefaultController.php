@@ -17,7 +17,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $categories = Category::find()->all();
-        $vacancies = Vacancy::find()->limit(10)->orderBy('id DESC')->all();
+        $vacancies = Vacancy::find()->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(10)->orderBy('id DESC')->all();
         return $this->render('index', [
             'categories' => $categories,
             'vacancies' => $vacancies

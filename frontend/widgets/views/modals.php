@@ -101,8 +101,7 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 <?= Html::endForm() ?>
             </div>
         <?php endif ?>
-        <?php if (Yii::$app->controller->uniqueId === 'vacancy/default' && !Yii::$app->user->isGuest):
-            /** @var \common\models\Resume[] $resumes */
+        <?php if (!Yii::$app->user->isGuest):
             $resumes = \common\models\Resume::find()->where(['owner'=> Yii::$app->user->id, 'status'=>\common\models\Resume::STATUS_ACTIVE])->all()?>
         <div class="modal-style modal-send-message jsModalMessageVacancy">
             <h2>Написать нам
@@ -115,7 +114,7 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                     </option>
                     <?php endforeach ?>
                 </select>
-                <input name="vacancy_id" type="hidden" value="<?= Yii::$app->request->get('id') ?>">
+                <input name="vacancy_id" type="hidden" value="">
                 <textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение"></textarea>
                 <button class="jsBtnReg jsBtn" type="submit">Отправить
                 </button>

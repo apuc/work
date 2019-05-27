@@ -109,7 +109,7 @@ use yii\helpers\StringHelper; ?>
                     </div>
                     <?php if(!Yii::$app->user->isGuest && $model->owner != Yii::$app->user->id): ?>
                     <div class="sr-btn">
-                        <button class="sr-btn__btn btn btn-red jsVacancyModal">Отправить резюме
+                        <button class="sr-btn__btn btn btn-red jsVacancyModal" data-id="<?=$model->id?>">Отправить резюме
                         </button>
                     </div>
                     <?php endif ?>

@@ -65,13 +65,29 @@ if ($('.home__slider').length > 0) {
   $('.home__slider').slick({
     verticalSwiping: true,
     vertical: true,
-    arrows: false,
-    slidesToShow: 2,
+    arrows: true,
+    prevArrow: '<button type="button" class="prevSlickHome"><img src="/images/arrow-down.svg"></button>',
+    nextArrow: '<button type="button" class="nextSlickHome"><img src="/images/arrow-up.svg"></button>',
+    slidesToShow: 3,
     autoplay: true,
     autoplaySpeed: 2000,
     responsive: [{
+      breakpoint: 1500,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1
+      }
+    }, {
+      breakpoint: 992,
+      settings: {
+        arrows: false,
+        slidesToShow: 2,
+        slidesToScroll: 1
+      }
+    }, {
       breakpoint: 576,
       settings: {
+        arrows: false,
         slidesToShow: 1,
         slidesToScroll: 1
       }
@@ -191,6 +207,9 @@ $(document).ready(function () {
     $('body').addClass('body-overflow');
   });
   $('.jsVacancyModal').click(function () {
+    var vacancy_id=$(this).attr('data-id');
+    if(vacancy_id!==undefined)
+      $("input[name=vacancy_id]").val(vacancy_id);
     $('.jsModal').fadeIn();
     $('.jsModalMessageVacancy').fadeIn();
     $('body').addClass('body-overflow');
