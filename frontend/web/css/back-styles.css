@@ -53,3 +53,6 @@
   width: 166px;
   height: auto;
 }
+.single-card__title {
+  text-decoration: none;
+}
