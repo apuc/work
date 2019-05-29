@@ -2,8 +2,8 @@
 
 /* @var $this \yii\web\View */
 /* @var $categories \common\models\Category[] */
-
 /* @var $vacancies \common\models\Vacancy[] */
+/* @var $employer \common\models\Employer */
 
 
 use common\models\KeyValue;
@@ -58,7 +58,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                     </button>
                     <?php else: ?>
                     <div class="dropdown jsMenu">
-                        <span class="nhome__nav-item nav-btn jsOpenMenu"><?= Yii::$app->user->identity->username ?></span>
+                        <span class="nhome__nav-item nav-btn jsOpenMenu"><?= $employer->first_name.' '.$employer->second_name ?></span>
                         <div class="dropdown__menu jsShowMenu">
                             <a class="nhome__nav-item" href="<?=Url::to(['/personal_area/default/index'])?>">Личный кабинект</a>
                             <?= Html::beginForm(['/site/logout'], 'post', ['class' => 'form-logout']) ?>
@@ -165,8 +165,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
     $i++;
     endforeach; ?>
         <a class="nhome__footer-item" href="#"></a>
-	<img class="nhome__dots1" src="/images/bg-dots.png" alt="" role="presentation"/>
-	<img class="nhome__circle" src="/images/circle.png" alt="" role="presentation"/>
     </div>
-
+    <img class="nhome__dots1" src="/images/bg-dots.png" alt="" role="presentation"/>
+    <img class="nhome__circle" src="/images/circle.png" alt="" role="presentation"/>
 </div>

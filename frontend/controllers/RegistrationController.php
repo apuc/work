@@ -47,6 +47,7 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
             $employer->first_name = $post['first_name'];
             $employer->second_name = $post['second_name'];
             $employer->user_id = $user->id;
+            $employer->email = $user->email;
             $employer->save();
         }
         return $this->goBack();

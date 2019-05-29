@@ -4,6 +4,7 @@ namespace frontend\modules\request\controllers;
 
 use common\models\Employer;
 use common\models\Phone;
+use dektrium\user\models\User;
 use Yii;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
@@ -42,6 +43,10 @@ class EmployerController extends MyActiveController
                 $phone->number = $params['phone'];
                 $phone->save();
             }
+            $user = User::findOne(Yii::$app->user->id);
+            $user->email=$model->email;
+            $user->username=$model->email;
+            $user->save();
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
         } elseif (!$model->hasErrors()) {

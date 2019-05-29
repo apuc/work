@@ -4,6 +4,7 @@ namespace frontend\modules\main_page\controllers;
 
 use common\classes\Debug;
 use common\models\Category;
+use common\models\Employer;
 use common\models\Vacancy;
 use yii\web\Controller;
 
@@ -18,9 +19,11 @@ class DefaultController extends Controller
     {
         $categories = Category::find()->all();
         $vacancies = Vacancy::find()->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(10)->orderBy('id DESC')->all();
+        $employer = \Yii::$app->user->isGuest?null:Employer::find()->where(['user_id'=>\Yii::$app->user->id])->one();
         return $this->render('index', [
             'categories' => $categories,
-            'vacancies' => $vacancies
+            'vacancies' => $vacancies,
+            'employer' => $employer
         ]);
     }
 

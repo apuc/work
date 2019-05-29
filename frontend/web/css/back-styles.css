@@ -54,5 +54,6 @@
   height: auto;
 }
 .single-card__title {
+  display: block;
   text-decoration: none;
 }

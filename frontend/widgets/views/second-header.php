@@ -1,5 +1,5 @@
 <?php
-
+/* @var $employer \common\models\Employer */
 use yii\helpers\Html;
 
 ?>
@@ -24,7 +24,7 @@ use yii\helpers\Html;
                             <?php else: ?>
 															<div class="dropdown jsMenu">
 																<span class="home__nav-item jsOpenMenu">
-																	<?= Yii::$app->user->identity->username ?>
+																	<?= $employer->first_name.' '.$employer->second_name ?>
 																</span>
 																<div class="dropdown__menu jsShowMenu">
 																	<a class="home__nav-item" href="/personal-area">
@@ -33,7 +33,7 @@ use yii\helpers\Html;
                                     <?= Html::beginForm(['/site/logout'], 'post', ['class' => 'form-logout']) ?>
                                     <?= Html::submitButton(
                                         'Выйти',
-                                        ['class' => 'btn-logout']
+                                        ['class' => 'home__nav-item btn-logout']
                                     ) ?>
                                     <?= Html::endForm() ?>
 																</div>
