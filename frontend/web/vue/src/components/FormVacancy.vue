@@ -71,6 +71,7 @@
                     .then(response => {
                             this.$router.push('/personal-area/all-vacancy')
                         }, response => {
+                        this.$swal(response.data.message);
                         }
                     )
             },

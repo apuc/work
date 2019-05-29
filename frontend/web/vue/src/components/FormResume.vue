@@ -134,6 +134,7 @@
                     .then(response => {
                             this.$router.push('/personal-area/all-resume')
                         }, response => {
+							this.$swal(response.message);
                         }
                     )
             },

@@ -61,15 +61,16 @@
                                 element.subject = 'Отклик на резюме ' + element.subject0.title;
                             }
                             if (element.subject === 'Vacancy') {
-                                element.subject = 'Отклик на вакансию ' + element.subject0.title;
+                                element.subject = 'Отклик на вакансию ' + element.subject0.post;
                             }
                             let timestamp = element.created_at;
                             let date = new Date();
                             date.setTime(timestamp * 1000);
-                            element.created_at = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                            element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
                         });
                         this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
                     }, response => {
+                    this.$swal(response.data.message);
                     }
                 );
 

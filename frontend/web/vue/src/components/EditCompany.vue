@@ -118,6 +118,7 @@
               document.querySelector('.social-block button').click();
             }
           }, response => {
+			this.$swal(response.data.message);
           }
         )
     },
@@ -147,6 +148,7 @@
           .then(response => {
             this.$router.push('/personal-area/all-company')
             }, response => {
+			  this.$swal(response.data.message);
             }
           )
       },

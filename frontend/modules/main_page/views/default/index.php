@@ -126,7 +126,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                                 <span class="ml5"><?=$vacancy->city?></span>
                             </a>
                         </div>
-                        <a href="<?=Url::to(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title"><?=$vacancy->post?></a>
+                        <a href="<?=Url::to(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title" title="<?=$vacancy->post?>"><?=$vacancy->post?></a>
                         <div class="single-card__info-second"><span class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd MM yyyy, hh:mm') ?></span>
                             <div class="single-card__view"><img class="single-card__icon mr5" src="/images/icon-eye.png"
                                                                 alt="" role="presentation"/><span><?=$vacancy->views?></span>
@@ -156,7 +156,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
     <?php
     $i=0;
     foreach($categories as $category): ?>
-    <?php if($i<8): ?>
+    <?php if($i<9): ?>
         <a class="nhome__footer-item" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?=$category->name?> <?=$category->vacancy_count?></a>
     <?php else:?>
         <a class="nhome__footer-item mob-hide" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?=$category->name?> <?=$category->vacancy_count?></a>

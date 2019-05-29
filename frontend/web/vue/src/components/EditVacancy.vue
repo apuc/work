@@ -57,6 +57,7 @@
                         this.formData.officeAddress = response.data.address;
                         this.formData.houseNumber = response.data.home_number;
                     }, response => {
+                    this.$swal(response.data.message);
                     }
                 )
         },
@@ -84,6 +85,7 @@
                     .then(response => {
                             this.$router.push('/personal-area/all-vacancy')
                         }, response => {
+                        this.$swal(response.data.message);
                         }
                     )
             },

@@ -46,12 +46,7 @@ use yii\helpers\Url; ?>
                     </h3><span class="resume-top__price"><?= $model->min_salary ?>-<?= $model->max_salary ?> RUB</span>
                     <table class="resume-top__text">
                         <tbody>
-                        <tr>
-                            <th>Занятость:
-                            </th>
-                            <td><?= $model->employment_type->name ?>
-                            </td>
-                        </tr>
+
                         <tr>
                             <th>Возраст:
                             </th>

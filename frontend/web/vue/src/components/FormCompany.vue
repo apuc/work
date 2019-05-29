@@ -119,6 +119,7 @@
           .then(response => {
             	this.$router.push('/personal-area/all-company')
             }, response => {
+			  this.$swal(response.data.message);
             }
           )
       },

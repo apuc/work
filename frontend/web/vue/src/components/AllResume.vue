@@ -1,5 +1,6 @@
 <template>
     <div>
+        <v-subheader class="all-head">Ваши резюме</v-subheader>
         <template v-if="getAllResume.length === 0">
             <v-subheader>У вас нет резюме</v-subheader>
         </template>
@@ -21,7 +22,7 @@
 
                             <v-list-tile-content>
                                 <v-list-tile-title class="mt-auto mb-auto"> {{ item.title }}</v-list-tile-title>
-                                <v-list-tile-sub-title class="mt-auto mb-auto"> {{ item.update_time }}</v-list-tile-sub-title>
+                                <v-list-tile-sub-title class="mt-auto mb-auto">Последнее обновление: {{ item.update_time }}</v-list-tile-sub-title>
                                 <v-divider style="width: 100%;"></v-divider>
                             </v-list-tile-content>
                             <router-link :to="`${editLink}/${item.id}`">
@@ -91,10 +92,11 @@
                             let timestamp = element.update_time;
                             let date = new Date();
                             date.setTime(timestamp * 1000);
-                            element.update_time = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                            element.update_time = date.getDate() + '.' + (date.getMonth() + 1 ) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
                         });
                         this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
                     }, response => {
+                    this.$swal(response.data.message);
                     }
                 );
 
@@ -107,9 +109,10 @@
                             let newData = response.data;
                             let date = new Date();
                             date.setTime(newData.update_time * 1000);
-                            newData.update_time = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                            newData.update_time = date.getDate() + '.' + (date.getMonth() + 1 ) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
                             this.getAllResume.unshift(newData);
                         }, response => {
+                        this.$swal(response.data.message);
                         }
                     );
             },
@@ -118,6 +121,7 @@
                 this.$http.delete(`${process.env.VUE_APP_API_URL}/request/resume/` + resumeId)
                     .then(response => {
                         }, response => {
+                        this.$swal(response.data.message);
                         }
                     );
             },
@@ -126,6 +130,7 @@
                     .then(response => {
                             this.getAllResume = response.data;
                         }, response => {
+                        this.$swal(response.data.message);
                         }
                     );
             }
@@ -140,5 +145,12 @@
 
     a {
         text-decoration: none;
+    }
+    .all-head {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        padding: 0;
+        font-size: 22px;
+        color: rgba(0,0,0,.74);
     }
 </style>

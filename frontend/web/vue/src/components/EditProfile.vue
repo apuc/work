@@ -26,6 +26,7 @@
 						}
             this.idEmployer = response.data[0].id;
           }, response => {
+			this.$swal(response.data.message);
           }
         )
     },
@@ -41,6 +42,7 @@
         this.$http.patch(`${process.env.VUE_APP_API_URL}/request/employer/` + this.idEmployer, data)
           .then(response => {
             }, response => {
+			  this.$swal(response.data.message);
             }
           )
       },

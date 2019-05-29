@@ -65,6 +65,7 @@
                 .then(response => {
                         this.allRecords = response.data;
                     }, response => {
+                    this.$swal(response.data.message);
                     }
                 );
 
@@ -107,7 +108,7 @@
         background-color: #0000FF !important;
     }
     .main-card_vacancy {
-        background-color: #00FF00 !important;
+        background-color: #FF0000 !important;
     }
     @media (max-width: 1400px) {
         .main-card {
