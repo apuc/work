@@ -18,7 +18,7 @@ class ExperienceSearch extends Experience
     {
         return [
             [['id', 'resume_id', 'month_from', 'month_to', 'year_from', 'year_to', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'city', 'post', 'responsibility'], 'safe'],
+            [['name', 'post', 'responsibility'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class ExperienceSearch extends Experience
      */
     public function search($params)
     {
-        $query = Experience::find();
+        $query = Experience::find()->orderBy('id DESC');
 
         // add conditions that should always apply here
 
@@ -70,7 +70,6 @@ class ExperienceSearch extends Experience
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'city', $this->city])
             ->andFilterWhere(['like', 'post', $this->post])
             ->andFilterWhere(['like', 'responsibility', $this->responsibility]);
 

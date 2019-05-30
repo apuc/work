@@ -40,7 +40,7 @@ class EducationSearch extends Education
      */
     public function search($params)
     {
-        $query = Education::find();
+        $query = Education::find()->orderBy('id DESC');
 
         // add conditions that should always apply here
 

@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'year_to')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'academic_degree')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'academic_degree')->dropDownList(['Бакалавр'=>'Бакалавр', 'Магистр'=>'Магистр']) ?>
 
     <?= $form->field($model, 'specialization')->textInput(['maxlength' => true]) ?>
 

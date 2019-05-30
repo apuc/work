@@ -40,7 +40,7 @@ class EmployerSearch extends Employer
      */
     public function search($params)
     {
-        $query = Employer::find();
+        $query = Employer::find()->orderBy('id DESC');
 
         // add conditions that should always apply here
 

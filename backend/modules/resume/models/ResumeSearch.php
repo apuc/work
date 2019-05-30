@@ -46,7 +46,7 @@ class ResumeSearch extends Resume
      */
     public function search($params)
     {
-        $query = Resume::find();
+        $query = Resume::find()->orderBy('id DESC');
         $query->joinWith(['skills']);
         $query->joinWith(['category']);
 
