@@ -80,7 +80,7 @@ use yii\helpers\Url; ?>
                                     class="resume-description__experience"><?= Experience::getPeriod_string(Experience::getPeriod_sum($model->experience)) ?></span>
                         </div>
                         <?php foreach ($model->experience as $experience): ?>
-                            <h4 class="resume-description__title-bold"><?= $experience->name.' ('.$experience->city.')'?>
+                            <h4 class="resume-description__title-bold"><?= $experience->name ?>
                             </h4>
                             <p class="resume-description__text">
                                 с <?= $experience->month_from >= 10 ? $experience->month_from : ('0' . $experience->month_from) ?>
