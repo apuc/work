@@ -18,7 +18,7 @@ class EmployerSearch extends Employer
     {
         return [
             [['id', 'user_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['first_name', 'second_name', 'patronymic', 'birth_date'], 'safe'],
+            [['first_name', 'second_name', 'birth_date'], 'safe'],
         ];
     }
 
@@ -67,7 +67,6 @@ class EmployerSearch extends Employer
 
         $query->andFilterWhere(['like', 'first_name', $this->first_name])
             ->andFilterWhere(['like', 'second_name', $this->second_name])
-            ->andFilterWhere(['like', 'patronymic', $this->patronymic])
             ->andFilterWhere(['like', 'birth_date', $this->birth_date]);
 
         return $dataProvider;
