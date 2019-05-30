@@ -5,14 +5,18 @@ import router from './router'
 import ImageUploader from "vue-image-upload-resize";
 import VueResource from 'vue-resource';
 import VueSweetalert2 from 'vue-sweetalert2';
+import store from "./store";
 
 Vue.use(ImageUploader);
 Vue.use(VueResource);
 Vue.use(VueSweetalert2);
 
-Vue.config.productionTip = false;
+Vue.config.devtools = true;
+
+// Vue.config.productionTip = false;
 new Vue({
   router,
+  store,
   http: {
     headers: {
       "Accept": "application/json",

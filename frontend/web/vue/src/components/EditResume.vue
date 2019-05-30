@@ -96,6 +96,7 @@
         components: {FormTemplate},
         mounted() {
             document.title = this.$route.meta.title;
+            console.log(this);
 
             this.getEmploymentType()
                 .then(response => {
@@ -144,7 +145,14 @@
                             document.querySelector('.btnEducation').click();
                         }
                     }, response => {
-					this.$swal(response.data.message);
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
                     }
                 )
         },
@@ -182,9 +190,17 @@
                 }
                 this.$http.patch(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id, data)
                     .then(response => {
-                            this.$router.push('/personal-area/all-resume')
+                            this.$router.push('/personal-area/all-resume');
+                            return response;
                         }, response => {
-							this.$swal(response.data.message);
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
                         }
                     )
             },

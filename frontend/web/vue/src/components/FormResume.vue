@@ -104,7 +104,7 @@
         methods: {
             saveData() {
                 let data = {
-                	city: this.formData.resumeCity,
+                    city: this.formData.resumeCity,
                     image: {},
                     title: this.formData.careerObjective,
                     category: this.formData.categoriesResume,
@@ -134,7 +134,7 @@
                     .then(response => {
                             this.$router.push('/personal-area/all-resume')
                         }, response => {
-							this.$swal(response.message);
+                            this.$swal(response.message);
                         }
                     )
             },

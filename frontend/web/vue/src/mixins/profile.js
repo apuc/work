@@ -5,6 +5,7 @@ const profile = {
       formData: {
         first_name: '',
         second_name: '',
+        date: '',
         email: '',
         phone: ''
       },

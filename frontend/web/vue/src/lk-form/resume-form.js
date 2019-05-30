@@ -1,5 +1,5 @@
 import Field from '../models/Field';
-import {VTextarea, VTextField, VSelect, VCheckbox, VSubheader,} from 'vuetify/lib'
+import {VTextarea, VTextField, VSelect, VSubheader,} from 'vuetify/lib'
 import AddWork from "../components/AddWork";
 import AddEducation from "../components/AddEducation";
 import AddSocial from "../components/AddSocial";
@@ -9,13 +9,13 @@ export default {
     name: 'resumeCity',
     label: 'Город*',
     rules: [v => !!v  || 'Город обязателен к заполнению'],
-    component: VTextField,
+    component: VTextField
   }),
   careerObjective: Object.assign({}, Field, {
     name: 'careerObjective',
     label: 'Желаемая должность*',
     rules: [v => !!v  || 'Желаемая должность обязателена к заполнению'],
-    component: VTextField,
+    component: VTextField
   }),
   categoriesResume: Object.assign({}, Field, {
     name: 'categoriesResume',
@@ -32,12 +32,6 @@ export default {
     chips: 'chips',
     multiple: 'multiple'
   }),
-  // careerObjectiveCheckbox: Object.assign({}, Field, {
-  //   name: 'careerObjectiveCheckbox',
-  //   label: 'Показать желаемую должность в резюме',
-  //   rules: [],
-  //   component: VCheckbox,
-  // }),
   salaryFrom: Object.assign({}, Field, {
     name: 'salaryFrom',
     label: 'Зарплата в месяц от',
@@ -51,13 +45,6 @@ export default {
     rules: [v => /^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры'],
     component: VTextField,
     prefix: "₽",
-  }),
-  aboutMe: Object.assign({}, Field, {
-    name: 'aboutMe',
-    label: 'О себе',
-    rules: [],
-    counter: 2000,
-    component: VTextarea,
   }),
   addSocial: Object.assign({}, Field, {
     component: AddSocial,
@@ -119,4 +106,11 @@ export default {
     class: 'duties',
     component: VTextField,
   }),
+  aboutMe: Object.assign({}, Field, {
+    name: 'aboutMe',
+    label: 'О себе',
+    rules: [],
+    counter: 2000,
+    component: VTextarea,
+  })
 }
