@@ -40,6 +40,11 @@ class Category extends WorkActiveRecord
         return ['resume', 'resumeCategories'];
     }
 
+    public function getRelateDeleteList()
+    {
+        return ['vacancyCategories', 'resumeCategories'];
+    }
+
     /**
      * {@inheritdoc}
      */

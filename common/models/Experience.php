@@ -12,14 +12,12 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property integer $resume_id
  * @property string $name
- * @property string $city
  * @property string $post
  * @property string $responsibility
  * @property integer $month_from
  * @property integer $month_to
  * @property integer $year_from
  * @property integer $year_to
- * @property string $department
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -75,7 +73,7 @@ class Experience extends WorkActiveRecord
             [['resume_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['month_from', 'month_to'], 'integer', 'max' => 12],
             [['year_from', 'year_to'], 'integer', 'max' => date('Y')],
-            [['name', 'city', 'post', 'department'], 'string', 'max' => 255],
+            [['name', 'post'], 'string', 'max' => 255],
             [['responsibility'], 'string'],
             [['resume_id', 'name'], 'required'],
         ];
@@ -95,7 +93,6 @@ class Experience extends WorkActiveRecord
             'id' => 'ID',
             'resume_id' => 'Резюме',
             'name' => 'Название',
-            'city' => 'Город',
             'post' => 'Должность',
             'responsibility' => 'Обязанности',
             'month_from' => 'Месяц начала',

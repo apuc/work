@@ -40,7 +40,7 @@ class KeyValueSearch extends KeyValue
      */
     public function search($params)
     {
-        $query = KeyValue::find();
+        $query = KeyValue::find()->orderBy('id DESC');
 
         // add conditions that should always apply here
 

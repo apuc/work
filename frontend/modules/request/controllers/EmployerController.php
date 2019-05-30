@@ -54,4 +54,5 @@ class EmployerController extends MyActiveController
         }
         return $model;
     }
+
 }

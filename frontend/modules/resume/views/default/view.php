@@ -53,6 +53,14 @@ use yii\helpers\Url; ?>
                             <td><?= $model->employer->age ?>
                             </td>
                         </tr>
+                        <?php if($model->employment_type): ?>
+                        <tr>
+                            <th>Вид занятости:
+                            </th>
+                            <td><?= $model->employment_type->name ?>
+                            </td>
+                        </tr>
+                        <?php endif ?>
                         <tr>
                             <th>Город:
                             </th>
@@ -81,6 +89,9 @@ use yii\helpers\Url; ?>
                                 <?= $experience->month_to >= 10 ? $experience->month_to : ('0' . $experience->month_to) ?>
                                 .<?= $experience->year_to ?>
                                 (<?= Experience::getPeriod_string($experience->getPeriod()) ?>)
+                            </p>
+                            <p class="resume-description__text">
+                                <?= $experience->post ?>
                             </p>
                             <p class="resume-description__text">
                                 <?= $experience->responsibility ?>
@@ -132,7 +143,7 @@ use yii\helpers\Url; ?>
                                 <a href="tel:<?= $model->employer->phone->number ?>"><?= $model->employer->phone->number ?></a>
                             <?php endif ?>
                             <p>Почта:
-                            </p><a href="mailto:<?= $model->employer->email ?>"><?= $model->employer->email ?></a>
+                            </p><a href="mailto:<?= $model->employer->user->email ?>"><?= $model->employer->user->email ?></a>
                         </div>
                         <div class="resume-info__soc">
                             <?php if ($model->hasSocials()): ?>

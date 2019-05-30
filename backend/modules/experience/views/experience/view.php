@@ -42,14 +42,28 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             'name',
-            'city',
             'post',
             'responsibility',
-            'month_from',
+            [
+                'attribute' => 'month_from',
+                'value' => function ($model) {
+                    /** @var Experience $model */
+                    if($model->month_from>0&&$model->month_from<13)
+                        return Experience::$months[$model->month_from];
+                    return null;
+                }
+            ],
             'year_from',
-            'month_to',
+            [
+                'attribute' => 'month_to',
+                'value' => function ($model) {
+                    /** @var Experience $model */
+                    if($model->month_to>0&&$model->month_to<13)
+                        return Experience::$months[$model->month_to];
+                    return null;
+                }
+            ],
             'year_to',
-            'department',
             [
                 'attribute' => 'status',
                 'value' => function ($model) {
