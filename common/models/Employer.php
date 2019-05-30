@@ -17,14 +17,13 @@ use yii\db\ActiveRecord;
  * @property string $first_name
  * @property string $second_name
  * @property string $patronymic
- * @property string $email
  * @property string $birth_date
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $age
  *
- * @property User $security
+ * @property User $user
  * @property Resume[] $resume
  * @property Phone $phone
  */
@@ -63,7 +62,7 @@ class Employer extends WorkActiveRecord
     {
         return [
             [['user_id', 'status', 'created_at', 'updated_at', 'owner'], 'integer'],
-            [['first_name', 'second_name', 'patronymic', 'email', 'birth_date'], 'string', 'max' => 255],
+            [['first_name', 'second_name', 'patronymic', 'birth_date'], 'string', 'max' => 255],
             [['user_id', 'first_name', 'second_name'], 'required'],
         ];
     }
@@ -84,7 +83,6 @@ class Employer extends WorkActiveRecord
             'first_name' => 'Имя',
             'second_name' => 'Фамилия',
             'patronymic' => 'Отчество',
-            'email' => 'Email',
             'birth_date' => 'Дата рождения',
             'status' => 'Статус',
             'created_at' => 'Создан',
