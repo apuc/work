@@ -3,6 +3,7 @@
 namespace backend\modules\company\controllers;
 
 use common\classes\Debug;
+use common\models\Phone;
 use Yii;
 use common\models\Company;
 use backend\modules\company\models\CompanySearch;
@@ -66,10 +67,11 @@ class CompanyController extends Controller
     public function actionCreate()
     {
         $model = new Company();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->phone->number = Yii::$app->request->post('Phone')['number'];
-            $model->phone->save();
+            $phone = new Phone();
+            $phone->company_id = $model->id;
+            $phone->number = Yii::$app->request->post('Phone')['number'];
+            $phone->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

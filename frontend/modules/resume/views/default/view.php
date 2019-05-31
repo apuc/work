@@ -43,6 +43,10 @@ use yii\helpers\Url; ?>
 <!--                        </p>-->
 <!--                    </div>-->
                     <h3 class="resume-top__head"><?= $model->title ?>
+                        <br>
+                        <p class="resume-description__text">
+                            <?=$model->employer->first_name.' '.$model->employer->second_name?>
+                        </p>
                     </h3><span class="resume-top__price"><?= $model->min_salary ?>-<?= $model->max_salary ?> RUB</span>
                     <table class="resume-top__text">
                         <tbody>

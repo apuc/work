@@ -43,8 +43,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'contact_person')->textInput(['maxlength' => true]) ?>
 
+    <?php if(Yii::$app->controller->action->id === 'update'): ?>
     <?= $form->field($model->phone, 'number')->textInput(['maxlength' => true]) ?>
-
+    <?php elseif(Yii::$app->controller->action->id === 'create'):?>
+    <?= $form->field(new \common\models\Phone(), 'number')->textInput(['maxlength' => true]) ?>
+    <?php endif ?>
     <?= $form->field($model, 'status')->dropDownList([
         Company::STATUS_ACTIVE => 'Активен',
         Company::STATUS_INACTIVE => 'Не активен',
