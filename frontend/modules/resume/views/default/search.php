@@ -167,7 +167,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         foreach ($resumes->models as $resume):?>
                             <div class="single-card-resume">
                                 <div class="single-card-resume__top"><img class="single-card-resume__left-img"
-                                                                          src="<?= $resume->image_url ?>" alt=""
+                                                                          src="<?=$resume->image_url?$resume->image_url:'/images/empty_user.jpg'?>" alt=""
                                                                           role="presentation"/>
                                     <div class="single-card-resume__top-left">
                                         <div class="single-card-resume__head">
