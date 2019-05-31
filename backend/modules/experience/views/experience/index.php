@@ -49,7 +49,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'name',
             'post',
-            'responsibility',
+            [
+                'attribute' => 'responsibility',
+                'contentOptions' => ['style' => 'width:400px; white-space: normal;'],
+                'value' => function ($model) {
+                    return nl2br(\yii\helpers\StringHelper::truncate($model->responsibility, 100, '...'));
+                },
+            ],
             [
                 'attribute' => 'month_from',
                 'value' => function ($model) {

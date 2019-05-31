@@ -1,4 +1,7 @@
 <?php
+
+use yii\web\Cookie;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -20,6 +23,25 @@ return [
             // following line will restrict access to admin controller from frontend application
             'class' => 'dektrium\user\Module',
             'as frontend' => 'dektrium\user\filters\FrontendFilter',
+            'controllerMap' => [
+                'security' => [
+                    'class' => \dektrium\user\controllers\SecurityController::className(),
+                    'on ' . \dektrium\user\controllers\SecurityController::EVENT_AFTER_LOGIN => function ($e) {
+                        $cookie = Yii::createObject([
+                            'class' => 'yii\web\Cookie',
+                            'name' => 'key',
+                            'value' => Yii::$app->user->identity->getAuthKey(),
+                            'expire' => time() + 7*86400,
+                            'httpOnly' => false
+                        ]);
+                        Yii::$app->getResponse()->getCookies()->add($cookie);
+                    },
+                    'on ' . \dektrium\user\controllers\SecurityController::EVENT_AFTER_LOGOUT => function ($e) {
+                        Yii::$app->response->redirect('/vacancy/search');
+                        Yii::$app->request->getCookies()->remove('key');
+                    },
+                ],
+            ],
         ],
         'personal_area' => [
             'class' => 'frontend\modules\personal_area\PersonalArea',
@@ -44,7 +66,7 @@ return [
 //        ],
         'user' => [
             //'class' => 'app\components\User',
-            'identityClass' => 'dektrium\user\models\User',
+            'identityClass' => 'common\models\base\User',
         ],
 //        'security' => [
 //            'identityClass' => 'common\models\User',
