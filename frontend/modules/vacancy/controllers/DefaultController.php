@@ -71,7 +71,7 @@ class DefaultController extends Controller
         $employment_types = EmploymentType::find()->all();
         $cities = City::find()->all();
 
-        $vacancies_query = Vacancy::find();
+        $vacancies_query = Vacancy::find()->orderBy('id DESC');
         if($params['experience_ids']) {
             if(!in_array(0,$params['experience_ids'])) {
                 $or = ['or'];

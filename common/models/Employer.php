@@ -113,11 +113,12 @@ class Employer extends WorkActiveRecord
     }
 
     /**
-     * @return Integer
+     * @return int
      * @throws Exception
      */
     public function getAge()
     {
+        if($this->birth_date===null) return 0;
         return date_diff(new DateTime($this->birth_date), date_create('now'))->y;
     }
 

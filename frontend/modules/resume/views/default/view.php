@@ -46,13 +46,14 @@ use yii\helpers\Url; ?>
                     </h3><span class="resume-top__price"><?= $model->min_salary ?>-<?= $model->max_salary ?> RUB</span>
                     <table class="resume-top__text">
                         <tbody>
-
+                        <?php if($model->employer->age>0):?>
                         <tr>
                             <th>Возраст:
                             </th>
                             <td><?= $model->employer->age ?>
                             </td>
                         </tr>
+                        <?php endif ?>
                         <?php if($model->employment_type): ?>
                         <tr>
                             <th>Вид занятости:
@@ -105,21 +106,32 @@ use yii\helpers\Url; ?>
                             <h4 class="resume-description__title-bold">
                                 <?= $education->name ?>
                             </h4>
-                            <p class="resume-description__text">Горловка <br><?= $education->academic_degree ?>,
+                            <p class="resume-description__text"><?= $education->academic_degree ?>,
                                 <br>с <?= $education->year_from ?> по
                                 <?= $education->year_to ?>г.
                             </p>
                         <?php endforeach; ?>
                     </div>
+                    <?php if($model->skills):?>
                     <div class="resume-description__item">
-                        <h4 class="resume-description__title-main">Профессиональные и другие навык
+                        <h4 class="resume-description__title-main">Профессиональные и другие навыки
                         </h4>
                         <p class="resume-description__text">
-                            <?php foreach ($model->skills as $skill): ?>
-                            <?= $skill->name . ' ';?>
-                            <?php endforeach ?>
+
+                            <?php
+                            $i=true;
+                            foreach ($model->skills as $skill) {
+                                if($i){
+                                    echo $skill->name;
+                                    $i=false;
+                                } else {
+                                    echo ', '.$skill->name;
+                                }
+                            }
+                            ?>.
                         </p>
                     </div>
+                    <?php endif ?>
                     <div class="resume-description__item">
                         <h4 class="resume-description__title-main">Дополнительная информация
                         </h4>
