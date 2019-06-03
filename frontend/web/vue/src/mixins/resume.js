@@ -10,7 +10,6 @@ const resume = {
         categoriesResume: [],
         salaryFrom: '',
         salaryBefore: '',
-        aboutMe: '',
         workBlock: [
           {
             name: '',
@@ -45,6 +44,8 @@ const resume = {
         duties3: '',
         duties4: '',
         duties5: '',
+        dutiesSelect: [],
+        aboutMe: '',
       },
     };
   }

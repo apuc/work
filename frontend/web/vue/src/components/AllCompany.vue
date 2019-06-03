@@ -89,7 +89,14 @@
                         });
                         this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
                     }, response => {
-                        this.$swal(response.message);
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
                     }
                 );
 
@@ -99,8 +106,16 @@
                 this.getAllCompany.splice(index, 1);
                 this.$http.delete(`${process.env.VUE_APP_API_URL}/request/company/` + resumeId)
                     .then(response => {
+                        return response;
                         }, response => {
-                            this.$swal(response.message);
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
                         }
                     );
             },
@@ -109,7 +124,14 @@
                     .then(response => {
                             this.getAllCompany = response.data;
                         }, response => {
-                            this.$swal(response.message);
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
                         }
                     );
             }

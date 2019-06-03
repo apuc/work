@@ -96,7 +96,14 @@
                         });
                         this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
                     }, response => {
-                    this.$swal(response.data.message);
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
                     }
                 );
 
@@ -112,7 +119,14 @@
                             newData.update_time = date.getDate() + '.' + (date.getMonth() + 1 ) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
                             this.getAllResume.unshift(newData);
                         }, response => {
-                        this.$swal(response.data.message);
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
                         }
                     );
             },
@@ -120,8 +134,16 @@
                 this.getAllResume.splice(index, 1);
                 this.$http.delete(`${process.env.VUE_APP_API_URL}/request/resume/` + resumeId)
                     .then(response => {
+                        return response;
                         }, response => {
-                        this.$swal(response.data.message);
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
                         }
                     );
             },
@@ -130,7 +152,14 @@
                     .then(response => {
                             this.getAllResume = response.data;
                         }, response => {
-                        this.$swal(response.data.message);
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
                         }
                     );
             }

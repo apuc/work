@@ -15,7 +15,7 @@
                     <v-list-tile-content>
                         <v-list-tile-title>{{ item.subject }}</v-list-tile-title>
                         <v-list-tile-sub-title class="text--primary">{{ item.receiver.employer.first_name }} {{
-                            item.receiver.employer.second_name }} - {{ item.receiver.employer.email }}
+                            item.receiver.employer.second_name }} - {{ item.receiver.email }}
                         </v-list-tile-sub-title>
                         <v-list-tile-sub-title>{{ item.text }}</v-list-tile-sub-title>
                     </v-list-tile-content>
@@ -70,7 +70,14 @@
                         });
                         this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
                     }, response => {
-                    this.$swal(response.data.message);
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
                     }
                 );
 

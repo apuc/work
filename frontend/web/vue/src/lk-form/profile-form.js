@@ -37,6 +37,6 @@ export default {
       v => !!v || 'Номер телефона обязателен к заполнению'
     ],
     component: VTextField,
-    maskPhone: '+# (###) ## - ## - ###'
+    maskPhone: '+## (###) ## - ## - ###'
   }),
 }

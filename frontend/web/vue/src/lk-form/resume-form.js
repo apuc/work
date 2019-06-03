@@ -3,6 +3,7 @@ import {VTextarea, VTextField, VSelect, VSubheader,} from 'vuetify/lib'
 import AddWork from "../components/AddWork";
 import AddEducation from "../components/AddEducation";
 import AddSocial from "../components/AddSocial";
+import DutiesSelect from "../components/DutiesSelect";
 
 export default {
   resumeCity: Object.assign({}, Field, {
@@ -35,14 +36,14 @@ export default {
   salaryFrom: Object.assign({}, Field, {
     name: 'salaryFrom',
     label: 'Зарплата в месяц от',
-    rules: [v => /^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры'],
+    rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
     component: VTextField,
     prefix: "₽",
   }),
   salaryBefore: Object.assign({}, Field, {
     name: 'salaryBefore',
     label: 'Зарплата в месяц до',
-    rules: [v => /^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры'],
+    rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
     component: VTextField,
     prefix: "₽",
   }),
@@ -105,6 +106,10 @@ export default {
     rules: [],
     class: 'duties',
     component: VTextField,
+  }),
+  dutiesSelect: Object.assign({}, Field, {
+    rules: [],
+    component: DutiesSelect,
   }),
   aboutMe: Object.assign({}, Field, {
     name: 'aboutMe',

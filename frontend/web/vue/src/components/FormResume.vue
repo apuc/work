@@ -135,7 +135,14 @@
                             this.$router.push('/personal-area/all-resume');
                             return response;
                         }, response => {
-                            this.$swal(response.message);
+                      this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                      })
                         }
                     )
             },

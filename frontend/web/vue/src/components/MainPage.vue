@@ -65,7 +65,14 @@
                 .then(response => {
                         this.allRecords = response.data;
                     }, response => {
-                    this.$swal(response.data.message);
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
                     }
                 );
 

@@ -218,6 +218,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             </div>
                                         </div>
                                     <?php endif ?>
+																	<a class="btn-card btn-red jsSendMessage">Откликнуться</a>
                                 </div>
                             </div>
                         <?php endforeach ?>
