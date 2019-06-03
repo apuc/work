@@ -20,6 +20,7 @@ const resume = {
             year_from: '',
             month_to: '',
             year_to: '',
+            description: ''
           }
         ],
         educationBlock: [

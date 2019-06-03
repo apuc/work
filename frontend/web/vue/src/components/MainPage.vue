@@ -1,6 +1,6 @@
 <template>
     <div class="main-block">
-        <template v-for="(items, index) in allRecords" :key="index">
+        <template v-for="(items, index) in allRecords">
 
             <template v-if="items === allRecords.Resume">
                 <v-subheader class="main-head">Резюме</v-subheader>

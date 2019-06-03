@@ -45,7 +45,7 @@
 <script>
   import FormExperience from '../lk-form/experience';
   import Field from '../models/Field';
-  import {VTextField, VSelect} from 'vuetify/lib'
+  import {VTextField, VSelect, VTextarea} from 'vuetify/lib'
   export default {
     name: "AddWork",
     props: {
@@ -210,6 +210,13 @@
               v => /^\d+$/.test(v) || 'Только цыфры'
             ],
           }),
+          description: Object.assign({}, Field, {
+            name: 'description',
+            label: 'Описание',
+            component: VTextarea,
+            counter: 2000,
+            rules: []
+          })
         };
         this.works.push(template);
         this.value.push({});
