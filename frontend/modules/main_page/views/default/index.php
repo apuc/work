@@ -67,7 +67,6 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                                 ['class' => 'nhome__nav-item']
                             ) ?>
                             <?= Html::endForm() ?>
-<!--                            <a class="nhome__nav-item" href="/personal-area">Выйти</a>-->
                         </div>
                     </div>
                     <?php endif ?>
@@ -157,9 +156,9 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
     $i=0;
     foreach($categories as $category): ?>
     <?php if($i<9): ?>
-        <a class="nhome__footer-item" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?=$category->name?> <?=$category->vacancy_count?></a>
+        <a class="nhome__footer-item" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?=$category->name?> <?=$category->getVacancyCategories()->count()?></a>
     <?php else:?>
-        <a class="nhome__footer-item mob-hide" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?=$category->name?> <?=$category->vacancy_count?></a>
+        <a class="nhome__footer-item mob-hide" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?=$category->name?> <?=$category->getVacancyCategories()->count()?>?></a>
     <?php
     endif;
     $i++;

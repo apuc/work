@@ -18,7 +18,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $categories = Category::find()->limit(18)->all();
-        $vacancies = Vacancy::find()->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(10)->orderBy('id DESC')->all();
+        $vacancies = Vacancy::find()->with(['employment_type', 'category', 'company'])->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(10)->orderBy('id DESC')->all();
         $employer = \Yii::$app->user->isGuest?null:Employer::find()->where(['user_id'=>\Yii::$app->user->id])->one();
         return $this->render('index', [
             'categories' => $categories,
@@ -29,7 +29,6 @@ class DefaultController extends Controller
 
     public function actionSearch()
     {
-        //Debug::dd(\Yii::$app->request->post());
         if(\Yii::$app->request->post('search_type') === 'vacancy'){
             return $this->redirect('/vacancy/search?search_text='.\Yii::$app->request->post('search_text'));
         }
