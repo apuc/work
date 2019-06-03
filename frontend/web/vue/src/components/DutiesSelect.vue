@@ -47,7 +47,7 @@
         this.$emit('duties', dutiesSelect)
 			},
       async getSkill() {
-        return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/skill`);
+        return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/skill?per-page=-1`);
       },
 		}
 	}

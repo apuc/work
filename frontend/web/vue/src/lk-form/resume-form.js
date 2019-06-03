@@ -107,10 +107,10 @@ export default {
     class: 'duties',
     component: VTextField,
   }),
-  dutiesSelect: Object.assign({}, Field, {
-    rules: [],
-    component: DutiesSelect,
-  }),
+  // dutiesSelect: Object.assign({}, Field, {
+  //   rules: [],
+  //   component: DutiesSelect,
+  // }),
   aboutMe: Object.assign({}, Field, {
     name: 'aboutMe',
     label: 'О себе',
