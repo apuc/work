@@ -90,11 +90,4 @@ class Category extends WorkActiveRecord
             ->viaTable('vacancy_category', ['category_id' => 'id']);
     }
 
-    /**
-     * @return int|string
-     */
-    public function getVacancy_count()
-    {
-        return $this->getVacancyCategories()->count();
-    }
 }

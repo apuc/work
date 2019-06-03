@@ -77,7 +77,7 @@ class DefaultController extends Controller
         $employment_types = EmploymentType::find()->all();
         $cities = City::find()->all();
 
-        $resume_query = Resume::find()->orderBy('id DESC');
+        $resume_query = Resume::find()->with(['employer', 'employment_type'])->where(['status' => Resume::STATUS_ACTIVE])->orderBy('id DESC');
         if($params['experience_ids']) {
             if(!in_array(0,$params['experience_ids'])) {
                 $tmp_exp_ids = [];
