@@ -53,6 +53,16 @@ $this->params['breadcrumbs'][] = $model->post;
             'qualification_requirements',
             'work_experience',
             'education',
+            [
+                'label' => 'Категории',
+                'format' => 'html',
+                'value' => function($model) {
+                    $result='';
+                    foreach ($model->category as $category)
+                        $result.=$category->name.'<br>';
+                    return $result;
+                }
+            ],
             'working_conditions',
             'video',
             'address',
