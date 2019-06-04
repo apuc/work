@@ -117,8 +117,17 @@
         }
         this.$http.post(`${process.env.VUE_APP_API_URL}/request/company`, data)
           .then(response => {
-            	this.$router.push('/personal-area/all-company')
+            	this.$router.push('/personal-area/all-company');
+            	return response;
             }, response => {
+            this.$swal({
+              toast: true,
+              position: 'bottom-end',
+              showConfirmButton: false,
+              timer: 4000,
+              type: 'error',
+              title: response.data.message
+            })
             }
           )
       },

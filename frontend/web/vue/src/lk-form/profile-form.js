@@ -1,5 +1,6 @@
 import Field from '../models/Field';
 import {VTextField} from 'vuetify/lib'
+import DatePicker from '../components/DatePicker'
 
 export default {
   first_name: Object.assign({}, Field, {
@@ -8,7 +9,7 @@ export default {
     rules: [
       v => (v && v.length >= 3) || 'Больше 3 символов'
     ],
-    component: VTextField,
+    component: VTextField
   }),
   second_name: Object.assign({}, Field, {
     name: 'second_name',
@@ -16,13 +17,17 @@ export default {
     rules: [
       v => (v && v.length >= 3) || 'Больше 3 символов'
     ],
-    component: VTextField,
+    component: VTextField
+  }),
+  date: Object.assign({}, Field, {
+    rules: [],
+    component: DatePicker
   }),
   email: Object.assign({}, Field, {
     name: 'email',
     label: 'Email*',
     rules: [v => /.+@.+/.test(v) || 'Email должен быть правильным',],
-    component: VTextField,
+    component: VTextField
   }),
   phone: Object.assign({}, Field, {
     name: 'phone',
@@ -32,6 +37,6 @@ export default {
       v => !!v || 'Номер телефона обязателен к заполнению'
     ],
     component: VTextField,
-    maskPhone: '+# (###) ## - ## - ###',
+    maskPhone: '+## (###) ## - ## - ###'
   }),
 }

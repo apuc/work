@@ -104,14 +104,14 @@ if ($('.home__form-select-js').length > 0) {
 
 if ($('.jsModalSelectResume').length > 0) {
   $('.jsModalSelectResume').select2({
-    placeholder: "Выберите резюме",
+    placeholder: "Выберите вакансию",
     minimumResultsForSearch: Infinity
   });
 }
 
 if ($('.jsModalSelectVacancy').length > 0) {
   $('.jsModalSelectVacancy').select2({
-    placeholder: "Выберите вакансию",
+    placeholder: "Выберите резюме",
     minimumResultsForSearch: Infinity
   });
 }

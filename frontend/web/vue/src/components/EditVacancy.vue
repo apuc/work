@@ -57,6 +57,14 @@
                         this.formData.officeAddress = response.data.address;
                         this.formData.houseNumber = response.data.home_number;
                     }, response => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
                     }
                 )
         },
@@ -82,8 +90,17 @@
 
                 this.$http.patch(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id, data)
                     .then(response => {
-                            this.$router.push('/personal-area/all-vacancy')
+                            this.$router.push('/personal-area/all-vacancy');
+                            return response;
                         }, response => {
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
                         }
                     )
             },

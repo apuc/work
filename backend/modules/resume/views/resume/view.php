@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'employer_id',
                 'value' => function ($model) {
-                    return $model->employer->second_name . ' ' . $model->employer->first_name . ' ' . $model->employer->patronymic;;
+                    return $model->employer->second_name . ' ' . $model->employer->first_name;
                 },
             ],
             'title',

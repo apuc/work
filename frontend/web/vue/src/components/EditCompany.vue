@@ -118,6 +118,14 @@
               document.querySelector('.social-block button').click();
             }
           }, response => {
+          this.$swal({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 4000,
+            type: 'error',
+            title: response.data.message
+          })
           }
         )
     },
@@ -145,8 +153,17 @@
         }
         this.$http.patch(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id, data)
           .then(response => {
-            this.$router.push('/personal-area/all-company')
+            this.$router.push('/personal-area/all-company');
+            return response;
             }, response => {
+            this.$swal({
+              toast: true,
+              position: 'bottom-end',
+              showConfirmButton: false,
+              timer: 4000,
+              type: 'error',
+              title: response.data.message
+            })
             }
           )
       },

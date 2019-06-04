@@ -1,7 +1,7 @@
 <?php
 namespace common\models;
 
-use yii\db\ActiveRecord;
+use common\models\base\WorkActiveRecord;
 
 /**
  * This is the model class for table "skill".
@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property string $name
  */
-class Skill extends ActiveRecord
+class Skill extends WorkActiveRecord
 {
 
     /**
@@ -33,6 +33,11 @@ class Skill extends ActiveRecord
     public function extraFields()
     {
         return ['resume', 'vacancy', 'resume_skill', 'vacancy_skill'];
+    }
+
+    public function getRelateDeleteList()
+    {
+        return ['resume_skill', 'vacancy_skill'];
     }
 
     /**
@@ -59,7 +64,7 @@ class Skill extends ActiveRecord
      */
     public function getResume_skill()
     {
-        return $this->hasMany(ResumeSkill::className(), ['resume_id' => 'id']);
+        return $this->hasMany(ResumeSkill::className(), ['skill_id' => 'id']);
     }
 
     /**

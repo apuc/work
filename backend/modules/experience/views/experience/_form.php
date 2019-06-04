@@ -27,15 +27,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'post')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'month_from')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'month_from')->dropDownList(Experience::$months); ?>
 
     <?= $form->field($model, 'year_from')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'month_to')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'month_to')->dropDownList(Experience::$months); ?>
 
     <?= $form->field($model, 'year_to')->textInput(['maxlength' => true]) ?>
 

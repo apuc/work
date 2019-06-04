@@ -88,6 +88,7 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             <div class="modal-style modal-send-message jsModalMessage">
                 <h2>Сообщение</h2>
                 <?= Html::beginForm(['/resume/default/send-message'], 'post', ['class' => 'jsModalMessageForm']) ?>
+                <span>Выберите вакансию</span>
                 <select name="vacancy_id" class="jsModalSelectResume">
                     <?php foreach($vacancies as $vacancy): ?>
                         <option value="<?=$vacancy->id?>">
@@ -107,6 +108,7 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             <h2>Написать нам
             </h2>
             <?= Html::beginForm(['/vacancy/default/send-message'], 'post', ['class' => 'jsModalRegForm']) ?>
+            <span>Выберите резюме</span>
                 <select name="resume_id" class="jsModalSelectVacancy">
                     <?php foreach($resumes as $resume): ?>
                     <option value="<?=$resume->id?>">

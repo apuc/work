@@ -30,8 +30,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'second_name')->textInput(['maxlength' => true])?>
 
-    <?= $form->field($model, 'patronymic')->textInput(['maxlength' => true])?>
-
     <?= $form->field($model, 'birth_date')->widget(DatePicker::className(), [
             'pluginOptions' => [
                 'format' => 'yyyy-mm-dd',

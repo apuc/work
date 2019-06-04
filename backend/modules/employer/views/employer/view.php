@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Employer */
 
-$this->title = $model->second_name.' '.$model->first_name.' '.$model->patronymic;
+$this->title = $model->second_name.' '.$model->first_name;
 $this->params['breadcrumbs'][] = ['label' => 'Сотрудники', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -39,8 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'first_name',
             'second_name',
-            'patronymic',
-            'birth_date',
+            [
+                'attribute' => 'birth_date',
+                'value' => function($model){
+                    return date('d.m.Y', strtotime($model->birth_date));
+                }
+            ],
             [
                 'attribute' => 'status',
                 'value' => function ($model) {

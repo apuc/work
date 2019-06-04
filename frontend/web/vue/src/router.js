@@ -20,7 +20,11 @@ export default new Router({
   routes: [
     {
       path: '/personal-area/',
-      name: 'main',
+      redirect: '/personal-area/statistics'
+    },
+    {
+      path: '/personal-area/statistics',
+      name: 'statistics',
       meta: {title: 'Статистика'},
       component: MainPage
     },

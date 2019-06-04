@@ -104,7 +104,7 @@
         methods: {
             saveData() {
                 let data = {
-                	city: this.formData.resumeCity,
+                    city: this.formData.resumeCity,
                     image: {},
                     title: this.formData.careerObjective,
                     category: this.formData.categoriesResume,
@@ -132,8 +132,17 @@
                 }
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/resume`, data)
                     .then(response => {
-                            this.$router.push('/personal-area/all-resume')
+                            this.$router.push('/personal-area/all-resume');
+                            return response;
                         }, response => {
+                      this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                      })
                         }
                     )
             },

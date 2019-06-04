@@ -7,6 +7,7 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
+use yii\filters\auth\HttpBearerAuth;
 use yii\filters\Cors;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
@@ -71,6 +72,9 @@ class MyActiveController extends ActiveController
                 'Access-Control-Allow-Origin' => ['*']
             ],
         ];
+//        $behaviors['authenticator'] = [
+//            'class' => HttpBearerAuth::className()
+//        ];
         return $behaviors;
     }
 

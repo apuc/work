@@ -53,6 +53,6 @@ export default {
       v => (v && v.length >= 11) || 'Введите 11 символов'
     ],
     component: VTextField,
-    maskPhone: '+# (###) ## - ## - ###',
+    maskPhone: '+## (###) ## - ## - ###',
   }),
 }

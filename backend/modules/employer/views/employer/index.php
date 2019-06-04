@@ -47,8 +47,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'first_name',
             'second_name',
-            'patronymic',
-            'birth_date',
+            [
+                'attribute' => 'birth_date',
+                'value' => function($model){
+                    return date('d.m.Y', strtotime($model->birth_date));
+                }
+            ],
             [
                 'attribute' => 'status',
                 'format' => 'raw',

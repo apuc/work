@@ -1,15 +1,10 @@
 <template>
     <div class="main-block">
-        <template v-for="(items, index) in allRecords" :key="index">
+        <template v-for="(items, index) in allRecords">
 
             <template v-if="items === allRecords.Resume">
                 <v-subheader class="main-head">Резюме</v-subheader>
                 <v-subheader  v-if="allRecords.Resume.length === 0">У вас нет резюме</v-subheader>
-            </template>
-
-            <template v-else-if="false">
-                <v-subheader class="main-head">Компании</v-subheader>
-                <v-subheader v-if="allRecords.Company.length === 0">У вас нет компаний</v-subheader>
             </template>
 
             <template v-else-if="items === allRecords.Vacancy">
@@ -26,7 +21,16 @@
                     :key="itemIndex"
             >
                 <v-card-text class="headline font-weight-bold">
-                    {{ item.name }}
+                    <template v-if="items === allRecords.Vacancy">
+                        <a :href="domen + '/vacancy/view/' + item.id" target="_blank" class="statistics-link">
+                        {{ item.name }}
+                        </a>
+                    </template>
+                    <template v-else-if="items === allRecords.Resume">
+                        <a :href="domen + '/resume/view/' + item.id" target="_blank" class="statistics-link">
+                            {{ item.name }}
+                        </a>
+                    </template>
                 </v-card-text>
 
                 <v-card-actions>
@@ -54,17 +58,27 @@
         name: "MainPage",
         data() {
             return {
-                allRecords: '',
+                allRecords: [],
+                domen: ''
             }
         },
         computed: {
         },
-        created() {
+        mounted() {
             document.title = this.$route.meta.title;
             this.$http.get(`${process.env.VUE_APP_API_URL}/personal_area/default/statistics`)
                 .then(response => {
                         this.allRecords = response.data;
+                        this.domen = `${process.env.VUE_APP_API_URL}`;
                     }, response => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
                     }
                 );
 
@@ -107,7 +121,7 @@
         background-color: #0000FF !important;
     }
     .main-card_vacancy {
-        background-color: #00FF00 !important;
+        background-color: #FF0000 !important;
     }
     @media (max-width: 1400px) {
         .main-card {
@@ -124,5 +138,9 @@
             width: 100%;
             margin-right: 0;
         }
+    }
+    .statistics-link {
+        color: inherit;
+        text-decoration: none;
     }
 </style>

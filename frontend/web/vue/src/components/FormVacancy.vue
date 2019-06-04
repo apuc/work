@@ -69,8 +69,17 @@
                 };
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/vacancy`, data)
                     .then(response => {
-                            this.$router.push('/personal-area/all-vacancy')
+                            this.$router.push('/personal-area/all-vacancy');
+                            return response;
                         }, response => {
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
                         }
                     )
             },

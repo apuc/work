@@ -23,7 +23,6 @@
           v-for="link in linkMenu"
           :key="link.title"
           :to="link.url"
-          @click=""
         >
           <v-list-tile-content>
             <img :src="link.img" alt="">
@@ -66,7 +65,7 @@ export default {
       linkMenu: [
         {
           title: 'Статистика',
-          url: '/personal-area/',
+          url: '/personal-area/statistics',
           img: `${process.env.VUE_APP_API_URL}`+'/vue/public/lk-image/analysis.png'
         },
         {

@@ -40,7 +40,7 @@ class SkillSearch extends Skill
      */
     public function search($params)
     {
-        $query = Skill::find();
+        $query = Skill::find()->orderBy('id DESC');
 
         // add conditions that should always apply here
 
