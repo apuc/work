@@ -76,6 +76,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'work_experience',
             'education',
             [
+                'label' => 'Категории',
+                'format' => 'html',
+                'value' => function($model) {
+                    $result='';
+                    foreach ($model->category as $category)
+                        $result.=$category->name.'<br>';
+                    return $result;
+                }
+            ],
+            [
                 'attribute' => 'working_conditions',
                 'contentOptions' => ['style' => 'white-space: normal;'],
             ],
