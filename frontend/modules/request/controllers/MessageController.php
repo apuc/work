@@ -5,6 +5,7 @@ namespace frontend\modules\request\controllers;
 use common\models\Message;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\auth\HttpBearerAuth;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 
@@ -17,6 +18,14 @@ class MessageController extends ActiveController
         $actions = parent::actions();
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         return $actions;
+    }
+
+    public function behaviors() {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => HttpBearerAuth::className()
+        ];
+        return $behaviors;
     }
 
     public function prepareDataProvider()

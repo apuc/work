@@ -30,7 +30,7 @@ use yii\helpers\Html;
 																	<a class="home__nav-item" href="/personal-area">
 																		Личный кабинект
 																	</a>
-                                    <?= Html::beginForm(['/site/logout'], 'post', ['class' => 'form-logout']) ?>
+                                    <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
                                     <?= Html::submitButton(
                                         'Выйти',
                                         ['class' => 'home__nav-item btn-logout']

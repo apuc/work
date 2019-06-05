@@ -37,8 +37,7 @@ return [
                         Yii::$app->getResponse()->getCookies()->add($cookie);
                     },
                     'on ' . \dektrium\user\controllers\SecurityController::EVENT_AFTER_LOGOUT => function ($e) {
-                        Yii::$app->response->redirect('/vacancy/search');
-                        Yii::$app->request->getCookies()->remove('key');
+                        Yii::$app->getResponse()->getCookies()->remove('key');
                     },
                 ],
             ],

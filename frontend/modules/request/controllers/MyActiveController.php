@@ -72,9 +72,9 @@ class MyActiveController extends ActiveController
                 'Access-Control-Allow-Origin' => ['*']
             ],
         ];
-//        $behaviors['authenticator'] = [
-//            'class' => HttpBearerAuth::className()
-//        ];
+        $behaviors['authenticator'] = [
+            'class' => HttpBearerAuth::className()
+        ];
         return $behaviors;
     }
 

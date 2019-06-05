@@ -61,7 +61,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                         <span class="nhome__nav-item nav-btn jsOpenMenu"><?= $employer->first_name.' '.$employer->second_name ?></span>
                         <div class="dropdown__menu jsShowMenu">
                             <a class="nhome__nav-item" href="<?=Url::to(['/personal_area/default/index'])?>">Личный кабинект</a>
-                            <?= Html::beginForm(['/site/logout'], 'post', ['class' => 'form-logout']) ?>
+                            <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
                             <?= Html::submitButton(
                                 'Выйти',
                                 ['class' => 'nhome__nav-item']
@@ -158,7 +158,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
     <?php if($i<9): ?>
         <a class="nhome__footer-item" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?=$category->name?> <?=$category->getVacancyCategories()->count()?></a>
     <?php else:?>
-        <a class="nhome__footer-item mob-hide" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?=$category->name?> <?=$category->getVacancyCategories()->count()?>?></a>
+        <a class="nhome__footer-item mob-hide" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?=$category->name?> <?=$category->getVacancyCategories()->count()?></a>
     <?php
     endif;
     $i++;
