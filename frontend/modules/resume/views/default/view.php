@@ -27,7 +27,7 @@ use yii\helpers\Url; ?>
                 </ul>
                 <div class="resume-results__date">
                     <p>Резюме от
-                    </p><span><?= Yii::$app->formatter->asDate($model->created_at, 'dd MM yyyy') ?></span>
+                    </p><span><?= Yii::$app->formatter->asDate($model->update_time, 'dd MM yyyy') ?></span>
                 </div>
             </div>
             <div class="resume-top"><img class="resume-top__left" src="<?=$model->image_url?$model->image_url:'/images/empty_user.jpg'?>" alt=""
