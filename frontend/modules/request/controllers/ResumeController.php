@@ -159,10 +159,15 @@ class ResumeController extends MyActiveController
             ResumeCategory::deleteAll(['resume_id'=>$model->id]);
             if($params['category']){
                 foreach($params['category'] as $category){
-                    if(Category::findOne($category)){
+                    if(is_array($category)){
+                        $category_id=$category['id'];
+                    } else {
+                        $category_id=$category;
+                    }
+                    if(Category::findOne($category_id)){
                         $resume_category = new ResumeCategory();
                         $resume_category->resume_id=$model->id;
-                        $resume_category->category_id=$category;
+                        $resume_category->category_id=$category_id;
                         $resume_category->save();
                     }
                 }
