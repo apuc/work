@@ -30,17 +30,17 @@ class DefaultController extends Controller
 
     public function actionSendMessage(){
         $post = Yii::$app->request->post();
-        $resume = Resume::findOne($post['resume_id']);
-        $vacancy = Vacancy::findOne($post['vacancy_id']);
+        $resume = Resume::findOne($post['vacancy_resume_id']);
+        $vacancy = Vacancy::findOne($post['vacancy_vacancy_id']);
         if($resume && $vacancy ){
             $message = new Message();
-            $message->text = $post['message'];
+            $message->text = $post['vacancy_message'];
             $message->sender_id = Yii::$app->user->id;
             $message->subject = 'Vacancy';
             $message->subject_id = $vacancy->id;
-            $message->receiver_id = $vacancy->company->user_id;
+            $message->receiver_id = $vacancy->owner;
             $message->subject_from = 'Resume';
-            $message->subject_from_id = $post['resume_id'];
+            $message->subject_from_id = $post['vacancy_resume_id'];
             $message->save();
 
             $text = 'Пользователь '.$resume->employer->second_name.' '.$resume->employer->first_name.' заинтересовался вашей вакансией "'.$vacancy->post.'" 

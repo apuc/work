@@ -217,8 +217,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                                 <?php endif ?>
                                             </div>
                                         </div>
-                                    <?php endif ?>
-																	<a class="btn-card btn-red jsSendMessage">Откликнуться</a>
+                                    <?php endif;
+                                    if(!Yii::$app->user->isGuest):?>
+                                    <a class="btn-card btn-red jsSendMessage" data-id="<?=$resume->id?>">Откликнуться</a>
+                                    <?php endif;?>
                                 </div>
                             </div>
                         <?php endforeach ?>

@@ -173,7 +173,7 @@ use yii\helpers\Url; ?>
                             <?php endif ?>
                         </div>
                         <?php if(!Yii::$app->user->isGuest && $model->owner != Yii::$app->user->id): ?>
-                        <button class="resume-info__btn jsSendMessage">написать сообщение
+                        <button class="resume-info__btn jsSendMessage" data-id="<?=$model->id?>">написать сообщение
                         </button>
                         <?php endif ?>
 <!--                        <a class="resume-info__complain" href="#">Пожаловаться на<br>это резюме</a>-->
