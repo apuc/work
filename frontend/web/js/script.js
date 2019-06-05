@@ -202,6 +202,9 @@ $(document).ready(function () {
     $('.jsModalLogin').fadeIn();
   });
   $('.jsSendMessage').click(function () {
+    var resume_id=$(this).attr('data-id');
+    if(resume_id!==undefined)
+      $("input[name=resume_resume_id]").val(resume_id);
     $('.jsModal').fadeIn();
     $('.jsModalMessage').fadeIn();
     $('body').addClass('body-overflow');
@@ -209,7 +212,7 @@ $(document).ready(function () {
   $('.jsVacancyModal').click(function () {
     var vacancy_id=$(this).attr('data-id');
     if(vacancy_id!==undefined)
-      $("input[name=vacancy_id]").val(vacancy_id);
+      $("input[name=vacancy_vacancy_id]").val(vacancy_id);
     $('.jsModal').fadeIn();
     $('.jsModalMessageVacancy').fadeIn();
     $('body').addClass('body-overflow');

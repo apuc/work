@@ -82,46 +82,45 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             </div>
             <span class="modal-style__error-text">Вы ввели не верные данные вернитесь и заполните форму верное</span>
         </div>
-        <?php if (Yii::$app->controller->uniqueId === 'resume/default' && !Yii::$app->user->isGuest):?>
+        <?php if (!Yii::$app->user->isGuest):?>
             <?php /** @var \common\models\Vacancy[] $vacancies */
             $vacancies = \common\models\Vacancy::find()->where(['owner'=> Yii::$app->user->id, 'status'=>\common\models\Vacancy::STATUS_ACTIVE])->all()?>
             <div class="modal-style modal-send-message jsModalMessage">
                 <h2>Сообщение</h2>
                 <?= Html::beginForm(['/resume/default/send-message'], 'post', ['class' => 'jsModalMessageForm']) ?>
                 <span>Выберите вакансию</span>
-                <select name="vacancy_id" class="jsModalSelectResume">
+                <select name="resume_vacancy_id" class="jsModalSelectResume">
                     <?php foreach($vacancies as $vacancy): ?>
                         <option value="<?=$vacancy->id?>">
                             <?=$vacancy->post?>
                         </option>
                     <?php endforeach ?>
                 </select>
-                <input name="resume_id" type="hidden" value="<?= Yii::$app->request->get('id') ?>">
-                <textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение" required></textarea>
+                <input name="resume_resume_id" type="hidden" value="">
+                <textarea class="jsMessage" name="resume_message" rows="5" placeholder="Введите сообщение" required></textarea>
                 <button class="jsBtnReg jsBtn" type="submit">Отправить</button>
                 <?= Html::endForm() ?>
             </div>
-        <?php endif ?>
-        <?php if (!Yii::$app->user->isGuest):
+            <?php
             $resumes = \common\models\Resume::find()->where(['owner'=> Yii::$app->user->id, 'status'=>\common\models\Resume::STATUS_ACTIVE])->all()?>
-        <div class="modal-style modal-send-message jsModalMessageVacancy">
-            <h2>Написать нам
-            </h2>
-            <?= Html::beginForm(['/vacancy/default/send-message'], 'post', ['class' => 'jsModalRegForm']) ?>
-            <span>Выберите резюме</span>
-                <select name="resume_id" class="jsModalSelectVacancy">
-                    <?php foreach($resumes as $resume): ?>
-                    <option value="<?=$resume->id?>">
-                        <?=$resume->title?>
-                    </option>
-                    <?php endforeach ?>
-                </select>
-                <input name="vacancy_id" type="hidden" value="">
-                <textarea class="jsMessage" name="message" rows="5" placeholder="Введите сообщение"></textarea>
-                <button class="jsBtnReg jsBtn" type="submit">Отправить
-                </button>
-            <?= Html::endForm() ?>
-        </div>
+            <div class="modal-style modal-send-message jsModalMessageVacancy">
+                <h2>Написать нам
+                </h2>
+                <?= Html::beginForm(['/vacancy/default/send-message'], 'post', ['class' => 'jsModalRegForm']) ?>
+                <span>Выберите резюме</span>
+                    <select name="vacancy_resume_id" class="jsModalSelectVacancy">
+                        <?php foreach($resumes as $resume): ?>
+                        <option value="<?=$resume->id?>">
+                            <?=$resume->title?>
+                        </option>
+                        <?php endforeach ?>
+                    </select>
+                    <input name="vacancy_vacancy_id" type="hidden" value="">
+                    <textarea class="jsMessage" name="vacancy_message" rows="5" placeholder="Введите сообщение"></textarea>
+                    <button class="jsBtnReg jsBtn" type="submit">Отправить
+                    </button>
+                <?= Html::endForm() ?>
+            </div>
         <?php endif ?>
     </div>
 </div>
