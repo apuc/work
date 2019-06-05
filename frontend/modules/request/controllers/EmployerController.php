@@ -44,8 +44,8 @@ class EmployerController extends MyActiveController
                 $phone->save();
             }
             $user = User::findOne(Yii::$app->user->id);
-            $user->email=$model->email;
-            $user->username=$model->email;
+            $user->email=$params['email'];
+            $user->username=$params['email'];
             $user->save();
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
