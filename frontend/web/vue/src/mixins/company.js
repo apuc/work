@@ -5,6 +5,7 @@ const company = {
       image: null,
       formData: {
         image_url: '',
+        privatePerson: false,
         nameCompany: '',
         site: '',
         scopeOfTheCompany: '',

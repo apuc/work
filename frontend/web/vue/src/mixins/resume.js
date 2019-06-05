@@ -29,14 +29,14 @@ const resume = {
             year_to: '',
             academic_degree: '',
             faculty: '',
-            specialisation: '',
+            specialisation: ''
           }
         ],
         addSocial: {
           vkontakte: '',
           facebook: '',
           instagram: '',
-          skype: '',
+          skype: ''
         },
         duties0: '',
         duties1: '',
@@ -45,8 +45,8 @@ const resume = {
         duties4: '',
         duties5: '',
         dutiesSelect: [],
-        aboutMe: '',
-      },
+        aboutMe: ''
+      }
     };
   }
 };

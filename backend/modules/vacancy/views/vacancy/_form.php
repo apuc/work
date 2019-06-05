@@ -37,6 +37,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'education')->textInput() ?>
 
+    <?= $form->field($model, 'category')->widget(Select2::className(), [
+        'data' => ArrayHelper::map(\common\models\Category::find()->all(), 'id', 'name'),
+        'options' => ['placeholder' => 'Начните вводить название категории ...', 'multiple' => true],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]) ?>
+
     <?= $form->field($model, 'working_conditions')->textInput() ?>
 
     <?= $form->field($model, 'video')->textInput() ?>

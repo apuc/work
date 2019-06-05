@@ -20,7 +20,7 @@
                 .then(response => {
                         this.formData.first_name = response.data[0].first_name;
                         this.formData.second_name = response.data[0].second_name;
-                        this.formData.date = response.data[0].date;
+                        this.formData.date = '2016-05-18';
                         this.formData.email = response.data[0].user.email;
                         if (response.data[0].phone != null) {
                             this.formData.phone = response.data[0].phone.number;

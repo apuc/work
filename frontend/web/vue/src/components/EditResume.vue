@@ -96,7 +96,6 @@
         components: {FormTemplate},
         mounted() {
             document.title = this.$route.meta.title;
-            console.log(this);
 
             this.getEmploymentType()
                 .then(response => {
@@ -104,7 +103,16 @@
                     for (let i = 0; i < response.data.length; i++) {
                         this.$set(FormResume.categoriesResume.items, i, response.data[i]);
                     }
-                });
+                }, response => {
+					this.$swal({
+						toast: true,
+						position: 'bottom-end',
+						showConfirmButton: false,
+						timer: 4000,
+						type: 'error',
+						title: response.data.message
+					})
+				});
 
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skills,category')
                 .then(response => {
@@ -126,10 +134,11 @@
                         this.formData.addSocial.skype = response.data.skype;
                         this.formData.educationBlock = response.data.education;
                         this.formData.workBlock = response.data.experience;
+                        this.formData.dutiesSelect = response.data.skills;
 
-                        for (let i = 0; i < response.data.skills.length; i++) {
-                            this.formData['duties' + i] = response.data.skills[i].name;
-                        }
+                        // for (let i = 0; i < response.data.skills.length; i++) {
+                        //     this.formData['duties' + i] = response.data.skills[i].name;
+                        // }
 
                         if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
                             document.querySelector('.social-block button').click();
@@ -172,7 +181,7 @@
                     skype: this.formData.addSocial.skype,
                     education: this.formData.educationBlock,
                     work: this.formData.workBlock,
-                    skills: [],
+					skills: this.formData.dutiesSelect
                 };
                 if (this.hasImage) {
                     data.image = this.image;
@@ -182,12 +191,12 @@
                     }
                 }
 
-                let dutiesVal = document.querySelectorAll('.duties input');
-                for (let i = 0; i < dutiesVal.length; i++) {
-                    if (dutiesVal[i].value !== '') {
-                        data.skills.push({name: dutiesVal[i].value})
-                    }
-                }
+                // let dutiesVal = document.querySelectorAll('.duties input');
+                // for (let i = 0; i < dutiesVal.length; i++) {
+                //     if (dutiesVal[i].value !== '') {
+                //         data.skills.push({name: dutiesVal[i].value})
+                //     }
+                // }
                 this.$http.patch(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id, data)
                     .then(response => {
                             this.$router.push('/personal-area/all-resume');

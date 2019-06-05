@@ -2,6 +2,7 @@
 
 namespace backend\modules\vacancy\controllers;
 
+use common\models\VacancyCategory;
 use Yii;
 use common\models\Vacancy;
 use backend\modules\vacancy\models\VacancySearch;
@@ -65,8 +66,16 @@ class VacancyController extends Controller
     public function actionCreate()
     {
         $model = new Vacancy();
-
+        $post = Yii::$app->request->post();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if($post['Vacancy']['category']){
+                foreach ($post['Vacancy']['category'] as $category){
+                    $resume_category = new VacancyCategory();
+                    $resume_category->vacancy_id = $model->id;
+                    $resume_category->category_id = $category;
+                    $resume_category->save();
+                }
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -85,8 +94,19 @@ class VacancyController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $post = Yii::$app->request->post();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if($post['Vacancy']['category']){
+                foreach($model->vacancy_category as $category){
+                    $category->delete();
+                }
+                foreach ($post['Vacancy']['category'] as $category){
+                    $resume_category = new VacancyCategory();
+                    $resume_category->vacancy_id = $model->id;
+                    $resume_category->category_id = $category;
+                    $resume_category->save();
+                }
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

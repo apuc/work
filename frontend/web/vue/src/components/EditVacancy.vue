@@ -20,25 +20,61 @@
                     for (let i = 0; i < response.data.length; i++) {
                         this.$set(FormVacancy.categoriesVacancy.items, i, response.data[i]);
                     }
-                });
+                }), response => {
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
+                    };
             this.getEmploymentType().then(response => {
                 FormVacancy.typeOfEmployment.items = response.data;
                 for (let i = 0; i < response.data.length; i++) {
                     this.$set(FormVacancy.typeOfEmployment.items, i, response.data[i]);
                 }
-            });
+            }, response => {
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
+                    });
             this.getCompanyName().then(response => {
                 FormVacancy.companyName.items = response.data;
                 for (let i = 0; i < response.data.length; i++) {
                     this.$set(FormVacancy.companyName.items, i, response.data[i]);
                 }
-            });
+            }, response => {
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
+                    });
             this.getExperience().then(response => {
                 FormVacancy.experience.items = response.data;
                 for (let i = 0; i < response.data.length; i++) {
                     this.$set(FormVacancy.experience.items, i, response.data[i]);
                 }
-            });
+            }, response => {
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
+                    });
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id + '?expand=employment-type,category')
                 .then(response => {
                         this.formData.city = response.data.city;

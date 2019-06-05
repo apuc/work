@@ -1,23 +1,24 @@
 <template>
-  <div>
-    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
+    <div>
+        <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
 
-      <image-uploader
-        class="input-file"
-        :preview="true"
-        :className="['fileinput', { 'fileinput--loaded': hasImage }]"
-        capture="environment"
-        :debug="1"
-        doNotResize="gif"
-        :autoRotate="true"
-        outputFormat="verbose"
-        @input="setImage"
-      >
-        <label for="fileInput" slot="upload-label">
+            <image-uploader
+                    class="input-file"
+                    :preview="true"
+                    :className="['fileinput', { 'fileinput--loaded': hasImage }]"
+                    capture="environment"
+                    :debug="1"
+                    doNotResize="gif"
+                    :autoRotate="true"
+                    outputFormat="verbose"
+                    @input="setImage"
+            >
+                <label for="fileInput" slot="upload-label">
           <span class="upload-caption">
             Загрузить логотип
-            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-						 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 x="0px" y="0px"
+                 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 						<g>
 							<g>
 								<g>
@@ -77,70 +78,129 @@
 						</g>
 					</svg>
           </span>
-        </label>
-      </image-uploader>
+                </label>
+            </image-uploader>
 
-    </FormTemplate>
-  </div>
+        </FormTemplate>
+    </div>
 </template>
 
 <script>
-  import FormCompany from '../lk-form/company-form';
-  import FormTemplate from "./FormTemplate";
-  import Company from "../mixins/company";
+    import FormCompany from '../lk-form/company-form';
+    import FormTemplate from "./FormTemplate";
+    import Company from "../mixins/company";
 
-  export default {
-    name: "FormCompany",
-    components: {FormTemplate},
-    mixins: [Company],
-    created() {
-      document.title = this.$route.meta.title;
-    },
-    methods: {
-      saveData() {
-        let data = {
-          image: {},
-          name: this.formData.nameCompany,
-          website: this.formData.site,
-          activity_field: this.formData.scopeOfTheCompany,
-          vk: this.formData.addSocial.vkontakte,
-          facebook: this.formData.addSocial.facebook,
-          instagram: this.formData.addSocial.instagram,
-          skype: this.formData.addSocial.skype,
-          description: this.formData.aboutCompany,
-          contact_person: this.formData.contactPerson,
-          phone: this.formData.companyPhone,
-        };
-        let image = document.querySelector('.fileinput');
-        if(image.classList.contains('fileinput--loaded')) {
-          data.image = this.image;
-        }
-        this.$http.post(`${process.env.VUE_APP_API_URL}/request/company`, data)
-          .then(response => {
-            	this.$router.push('/personal-area/all-company');
-            	return response;
-            }, response => {
-            this.$swal({
-              toast: true,
-              position: 'bottom-end',
-              showConfirmButton: false,
-              timer: 4000,
-              type: 'error',
-              title: response.data.message
-            })
-            }
-          )
-      },
-      getFormData() {
-        return FormCompany;
-      },
-      setImage: function(output) {
-        this.hasImage = true;
-        this.image = output;
-      }
-    },
-  }
+    export default {
+        name: "FormCompany",
+        components: {FormTemplate},
+        mixins: [Company],
+        created() {
+            document.title = this.$route.meta.title;
+        },
+        mounted() {
+			this.inputsDisabled();
+			this.getUserData();
+        },
+        methods: {
+            saveData() {
+                let data = {
+                    image: {},
+                    name: this.formData.nameCompany,
+                    website: this.formData.site,
+                    activity_field: this.formData.scopeOfTheCompany,
+                    vk: this.formData.addSocial.vkontakte,
+                    facebook: this.formData.addSocial.facebook,
+                    instagram: this.formData.addSocial.instagram,
+                    skype: this.formData.addSocial.skype,
+                    description: this.formData.aboutCompany,
+                    contact_person: this.formData.contactPerson,
+                    phone: this.formData.companyPhone,
+                };
+                let image = document.querySelector('.fileinput');
+                if (image.classList.contains('fileinput--loaded')) {
+                    data.image = this.image;
+                }
+                this.$http.post(`${process.env.VUE_APP_API_URL}/request/company`, data)
+                    .then(response => {
+                            this.$router.push('/personal-area/all-company');
+                            return response;
+                        }, response => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
+                        }
+                    )
+            },
+			getUserData() {
+				this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
+						.then(response => {
+									this.formData.contactPerson = response.data[0].first_name + ' ' + response.data[0].second_name;
+									if (response.data[0].phone != null) {
+										this.formData.companyPhone = response.data[0].phone.number;
+									}
+								}, response => {
+									this.$swal({
+										toast: true,
+										position: 'bottom-end',
+										showConfirmButton: false,
+										timer: 4000,
+										type: 'error',
+										title: response.data.message
+									})
+								}
+						)
+			},
+            getFormData() {
+                return FormCompany;
+            },
+            setImage: function (output) {
+                this.hasImage = true;
+                this.image = output;
+            },
+			inputsDisabled() {
+				let check = document.querySelector('.privatePerson');
+				let inputCheck = check.querySelector('input');
+				let allInputs = document.querySelectorAll('.jsCompanyInput');
+				let nameCompany = document.getElementById('nameCompany');
+				let site = document.getElementById('site');
+				let scopeOfTheCompany = document.getElementById('scopeOfTheCompany');
+				let addSocial = document.getElementById('addSocial');
+				let aboutCompany = document.getElementById('aboutCompany');
+
+				check.addEventListener('click', function () {
+					let attrCheck = inputCheck.getAttribute('aria-checked');
+					if (attrCheck === 'true') {
+						for (let i = 0; i < allInputs.length; i++) {
+							allInputs[i].classList.add('opacity');
+						}
+						nameCompany.disabled = true;
+						site.disabled = true;
+						scopeOfTheCompany.disabled = true;
+						addSocial.querySelector('button').disabled = true;
+						aboutCompany.disabled = true;
+					} else {
+						for (let i = 0; i < allInputs.length; i++) {
+							allInputs[i].classList.remove('opacity');
+						}
+						nameCompany.disabled = false;
+						site.disabled = false;
+						scopeOfTheCompany.disabled = false;
+						addSocial.querySelector('button').disabled = false;
+						aboutCompany.disabled = false;
+					}
+				});
+			}
+        },
+    }
 </script>
 
-<style scoped>
+<style>
+    .opacity {
+        opacity: 0.5;
+    }
 </style>

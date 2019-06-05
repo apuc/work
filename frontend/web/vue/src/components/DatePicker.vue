@@ -41,6 +41,20 @@
                 menu: false
             }
         },
+        mounted() {
+            this.getDate().then(response => {
+                this.date = response.data.date;
+            }, response => {
+                this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: response.data.message
+                })
+            });
+        },
         watch: {
             menu (val) {
                 val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
@@ -50,7 +64,10 @@
             save (date) {
                 this.$emit('input', date);
                 this.$refs.menu.save(date);
-            }
+            },
+            async getDate() {
+                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index`);
+            },
         }
     }
 

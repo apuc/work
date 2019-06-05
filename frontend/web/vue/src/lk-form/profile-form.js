@@ -5,7 +5,7 @@ import DatePicker from '../components/DatePicker'
 export default {
   first_name: Object.assign({}, Field, {
     name: 'fist_name',
-    label: 'Имя',
+    label: 'Имя*',
     rules: [
       v => (v && v.length >= 3) || 'Больше 3 символов'
     ],
@@ -13,7 +13,7 @@ export default {
   }),
   second_name: Object.assign({}, Field, {
     name: 'second_name',
-    label: 'Фамилия',
+    label: 'Фамилия*',
     rules: [
       v => (v && v.length >= 3) || 'Больше 3 символов'
     ],
@@ -26,16 +26,13 @@ export default {
   email: Object.assign({}, Field, {
     name: 'email',
     label: 'Email*',
-    rules: [v => /.+@.+/.test(v) || 'Email должен быть правильным',],
+    rules: [v => /.+@.+/.test(v) || 'Email должен быть правильным'],
     component: VTextField
   }),
   phone: Object.assign({}, Field, {
     name: 'phone',
     label: 'Номер телефона',
-    rules: [
-      v => (v && v.length >= 11) || 'Введите 11 символов',
-      v => !!v || 'Номер телефона обязателен к заполнению'
-    ],
+    rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
     component: VTextField,
     maskPhone: '+## (###) ## - ## - ###'
   }),

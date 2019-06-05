@@ -4,20 +4,20 @@ import {VTextField, VSelect, VTextarea} from 'vuetify/lib'
 export default {
   name: Object.assign({}, Field, {
     name: 'name',
-    label: 'Название компании*',
+    label: 'Название компании',
     component: VTextField,
-    rules: [v => !!v || 'Название компании обязателено к заполнению']
+    rules: []
   }),
   post: Object.assign({}, Field, {
     name: 'post',
-    label: 'Должность*',
+    label: 'Должность',
     component: VTextField,
-    rules: [v => !!v || 'Должность обязателена к заполнению']
+    rules: []
   }),
   month_from: Object.assign({}, Field, {
     name: 'month_from',
-    label: 'Месяц начала*',
-    rules: [v => !!v || 'Месяц начала обязателен к заполнению'],
+    label: 'Месяц начала',
+    rules: [],
     component: VSelect,
     items: [
       {
@@ -72,18 +72,15 @@ export default {
   }),
   year_from: Object.assign({}, Field, {
     name: 'year_from',
-    label: 'Год начала*',
+    label: 'Год начала',
     component: VTextField,
     type: 'number',
-    rules: [
-      v => !!v || 'Год начала обязателен к заполнению',
-      v => /^\d+$/.test(v) || 'Только цыфры'
-    ]
+    rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')]
   }),
   month_to: Object.assign({}, Field, {
     name: 'month_to',
-    label: 'Месяц окончания*',
-    rules: [v => !!v || 'Месяц окончания обязателен к заполнению'],
+    label: 'Месяц окончания',
+    rules: [],
     component: VSelect,
     items: [
       {
@@ -138,13 +135,10 @@ export default {
   }),
   year_to: Object.assign({}, Field, {
     name: 'year_to',
-    label: 'Год окончания*',
+    label: 'Год окончания',
     component: VTextField,
     type: 'number',
-    rules: [
-      v => !!v || 'Год окончания обязателен к заполнению',
-      v => /^\d+$/.test(v) || 'Только цыфры'
-    ]
+    rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')]
   }),
   description: Object.assign({}, Field, {
     name: 'description',
