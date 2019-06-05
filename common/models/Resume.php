@@ -212,14 +212,15 @@ class Resume extends WorkActiveRecord
             $years = 0;
             $months = 0;
             foreach ($experiences as $experience){
-                $years += $experience['year_to'] - $experience['year_from'];
-                $tmp_months = $experience['month_to'] - $experience['month_from'];
-                if($tmp_months >= 0){
-                    $months += $tmp_months;
-                }
-                else {
-                    $years--;
-                    $months += 12-$experience['month_from']+$experience['month_to'];
+                if(!empty($experience['year_to'])) {
+                    $years += $experience['year_to'] - $experience['year_from'];
+                    $tmp_months = $experience['month_to'] - $experience['month_from'];
+                    if ($tmp_months >= 0) {
+                        $months += $tmp_months;
+                    } else {
+                        $years--;
+                        $months += 12 - $experience['month_from'] + $experience['month_to'];
+                    }
                 }
             }
             return $years + (int)($months/12);
