@@ -69,7 +69,7 @@ class MyActiveController extends ActiveController
                 'Access-Control-Allow-Credentials' => true,
                 'Access-Control-Request-Headers' => ['Origin', 'Content-Type', 'Accept', 'Authorization'],
                 'Access-Control-Max-Age'           => 3600,                 // Cache (seconds)
-                'Access-Control-Allow-Origin' => ['*']
+                'Access-Control-Allow-Origin' => '*'
             ],
         ];
         $behaviors['authenticator'] = [

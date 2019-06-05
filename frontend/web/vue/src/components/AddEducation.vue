@@ -70,29 +70,23 @@
         const template = {
           name: Object.assign({}, Field, {
             name: 'name',
-            label: 'Название университета*',
+            label: 'Название университета',
             component: VTextField,
-            rules: [v => !!v  || 'Название университета обязателено к заполнению'],
+            rules: []
           }),
           year_from: Object.assign({}, Field, {
             name: 'year_from',
-            label: 'Год поступления*',
+            label: 'Год поступления',
             component: VTextField,
             type: 'number',
-            rules: [
-              v => !!v  || 'Год поступления обязателен к заполнению',
-              v => /^\d+$/.test(v) || 'Только цыфры'
-            ],
+            rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')]
           }),
           year_to: Object.assign({}, Field, {
             name: 'year_to',
-            label: 'Год окончания*',
+            label: 'Год окончания',
             component: VTextField,
             type: 'number',
-            rules: [
-              v => !!v  || 'Год окончания обязателен к заполнению',
-              v => /^\d+$/.test(v) || 'Только цыфры'
-            ],
+            rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')]
           }),
           academic_degree: Object.assign({}, Field, {
             name: 'academic_degree',
@@ -105,20 +99,20 @@
               },
               {
                 name: 'Магистр'
-              },
-            ],
+              }
+            ]
           }),
           faculty: Object.assign({}, Field, {
             name: 'faculty',
-            label: 'Факультет*',
-            rules: [v => !!v  || 'Факультет обязателен к заполнению'],
-            component: VTextField,
+            label: 'Факультет',
+            rules: [],
+            component: VTextField
           }),
           specialization: Object.assign({}, Field, {
             name: 'specialization',
             label: 'Специализация',
             rules: [],
-            component: VTextField,
+            component: VTextField
           }),
         };
         this.education.push(template);

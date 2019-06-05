@@ -132,8 +132,12 @@
                         this.formData.addSocial.facebook = response.data.facebook;
                         this.formData.addSocial.instagram = response.data.instagram;
                         this.formData.addSocial.skype = response.data.skype;
-                        this.formData.educationBlock = response.data.education;
-                        this.formData.workBlock = response.data.experience;
+                        if(response.data.education.length > 0) {
+							this.formData.educationBlock = response.data.education;
+						}
+                        if(response.data.experience.length > 0) {
+							this.formData.workBlock = response.data.experience;
+						}
                         this.formData.dutiesSelect = response.data.skills;
 
                         // for (let i = 0; i < response.data.skills.length; i++) {

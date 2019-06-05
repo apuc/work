@@ -9,7 +9,7 @@
                  :taggable="true"
                  :close-on-select="false"
                  @tag="addTag"
-                 @input="pushTags"
+                 @close="pushTags"
     ></multiselect>
 </template>
 
@@ -48,22 +48,24 @@
                     title: response.data.message
                 })
             });
-            this.getSkills().then(response => {
-                this.dutiesSelect = response.data.skills;
-                let opt = this.dutiesSelect;
-                for(let i = 0; i < opt.length; i++) {
-                    opt[i]['code'] = opt[i].id;
-                }
-            }, response => {
-                this.$swal({
-                    toast: true,
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 4000,
-                    type: 'error',
-                    title: response.data.message
-                })
-            });
+            if(this.$route.name === 'edit-resume/id') {
+                this.getSkills().then(response => {
+                    this.dutiesSelect = response.data.skills;
+                    let opt = this.dutiesSelect;
+                    for(let i = 0; i < opt.length; i++) {
+                        opt[i]['code'] = opt[i].id;
+                    }
+                }, response => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
+                });
+            }
         },
         methods: {
             addTag(newTag) {

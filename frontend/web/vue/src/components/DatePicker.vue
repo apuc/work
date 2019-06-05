@@ -12,7 +12,7 @@
     >
         <template v-slot:activator="{ on }">
             <v-text-field
-                    v-model="date"
+                    v-model="birth_date"
                     label="Дата рождения"
                     class="date-label"
                     prepend-icon="event"
@@ -22,7 +22,7 @@
         </template>
         <v-date-picker
                 ref="picker"
-                v-model="date"
+                v-model="birth_date"
                 :max="new Date().toISOString().substr(0, 10)"
                 min="1950-01-01"
                 @change="save"
@@ -37,13 +37,13 @@
         name: 'DatePicker',
         data() {
             return {
-                date: null,
+                birth_date: null,
                 menu: false
             }
         },
         mounted() {
             this.getDate().then(response => {
-                this.date = response.data.date;
+                this.birth_date = response.data[0].birth_date;
             }, response => {
                 this.$swal({
                     toast: true,
@@ -61,9 +61,9 @@
             }
         },
         methods: {
-            save (date) {
-                this.$emit('input', date);
-                this.$refs.menu.save(date);
+            save (birth_date) {
+                this.$emit('input', birth_date);
+                this.$refs.menu.save(birth_date);
             },
             async getDate() {
                 return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index`);

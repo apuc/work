@@ -45,7 +45,7 @@
                             <v-btn outline small fab
                                    class="edit-btn"
                                    type="button"
-                                   @click="removeResume( item.id)"
+                                   @click="removeResume(index, item.id)"
                             >
                                 <v-icon>delete</v-icon>
 

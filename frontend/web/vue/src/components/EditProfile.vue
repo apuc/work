@@ -20,7 +20,7 @@
                 .then(response => {
                         this.formData.first_name = response.data[0].first_name;
                         this.formData.second_name = response.data[0].second_name;
-                        this.formData.date = '2016-05-18';
+                        this.formData.birth_date = response.data[0].birth_date;
                         this.formData.email = response.data[0].user.email;
                         if (response.data[0].phone != null) {
                             this.formData.phone = response.data[0].phone.number;
@@ -43,7 +43,7 @@
                 let data = {
                     first_name: this.formData.first_name,
                     second_name: this.formData.second_name,
-                    date: this.formData.date,
+                    birth_date: this.formData.birth_date,
                     email: this.formData.email,
                     phone: this.formData.phone
                 };

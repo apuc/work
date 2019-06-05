@@ -19,7 +19,7 @@ export default {
     ],
     component: VTextField
   }),
-  date: Object.assign({}, Field, {
+  birth_date: Object.assign({}, Field, {
     rules: [],
     component: DatePicker
   }),
