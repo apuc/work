@@ -1,5 +1,30 @@
 <template>
     <div>
+<!--        <v-tabs-->
+<!--                v-model="model"-->
+<!--                centered-->
+<!--                color="cyan"-->
+<!--                slider-color="yellow"-->
+<!--        >-->
+<!--            <v-tab-->
+<!--                    v-for="i in tabs"-->
+<!--                    :key="i"-->
+<!--                    :href="`#i.name`"-->
+<!--            >-->
+<!--                {{ i.name }}-->
+<!--            </v-tab>-->
+<!--        </v-tabs>-->
+<!--        <v-tabs-items v-model="model">-->
+<!--            <v-tab-item-->
+<!--                    v-for="i in 3"-->
+<!--                    :key="i"-->
+<!--                    :value="`tab-${i}`"-->
+<!--            >-->
+<!--                <v-card flat>-->
+<!--                    <v-card-text v-text="text"></v-card-text>-->
+<!--                </v-card>-->
+<!--            </v-tab-item>-->
+<!--        </v-tabs-items>-->
         <v-subheader v-if="messages.length === 0">У вас нет сообщений</v-subheader>
         <v-list v-else two-line class="message-block">
             <template v-for="(item, index) in messages">
@@ -10,7 +35,7 @@
                         @click="toggle(index)"
                 >
                     <v-list-tile-content>
-                        <v-list-tile-title>{{ item.subject }}</v-list-tile-title>
+                        <v-list-tile-title v-html="item.subject"></v-list-tile-title>
                         <v-list-tile-sub-title class="text--primary">{{ item.receiver.employer.first_name }} {{
                             item.receiver.employer.second_name }} - {{ item.receiver.email }}
                         </v-list-tile-sub-title>
@@ -44,6 +69,16 @@
                 messages: [],
                 paginationPageCount: 1,
                 paginationCurrentPage: 1,
+                model: 'Входящие',
+                tabs: [
+                    {
+                        name: 'Входящие'
+                    },
+                    {
+                        name: 'Исходящие'
+                    }
+                ],
+                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
             }
         },
         created() {
@@ -53,10 +88,10 @@
                         this.messages = response.data;
                         this.messages.forEach((element) => {
                             if (element.subject === 'Resume') {
-                                element.subject = 'Отклик на резюме ' + element.subject0.title;
+                                element.subject = 'Отклик на резюме ' + '<a href="#">' + element.subject0.title + '</a>';
                             }
                             if (element.subject === 'Vacancy') {
-                                element.subject = 'Отклик на вакансию ' + element.subject0.post;
+                                element.subject = 'Отклик на вакансию ' + '<a href="#">' + element.subject0.post + '</a>';
                             }
                             let timestamp = element.created_at;
                             let date = new Date();
