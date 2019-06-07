@@ -66,7 +66,7 @@
         },
         mounted() {
             document.title = this.$route.meta.title;
-            this.$http.get(`${process.env.VUE_APP_API_URL}/personal_area/default/statistics`)
+            this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/statistics`)
                 .then(response => {
                         this.allRecords = response.data;
                         this.domen = `${process.env.VUE_APP_API_URL}`;

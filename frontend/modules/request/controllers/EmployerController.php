@@ -87,7 +87,7 @@ class EmployerController extends MyActiveController
                 'responses' => $responses
             ];
         }
-        return json_encode($result);
+        return $result;
     }
 
 }
