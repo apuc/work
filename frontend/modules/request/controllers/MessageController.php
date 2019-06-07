@@ -38,10 +38,13 @@ class MessageController extends MyActiveController
             $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
         $query=Message::find();
-        if(isset($requestParams['sender_id'])&&$requestParams['sender_id']==Yii::$app->user->id)
-            $query->andWhere(['sender_id'=>$requestParams['sender_id']]);
-        if(isset($requestParams['receiver_id'])&&$requestParams['receiver_id']==Yii::$app->user->id)
-            $query->andWhere(['receiver_id'=>$requestParams['receiver_id']]);
+        if(isset($requestParams['type'])){
+            if($requestParams['type']==='incoming'){
+                $query->andWhere(['receiver_id'=>Yii::$app->user->id]);
+            } else if($requestParams['type']==='outgoing'){
+                $query->andWhere(['sender_id'=>Yii::$app->user->id]);
+            }
+        }
         return Yii::createObject([
             'class' => ActiveDataProvider::className(),
             'query' => $query,
