@@ -32,12 +32,8 @@ class VacancyController extends MyActiveController
         $params = Yii::$app->getRequest()->getBodyParams();
         if(Yii::$app->user->isGuest)
             throw new HttpException(400, 'Пользователь не авторизирован');
-        $company = Company::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
-        if(!$company)
-            throw new HttpException(400, 'Вы не являетесь работодателем');
         $model->load($params, '');
         $model->update_time = time();
-        $model->company_id = $company->id;
         if($model->save()){
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
@@ -69,9 +65,7 @@ class VacancyController extends MyActiveController
         if(!$model) throw new HttpException(400, 'Такой вакансии не существует');
         $this->checkAccess($this->action->id, $model);
         $params = Yii::$app->getRequest()->getBodyParams();
-        $company = Company::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
         $model->load($params, '');
-        $model->company_id = $company->id;
         if($model->save()){
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);

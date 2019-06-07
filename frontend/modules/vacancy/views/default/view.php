@@ -90,12 +90,14 @@ use yii\helpers\StringHelper; ?>
                                                           role="presentation"/>
                         </div>
                         <div class="sr-block__text">
+                            <?php if(!empty($model->company->name)):?>
                             <h3 class="sr-block__text__company">Компания:
                             </h3>
                             <p class="sr-block__text__c-name"><?= $model->company->name ?>
                             </p>
                             <p class="sr-block__text__c-name"><?= $model->company->activity_field ?>
                             </p>
+                            <?php endif ?>
                             <h3 class="sr-block__text__contact">Контактное лицо:
                             </h3>
                             <p class="sr-block__text__cont-name"><?= $model->company->contact_person ?>

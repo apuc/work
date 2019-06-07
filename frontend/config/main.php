@@ -38,9 +38,6 @@ return [
                     },
                     'on ' . \dektrium\user\controllers\SecurityController::EVENT_BEFORE_LOGOUT => function ($e) {
                         Yii::$app->getResponse()->getCookies()->remove('key');
-                        $user = \dektrium\user\models\User::findIdentity(Yii::$app->user->id);
-                        $user->auth_key=Yii::$app->security->generateRandomString();
-                        $user->save();
                     },
                 ],
             ],
