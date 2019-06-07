@@ -59,6 +59,8 @@
         return this.paramsFile;
       },
       validate () {
+        let btn = document.getElementById('main-btn');
+        btn.disabled = true;
         if (this.$refs.form.validate()) {
           this.snackbar = true;
           this.sendForm();

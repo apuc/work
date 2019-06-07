@@ -174,7 +174,6 @@
 				let addSocial = document.getElementById('addSocial');
 				let aboutCompany = document.getElementById('aboutCompany');
 				check.addEventListener('click', () => {
-					console.log(123);
 					let attrCheck = inputCheck.getAttribute('aria-checked');
 					if (attrCheck == 'true') {
 						this.formData.nameCompany = '';
@@ -195,6 +194,7 @@
 						aboutCompany.disabled = true;
 						FormCompany.nameCompany.rules = [];
 						FormCompany.scopeOfTheCompany.rules = [];
+						this.$forceUpdate();
 						let elem = document.getElementById('main-btn');
 						elem.disabled = false;
 						elem.classList.remove('v-btn--disabled');
