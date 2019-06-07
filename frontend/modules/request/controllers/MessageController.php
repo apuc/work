@@ -9,7 +9,7 @@ use yii\filters\auth\HttpBearerAuth;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 
-class MessageController extends ActiveController
+class MessageController extends MyActiveController
 {
     public $modelClass = 'common\models\Message';
 

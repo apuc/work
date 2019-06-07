@@ -1,24 +1,25 @@
 <template>
-	<FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
+    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
 
-		<img class="my-avatar" v-if="formData.image_url" :src="formData.image_url"/>
-		<image-uploader
-			class="input-file"
-			:preview="true"
-			:className="['fileinput', { 'fileinput--loaded': hasImage }]"
-			capture="environment"
-			:debug="1"
-			accept="video/*,image/*"
-			doNotResize="gif"
-			:autoRotate="true"
-			outputFormat="verbose"
-			@input="setImage"
-		>
-			<label for="fileInput" slot="upload-label">
+        <img class="my-avatar" v-if="formData.image_url" :src="formData.image_url"/>
+        <image-uploader
+                class="input-file"
+                :preview="true"
+                :className="['fileinput', { 'fileinput--loaded': hasImage }]"
+                capture="environment"
+                :debug="1"
+                accept="video/*,image/*"
+                doNotResize="gif"
+                :autoRotate="true"
+                outputFormat="verbose"
+                @input="setImage"
+        >
+            <label for="fileInput" slot="upload-label">
 				<span class="upload-caption">
 					Выбрать фото
-					<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-							 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+					<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 						<g>
 							<g>
 								<g>
@@ -78,106 +79,174 @@
 						</g>
 					</svg>
 				</span>
-			</label>
-		</image-uploader>
+            </label>
+        </image-uploader>
 
-	</FormTemplate>
+    </FormTemplate>
 </template>
 
 <script>
-  import FormCompany from '../lk-form/company-form';
-  import FormTemplate from "./FormTemplate";
-  import Company from "../mixins/company";
+    import FormCompany from '../lk-form/company-form';
+    import FormTemplate from "./FormTemplate";
+    import Company from "../mixins/company";
 
-  export default {
-    name: 'FormResume',
-    mixins: [Company],
-    components: {FormTemplate},
-    mounted() {
-      document.title = this.$route.meta.title;
+    export default {
+        name: 'FormResume',
+        mixins: [Company],
+        components: {FormTemplate},
+        mounted() {
+            document.title = this.$route.meta.title;
+            this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id + '?expand=phone')
+                .then(response => {
 
-      this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id + '?expand=phone')
-        .then(response => {
+                        if (response.data.image_url) {
+                            this.formData.image_url = response.data.image_url;
+                        }
 
-            if (response.data.image_url) {
-              this.formData.image_url =  response.data.image_url;
+                        this.formData.nameCompany = response.data.name;
+                        this.formData.site = response.data.website;
+                        this.formData.scopeOfTheCompany = response.data.activity_field;
+                        this.formData.addSocial.vkontakte = response.data.vk;
+                        this.formData.addSocial.facebook = response.data.facebook;
+                        this.formData.addSocial.instagram = response.data.instagram;
+                        this.formData.addSocial.skype = response.data.skype;
+                        this.formData.aboutCompany = response.data.description;
+                        this.formData.contactPerson = response.data.contact_person;
+                        this.formData.companyPhone = response.data.phone.number;
+
+
+                        if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
+                            document.querySelector('.social-block button').click();
+                        }
+
+                        Object.assign(FormCompany.nameCompany.rules, [v => !!v || 'Название компании обязательно к заполнению']);
+                        Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
+                        this.inputsDisabled();
+                    }, response => {
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
+                    }
+                );
+        },
+        methods: {
+            saveData() {
+                let data = {
+                    image: {},
+                    name: this.formData.nameCompany,
+                    website: this.formData.site,
+                    activity_field: this.formData.scopeOfTheCompany,
+                    vk: this.formData.addSocial.vkontakte,
+                    facebook: this.formData.addSocial.facebook,
+                    instagram: this.formData.addSocial.instagram,
+                    skype: this.formData.addSocial.skype,
+                    description: this.formData.aboutCompany,
+                    contact_person: this.formData.contactPerson,
+                    phone: this.formData.companyPhone,
+                };
+                if (this.hasImage) {
+                    data.image = this.image;
+                } else {
+                    data.image = {
+                        changeImg: false
+                    }
+                }
+                this.$http.patch(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id, data)
+                    .then(response => {
+                            this.$router.push('/personal-area/all-company');
+                            return response;
+                        }, response => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
+                        }
+                    )
+            },
+            getFormData() {
+                return FormCompany;
+            },
+            setImage: function (output) {
+                this.hasImage = true;
+                this.image = output;
+                let img = document.querySelector('.my-avatar');
+                img.classList.add('hide');
+            },
+            inputsDisabled() {
+                let check = document.querySelector('.privatePerson .v-input__slot');
+                let inputCheck = check.querySelector('input');
+                let allInputs = document.querySelectorAll('.jsCompanyInput');
+                let nameCompany = document.getElementById('nameCompany');
+                let site = document.getElementById('site');
+                let scopeOfTheCompany = document.getElementById('scopeOfTheCompany');
+                let addSocial = document.getElementById('addSocial');
+                let aboutCompany = document.getElementById('aboutCompany');
+
+                check.addEventListener('click', () => {
+
+                    let attrCheck = inputCheck.getAttribute('aria-checked');
+                    if (attrCheck == 'true') {
+                        this.formData.nameCompany = '';
+                        this.formData.site = '';
+                        this.formData.scopeOfTheCompany = '';
+                        this.formData.addSocial.facebook = '';
+                        this.formData.addSocial.instagram = '';
+                        this.formData.addSocial.skype = '';
+                        this.formData.addSocial.vkontakte = '';
+                        this.formData.aboutCompany = '';
+
+                        for (let i = 0; i < allInputs.length; i++) {
+                            allInputs[i].classList.add('opacity');
+                        }
+                        nameCompany.disabled = true;
+                        site.disabled = true;
+                        scopeOfTheCompany.disabled = true;
+                        addSocial.querySelector('button').disabled = true;
+                        aboutCompany.disabled = true;
+                        FormCompany.nameCompany.rules = [];
+                        FormCompany.scopeOfTheCompany.rules = [];
+                        let elem = document.getElementById('main-btn');
+                        elem.disabled = false;
+                        elem.classList.remove('v-btn--disabled');
+                        elem.classList.remove('success--text');
+                        elem.classList.add('success');
+                    } else {
+                        for (let i = 0; i < allInputs.length; i++) {
+                            allInputs[i].classList.remove('opacity');
+                        }
+                        nameCompany.disabled = false;
+                        site.disabled = false;
+                        scopeOfTheCompany.disabled = false;
+                        addSocial.querySelector('button').disabled = false;
+                        aboutCompany.disabled = false;
+                        Object.assign(FormCompany.nameCompany.rules, [v => !!v || 'Название компании обязательно к заполнению']);
+                        Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
+                        let elem = document.getElementById('main-btn');
+                        elem.disabled = false;
+                        elem.classList.remove('v-btn--disabled');
+                        elem.classList.remove('success--text');
+                        elem.classList.add('success');
+                    }
+                });
+                if (!this.formData.nameCompany.length) {
+                    let inputSlot = document.querySelector('.v-input--selection-controls__ripple');
+                    inputSlot.click();
+                    setTimeout(function () {
+						check.click();
+					}, 1);
+                }
             }
-
-            this.formData.nameCompany = response.data.name;
-            this.formData.site = response.data.website;
-            this.formData.scopeOfTheCompany = response.data.activity_field;
-            this.formData.addSocial.vkontakte = response.data.vk;
-            this.formData.addSocial.facebook = response.data.facebook;
-            this.formData.addSocial.instagram = response.data.instagram;
-            this.formData.addSocial.skype = response.data.skype;
-            this.formData.aboutCompany = response.data.description;
-            this.formData.contactPerson = response.data.contact_person;
-            this.formData.companyPhone = response.data.phone.number;
-
-            if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
-              document.querySelector('.social-block button').click();
-            }
-          }, response => {
-          this.$swal({
-            toast: true,
-            position: 'bottom-end',
-            showConfirmButton: false,
-            timer: 4000,
-            type: 'error',
-            title: response.data.message
-          })
-          }
-        )
-    },
-    methods: {
-      saveData() {
-        let data = {
-          image: {},
-          name: this.formData.nameCompany,
-          website: this.formData.site,
-          activity_field: this.formData.scopeOfTheCompany,
-          vk: this.formData.addSocial.vkontakte,
-          facebook: this.formData.addSocial.facebook,
-          instagram: this.formData.addSocial.instagram,
-          skype: this.formData.addSocial.skype,
-          description: this.formData.aboutCompany,
-          contact_person: this.formData.contactPerson,
-          phone: this.formData.companyPhone,
-        };
-        if (this.hasImage) {
-          data.image = this.image;
-        } else {
-          data.image = {
-            changeImg: false
-          }
-        }
-        this.$http.patch(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id, data)
-          .then(response => {
-            this.$router.push('/personal-area/all-company');
-            return response;
-            }, response => {
-            this.$swal({
-              toast: true,
-              position: 'bottom-end',
-              showConfirmButton: false,
-              timer: 4000,
-              type: 'error',
-              title: response.data.message
-            })
-            }
-          )
-      },
-      getFormData() {
-        return FormCompany;
-      },
-      setImage: function (output) {
-        this.hasImage = true;
-        this.image = output;
-        let img = document.querySelector('.my-avatar');
-        img.classList.add('hide');
-      },
-    },
-  }
+        },
+    }
 </script>
 
 <style>

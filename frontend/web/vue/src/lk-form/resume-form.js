@@ -51,14 +51,6 @@ export default {
     component: AddSocial,
     rules: []
   }),
-  educationBlock: Object.assign({}, Field, {
-    component: AddEducation,
-    rules: []
-  }),
-  workBlock: Object.assign({}, Field, {
-    component: AddWork,
-    rules: []
-  }),
   dutiesAndAccomplishments: Object.assign({}, Field, {
     text: 'Навыки',
     rules: [],
@@ -68,6 +60,14 @@ export default {
   dutiesSelect: Object.assign({}, Field, {
     rules: [],
     component: DutiesSelect
+  }),
+  educationBlock: Object.assign({}, Field, {
+    component: AddEducation,
+    rules: []
+  }),
+  workBlock: Object.assign({}, Field, {
+    component: AddWork,
+    rules: []
   }),
   aboutMe: Object.assign({}, Field, {
     name: 'aboutMe',

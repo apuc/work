@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\base\WorkActiveRecord;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -21,7 +22,7 @@ use yii\db\ActiveRecord;
  * @property int $created_at
  * @property int $updated_at
  */
-class Message extends ActiveRecord
+class Message extends WorkActiveRecord
 {
 
     const SUBJECT_RESUME = 'Resume';

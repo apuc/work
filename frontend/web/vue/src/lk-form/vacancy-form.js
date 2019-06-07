@@ -129,7 +129,7 @@ export default {
   officeAddress: Object.assign({}, Field, {
     name: 'officeAddress',
     label: 'Адрес офиса',
-    rules: [v => (v && v.length >= 5) || 'Больше 5 символов'],
+    rules: [],
     component: VTextField
   }),
   houseNumber: Object.assign({}, Field, {

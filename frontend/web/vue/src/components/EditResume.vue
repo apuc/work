@@ -118,15 +118,17 @@
                 .then(response => {
 
                         this.formData.resumeCity = response.data.city;
-
                         if (response.data.image_url) {
                             this.formData.image_url = response.data.image_url;
                         }
-
                         this.formData.careerObjective = response.data.title;
                         this.formData.categoriesResume = response.data.category;
-                        this.formData.salaryFrom = response.data.min_salary;
-                        this.formData.salaryBefore = response.data.max_salary;
+                        if(response.data.min_salary) {
+							this.formData.salaryFrom = response.data.min_salary;
+						}
+						if(response.data.max_salary) {
+							this.formData.salaryBefore = response.data.max_salary;
+						}
                         this.formData.aboutMe = response.data.description;
                         this.formData.addSocial.vkontakte = response.data.vk;
                         this.formData.addSocial.facebook = response.data.facebook;

@@ -6,31 +6,33 @@ import store from './store';
 import ImageUploader from "vue-image-upload-resize";
 import VueResource from 'vue-resource';
 import VueSweetalert2 from 'vue-sweetalert2';
-// import VueSelect from 'vue-select'
 
 Vue.use(ImageUploader);
 Vue.use(VueResource);
 Vue.use(VueSweetalert2);
 Vue.config.devtools = true;
 
-// Vue.component('v-select', VueSelect.VueSelect);
-
 // Vue.config.productionTip = false;
 
 router.afterEach( async (to, from, next) => {
-  let getCookKey = getCookie('key');
-  function getCookie(name){
-    let matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    let key = decodeURI(matches[1]);
-    key = key.match(/"[a-zA-Z0-9-_]{5,}"/)[0];
-    key = key.replace(/"/g, '');
-    return key ? key : undefined;
-  }
-  localStorage.localKey = getCookKey;
-  Vue.http.headers.common['Authorization'] = `Bearer ${localStorage.getItem('localKey')}`;
-  // Vue.http.headers.common['Authorization'] = 'Bearer heLv-yHzbt3aWGlogjbQLSnVhZrhWDKp';
+
+  //для прода
+  // let getCookKey = getCookie('key');
+  // function getCookie(name){
+  //   let matches = document.cookie.match(new RegExp(
+  //       "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  //   ));
+  //   let key = decodeURI(matches[1]);
+  //   key = key.match(/"[a-zA-Z0-9-_]{5,}"/)[0];
+  //   key = key.replace(/"/g, '');
+  //   return key ? key : undefined;
+  // }
+  // localStorage.localKey = getCookKey;
+  // Vue.http.headers.common['Authorization'] = `Bearer ${localStorage.getItem('localKey')}`;
+
+  //для localhost
+  Vue.http.headers.common['Authorization'] = 'Bearer heLv-yHzbt3aWGlogjbQLSnVhZrhWDKp';
+
 });
 
 new Vue({

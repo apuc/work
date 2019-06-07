@@ -219,5 +219,9 @@
   }
 </script>
 
-<style scoped>
+<style>
+  .work-block {
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,0.42);
+  }
 </style>

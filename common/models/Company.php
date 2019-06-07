@@ -64,7 +64,7 @@ class Company extends WorkActiveRecord
             [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person', 'image_url'], 'string', 'max' => 255],
             [['activity_field', 'description'], 'string'],
-            [['user_id', 'name'], 'required'],
+            [['user_id', 'contact_person'], 'required'],
         ];
     }
 

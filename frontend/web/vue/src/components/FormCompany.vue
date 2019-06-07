@@ -98,6 +98,8 @@
             document.title = this.$route.meta.title;
         },
         mounted() {
+			Object.assign(FormCompany.nameCompany.rules , [v => !!v || 'Название компании обязательно к заполнению']);
+			Object.assign(FormCompany.scopeOfTheCompany.rules , [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
 			this.inputsDisabled();
 			this.getUserData();
         },
@@ -163,7 +165,7 @@
                 this.image = output;
             },
 			inputsDisabled() {
-				let check = document.querySelector('.privatePerson');
+				let check = document.querySelector('.privatePerson .v-input__slot');
 				let inputCheck = check.querySelector('input');
 				let allInputs = document.querySelectorAll('.jsCompanyInput');
 				let nameCompany = document.getElementById('nameCompany');
@@ -171,10 +173,18 @@
 				let scopeOfTheCompany = document.getElementById('scopeOfTheCompany');
 				let addSocial = document.getElementById('addSocial');
 				let aboutCompany = document.getElementById('aboutCompany');
-
-				check.addEventListener('click', function () {
+				check.addEventListener('click', () => {
+					console.log(123);
 					let attrCheck = inputCheck.getAttribute('aria-checked');
-					if (attrCheck === 'true') {
+					if (attrCheck == 'true') {
+						this.formData.nameCompany = '';
+						this.formData.site = '';
+						this.formData.scopeOfTheCompany = '';
+						this.formData.addSocial.facebook = '';
+						this.formData.addSocial.instagram = '';
+						this.formData.addSocial.skype = '';
+						this.formData.addSocial.vkontakte = '';
+						this.formData.aboutCompany = '';
 						for (let i = 0; i < allInputs.length; i++) {
 							allInputs[i].classList.add('opacity');
 						}
@@ -183,6 +193,13 @@
 						scopeOfTheCompany.disabled = true;
 						addSocial.querySelector('button').disabled = true;
 						aboutCompany.disabled = true;
+						FormCompany.nameCompany.rules = [];
+						FormCompany.scopeOfTheCompany.rules = [];
+						let elem = document.getElementById('main-btn');
+						elem.disabled = false;
+						elem.classList.remove('v-btn--disabled');
+						elem.classList.remove('success--text');
+						elem.classList.add('success');
 					} else {
 						for (let i = 0; i < allInputs.length; i++) {
 							allInputs[i].classList.remove('opacity');
@@ -192,6 +209,13 @@
 						scopeOfTheCompany.disabled = false;
 						addSocial.querySelector('button').disabled = false;
 						aboutCompany.disabled = false;
+						Object.assign(FormCompany.nameCompany.rules , [v => !!v || 'Название компании обязательно к заполнению']);
+						Object.assign(FormCompany.scopeOfTheCompany.rules , [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
+						let elem = document.getElementById('main-btn');
+						elem.disabled = false;
+						elem.classList.remove('v-btn--disabled');
+						elem.classList.remove('success--text');
+						elem.classList.add('success');
 					}
 				});
 			}

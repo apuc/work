@@ -83,8 +83,12 @@
                         this.formData.post = response.data.post;
                         this.formData.duties = response.data.responsibilities;
                         this.formData.typeOfEmployment = response.data.employment_type_id;
-                        this.formData.salaryFrom = response.data.min_salary;
-                        this.formData.salaryBefore = response.data.max_salary;
+                        if(response.data.min_salary) {
+                            this.formData.salaryFrom = response.data.min_salary;
+                        }
+                        if(response.data.max_salary) {
+                            this.formData.salaryBefore = response.data.max_salary;
+                        }
                         this.formData.qualificationRequirements = response.data.qualification_requirements;
                         this.formData.experience = response.data.work_experience;
                         this.formData.education = response.data.education;

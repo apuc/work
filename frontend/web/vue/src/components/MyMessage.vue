@@ -1,10 +1,7 @@
 <template>
-    <template v-if="messages.length === 0">
-        <v-subheader>У вас нет сообщений</v-subheader>
-    </template>
-
-    <template v-else>
-        <v-list two-line class="message-block">
+    <div>
+        <v-subheader v-if="messages.length === 0">У вас нет сообщений</v-subheader>
+        <v-list v-else two-line class="message-block">
             <template v-for="(item, index) in messages">
                 <v-list-tile
                         :key="item.id"
@@ -28,17 +25,15 @@
                 <v-divider></v-divider>
             </template>
         </v-list>
-    </template>
-
-    <template v-if="paginationPageCount > 1">
-        <div class="text-xs-center">
+        <div  class="text-xs-center">
             <v-pagination
+                    v-if="paginationPageCount > 1"
                     v-model="paginationCurrentPage"
                     :length="paginationPageCount"
                     @input="changePage"
             ></v-pagination>
         </div>
-    </template>
+    </div>
 </template>
 
 <script>
