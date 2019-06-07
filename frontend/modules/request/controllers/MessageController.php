@@ -2,6 +2,7 @@
 
 namespace frontend\modules\request\controllers;
 
+use common\classes\Debug;
 use common\models\Message;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -36,9 +37,17 @@ class MessageController extends MyActiveController
         if (empty($requestParams)) {
             $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
+        $query=Message::find();
+        if(isset($requestParams['type'])){
+            if($requestParams['type']==='incoming'){
+                $query->andWhere(['receiver_id'=>Yii::$app->user->id]);
+            } else if($requestParams['type']==='outgoing'){
+                $query->andWhere(['sender_id'=>Yii::$app->user->id]);
+            }
+        }
         return Yii::createObject([
             'class' => ActiveDataProvider::className(),
-            'query' => Message::find()->where(['sender_id' => Yii::$app->user->id])->orWhere(['receiver_id'=>Yii::$app->user->id]),
+            'query' => $query,
             'pagination' => [
                 'params' => $requestParams,
             ],
