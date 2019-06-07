@@ -122,9 +122,5 @@
   }
 </script>
 
-<style>
-  .education-block {
-    padding: 10px;
-    border: 1px solid rgba(0,0,0,0.42);
-  }
+<style scoped>
 </style>

@@ -8,7 +8,7 @@ const vacancy = {
         categoriesVacancy: [],
         post: '',
         duties: '',
-        typeOfEmployment: [],
+        typeOfEmployment: null,
         salaryFrom: '',
         salaryBefore: '',
         qualificationRequirements: '',

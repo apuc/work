@@ -21,7 +21,8 @@
                             </v-list-tile-avatar>
 
                             <v-list-tile-content>
-                                <v-list-tile-title class="mt-auto mb-auto"> {{ item.name }}</v-list-tile-title>
+                                <v-list-tile-title v-if="item.name.length > 0" class="mt-auto mb-auto"> {{ item.name }}</v-list-tile-title>
+                                <v-list-tile-title v-else class="mt-auto mb-auto"> {{ item.contact_person }}</v-list-tile-title>
                                 <v-list-tile-sub-title class="mt-auto mb-auto">Последнее обновление: {{ item.updated_at
                                     }}
                                 </v-list-tile-sub-title>

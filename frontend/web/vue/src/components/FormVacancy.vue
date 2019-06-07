@@ -54,9 +54,13 @@
                     });
             this.getCompanyName().then(response => {
                 this.lengthCompany = response.data.length;
-                FormVacancy.companyName.items = response.data;
+                FormVacancy.companyName.items = [];
                 for (let i = 0; i < response.data.length; i++) {
-                    this.$set(FormVacancy.companyName.items, i, response.data[i]);
+                    if(response.data[i].name) {
+                        FormVacancy.companyName.items.push(response.data[i]);
+                    } else {
+                        FormVacancy.companyName.items.push({name: response.data[i].contact_person, id: response.data[i].id});
+                    }
                 }
             }, response => {
                         this.$swal({

@@ -218,8 +218,10 @@
         opacity: 0;
     }
 
-    .remove-work, .remove-education {
+    .work-block, .education-block {
         margin-top: 30px;
+		padding: 10px;
+		border: 1px solid rgba(0,0,0,0.42);
     }
 
     .item-block {
