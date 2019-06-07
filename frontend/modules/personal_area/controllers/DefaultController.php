@@ -18,36 +18,4 @@ class DefaultController extends Controller
             return $this->renderFile('@frontend/web/vue/dist/index.html');
         return $this->redirect('/');
     }
-
-    /**
-     * @throws HttpException
-     */
-    public function actionStatistics(){
-        if(\Yii::$app->user->isGuest)
-            throw new HttpException(404, 'Not found');
-        $result = ['Vacancy'=>[], 'Resume'=>[]];
-        /** @var Vacancy[] $vacancies */
-        $vacancies = Vacancy::find()->where(['owner'=>\Yii::$app->user->id, 'status'=>Vacancy::STATUS_ACTIVE])->all();
-        foreach ($vacancies as $vacancy){
-            $responses = Message::find()->where(['subject'=>'Vacancy', 'subject_id'=>$vacancy->id])->count();
-            $result['Vacancy'][]=[
-                'id' => $vacancy->id,
-                'name' => $vacancy->post,
-                'views' => $vacancy->views,
-                'responses' => $responses
-            ];
-        }
-        /** @var Resume[] $resumes */
-        $resumes = Resume::find()->where(['owner'=>\Yii::$app->user->id, 'status'=>Resume::STATUS_ACTIVE])->all();
-        foreach ($resumes as $resume){
-            $responses = Message::find()->where(['subject'=>'Resume', 'subject_id'=>$resume->id])->count();
-            $result['Resume'][]=[
-                'id' => $resume->id,
-                'name' => $resume->title,
-                'views' => $resume->views,
-                'responses' => $responses
-            ];
-        }
-        return json_encode($result);
-    }
 }
