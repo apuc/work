@@ -1,63 +1,106 @@
 <template>
     <div>
-<!--        <v-tabs-->
-<!--                v-model="model"-->
-<!--                centered-->
-<!--                color="cyan"-->
-<!--                slider-color="yellow"-->
-<!--        >-->
-<!--            <v-tab-->
-<!--                    v-for="i in tabs"-->
-<!--                    :key="i"-->
-<!--                    :href="`#i.name`"-->
-<!--            >-->
-<!--                {{ i.name }}-->
-<!--            </v-tab>-->
-<!--        </v-tabs>-->
-<!--        <v-tabs-items v-model="model">-->
-<!--            <v-tab-item-->
-<!--                    v-for="i in 3"-->
-<!--                    :key="i"-->
-<!--                    :value="`tab-${i}`"-->
-<!--            >-->
-<!--                <v-card flat>-->
-<!--                    <v-card-text v-text="text"></v-card-text>-->
-<!--                </v-card>-->
-<!--            </v-tab-item>-->
-<!--        </v-tabs-items>-->
-        <v-subheader v-if="messages.length === 0">У вас нет сообщений</v-subheader>
-        <v-list v-else two-line class="message-block">
-            <template v-for="(item, index) in messages">
-                <v-list-tile
-                        :key="item.id"
-                        avatar
-                        ripple
-                        @click="toggle(index)"
-                >
-                    <v-list-tile-content>
-                        <v-list-tile-title v-html="item.subject"></v-list-tile-title>
-                        <v-list-tile-sub-title class="text--primary">{{ item.receiver.employer.first_name }} {{
-                            item.receiver.employer.second_name }} - {{ item.receiver.email }}
-                        </v-list-tile-sub-title>
-                        <v-list-tile-sub-title>{{ item.text }}</v-list-tile-sub-title>
-                    </v-list-tile-content>
 
-                    <v-list-tile-action>
-                        <v-list-tile-action-text>{{ item.created_at }}</v-list-tile-action-text>
-                    </v-list-tile-action>
+        <v-tabs
+                centered
+                light
+                icons-and-text
+        >
+            <v-tabs-slider color="black"></v-tabs-slider>
 
-                </v-list-tile>
-                <v-divider></v-divider>
-            </template>
-        </v-list>
-        <div  class="text-xs-center">
-            <v-pagination
-                    v-if="paginationPageCount > 1"
-                    v-model="paginationCurrentPage"
-                    :length="paginationPageCount"
-                    @input="changePage"
-            ></v-pagination>
-        </div>
+            <v-tab href="#tab-1" @click="getIncoming()">
+                Входящие
+            </v-tab>
+
+            <v-tab href="#tab-2" @click="getOutgoing()">
+                Исходящие
+            </v-tab>
+
+            <v-tab-item
+                    value="tab-1"
+            >
+                <v-card flat>
+                    <v-card-text>
+                        <v-subheader v-if="messagesIncoming.length === 0">У вас нет сообщений</v-subheader>
+                        <v-list v-else two-line class="message-block">
+                            <template v-for="incoming in messagesIncoming">
+                                <v-list-tile
+                                        :key="incoming.id"
+                                        avatar
+                                        ripple
+                                >
+                                    <v-list-tile-content>
+                                        <v-list-tile-title v-html="incoming.subject"></v-list-tile-title>
+                                        <v-list-tile-title v-html="incoming.subject_from"></v-list-tile-title>
+                                        <v-list-tile-sub-title class="text--primary">{{ incoming.sender.employer.first_name }} {{
+                                            incoming.sender.employer.second_name }} - {{ incoming.sender.email }}
+                                        </v-list-tile-sub-title>
+                                        <v-list-tile-sub-title>{{ incoming.text }}</v-list-tile-sub-title>
+                                    </v-list-tile-content>
+
+                                    <v-list-tile-action>
+                                        <v-list-tile-action-text>{{ incoming.created_at }}</v-list-tile-action-text>
+                                    </v-list-tile-action>
+
+                                </v-list-tile>
+                                <v-divider></v-divider>
+                            </template>
+                        </v-list>
+                    </v-card-text>
+                    <div  class="text-xs-center">
+                        <v-pagination
+                                v-if="paginationPageCountIncoming > 1"
+                                v-model="paginationCurrentPageIncoming"
+                                :length="paginationPageCountIncoming"
+                                @input="changePageIncoming"
+                        ></v-pagination>
+                    </div>
+                </v-card>
+            </v-tab-item>
+
+            <v-tab-item
+                    value="tab-2"
+            >
+                <v-card flat>
+                    <v-card-text>
+                        <v-subheader v-if="messagesOutgoing.length === 0">У вас нет сообщений</v-subheader>
+                        <v-list v-else two-line class="message-block">
+                            <template v-for="outgoing in messagesOutgoing">
+                                <v-list-tile
+                                        :key="outgoing.id"
+                                        avatar
+                                        ripple
+                                >
+                                    <v-list-tile-content>
+                                        <v-list-tile-title v-html="outgoing.subject"></v-list-tile-title>
+                                        <v-list-tile-title v-html="outgoing.subject_from"></v-list-tile-title>
+                                        <v-list-tile-sub-title class="text--primary">{{ outgoing.receiver.employer.first_name }} {{
+                                            outgoing.receiver.employer.second_name }} - {{ outgoing.receiver.email }}
+                                        </v-list-tile-sub-title>
+                                        <v-list-tile-sub-title>{{ outgoing.text }}</v-list-tile-sub-title>
+                                    </v-list-tile-content>
+
+                                    <v-list-tile-action>
+                                        <v-list-tile-action-text>{{ outgoing.created_at }}</v-list-tile-action-text>
+                                    </v-list-tile-action>
+
+                                </v-list-tile>
+                                <v-divider></v-divider>
+                            </template>
+                        </v-list>
+                    </v-card-text>
+                    <div  class="text-xs-center">
+                        <v-pagination
+                                v-if="paginationPageCountOutgoing > 1"
+                                v-model="paginationCurrentPageOutgoing"
+                                :length="paginationPageCountOutgoing"
+                                @input="changePageOutgoing"
+                        ></v-pagination>
+                    </div>
+                </v-card>
+            </v-tab-item>
+        </v-tabs>
+
     </div>
 </template>
 
@@ -66,52 +109,121 @@
         name: "MyMessage",
         data() {
             return {
-                messages: [],
-                paginationPageCount: 1,
-                paginationCurrentPage: 1,
-                model: 'Входящие',
-                tabs: [
-                    {
-                        name: 'Входящие'
-                    },
-                    {
-                        name: 'Исходящие'
-                    }
-                ],
-                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+                messagesIncoming: [],
+                messagesOutgoing: [],
+                paginationPageCountIncoming: 1,
+                paginationPageCountOutgoing: 1,
+                paginationCurrentPageIncoming: 1,
+                paginationCurrentPageOutgoing: 1
             }
         },
-        created() {
+        mounted() {
             document.title = this.$route.meta.title;
-            this.$http.get(`${process.env.VUE_APP_API_URL}/request/message?expand=receiver.employer,subject0`)
-                .then(response => {
-                        this.messages = response.data;
-                        this.messages.forEach((element) => {
-                            if (element.subject === 'Resume') {
-                                element.subject = 'Отклик на резюме ' + '<a href="#">' + element.subject0.title + '</a>';
-                            }
-                            if (element.subject === 'Vacancy') {
-                                element.subject = 'Отклик на вакансию ' + '<a href="#">' + element.subject0.post + '</a>';
-                            }
-                            let timestamp = element.created_at;
-                            let date = new Date();
-                            date.setTime(timestamp * 1000);
-                            element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-                        });
-                        this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
-                    }, response => {
-                    this.$swal({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        type: 'error',
-                        title: response.data.message
-                    })
-                    }
-                );
-
+            this.getIncoming();
         },
+        methods: {
+            getIncoming() {
+                this.messagesIncoming = [];
+                this.paginationPageCountIncoming = 1;
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/message?expand=subject0,sender.employer,subject0_from&type=incoming`,)
+                    .then(response => {
+                            this.messagesIncoming = response.data;
+                            let domen = `${process.env.VUE_APP_API_URL}`;
+                            this.messagesIncoming.forEach((element) => {
+                                if (element.subject === 'Resume') {
+                                    element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
+                                    element.subject_from = 'Предлагают вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.post + '</a>';
+                                }
+                                if (element.subject === 'Vacancy') {
+                                    element.subject = 'Отклик на вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.post + '</a>';
+                                    element.subject_from = 'Прилагают резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.title + '</a>';
+                                }
+                                let timestamp = element.created_at;
+                                let date = new Date();
+                                date.setTime(timestamp * 1000);
+                                element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                            });
+                            this.paginationPageCountIncoming = response.headers.map['x-pagination-page-count'][0];
+                        }, response => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
+                        }
+                    );
+
+            },
+            getOutgoing() {
+                this.messagesOutgoing = [];
+                this.paginationPageCountOutgoing = 1;
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/message?expand=subject0,receiver.employer,subject0_from&type=outgoing`,)
+                    .then(response => {
+                            this.messagesOutgoing = response.data;
+                            let domen = `${process.env.VUE_APP_API_URL}`;
+                            this.messagesOutgoing.forEach((element) => {
+                                if (element.subject === 'Resume') {
+                                    element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
+                                    element.subject_from = 'Предлагают вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.post + '</a>';
+                                }
+                                if (element.subject === 'Vacancy') {
+                                    element.subject = 'Отклик на вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.post + '</a>';
+                                    element.subject_from = 'Прилагают резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.title + '</a>';
+                                }
+                                let timestamp = element.created_at;
+                                let date = new Date();
+                                date.setTime(timestamp * 1000);
+                                element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                            });
+                            this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
+                        }, response => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
+                        }
+                    );
+            },
+            changePageIncoming(paginationCurrentPageIncoming) {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/message?expand=subject0,sender.employer&type=incoming?page=` + paginationCurrentPageIncoming)
+                    .then(response => {
+                            this.getAllVacancy = response.data;
+                        }, response => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
+                        }
+                    );
+            },
+            changePageOutgoing(paginationCurrentPageOutgoing) {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/message?expand=subject0,receiver.employer&type=outgoing?page=` + paginationCurrentPageOutgoing)
+                    .then(response => {
+                            this.getAllVacancy = response.data;
+                        }, response => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
+                        }
+                    );
+            }
+        }
     }
 </script>
 
@@ -125,10 +237,14 @@
     }
 
     .message-block a {
-        cursor: default !important;
+        color: inherit;
+        cursor: pointer !important;
     }
 
     .message-block .v-ripple__container {
         display: none !important;
+    }
+    .message-block.v-list--two-line .v-list__tile {
+        height: auto;
     }
 </style>

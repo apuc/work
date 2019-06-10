@@ -38,7 +38,7 @@ class Message extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['receiver', 'sender', 'subject0'];
+        return ['receiver', 'sender', 'subject0', 'subject0_from'];
     }
 
     /**
@@ -96,7 +96,7 @@ class Message extends WorkActiveRecord
         if($this->subject === self::SUBJECT_VACANCY)
             return $this->hasOne(Vacancy::className(), ['id'=>'subject_id']);
     }
-    public function getSubject_from(){
+    public function getSubject0_from(){
         if($this->subject_from === self::SUBJECT_RESUME)
             return $this->hasOne(Resume::className(), ['id'=>'subject_from_id']);
         if($this->subject_from === self::SUBJECT_VACANCY)
