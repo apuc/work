@@ -194,7 +194,22 @@
             changePageIncoming(paginationCurrentPageIncoming) {
                 this.$http.get(`${process.env.VUE_APP_API_URL}/request/message?expand=subject0,sender.employer&type=incoming?page=` + paginationCurrentPageIncoming)
                     .then(response => {
-                            this.getAllVacancy = response.data;
+                        this.messagesIncoming = response.data;
+                        let domen = `${process.env.VUE_APP_API_URL}`;
+                        this.messagesIncoming.forEach((element) => {
+                            if (element.subject === 'Resume') {
+                                element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
+                                element.subject_from = 'Предлагают вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.post + '</a>';
+                            }
+                            if (element.subject === 'Vacancy') {
+                                element.subject = 'Отклик на вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.post + '</a>';
+                                element.subject_from = 'Прилагают резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.title + '</a>';
+                            }
+                            let timestamp = element.created_at;
+                            let date = new Date();
+                            date.setTime(timestamp * 1000);
+                            element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                        });
                         }, response => {
                             this.$swal({
                                 toast: true,
@@ -210,7 +225,22 @@
             changePageOutgoing(paginationCurrentPageOutgoing) {
                 this.$http.get(`${process.env.VUE_APP_API_URL}/request/message?expand=subject0,receiver.employer&type=outgoing?page=` + paginationCurrentPageOutgoing)
                     .then(response => {
-                            this.getAllVacancy = response.data;
+                        this.messagesOutgoing = response.data;
+                        let domen = `${process.env.VUE_APP_API_URL}`;
+                        this.messagesOutgoing.forEach((element) => {
+                            if (element.subject === 'Resume') {
+                                element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
+                                element.subject_from = 'Предлагают вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.post + '</a>';
+                            }
+                            if (element.subject === 'Vacancy') {
+                                element.subject = 'Отклик на вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.post + '</a>';
+                                element.subject_from = 'Прилагают резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.title + '</a>';
+                            }
+                            let timestamp = element.created_at;
+                            let date = new Date();
+                            date.setTime(timestamp * 1000);
+                            element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                        });
                         }, response => {
                             this.$swal({
                                 toast: true,
