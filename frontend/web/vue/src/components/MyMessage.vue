@@ -35,15 +35,15 @@
                                         <v-list-tile-sub-title class="text--primary">{{ incoming.sender.employer.first_name }} {{
                                             incoming.sender.employer.second_name }} - {{ incoming.sender.email }}
                                         </v-list-tile-sub-title>
-                                        <v-list-tile-sub-title>{{ incoming.text }}</v-list-tile-sub-title>
+                                        <v-list-tile-sub-title class="message__text">{{ incoming.text }}</v-list-tile-sub-title>
                                     </v-list-tile-content>
 
                                     <v-list-tile-action>
-                                        <v-list-tile-action-text>{{ incoming.created_at }}</v-list-tile-action-text>
+                                        <v-list-tile-action-text class="message__data">{{ incoming.created_at }}</v-list-tile-action-text>
                                     </v-list-tile-action>
 
                                 </v-list-tile>
-                                <v-divider></v-divider>
+                                <v-divider class="message__hr"></v-divider>
                             </template>
                         </v-list>
                     </v-card-text>
@@ -77,15 +77,15 @@
                                         <v-list-tile-sub-title class="text--primary">{{ outgoing.receiver.employer.first_name }} {{
                                             outgoing.receiver.employer.second_name }} - {{ outgoing.receiver.email }}
                                         </v-list-tile-sub-title>
-                                        <v-list-tile-sub-title>{{ outgoing.text }}</v-list-tile-sub-title>
+                                        <v-list-tile-sub-title class="message__text">{{ outgoing.text }}</v-list-tile-sub-title>
                                     </v-list-tile-content>
 
                                     <v-list-tile-action>
-                                        <v-list-tile-action-text>{{ outgoing.created_at }}</v-list-tile-action-text>
+                                        <v-list-tile-action-text class="message__data">{{ outgoing.created_at }}</v-list-tile-action-text>
                                     </v-list-tile-action>
 
                                 </v-list-tile>
-                                <v-divider></v-divider>
+                                <v-divider class="message__hr"></v-divider>
                             </template>
                         </v-list>
                     </v-card-text>
@@ -276,5 +276,27 @@
     }
     .message-block.v-list--two-line .v-list__tile {
         height: auto;
+    }
+    .message__hr {
+        margin: 10px 0;
+    }
+    .message__text {
+        white-space: initial;
+        overflow: auto;
+    }
+    .message-block .v-list__tile__action {
+        min-width: 100px;
+    }
+    @media (max-width: 550px) {
+        .message-block .v-list__tile {
+            flex-direction: column;
+            align-items: center;
+        }
+        .message-block .v-list__tile__content {
+            width: 100%;
+        }
+        .message-block .v-list__tile__action {
+            margin-top: 15px;
+        }
     }
 </style>
