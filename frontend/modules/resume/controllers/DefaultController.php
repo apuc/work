@@ -47,14 +47,10 @@ class DefaultController extends Controller
             $message->subject_from = 'Vacancy';
             $message->subject_from_id = $post['resume_vacancy_id'];
             $message->save();
-
-            $text = 'Компания '.$vacancy->company->name.' заинтересовалась вашим резюме "'.$resume->title.'" 
-            и готова предложить вам вакансию '.$vacancy->post.'. '. Url::base(true).'/vacancy/view/'.$vacancy->id.'. '.$message->text;
-            Yii::$app->mailer->compose()
+            Yii::$app->mailer->compose('resume_like', ['resume'=>$resume, 'vacancy'=>$vacancy, 'text'=>$message->text])
                 ->setFrom('noreply@rabota.today')
                 ->setTo(User::findOne($resume->owner)->email)
                 ->setSubject('Ответ на ваше резюме '. $resume->title.'.')
-                ->setTextBody($text)
                 ->send();
         }
         return $this->goBack();

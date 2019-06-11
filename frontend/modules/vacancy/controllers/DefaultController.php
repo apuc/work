@@ -10,6 +10,9 @@ use common\models\Message;
 use common\models\Resume;
 use common\models\User;
 use common\models\Vacancy;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
@@ -43,16 +46,11 @@ class DefaultController extends Controller
             $message->subject_from = 'Resume';
             $message->subject_from_id = $post['vacancy_resume_id'];
             $message->save();
-
-            $text = 'Пользователь '.$resume->employer->second_name.' '.$resume->employer->first_name.' заинтересовался вашей вакансией "'.$vacancy->post.'" 
-            и прилагает своё резюме '.$resume->title.'. '. Url::base(true).'/resume/view/'.$resume->id.'. '.$message->text;
-            Yii::$app->mailer->compose()
+            Yii::$app->mailer->compose('vacancy_like', ['resume'=>$resume, 'vacancy'=>$vacancy, 'text'=>$message->text])
                 ->setFrom('noreply@rabota.today')
                 ->setTo(User::findOne($vacancy->owner)->email)
                 ->setSubject('Ответ на вашу вакансию '. $vacancy->post.'.')
-                ->setTextBody($text)
                 ->send();
-
         }
         return $this->goBack();
 

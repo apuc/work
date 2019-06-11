@@ -14,6 +14,7 @@ use common\models\Experience;
 use common\models\KeyValue;
 use common\models\Resume;
 use frontend\assets\MainAsset;
+use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
@@ -171,7 +172,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                                                           role="presentation"/>
                                     <div class="single-card-resume__top-left">
                                         <div class="single-card-resume__head">
-                                            <h3><a href="/resume/view/<?= $resume->id ?>"><?= $resume->title ?></a></h3>
+                                            <h3><a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id])?>"><?= $resume->title ?></a></h3>
                                             <!--                                    <p class="single-card-resume__status vr-head">Онлайн-->
                                             <!--                                    </p>-->
                                         </div>

@@ -9,17 +9,6 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => 'mail.adm.tools',
-                'username' => 'noreply@rabota.today',
-                'password' => '123edsaqw',
-                'port' => '25',
-                'encryption' => 'tls',
-            ],
-        ],
     ],
     'modules' => [
         'User' => [
