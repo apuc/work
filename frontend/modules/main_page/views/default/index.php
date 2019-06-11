@@ -94,7 +94,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
         </div>
         <div class="nhome__main-bottom">
             <img class="nhome__main-big-circle" src="/images/home-big-circle.png" alt="" role="presentation"/>
-            <img class="nhome__main-gerb" src="/images/gerb-doneck-z.png" alt="" role="presentation"/>
+            <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="" role="presentation"/>
             <h1 class="nhome__title">Работа</h1>
             <p class="nhome__desc">Сделайте грамотный выбор! Предлагаем размещение и продвижение на новой и
                 перспективной площадке <span class="yellow-text">РаботаДНР</span>. Станьте первым и получайте максимум
@@ -134,7 +134,9 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                     </div>
                 </div>
                 <div class="single-card__info">
+                    <?php if($vacancy->employment_type):?>
                     <p><?=$vacancy->employment_type->name?>.</p>
+                    <?php endif ?>
                     <p><?=StringHelper::truncate($vacancy->responsibilities, 80, '...')?></p>
                 </div>
                 <?php if(!Yii::$app->user->isGuest):?>

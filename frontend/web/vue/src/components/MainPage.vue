@@ -42,8 +42,10 @@
                             <v-icon class="mr-1">remove_red_eye</v-icon>
                             <span class="subheading mr-2">{{ item.views }}</span>
                             <span class="mr-1">·</span>
+                            <router-link to="/personal-area/my-message" class="statistics-link">
                             <v-icon class="mr-1">message</v-icon>
                             <span class="subheading">{{ item.responses }}</span>
+                            </router-link>
                         </v-layout>
                     </v-list-tile>
                 </v-card-actions>
@@ -140,6 +142,8 @@
         }
     }
     .statistics-link {
+        display: flex;
+        align-items: center;
         color: inherit;
         text-decoration: none;
     }

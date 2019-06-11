@@ -183,6 +183,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                         <p class="single-card-resume__employment"><?= $resume->employment_type->name ?>
                                         </p>
                                         <?php endif ?>
+                                        <?php if($resume->lastExperience):?>
                                         <p class="single-card-resume__last-work">Последнее место работы
                                         </p>
                                         <p class="single-card-resume__name-work"><?= $resume->lastExperience->post ?>
@@ -191,6 +192,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                         <p class="single-card-resume__date-work"><?= Experience::$months[$resume->lastExperience->month_from] ?> <?= $resume->lastExperience->year_from ?>
                                             — <?= Experience::$months[$resume->lastExperience->month_to] ?> <?= $resume->lastExperience->year_to ?>
                                         </p>
+                                        <?php endif ?>
                                         <p class="single-card-resume__last-check">
                                             Обновлено <?= date('d.m.Y', $resume->update_time) ?>
                                         </p>
