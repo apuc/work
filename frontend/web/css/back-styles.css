@@ -10,24 +10,30 @@
 }
 
 .search-pagination li a, .search-pagination li span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  margin: 0 10px;
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 5px;
+  margin-right: 5px;
+  padding: 8px 10px;
+  font-family: AvenirNextCyr-Demi, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #262626;
+  background-color: #f7f6f6;
+  border-radius: 2px;
   text-decoration: none;
+  transition: all ease .5s;
 }
 
-.search-pagination li a:hover {
-  background-color: #86dfff;
+.search-pagination li a:hover, .search-pagination li span:hover {
+  background-color: #dddddd;
+  transition: all ease .3s;
 }
 
-.search-pagination li span {
-  background-color: #b6c3ca;
+.search-pagination .prev.disabled span:hover, .search-pagination .next.disabled span:hover {
+  background-color: transparent;
+}
+
+.search-pagination .active a, .search-pagination .active span {
+  background-color: #dddddd;
+  transition: all ease .3s;
 }
 
 .v-content-top {
