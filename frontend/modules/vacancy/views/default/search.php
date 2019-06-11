@@ -199,25 +199,35 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                         class="single-card__info-second__image" src="<?=$vacancy->company->image_url?>" alt=""
                                         role="presentation"/>
                             </div>
-                            <span class="single-card__price"><?= $vacancy->min_salary ?>-<?= $vacancy->max_salary ?> RUB</span>
+                            <span class="single-card__price">
+                                <?php if($vacancy->min_salary || $vacancy->max_salary):?>
+                                    <?php if($vacancy->min_salary && $vacancy->max_salary):?>
+                                        <?= $vacancy->min_salary ?>-<?= $vacancy->max_salary ?> RUB
+                                    <?php elseif ($vacancy->min_salary): ?>
+                                        <?= $vacancy->min_salary ?> RUB
+                                    <?php else: ?>
+                                        <?= $vacancy->max_salary ?> RUB
+                                    <?php endif ?>
+                                <?php endif ?>
+                            </span>
                             <div class="single-card__info">
                                 <p><?= nl2br(StringHelper::truncate($vacancy->responsibilities, 80, '...')) ?></p>
                             </div>
                             <div class="d-flex flex-wrap align-items-center mt-auto justify-content-between">
-                                <?php if($vacancy->company->hasSocials()): ?>
                                 <div class="single-card__info__soc">
-                                    <span>Написать соискателю в сетях</span>
-                                    <?php if($vacancy->company->vk):?>
-                                    <a target="_blank" class="vk-bg" href="<?=$vacancy->company->vk?>"><img src="/images/vk.svg" alt="" role="presentation"/></a>
-                                    <?php endif ?>
-                                    <?php if($vacancy->company->instagram):?>
-                                    <a target="_blank" class="ok-bg" href="<?=$vacancy->company->instagram?>"><img src="/images/ok.svg" alt="" role="presentation"/></a>
-                                    <?php endif ?>
-                                    <?php if($vacancy->company->facebook):?>
-                                    <a target="_blank" class="fb-bg" href="<?=$vacancy->company->facebook?>"><img src="/images/fb.svg" alt="" role="presentation"/></a>
+                                    <?php if($vacancy->company->hasSocials()): ?>
+                                        <span>Написать соискателю в сетях</span>
+                                        <?php if($vacancy->company->vk):?>
+                                        <a target="_blank" class="vk-bg" href="<?=$vacancy->company->vk?>"><img src="/images/vk.svg" alt="" role="presentation"/></a>
+                                        <?php endif ?>
+                                        <?php if($vacancy->company->instagram):?>
+                                        <a target="_blank" class="ok-bg" href="<?=$vacancy->company->instagram?>"><img src="/images/ok.svg" alt="" role="presentation"/></a>
+                                        <?php endif ?>
+                                        <?php if($vacancy->company->facebook):?>
+                                        <a target="_blank" class="fb-bg" href="<?=$vacancy->company->facebook?>"><img src="/images/fb.svg" alt="" role="presentation"/></a>
+                                        <?php endif ?>
                                     <?php endif ?>
                                 </div>
-                                <?php endif ?>
                                 <a class="btn-card btn-red mt5 mb5 ml15" href="/vacancy/view/<?= $vacancy->id ?>">Посмотреть
                                     полностью</a>
                             </div>
@@ -227,10 +237,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                          'pagination' => $vacancies->pagination,
                          'options' => ['class' => 'search-pagination'],
                          'maxButtonCount' => 5,
-                         'firstPageLabel' => '<<',
-                         'lastPageLabel' => '>>',
-                         'nextPageLabel' => '>',
-                         'prevPageLabel' => '<',
+                         'nextPageLabel' => 'Вперед',
+                         'prevPageLabel' => 'Назад',
                      ]);?>
                     <?php else: ?>
                         <div class="single-card">

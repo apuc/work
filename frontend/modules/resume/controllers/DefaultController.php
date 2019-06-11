@@ -8,6 +8,7 @@ use common\models\City;
 use common\models\EmploymentType;
 use common\models\Message;
 use common\models\Resume;
+use common\models\User;
 use common\models\Vacancy;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -51,7 +52,7 @@ class DefaultController extends Controller
             и готова предложить вам вакансию '.$vacancy->post.'. '. Url::base(true).'/vacancy/view/'.$vacancy->id.'. '.$message->text;
             Yii::$app->mailer->compose()
                 ->setFrom('noreply@rabota.today')
-                ->setTo(Yii::$app->user->identity->email)
+                ->setTo(User::findOne($resume->owner)->email)
                 ->setSubject('Ответ на ваше резюме '. $resume->title.'.')
                 ->setTextBody($text)
                 ->send();
