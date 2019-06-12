@@ -52,10 +52,12 @@ use yii\helpers\StringHelper; ?>
                     </div>
                 </div>
                 <div class="single-block__left__employment">
+                    <?php if($model->employment_type):?>
                     <h3 class="single-block__left__employment__head">Вид занятости:
                     </h3>
                     <p class="single-block__left__employment__text"><?= $model->employment_type->name ?>
                     </p>
+                    <?php endif ?>
                 </div>
                 <div class="single-block__left__description">
                     <h3 class="single-block__left__description__head">Описание вакансии
