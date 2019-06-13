@@ -57,6 +57,11 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
                 'httpOnly' => false
             ]);
             Yii::$app->getResponse()->getCookies()->add($cookie);
+            Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer])
+                ->setFrom('noreply@rabota.today')
+                ->setTo(Yii::$app->user->identity->email)
+                ->setSubject('Спасибо за регистрацию')
+                ->send();
         }
         return $this->goBack();
     }
