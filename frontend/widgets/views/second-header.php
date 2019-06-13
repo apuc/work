@@ -24,7 +24,11 @@ use yii\helpers\Html;
                             <?php else: ?>
 															<div class="dropdown jsMenu">
 																<span class="home__nav-item jsOpenMenu">
-																	<?= $employer->first_name.' '.$employer->second_name ?>
+																	<?php if(!$employer->first_name && !$employer->second_name):?>
+                                                                        <?=Yii::$app->user->identity->email?>
+                                                                    <?php else:?>
+                                                                        <?= $employer->first_name.' '.$employer->second_name ?>
+                                                                    <?php endif?>
 																</span>
 																<div class="dropdown__menu jsShowMenu">
 																	<a class="home__nav-item" href="/personal-area">
