@@ -36,7 +36,17 @@ use yii\helpers\StringHelper; ?>
                 <h3 class="single-block__left__head"><?= $model->post ?>
                 </h3>
                 <div class="single-block__left__price">
-                    <span><?= $model->min_salary ?>-<?= $model->max_salary ?> RUB</span>
+                    <span>
+                        <?php if($model->min_salary && $model->max_salary):?>
+                            <?= $model->min_salary ?>-<?= $model->max_salary ?> RUB
+                        <?php elseif ($model->min_salary):?>
+                            От <?= $model->min_salary ?> RUB
+                        <?php elseif ($model->max_salary):?>
+                            До <?= $model->max_salary ?> RUB
+                        <?php else: ?>
+                            Зарплата договорная
+                        <?php endif?>
+                    </span>
                     <div class="single-block__left__price__soc">
                         <?php if ($model->company->hasSocials()): ?>
                             <span>Написать соискателю в сетях</span>
