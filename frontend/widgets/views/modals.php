@@ -4,6 +4,7 @@
 /* @var $registration_form \dektrium\user\models\RegistrationForm */
 
 use common\classes\Debug;
+use dektrium\user\widgets\Connect;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
@@ -43,6 +44,9 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             <?= Html::submitButton(
                 Yii::t('user', 'Войти'),
                 ['class' => 'jsBtnLogin jsBtn', 'tabindex' => '4']) ?>
+            <?= Connect::widget([
+                'baseAuthUrl' => ['/user/security/auth']
+            ]) ?>
             <?php ActiveForm::end(); ?>
             <div class="modal-style__text"><span>Забыли пароль?</span>
                 <button class="jsRegForm">Зарегистрироваться
