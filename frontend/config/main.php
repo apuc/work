@@ -46,12 +46,14 @@ return [
                         if ($e->account->user === null) {
                             return;
                         }
-                        $employer = new \common\models\Employer();
-                        $employer->user_id=Yii::$app->user->id;
-                        $employer->first_name=$e->client->getUserAttributes()['first_name'];
-                        $employer->second_name=$e->client->getUserAttributes()['last_name'];
-                        $employer->birth_date=date('Y-m-d', strtotime($e->client->getUserAttributes()['bdate']));
-                        $employer->save();
+                        if(!\common\models\Employer::find()->where(['user_id'=>Yii::$app->user->id])->one()){
+                            $employer = new \common\models\Employer();
+                            $employer->user_id=Yii::$app->user->id;
+                            $employer->first_name=$e->client->getUserAttributes()['first_name'];
+                            $employer->second_name=$e->client->getUserAttributes()['last_name'];
+                            $employer->birth_date=date('Y-m-d', strtotime($e->client->getUserAttributes()['bdate']));
+                            $employer->save();
+                        }
                             $cookie = Yii::createObject([
                                 'class' => 'yii\web\Cookie',
                                 'name' => 'key',
@@ -90,8 +92,8 @@ return [
             'clients' => [
                 'vkontakte' => [
                     'class'        => 'dektrium\user\clients\VKontakte',
-                    'clientId'     => '7019329',
-                    'clientSecret' => 'TJJHTu53Yf19dzU2047A',
+                    'clientId'     => Yii::$app->params['VK_clientId'],
+                    'clientSecret' => Yii::$app->params['VK_clientSecret'],
                 ]
             ],
         ],
