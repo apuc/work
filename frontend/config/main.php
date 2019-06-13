@@ -53,6 +53,11 @@ return [
                             $employer->second_name=$e->client->getUserAttributes()['last_name'];
                             $employer->birth_date=date('Y-m-d', strtotime($e->client->getUserAttributes()['bdate']));
                             $employer->save();
+                            Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer])
+                                ->setFrom('noreply@rabota.today')
+                                ->setTo(Yii::$app->user->identity->email)
+                                ->setSubject('Спасибо за регистрацию')
+                                ->send();
                         }
                             $cookie = Yii::createObject([
                                 'class' => 'yii\web\Cookie',
