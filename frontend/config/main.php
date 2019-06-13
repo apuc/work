@@ -87,16 +87,7 @@ return [
 //        'request' => [
 //            'csrfParam' => '_csrf-frontend',
 //        ],
-        'authClientCollection' => [
-            'class' => yii\authclient\Collection::className(),
-            'clients' => [
-                'vkontakte' => [
-                    'class'        => 'dektrium\user\clients\VKontakte',
-                    'clientId'     => Yii::$app->params['VK_clientId'],
-                    'clientSecret' => Yii::$app->params['VK_clientSecret'],
-                ]
-            ],
-        ],
+
         'user' => [
             //'class' => 'app\components\User',
             'identityClass' => 'common\models\base\User',
