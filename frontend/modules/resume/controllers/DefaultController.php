@@ -8,6 +8,7 @@ use common\models\City;
 use common\models\EmploymentType;
 use common\models\Message;
 use common\models\Resume;
+use common\models\Skill;
 use common\models\User;
 use common\models\Vacancy;
 use Yii;
@@ -72,7 +73,7 @@ class DefaultController extends Controller
         $employment_types = EmploymentType::find()->all();
         $cities = City::find()->all();
 
-        $resume_query = Resume::find()->with(['employer', 'employment_type'])->where(['status' => Resume::STATUS_ACTIVE])->orderBy('id DESC');
+        $resume_query = Resume::find()->with(['employer', 'employment_type'])->where([Resume::tableName().'.status' => Resume::STATUS_ACTIVE])->orderBy('id DESC');
         if($params['experience_ids']) {
             if(!in_array(0,$params['experience_ids'])) {
                 $tmp_exp_ids = [];
@@ -101,7 +102,20 @@ class DefaultController extends Controller
             $resume_query->andWhere(['<=', 'min_salary', $params['max_salary']]);
         }
         if($params['search_text']){
-            $resume_query->andWhere(['like', 'title', $params['search_text']]);
+            $resume_query->joinWith(['skills', 'experience', 'education']);
+            $resume_query->andWhere(['or',
+                ['like', 'title', $params['search_text']],
+                ['like', 'city', $params['search_text']],
+                ['like', 'description', $params['search_text']],
+                ['like', Skill::tableName().'.name', $params['search_text']],
+                ['like', 'experience.name', $params['search_text']],
+                ['like', 'experience.post', $params['search_text']],
+                ['like', 'experience.responsibility', $params['search_text']],
+                ['like', 'education.name', $params['search_text']],
+                ['like', 'education.faculty', $params['search_text']],
+                ['like', 'education.academic_degree', $params['search_text']],
+                ['like', 'education.specialization', $params['search_text']],
+            ]);
         }
         if($params['city']){
             $resume_query->andWhere(['like', 'city', $params['city']]);

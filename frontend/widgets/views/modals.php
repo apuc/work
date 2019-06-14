@@ -25,7 +25,7 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 'action' => '/user/login',
                 'id' => 'login-form',
                 'enableAjaxValidation' => true,
-                'enableClientValidation' => false,
+                'enableClientValidation' => true,
                 'validateOnBlur' => false,
                 'validateOnType' => false,
                 'validateOnChange' => false,

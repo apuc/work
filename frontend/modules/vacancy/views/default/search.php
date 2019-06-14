@@ -185,7 +185,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                             <h3 class="single-card__title mt5 mb0"><?= $vacancy->post ?></h3>
                             <div class="single-card__info-second"><span
-                                        class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->created_at, 'dd MM yyyy') ?></span>
+                                        class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->created_at, 'dd.MM.yyyy') ?></span>
                                 <div class="single-card__view"><img class="single-card__icon mr5"
                                                                     src="/images/icon-eye.png" alt=""
                                                                     role="presentation"/><span><?= $vacancy->views ?></span>
