@@ -5,18 +5,14 @@ import DatePicker from '../components/DatePicker'
 export default {
   first_name: Object.assign({}, Field, {
     name: 'fist_name',
-    label: 'Имя*',
-    rules: [
-      v => (v && v.length >= 3) || 'Больше 3 символов'
-    ],
+    label: 'Имя',
+    rules: [],
     component: VTextField
   }),
   second_name: Object.assign({}, Field, {
     name: 'second_name',
-    label: 'Фамилия*',
-    rules: [
-      v => (v && v.length >= 3) || 'Больше 3 символов'
-    ],
+    label: 'Фамилия',
+    rules: [],
     component: VTextField
   }),
   birth_date: Object.assign({}, Field, {
@@ -34,6 +30,6 @@ export default {
     label: 'Номер телефона',
     rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
     component: VTextField,
-    maskPhone: '+## (###) ## - ## - ###'
+    // maskPhone: '+## (###) ## - ## - ###'
   }),
 }

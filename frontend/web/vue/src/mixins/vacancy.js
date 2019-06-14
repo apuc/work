@@ -1,6 +1,7 @@
 const vacancy = {
   data() {
     return {
+      dataVacancy: [],
       lengthCompany: 0,
       formData: {
         city: '',
@@ -19,6 +20,7 @@ const vacancy = {
         officeAddress: '',
         houseNumber: '',
       },
+      valid: false
     };
   }
 };

@@ -1,10 +1,13 @@
 <template>
     <div>
         <template v-if="lengthCompany === 0">
-            <v-subheader>У вас нет не одной компании</v-subheader>
+            <v-subheader>Для создания вакансии добавьте компанию или частное лицо </v-subheader>
+            <v-btn>
+                <router-link class="vacancy__link" to="/personal-area/add-company">Создать</router-link>
+            </v-btn>
         </template>
         <template v-else>
-            <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
+            <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
             </FormTemplate>
         </template>
 
@@ -137,10 +140,36 @@
             },
             async getExperience() {
                 return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/get-experiences`)
-            }
+            },
+            valHandler(val) {
+                this.valid = val;
+            },
         },
+        beforeRouteLeave(to, from, next) {
+            if ((this.formData.city.length > 0 || this.formData.companyName.length > 0 || this.formData.post.length > 0 || this.formData.duties.length > 0) && !this.valid) {
+                next(false);
+                this.$swal({
+                    title: 'Вы точно не хотите сохранить резюме?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Да',
+                    cancelButtonText: 'Нет'
+                }).then((result) => {
+                    if (result.value) {
+                        next();
+                    }
+                })
+            } else {
+                next();
+            }
+        }
     }
 </script>
 
-<style scoped>
+<style>
+    .vacancy__link {
+        text-decoration: none;
+    }
 </style>

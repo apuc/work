@@ -49,7 +49,7 @@ export default new Router({
     {
       path: '/personal-area/add-company',
       name: 'add-company',
-      meta: {title: 'Создать компанию'},
+      meta: {title: 'Создать компанию или частное лицо'},
       component: FormCompany
     },
     {

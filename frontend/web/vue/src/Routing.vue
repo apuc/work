@@ -8,8 +8,13 @@
             <v-list class="pa-1">
                 <v-list-tile avatar>
                     <v-list-tile-content>
-                        <v-list-tile-title class="login-block"><img class="login-image" :src="loginImg" alt="">
+                        <v-list-tile-title v-if="firstName.length > 0" class="login-block">
+                            <img class="login-image" :src="loginImg" alt="">
                             {{firstName}} {{secondName}}
+                        </v-list-tile-title>
+                        <v-list-tile-title v-else class="login-block">
+                            <img class="login-image" :src="loginImg" alt="">
+                            {{email}}
                         </v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
@@ -61,6 +66,7 @@
                 drawer: true,
                 firstName: '',
                 secondName: '',
+                email: '',
                 loginImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/login.png',
                 mainImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/main.png',
                 logOutImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/exit.png',
@@ -86,7 +92,7 @@
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/add_resume.png'
                     },
                     {
-                        title: 'Добавить компанию',
+                        title: 'Добавить компанию или частное лицо',
                         url: '/personal-area/add-company',
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/add_company.png'
                     },
@@ -114,11 +120,14 @@
             }
         },
         mounted() {
-            this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index`)
+            this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
                 .then(response => {
 
                         this.firstName = response.data[0].first_name;
                         this.secondName = response.data[0].second_name;
+                        this.email = response.data[0].user.email;
+                        this.email = this.email.match(/.+@/)[0];
+                        this.email = this.email.slice(0, this.email.length-1)
 
                     }, response => {
                         this.$swal({

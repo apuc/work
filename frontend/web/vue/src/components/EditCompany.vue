@@ -1,5 +1,5 @@
 <template>
-    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
+    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
 
         <img class="my-avatar" v-if="formData.image_url" :src="formData.image_url"/>
         <image-uploader
@@ -99,6 +99,7 @@
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id + '?expand=phone')
                 .then(response => {
 
+                        this.dataCompany = response.data;
                         if (response.data.image_url) {
                             this.formData.image_url = response.data.image_url;
                         }
@@ -179,7 +180,9 @@
                 this.hasImage = true;
                 this.image = output;
                 let img = document.querySelector('.my-avatar');
-                img.classList.add('hide');
+                if (img != null) {
+                    img.classList.add('hide');
+                }
             },
             inputsDisabled() {
                 let check = document.querySelector('.privatePerson .v-input__slot');
@@ -241,11 +244,65 @@
                     let inputSlot = document.querySelector('.v-input--selection-controls__ripple');
                     inputSlot.click();
                     setTimeout(function () {
-						check.click();
-					}, 1);
+                        check.click();
+                    }, 1);
                 }
-            }
+            },
+			valHandler(val) {
+				this.valid = val;
+			},
         },
+        beforeRouteLeave(to, from, next) {
+			const tmpResume = {
+				'name': this.dataCompany.name,
+				'website': this.dataCompany.website,
+				'activity_field': this.dataCompany.activity_field,
+				'vk': this.dataCompany.vk,
+				'facebook': this.dataCompany.facebook,
+				'instagram': this.dataCompany.instagram,
+				'skype': this.dataCompany.skype,
+				'description': this.dataCompany.description,
+				'contact_person': this.dataCompany.contact_person,
+				'number': this.dataCompany.phone.number
+			};
+			const tmpFormData = {
+				'name': this.formData.nameCompany,
+				'website': this.formData.site,
+				'activity_field': this.formData.scopeOfTheCompany,
+				'vk': this.formData.addSocial.vkontakte,
+				'facebook': this.formData.addSocial.facebook,
+				'instagram': this.formData.addSocial.instagram,
+				'skype': this.formData.addSocial.skype,
+				'description': this.formData.aboutCompany,
+				'contact_person': this.formData.contactPerson,
+				'number': this.formData.companyPhone
+			};
+			let formValid = true;
+			for (let i in tmpResume) {
+				if(tmpResume[i] !== tmpFormData[i]) {
+					formValid = false;
+					break;
+				}
+			}
+			if (!formValid && !this.valid) {
+                next(false);
+                this.$swal({
+                    title: 'Вы точно не хотите сохранить изменения?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Да',
+                    cancelButtonText: 'Нет'
+                }).then((result) => {
+                    if (result.value) {
+                        next();
+                    }
+                })
+            } else {
+                next();
+            }
+        }
     }
 </script>
 

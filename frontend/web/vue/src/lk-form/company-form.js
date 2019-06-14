@@ -63,6 +63,6 @@ export default {
     label: 'Телефон',
     rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
     component: VTextField,
-    maskPhone: '+## (###) ## - ## - ###'
+    // maskPhone: '+## (###) ## - ## - ###'
   }),
 }

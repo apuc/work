@@ -1,6 +1,7 @@
 const company = {
   data() {
     return {
+      dataCompany: [],
       hasImage: false,
       image: null,
       formData: {
@@ -19,6 +20,7 @@ const company = {
         contactPerson: '',
         companyPhone: ''
       },
+      valid: false
     };
   }
 };

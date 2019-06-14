@@ -22,24 +22,24 @@ use yii\helpers\StringHelper; ?>
                         src="/images/add-contact.svg" alt="" role="presentation"/>
             </button>
             <div class="single-block__left">
-                <div class="single-block__left__first">
+                <div class="single-block__first">
                     <div class="category-block">
                         <?php foreach ($model->category as $category): ?>
                             <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::to(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
                         <?php endforeach ?>
                     </div>
                     <span>Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd MM yyyy') ?></span>
-                    <div class="single-block__left__first__view"><img class="single-block__icon mr5"
+                    <div class="single-block__view"><img class="single-block__icon mr5"
                                                                       src="/images/icon-eye.png" alt=""
                                                                       role="presentation"/><span><?= $model->views ?></span>
                     </div>
-                    <a class="single-block__left__first__city d-flex align-items-center ml-auto mt5 mb5"
+                    <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5"
                        href="<?=\yii\helpers\Url::to(['/vacancy/search', 'city' => $model->city])?>"><img class="single-block__icon" src="/images/arr-place.png" alt=""
                                      role="presentation"/><span class="ml5"><?= $model->city ?></span></a>
                 </div>
-                <h3 class="single-block__left__head"><?= $model->post ?>
+                <h3 class="single-block__head"><?= $model->post ?>
                 </h3>
-                <div class="single-block__left__price">
+                <div class="single-block__price">
                     <span>
                         <?php if($model->min_salary && $model->max_salary):?>
                             <?= $model->min_salary ?>-<?= $model->max_salary ?> RUB
@@ -51,7 +51,7 @@ use yii\helpers\StringHelper; ?>
                             Зарплата договорная
                         <?php endif?>
                     </span>
-                    <div class="single-block__left__price__soc">
+                    <div class="single-block__soc">
                         <?php if ($model->company->hasSocials()): ?>
                             <span>Написать соискателю в сетях</span>
                             <?php if ($model->company->vk): ?><a class="vk-bg" target="_blank" href="<?= $model->company->vk ?>"><img
@@ -65,33 +65,33 @@ use yii\helpers\StringHelper; ?>
                         <?php endif ?>
                     </div>
                 </div>
-                <div class="single-block__left__employment">
+                <div class="single-block__employment">
                     <?php if($model->employment_type):?>
-                    <h3 class="single-block__left__employment__head">Вид занятости:
+                    <h3 class="single-block__employment-head">Вид занятости:
                     </h3>
-                    <p class="single-block__left__employment__text"><?= $model->employment_type->name ?>
+                    <p class="single-block__employment-text"><?= $model->employment_type->name ?>
                     </p>
                     <?php endif ?>
                 </div>
-                <div class="single-block__left__description">
-                    <h3 class="single-block__left__description__head">Описание вакансии
+                <div class="single-block__description">
+                    <h3 class="single-block__description-head">Описание вакансии
                     </h3>
-                    <p class="single-block__left__requirements__text"><?= $model->company->description ?></p>
+                    <p class="single-block__requirements-text"><?= $model->company->description ?></p>
                 </div>
-                <div class="single-block__left__requirements">
-                    <h3 class="single-block__left__requirements__head">Требования:
+                <div class="single-block__requirements">
+                    <h3 class="single-block__requirements-head">Требования:
                     </h3>
-                    <p class="single-block__left__requirements__text"><?= nl2br($model->qualification_requirements) ?></p>
+                    <p class="single-block__requirements-text"><?= nl2br($model->qualification_requirements) ?></p>
                 </div>
-                <div class="single-block__left__duties">
-                    <h3 class="single-block__left__duties__head">Обязаности
+                <div class="single-block__duties">
+                    <h3 class="single-block__duties-head">Обязаности
                     </h3>
-                    <p class="single-block__left__duties__text"><?= nl2br($model->responsibilities) ?></p>
+                    <p class="single-block__duties-text"><?= nl2br($model->responsibilities) ?></p>
                 </div>
-                <div class="single-block__left__conditions">
-                    <h3 class="single-block__left__conditions__head">Условия работы:
+                <div class="single-block__conditions">
+                    <h3 class="single-block__conditions-head">Условия работы:
                     </h3>
-                    <p class="single-block__left__conditions__text"><?= nl2br($model->working_conditions) ?></p>
+                    <p class="single-block__conditions-text"><?= nl2br($model->working_conditions) ?></p>
                 </div>
             </div>
             <div class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">

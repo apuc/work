@@ -1,5 +1,5 @@
 <template>
-    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
+    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
     </FormTemplate>
 </template>
 
@@ -81,6 +81,7 @@
                     });
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id + '?expand=employment-type,category')
                 .then(response => {
+                        this.dataVacancy = response.data;
                         this.formData.city = response.data.city;
                         this.formData.companyName = response.data.company_id;
                         this.formData.categoriesVacancy = response.data.category;
@@ -162,8 +163,78 @@
             },
             async getExperience() {
                 return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/get-experiences`)
-            }
+            },
+            valHandler(val) {
+                this.valid = val;
+            },
         },
+        beforeRouteLeave(to, from, next) {
+            if (this.dataVacancy.max_salary == null) {
+                this.dataVacancy.max_salary = '';
+            }
+            if (this.dataVacancy.min_salary == null) {
+                this.dataVacancy.min_salary = '';
+            }
+            const tmpResume = {
+                'city': this.dataVacancy.city,
+                'company_id': this.dataVacancy.company_id,
+                'category': this.dataVacancy.category,
+                'post': this.dataVacancy.post,
+                'responsibilities': this.dataVacancy.responsibilities,
+                'employment_type_id': this.dataVacancy.employment_type_id,
+                'min_salary': this.dataVacancy.min_salary,
+                'max_salary': this.dataVacancy.max_salary,
+                'qualification_requirements': this.dataVacancy.qualification_requirements,
+                'work_experience': this.dataVacancy.work_experience,
+                'education': this.dataVacancy.education,
+                'working_conditions': this.dataVacancy.working_conditions,
+                'video': this.dataVacancy.video,
+                'address': this.dataVacancy.address,
+                'home_number': this.dataVacancy.home_number,
+            };
+            const tmpFormData = {
+                'city': this.formData.city,
+                'company_id': this.formData.companyName,
+                'category': this.formData.categoriesVacancy,
+                'post': this.formData.post,
+                'responsibilities': this.formData.duties,
+                'employment_type_id': this.formData.typeOfEmployment,
+                'min_salary': this.formData.salaryFrom,
+                'max_salary': this.formData.salaryBefore,
+                'qualification_requirements': this.formData.qualificationRequirements,
+                'work_experience': this.formData.experience,
+                'education': this.formData.education,
+                'working_conditions': this.formData.workingConditions,
+                'video': this.formData.vacancyVideo,
+                'address': this.formData.officeAddress,
+                'home_number': this.formData.houseNumber,
+            };
+            let formValid = true;
+            for (let i in tmpResume) {
+                if(tmpResume[i] !== tmpFormData[i]) {
+                    formValid = false;
+                    break;
+                }
+            }
+            if (!formValid && !this.valid) {
+                next(false);
+                this.$swal({
+                    title: 'Вы точно не хотите сохранить изменения?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Да',
+                    cancelButtonText: 'Нет'
+                }).then((result) => {
+                    if (result.value) {
+                        next();
+                    }
+                })
+            } else {
+                next();
+            }
+        }
     }
 </script>
 

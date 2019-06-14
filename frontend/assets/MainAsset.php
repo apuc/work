@@ -21,6 +21,7 @@ class MainAsset extends AssetBundle
     ];
     public $js = [
         'js/jquery-3.3.1.min.js',
+        'js/resizeSensor.js',
         'js/jquery.sticky-kit.js',
         'js/slick/slick.min.js',
         'js/select2/select2.min.js',

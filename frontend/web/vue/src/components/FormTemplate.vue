@@ -61,7 +61,9 @@
       validate () {
         let btn = document.getElementById('main-btn');
         btn.disabled = true;
-        if (this.$refs.form.validate()) {
+        let valid = this.$refs.form.validate();
+        this.$emit('val', valid);
+        if (valid) {
           this.snackbar = true;
           this.sendForm();
         }
@@ -80,6 +82,7 @@
     padding: 0;
     font-size: 22px;
     border-bottom: 3px solid rgba(0,0,0,0.74);
+    cursor: pointer;
   }
   .input-file img {
     width: auto;

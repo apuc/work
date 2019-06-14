@@ -1,5 +1,5 @@
 <template>
-    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
+    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
 
         <img class="my-avatar" v-if="formData.image_url" :src="formData.image_url"/>
         <image-uploader
@@ -104,18 +104,19 @@
                         this.$set(FormResume.categoriesResume.items, i, response.data[i]);
                     }
                 }, response => {
-					this.$swal({
-						toast: true,
-						position: 'bottom-end',
-						showConfirmButton: false,
-						timer: 4000,
-						type: 'error',
-						title: response.data.message
-					})
-				});
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
+                });
 
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skills,category')
                 .then(response => {
+                        this.dataResume = response.data;
 
                         this.formData.resumeCity = response.data.city;
                         if (response.data.image_url) {
@@ -123,28 +124,24 @@
                         }
                         this.formData.careerObjective = response.data.title;
                         this.formData.categoriesResume = response.data.category;
-                        if(response.data.min_salary) {
-							this.formData.salaryFrom = response.data.min_salary;
-						}
-						if(response.data.max_salary) {
-							this.formData.salaryBefore = response.data.max_salary;
-						}
+                        if (response.data.min_salary) {
+                            this.formData.salaryFrom = response.data.min_salary;
+                        }
+                        if (response.data.max_salary) {
+                            this.formData.salaryBefore = response.data.max_salary;
+                        }
                         this.formData.aboutMe = response.data.description;
                         this.formData.addSocial.vkontakte = response.data.vk;
                         this.formData.addSocial.facebook = response.data.facebook;
                         this.formData.addSocial.instagram = response.data.instagram;
                         this.formData.addSocial.skype = response.data.skype;
-                        if(response.data.education.length > 0) {
-							this.formData.educationBlock = response.data.education;
-						}
-                        if(response.data.experience.length > 0) {
-							this.formData.workBlock = response.data.experience;
-						}
+                        if (response.data.education.length > 0) {
+                            this.formData.educationBlock = response.data.education;
+                        }
+                        if (response.data.experience.length > 0) {
+                            this.formData.workBlock = response.data.experience;
+                        }
                         this.formData.dutiesSelect = response.data.skills;
-
-                        // for (let i = 0; i < response.data.skills.length; i++) {
-                        //     this.formData['duties' + i] = response.data.skills[i].name;
-                        // }
 
                         if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
                             document.querySelector('.social-block button').click();
@@ -187,7 +184,7 @@
                     skype: this.formData.addSocial.skype,
                     education: this.formData.educationBlock,
                     work: this.formData.workBlock,
-					skills: this.formData.dutiesSelect
+                    skills: this.formData.dutiesSelect
                 };
                 if (this.hasImage) {
                     data.image = this.image;
@@ -196,13 +193,6 @@
                         changeImg: false
                     }
                 }
-
-                // let dutiesVal = document.querySelectorAll('.duties input');
-                // for (let i = 0; i < dutiesVal.length; i++) {
-                //     if (dutiesVal[i].value !== '') {
-                //         data.skills.push({name: dutiesVal[i].value})
-                //     }
-                // }
                 this.$http.patch(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id, data)
                     .then(response => {
                             this.$router.push('/personal-area/all-resume');
@@ -228,10 +218,74 @@
             setImage: function (output) {
                 this.hasImage = true;
                 this.image = output;
-                let img = document.querySelector('.my-avatar');
-                img.classList.add('hide');
+				let img = document.querySelector('.my-avatar');
+				if (img != null) {
+					img.classList.add('hide');
+				}
             },
+			valHandler(val) {
+				this.valid = val;
+			},
         },
+        beforeRouteLeave(to, from, next) {
+            if (this.dataResume.max_salary == null) {
+                this.dataResume.max_salary = '';
+            }
+			if (this.dataResume.min_salary == null) {
+				this.dataResume.min_salary = '';
+			}
+			const tmpResume = {
+				'city': this.dataResume.city,
+				'title': this.dataResume.title,
+				'category': this.dataResume.category,
+				'min_salary': this.dataResume.min_salary,
+				'max_salary': this.dataResume.max_salary,
+				'description': this.dataResume.description,
+				'vk': this.dataResume.vk,
+				'facebook': this.dataResume.facebook,
+				'instagram': this.dataResume.instagram,
+				'skype': this.dataResume.skype,
+				'skills': this.dataResume.skills,
+			};
+			const tmpFormData = {
+				'city': this.formData.resumeCity,
+				'title': this.formData.careerObjective,
+				'category': this.formData.categoriesResume,
+				'min_salary': this.formData.salaryFrom,
+				'max_salary': this.formData.salaryBefore,
+				'description': this.formData.aboutMe,
+				'vk': this.formData.addSocial.vkontakte,
+				'facebook': this.formData.addSocial.facebook,
+				'instagram': this.formData.addSocial.instagram,
+				'skype': this.formData.addSocial.skype,
+				'skills': this.formData.dutiesSelect,
+			};
+			let formValid = true;
+			for (let i in tmpResume) {
+				if(tmpResume[i] !== tmpFormData[i]) {
+					formValid = false;
+					break;
+				}
+			}
+            if (!formValid && !this.valid) {
+                next(false);
+                this.$swal({
+                    title: 'Вы точно не хотите сохранить изменения?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Да',
+                    cancelButtonText: 'Нет'
+                }).then((result) => {
+                    if (result.value) {
+                        next();
+                    }
+                })
+            } else {
+                next();
+            }
+        }
     }
 </script>
 

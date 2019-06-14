@@ -1,6 +1,7 @@
 const profile = {
   data() {
     return {
+      dataProfile: [] ,
       idEmployer: '',
       formData: {
         first_name: '',
