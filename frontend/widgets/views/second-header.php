@@ -25,7 +25,7 @@ use yii\helpers\Html;
 															<div class="dropdown jsMenu">
 																<span class="home__nav-item jsOpenMenu">
 																	<?php if(!$employer->first_name && !$employer->second_name):?>
-                                                                        <?=Yii::$app->user->identity->email?>
+                                                                        <?=explode('@', Yii::$app->user->identity->email)[0]?>
                                                                     <?php else:?>
                                                                         <?= $employer->first_name.' '.$employer->second_name ?>
                                                                     <?php endif?>

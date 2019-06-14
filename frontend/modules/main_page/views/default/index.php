@@ -60,7 +60,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                     <div class="dropdown jsMenu">
                         <span class="nhome__nav-item nav-btn jsOpenMenu">
                             <?php if(!$employer->first_name && !$employer->second_name):?>
-                            <?=Yii::$app->user->identity->email?>
+                            <?=explode('@', Yii::$app->user->identity->email)[0]?>
                             <?php else:?>
                             <?= $employer->first_name.' '.$employer->second_name ?>
                             <?php endif?>
