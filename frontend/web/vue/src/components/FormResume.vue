@@ -1,5 +1,5 @@
 <template>
-    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
+    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
 
         <image-uploader
                 class="input-file"
@@ -100,15 +100,15 @@
                     this.$set(FormResume.categoriesResume.items, i, response.data[i]);
                 }
             }, response => {
-				this.$swal({
-					toast: true,
-					position: 'bottom-end',
-					showConfirmButton: false,
-					timer: 4000,
-					type: 'error',
-					title: response.data.message
-				})
-			});
+                this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: response.data.message
+                })
+            });
         },
         methods: {
             saveData() {
@@ -127,32 +127,25 @@
                     education: this.formData.educationBlock,
                     work: this.formData.workBlock,
                     // skills: [],
-					skills: this.formData.dutiesSelect
+                    skills: this.formData.dutiesSelect
                 };
                 let image = document.querySelector('.fileinput');
                 if (image.classList.contains('fileinput--loaded')) {
                     data.image = this.image;
                 }
-
-                // let dutiesVal = document.querySelectorAll('.duties input');
-                // for (let i = 0; i < dutiesVal.length; i++) {
-                //     if (dutiesVal[i].value !== '') {
-                //         data.skills.push({name: dutiesVal[i].value})
-                //     }
-                // }
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/resume`, data)
                     .then(response => {
                             this.$router.push('/personal-area/all-resume');
                             return response;
                         }, response => {
-                      this.$swal({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        type: 'error',
-                        title: response.data.message
-                      })
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
                         }
                     )
             },
@@ -166,7 +159,30 @@
                 this.hasImage = true;
                 this.image = output;
             },
+			valHandler(val) {
+				this.valid = val;
+			},
         },
+        beforeRouteLeave(to, from, next) {
+                if ((this.formData.resumeCity.length > 0 || this.formData.careerObjective.length > 0 || this.formData.categoriesResume.length > 0) && !this.valid) {
+                    next(false);
+                    this.$swal({
+                        title: 'Вы точно не хотите сохранить резюме?',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Да',
+                        cancelButtonText: 'Нет'
+                    }).then((result) => {
+                        if (result.value) {
+                            next();
+                        }
+                    })
+                } else {
+                    next();
+                }
+        }
     }
 </script>
 
@@ -220,8 +236,8 @@
 
     .work-block, .education-block {
         margin-top: 30px;
-		padding: 10px;
-		border: 1px solid rgba(0,0,0,0.42);
+        padding: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.42);
     }
 
     .item-block {

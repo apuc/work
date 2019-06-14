@@ -1,6 +1,7 @@
 const resume = {
   data() {
     return {
+      dataResume: [],
       hasImage: false,
       image: null,
       formData: {
@@ -38,15 +39,10 @@ const resume = {
           instagram: '',
           skype: ''
         },
-        duties0: '',
-        duties1: '',
-        duties2: '',
-        duties3: '',
-        duties4: '',
-        duties5: '',
         dutiesSelect: [],
         aboutMe: ''
-      }
+      },
+      valid: false
     };
   }
 };

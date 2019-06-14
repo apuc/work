@@ -1,6 +1,6 @@
 <template>
     <div>
-        <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData">
+        <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
 
             <image-uploader
                     class="input-file"
@@ -218,8 +218,31 @@
 						elem.classList.add('success');
 					}
 				});
-			}
+			},
+			valHandler(val) {
+				this.valid = val;
+			},
         },
+		beforeRouteLeave(to, from, next) {
+			if ((this.formData.nameCompany.length > 0 || this.formData.scopeOfTheCompany.length > 0) && !this.valid) {
+				next(false);
+				this.$swal({
+					title: 'Вы точно не хотите сохранить резюме?',
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Да',
+					cancelButtonText: 'Нет'
+				}).then((result) => {
+					if (result.value) {
+						next();
+					}
+				})
+			} else {
+				next();
+			}
+		}
     }
 </script>
 

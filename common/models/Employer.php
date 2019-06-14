@@ -62,7 +62,7 @@ class Employer extends WorkActiveRecord
         return [
             [['user_id', 'status', 'created_at', 'updated_at', 'owner'], 'integer'],
             [['first_name', 'second_name', 'birth_date'], 'string', 'max' => 255],
-            [['user_id', 'first_name', 'second_name'], 'required'],
+            [['user_id'], 'required'],
         ];
     }
 

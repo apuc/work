@@ -18,6 +18,7 @@
         mounted() {
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
                 .then(response => {
+                        this.dataProfile = response.data[0];
                         this.formData.first_name = response.data[0].first_name;
                         this.formData.second_name = response.data[0].second_name;
                         this.formData.birth_date = response.data[0].birth_date;
@@ -50,6 +51,13 @@
 
                 this.$http.patch(`${process.env.VUE_APP_API_URL}/request/employer/` + this.idEmployer, data)
                     .then(response => {
+                            this.$swal({
+                            title: 'Данные сохранены'
+                        }).then((result) => {
+                                if (result.value) {
+                                    this.$router.go();
+                                }
+                            });
                             return response;
                         }, response => {
                             this.$swal({
@@ -67,6 +75,30 @@
                 return FormProfile;
             }
         },
+        beforeRouteLeave(to, from, next) {
+            if ((this.formData.first_name != this.dataProfile.first_name) ||
+                (this.formData.second_name != this.dataProfile.second_name) ||
+                    (this.formData.birth_date != this.dataProfile.birth_date) ||
+                        (this.formData.email != this.dataProfile.user.email) ||
+                            (this.formData.phone != this.dataProfile.phone.number)) {
+                next(false);
+                this.$swal({
+                    title: 'Вы точно не хотите сохранить изменения?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Да',
+                    cancelButtonText: 'Нет'
+                }).then((result) => {
+                    if (result.value) {
+                        next();
+                    }
+                })
+            } else {
+                next();
+            }
+        }
     }
 
 </script>
