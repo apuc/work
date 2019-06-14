@@ -11,7 +11,11 @@ use yii\helpers\StringHelper; ?>
     <div class="single-vacancy__circle">
     </div>
     <div class="container">
-        <p class="result-search">Результаты поиска · <?= $model->city ?> ·<span><?= $model->post ?></span>
+        <p class="result-search">Результаты поиска
+            <?php if($model->city):?>
+            · <?= $model->city ?>
+            <?php endif?>
+            ·<span><?= $model->post ?></span>
         </p>
         <div class="single-block single-block-slider">
             <button class="mobile-contacts jsShowContacts jsShowContactsFlag"><img
