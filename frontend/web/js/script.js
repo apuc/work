@@ -117,6 +117,7 @@ if ($('.jsModalSelectVacancy').length > 0) {
 }
 
 $(document).ready(function () {
+
   if ($('#sidebar').length > 0 && window.innerWidth > 993) {
     var stickySidebar = new StickySidebar('#sidebar', {
       topSpacing: 0,
@@ -277,6 +278,9 @@ $(document).ready(function () {
     $('.jsNavMenu').toggleClass('active-nav');
     $('.jsNavOverlay').toggleClass('active-filter-overlay').css('display', 'none');
   });
+  if($('#jsInitialTab').val()==='login'){
+    $('.jsLogin').click();
+  }
 });
 
 if ($('.jsCitiesSelect').length > 0) {

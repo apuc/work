@@ -16,6 +16,6 @@ class DefaultController extends Controller
     {
         if(!\Yii::$app->user->isGuest)
             return $this->renderFile('@frontend/web/vue/dist/index.html');
-        return $this->redirect('/');
+        return $this->redirect('/?tab=login');
     }
 }
