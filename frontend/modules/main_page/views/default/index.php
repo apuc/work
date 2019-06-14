@@ -30,18 +30,6 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
             <div class="nhome-white-line__square">
             </div>
         </div>
-        <div class="nhome-white-line">
-            <div class="nhome-white-line__square">
-            </div>
-        </div>
-        <div class="nhome-white-line">
-            <div class="nhome-white-line__square">
-            </div>
-        </div>
-        <div class="nhome-white-line">
-            <div class="nhome-white-line__square">
-            </div>
-        </div>
         <div class="nhome__main-top">
             <div class="nhome__main-header">
                 <button class="mobile-nav-btn jsOpenNavMenu"><span></span><span></span><span></span>
@@ -49,7 +37,9 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                 <div class="filter-overlay nav-overlay jsNavOverlay">
                 </div>
                 <nav class="nhome__nav jsNavMenu">
-                    <a class="nhome__nav-item" href="/">Главная</a>
+                    <a class="nhome__nav-item nhome__nav-item_logo" href="/">
+                        <img src="/images/logo-main.png" alt="" role="presentation"/>
+                    </a>
                     <a class="nhome__nav-item" href="<?=Url::to(['/resume/default/search'])?>">Поиск резюме</a>
                     <a class="nhome__nav-item" href="<?=Url::to(['/vacancy/default/search'])?>">Поиск вакансий</a>
                     <?php if (Yii::$app->user->isGuest): ?>
@@ -64,8 +54,10 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                             <?php else:?>
                             <?= $employer->first_name.' '.$employer->second_name ?>
                             <?php endif?>
+                            <span>></span>
                         </span>
                         <div class="dropdown__menu jsShowMenu">
+                            <span class="nhome__nav-item mobile-prev jsMenuPrev">Назад</span>
                             <a class="nhome__nav-item" href="<?=Url::to(['/personal_area/default/index'])?>">Личный кабинект</a>
                             <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
                             <?= Html::submitButton(
@@ -110,10 +102,10 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
             <img class="nhome__main-bottom-img" src="/images/img1.png" img="" alt="" role="presentation"/>
         </div>
     </div>
-    <div class="nhome__aside">
+    <aside class="nhome__aside">
         <img class="nhome__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
         <div class="nhome__aside-header">
-            <span class="nhome__aside-header-vacancy">Вакансии дня</span>
+            <h3 class="nhome__aside-header-vacancy">Вакансии дня</h3>
         </div>
         <div class="home__slider">
             <?php foreach ($vacancies as $vacancy): ?>
@@ -158,7 +150,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
             </div>
             <?php endforeach ?>
         </div>
-    </div>
+    </aside>
     <div class="nhome__footer">
 
     <?php

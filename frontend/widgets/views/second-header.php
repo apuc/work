@@ -14,7 +14,7 @@ use yii\helpers\Html;
 										<div class="filter-overlay nav-overlay jsNavOverlay">
 										</div>
                     <nav class="home__nav jsNavMenu">
-                        <a class="home__nav-item" href="/">Главная</a>
+                        <a class="home__nav-item home__nav-item_logo" href="/"><img src="/images/logo-main.png" alt="" role="presentation"/></a>
 												<a class="home__nav-item" href="<?=yii\helpers\Url::to('/resume/search')?>">Резюме</a>
                             <?php
                             if (Yii::$app->user->isGuest): ?>

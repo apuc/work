@@ -119,47 +119,56 @@ if ($('.jsModalSelectVacancy').length > 0) {
 $(document).ready(function () {
 
   if ($('#sidebar').length > 0 && window.innerWidth > 993) {
-    var stickySidebar = new StickySidebar('#sidebar', {
+    let stickySidebar = new StickySidebar('#sidebar', {
       topSpacing: 0,
       bottomSpacing: 20,
       containerSelector: '.v-content-bottom',
-      innerWrapperSelector: '.sidebar-inner'
+      innerWrapperSelector: '.sidebar-inner',
+      resizeSensor: true
     });
   }
 
   if ($('#sidebar-vr').length > 0 && window.innerWidth > 993) {
-    var stickySidebar = new StickySidebar('#sidebar-vr', {
+    let stickySidebar = new StickySidebar('#sidebar-vr', {
       topSpacing: 0,
       bottomSpacing: 0,
       containerSelector: '.container-for-sidebar',
-      innerWrapperSelector: '.sidebar-inner'
+      innerWrapperSelector: '.sidebar-inner',
+      resizeSensor: true
     });
   }
 
   if ($('#sidebar-single').length > 0 && window.innerWidth > 993) {
-    var _stickySidebar = new StickySidebar('#sidebar-single', {
+    let stickySidebar = new StickySidebar('#sidebar-single', {
       topSpacing: 20,
       bottomSpacing: 20,
       containerSelector: '.single-block-slider',
-      innerWrapperSelector: '.sidebar-inner'
+      innerWrapperSelector: '.sidebar-inner',
+      resizeSensor: true
     });
   }
 
-  // $('.jsOpenCheck').next().hide();
   $('.jsOpenCheck').click(function () {
-    stickySidebar.updateSticky();
     if ($(this).hasClass("open-services-mob")) {
       $(this).removeClass('open-services-mob').next().slideDown();
-      $(this).find('.jsBtnPlus').toggleClass('btn-active');
-      $(this).find('.jsBtnMinus').toggleClass('btn-active');
+      let qw = $(this).find('.jsBtnPlus');
+      let qwe = $(this).find('.jsBtnMinus');
+      setTimeout(function () {
+        qw.toggleClass('btn-active');
+      },250);
+      setTimeout(function () {
+        qwe.toggleClass('btn-active');
+      },250);
     } else {
-      // $('.jsOpenCheck.open-services-mob').not(this).removeClass('open-services-mob').next().slideUp();
       $(this).addClass(' open-services-mob').next().slideUp();
-      $(this).find('.jsBtnPlus').toggleClass('btn-active');
-      $(this).find('.jsBtnMinus').toggleClass('btn-active');
-    }
-    if (window.innerWidth > 993) {
-      stickySidebar.updateSticky();
+      let qw = $(this).find('.jsBtnPlus');
+      let qwe = $(this).find('.jsBtnMinus');
+      setTimeout(function () {
+        qw.toggleClass('btn-active');
+      },250);
+      setTimeout(function () {
+        qwe.toggleClass('btn-active');
+      },250);
     }
   });
 
@@ -249,28 +258,40 @@ $(document).ready(function () {
     }
   });
 
-  $('.jsOpenMenu').mouseenter(function () {
-    $('.jsShowMenu').fadeIn().css('display', 'flex');
-  });
+  if(window.innerWidth > 1251) {
+    $('.jsOpenMenu').mouseenter(function () {
+      $('.jsShowMenu').fadeIn().css('display', 'flex');
+    });
 
-  // $('.jsShowMenu').mouseleave(function () {
-  //   $('.jsShowMenu').fadeOut();
-  // });
-
-  $('.jsMenu').mouseleave(function (e) {
-    if (!$('.jsShowMenu').is(e.target) || !$('.jsOpenMenu').is(e.target)) {
-      $('.jsShowMenu').fadeOut();
-    }
-  });
+    $('.jsMenu').mouseleave(function (e) {
+      if (!$('.jsShowMenu').is(e.target) || !$('.jsOpenMenu').is(e.target)) {
+        $('.jsShowMenu').fadeOut();
+      }
+    });
+  }
 
   $('.jsOpenNavMenu').click(function () {
     $('.jsOpenNavMenu').toggleClass('activeBtn');
     $('.jsNavMenu').toggleClass('active-nav');
-    if ($('.jsNavOverlay').hasClass('active-filter-overlay')) {
-      $('.jsNavOverlay').removeClass('active-filter-overlay').css('display', 'none');
+    if($('.jsNavOverlay').hasClass('active-filter-overlay')) {
+      $('.jsNavOverlay').removeClass('active-filter-overlay').css('display', 'none')
+      $('.jsNavMenu').removeClass('active-nav');
+      $('.jsShowMenu').removeClass('active-nav-drop');
     } else {
-      $('.jsNavOverlay').addClass('active-filter-overlay').css('display', 'block');
+      $('.jsNavOverlay').addClass('active-filter-overlay').css('display', 'block')
     }
+  });
+
+  if(window.innerWidth < 1250) {
+    $('.jsOpenMenu').click(function () {
+      $('.jsNavMenu').toggleClass('active-nav');
+      $('.jsShowMenu').toggleClass('active-nav-drop');
+    });
+  }
+
+  $('.jsMenuPrev').click(function () {
+    $('.jsNavMenu').toggleClass('active-nav');
+    $('.jsShowMenu').toggleClass('active-nav-drop');
   });
 
   $('.jsNavOverlay').click(function () {
