@@ -196,7 +196,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                             alt=""
                                             role="presentation"/><span
                                             class="ml5"><?= $vacancy->city ?></span></a><img
-                                        class="single-card__info-second__image" src="<?=$vacancy->company->image_url?>" alt=""
+                                        class="single-card__info-second__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt=""
                                         role="presentation"/>
                             </div>
                             <span class="single-card__price">

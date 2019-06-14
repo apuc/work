@@ -97,6 +97,9 @@ class Company extends WorkActiveRecord
         ];
     }
 
+    public function getPhotoOrEmptyPhoto(){
+        return $this->image_url?$this->image_url:'/images/company_empty.png';
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

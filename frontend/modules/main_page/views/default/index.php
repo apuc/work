@@ -120,7 +120,8 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
             <div class="single-card home-card">
                 <div class="single-card__tr">
                 </div>
-                <div class="single-card__header"><img src="<?=$vacancy->company->image_url?>" alt="" role="presentation"/>
+                <div class="single-card__header">
+                    <img src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt="" role="presentation"/>
                     <div class="single-card__top">
                         <div class="single-card__cat-city">
                             <?php if($vacancy->category):?>
