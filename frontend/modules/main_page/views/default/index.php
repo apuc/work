@@ -58,7 +58,13 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                     </button>
                     <?php else: ?>
                     <div class="dropdown jsMenu">
-                        <span class="nhome__nav-item nav-btn jsOpenMenu"><?= $employer->first_name.' '.$employer->second_name ?></span>
+                        <span class="nhome__nav-item nav-btn jsOpenMenu">
+                            <?php if(!$employer->first_name && !$employer->second_name):?>
+                            <?=Yii::$app->user->identity->email?>
+                            <?php else:?>
+                            <?= $employer->first_name.' '.$employer->second_name ?>
+                            <?php endif?>
+                        </span>
                         <div class="dropdown__menu jsShowMenu">
                             <a class="nhome__nav-item" href="<?=Url::to(['/personal_area/default/index'])?>">Личный кабинект</a>
                             <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
@@ -114,7 +120,8 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
             <div class="single-card home-card">
                 <div class="single-card__tr">
                 </div>
-                <div class="single-card__header"><img src="<?=$vacancy->company->image_url?>" alt="" role="presentation"/>
+                <div class="single-card__header">
+                    <img src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt="" role="presentation"/>
                     <div class="single-card__top">
                         <div class="single-card__cat-city">
                             <?php if($vacancy->category):?>

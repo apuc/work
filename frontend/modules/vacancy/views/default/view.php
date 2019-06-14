@@ -11,7 +11,11 @@ use yii\helpers\StringHelper; ?>
     <div class="single-vacancy__circle">
     </div>
     <div class="container">
-        <p class="result-search">Результаты поиска · <?= $model->city ?> ·<span><?= $model->post ?></span>
+        <p class="result-search">Результаты поиска
+            <?php if($model->city):?>
+            · <?= $model->city ?>
+            <?php endif?>
+            ·<span><?= $model->post ?></span>
         </p>
         <div class="single-block single-block-slider">
             <button class="mobile-contacts jsShowContacts jsShowContactsFlag"><img
@@ -36,7 +40,17 @@ use yii\helpers\StringHelper; ?>
                 <h3 class="single-block__left__head"><?= $model->post ?>
                 </h3>
                 <div class="single-block__left__price">
-                    <span><?= $model->min_salary ?>-<?= $model->max_salary ?> RUB</span>
+                    <span>
+                        <?php if($model->min_salary && $model->max_salary):?>
+                            <?= $model->min_salary ?>-<?= $model->max_salary ?> RUB
+                        <?php elseif ($model->min_salary):?>
+                            От <?= $model->min_salary ?> RUB
+                        <?php elseif ($model->max_salary):?>
+                            До <?= $model->max_salary ?> RUB
+                        <?php else: ?>
+                            Зарплата договорная
+                        <?php endif?>
+                    </span>
                     <div class="single-block__left__price__soc">
                         <?php if ($model->company->hasSocials()): ?>
                             <span>Написать соискателю в сетях</span>
@@ -52,10 +66,12 @@ use yii\helpers\StringHelper; ?>
                     </div>
                 </div>
                 <div class="single-block__left__employment">
+                    <?php if($model->employment_type):?>
                     <h3 class="single-block__left__employment__head">Вид занятости:
                     </h3>
                     <p class="single-block__left__employment__text"><?= $model->employment_type->name ?>
                     </p>
+                    <?php endif ?>
                 </div>
                 <div class="single-block__left__description">
                     <h3 class="single-block__left__description__head">Описание вакансии
@@ -86,7 +102,7 @@ use yii\helpers\StringHelper; ?>
                                 src="/images/add-contact.svg" alt="" role="presentation"/>
                     </button>
                     <div class="sr-block">
-                        <div class="sr-block__image"><img src="<?=$model->company->image_url?>" alt=""
+                        <div class="sr-block__image"><img src="<?=$model->company->getPhotoOrEmptyPhoto()?>" alt=""
                                                           role="presentation"/>
                         </div>
                         <div class="sr-block__text">

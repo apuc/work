@@ -196,19 +196,20 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                             alt=""
                                             role="presentation"/><span
                                             class="ml5"><?= $vacancy->city ?></span></a><img
-                                        class="single-card__info-second__image" src="<?=$vacancy->company->image_url?>" alt=""
+                                        class="single-card__info-second__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt=""
                                         role="presentation"/>
                             </div>
                             <span class="single-card__price">
-                                <?php if($vacancy->min_salary || $vacancy->max_salary):?>
-                                    <?php if($vacancy->min_salary && $vacancy->max_salary):?>
-                                        <?= $vacancy->min_salary ?>-<?= $vacancy->max_salary ?> RUB
-                                    <?php elseif ($vacancy->min_salary): ?>
-                                        <?= $vacancy->min_salary ?> RUB
-                                    <?php else: ?>
-                                        <?= $vacancy->max_salary ?> RUB
-                                    <?php endif ?>
-                                <?php endif ?>
+                                <?php if($vacancy->min_salary && $vacancy->max_salary):?>
+                                    <?= $vacancy->min_salary ?>-<?= $vacancy->max_salary ?> RUB
+                                <?php elseif ($vacancy->min_salary):?>
+                                    От <?= $vacancy->min_salary ?> RUB
+                                <?php elseif ($vacancy->max_salary):?>
+                                    До <?= $vacancy->max_salary ?> RUB
+                                <?php else: ?>
+                                    Зарплата договорная
+                                <?php endif?>
+                    </span>
                             </span>
                             <div class="single-card__info">
                                 <p><?= nl2br(StringHelper::truncate($vacancy->responsibilities, 80, '...')) ?></p>

@@ -9,6 +9,7 @@ use common\models\Employer;
 use dektrium\user\models\LoginForm;
 use dektrium\user\models\RegistrationForm;
 use dektrium\user\models\User;
+use Yii;
 
 class RegistrationController extends \dektrium\user\controllers\RegistrationController
 {
@@ -48,6 +49,19 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
             $employer->second_name = $post['second_name'];
             $employer->user_id = $user->id;
             $employer->save();
+            $cookie = Yii::createObject([
+                'class' => 'yii\web\Cookie',
+                'name' => 'key',
+                'value' => Yii::$app->user->identity->getAuthKey(),
+                'expire' => time() + 7*86400,
+                'httpOnly' => false
+            ]);
+            Yii::$app->getResponse()->getCookies()->add($cookie);
+            Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer])
+                ->setFrom('noreply@rabota.today')
+                ->setTo(Yii::$app->user->identity->email)
+                ->setSubject('Спасибо за регистрацию')
+                ->send();
         }
         return $this->goBack();
     }

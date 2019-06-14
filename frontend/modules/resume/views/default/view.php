@@ -21,8 +21,10 @@ use yii\helpers\Url; ?>
                 <ul class="breadcrumbs">
                     <li><a href="<?=Url::to('/resume/search')?>">К результатам поиска</a>
                     </li>
+                    <?php if($model->city):?>
                     <li><a href="<?=Url::to(['/resume/search', 'city' => $model->city])?>"><?= $model->city ?></a>
                     </li>
+                    <?php endif?>
                     <li><?= $model->title ?></li>
                 </ul>
                 <div class="resume-results__date">

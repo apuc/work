@@ -39,6 +39,35 @@ return [
                     'on ' . \dektrium\user\controllers\SecurityController::EVENT_BEFORE_LOGOUT => function ($e) {
                         Yii::$app->getResponse()->getCookies()->remove('key');
                     },
+                    'on ' . \dektrium\user\controllers\SecurityController::EVENT_AFTER_AUTHENTICATE=> /**
+                     * @param \dektrium\user\events\AuthEvent $e
+                     */
+                        function ($e) {
+                        if ($e->account->user === null) {
+                            return;
+                        }
+                        if(!\common\models\Employer::find()->where(['user_id'=>Yii::$app->user->id])->one()){
+                            $employer = new \common\models\Employer();
+                            $employer->user_id=Yii::$app->user->id;
+                            $employer->first_name=$e->client->getUserAttributes()['first_name'];
+                            $employer->second_name=$e->client->getUserAttributes()['last_name'];
+                            $employer->birth_date=date('Y-m-d', strtotime($e->client->getUserAttributes()['bdate']));
+                            $employer->save();
+                            Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer])
+                                ->setFrom('noreply@rabota.today')
+                                ->setTo(Yii::$app->user->identity->email)
+                                ->setSubject('Спасибо за регистрацию')
+                                ->send();
+                        }
+                            $cookie = Yii::createObject([
+                                'class' => 'yii\web\Cookie',
+                                'name' => 'key',
+                                'value' => Yii::$app->user->identity->getAuthKey(),
+                                'expire' => time() + 7*86400,
+                                'httpOnly' => false
+                            ]);
+                            Yii::$app->getResponse()->getCookies()->add($cookie);
+                    },
                 ],
             ],
         ],
@@ -63,6 +92,7 @@ return [
 //        'request' => [
 //            'csrfParam' => '_csrf-frontend',
 //        ],
+
         'user' => [
             //'class' => 'app\components\User',
             'identityClass' => 'common\models\base\User',

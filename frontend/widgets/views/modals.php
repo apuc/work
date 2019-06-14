@@ -4,10 +4,12 @@
 /* @var $registration_form \dektrium\user\models\RegistrationForm */
 
 use common\classes\Debug;
+use dektrium\user\widgets\Connect;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
 ?>
+<input type="hidden" id="jsInitialTab" value="<?=Yii::$app->request->get('tab')?>">
 <div class="modal-block jsModal">
     <div class="modal-overlay jsModalClose">
     </div>
@@ -43,6 +45,9 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             <?= Html::submitButton(
                 Yii::t('user', 'Войти'),
                 ['class' => 'jsBtnLogin jsBtn', 'tabindex' => '4']) ?>
+            <?= Connect::widget([
+                'baseAuthUrl' => ['/user/security/auth']
+            ]) ?>
             <?php ActiveForm::end(); ?>
             <div class="modal-style__text"><span>Забыли пароль?</span>
                 <button class="jsRegForm">Зарегистрироваться
@@ -86,6 +91,7 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             <?php /** @var \common\models\Vacancy[] $vacancies */
             $vacancies = \common\models\Vacancy::find()->where(['owner'=> Yii::$app->user->id, 'status'=>\common\models\Vacancy::STATUS_ACTIVE])->all()?>
             <div class="modal-style modal-send-message jsModalMessage">
+                <?php if($vacancies):?>
                 <h2>Сообщение</h2>
                 <?= Html::beginForm(['/resume/default/send-message'], 'post', ['class' => 'jsModalMessageForm']) ?>
                 <span>Выберите вакансию</span>
@@ -100,15 +106,20 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 <textarea class="jsMessage" name="resume_message" rows="5" placeholder="Введите сообщение" required></textarea>
                 <button class="jsBtnReg jsBtn" type="submit">Отправить</button>
                 <?= Html::endForm() ?>
+            <?php else:?>
+                <h2>Чтобы откликнуться на резюме <br><a href="/personal-area/add-vacancy">создайте вакансию</a>
+                </h2>
+            <?php endif?>
             </div>
             <?php
             $resumes = \common\models\Resume::find()->where(['owner'=> Yii::$app->user->id, 'status'=>\common\models\Resume::STATUS_ACTIVE])->all()?>
             <div class="modal-style modal-send-message jsModalMessageVacancy">
+                <?php if($resumes):?>
                 <h2>Написать нам
                 </h2>
                 <?= Html::beginForm(['/vacancy/default/send-message'], 'post', ['class' => 'jsModalRegForm']) ?>
                 <span>Выберите резюме</span>
-                    <select name="vacancy_resume_id" class="jsModalSelectVacancy">
+                    <select required name="vacancy_resume_id" class="jsModalSelectVacancy">
                         <?php foreach($resumes as $resume): ?>
                         <option value="<?=$resume->id?>">
                             <?=$resume->title?>
@@ -120,6 +131,10 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                     <button class="jsBtnReg jsBtn" type="submit">Отправить
                     </button>
                 <?= Html::endForm() ?>
+                <?php else:?>
+                    <h2>Чтобы откликнуться на вакансию <br><a href="/personal-area/add-resume">создайте резюме</a>
+                    </h2>
+                <?php endif?>
             </div>
         <?php endif ?>
     </div>
