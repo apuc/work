@@ -67,9 +67,8 @@ use yii\helpers\Html;
                         ['class' => 'home__search btn-red']
                     ) ?>
                     <?= Html::endForm() ?>
-                    <a class="btn btn-red mr20" href="/personal-area/add-resume">разместить резюме</a><a class="btn btn-red"
-                                                                                 href="<?=\yii\helpers\Url::to(['/vacancy/default/search'])?>">Найти
-                        вакансии</a>
+                    <a class="btn btn-red mr20" href="/personal-area/add-resume">разместить резюме</a>
+                    <a class="btn btn-red" href="/personal-area/add-vacancy">создать вакансию</a>
                 </div>
             </div>
         </div>
