@@ -138,6 +138,7 @@ return [
                 'personal-area/<action>' => 'personal_area/default/index',
                 'personal-area/<action>/<id>' => 'personal_area/default/index',
                 'personal-area' => 'personal_area/default/index',
+                'sitemap.xml' => 'sitemap/index',
                 ['class' => 'yii\rest\UrlRule', 'controller' =>
                     [
                         'request/category',
