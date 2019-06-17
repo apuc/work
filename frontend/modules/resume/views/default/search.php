@@ -19,7 +19,7 @@ use yii\web\View;
 use yii\widgets\LinkPager;
 
 $this->title=KeyValue::findValueByKey('resume_search_page_title')?:"Поиск резюме";
-$this->registerMetaTag(['description' => KeyValue::findValueByKey('resume_search_page_description')]);
+$this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueByKey('resume_search_page_description')]);
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['depends' => [MainAsset::className()]]);
 ?>
 

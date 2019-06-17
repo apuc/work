@@ -13,7 +13,7 @@ use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
 $this->title = KeyValue::findValueByKey('main_page_title') ?: 'Работа: главная';
-$this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_description')]);
+$this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueByKey('main_page_description')]);
 ?>
 
 <div class="nhome">
@@ -87,7 +87,7 @@ $this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_des
                 ) ?>
                 <?= Html::endForm() ?>
                 <a class="btn btn-red mr20" href="/personal-area/add-resume">разместить резюме</a>
-                <a class="btn btn-red" href="<?=Url::to(['/vacancy/default/search'])?>">Найти вакансии</a>
+                <a class="btn btn-red" href="/personal-area/add-vacancy">создать вакансию</a>
             </div>
         </div>
         <div class="nhome__main-bottom">
