@@ -13,7 +13,7 @@ use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
 $this->title = KeyValue::findValueByKey('main_page_title') ?: 'Работа: главная';
-$this->registerMetaTag(['description' => KeyValue::findValueByKey('main_page_description')]);
+$this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueByKey('main_page_description')]);
 ?>
 
 <div class="nhome">

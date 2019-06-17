@@ -1,3 +1,4 @@
+<?php if (Yii::$app->request->getUserIP() != '127.0.0.1'): ?>
 <!— Global site tag (gtag.js) - Google Analytics —>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140244918-1"></script>
 <script>
@@ -7,3 +8,4 @@
 
     gtag('config', 'UA-140244918-1');
 </script>
+<?php endif?>
