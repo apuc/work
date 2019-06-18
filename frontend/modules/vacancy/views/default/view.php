@@ -11,12 +11,14 @@ use yii\helpers\StringHelper; ?>
     <div class="single-vacancy__circle">
     </div>
     <div class="container">
-        <p class="result-search">Результаты поиска
+        <ul class="result-search">
+            <li>Результаты поиска · </li>
+            <li>
             <?php if($model->city):?>
-            · <?= $model->city ?>
-            <?php endif?>
-            ·<span><?= $model->post ?></span>
-        </p>
+            <?= $model->city ?>
+            <?php endif?> · </li>
+            <li><?= $model->post ?></li>
+        </ul>
         <div class="single-block single-block-slider">
             <button class="mobile-contacts jsShowContacts jsShowContactsFlag"><img
                         src="/images/add-contact.svg" alt="" role="presentation"/>
@@ -37,8 +39,8 @@ use yii\helpers\StringHelper; ?>
                        href="<?=\yii\helpers\Url::to(['/vacancy/search', 'city' => $model->city])?>"><img class="single-block__icon" src="/images/arr-place.png" alt=""
                                      role="presentation"/><span class="ml5"><?= $model->city ?></span></a>
                 </div>
-                <h3 class="single-block__head"><?= $model->post ?>
-                </h3>
+                <h1 class="single-block__head"><?= $model->post ?>
+                </h1>
                 <div class="single-block__price">
                     <span>
                         <?php if($model->min_salary && $model->max_salary):?>
@@ -94,7 +96,7 @@ use yii\helpers\StringHelper; ?>
                     <p class="single-block__conditions-text"><?= nl2br($model->working_conditions) ?></p>
                 </div>
             </div>
-            <div class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">
+            <aside class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">
                 <div class="single-vacancy-overlay jsHideContacts">
                 </div>
                 <div class="sidebar-inner">
@@ -132,7 +134,7 @@ use yii\helpers\StringHelper; ?>
                     </div>
                     <?php endif ?>
                 </div>
-            </div>
+            </aside>
         </div>
     </div>
 </section>
