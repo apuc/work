@@ -22,7 +22,7 @@ MainAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <link rel="shortcut icon" href="../images/favicon.png" />
+    <link rel="shortcut icon" href="/images/favicon.png" />
     <?=YandexMetrika::widget()?>
     <?=GoogleAnalytics::widget()?>
 </head>
