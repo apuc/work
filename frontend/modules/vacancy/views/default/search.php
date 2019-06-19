@@ -166,7 +166,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         </button>
                     </div>
                 </div>
-                <div class="v-content-bottom__center">
+                <div class="v-content-bottom__center scroll">
                     <?php if(!$vacancies): ?>
                     <div class="single-card">
                         <p>Нет результатов поиска</p>
