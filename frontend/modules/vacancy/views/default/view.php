@@ -1,10 +1,12 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $model \common\models\Vacancy */
+/* @var $last_vacancies \common\models\Vacancy[] */
 
 $this->title = $model->post;
 
-use yii\helpers\StringHelper; ?>
+use yii\helpers\StringHelper;
+use yii\helpers\Url; ?>
 
 <section class="single-vacancy"><img class="single-vacancy__dots2" src="/images/bg-dots.png" alt=""
                                      role="presentation"/>
@@ -24,6 +26,8 @@ use yii\helpers\StringHelper; ?>
                         src="/images/add-contact.svg" alt="" role="presentation"/>
             </button>
             <div class="single-block__left">
+                <img class="single-block__logo" src="<?=$model->company->getPhotoOrEmptyPhoto()?>" alt=""
+                     role="presentation"/>
                 <div class="single-block__first">
                     <div class="category-block">
                         <?php foreach ($model->category as $category): ?>
@@ -100,32 +104,27 @@ use yii\helpers\StringHelper; ?>
                 <div class="single-vacancy-overlay jsHideContacts">
                 </div>
                 <div class="sidebar-inner">
-                    <button class="mobile-contacts sidebar-mobile-contacts jsShowContacts"><img
-                                src="/images/add-contact.svg" alt="" role="presentation"/>
+                    <button class="mobile-contacts sidebar-mobile-contacts jsShowContacts"><img src="assets/images/add-contact.svg" alt="" role="presentation"/>
                     </button>
                     <div class="sr-block">
-                        <div class="sr-block__image"><img src="<?=$model->company->getPhotoOrEmptyPhoto()?>" alt=""
-                                                          role="presentation"/>
-                        </div>
-                        <div class="sr-block__text">
+                        <ul class="sr-block__text">
                             <?php if(!empty($model->company->name)):?>
-                            <h3 class="sr-block__text__company">Компания:
-                            </h3>
-                            <p class="sr-block__text__c-name"><?= $model->company->name ?>
-                            </p>
-                            <p class="sr-block__text__c-name"><?= $model->company->activity_field ?>
-                            </p>
+                            <li class="sr-block__text__company">
+                                <p><strong>Компания:</strong><?= $model->company->name ?><br> <?= $model->company->activity_field ?>
+                                </p>
+                            </li>
                             <?php endif ?>
-                            <h3 class="sr-block__text__contact">Контактное лицо:
-                            </h3>
-                            <p class="sr-block__text__cont-name"><?= $model->company->contact_person ?>
-                            </p>
-                            <h3 class="sr-block__text__phone">Телефон:</h3>
+                            <li class="sr-block__text__contact">
+                                <p><strong>Контактное лицо:</strong><?= $model->company->contact_person ?>
+                                </p>
+                            </li>
                             <?php if ($model->company->phone): ?>
-                                <a class="sr-block__text__p-num"
-                                   href="tel:<?= $model->company->phone->number ?>"><?= $model->company->phone->number ?></a>
+                            <li class="sr-block__text__phone"><img src="/images/phone.svg" alt="" role="presentation"/>
+                                <div><strong>Телефон:</strong><a href="tel:<?= $model->company->phone->number ?>"><?= $model->company->phone->number ?></a>
+                                </div>
+                            </li>
                             <?php endif ?>
-                        </div>
+                        </ul>
                     </div>
                     <?php if(!Yii::$app->user->isGuest && $model->owner != Yii::$app->user->id): ?>
                     <div class="sr-btn">
@@ -133,8 +132,58 @@ use yii\helpers\StringHelper; ?>
                         </button>
                     </div>
                     <?php endif ?>
+                    <div class="last-vacancy pc-last-vacancy">
+                        <h2 class="last-vacancy__head">Последние вакансии
+                        </h2>
+                        <?php foreach ($last_vacancies as $vacancy):?>
+                        <div class="last-vacancy__item">
+                            <div class="last-vacancy__tr">
+                            </div>
+                            <div class="last-vacancy__header"><img src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt="" role="presentation"/>
+                                <div class="last-vacancy__top">
+                                    <?php if($vacancy->category):?>
+                                    <div class="last-vacancy__cat-city">
+                                        <a class="btn-card btn-card-small btn-gray" href="<?=Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$vacancy->category[0]->id])])?>"><?=$vacancy->category[0]->name?></a>
+                                    </div>
+                                    <?php endif ?>
+                                    <a class="last-vacancy__title" href="/vacancy/view/<?= $vacancy->id ?>" title="$vacancy->post"><?=$vacancy->post?></a>
+                                </div>
+                            </div>
+                            <div class="last-vacancy__info">
+                                <p>
+                                    <?=StringHelper::truncate($vacancy->responsibilities, 200, '...')?>
+                                </p>
+                            </div>
+                        </div>
+                        <?php endforeach;?>
+                    </div>
                 </div>
             </aside>
+            <div class="last-vacancy mob-last-vacancy">
+                <h2 class="last-vacancy__head">Последние вакансии
+                </h2>
+                <?php foreach ($last_vacancies as $vacancy):?>
+                    <div class="last-vacancy__item">
+                        <div class="last-vacancy__tr">
+                        </div>
+                        <div class="last-vacancy__header"><img src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt="" role="presentation"/>
+                            <div class="last-vacancy__top">
+                                <?php if($vacancy->category):?>
+                                    <div class="last-vacancy__cat-city">
+                                        <a class="btn-card btn-card-small btn-gray" href="<?=Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$vacancy->category[0]->id])])?>"><?=$vacancy->category[0]->name?></a>
+                                    </div>
+                                <?php endif ?>
+                                <a class="last-vacancy__title" href="/vacancy/view/<?= $vacancy->id ?>" title="$vacancy->post"><?=$vacancy->post?></a>
+                            </div>
+                        </div>
+                        <div class="last-vacancy__info">
+                            <p>
+                                <?=StringHelper::truncate($vacancy->responsibilities, 200, '...')?>
+                            </p>
+                        </div>
+                    </div>
+                <?php endforeach;?>
+            </div>
         </div>
     </div>
 </section>
