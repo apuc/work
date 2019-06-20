@@ -24,11 +24,13 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
+        $last_vacancies=Vacancy::find()->where(['status'=>Vacancy::STATUS_ACTIVE])->orderBy('id DESC')->limit(2)->all();
         $model = Vacancy::findOne($id);
         $model->views++;
         $model->save();
         return $this->render('view', [
-            'model' => $model
+            'model' => $model,
+            'last_vacancies' => $last_vacancies
         ]);
     }
 

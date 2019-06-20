@@ -280,9 +280,10 @@ $(document).ready(function () {
   });
 
   $('.jsNavOverlay').click(function () {
-    $('.jsOpenNavMenu').toggleClass('activeBtn');
-    $('.jsNavMenu').toggleClass('active-nav');
-    $('.jsNavOverlay').toggleClass('active-filter-overlay').css('display', 'none');
+    $('.jsOpenNavMenu').removeClass('activeBtn');
+    $('.jsNavMenu').removeClass('active-nav');
+    $('.jsShowMenu').removeClass('active-nav-drop');
+    $('.jsNavOverlay').removeClass('active-filter-overlay').css('display', 'none')
   });
   if($('#jsInitialTab').val()==='login'){
     $('.jsLogin').click();

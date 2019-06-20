@@ -28,9 +28,10 @@ use yii\helpers\Html;
                                                                         <?=explode('@', Yii::$app->user->identity->email)[0]?>
                                                                     <?php else:?>
                                                                         <?= $employer->first_name.' '.$employer->second_name ?>
-                                                                    <?php endif?>
+                                                                    <?php endif?> <span>></span>
 																</span>
 																<div class="dropdown__menu jsShowMenu">
+                                                                    <span class="nhome__nav-item mobile-prev jsMenuPrev">Назад</span>
 																	<a class="home__nav-item" href="/personal-area">
 																		Личный кабинект
 																	</a>
