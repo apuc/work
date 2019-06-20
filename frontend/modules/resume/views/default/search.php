@@ -162,7 +162,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         </button>
                     </div>
                 </div>
-                <div class="v-content-bottom__center">
+                <div class="v-content-bottom__center scroll">
                     <?php /** @var Resume $resume */
                     if ($resumes->models):
                         foreach ($resumes->models as $resume):?>

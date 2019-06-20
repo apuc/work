@@ -6,7 +6,6 @@
                     class="input-file"
                     :preview="true"
                     :className="['fileinput', { 'fileinput--loaded': hasImage }]"
-                    capture="environment"
                     :debug="1"
                     doNotResize="gif"
                     :autoRotate="true"
