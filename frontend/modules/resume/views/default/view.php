@@ -49,7 +49,7 @@ use yii\helpers\Url; ?>
                     <p class="resume-description__text">
                         <?=$model->employer->first_name.' '.$model->employer->second_name?>
                     </p>
-                    <span class="resume-top__price"><?= $model->min_salary ?>-<?= $model->max_salary ?> RUB</span>
+                    <span class="resume-top__price"><?= (int)$model->min_salary ?>-<?= (int)$model->max_salary ?> RUB</span>
                     <table class="resume-top__text">
                         <tbody>
                         <?php if($model->employer->age>0):?>
