@@ -72,8 +72,11 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
             </div>
             <div class="nhome__main-content">
                 <?= Html::beginForm(['/main_page/default/search'], 'post', ['class' => 'nhome__form']) ?>
-                    <span class="nhome__form-text">Сейчас на сайте свыше <span class='white-text'> <?=Vacancy::find()->count()?> вакансий </span> и <span
-                                class='white-text'> <?=\common\models\Resume::find()->count()?> резюме</span></span>
+                    <span class="nhome__form-text">
+                        Сейчас на сайте свыше
+                        <a href="<?=Url::to(['/vacancy/default/search'])?>" class='white-text'> <?=Vacancy::find()->count()?> вакансий </a> и
+                        <a href="<?=Url::to(['/resume/default/search'])?>" class='white-text'> <?=\common\models\Resume::find()->count()?> резюме</a>
+                    </span>
                     <input name="search_text" class="nhome__form-input" placeholder="Я ищу..." type="text"/>
                     <div class="nhome__form-select">
                         <select name="search_type" class="home__form-select-js">
