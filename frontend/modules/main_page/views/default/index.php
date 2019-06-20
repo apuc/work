@@ -141,7 +141,6 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
                     <?php endif ?>
                     <p><?=StringHelper::truncate($vacancy->responsibilities, 80, '...')?></p>
                 </div>
-                <?php if(!Yii::$app->user->isGuest):?>
                 <div class="d-flex flex-wrap align-items-center justify-content-start mt-auto">
                     <a class="btn-card btn-red jsVacancyModal" data-id="<?=$vacancy->id?>">Откликнуться</a>
 <!--                    <a class="single-card__like" href="#">-->
@@ -149,7 +148,6 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
 <!--                        <span>В избранное</span>-->
 <!--                    </a>-->
                 </div>
-                <?php endif ?>
             </div>
             <?php endforeach ?>
         </div>
