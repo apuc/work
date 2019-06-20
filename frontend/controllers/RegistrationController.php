@@ -10,9 +10,14 @@ use dektrium\user\models\LoginForm;
 use dektrium\user\models\RegistrationForm;
 use dektrium\user\models\User;
 use Yii;
+use yii\base\ViewContextInterface;
 
-class RegistrationController extends \dektrium\user\controllers\RegistrationController
+class RegistrationController extends \dektrium\user\controllers\RegistrationController implements ViewContextInterface
 {
+    public function getViewPath()
+    {
+        return Yii::getAlias('@common/mail');
+    }
     /**
      * Displays the registration page.
      * After successful registration if enableConfirmation is enabled shows info message otherwise
@@ -56,6 +61,7 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
                 'expire' => time() + 7*86400,
                 'httpOnly' => false
             ]);
+            Yii::$app->mailer->viewPath='@common/mail';
             Yii::$app->getResponse()->getCookies()->add($cookie);
             Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer])
                 ->setFrom('noreply@rabota.today')
