@@ -127,12 +127,10 @@ use yii\helpers\StringHelper; ?>
                             <?php endif ?>
                         </div>
                     </div>
-                    <?php if(!Yii::$app->user->isGuest && $model->owner != Yii::$app->user->id): ?>
                     <div class="sr-btn">
                         <button class="sr-btn__btn btn btn-red jsVacancyModal" data-id="<?=$model->id?>">Отправить резюме
                         </button>
                     </div>
-                    <?php endif ?>
                 </div>
             </aside>
         </div>

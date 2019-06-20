@@ -35,4 +35,14 @@ $(document).ready(function(){
     $(document).on('click', '#search', function () {
         search();
     });
+    $('.jsCheckBlock').keydown(function(eventObject){
+        if (eventObject.keyCode == 13){
+            search();
+        }
+    });
+    $('.search').keydown(function(eventObject){
+        if (eventObject.keyCode == 13){
+            search();
+        }
+    });
 });

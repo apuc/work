@@ -111,10 +111,11 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 </h2>
             <?php endif?>
             </div>
+        <?php endif ?>
             <?php
             $resumes = \common\models\Resume::find()->where(['owner'=> Yii::$app->user->id, 'status'=>\common\models\Resume::STATUS_ACTIVE])->all()?>
             <div class="modal-style modal-send-message jsModalMessageVacancy">
-                <?php if($resumes):?>
+                <?php if($resumes && !Yii::$app->user->isGuest):?>
                 <h2>Написать нам
                 </h2>
                 <?= Html::beginForm(['/vacancy/default/send-message'], 'post', ['class' => 'jsModalRegForm']) ?>
@@ -136,6 +137,5 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                     </h2>
                 <?php endif?>
             </div>
-        <?php endif ?>
     </div>
 </div>
