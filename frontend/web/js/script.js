@@ -233,29 +233,7 @@ $(document).ready(function () {
     $('.jsModalReg').fadeOut();
     $('.jsModalMessage').fadeOut();
     $('.jsModalMessageVacancy').fadeOut();
-    $('.jsBtn').prop('disabled', true);
     $('body').removeClass('body-overflow');
-  });
-
-  var nameTest = /^([A-Z])(.+)/;
-  var mailTest = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
-  var passTest = /^([A-Z])(.+)/;
-
-  $('.jsModalLoginForm input').on('input', function () {
-    var mail = $('.jsModalLoginForm .jsMail').val();
-    var pass = $('.jsModalLoginForm .jsPass').val();
-    if (mailTest.test(mail) && passTest.test(pass)) {
-      $('.jsBtnLogin').prop('disabled', false);
-    }
-  });
-  $('.jsModalRegForm input').on('input', function () {
-    var name = $('.jsModalRegForm .jsName').val();
-    var surname = $('.jsModalRegForm .jsSurname').val();
-    var mail = $('.jsModalRegForm .jsMail').val();
-    var pass = $('.jsModalRegForm .jsPass').val();
-    if (mailTest.test(mail) && passTest.test(pass) && nameTest.test(name) && nameTest.test(surname)) {
-      $('.jsBtnReg').prop('disabled', false);
-    }
   });
 
   if(window.innerWidth > 1251) {
@@ -274,11 +252,11 @@ $(document).ready(function () {
     $('.jsOpenNavMenu').toggleClass('activeBtn');
     $('.jsNavMenu').toggleClass('active-nav');
     if($('.jsNavOverlay').hasClass('active-filter-overlay')) {
-      $('.jsNavOverlay').removeClass('active-filter-overlay').css('display', 'none')
+      $('.jsNavOverlay').removeClass('active-filter-overlay').css('display', 'none');
       $('.jsNavMenu').removeClass('active-nav');
       $('.jsShowMenu').removeClass('active-nav-drop');
     } else {
-      $('.jsNavOverlay').addClass('active-filter-overlay').css('display', 'block')
+      $('.jsNavOverlay').addClass('active-filter-overlay').css('display', 'block');
     }
   });
 
@@ -295,9 +273,10 @@ $(document).ready(function () {
   });
 
   $('.jsNavOverlay').click(function () {
-    $('.jsOpenNavMenu').toggleClass('activeBtn');
-    $('.jsNavMenu').toggleClass('active-nav');
-    $('.jsNavOverlay').toggleClass('active-filter-overlay').css('display', 'none');
+    $('.jsOpenNavMenu').removeClass('activeBtn');
+    $('.jsNavMenu').removeClass('active-nav');
+    $('.jsShowMenu').removeClass('active-nav-drop');
+    $('.jsNavOverlay').removeClass('active-filter-overlay').css('display', 'none')
   });
   if($('#jsInitialTab').val()==='login'){
     $('.jsLogin').click();

@@ -72,8 +72,11 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
             </div>
             <div class="nhome__main-content">
                 <?= Html::beginForm(['/main_page/default/search'], 'post', ['class' => 'nhome__form']) ?>
-                    <span class="nhome__form-text">Сейчас на сайте свыше <span class='white-text'> <?=Vacancy::find()->count()?> вакансий </span> и <span
-                                class='white-text'> <?=\common\models\Resume::find()->count()?> резюме</span></span>
+                    <span class="nhome__form-text">
+                        Сейчас на сайте свыше
+                        <a href="<?=Url::to(['/vacancy/default/search'])?>" class='white-text'> <?=Vacancy::find()->count()?> вакансий </a> и
+                        <a href="<?=Url::to(['/resume/default/search'])?>" class='white-text'> <?=\common\models\Resume::find()->count()?> резюме</a>
+                    </span>
                     <input name="search_text" class="nhome__form-input" placeholder="Я ищу..." type="text"/>
                     <div class="nhome__form-select">
                         <select name="search_type" class="home__form-select-js">
@@ -138,7 +141,6 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
                     <?php endif ?>
                     <p><?=StringHelper::truncate($vacancy->responsibilities, 80, '...')?></p>
                 </div>
-                <?php if(!Yii::$app->user->isGuest):?>
                 <div class="d-flex flex-wrap align-items-center justify-content-start mt-auto">
                     <a class="btn-card btn-red jsVacancyModal" data-id="<?=$vacancy->id?>">Откликнуться</a>
 <!--                    <a class="single-card__like" href="#">-->
@@ -146,7 +148,6 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
 <!--                        <span>В избранное</span>-->
 <!--                    </a>-->
                 </div>
-                <?php endif ?>
             </div>
             <?php endforeach ?>
         </div>

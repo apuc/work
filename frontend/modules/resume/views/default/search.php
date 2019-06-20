@@ -190,8 +190,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                         <p class="single-card-resume__name-work"><?= $resume->lastExperience->post ?>
                                             , <?= $resume->lastExperience->name ?>
                                         </p>
-                                        <p class="single-card-resume__date-work"><?= Experience::$months[$resume->lastExperience->month_from] ?> <?= $resume->lastExperience->year_from ?>
+                                        <p class="single-card-resume__date-work">
+                                            <?php if($resume->lastExperience->month_from && $resume->lastExperience->year_from):?>
+                                            <?= Experience::$months[$resume->lastExperience->month_from] ?> <?= $resume->lastExperience->year_from ?>
+                                            <?php endif ?>
+                                            <?php if($resume->lastExperience->month_to && $resume->lastExperience->year_to):?>
                                             — <?= Experience::$months[$resume->lastExperience->month_to] ?> <?= $resume->lastExperience->year_to ?>
+                                            <?php endif?>
                                         </p>
                                         <?php endif ?>
                                         <p class="single-card-resume__last-check">
