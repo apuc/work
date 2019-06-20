@@ -137,5 +137,9 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                     </h2>
                 <?php endif?>
             </div>
+        <div class="modal-style modal-success jsModalSuccess <?=Yii::$app->request->get('message')?'jsActive':''?>">
+            <h2><?= Yii::$app->request->get('message')?>
+            </h2>
+        </div>
     </div>
 </div>

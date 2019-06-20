@@ -54,8 +54,9 @@ class DefaultController extends Controller
                 ->setSubject('Ответ на вашу вакансию '. $vacancy->post.'.')
                 ->send();
         }
-        return $this->goBack();
-
+        $url = explode('?', Yii::$app->request->referrer)[0];
+        $url.='?message=Ваше сообщение успешно отправлено';
+        return $this->redirect($url);
     }
 
     public function actionSearch()

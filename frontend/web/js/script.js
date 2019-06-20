@@ -203,6 +203,12 @@ $(document).ready(function () {
     $('.jsModalLogin').fadeIn();
     $('body').addClass('body-overflow');
   });
+  var modalActive = $('.jsActive');
+  if(modalActive.length>0){
+    $('.jsModal').fadeIn();
+    $('.jsModalSuccess').fadeIn();
+    $('body').addClass('body-overflow');
+  }
   $('.jsRegForm').click(function () {
     $('.jsModalLogin').fadeOut(1);
     $('.jsModalReg').fadeIn();
@@ -233,6 +239,7 @@ $(document).ready(function () {
     $('.jsModalReg').fadeOut();
     $('.jsModalMessage').fadeOut();
     $('.jsModalMessageVacancy').fadeOut();
+    $('.jsModalSuccess').fadeOut();
     $('body').removeClass('body-overflow');
   });
 
