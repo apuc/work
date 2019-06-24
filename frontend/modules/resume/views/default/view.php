@@ -49,7 +49,17 @@ use yii\helpers\Url; ?>
                     <p class="resume-description__text">
                         <?=$model->employer->first_name.' '.$model->employer->second_name?>
                     </p>
-                    <span class="resume-top__price"><?= (int)$model->min_salary ?>-<?= (int)$model->max_salary ?> RUB</span>
+                    <span class="resume-top__price">
+                        <?php if($model->min_salary>0 && $model->max_salary>0):?>
+                            <?= (int)$model->min_salary ?>-<?= (int)$model->max_salary ?> RUB
+                        <?php elseif($model->max_salary>0):?>
+                            До <?= (int)$model->max_salary ?> RUB
+                        <?php elseif($model->min_salary>0):?>
+                            От <?= (int)$model->min_salary ?> RUB
+                        <?php else:?>
+                            По договоренноси
+                        <?php endif?>
+                    </span>
                     <table class="resume-top__text">
                         <tbody>
                         <?php if($model->employer->age>0):?>

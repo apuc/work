@@ -176,7 +176,17 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             <!--                                    <p class="single-card-resume__status vr-head">Онлайн-->
                                             <!--                                    </p>-->
                                         </div>
-                                        <span class="single-card-resume__price"><?= (int)$resume->min_salary ?>-<?= (int)$resume->max_salary ?> RUB</span>
+                                        <span class="single-card-resume__price">
+                                            <?php if($resume->min_salary>0 && $resume->max_salary>0):?>
+                                            <?= (int)$resume->min_salary ?>-<?= (int)$resume->max_salary ?> RUB
+                                            <?php elseif($resume->max_salary>0):?>
+                                            До <?= (int)$resume->max_salary ?> RUB
+                                            <?php elseif($resume->min_salary>0):?>
+                                            От <?= (int)$resume->min_salary ?> RUB
+                                            <?php else:?>
+                                            По договоренноси
+                                            <?php endif?>
+                                        </span>
                                         <p class="single-card-resume__name"><?= $resume->employer->second_name ?> <?= $resume->employer->first_name ?>
                                             · возраст - <?= $resume->employer->age ?> · <?= $resume->city ?>
                                         </p>
