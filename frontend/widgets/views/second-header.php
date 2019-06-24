@@ -9,7 +9,7 @@ use yii\helpers\Html;
         <div class="header">
             <div class="home__main-top">
                 <div class="home__main-header">
-										<button class="mobile-nav-btn jsOpenNavMenu"><span></span><span></span><span></span>
+										<button class="mobile-nav-btn jsOpenNavMenu"><img src="/images/menu.png" alt="" role="presentation"/>
 										</button>
 										<div class="filter-overlay nav-overlay jsNavOverlay">
 										</div>

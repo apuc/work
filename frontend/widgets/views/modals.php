@@ -133,7 +133,7 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                     </button>
                 <?= Html::endForm() ?>
                 <?php else:?>
-                    <h2>Чтобы откликнуться на вакансию <br><a href="/personal-area/add-resume">создайте резюме</a>
+                    <h2 class="modal-h2">Чтобы откликнуться на вакансию <br><a href="/personal-area/add-resume">создайте резюме</a>
                     </h2>
                 <?php endif?>
             </div>
