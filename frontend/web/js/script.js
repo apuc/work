@@ -288,9 +288,7 @@ $(document).ready(function () {
   if($('#jsInitialTab').val()==='login'){
     $('.jsLogin').click();
   }
-  if(window.innerWidth < 575 && $('.scroll').length > 0) {
-    console.log($('.scroll'));
-    console.log(123);
+  if(window.innerWidth < 575 && $('.scroll').length > 0 && window.pageYOffset < 300) {
     $('html, body').animate({
       scrollTop: $(".scroll").offset().top-50
     }, 2000);

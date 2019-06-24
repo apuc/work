@@ -39,6 +39,7 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
                 <nav class="nhome__nav jsNavMenu">
                     <a class="nhome__nav-item nhome__nav-item_logo" href="/">
                         <img src="/images/logo-main.png" alt="" role="presentation"/>
+                        <img src="/images/logo_mob.png" alt="" role="presentation"/>
                     </a>
                     <a class="nhome__nav-item" href="<?=Url::to(['/resume/default/search'])?>">Поиск резюме</a>
                     <a class="nhome__nav-item" href="<?=Url::to(['/vacancy/default/search'])?>">Поиск вакансий</a>
@@ -168,5 +169,5 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
         <a class="nhome__footer-item" href="#"></a>
     </div>
     <img class="nhome__dots1" src="/images/bg-dots.png" alt="" role="presentation"/>
-    <img class="nhome__circle" src="/images/circle.png" alt="" role="presentation"/>
+    <div class="nhome__circle"></div>
 </div>
