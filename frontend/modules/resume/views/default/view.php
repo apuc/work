@@ -57,7 +57,7 @@ use yii\helpers\Url; ?>
                         <?php elseif($model->min_salary>0):?>
                             От <?= (int)$model->min_salary ?> RUB
                         <?php else:?>
-                            По договоренноси
+                            По договоренности
                         <?php endif?>
                     </span>
                     <table class="resume-top__text">
