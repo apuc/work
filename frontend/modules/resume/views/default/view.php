@@ -124,9 +124,18 @@ use yii\helpers\Url; ?>
                             <h4 class="resume-description__title-bold">
                                 <?= $education->name ?>
                             </h4>
-                            <p class="resume-description__text"><?= $education->academic_degree ?>,
-                                <br>с <?= $education->year_from ?> по
-                                <?= $education->year_to ?>г.
+                            <p class="resume-description__text"><?= $education->academic_degree ?><?php if($education->year_from || $education->year_to):?>,<?php endif?>
+                                <br>
+                                <?php if($education->year_from):?>
+                                с <?= $education->year_from ?>
+                                <?php endif ?>
+                                <?php if($education->year_to):?>
+                                по
+                                <?= $education->year_to ?>
+                                <?php endif?>
+                                <?php if($education->year_from || $education->year_to):?>
+                                г.
+                                <?php endif?>
                             </p>
                         <?php endforeach; ?>
                     </div>
