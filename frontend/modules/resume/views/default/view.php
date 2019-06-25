@@ -78,12 +78,14 @@ use yii\helpers\Url; ?>
                             </td>
                         </tr>
                         <?php endif ?>
+                        <?php if($model->city):?>
                         <tr>
                             <th>Город:
                             </th>
                             <td><?= $model->city ?>
                             </td>
                         </tr>
+                        <?php endif?>
                         </tbody>
                     </table>
                 </div>
