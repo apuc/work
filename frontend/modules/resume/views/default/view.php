@@ -57,7 +57,7 @@ use yii\helpers\Url; ?>
                         <?php elseif($model->min_salary>0):?>
                             От <?= (int)$model->min_salary ?> RUB
                         <?php else:?>
-                            По договоренноси
+                            По договоренности
                         <?php endif?>
                     </span>
                     <table class="resume-top__text">
@@ -78,12 +78,14 @@ use yii\helpers\Url; ?>
                             </td>
                         </tr>
                         <?php endif ?>
+                        <?php if($model->city):?>
                         <tr>
                             <th>Город:
                             </th>
                             <td><?= $model->city ?>
                             </td>
                         </tr>
+                        <?php endif?>
                         </tbody>
                     </table>
                 </div>
@@ -122,9 +124,18 @@ use yii\helpers\Url; ?>
                             <h4 class="resume-description__title-bold">
                                 <?= $education->name ?>
                             </h4>
-                            <p class="resume-description__text"><?= $education->academic_degree ?>,
-                                <br>с <?= $education->year_from ?> по
-                                <?= $education->year_to ?>г.
+                            <p class="resume-description__text"><?= $education->academic_degree ?><?php if($education->year_from || $education->year_to):?>,<?php endif?>
+                                <br>
+                                <?php if($education->year_from):?>
+                                с <?= $education->year_from ?>
+                                <?php endif ?>
+                                <?php if($education->year_to):?>
+                                по
+                                <?= $education->year_to ?>
+                                <?php endif?>
+                                <?php if($education->year_from || $education->year_to):?>
+                                г.
+                                <?php endif?>
                             </p>
                         <?php endforeach; ?>
                     </div>

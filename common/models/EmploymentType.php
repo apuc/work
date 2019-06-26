@@ -30,6 +30,17 @@ class EmploymentType extends ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Вид занятости'
+        ];
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getVacancy()

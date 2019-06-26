@@ -192,11 +192,17 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             <?php elseif($resume->min_salary>0):?>
                                             От <?= (int)$resume->min_salary ?> RUB
                                             <?php else:?>
-                                            По договоренноси
+                                            По договоренности
                                             <?php endif?>
                                         </span>
-                                        <p class="single-card-resume__name"><?= $resume->employer->second_name ?> <?= $resume->employer->first_name ?>
-                                            · возраст - <?= $resume->employer->age ?> · <?= $resume->city ?>
+                                        <p class="single-card-resume__name">
+                                            <?= $resume->employer->second_name ?> <?= $resume->employer->first_name ?>
+                                            <?php if($resume->employer->age && $resume->employer->age > 0):?>
+                                            · возраст - <?= $resume->employer->age ?>
+                                            <?php endif ?>
+                                            <?php if($resume->city):?>
+                                            · <?= $resume->city ?>
+                                            <?php endif ?>
                                         </p>
                                         <?php if($resume->employment_type): ?>
                                         <p class="single-card-resume__employment"><?= $resume->employment_type->name ?>
