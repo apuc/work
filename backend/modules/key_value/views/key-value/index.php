@@ -27,7 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'key',
             'label',
-            'value:ntext',
+            [
+                'attribute' => 'value',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
