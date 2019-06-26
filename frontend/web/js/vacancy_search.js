@@ -20,10 +20,12 @@ $(document).ready(function(){
         var max_salary = $("input[name='max_salary']");
         var search_text = $("input[name='vacancy_search_text']");
         var jsCitiesSelect = $(".jsCitiesSelect");
+        var jsDutiesSelect = $(".jsDutiesSelect");
         window.location.href="/vacancy/search?" +
             "experience_ids=" + JSON.stringify(experienceIds) +
             "&category_ids=" + JSON.stringify(categoryIds) +
             "&employment_type_ids="+JSON.stringify(employment_typeIds) +
+            "&tags_id="+JSON.stringify(jsDutiesSelect.val()) +
             "&min_salary="+min_salary.val() +
             "&max_salary="+max_salary.val() +
             "&search_text="+search_text.val()+

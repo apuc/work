@@ -2,8 +2,10 @@
 
 /* @var $this View */
 /* @var $categories Category[] */
+/* @var $tags \common\models\Skill[] */
 /* @var $vacancies \yii\data\ActiveDataProvider */
 /* @var $category_ids array */
+/* @var $tags_id array */
 /* @var $experience_ids array */
 /* @var $employment_type_ids array */
 /* @var $min_salary int */
@@ -67,8 +69,12 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         <div class="vl-block">
                             <select class="vl-block__cities jsDutiesSelect" multiple="multiple">
                                 <option></option>
-                                <?php foreach($cities as $sel_city):?>
-                                    <option <?=$sel_city->name == $city?'selected':''?>><?=$sel_city->name?></option>
+                                <?php foreach($tags as $tag):?>
+                                    <option value="<?=$tag->id?>"
+                                        <?php if(is_array($tags_id)):?>
+                                            <?=in_array($tag->id, $tags_id)?'selected':""?>
+                                        <?php endif?>
+                                    ><?=$tag->name?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
