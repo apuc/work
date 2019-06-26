@@ -55,6 +55,14 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                     </div>
                     <div class="sidebar-inner">
                         <div class="vl-block">
+                            <select class="vl-block__cities jsDutiesSelect" multiple="multiple">
+                                <option></option>
+                                <?php foreach($cities as $sel_city):?>
+                                    <option <?=$sel_city->name == $city?'selected':''?>><?=$sel_city->name?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <div class="vl-block">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <option></option>
                                 <?php foreach ($cities as $sel_city): ?>
