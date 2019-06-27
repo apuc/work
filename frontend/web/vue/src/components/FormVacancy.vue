@@ -2,9 +2,11 @@
     <div>
         <template v-if="lengthCompany === 0">
             <v-subheader>Для создания вакансии добавьте компанию или частное лицо </v-subheader>
-            <v-btn>
-                <router-link class="vacancy__link" to="/personal-area/add-company">Создать</router-link>
-            </v-btn>
+            <router-link class="vacancy__link" to="/personal-area/add-company">
+                <v-btn class="vacancy__link">
+                    Создать
+                </v-btn>
+            </router-link>
         </template>
         <template v-else>
             <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
@@ -171,5 +173,6 @@
 <style>
     .vacancy__link {
         text-decoration: none;
+        color: #1976d2 !important;
     }
 </style>
