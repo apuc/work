@@ -40,7 +40,7 @@ class WorkActiveRecord extends ActiveRecord
     public function beforeSave($insert)
     {
         parent::beforeSave($insert);
-        if ($insert && $this->hasAttribute('owner')){
+        if ($insert && $this->hasAttribute('owner') && !\Yii::$app->user->isGuest){
             $this->owner = \Yii::$app->user->id;
         }
         return true;

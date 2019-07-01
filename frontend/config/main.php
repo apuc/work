@@ -39,6 +39,17 @@ return [
                     'on ' . \dektrium\user\controllers\SecurityController::EVENT_BEFORE_LOGOUT => function ($e) {
                         Yii::$app->getResponse()->getCookies()->remove('key');
                     },
+                    'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_CONFIRM => function () {
+                        \common\classes\Debug::dd(123);
+                        $cookie = Yii::createObject([
+                            'class' => 'yii\web\Cookie',
+                            'name' => 'key',
+                            'value' => Yii::$app->user->identity->getAuthKey(),
+                            'expire' => time() + 7*86400,
+                            'httpOnly' => false
+                        ]);
+                        Yii::$app->getResponse()->getCookies()->add($cookie);
+                    },
                     'on ' . \dektrium\user\controllers\SecurityController::EVENT_AFTER_AUTHENTICATE=> /**
                      * @param \dektrium\user\events\AuthEvent $e
                      */
@@ -62,7 +73,7 @@ return [
                             $cookie = Yii::createObject([
                                 'class' => 'yii\web\Cookie',
                                 'name' => 'key',
-                                'value' => Yii::$app->user->identity->getAuthKey(),
+                                'value' => $e->client->getUserAttributes()['auth_key'],
                                 'expire' => time() + 7*86400,
                                 'httpOnly' => false
                             ]);
@@ -139,6 +150,7 @@ return [
                 'personal-area/<action>/<id>' => 'personal_area/default/index',
                 'personal-area' => 'personal_area/default/index',
                 'sitemap.xml' => 'sitemap/index',
+                'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
                 ['class' => 'yii\rest\UrlRule', 'controller' =>
                     [
                         'request/category',
