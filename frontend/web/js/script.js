@@ -297,13 +297,13 @@ $(document).ready(function () {
 
 if ($('.jsCitiesSelect').length > 0) {
   $('.jsCitiesSelect').select2({
-    placeholder: "Выбирите город"
+    placeholder: "Выберите город"
   });
 }
 
 if ($('.jsDutiesSelect').length > 0) {
   $('.jsDutiesSelect').select2({
-    placeholder: "Выбирите навыки"
+    placeholder: "Выберите навыки"
   });
 }
 //# sourceMappingURL=script.js.map
