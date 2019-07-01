@@ -296,6 +296,14 @@ $(document).ready(function () {
 });
 
 if ($('.jsCitiesSelect').length > 0) {
-  $('.jsCitiesSelect').select2();
+  $('.jsCitiesSelect').select2({
+    placeholder: "Выберите город"
+  });
+}
+
+if ($('.jsDutiesSelect').length > 0) {
+  $('.jsDutiesSelect').select2({
+    placeholder: "Выберите навыки"
+  });
 }
 //# sourceMappingURL=script.js.map
