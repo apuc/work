@@ -98,10 +98,13 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
             <img class="nhome__main-big-circle" src="/images/home-big-circle.png" alt="" role="presentation"/>
             <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="" role="presentation"/>
             <h1 class="nhome__title">Работа</h1>
-            <p class="nhome__desc">Сделайте грамотный выбор! Предлагаем размещение и продвижение на новой и
+            <p class="nhome__desc desc-pc">Сделайте грамотный выбор! Предлагаем размещение и продвижение на новой и
                 перспективной площадке <span class="yellow-text">РаботаДНР</span>. Станьте первым и получайте максимум
                 продаж, опережая конкурентов на несколько шагов. Полностью берем на себя все, что связано с размещением
                 на маркетплейсе, эффективно управляем ценами и поставками
+            </p>
+            <p class="nhome__desc desc-mob">Сделайте грамотный выбор! Предлагаем размещение и продвижение на новой и
+                перспективной площадке <span class="yellow-text">РаботаДНР</span>.
             </p>
             <img class="nhome__main-bottom-img" src="/images/img1.png" img="" alt="" role="presentation"/>
         </div>

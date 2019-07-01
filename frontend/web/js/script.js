@@ -88,7 +88,7 @@ if ($('.home__slider').length > 0) {
       breakpoint: 576,
       settings: {
         arrows: false,
-        slidesToShow: 1,
+        slidesToShow: 2,
         slidesToScroll: 1
       }
     }]
