@@ -204,8 +204,8 @@
             type: 'number',
             rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')]
           }),
-          description: Object.assign({}, Field, {
-            name: 'description',
+          responsibility: Object.assign({}, Field, {
+            name: 'responsibility',
             label: 'Описание',
             component: VTextarea,
             counter: 2000,
