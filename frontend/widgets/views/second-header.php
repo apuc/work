@@ -49,7 +49,7 @@ use yii\helpers\Html;
                             <?php endif ?>
                     </nav>
                     <div class="home__main-email d-flex align-items-center"><span class="home__main-ico">@</span><a
-                                href="mailto:info@vendoram.ru">info@vendoram.ru</a>
+                                href="mailto:info@rabota.today">info@rabota.today</a>
                     </div>
                     <div class="d-flex align-items-center"><i class="home__main-ico fa fa-phone"></i>
                         <div class="d-flex flex-column"><a href="tel:88003553505">+8 800 355-35-05</a><a
