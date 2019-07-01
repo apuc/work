@@ -39,8 +39,6 @@ export default {
   addSocial: Object.assign({}, Field, {
     component: AddSocial,
     rules: [],
-    class: 'jsCompanyInput',
-    id: 'addSocial'
   }),
   aboutCompany: Object.assign({}, Field, {
     name: 'aboutCompany',
