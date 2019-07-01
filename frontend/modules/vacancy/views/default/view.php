@@ -126,12 +126,10 @@ use yii\helpers\Url; ?>
                             <?php endif ?>
                         </ul>
                     </div>
-                    <?php if(!Yii::$app->user->isGuest && $model->owner != Yii::$app->user->id): ?>
                     <div class="sr-btn">
                         <button class="sr-btn__btn btn btn-red jsVacancyModal" data-id="<?=$model->id?>">Отправить резюме
                         </button>
                     </div>
-                    <?php endif ?>
                     <div class="last-vacancy pc-last-vacancy">
                         <h2 class="last-vacancy__head">Последние вакансии
                         </h2>

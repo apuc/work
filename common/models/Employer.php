@@ -20,6 +20,7 @@ use yii\db\ActiveRecord;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $owner
  * @property integer $age
  *
  * @property User $user
@@ -84,7 +85,8 @@ class Employer extends WorkActiveRecord
             'birth_date' => 'Дата рождения',
             'status' => 'Статус',
             'created_at' => 'Создан',
-            'updated_at' => 'Изменен'
+            'updated_at' => 'Изменен',
+            'owner' => 'Пользователь'
         ];
     }
 
