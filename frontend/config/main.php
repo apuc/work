@@ -1,5 +1,6 @@
 <?php
 
+use dektrium\user\models\Token;
 use yii\web\Cookie;
 
 $params = array_merge(
@@ -64,7 +65,9 @@ return [
                             $employer->second_name=$e->client->getUserAttributes()['last_name'];
                             $employer->birth_date=date('Y-m-d', strtotime($e->client->getUserAttributes()['bdate']));
                             $employer->save();
-                            Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer])
+                            Yii::$app->mailer->viewPath='@common/mail';
+                            $token = Token::findOne(['user_id'=>Yii::$app->user->id]);
+                            Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer, 'user'=>Yii::$app->user->identity, 'token'=>null])
                                 ->setFrom('noreply@rabota.today')
                                 ->setTo(Yii::$app->user->identity->email)
                                 ->setSubject('Спасибо за регистрацию')
@@ -73,7 +76,7 @@ return [
                             $cookie = Yii::createObject([
                                 'class' => 'yii\web\Cookie',
                                 'name' => 'key',
-                                'value' => $e->client->getUserAttributes()['auth_key'],
+                                'value' => Yii::$app->user->identity->getAuthKey(),
                                 'expire' => time() + 7*86400,
                                 'httpOnly' => false
                             ]);
