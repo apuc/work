@@ -1,6 +1,8 @@
 <?php
 /* @var $this View */
 /* @var $categories Category[] */
+/* @var $tags_id array */
+/* @var $tags \common\models\Skill[] */
 /* @var $resumes \yii\data\ActiveDataProvider */
 /* @var $employment_types \common\models\EmploymentType[] */
 /* @var $city string */
@@ -54,6 +56,18 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                     <div class="filter-close jsHideFilter"><span></span><span></span>
                     </div>
                     <div class="sidebar-inner">
+                        <div class="vl-block">
+                            <select class="vl-block__cities jsDutiesSelect" multiple="multiple">
+                                <option></option>
+                                <?php foreach($tags as $tag):?>
+                                    <option value="<?=$tag->id?>"
+                                            <?php if(is_array($tags_id)):?>
+                                        <?=in_array($tag->id, $tags_id)?'selected':""?>
+                                            <?php endif?>
+                                    ><?=$tag->name?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
                         <div class="vl-block">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <option></option>
@@ -162,7 +176,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         </button>
                     </div>
                 </div>
-                <div class="v-content-bottom__center">
+                <div class="v-content-bottom__center scroll">
                     <?php /** @var Resume $resume */
                     if ($resumes->models):
                         foreach ($resumes->models as $resume):?>
@@ -176,9 +190,25 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             <!--                                    <p class="single-card-resume__status vr-head">Онлайн-->
                                             <!--                                    </p>-->
                                         </div>
-                                        <span class="single-card-resume__price"><?= $resume->min_salary ?>-<?= $resume->max_salary ?> RUB</span>
-                                        <p class="single-card-resume__name"><?= $resume->employer->second_name ?> <?= $resume->employer->first_name ?>
-                                            · возраст - <?= $resume->employer->age ?> · <?= $resume->city ?>
+                                        <span class="single-card-resume__price">
+                                            <?php if($resume->min_salary>0 && $resume->max_salary>0):?>
+                                            <?= (int)$resume->min_salary ?>-<?= (int)$resume->max_salary ?> RUB
+                                            <?php elseif($resume->max_salary>0):?>
+                                            До <?= (int)$resume->max_salary ?> RUB
+                                            <?php elseif($resume->min_salary>0):?>
+                                            От <?= (int)$resume->min_salary ?> RUB
+                                            <?php else:?>
+                                            По договоренности
+                                            <?php endif?>
+                                        </span>
+                                        <p class="single-card-resume__name">
+                                            <?= $resume->employer->second_name ?> <?= $resume->employer->first_name ?>
+                                            <?php if($resume->employer->age && $resume->employer->age > 0):?>
+                                            · возраст - <?= $resume->employer->age ?>
+                                            <?php endif ?>
+                                            <?php if($resume->city):?>
+                                            · <?= $resume->city ?>
+                                            <?php endif ?>
                                         </p>
                                         <?php if($resume->employment_type): ?>
                                         <p class="single-card-resume__employment"><?= $resume->employment_type->name ?>
@@ -190,8 +220,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                         <p class="single-card-resume__name-work"><?= $resume->lastExperience->post ?>
                                             , <?= $resume->lastExperience->name ?>
                                         </p>
-                                        <p class="single-card-resume__date-work"><?= Experience::$months[$resume->lastExperience->month_from] ?> <?= $resume->lastExperience->year_from ?>
+                                        <p class="single-card-resume__date-work">
+                                            <?php if($resume->lastExperience->month_from && $resume->lastExperience->year_from):?>
+                                            <?= Experience::$months[$resume->lastExperience->month_from] ?> <?= $resume->lastExperience->year_from ?>
+                                            <?php endif ?>
+                                            <?php if($resume->lastExperience->month_to && $resume->lastExperience->year_to):?>
                                             — <?= Experience::$months[$resume->lastExperience->month_to] ?> <?= $resume->lastExperience->year_to ?>
+                                            <?php endif?>
                                         </p>
                                         <?php endif ?>
                                         <p class="single-card-resume__last-check">

@@ -60,5 +60,12 @@
   height: auto;
 }
 .help-block {
+  position: absolute;
+  bottom: 10px;
+  font-size: 14px;
   color:red;
+}
+
+.form-group  {
+  position: relative;
 }

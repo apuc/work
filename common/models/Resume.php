@@ -205,12 +205,9 @@ class Resume extends WorkActiveRecord
     public function getLastExperience()
     {
         return $this->hasOne(Experience::className(), ['resume_id' => 'id'])->orderBy('year_to DESC, month_to DESC')
-            ->where(['>', 'month_to', 0])
-            ->andWhere(['<=', 'month_to', 12])
-            ->andWhere(['>', 'month_from', 0])
+            ->where(['>', 'month_from', 0])
             ->andWhere(['<=', 'month_from', 12])
-            ->andWhere('year_from IS NOT NULL')
-            ->andWhere('year_to IS NOT NULL');
+            ->andWhere('year_from IS NOT NULL');
     }
 
     public static function getFullExperience($experiences){

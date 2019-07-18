@@ -9,7 +9,7 @@ use yii\helpers\Html;
 use yii\helpers\Url; ?>
 
 
-<section class="resume"><img class="resume__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
+<div class="resume"><img class="resume__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
     <div class="resume__circle">
     </div>
     <div class="container container-for-sidebar">
@@ -32,7 +32,7 @@ use yii\helpers\Url; ?>
                     </p><span><?= Yii::$app->formatter->asDate($model->update_time, 'dd MM yyyy') ?></span>
                 </div>
             </div>
-            <div class="resume-top"><img class="resume-top__left" src="<?=$model->image_url?$model->image_url:'/images/empty_user.jpg'?>" alt=""
+            <section class="resume-top"><img class="resume-top__left" src="<?=$model->image_url?$model->image_url:'/images/empty_user.jpg'?>" alt=""
                                          role="presentation"/>
                 <div class="resume-top__right">
 <!--                    <div class="resume-top__header">-->
@@ -45,11 +45,21 @@ use yii\helpers\Url; ?>
 <!--                        </p>-->
 <!--                    </div>-->
                     <h3 class="resume-top__head"><?= $model->title ?>
-                        <br>
-                        <p class="resume-description__text">
-                            <?=$model->employer->first_name.' '.$model->employer->second_name?>
-                        </p>
-                    </h3><span class="resume-top__price"><?= $model->min_salary ?>-<?= $model->max_salary ?> RUB</span>
+                    </h3>
+                    <p class="resume-description__text">
+                        <?=$model->employer->first_name.' '.$model->employer->second_name?>
+                    </p>
+                    <span class="resume-top__price">
+                        <?php if($model->min_salary>0 && $model->max_salary>0):?>
+                            <?= (int)$model->min_salary ?>-<?= (int)$model->max_salary ?> RUB
+                        <?php elseif($model->max_salary>0):?>
+                            До <?= (int)$model->max_salary ?> RUB
+                        <?php elseif($model->min_salary>0):?>
+                            От <?= (int)$model->min_salary ?> RUB
+                        <?php else:?>
+                            По договоренности
+                        <?php endif?>
+                    </span>
                     <table class="resume-top__text">
                         <tbody>
                         <?php if($model->employer->age>0):?>
@@ -68,18 +78,20 @@ use yii\helpers\Url; ?>
                             </td>
                         </tr>
                         <?php endif ?>
+                        <?php if($model->city):?>
                         <tr>
                             <th>Город:
                             </th>
                             <td><?= $model->city ?>
                             </td>
                         </tr>
+                        <?php endif?>
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </section>
             <div class="resume-block single-block-slider">
-                <div class="resume-description">
+                <section class="resume-description">
                     <div class="resume-description__item">
                         <div class="resume-description__main-head">
                             <h4 class="resume-description__title-main">Опыт работы
@@ -112,9 +124,18 @@ use yii\helpers\Url; ?>
                             <h4 class="resume-description__title-bold">
                                 <?= $education->name ?>
                             </h4>
-                            <p class="resume-description__text"><?= $education->academic_degree ?>,
-                                <br>с <?= $education->year_from ?> по
-                                <?= $education->year_to ?>г.
+                            <p class="resume-description__text"><?= $education->academic_degree ?><?php if($education->year_from || $education->year_to):?>,<?php endif?>
+                                <br>
+                                <?php if($education->year_from):?>
+                                с <?= $education->year_from ?>
+                                <?php endif ?>
+                                <?php if($education->year_to):?>
+                                по
+                                <?= $education->year_to ?>
+                                <?php endif?>
+                                <?php if($education->year_from || $education->year_to):?>
+                                г.
+                                <?php endif?>
                             </p>
                         <?php endforeach; ?>
                     </div>
@@ -145,8 +166,8 @@ use yii\helpers\Url; ?>
                             <?= nl2br($model->description) ?>
                         </p>
                     </div>
-                </div>
-                <div class="resume-info jsOpenContacts" id="sidebar-single">
+                </section>
+                <aside class="resume-info jsOpenContacts" id="sidebar-single">
                     <div class="single-vacancy-overlay jsHideContacts"></div>
                     <div class="sidebar-inner">
                         <button class="mobile-contacts sidebar-mobile-contacts jsShowContacts"><img
@@ -180,7 +201,7 @@ use yii\helpers\Url; ?>
                         <?php endif ?>
 <!--                        <a class="resume-info__complain" href="#">Пожаловаться на<br>это резюме</a>-->
                     </div>
-                </div>
+                </aside>
             </div>
         </div>
 <!--        <div class="soc-sidebar" id="sidebar-vr">-->
@@ -430,4 +451,4 @@ use yii\helpers\Url; ?>
 <!--            </div>-->
 <!--        </div>-->
     </div>
-</section>
+</div>

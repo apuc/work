@@ -107,14 +107,15 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 <button class="jsBtnReg jsBtn" type="submit">Отправить</button>
                 <?= Html::endForm() ?>
             <?php else:?>
-                <h2>Чтобы откликнуться на резюме <br><a href="/personal-area/add-vacancy">создайте вакансию</a>
+                <h2 class="modal-h2">Чтобы откликнуться на резюме <br><a href="/personal-area/add-vacancy">создайте вакансию</a>
                 </h2>
             <?php endif?>
             </div>
+        <?php endif ?>
             <?php
             $resumes = \common\models\Resume::find()->where(['owner'=> Yii::$app->user->id, 'status'=>\common\models\Resume::STATUS_ACTIVE])->all()?>
             <div class="modal-style modal-send-message jsModalMessageVacancy">
-                <?php if($resumes):?>
+                <?php if($resumes && !Yii::$app->user->isGuest):?>
                 <h2>Написать нам
                 </h2>
                 <?= Html::beginForm(['/vacancy/default/send-message'], 'post', ['class' => 'jsModalRegForm']) ?>
@@ -132,10 +133,13 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                     </button>
                 <?= Html::endForm() ?>
                 <?php else:?>
-                    <h2>Чтобы откликнуться на вакансию <br><a href="/personal-area/add-resume">создайте резюме</a>
+                    <h2 class="modal-h2">Чтобы откликнуться на вакансию <br><a href="/personal-area/add-resume">создайте резюме</a>
                     </h2>
                 <?php endif?>
             </div>
-        <?php endif ?>
+        <div class="modal-style modal-success jsModalSuccess <?=Yii::$app->request->get('message')?'jsActive':''?>">
+            <h2><?= Yii::$app->request->get('message')?>
+            </h2>
+        </div>
     </div>
 </div>

@@ -8,10 +8,14 @@ use common\classes\Debug;
 use common\models\Employer;
 use dektrium\user\models\LoginForm;
 use dektrium\user\models\RegistrationForm;
+use dektrium\user\models\Token;
 use dektrium\user\models\User;
+use dektrium\user\Module;
 use Yii;
+use yii\base\ViewContextInterface;
+use yii\web\NotFoundHttpException;
 
-class RegistrationController extends \dektrium\user\controllers\RegistrationController
+class RegistrationController extends \dektrium\user\controllers\RegistrationController implements ViewContextInterface
 {
     /**
      * Displays the registration page.
@@ -33,36 +37,63 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
         $this->performAjaxValidation($model);
         $post = \Yii::$app->request->post();
         $post['register-form']['username'] = $post['register-form']['email'];
-        //Debug::dd($post);
         if ($model->load($post) && $model->register()) {
             $this->trigger(self::EVENT_AFTER_REGISTER, $event);
             /** @var User $user */
             $user = User::find()->where(['email' => $post['register-form']['email']])->one();
-            $user->confirmed_at = time();
-            $user->save();
-            $login_form = \Yii::createObject(LoginForm::className());
-            $login_form->login = $post['register-form']['username'];
-            $login_form->password = $post['register-form']['password'];
-            $login_form->login();
             $employer = new Employer();
             $employer->first_name = $post['first_name'];
             $employer->second_name = $post['second_name'];
             $employer->user_id = $user->id;
+            $employer->owner = $user->id;
             $employer->save();
-            $cookie = Yii::createObject([
-                'class' => 'yii\web\Cookie',
-                'name' => 'key',
-                'value' => Yii::$app->user->identity->getAuthKey(),
-                'expire' => time() + 7*86400,
-                'httpOnly' => false
-            ]);
-            Yii::$app->getResponse()->getCookies()->add($cookie);
-            Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer])
+            $token = Token::findOne(['user_id'=>$user->id]);
+            Yii::$app->mailer->viewPath='@common/mail';
+            Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer, 'user'=>$user, 'token'=>$token])
                 ->setFrom('noreply@rabota.today')
-                ->setTo(Yii::$app->user->identity->email)
+                ->setTo($user->email)
                 ->setSubject('Спасибо за регистрацию')
                 ->send();
         }
-        return $this->goBack();
+        $url = explode('?', Yii::$app->request->referrer)[0];
+        $url.='?message=Ваш аккаунт успешно зарегистрирован, проверьте почту для получения дальнейших инструкций';
+        return $this->redirect($url);
+    }
+    /**
+     * Confirms user's account. If confirmation was successful logs the user and shows success message. Otherwise
+     * shows error message.
+     *
+     * @param int    $id
+     * @param string $code
+     *
+     * @return string
+     * @throws \yii\web\HttpException
+     */
+    public function actionConfirm($id, $code)
+    {
+        $user = $this->finder->findUserById($id);
+
+        if ($user === null) {
+            throw new NotFoundHttpException();
+        }
+
+        $event = $this->getUserEvent($user);
+        $this->trigger(self::EVENT_BEFORE_CONFIRM, $event);
+        $user->attemptConfirmation($code);
+        $this->afterConfirm($event);
+        return $this->redirect('/?message=Ваш аккаунт был успешно активирован');
+    }
+
+    public function afterConfirm($event)
+    {
+        //\common\classes\Debug::dd(123);
+        $cookie = Yii::createObject([
+            'class' => 'yii\web\Cookie',
+            'name' => 'key',
+            'value' => Yii::$app->user->identity->getAuthKey(),
+            'expire' => time() + 7*86400,
+            'httpOnly' => false
+        ]);
+        Yii::$app->getResponse()->getCookies()->add($cookie);
     }
 }

@@ -43,10 +43,7 @@ $this->params['breadcrumbs'][] = $model->post;
             ],
             'post',
             'responsibilities:ntext',
-            [
-                'attribute' => 'employment_type.name',
-                'label' => 'Тип занятости'
-            ],
+            'employment_type.name',
             'views',
             'min_salary',
             'max_salary',

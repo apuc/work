@@ -20,10 +20,13 @@ $(document).ready(function(){
         var max_salary = $("input[name='max_salary']");
         var search_text = $("input[name='resume_search_text']");
         var jsCitiesSelect = $(".jsCitiesSelect");
+        var jsDutiesSelect = $(".jsDutiesSelect");
+        console.log(jsDutiesSelect.val());
         window.location.href="/resume/search?" +
             "experience_ids=" + JSON.stringify(experienceIds) +
             "&category_ids=" + JSON.stringify(categoryIds) +
             "&employment_type_ids="+JSON.stringify(employment_typeIds) +
+            "&tags_id="+JSON.stringify(jsDutiesSelect.val()) +
             "&min_salary="+min_salary.val() +
             "&max_salary="+max_salary.val() +
             "&search_text="+search_text.val()+
@@ -34,5 +37,15 @@ $(document).ready(function(){
     });
     $(document).on('click', '#search', function () {
         search();
+    });
+    $('.jsCheckBlock').keydown(function(eventObject){
+        if (eventObject.keyCode == 13){
+            search();
+        }
+    });
+    $('.search').keydown(function(eventObject){
+        if (eventObject.keyCode == 13){
+            search();
+        }
     });
 });

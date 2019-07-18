@@ -9,12 +9,15 @@ use yii\helpers\Html;
         <div class="header">
             <div class="home__main-top">
                 <div class="home__main-header">
-										<button class="mobile-nav-btn jsOpenNavMenu"><span></span><span></span><span></span>
+										<button class="mobile-nav-btn jsOpenNavMenu"><img src="/images/menu.png" alt="" role="presentation"/>
 										</button>
 										<div class="filter-overlay nav-overlay jsNavOverlay">
 										</div>
                     <nav class="home__nav jsNavMenu">
-                        <a class="home__nav-item home__nav-item_logo" href="/"><img src="/images/logo-main.png" alt="" role="presentation"/></a>
+                        <a class="home__nav-item home__nav-item_logo" href="/">
+                            <img src="/images/logo-main.png" alt="" role="presentation"/>
+                            <img src="/images/logo_mob.png" alt="" role="presentation"/>
+                        </a>
 												<a class="home__nav-item" href="<?=yii\helpers\Url::to('/resume/search')?>">Резюме</a>
                             <?php
                             if (Yii::$app->user->isGuest): ?>
@@ -28,9 +31,10 @@ use yii\helpers\Html;
                                                                         <?=explode('@', Yii::$app->user->identity->email)[0]?>
                                                                     <?php else:?>
                                                                         <?= $employer->first_name.' '.$employer->second_name ?>
-                                                                    <?php endif?>
+                                                                    <?php endif?> <span>></span>
 																</span>
 																<div class="dropdown__menu jsShowMenu">
+                                                                    <span class="nhome__nav-item mobile-prev jsMenuPrev">Назад</span>
 																	<a class="home__nav-item" href="/personal-area">
 																		Личный кабинект
 																	</a>
@@ -45,7 +49,7 @@ use yii\helpers\Html;
                             <?php endif ?>
                     </nav>
                     <div class="home__main-email d-flex align-items-center"><span class="home__main-ico">@</span><a
-                                href="mailto:info@vendoram.ru">info@vendoram.ru</a>
+                                href="mailto:info@rabota.today">info@rabota.today</a>
                     </div>
                     <div class="d-flex align-items-center"><i class="home__main-ico fa fa-phone"></i>
                         <div class="d-flex flex-column"><a href="tel:88003553505">+8 800 355-35-05</a><a

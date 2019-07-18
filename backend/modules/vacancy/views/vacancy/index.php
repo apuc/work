@@ -57,11 +57,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'attribute' => 'employment_type_id',
+                'attribute' => 'employment_type.name',
                 'format' => 'raw',
-                'value' => function ($model) {
-                    return EmploymentType::findOne($model->employment_type_id)->name;
-                },
                 'filter'    => Html::activeDropDownList( $searchModel, 'employment_type_id',
                     \yii\helpers\ArrayHelper::map(EmploymentType::find()->asArray()->all(),'id', 'name'),
                     [ 'class' => 'form-control', 'prompt' => '' ] ),

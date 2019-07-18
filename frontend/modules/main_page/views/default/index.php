@@ -32,13 +32,14 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
         </div>
         <div class="nhome__main-top">
             <div class="nhome__main-header">
-                <button class="mobile-nav-btn jsOpenNavMenu"><span></span><span></span><span></span>
+                <button class="mobile-nav-btn jsOpenNavMenu"><img src="/images/menu.png" alt="" role="presentation"/>
                 </button>
                 <div class="filter-overlay nav-overlay jsNavOverlay">
                 </div>
                 <nav class="nhome__nav jsNavMenu">
                     <a class="nhome__nav-item nhome__nav-item_logo" href="/">
                         <img src="/images/logo-main.png" alt="" role="presentation"/>
+                        <img src="/images/logo_mob.png" alt="" role="presentation"/>
                     </a>
                     <a class="nhome__nav-item" href="<?=Url::to(['/resume/default/search'])?>">Поиск резюме</a>
                     <a class="nhome__nav-item" href="<?=Url::to(['/vacancy/default/search'])?>">Поиск вакансий</a>
@@ -72,8 +73,11 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
             </div>
             <div class="nhome__main-content">
                 <?= Html::beginForm(['/main_page/default/search'], 'post', ['class' => 'nhome__form']) ?>
-                    <span class="nhome__form-text">Сейчас на сайте свыше <span class='white-text'> <?=Vacancy::find()->count()?> вакансий </span> и <span
-                                class='white-text'> <?=\common\models\Resume::find()->count()?> резюме</span></span>
+                    <span class="nhome__form-text">
+                        Сейчас на сайте свыше
+                        <a href="<?=Url::to(['/vacancy/default/search'])?>" class='white-text'> <?=Vacancy::find()->count()?> вакансий </a> и
+                        <a href="<?=Url::to(['/resume/default/search'])?>" class='white-text'> <?=\common\models\Resume::find()->count()?> резюме</a>
+                    </span>
                     <input name="search_text" class="nhome__form-input" placeholder="Я ищу..." type="text"/>
                     <div class="nhome__form-select">
                         <select name="search_type" class="home__form-select-js">
@@ -94,10 +98,13 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
             <img class="nhome__main-big-circle" src="/images/home-big-circle.png" alt="" role="presentation"/>
             <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="" role="presentation"/>
             <h1 class="nhome__title">Работа</h1>
-            <p class="nhome__desc">Сделайте грамотный выбор! Предлагаем размещение и продвижение на новой и
+            <p class="nhome__desc desc-pc">Сделайте грамотный выбор! Предлагаем размещение и продвижение на новой и
                 перспективной площадке <span class="yellow-text">РаботаДНР</span>. Станьте первым и получайте максимум
                 продаж, опережая конкурентов на несколько шагов. Полностью берем на себя все, что связано с размещением
                 на маркетплейсе, эффективно управляем ценами и поставками
+            </p>
+            <p class="nhome__desc desc-mob">Сделайте грамотный выбор! Предлагаем размещение и продвижение на новой и
+                перспективной площадке <span class="yellow-text">РаботаДНР</span>.
             </p>
             <img class="nhome__main-bottom-img" src="/images/img1.png" img="" alt="" role="presentation"/>
         </div>
@@ -138,7 +145,6 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
                     <?php endif ?>
                     <p><?=StringHelper::truncate($vacancy->responsibilities, 80, '...')?></p>
                 </div>
-                <?php if(!Yii::$app->user->isGuest):?>
                 <div class="d-flex flex-wrap align-items-center justify-content-start mt-auto">
                     <a class="btn-card btn-red jsVacancyModal" data-id="<?=$vacancy->id?>">Откликнуться</a>
 <!--                    <a class="single-card__like" href="#">-->
@@ -146,7 +152,6 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
 <!--                        <span>В избранное</span>-->
 <!--                    </a>-->
                 </div>
-                <?php endif ?>
             </div>
             <?php endforeach ?>
         </div>
@@ -167,5 +172,5 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
         <a class="nhome__footer-item" href="#"></a>
     </div>
     <img class="nhome__dots1" src="/images/bg-dots.png" alt="" role="presentation"/>
-    <img class="nhome__circle" src="/images/circle.png" alt="" role="presentation"/>
+    <div class="nhome__circle"></div>
 </div>

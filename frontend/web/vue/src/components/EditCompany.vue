@@ -6,7 +6,6 @@
                 class="input-file"
                 :preview="true"
                 :className="['fileinput', { 'fileinput--loaded': hasImage }]"
-                capture="environment"
                 :debug="1"
                 accept="video/*,image/*"
                 doNotResize="gif"
@@ -191,7 +190,6 @@
                 let nameCompany = document.getElementById('nameCompany');
                 let site = document.getElementById('site');
                 let scopeOfTheCompany = document.getElementById('scopeOfTheCompany');
-                let addSocial = document.getElementById('addSocial');
                 let aboutCompany = document.getElementById('aboutCompany');
 
                 check.addEventListener('click', () => {
@@ -201,10 +199,6 @@
                         this.formData.nameCompany = '';
                         this.formData.site = '';
                         this.formData.scopeOfTheCompany = '';
-                        this.formData.addSocial.facebook = '';
-                        this.formData.addSocial.instagram = '';
-                        this.formData.addSocial.skype = '';
-                        this.formData.addSocial.vkontakte = '';
                         this.formData.aboutCompany = '';
 
                         for (let i = 0; i < allInputs.length; i++) {
@@ -213,7 +207,6 @@
                         nameCompany.disabled = true;
                         site.disabled = true;
                         scopeOfTheCompany.disabled = true;
-                        addSocial.querySelector('button').disabled = true;
                         aboutCompany.disabled = true;
                         FormCompany.nameCompany.rules = [];
                         FormCompany.scopeOfTheCompany.rules = [];
@@ -229,7 +222,6 @@
                         nameCompany.disabled = false;
                         site.disabled = false;
                         scopeOfTheCompany.disabled = false;
-                        addSocial.querySelector('button').disabled = false;
                         aboutCompany.disabled = false;
                         Object.assign(FormCompany.nameCompany.rules, [v => !!v || 'Название компании обязательно к заполнению']);
                         Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);

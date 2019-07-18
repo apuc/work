@@ -2,8 +2,10 @@
 
 /* @var $this View */
 /* @var $categories Category[] */
+/* @var $tags \common\models\Skill[] */
 /* @var $vacancies \yii\data\ActiveDataProvider */
 /* @var $category_ids array */
+/* @var $tags_id array */
 /* @var $experience_ids array */
 /* @var $employment_type_ids array */
 /* @var $min_salary int */
@@ -64,6 +66,18 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                     <div class="filter-close jsHideFilter"><span></span><span></span>
                     </div>
                     <div class="sidebar-inner">
+                        <div class="vl-block">
+                            <select class="vl-block__cities jsDutiesSelect" multiple="multiple">
+                                <option></option>
+                                <?php foreach($tags as $tag):?>
+                                    <option value="<?=$tag->id?>"
+                                        <?php if(is_array($tags_id)):?>
+                                            <?=in_array($tag->id, $tags_id)?'selected':""?>
+                                        <?php endif?>
+                                    ><?=$tag->name?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
                         <div class="vl-block">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <option></option>
@@ -166,7 +180,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         </button>
                     </div>
                 </div>
-                <div class="v-content-bottom__center">
+                <div class="v-content-bottom__center scroll">
                     <?php if(!$vacancies): ?>
                     <div class="single-card">
                         <p>Нет результатов поиска</p>
@@ -178,26 +192,27 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         <div class="single-card">
                             <div class="single-card__tr">
                             </div>
-                            <div>
+                            <div class="single-card__header">
                                 <?php foreach ($vacancy->category as $category): ?>
                                     <a class="btn-card btn-card-small btn-gray" href="<?=Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
                                 <?php endforeach ?>
+                                <img
+                                        class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt=""
+                                        role="presentation"/>
                             </div>
-                            <h3 class="single-card__title mt5 mb0"><?= $vacancy->post ?></h3>
+                            <h3 class="single-card__title mt5"><?= $vacancy->post ?></h3>
                             <div class="single-card__info-second"><span
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->created_at, 'dd.MM.yyyy') ?></span>
                                 <div class="single-card__view"><img class="single-card__icon mr5"
                                                                     src="/images/icon-eye.png" alt=""
                                                                     role="presentation"/><span><?= $vacancy->views ?></span>
                                 </div>
-                                <a class="d-flex align-items-center ml-auto mt5 mb5" href="<?=Url::toRoute(['/vacancy/search', 'city' => $vacancy->city])?>"><img
+                                <a class="d-flex align-items-center mt5 mb5" href="<?=Url::toRoute(['/vacancy/search', 'city' => $vacancy->city])?>"><img
                                             class="single-card__icon"
                                             src="/images/arr-place.png"
                                             alt=""
                                             role="presentation"/><span
-                                            class="ml5"><?= $vacancy->city ?></span></a><img
-                                        class="single-card__info-second__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt=""
-                                        role="presentation"/>
+                                            class="ml5"><?= $vacancy->city ?></span></a>
                             </div>
                             <span class="single-card__price">
                                 <?php if($vacancy->min_salary && $vacancy->max_salary):?>
@@ -214,7 +229,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             <div class="single-card__info">
                                 <p><?= nl2br(StringHelper::truncate($vacancy->responsibilities, 80, '...')) ?></p>
                             </div>
-                            <div class="d-flex flex-wrap align-items-center mt-auto justify-content-between">
+                            <div class="single-card__bottom">
                                 <div class="single-card__info__soc">
                                     <?php if($vacancy->company->hasSocials()): ?>
                                         <span>Написать соискателю в сетях</span>
@@ -229,7 +244,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                         <?php endif ?>
                                     <?php endif ?>
                                 </div>
-                                <a class="btn-card btn-red mt5 mb5 ml15" href="/vacancy/view/<?= $vacancy->id ?>">Посмотреть
+                                <a class="btn-card btn-red" href="/vacancy/view/<?= $vacancy->id ?>">Посмотреть
                                     полностью</a>
                             </div>
                         </div>
