@@ -87,6 +87,9 @@ return [
         'resume' => [
             'class' => 'frontend\modules\resume\Resume',
         ],
+        'msg' => [
+            'class' => 'frontend\modules\msg\Msg',
+        ],
     ],
     'components' => [
 //        'request' => [
@@ -171,6 +174,7 @@ return [
                 '/' => 'main_page/default/index',
                 'resume/view/<id>' => 'resume/default/view',
                 'vacancy/view/<id>' => 'vacancy/default/view',
+                'msg' => 'msg/default/index',
                 'vacancy/search' => 'vacancy/default/search',
                 'resume/search' => 'resume/default/search',
                 'personal-area/<action>' => 'personal_area/default/index',

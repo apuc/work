@@ -53,7 +53,8 @@ class CGMessageWidget extends PrivateMessageKushalpandyaWidget
         CGMessageAssets::register($this->view);
     }
 
-    protected function getFormInput() {
+    protected function getFormInput()
+    {
         $html = '<div class="message-south"><form action="#" class="message-form" method="POST">';
         $html .= '<textarea disabled="true" name="input_message"></textarea>';
         $html .= '<input type="hidden" name="message_id_user" value="">';
@@ -64,4 +65,16 @@ class CGMessageWidget extends PrivateMessageKushalpandyaWidget
         $html .= '</form></div>';
         return $html;
     }
+
+    protected function addJs()
+    {
+        $view = $this->getView();
+        $var_name = 'mess_' . $this->uniq_id;
+        $script = 'var ' . $var_name . ' = new visiPrivateMessages("#'. $this->uniq_id .'", function() {
+            document.querySelector(\'.contact\').click()
+        });';
+        $script .= "$var_name.getAllMessages();";
+        $view->registerJs($script, $view::POS_READY);
+    }
+
 }

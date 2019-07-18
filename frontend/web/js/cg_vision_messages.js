@@ -14,7 +14,7 @@ var visiPrivateMessages = (function() {
         return url;
     };
 
-    return function(id_block_) {
+    return function(id_block_, callback) {
         var id_block = typeof id_block_ != "undefined" ? id_block_ : '#message-container';
         if(id_block in di) {
             return di[id_block];
@@ -240,6 +240,7 @@ var visiPrivateMessages = (function() {
 
         di[id_block] = this;
 
+        callback();
 
         this.pools = new privateMessPooling(self.lastId);
         this.pools.addListener('newData', this.fromPooling);
