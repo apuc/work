@@ -2,6 +2,7 @@
 
 namespace frontend\modules\request\controllers;
 
+use common\classes\Debug;
 use common\models\Category;
 use common\models\Company;
 use common\models\Vacancy;
@@ -30,6 +31,7 @@ class VacancyController extends MyActiveController
     public function actionCreate(){
         $model = new Vacancy();
         $params = Yii::$app->getRequest()->getBodyParams();
+        Debug::dd($params);
         if(Yii::$app->user->isGuest)
             throw new HttpException(400, 'Пользователь не авторизирован');
         $model->load($params, '');
