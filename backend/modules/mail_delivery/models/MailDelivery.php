@@ -26,33 +26,37 @@ class MailDelivery extends Model
 
     public function parseExcel($file)
     {
-        ini_set("memory_limit",-1);
-        $validator = new EmailValidator();
+        $this->readExcel($file);
+
+        $users = SendMail::find()->where(['status' => 0])->asArray()->all();
+        $this->sendMessage($users);
+
+    }
+
+    public function readExcel($file)
+    {
         $objPHPExcel = \PHPExcel_IOFactory::load($file->tempName);
         $count = $objPHPExcel->getSheetCount();
-        $res = $objPHPExcel->setActiveSheetIndex(1)->getRowIterator();
-        Debug::dd($res);
 
         for($i = 0; $i < $count; ++$i) {
             $result = [];
             $objPHPExcel->setActiveSheetIndex($i);
-            $sheet = $objPHPExcel->getActiveSheet();
-            $sheetTitle = $sheet->getTitle();
+            $sheetTitle = $objPHPExcel->getActiveSheet()->getTitle();
+            $maxCell = $objPHPExcel->getActiveSheet()->getHighestRowAndColumn();
+            $data = $objPHPExcel->getActiveSheet()->rangeToArray('A1:' . $maxCell['column'] . $maxCell['row']);
 
-            foreach ($sheet->toArray() as $row) {
-                if ($row[0] != 'Почта' && !empty($row[0])) {
+            foreach ($data as $row) {
+                if ($row[0] != 'Почта' && $row[0] != 'Почты' && !empty($row[0])) {
                     $tmp = [$row[0], $row[1]];
                     array_push($result, $tmp);
                 }
             }
-//            $this->saveMessage($result, $sheetTitle);
+            $this->saveMessage($result, $sheetTitle);
             unset($sheetTitle);
             unset($sheet);
             unset($result);
             unset($tmp);
         }
-
-
     }
 
     public function saveMessage($result, $sheetTitle)
@@ -65,16 +69,19 @@ class MailDelivery extends Model
             $options = [];
             $model->user_id = $this->getUser($model->email);
             if($sheetTitle == 'Почты вакансии') {
-                $options['token'] = $this->getVacancy($model->user_id);
+                $options['variable'] = $this->getVacancy($model->user_id);
                 $letter = 'letter3';
             }
             if($sheetTitle == 'Резюме добавлены' || $sheetTitle == 'Резюме список') {
-                $options['vacancy'] = $this->getToken($model->user_id);
+                $options['variable'] = $this->getToken($model->user_id);
                 $letter = 'letter1';
             }
-            $options['name'] = $item[1];
+            $options['name'] = $item[1] ? $item[1] : '';
             $model->status = 0;
             $model->template = $letter;
+            if(!isset($options['variable'])) {
+                $options['variable'] = '';
+            }
             $model->options = json_encode($options);
             $model->save();
             unset($model);
@@ -83,26 +90,22 @@ class MailDelivery extends Model
         }
     }
 
-    public function sendMessage($users, $result, $letter)
+    public function sendMessage($users)
     {
         $messages = [];
-        foreach ($users as $user) {
-            foreach ($result as $item) {
-                if($user['email'] == $item[0]) {
-                    if(!isset($user['variable'])){
-                        $user['variable'] = '';
-                    }
-                    $messages[] = Yii::$app->mailer->compose($letter, [
-                        'name' => $item[1],
-                        'variable' => $user['variable'],
-                        'id'   => $user['id'],
-                    ])
-                        ->setFrom('noreply@rabota.today')
-                        ->setSubject('Тестовая рассылка для сайты с работой')
-                        ->setTo($item[0]);
-                }
-            }
+        foreach ($users as $user)
+        {
+            $options = (array) json_decode($user['options']);
+            $messages[] = Yii::$app->mailer->compose($user['template'], [
+                'name' => $options['name'],
+                'variable' =>  $options['variable'],
+                'id' => $user['user_id']
+            ])
+                ->setFrom('noreply@rabota.today')
+                ->setSubject('Тестовая рассылка для сайты с работой')
+                ->setTo($user['email']);
         }
+
         return Yii::$app->mailer->sendMultiple($messages);
     }
 
@@ -141,19 +144,24 @@ class MailDelivery extends Model
 
     public function getUser($email)
     {
-        $user = User::find()->where(['email' => $email])->asArray()->one();
-        return $user['id'];
+        $user = User::findOne(['email' => $email]);
+        return $user->id;
 
     }
 
     public function getToken($id)
     {
-        return Token::findOne(['user_id' => $id]);
+        $token = Token::findOne(['user_id' => $id]);
+        if(!$token) return '';
+        $token = $token ? $token->code : '';
+        return $token;
     }
 
     public function getVacancy($id)
     {
-        $company_id = Company::findOne(['user_id' =>$id]);
-        return Vacancy::findOne(['company_id' => $company_id]);
+        $company_id = Company::findOne(['user_id' => $id]);
+        if(!$company_id) return '';
+        $vacancy = Vacancy::findOne(['company_id' => $company_id->id]);
+        return $vacancy->id;
     }
 }
