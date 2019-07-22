@@ -46,6 +46,9 @@ return [
         'key_value' => [
             'class' => 'backend\modules\key_value\KeyValue',
         ],
+        'mail_delivery' => [
+            'class' => 'backend\modules\mail_delivery\MailDelivery',
+        ],
         'user' => [
             'class'  => 'dektrium\user\Module',
             'admins' => ['test'],
@@ -61,6 +64,18 @@ return [
 //            'enableAutoLogin' => true,
 //            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
 //        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'mail.adm.tools',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
+                'username' => 'noreply@rabota.today',
+                'password' => '123edsaqw',
+                'port' => '2525', // Port 25 is a very common port too
+                'encryption' => 'tls', // It is often used, check your provider or mail server specs
+            ],
+        ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',

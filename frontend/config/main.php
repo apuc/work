@@ -101,12 +101,53 @@ return [
         'resume' => [
             'class' => 'frontend\modules\resume\Resume',
         ],
+        'msg' => [
+            'class' => 'frontend\modules\msg\Msg',
+        ],
     ],
     'components' => [
 //        'request' => [
 //            'csrfParam' => '_csrf-frontend',
 //        ],
-
+        'mymessages' => [
+            //Обязательно
+            'class' => 'vision\messages\components\MyMessages',
+            //не обязательно
+            //класс модели пользователей
+            //по-умолчанию \Yii::$app->user->identityClass
+            'modelUser' => 'frontend\models\user\UserDec',
+            //имя контроллера где разместили action
+            'nameController' => '/msg/default',
+            //не обязательно
+            //имя поля в таблице пользователей которое будет использоваться в качестве имени
+            //по-умолчанию username
+            'attributeNameUser' => 'username',
+            //не обязательно
+            //можно указать роли и/или id пользователей которые будут видны в списке контактов всем кто не подпадает
+            //в эту выборку, при этом указанные пользователи будут и смогут писать всем зарегестрированным пользователям
+            'admins' => [],
+            //не обязательно
+            //включение возможности дублировать сообщение на email
+            //для работы данной функции в проектк должна быть реализована отправка почты штатными средствами фреймворка
+            'enableEmail' => true,
+            //задаем функцию для возврата адреса почты
+            //в качестве аргумента передается объект модели пользователя
+            'getEmail' => function ($user_model) {
+                return $user_model->email;
+            },
+            //задаем функцию для возврата лого пользователей в списке контактов (для виджета cloud)
+            //в качестве аргумента передается id пользователя
+            'getLogo' => function ($user_id) {
+                return '\img\ghgsd.jpg';
+            },
+            //указываем шаблоны сообщений, в них будет передаваться сообщение $message
+            'templateEmail' => [
+                'html' => 'private-message-text',
+                'text' => 'private-message-html'
+            ],
+            //тема письма
+            'subject' => 'Private message'
+        ],
         'user' => [
             //'class' => 'app\components\User',
             'identityClass' => 'common\models\base\User',
@@ -147,6 +188,7 @@ return [
                 '/' => 'main_page/default/index',
                 'resume/view/<id>' => 'resume/default/view',
                 'vacancy/view/<id>' => 'vacancy/default/view',
+                'msg' => 'msg/default/index',
                 'vacancy/search' => 'vacancy/default/search',
                 'resume/search' => 'resume/default/search',
                 'personal-area/<action>' => 'personal_area/default/index',
