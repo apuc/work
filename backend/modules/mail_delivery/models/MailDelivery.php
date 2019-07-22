@@ -28,8 +28,8 @@ class MailDelivery extends Model
     {
         $this->readExcel($file);
 
-        $users = SendMail::find()->where(['status' => 0])->asArray()->all();
-        $this->sendMessage($users);
+//        $users = SendMail::find()->where(['status' => 0])->asArray()->all();
+//        $this->sendMessage($users);
 
     }
 
@@ -51,6 +51,7 @@ class MailDelivery extends Model
                     array_push($result, $tmp);
                 }
             }
+
             $this->saveMessage($result, $sheetTitle);
             unset($sheetTitle);
             unset($sheet);
@@ -145,6 +146,7 @@ class MailDelivery extends Model
     public function getUser($email)
     {
         $user = User::findOne(['email' => $email]);
+        if(!$user) return null;
         return $user->id;
 
     }
