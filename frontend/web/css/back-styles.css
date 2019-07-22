@@ -69,3 +69,7 @@
 .form-group  {
   position: relative;
 }
+
+.home-card .single-card__info {
+  margin-top: 5px;
+}
