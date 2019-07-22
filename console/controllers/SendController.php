@@ -23,5 +23,6 @@ class SendController extends Controller
             $users = SendMail::find()->where(['status' => 0])->asArray()->all();
         }
         $file->sendMessage($users);
+        return 'complete';
     }
 }
