@@ -15,12 +15,17 @@ class SendController extends Controller
         return ['all'];
     }
 
+    public function optionAliases()
+    {
+        return ['all' => 'all'];
+    }
+
     public function actionIndex()
     {
         $file = new MailDelivery();
-        $users = SendMail::find()->where(['status' => 0])->asArray()->one();
+        $users = SendMail::find()->where(['status' => 0])->limit(1)->all();
         if($this->all == true) {
-            $users = SendMail::find()->where(['status' => 0])->asArray()->all();
+            $users = SendMail::find()->where(['status' => 0])->all();
         }
         $file->sendMessage($users);
         return 'complete';

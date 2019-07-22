@@ -30,5 +30,7 @@ class MailDeliveryController extends Controller
         $file = new MailDelivery();
         $users = SendMail::find()->where(['status' => 0])->asArray()->all();
         $file->sendMessage($users);
+
+        return $this->render('index', compact('file'));
     }
 }

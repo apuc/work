@@ -64,14 +64,17 @@ class MailDelivery extends Model
             $model->email = $item[0];
             $letter = 'letter2';
             $options = [];
+            $model->subject = 'Наконец то! Новый сервис работы';
             $model->user_id = $this->getUser($model->email);
             if($sheetTitle == 'Почты вакансии') {
                 $options['variable'] = $this->getVacancy($model->user_id);
                 $letter = 'letter3';
+                $model->subject = 'Я тебя давно искал. Твоя вакансия уже у нас!';
             }
             if($sheetTitle == 'Резюме добавлены' || $sheetTitle == 'Резюме список') {
                 $options['variable'] = $this->getToken($model->user_id);
                 $letter = 'letter1';
+                $model->subject = 'Есть работа! Личное приглашение';
             }
             $options['name'] = $item[1] ? $item[1] : '';
             $model->status = 0;
@@ -92,17 +95,17 @@ class MailDelivery extends Model
         $messages = [];
         foreach ($users as $user)
         {
-            $options = (array) json_decode($user['options']);
-            $messages[] = Yii::$app->mailer->compose($user['template'], [
+            $options = (array) json_decode($user->options);
+            $messages[] = Yii::$app->mailer->compose($user->template, [
                 'name' => $options['name'],
                 'variable' =>  $options['variable'],
-                'id' => $user['user_id']
+                'id' => $user->user_id
             ])
                 ->setFrom('noreply@rabota.today')
-                ->setSubject('Тестовая рассылка для сайты с работой')
-                ->setTo($user['email']);
+                ->setSubject($user->subject)
+                ->setTo($user->email);
         }
-
+        
         return Yii::$app->mailer->sendMultiple($messages);
     }
 
