@@ -22,4 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php \yii\widgets\ActiveForm::end(); ?>
     <h4>Структура документа должен представлять следующую последовательность данных: |Почта|Имя|</h4>
+
+    <p>
+        <?= Html::a('Создать рассылку', ['send'], ['class' => 'btn btn-success']) ?>
+    </p>
+
 </div>

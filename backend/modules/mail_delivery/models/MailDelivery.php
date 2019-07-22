@@ -27,10 +27,6 @@ class MailDelivery extends Model
     public function parseExcel($file)
     {
         $this->readExcel($file);
-
-//        $users = SendMail::find()->where(['status' => 0])->asArray()->all();
-//        $this->sendMessage($users);
-
     }
 
     public function readExcel($file)
