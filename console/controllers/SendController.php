@@ -3,7 +3,9 @@
 namespace console\controllers;
 
 use backend\modules\mail_delivery\models\MailDelivery;
+use common\classes\Debug;
 use common\models\SendMail;
+use Yii;
 use yii\console\Controller;
 
 class SendController extends Controller
@@ -28,6 +30,5 @@ class SendController extends Controller
             $users = SendMail::find()->where(['status' => 0])->all();
         }
         $file->sendMessage($users);
-        return 'complete';
     }
 }

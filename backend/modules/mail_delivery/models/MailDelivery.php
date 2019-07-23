@@ -103,51 +103,21 @@ class MailDelivery extends Model
             ])
                 ->setFrom('noreply@rabota.today')
                 ->setSubject($user->subject)
-                ->setTo($user->email);
+                ->setTo($user->email)->send();
+            $user->status = 1;
+            $user->dt_send = strtotime(date("Y-m-d H:i:s"));
+            $user->save();
+            echo 'Почта отправлена на адрес:' . $user->email . "\n";
+            sleep(1);
         }
-        
-        return Yii::$app->mailer->sendMultiple($messages);
-    }
-
-    public function getUsersByEmail($data)
-    {
-        $forQuery = [];
-        foreach ($data as $item)
-        {
-            array_push($forQuery,$item[0]);
-        }
-        $result = User::find()->where(['in', 'email', $forQuery])->asArray()->all();
-
-        return $result;
-    }
-
-    public function getTokensById($data)
-    {
-        foreach ($data as &$item){
-            $token = Token::findOne(['user_id' => $item['id']]);
-            $item['variable'] = $token ? $token->code : '';
-        }
-
-        return $data;
-    }
-
-    public function getLinkVacancy( $data)
-    {
-        foreach ($data as &$item) {
-            $company_id = Company::findOne(['user_id' => $item['id']]);
-            $vacancy = Vacancy::findOne(['company_id' => $company_id]);
-            $item['variable'] = $vacancy ? $vacancy->id : '';
-        }
-
-        return $data;
     }
 
     public function getUser($email)
     {
         $user = User::findOne(['email' => $email]);
         if(!$user) return null;
-        return $user->id;
 
+        return $user->id;
     }
 
     public function getToken($id)
@@ -155,6 +125,7 @@ class MailDelivery extends Model
         $token = Token::findOne(['user_id' => $id]);
         if(!$token) return '';
         $token = $token ? $token->code : '';
+
         return $token;
     }
 
@@ -163,6 +134,7 @@ class MailDelivery extends Model
         $company_id = Company::findOne(['user_id' => $id]);
         if(!$company_id) return '';
         $vacancy = Vacancy::findOne(['company_id' => $company_id->id]);
+
         return $vacancy->id;
     }
 }
