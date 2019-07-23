@@ -64,14 +64,17 @@ class MailDelivery extends Model
             $model->email = $item[0];
             $letter = 'letter2';
             $options = [];
+            $model->subject = 'Наконец то! Новый сервис работы';
             $model->user_id = $this->getUser($model->email);
             if($sheetTitle == 'Почты вакансии') {
                 $options['variable'] = $this->getVacancy($model->user_id);
                 $letter = 'letter3';
+                $model->subject = 'Я тебя давно искал. Твоя вакансия уже у нас!';
             }
             if($sheetTitle == 'Резюме добавлены' || $sheetTitle == 'Резюме список') {
                 $options['variable'] = $this->getToken($model->user_id);
                 $letter = 'letter1';
+                $model->subject = 'Есть работа! Личное приглашение';
             }
             $options['name'] = $item[1] ? $item[1] : '';
             $model->status = 0;
@@ -92,59 +95,29 @@ class MailDelivery extends Model
         $messages = [];
         foreach ($users as $user)
         {
-            $options = (array) json_decode($user['options']);
-            $messages[] = Yii::$app->mailer->compose($user['template'], [
+            $options = (array) json_decode($user->options);
+            $messages[] = Yii::$app->mailer->compose($user->template, [
                 'name' => $options['name'],
                 'variable' =>  $options['variable'],
-                'id' => $user['user_id']
+                'id' => $user->user_id
             ])
                 ->setFrom('noreply@rabota.today')
-                ->setSubject('Тестовая рассылка для сайты с работой')
-                ->setTo($user['email']);
+                ->setSubject($user->subject)
+                ->setTo($user->email)->send();
+            $user->status = 1;
+            $user->dt_send = strtotime(date("Y-m-d H:i:s"));
+            $user->save();
+            echo 'Почта отправлена на адрес:' . $user->email . "\n";
+            sleep(1);
         }
-
-        return Yii::$app->mailer->sendMultiple($messages);
-    }
-
-    public function getUsersByEmail($data)
-    {
-        $forQuery = [];
-        foreach ($data as $item)
-        {
-            array_push($forQuery,$item[0]);
-        }
-        $result = User::find()->where(['in', 'email', $forQuery])->asArray()->all();
-
-        return $result;
-    }
-
-    public function getTokensById($data)
-    {
-        foreach ($data as &$item){
-            $token = Token::findOne(['user_id' => $item['id']]);
-            $item['variable'] = $token ? $token->code : '';
-        }
-
-        return $data;
-    }
-
-    public function getLinkVacancy( $data)
-    {
-        foreach ($data as &$item) {
-            $company_id = Company::findOne(['user_id' => $item['id']]);
-            $vacancy = Vacancy::findOne(['company_id' => $company_id]);
-            $item['variable'] = $vacancy ? $vacancy->id : '';
-        }
-
-        return $data;
     }
 
     public function getUser($email)
     {
         $user = User::findOne(['email' => $email]);
         if(!$user) return null;
-        return $user->id;
 
+        return $user->id;
     }
 
     public function getToken($id)
@@ -152,6 +125,7 @@ class MailDelivery extends Model
         $token = Token::findOne(['user_id' => $id]);
         if(!$token) return '';
         $token = $token ? $token->code : '';
+
         return $token;
     }
 
@@ -160,6 +134,7 @@ class MailDelivery extends Model
         $company_id = Company::findOne(['user_id' => $id]);
         if(!$company_id) return '';
         $vacancy = Vacancy::findOne(['company_id' => $company_id->id]);
+
         return $vacancy->id;
     }
 }
