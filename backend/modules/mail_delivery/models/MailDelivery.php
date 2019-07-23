@@ -19,6 +19,9 @@ class MailDelivery extends SendMail
     {
         return [
           [['excel'], 'file', 'extensions' => 'xlsx'],
+            [['email', 'user_id', 'template', 'subject'], 'required'],
+            ['email', 'email'],
+            [['user_id', 'status'], 'integer'],
         ];
     }
 

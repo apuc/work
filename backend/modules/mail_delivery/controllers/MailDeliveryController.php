@@ -47,6 +47,19 @@ class MailDeliveryController extends Controller
             ]);
     }
 
+    public function actionCreate()
+    {
+        $model = new MailDelivery();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
     public function actionView($id)
     {
         $model = $this->findModel($id);
