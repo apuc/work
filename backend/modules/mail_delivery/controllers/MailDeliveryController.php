@@ -22,6 +22,7 @@ class MailDeliveryController extends Controller
             $file->excel = UploadedFile::getInstance($file, 'excel');
             $file->parseExcel($file->excel);
         }
+
         return $this->render('index',
             [
                 'searchModel' => $file,
@@ -29,13 +30,21 @@ class MailDeliveryController extends Controller
             ]);
     }
 
-    public function actionSend()
+    public function actionSend($id = null)
     {
-        $file = new MailDelivery();
+        $file = new MailDeliverySearch();
+        $dataProvider = $file->search(Yii::$app->request->queryParams);
         $users = SendMail::find()->where(['status' => 0])->all();
+        if($id !== null){
+            $users = SendMail::find()->where(['id' => $id])->limit(1)->all();
+        }
         $file->sendMessage($users);
 
-        return $this->render('index', compact('file'));
+        return $this->render('index',
+            [
+                'searchModel' => $file,
+                'dataProvider' => $dataProvider,
+            ]);
     }
 
     public function actionView($id)

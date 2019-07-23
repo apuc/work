@@ -31,12 +31,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-                'id',
                 'email',
                 'template',
-                'status',
+                [
+                  'attribute' => 'status',
+                  'value' => function($model) {
+                        return \common\models\SendMail::getStatusName($model->status);
+                  }
+                ],
                 'dt_send',
                 'subject',
+                [
+                    'label' => 'Отправить письмо',
+                    'format' => 'raw',
+                    'value' => function($model) {
+                        return Html::a('Отправка письма',['send', 'id' => $model->id],['class' => 'btn btn-success btn-xs']);
+                    }
+                ],
             ['class' => 'yii\grid\ActionColumn'],
             ],
 ]); ?>
