@@ -108,7 +108,7 @@ class MailDelivery extends SendMail
             if($answer == true) {
                 echo 'Почта отправлена на адрес:' . $user->email . "\n";
             }
-           
+
             sleep(1);
         }
     }
