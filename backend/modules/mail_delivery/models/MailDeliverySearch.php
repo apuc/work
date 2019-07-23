@@ -20,6 +20,7 @@ class MailDeliverySearch extends MailDelivery
         $query->andFilterWhere([
             'id' => $this->id,
         ]);
+        $query->orderBy('id DESC');
 
         return $dataProvider;
     }
