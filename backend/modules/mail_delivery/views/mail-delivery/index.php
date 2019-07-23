@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="mail-delivery-index">
     <?php $form = \yii\widgets\ActiveForm::begin(); ?>
 
-    <?= $form->field($file, 'excel')->fileInput() ?>
+    <?= $form->field($searchModel, 'excel')->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitInput('Submit', ['class' => 'btn btn-success']) ?>
@@ -26,5 +26,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Создать рассылку', ['send'], ['class' => 'btn btn-success']) ?>
     </p>
+<?= \yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'id',
+                'email',
+                'template',
+                'status',
+                'dt_send',
+                'subject',
+            ['class' => 'yii\grid\ActionColumn'],
+            ],
+]); ?>
+
 
 </div>
