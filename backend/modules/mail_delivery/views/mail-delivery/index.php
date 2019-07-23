@@ -26,6 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Создать рассылку', ['send'], ['class' => 'btn btn-success']) ?>
     </p>
+    <p>
+        <?= Html::a('Добавить', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 <?= \yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,

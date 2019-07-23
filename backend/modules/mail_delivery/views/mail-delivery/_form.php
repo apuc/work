@@ -6,6 +6,8 @@ use yii\helpers\Html; ?>
 
     <?= $form->field($model, 'email'); ?>
 
+    <?= $form->field($model, 'user_id'); ?>
+
     <?= $form->field($model, 'template'); ?>
 
     <?= $form->field($model, 'status'); ?>
