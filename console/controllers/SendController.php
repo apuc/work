@@ -29,7 +29,7 @@ class SendController extends Controller
     public function actionIndex()
     {
         $file = new MailDelivery();
-        $users = SendMail::find()->where(['user_id' => $this->id])->limit(1)->all();
+        $users = SendMail::find()->where(['id' => $this->id])->limit(1)->all();
         if($this->all == true) {
             $users = SendMail::find()->where(['status' => 0])->all();
         }
