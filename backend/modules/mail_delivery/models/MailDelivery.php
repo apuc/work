@@ -9,10 +9,8 @@ use common\models\User;
 use common\models\Vacancy;
 use dektrium\user\models\Token;
 use Yii;
-use yii\base\Model;
-use yii\validators\EmailValidator;
 
-class MailDelivery extends Model
+class MailDelivery extends SendMail
 {
     public $file;
     public $excel;
