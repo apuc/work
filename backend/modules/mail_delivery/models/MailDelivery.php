@@ -88,7 +88,7 @@ class MailDelivery extends SendMail
         }
     }
 
-    public function sendMessage($users)
+    public function sendMessage($users, $answer = false)
     {
         $messages = [];
         foreach ($users as $user)
@@ -105,7 +105,10 @@ class MailDelivery extends SendMail
             $user->status = 1;
             $user->dt_send = strtotime(date("Y-m-d H:i:s"));
             $user->save();
-            echo 'Почта отправлена на адрес:' . $user->email . "\n";
+            if($answer == true) {
+                echo 'Почта отправлена на адрес:' . $user->email . "\n";
+            }
+           
             sleep(1);
         }
     }

@@ -33,6 +33,6 @@ class SendController extends Controller
         if($this->all == true) {
             $users = SendMail::find()->where(['status' => 0])->all();
         }
-        $file->sendMessage($users);
+        $file->sendMessage($users, true);
     }
 }
