@@ -31,7 +31,7 @@ class SkillController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'denyCallback' => function ($rule, $action) {
-                    return $this->redirect('/');
+                        return $this->redirect('/');
                 },
                 'ruleConfig' => [
                     'class' => AccessRule::className(),
