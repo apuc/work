@@ -50,8 +50,8 @@ class SendMail extends ActiveRecord
     public static function getStatusList()
     {
         return [
+            self::TYPE_UNSEND => 'В очереди на отправку',
             self::TYPE_SEND => 'Отправлено',
-            self::TYPE_UNSEND => 'Неотправлено',
         ];
     }
 }

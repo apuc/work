@@ -51,7 +51,7 @@ return [
         ],
         'user' => [
             'class'  => 'dektrium\user\Module',
-            'admins' => ['test'],
+            'admins' => ['test', 'millenion94@gmail.com', 'kirill.bouko@gmail.com'],
             'as backend' => 'dektrium\user\filters\BackendFilter',
         ],
     ],
