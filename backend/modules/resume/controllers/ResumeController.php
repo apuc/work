@@ -6,9 +6,11 @@ use common\classes\Debug;
 use common\models\ResumeCategory;
 use common\models\ResumeEmploymentType;
 use common\models\ResumeSkill;
+use dektrium\user\filters\AccessRule;
 use Yii;
 use common\models\Resume;
 use backend\modules\resume\models\ResumeSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -28,6 +30,26 @@ class ResumeController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'denyCallback' => function ($rule, $action) {
+                    return $this->redirect('/');
+                },
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['switch'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
                 ],
             ],
         ];

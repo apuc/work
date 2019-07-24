@@ -4,9 +4,11 @@ namespace backend\modules\company\controllers;
 
 use common\classes\Debug;
 use common\models\Phone;
+use dektrium\user\filters\AccessRule;
 use Yii;
 use common\models\Company;
 use backend\modules\company\models\CompanySearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +28,26 @@ class CompanyController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'denyCallback' => function ($rule, $action) {
+                    return $this->redirect('/');
+                },
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['switch'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
                 ],
             ],
         ];
