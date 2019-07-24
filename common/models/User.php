@@ -5,6 +5,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -194,5 +195,10 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getEmployer(){
         return $this->hasOne(Employer::className(), ['user_id'=>'id']);
+    }
+
+    public static function getUserList()
+    {
+        return ArrayHelper::map(self::find()->all(), 'id', 'username');
     }
 }
