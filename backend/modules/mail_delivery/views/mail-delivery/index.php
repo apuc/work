@@ -15,6 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = \yii\widgets\ActiveForm::begin(); ?>
 
     <?= $form->field($searchModel, 'excel')->fileInput() ?>
+    <?= $form->field($searchModel, 'template')->fileInput([
+    ]) ?>
 
     <div class="form-group">
         <?= Html::submitInput('Submit', ['class' => 'btn btn-success']) ?>

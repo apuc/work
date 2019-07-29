@@ -56,7 +56,13 @@ class MailDeliveryController extends Controller
 
         if (Yii::$app->request->isPost) {
             $file->excel = UploadedFile::getInstance($file, 'excel');
-            $file->parseExcel($file->excel);
+            if(!empty($file->excel)){
+                $file->parseExcel($file->excel);
+            }
+            $file->template = UploadedFile::getInstance($file,'template');
+            if(!empty($file->template)){
+                $file->template->saveAs(\Yii::getAlias('@common/mail/admin_template/' . $file->template->baseName . '.' . $file->template->extension));
+            }
         }
 
         return $this->render('index',

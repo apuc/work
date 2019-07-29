@@ -14,11 +14,13 @@ class MailDelivery extends SendMail
 {
     public $file;
     public $excel;
+    public $template;
 
     public function rules()
     {
         return [
           [['excel'], 'file', 'extensions' => 'xlsx'],
+            [['template'], 'file', 'extensions' => 'php, html'],
             [['email', 'user_id', 'template', 'subject'], 'required'],
             ['email', 'email'],
             [['user_id', 'status'], 'integer'],

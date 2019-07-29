@@ -2,7 +2,11 @@
 
 namespace common\models;
 
+use common\classes\Debug;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 class SendMail extends ActiveRecord
 {
@@ -53,5 +57,20 @@ class SendMail extends ActiveRecord
             self::TYPE_UNSEND => 'В очереди на отправку',
             self::TYPE_SEND => 'Отправлено',
         ];
+    }
+
+    public static function getTemplate()
+    {
+        $files=\yii\helpers\FileHelper::findFiles(\Yii::getAlias('@common/mail/admin_template'));
+        $res = [];
+        if (isset($files[0])) {
+            foreach ($files as $index => $file) {
+                $nameFicheiro = substr($file, strrpos($file, '/') + 1);
+                $nameFicheiro = strtok($nameFicheiro, '.');
+                $res[$nameFicheiro] = $nameFicheiro;
+            }
+        }
+
+        return $res;
     }
 }
