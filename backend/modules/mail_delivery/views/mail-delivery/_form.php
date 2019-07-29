@@ -18,7 +18,7 @@ use yii\helpers\Html; ?>
         ],
     ]);?>
 
-    <?= $form->field($model, 'template'); ?>
+    <?= $form->field($model, 'template')->dropDownList(\common\models\SendMail::getTemplate()); ?>
 
     <?= $form->field($model, 'status')->dropDownList(\common\models\SendMail::getStatusList()); ?>
 
