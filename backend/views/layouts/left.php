@@ -41,7 +41,13 @@
                     ['label' => 'Умения', 'url' => ['/skill/skill/index']],
                     ['label' => 'Категории', 'url' => ['/category/category/index']],
                     ['label' => 'Переменные', 'url' => ['/key_value/key-value/index']],
-                    ['label' => 'Рассылка почты', 'url' => ['/mail_delivery/mail-delivery/index']],
+                    [
+                            'label' => 'Рассылка почты', 'url' => '#',
+                        'items' => [
+                                ['label' => 'Управление рассылкой', 'icon' => 'mail', 'url' => ['/mail_delivery/mail-delivery/index']],
+                                ['label' => 'Шаблоны', 'icon' => 'sheet', 'url' => ['/mail_delivery/templates/index']],
+                        ],
+                    ],
                 ],
             ]
         ) ?>

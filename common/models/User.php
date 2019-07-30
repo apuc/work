@@ -199,6 +199,6 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function getUserList()
     {
-        return ArrayHelper::map(self::find()->all(), 'id', 'username');
+        return ArrayHelper::map(self::find()->all(), 'username', 'username');
     }
 }
