@@ -59,10 +59,6 @@ class MailDeliveryController extends Controller
             if(!empty($file->excel)){
                 $file->parseExcel($file->excel);
             }
-            $file->template = UploadedFile::getInstance($file,'template');
-            if(!empty($file->template)){
-                $file->template->saveAs(\Yii::getAlias('@common/mail/admin_template/' . $file->template->baseName . '.' . $file->template->extension));
-            }
         }
 
         return $this->render('index',
@@ -92,9 +88,12 @@ class MailDeliveryController extends Controller
     public function actionCreate()
     {
         $model = new MailDelivery();
+        $arr = [];
+        if ($model->load(Yii::$app->request->post())) {
+            $arr[] = array_values($model->toArray());
+            $model = $model->saveMessage($arr, $model->template);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model]);
         }
 
         return $this->render('create', [

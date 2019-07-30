@@ -21,6 +21,7 @@ class SendMail extends ActiveRecord
     public function rules()
     {
         return [
+            [['id'], 'integer'],
             [['email', 'template','subject'], 'required'],
             [['email', 'template', 'options'], 'string']
         ];
@@ -66,7 +67,7 @@ class SendMail extends ActiveRecord
         if (isset($files[0])) {
             foreach ($files as $index => $file) {
                 $nameFicheiro = substr($file, strrpos($file, '/') + 1);
-                $nameFicheiro = strtok($nameFicheiro, '.');
+//                $nameFicheiro = strtok($nameFicheiro, '.');
                 $res[$nameFicheiro] = $nameFicheiro;
             }
         }
