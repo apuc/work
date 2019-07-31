@@ -115,6 +115,7 @@ class MailDeliveryController extends Controller
         $model = $this->findModel($id);
 
         if($model->load(Yii::$app->request->post()) && $model->save()) {
+//            Debug::dd($model->errors);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
