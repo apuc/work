@@ -21,7 +21,7 @@ class SendMail extends ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id', 'status'], 'integer'],
             [['email', 'template','subject'], 'required'],
             [['email', 'template', 'options'], 'string']
         ];
