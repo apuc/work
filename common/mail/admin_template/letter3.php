@@ -16,7 +16,7 @@
     ">
 	<tr>
 		<td>
-			<img src="https://html.art-craft.xyz/work-letter/03.jpg" alt="">
+			<img src="https://rabota.today/media/letters/03.jpg" alt="">
 		</td>
 	</tr>
 	<tr style="
@@ -207,7 +207,7 @@
 		padding-bottom: 35px;
     padding-left: 50px;
     padding-right: 50px;
-    background: url(https://html.art-craft.xyz/work-letter/pi.jpg) no-repeat 50% 100%;
+    background: url(https://rabota.today/media/letters/pi.png) no-repeat 50% 100%;
 	">
 		<td style="
     width: 190px; padding-left: 150px;">
@@ -223,7 +223,7 @@
 		</td>
 		<td style="width: 45px; padding-right: 37px;">
 			<a href="https://vk.com/rabotad0netsk">
-				<img src="https://html.art-craft.xyz/work-letter/letter_vk.png" alt="">
+				<img src="https://rabota.today/media/letters/letter_vk.png" alt="">
 			</a>
 		</td>
 		<td style="width: 45px;">
