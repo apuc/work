@@ -46,7 +46,7 @@ class ResumeSearch extends Resume
      */
     public function search($params)
     {
-        $query = Resume::find()->orderBy('id DESC');
+        $query = Resume::find()->groupBy('id')->orderBy('id DESC');
         $query->joinWith(['skills']);
         $query->joinWith(['category']);
 
@@ -77,6 +77,7 @@ class ResumeSearch extends Resume
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description]);
+
         return $dataProvider;
     }
 }

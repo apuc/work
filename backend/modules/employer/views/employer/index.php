@@ -14,7 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="employer-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -47,12 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'first_name',
             'second_name',
-            [
-                'attribute' => 'birth_date',
-                'value' => function($model){
-                    return date('d.m.Y', strtotime($model->birth_date));
-                }
-            ],
+//            [
+//                'attribute' => 'birth_date',
+//                'value' => function($model){
+//                    return date('d.m.Y', strtotime($model->birth_date));
+//                }
+//            ],
+            'created_at',
             [
                 'attribute' => 'status',
                 'format' => 'raw',

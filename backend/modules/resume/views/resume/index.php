@@ -14,13 +14,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="resume-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Создать резюме', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <?php $dataProvider->prepare(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -57,31 +57,31 @@ $this->params['breadcrumbs'][] = $this->title;
             'min_salary',
             'max_salary',
             'city',
-            [
-                'attribute' => 'description',
-                'contentOptions' => ['style' => 'width:400px; white-space: normal;'],
-                'value' => function ($model) {
-                    return nl2br(\yii\helpers\StringHelper::truncate($model->description, 100, '...'));
-                },
-            ],
-            [
-                'label' => 'Социальные сети',
-                'format' => 'html',
-                'value' =>
-                    function ($model) {
-                        /** @var Resume $model */
-                        $result = '';
-                        if($model->vk)
-                            $result.='VK: '.$model->vk.'<br>';
-                        if($model->facebook)
-                            $result.='Facebook: '.$model->facebook.'<br>';
-                        if($model->instagram)
-                            $result.='Instagram: '.$model->instagram.'<br>';
-                        if($model->skype)
-                            $result.='Skype: '.$model->skype;
-                        return $result;
-                }
-            ],
+//            [
+//                'attribute' => 'description',
+//                'contentOptions' => ['style' => 'width:400px; white-space: normal;'],
+//                'value' => function ($model) {
+//                    return nl2br(\yii\helpers\StringHelper::truncate($model->description, 100, '...'));
+//                },
+//            ],
+//            [
+//                'label' => 'Социальные сети',
+//                'format' => 'html',
+//                'value' =>
+//                    function ($model) {
+//                        /** @var Resume $model */
+//                        $result = '';
+//                        if($model->vk)
+//                            $result.='VK: '.$model->vk.'<br>';
+//                        if($model->facebook)
+//                            $result.='Facebook: '.$model->facebook.'<br>';
+//                        if($model->instagram)
+//                            $result.='Instagram: '.$model->instagram.'<br>';
+//                        if($model->skype)
+//                            $result.='Skype: '.$model->skype;
+//                        return $result;
+//                }
+//            ],
             [
                 'label' => 'Умения',
                 'contentOptions' => ['style' => 'width:400px; white-space: normal;'],
@@ -130,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     Resume::STATUS_INACTIVE => 'Не активно',
                 ], [ 'class' => 'form-control', 'prompt' => '' ] ),
             ],
-
+            'created_at',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
