@@ -12,10 +12,11 @@ class SendController extends Controller
 {
     public $all;
     public $id;
+    public $limit;
 
     public function options($actionID)
     {
-        return ['all', 'id'];
+        return ['all', 'id', 'limit'];
     }
 
     public function optionAliases()
@@ -23,6 +24,7 @@ class SendController extends Controller
         return [
             'all' => 'all',
             'id' => 'id',
+            'limit' => 'limit',
             ];
     }
 
@@ -31,7 +33,7 @@ class SendController extends Controller
         $file = new MailDelivery();
         $users = SendMail::find()->where(['id' => $this->id])->limit(1)->all();
         if($this->all == true) {
-            $users = SendMail::find()->where(['status' => 0])->all();
+            $users = SendMail::find()->where(['status' => 0])->limit($this->limit)->all();
         }
         $file->sendMessage($users, true);
     }
