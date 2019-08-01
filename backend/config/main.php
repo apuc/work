@@ -49,6 +49,12 @@ return [
         'mail_delivery' => [
             'class' => 'backend\modules\mail_delivery\MailDelivery',
         ],
+        'cities' => [
+            'class' => 'backend\modules\cities\Cities',
+        ],
+        'news' => [
+            'class' => 'backend\modules\news\News',
+        ],
         'user' => [
             'class'  => 'dektrium\user\Module',
             'admins' => ['test', 'millenion94@gmail.com', 'kirill.bouko@gmail.com'],

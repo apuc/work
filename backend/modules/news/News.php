@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\modules\mail_delivery;
+namespace backend\modules\news;
 
 /**
-* main_page module definition class
+ * news module definition class
  */
-class MailDelivery extends \yii\base\Module
+class News extends \yii\base\Module
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'backend\modules\mail_delivery\controllers';
+    public $controllerNamespace = 'backend\modules\news\controllers';
 
     /**
      * {@inheritdoc}

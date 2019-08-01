@@ -18,6 +18,9 @@ use Yii;
  */
 class City extends WorkActiveRecord
 {
+    const TYPE_HIDDEN = 1;
+    const TYPE_SHOWN = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -36,5 +39,27 @@ class City extends WorkActiveRecord
             [['region_id', 'status'], 'integer'],
             [['latitude', 'longitude'], 'safe'],
         ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+          'latitude' => 'Широта',
+            'longitude' => 'Долгота',
+            'region_id' => 'Область',
+        ];
+    }
+
+    public static function getStatusList()
+    {
+        return [
+            self::TYPE_HIDDEN => 'Скрыт',
+            self::TYPE_SHOWN => 'Выводится',
+        ];
+    }
+
+    public static function getStatusName($id)
+    {
+        return self::getStatusList()[$id];
     }
 }

@@ -1,23 +1,21 @@
 <?php
 
-namespace backend\modules\mail_delivery\controllers;
+namespace backend\modules\cities\controllers;
 
-use backend\modules\mail_delivery\models\MailDelivery;
-use backend\modules\mail_delivery\models\MailDeliverySearch;
-use common\classes\Debug;
-use common\models\SendMail;
+use backend\modules\cities\models\CitiesSearch;
+use common\models\City;
 use dektrium\user\filters\AccessRule;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
 
-class MailDeliveryController extends Controller
+class CitiesController extends Controller
 {
-
-
+    /**
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -52,49 +50,21 @@ class MailDeliveryController extends Controller
 
     public function actionIndex()
     {
-        $file = new MailDeliverySearch();
-        $dataProvider = $file->search(Yii::$app->request->queryParams);
+        $searchModel = new CitiesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        if (Yii::$app->request->isPost) {
-            $file->excel = UploadedFile::getInstance($file, 'excel');
-            if(!empty($file->excel)){
-                $file->parseExcel($file->excel);
-            }
-        }
-
-        return $this->render('index',
-            [
-                'searchModel' => $file,
-                'dataProvider' => $dataProvider,
-            ]);
-    }
-
-    public function actionSend($id = null)
-    {
-        $file = new MailDeliverySearch();
-        $dataProvider = $file->search(Yii::$app->request->queryParams);
-        $users = SendMail::find()->where(['status' => 0])->all();
-        if($id !== null){
-            $users = SendMail::find()->where(['id' => $id])->limit(1)->all();
-        }
-        $file->sendMessage($users);
-
-        return $this->render('index',
-            [
-                'searchModel' => $file,
-                'dataProvider' => $dataProvider,
-            ]);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionCreate()
     {
-        $model = new MailDelivery();
-        $arr = [];
-        if ($model->load(Yii::$app->request->post())) {
-            $arr[] = array_values($model->toArray());
-            $model = $model->saveMessage($arr, $model->template);
+        $model = new City();
 
-            return $this->redirect(['view', 'id' => $model]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -104,10 +74,8 @@ class MailDeliveryController extends Controller
 
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-
         return $this->render('view', [
-            'model' => $model,
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -115,7 +83,7 @@ class MailDeliveryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -133,7 +101,7 @@ class MailDeliveryController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = SendMail::findOne($id)) !== null) {
+        if (($model = City::findOne($id)) !== null) {
             return $model;
         }
 

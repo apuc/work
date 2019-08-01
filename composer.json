@@ -23,7 +23,8 @@
         "dmstr/yii2-adminlte-asset": "^2.1",
         "kartik-v/yii2-widget-datepicker": "@dev",
         "vision/yii2-private-messages": "^2",
-        "phpoffice/phpexcel": "^1.8"
+        "phpoffice/phpexcel": "^1.8",
+        "eugene-kei/yii2-simple-news": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

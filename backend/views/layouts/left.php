@@ -41,6 +41,8 @@
                     ['label' => 'Умения', 'url' => ['/skill/skill/index']],
                     ['label' => 'Категории', 'url' => ['/category/category/index']],
                     ['label' => 'Переменные', 'url' => ['/key_value/key-value/index']],
+                    ['label' => 'Города', 'url' => ['/cities/cities/index']],
+                    ['label' => 'Новости', 'url' => ['/news/news/index']],
                     [
                             'label' => 'Рассылка почты', 'url' => '#',
                         'items' => [
