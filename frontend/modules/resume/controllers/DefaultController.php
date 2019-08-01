@@ -74,7 +74,7 @@ class DefaultController extends Controller
         $tags = Skill::find()->all();
         $categories = Category::find()->all();
         $employment_types = EmploymentType::find()->all();
-        $cities = City::find()->all();
+        $cities = City::find()->where(['status' => 1])->all();
 
         $resume_query = Resume::find()->with(['employer', 'employment_type'])->where([Resume::tableName().'.status' => Resume::STATUS_ACTIVE])->orderBy('id DESC');
         if($params['experience_ids']) {
@@ -134,6 +134,7 @@ class DefaultController extends Controller
                 'pageSize' => 10
             ]
         ]);
+
         return $this->render('search', [
             'tags' => $tags,
             'cities' => $cities,
