@@ -16,6 +16,9 @@ use Yii;
  */
 class News extends \yii\db\ActiveRecord
 {
+    const TYPE_ACTIVE = 1;
+    const TYPE_UNACTIVE = 0;
+
     /**
      * {@inheritdoc}
      */
@@ -62,5 +65,18 @@ class News extends \yii\db\ActiveRecord
         if($this->dt_update !== null) {
             $this->dt_update = date('d-m-Y', $this->dt_update);
         }
+    }
+
+    public static function getStatusList()
+    {
+        return [
+            self::TYPE_UNACTIVE => 'Не активно',
+            self::TYPE_ACTIVE => 'Активно',
+        ];
+    }
+
+    public static function getStatusName($id)
+    {
+        return self::getStatusList()[$id];
     }
 }

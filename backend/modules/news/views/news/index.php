@@ -26,7 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'title:ntext',
             'description:ntext',
             'content:ntext',
-            'status',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    return \common\models\News::getStatusName($model->status);
+                }
+            ],
             'dt_create',
             //'dt_update',
 

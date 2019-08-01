@@ -13,8 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="news-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Список', ['index'], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -34,7 +32,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'title:ntext',
             'description:ntext',
             'content:ntext',
-            'status',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    return \common\models\News::getStatusName($model->status);
+                }
+            ],
             'dt_create',
             'dt_update',
         ],
