@@ -49,6 +49,15 @@ return [
         'mail_delivery' => [
             'class' => 'backend\modules\mail_delivery\MailDelivery',
         ],
+        'cities' => [
+            'class' => 'backend\modules\cities\Cities',
+        ],
+        'news' => [
+            'class' => 'backend\modules\news\News',
+        ],
+        'tags' => [
+            'class' => 'backend\modules\tags\Tags',
+        ],
         'user' => [
             'class'  => 'dektrium\user\Module',
             'admins' => ['test', 'millenion94@gmail.com', 'kirill.bouko@gmail.com'],
@@ -71,7 +80,7 @@ return [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'mail.adm.tools',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
                 'username' => 'noreply@rabota.today',
-                'password' => 'e314ckBCNo5H',
+                'password' => 'pht0CaN570ED',
                 'port' => '2525', // Port 25 is a very common port too
                 'encryption' => 'tls', // It is often used, check your provider or mail server specs
             ],

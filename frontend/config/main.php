@@ -104,6 +104,9 @@ return [
         'msg' => [
             'class' => 'frontend\modules\msg\Msg',
         ],
+        'news' => [
+            'class' => 'eugenekei\news\Module',
+        ]
     ],
     'components' => [
 //        'request' => [
