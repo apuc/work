@@ -18,8 +18,8 @@ use Yii;
  */
 class City extends WorkActiveRecord
 {
-    const TYPE_HIDDEN = 1;
-    const TYPE_SHOWN = 2;
+    const TYPE_HIDDEN = 0;
+    const TYPE_SHOWN = 1;
 
     /**
      * {@inheritdoc}
@@ -61,5 +61,10 @@ class City extends WorkActiveRecord
     public static function getStatusName($id)
     {
         return self::getStatusList()[$id];
+    }
+
+    public function getRegion()
+    {
+        return $this->hasOne(Region::className(), ['id' => 'region_id']);
     }
 }

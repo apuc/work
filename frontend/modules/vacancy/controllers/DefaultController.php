@@ -74,7 +74,7 @@ class DefaultController extends Controller
         ];
         $categories = Category::find()->all();
         $employment_types = EmploymentType::find()->all();
-        $cities = City::find()->where(['status' => 2])->all();
+        $cities = City::find()->where(['status' => 1])->all();
         $tags = Skill::find()->all();
 
         $vacancies_query = Vacancy::find()->with(['category', 'company'])->where(['status'=>Vacancy::STATUS_ACTIVE])->orderBy('id DESC');
