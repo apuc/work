@@ -3,6 +3,7 @@
 $this->title = 'Города';
 $this->params['breadcrumbs'][] = $this->title;
 
+use common\models\City;
 use yii\grid\GridView;
 use yii\helpers\Html; ?>
 <div class="cities-index">
@@ -18,13 +19,39 @@ use yii\helpers\Html; ?>
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'name',
-            'region_id',
+            [
+                'attribute' => 'name',
+                'filter' => \kartik\select2\Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'name',
+                    'data' => \yii\helpers\ArrayHelper::map(\common\models\City::find()->asArray()->all(), 'name',
+                        'name'),
+                    'options' => ['placeholder' => 'Выберите город...', 'class' => 'form-control'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
+            ],
+            [
+                'attribute' => 'region_id',
+                'value' => function ($model) {
+                    return $model->region->name;
+                }
+            ],
             [
                 'attribute' => 'status',
                 'value' => function ($model) {
                     return \common\models\City::getStatusName($model->status);
-                }
+                },
+                'filter' => \kartik\select2\Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'status',
+                    'data' => City::getStatusList(),
+                    'options' => ['placeholder' => 'Выберите статус...', 'class' => 'form-control'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
             ],
             'latitude',
             'longitude',

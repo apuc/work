@@ -1,6 +1,7 @@
 <?php
 namespace backend\modules\cities\models;
 
+use common\classes\Debug;
 use common\models\City;
 use yii\data\ActiveDataProvider;
 
@@ -29,6 +30,8 @@ class CitiesSearch extends City
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['status' => $this->status]);
+
 
         return $dataProvider;
     }
