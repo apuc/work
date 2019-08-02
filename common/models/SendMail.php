@@ -8,6 +8,18 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+/**
+* This is the model class for table "geobase_city".
+ *
+ * @property int $id
+* @property string $email
+* @property int $user_id
+* @property string $template
+* @property string $subject
+* @property string $options
+*
+ */
+
 class SendMail extends ActiveRecord
 {
     const TYPE_SEND = 1;

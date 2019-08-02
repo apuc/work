@@ -60,6 +60,7 @@ if (Yii::$app->controller->action->id === 'login') {
     </div>
 
     <?php $this->endBody() ?>
+    <?php $this->registerJsFile('@web/js/mobile.js', ['position' => yii\web\View::POS_END]) ?>
     </body>
     </html>
     <?php $this->endPage() ?>
