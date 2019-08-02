@@ -36,7 +36,17 @@ use yii\helpers\Html; ?>
                 'attribute' => 'region_id',
                 'value' => function ($model) {
                     return $model->region->name;
-                }
+                },
+                'filter' => \kartik\select2\Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'region_id',
+                    'data' => \yii\helpers\ArrayHelper::map(\common\models\Region::find()->asArray()->all(), 'id',
+                        'name'),
+                    'options' => ['placeholder' => 'Выберите регион...', 'class' => 'form-control'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
             ],
             [
                 'attribute' => 'status',

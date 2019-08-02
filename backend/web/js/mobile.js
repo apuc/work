@@ -1,5 +1,5 @@
 
-var mobileMinWidth = 800;
+var mobileMinWidth = 8000;
 var mobileTableId = 1;
 
 $('.calculator h3').click(function () {

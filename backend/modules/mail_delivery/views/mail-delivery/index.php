@@ -36,7 +36,16 @@ $this->params['breadcrumbs'][] = $this->title;
                   'attribute' => 'status',
                   'value' => function($model) {
                         return \common\models\SendMail::getStatusName($model->status);
-                  }
+                  },
+                    'filter' => \kartik\select2\Select2::widget([
+                        'model' => $searchModel,
+                        'attribute' => 'status',
+                        'data' => \common\models\SendMail::getStatusList(),
+                        'options' => ['placeholder' => 'Выберите статус...', 'class' => 'form-control'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]),
                 ],
                 'dt_send',
                 'subject',

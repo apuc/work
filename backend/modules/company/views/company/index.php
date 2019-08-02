@@ -20,7 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Создать работодателя', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
+    <div class="mobile-table">
+        <div class="mobile-table-control"></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -94,4 +95,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    </div>
 </div>
