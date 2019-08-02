@@ -26,7 +26,6 @@ class MailDeliverySearch extends MailDelivery
         $this->load($params);
         
         if (!$this->validate()) {
-            Debug::prn($this->errors);
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;

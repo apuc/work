@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Tags */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Tags', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Тэги', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>

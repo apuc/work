@@ -37,7 +37,7 @@ class Tags extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'tag' => 'Tag',
+            'tag' => 'Тэг',
         ];
     }
 }
