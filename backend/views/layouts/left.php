@@ -50,6 +50,7 @@
                                 ['label' => 'Шаблоны', 'icon' => 'sheet', 'url' => ['/mail_delivery/templates/index']],
                         ],
                     ],
+                    ['label' => 'Тэги', 'url' => ['/tags/tags/index']],
                 ],
             ]
         ) ?>

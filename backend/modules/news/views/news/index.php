@@ -25,7 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'title:ntext',
             'description:ntext',
-            'content:ntext',
+//            [
+//                'attribute' => 'content',
+//            ],
             [
                 'attribute' => 'status',
                 'value' => function ($model) {
@@ -33,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'dt_create',
+            'dt_public',
             //'dt_update',
 
             ['class' => 'yii\grid\ActionColumn'],

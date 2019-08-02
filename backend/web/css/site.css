@@ -118,3 +118,11 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.input-group {
+    width: 100%;
+}
+
+.form-control {
+    width: 30% !important;
+}

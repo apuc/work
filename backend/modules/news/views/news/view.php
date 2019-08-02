@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'dt_create',
             'dt_update',
+            'img',
         ],
     ]) ?>
 

@@ -24,7 +24,10 @@
         "kartik-v/yii2-widget-datepicker": "@dev",
         "vision/yii2-private-messages": "^2",
         "phpoffice/phpexcel": "^1.8",
-        "eugene-kei/yii2-simple-news": "*"
+        "eugene-kei/yii2-simple-news": "*",
+        "mihaildev/yii2-ckeditor": "*",
+        "mihaildev/yii2-elfinder": "*",
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
