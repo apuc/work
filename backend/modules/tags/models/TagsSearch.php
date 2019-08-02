@@ -1,15 +1,15 @@
 <?php
 
-namespace backend\modules\news\models;
+namespace backend\modules\tags\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\News;
+use common\models\Tags;
 
 /**
- * NewsSearch represents the model behind the search form of `common\models\News`.
+ * TagsSearch represents the model behind the search form of `common\models\Tags`.
  */
-class NewsSearch extends News
+class TagsSearch extends Tags
 {
     /**
      * {@inheritdoc}
@@ -17,9 +17,8 @@ class NewsSearch extends News
     public function rules()
     {
         return [
-            [['id', 'status', 'dt_create', 'dt_update', 'dt_public'], 'integer'],
-            [['title', 'description', 'content', 'dt_public'], 'safe'],
-            [['img'], 'string']
+            [['id'], 'integer'],
+            [['tag'], 'safe'],
         ];
     }
 
@@ -41,7 +40,7 @@ class NewsSearch extends News
      */
     public function search($params)
     {
-        $query = News::find();
+        $query = Tags::find();
 
         // add conditions that should always apply here
 
@@ -60,16 +59,9 @@ class NewsSearch extends News
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
-            'dt_create' => $this->dt_create,
-            'dt_update' => $this->dt_update,
-            'dt_public' => $this->dt_public,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'content', $this->content]);
-        $query->orderBy('id DESC');
+        $query->andFilterWhere(['like', 'tag', $this->tag]);
 
         return $dataProvider;
     }

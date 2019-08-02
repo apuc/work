@@ -55,6 +55,9 @@ return [
         'news' => [
             'class' => 'backend\modules\news\News',
         ],
+        'tags' => [
+            'class' => 'backend\modules\tags\Tags',
+        ],
         'user' => [
             'class'  => 'dektrium\user\Module',
             'admins' => ['test', 'millenion94@gmail.com', 'kirill.bouko@gmail.com'],
