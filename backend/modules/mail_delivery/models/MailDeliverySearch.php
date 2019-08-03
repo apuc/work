@@ -9,7 +9,7 @@ class MailDeliverySearch extends MailDelivery
     public function rules()
     {
         return [
-           [['user_id', 'template', 'subject', 'email'], 'safe'],
+           [['user_id', 'template', 'subject', 'email', 'dt_send'], 'safe'],
             [['status'], 'integer']
         ];
     }
@@ -35,6 +35,12 @@ class MailDeliverySearch extends MailDelivery
             'id' => $this->id,
         ]);
         $query->andFilterWhere(['status' => $this->status]);
+
+        if(!empty($this->dt_send)) {
+            $query->andFilterWhere(['>=', 'dt_send', strtotime($this->dt_send)]);
+            $query->andFilterWhere(['<=', 'dt_send', strtotime($this->dt_send) + 86400]);
+        }
+
         $query->orderBy('id DESC');
 
         return $dataProvider;

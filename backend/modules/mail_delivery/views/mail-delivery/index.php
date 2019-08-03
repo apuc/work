@@ -1,5 +1,6 @@
 <?php
 
+use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\web\View;
@@ -47,7 +48,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ]),
                 ],
-                'dt_send',
+            [
+                    'attribute' => 'dt_send',
+                'filter' => \kartik\date\DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' =>  'dt_send',
+                    'type' => DatePicker::TYPE_INPUT,
+                    'language' => 'ru',
+                    'options' => ['placeholder' => 'Выберите дату'],
+                ]),
+            ],
                 'subject',
                 [
                     'label' => 'Отправить письмо',
