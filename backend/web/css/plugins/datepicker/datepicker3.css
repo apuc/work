@@ -75,9 +75,9 @@
   border-bottom: 0;
   border-top: 6px solid #fff;
 }
-.datepicker > div {
-  display: none;
-}
+/*.datepicker > div {*/
+/*  display: none;*/
+/*}*/
 .datepicker.days div.datepicker-days {
   display: block;
 }
