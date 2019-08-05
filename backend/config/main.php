@@ -58,6 +58,9 @@ return [
         'tags' => [
             'class' => 'backend\modules\tags\Tags',
         ],
+        'views' => [
+            'class' => 'backend\modules\views\Views',
+        ],
         'user' => [
             'class'  => 'dektrium\user\Module',
             'admins' => ['test', 'millenion94@gmail.com', 'kirill.bouko@gmail.com'],

@@ -11,6 +11,7 @@ use common\models\Resume;
 use common\models\Skill;
 use common\models\User;
 use common\models\Vacancy;
+use common\models\Views;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
@@ -25,21 +26,29 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
-        $last_vacancies=Vacancy::find()->where(['status'=>Vacancy::STATUS_ACTIVE])->orderBy('id DESC')->limit(2)->all();
+        $last_vacancies = Vacancy::find()->where(['status' => Vacancy::STATUS_ACTIVE])->orderBy('id DESC')->limit(2)->all();
         $model = Vacancy::findOne($id);
+        $view = new Views();
+        $view->company_id = $model->company_id;
+        $view->vacancy_id = $model->id;
+        $view->viewer_id = Yii::$app->user->id;
+        $view->dt_view = strtotime(date("Y-m-d H:i:s"));
+        $view->save();
         $model->views++;
         $model->save();
         return $this->render('view', [
             'model' => $model,
-            'last_vacancies' => $last_vacancies
+            'last_vacancies' => $last_vacancies,
+            'view' => $view,
         ]);
     }
 
-    public function actionSendMessage(){
+    public function actionSendMessage()
+    {
         $post = Yii::$app->request->post();
         $resume = Resume::findOne($post['vacancy_resume_id']);
         $vacancy = Vacancy::findOne($post['vacancy_vacancy_id']);
-        if($resume && $vacancy ){
+        if ($resume && $vacancy) {
             $message = new Message();
             $message->text = $post['vacancy_message'];
             $message->sender_id = Yii::$app->user->id;
@@ -49,14 +58,15 @@ class DefaultController extends Controller
             $message->subject_from = 'Resume';
             $message->subject_from_id = $post['vacancy_resume_id'];
             $message->save();
-            Yii::$app->mailer->compose('vacancy_like', ['resume'=>$resume, 'vacancy'=>$vacancy, 'text'=>$message->text])
+            Yii::$app->mailer->compose('vacancy_like',
+                ['resume' => $resume, 'vacancy' => $vacancy, 'text' => $message->text])
                 ->setFrom('noreply@rabota.today')
                 ->setTo(User::findOne($vacancy->owner)->email)
-                ->setSubject('Ответ на вашу вакансию '. $vacancy->post.'.')
+                ->setSubject('Ответ на вашу вакансию ' . $vacancy->post . '.')
                 ->send();
         }
         $url = explode('?', Yii::$app->request->referrer)[0];
-        $url.='?message=Ваше сообщение успешно отправлено';
+        $url .= '?message=Ваше сообщение успешно отправлено';
         return $this->redirect($url);
     }
 
@@ -77,39 +87,42 @@ class DefaultController extends Controller
         $cities = City::find()->where(['status' => 1])->all();
         $tags = Skill::find()->all();
 
-        $vacancies_query = Vacancy::find()->with(['category', 'company'])->where(['status'=>Vacancy::STATUS_ACTIVE])->orderBy('id DESC');
-        if($params['experience_ids']) {
-            if(!in_array(0,$params['experience_ids'])) {
+        $vacancies_query = Vacancy::find()->with([
+            'category',
+            'company'
+        ])->where(['status' => Vacancy::STATUS_ACTIVE])->orderBy('id DESC');
+        if ($params['experience_ids']) {
+            if (!in_array(0, $params['experience_ids'])) {
                 $or = ['or'];
-                foreach ($params['experience_ids'] as $experience_id){
+                foreach ($params['experience_ids'] as $experience_id) {
                     $or[] = ['<=', 'work_experience', $experience_id];
                 }
                 $vacancies_query->andWhere($or);
             }
         }
-        if($params['category_ids']) {
+        if ($params['category_ids']) {
             $vacancies_query->joinWith(['category']);
             $vacancies_query->andWhere(['category.id' => $params['category_ids']]);
         }
-        if($params['tags_id']) {
+        if ($params['tags_id']) {
             $vacancies_query->joinWith(['skill']);
             $vacancies_query->andWhere(['skill.id' => $params['tags_id']]);
         }
-        if($params['employment_type_ids']) {
+        if ($params['employment_type_ids']) {
             $vacancies_query->joinWith(['employment_type']);
             $vacancies_query->andWhere(['employment_type.id' => $params['employment_type_ids']]);
         }
 
-        if($params['min_salary']){
+        if ($params['min_salary']) {
             $vacancies_query->andWhere(['>=', 'max_salary', $params['min_salary']]);
         }
-        if($params['max_salary']){
+        if ($params['max_salary']) {
             $vacancies_query->andWhere(['<=', 'min_salary', $params['max_salary']]);
         }
-        if($params['search_text']){
+        if ($params['search_text']) {
             $vacancies_query->andWhere(['like', 'post', $params['search_text']]);
         }
-        if($params['city']){
+        if ($params['city']) {
             $vacancies_query->andWhere(['like', 'city', $params['city']]);
         }
         $vacancies_query->orderBy('created_at DESC');
