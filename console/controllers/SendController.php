@@ -30,8 +30,10 @@ class SendController extends Controller
 
     public function actionIndex()
     {
+//        Debug::dd(Yii::$app->config);
         $file = new MailDelivery();
         $users = SendMail::find()->where(['id' => $this->id])->limit(1)->orderBy('id DESC')->all();
+
         if($this->all == true) {
             $users = SendMail::find()->where(['status' => 0])->limit($this->limit)->orderBy('id DESC')->all();
         }
