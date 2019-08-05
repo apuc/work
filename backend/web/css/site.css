@@ -123,10 +123,6 @@ a.desc:after {
     width: 100%;
 }
 
-.form-control {
-    width: 30% !important;
-}
-
 .media__upload_img{
     margin-bottom: 10px;
     float: left;
