@@ -14,9 +14,13 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/mobile.css',
+        'css/style.css',
     ];
     public $js = [
-        'js/jquery.cookie.js'
+        'js/jquery.cookie.js',
+        'js/plugins/datepicker/bootstrap-datepicker.js',
+        'js/plugins/timepicker/bootstrap-timepicker.min.js',
+        'js/script.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

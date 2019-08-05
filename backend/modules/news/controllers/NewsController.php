@@ -94,11 +94,12 @@ class NewsController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->dt_create = $model->dt_update = strtotime(date("Y-m-d H:i:s"));
-            if (!isset($model->dt_public)) {
+            if (empty($model->dt_public)) {
                 $model->dt_public = null;
+            } else {
+                $model->dt_public = strtotime($model->dt_public);
             }
             $model->save();
-
             if (!empty(Yii::$app->request->post('Tags'))) {
                 foreach (Yii::$app->request->post('Tags') as $tag) {
                     $tags = new TagsRelation();
@@ -132,9 +133,12 @@ class NewsController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->dt_update = strtotime(date("Y-m-d H:i:s"));
             $model->dt_create = strtotime($model->dt_create);
-            $model->dt_public = strtotime($model->dt_public);
+            if (empty($model->dt_public)) {
+                $model->dt_public = null;
+            } else {
+                $model->dt_public = strtotime($model->dt_public);
+            }
             $model->save();
-
             if (!empty(Yii::$app->request->post('Tags'))) {
                 TagsRelation::deleteAll(['news_id' => $id]);
                 foreach (Yii::$app->request->post('Tags') as $tag) {

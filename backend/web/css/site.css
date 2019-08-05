@@ -126,3 +126,13 @@ a.desc:after {
 .form-control {
     width: 30% !important;
 }
+
+.media__upload_img{
+    margin-bottom: 10px;
+    float: left;
+}
+
+.media__upload_img img{
+    margin: 3px;
+    object-fit: cover;
+}

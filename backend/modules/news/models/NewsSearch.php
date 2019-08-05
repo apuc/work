@@ -2,6 +2,7 @@
 
 namespace backend\modules\news\models;
 
+use common\classes\Debug;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\News;
@@ -18,7 +19,7 @@ class NewsSearch extends News
     {
         return [
             [['id', 'status', 'dt_create', 'dt_update', 'dt_public'], 'integer'],
-            [['title', 'description', 'content', 'dt_public'], 'safe'],
+            [['title', 'description', 'content', 'dt_public', 'dt_create'], 'safe'],
             [['img'], 'string']
         ];
     }
@@ -42,7 +43,6 @@ class NewsSearch extends News
     public function search($params)
     {
         $query = News::find();
-
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -51,6 +51,17 @@ class NewsSearch extends News
 
         $this->load($params);
 
+        if (empty($this->dt_create)) {
+            $this->dt_create = null;
+        } else {
+            $this->dt_create = strtotime($this->dt_create);
+        }
+
+        if (empty($this->dt_public)) {
+            $this->dt_public = null;
+        } else {
+            $this->dt_public = strtotime($this->dt_public);
+        }
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -61,14 +72,22 @@ class NewsSearch extends News
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
-            'dt_create' => $this->dt_create,
-            'dt_update' => $this->dt_update,
-            'dt_public' => $this->dt_public,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'content', $this->content]);
+
+        if(isset($this->dt_create)) {
+            $query->andFilterWhere(['>=', 'dt_create', $this->dt_create]);
+            $query->andFilterWhere(['<=', 'dt_create', $this->dt_create + 86400]);
+        }
+
+        if(isset($this->dt_public)) {
+            $query->andFilterWhere(['>=', 'dt_public', $this->dt_public]);
+            $query->andFilterWhere(['<=', 'dt_public', $this->dt_public + 86400]);
+        }
+
         $query->orderBy('id DESC');
 
         return $dataProvider;
