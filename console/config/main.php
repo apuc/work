@@ -33,7 +33,7 @@ return [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'mail.adm.tools',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
                 'username' => 'noreply@rabota.today',
-                'password' => 'pht0CaN570ED',
+                'password' => '98AyAh5pL9uN',
                 'port' => '2525', // Port 25 is a very common port too
                 'encryption' => 'tls', // It is often used, check your provider or mail server specs
             ],
