@@ -25,6 +25,7 @@ use yii\db\ActiveRecord;
  * @property integer $employment_type_id
  * @property integer $schedule_id
  * @property integer $views
+ * @property integer $notification_status
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
