@@ -2,6 +2,7 @@
 namespace common\models;
 
 use common\models\base\WorkActiveRecord;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -23,6 +24,7 @@ use yii\db\ActiveRecord;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $owner
  *
  * @property User $security
  * @property Vacancy[] $vacancy
@@ -70,7 +72,7 @@ class Company extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['user', 'vacancy', 'phone'];
+        return ['user', 'vacancy', 'phone', 'userCompany', 'users'];
     }
 
     /**
@@ -100,6 +102,17 @@ class Company extends WorkActiveRecord
     public function getPhotoOrEmptyPhoto(){
         return $this->image_url?$this->image_url:'/images/company_empty.png';
     }
+
+    public function canAccess($user_id){
+        $access=false;
+        foreach ($this->userCompany as $user_company){
+            if($user_company->user_id==Yii::$app->user->id)
+                $access=true;
+        }
+        if($this->owner != Yii::$app->user->id && !$access)
+            return false;
+        return true;
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -122,6 +135,22 @@ class Company extends WorkActiveRecord
     public function getPhone()
     {
         return $this->hasOne(Phone::className(), ['company_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserCompany()
+    {
+        return $this->hasMany(UserCompany::className(), ['company_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->via('userCompany');
     }
 
     /**

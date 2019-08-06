@@ -9,6 +9,7 @@ use common\models\Vacancy;
 use common\models\VacancyCategory;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\data\ActiveDataProvider;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
@@ -22,6 +23,51 @@ class VacancyController extends MyActiveController
         unset($actions['create']);
         unset($actions['update']);
         return $actions;
+    }
+
+    public function actionMyIndex(){
+        if(Yii::$app->user->isGuest)
+            throw new HttpException(201, 'Пользователь не авторизирован');
+        $requestParams = Yii::$app->getRequest()->getBodyParams();
+        if (empty($requestParams)) {
+            $requestParams = Yii::$app->getRequest()->getQueryParams();
+        }
+        return Yii::createObject([
+            'class' => ActiveDataProvider::className(),
+            'query' => $this->modelClass::find()->joinWith(['company','company.userCompany'])
+                ->where(['or', ['=', 'vacancy.owner', Yii::$app->user->id], ['=', 'user_company.user_id', Yii::$app->user->id], ['=', 'company.owner', Yii::$app->user->id]]),
+            'pagination' => [
+                'params' => $requestParams,
+            ],
+            'sort' => [
+                'params' => $requestParams,
+            ],
+        ]);
+    }
+
+    /**
+     * @param string $action
+     * @param Vacancy $model
+     * @param array $params
+     * @throws HttpException
+     */
+    public function checkAccess($action, $model = null, $params = [])
+    {
+        if($action === 'update' || $action === 'delete'){
+            if(Yii::$app->user->isGuest)
+                throw new HttpException(403, 'Вы не авторизированы');
+            if(!$model->company->canAccess(Yii::$app->user->id&&$model->owner!=Yii::$app->user->id))
+                throw new HttpException(403, 'У вас нет прав для редактирования этой записи');
+        }
+    }
+
+    public function beforeSave($insert)
+    {
+        parent::beforeSave($insert);
+        if ($insert && $this->hasAttribute('owner') && !\Yii::$app->user->isGuest){
+            $this->owner = $this->company->owner;
+        }
+        return true;
     }
 
     /**

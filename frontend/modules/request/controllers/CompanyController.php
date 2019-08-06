@@ -12,8 +12,12 @@ use common\models\Phone;
 use common\models\Resume;
 use common\models\ResumeSkill;
 use common\models\Skill;
+use common\models\UserCompany;
+use dektrium\user\models\User;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\data\ActiveDataProvider;
+use yii\db\ActiveRecord;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
@@ -27,6 +31,64 @@ class CompanyController extends MyActiveController
         unset($actions['create']);
         unset($actions['update']);
         return $actions;
+    }
+
+    public function actionMyIndex(){
+        if(Yii::$app->user->isGuest)
+            throw new HttpException(201, 'Пользователь не авторизирован');
+        $requestParams = Yii::$app->getRequest()->getBodyParams();
+        if (empty($requestParams)) {
+            $requestParams = Yii::$app->getRequest()->getQueryParams();
+        }
+        return Yii::createObject([
+            'class' => ActiveDataProvider::className(),
+            'query' => $this->modelClass::find()->joinWith('userCompany')->where(['or', ['=', 'owner', Yii::$app->user->id], ['=', 'user_company.user_id', Yii::$app->user->id]]),
+            'pagination' => [
+                'params' => $requestParams,
+            ],
+            'sort' => [
+                'params' => $requestParams,
+            ],
+        ]);
+    }
+
+    public function checkAccess($action, $model = null, $params = [])
+    {
+        if($action === 'update' || $action === 'delete'){
+            if(Yii::$app->user->isGuest)
+                throw new HttpException(403, 'Вы не авторизированы');
+            if(!$model->canAccess(Yii::$app->user->id))
+                throw new HttpException(403, 'У вас нет прав для редактирования этой записи');
+        }
+    }
+
+    public function addUser(){
+        $user=User::find()->where(['email'=>Yii::$app->request->get('email')]);
+        if(!$user)
+            throw new HttpException(403, 'Такого пользователя не существует');
+        $company=Company::find()->where(['id'=>Yii::$app->request->get('company_id')])->one();
+        if(!$company)
+            throw new HttpException(403, 'Такой компании не существует');
+        if($company->owner!=Yii::$app->user->id)
+            throw new HttpException(403, 'У вас нет прав для совершения этого действия');
+        $user_company=new UserCompany();
+        $user_company->user_id=$user->id;
+        $user_company->company_id=$company->id;
+        $user_company->save();
+        return true;
+    }
+
+    public function deleteUser(){
+        $company=Company::find()->where(['id'=>Yii::$app->request->get('company_id')])->one();
+        if(!$company)
+            throw new HttpException(403, 'Такой компании не существует');
+        if($company->owner!=Yii::$app->user->id)
+            throw new HttpException(403, 'У вас нет прав для совершения этого действия');
+        $user_company=UserCompany::find()->where(['company_id'=>$company->id, 'user_id'=>Yii::$app->request->get('user_id')])->one();
+        if(!$user_company)
+            throw new HttpException(403, 'Этот пользователь не включен в вашу компанию');
+        $user_company->delete();
+        return true;
     }
 
     /**
