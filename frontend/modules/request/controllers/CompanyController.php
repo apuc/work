@@ -63,10 +63,10 @@ class CompanyController extends MyActiveController
     }
 
     public function addUser(){
-        $user=User::find()->where(['email'=>Yii::$app->request->get('email')]);
+        $user=User::find()->where(['email'=>Yii::$app->request->post('email')]);
         if(!$user)
             throw new HttpException(403, 'Такого пользователя не существует');
-        $company=Company::find()->where(['id'=>Yii::$app->request->get('company_id')])->one();
+        $company=Company::find()->where(['id'=>Yii::$app->request->post('company_id')])->one();
         if(!$company)
             throw new HttpException(403, 'Такой компании не существует');
         if($company->owner!=Yii::$app->user->id)
@@ -79,12 +79,12 @@ class CompanyController extends MyActiveController
     }
 
     public function deleteUser(){
-        $company=Company::find()->where(['id'=>Yii::$app->request->get('company_id')])->one();
+        $company=Company::find()->where(['id'=>Yii::$app->request->post('company_id')])->one();
         if(!$company)
             throw new HttpException(403, 'Такой компании не существует');
         if($company->owner!=Yii::$app->user->id)
             throw new HttpException(403, 'У вас нет прав для совершения этого действия');
-        $user_company=UserCompany::find()->where(['company_id'=>$company->id, 'user_id'=>Yii::$app->request->get('user_id')])->one();
+        $user_company=UserCompany::find()->where(['company_id'=>$company->id, 'user_id'=>Yii::$app->request->post('user_id')])->one();
         if(!$user_company)
             throw new HttpException(403, 'Этот пользователь не включен в вашу компанию');
         $user_company->delete();
