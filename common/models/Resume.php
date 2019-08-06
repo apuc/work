@@ -87,7 +87,7 @@ class Resume extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['employer', 'experience', 'education', 'resume_skill', 'skills', 'resume_category', 'category', 'employment_type', 'can_update'];
+        return ['employer', 'experience', 'education', 'resume_skill', 'skills', 'resume_category', 'category', 'employment_type', 'can_update', 'views0', 'countViews'];
     }
 
     /**
@@ -238,13 +238,13 @@ class Resume extends WorkActiveRecord
         $this->created_at = date('d-m-Y', $this->created_at);
     }
 
-    public function getViews()
+    public function getViews0()
     {
-        return $this->hasMany(Views::className(), ['subject_id' => 'id']);
+        return $this->hasMany(Views::className(), ['subject_id' => 'id'])->where(['subject_type' => 'Resume']);
     }
 
     public function getCountViews()
     {
-        return Views::find()->where(['id' => $this->id])->andWhere(['subject_type' => 'резюме'])->count();
+        return Views::find()->where(['subject_id' => $this->id])->andWhere(['subject_type' => 'Resume'])->count();
     }
 }
