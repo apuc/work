@@ -16,8 +16,8 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'subject_type')->dropDownList([
-            'резюме' => 'резюме',
-            'вакансия' => 'вакансия'
+            'резюме' => 'Resume',
+            'вакансия' => 'Vacancy'
     ]);?>
 
     <?= $form->field($model, 'subject_id')->textInput() ?>

@@ -89,7 +89,7 @@ class Vacancy extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['company', 'schedule', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category'];
+        return ['company', 'schedule', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews'];
     }
 
     /**
@@ -196,13 +196,13 @@ class Vacancy extends WorkActiveRecord
         return (time()-self::UPDATE_MIN_SEC_PASSED) > $this->update_time;
     }
 
-    public function getViews()
+    public function getViews0()
     {
-        return $this->hasMany(Views::className(), ['subject_id' => 'id']);
+        return $this->hasMany(Views::className(), ['subject_id' => 'id'])->where(['subject_type' => 'Vacancy']);
     }
 
     public function getCountViews()
     {
-        return Views::find()->where(['id' => $this->id])->andWhere(['subject_type' => 'вакансия'])->count();
+        return Views::find()->where(['subject_id' => $this->id])->andWhere(['subject_type' => 'Vacancy'])->count();
     }
 }

@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'subject_id',
                 'value' => function ($model) {
-                    return \common\models\Views::getSubject($model->subject_type, $model->subject_id);
+                    return $model->getSubjectName();
                 },
             ],
             [

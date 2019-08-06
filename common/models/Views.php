@@ -18,8 +18,8 @@ use yii\helpers\ArrayHelper;
  */
 class Views extends \yii\db\ActiveRecord
 {
-    const TYPE_RESUME = 'резюме';
-    const TYPE_VACANCY = 'вакансия';
+    const TYPE_RESUME = 'Resume';
+    const TYPE_VACANCY = 'Vacancy';
 
     /**
      * {@inheritdoc}
@@ -83,23 +83,23 @@ class Views extends \yii\db\ActiveRecord
     public static function getSubjectType()
     {
         return [
-            self::TYPE_RESUME => 'резюме',
-            self::TYPE_VACANCY => 'вакансия',
+            self::TYPE_RESUME => 'Resume',
+            self::TYPE_VACANCY => 'Vacancy',
         ];
     }
 
-    public static function getSubject($type, $id)
+    public function getSubjectName()
     {
-        if ($type == 'вакансия') {
-            $vacancy = Vacancy::find()->where(['id' => $id])->one();
+        if ($this->subject_type == 'Vacancy') {
+            $vacancy = Vacancy::find()->where(['id' => $this->subject_id])->one();
             if(!empty($vacancy)) {
                 return $vacancy->post;
             }
             return false;
         }
 
-        if ($type == 'резюме') {
-            $resume = Resume::find()->where(['id' => $id])->one();
+        if ($this->subject_type == 'Resume') {
+            $resume = Resume::find()->where(['id' => $this->subject_id])->one();
             if(!empty($resume)) {
                 return $resume->title;
             }
@@ -107,16 +107,8 @@ class Views extends \yii\db\ActiveRecord
         }
     }
 
-    public static function findSubject($type)
+    public function getUsers()
     {
-        if ($type == 'вакансия') {
-            return ArrayHelper::map(\common\models\Vacancy::find()->asArray()->all(), 'id',
-                'post');
-        }
-
-        if ($type == 'резюме') {
-            return ArrayHelper::map(\common\models\Resume::find()->asArray()->all(), 'id',
-                'title');
-        }
+        return $this->hasOne(User::className(),['id' => 'viewer_id']);
     }
 }

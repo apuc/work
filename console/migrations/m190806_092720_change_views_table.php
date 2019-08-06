@@ -20,7 +20,7 @@ class m190806_092720_change_views_table extends Migration
         $this->addColumn('views', 'subject_id', $this->integer(11));
         foreach ($views as $view) {
             Yii::$app->db->createCommand()->insert('views', [
-                'subject_type' => 'вакансия',
+                'subject_type' => 'Vacancy',
                 'subject_id' => $view['vacancy_id'],
                 'viewer_id' => $view['viewer_id'],
                 'dt_view' => $view['dt_view'],

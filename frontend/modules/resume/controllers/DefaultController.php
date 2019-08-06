@@ -28,7 +28,7 @@ class DefaultController extends Controller
     {
         $model = Resume::findOne($id);
         $view = new Views();
-        $view->subject_type = 'резюме';
+        $view->subject_type = 'Resume';
         $view->subject_id = $model->id;
         $view->viewer_id = Yii::$app->user->id;
         $view->dt_view = strtotime(date("Y-m-d H:i:s"));

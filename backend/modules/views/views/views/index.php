@@ -22,9 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'subject_type',
-//                'value' => function ($model) {
-//                    return \common\models\Views::getCompany($model->company_id)->name;
-//                },
                 'filter' => \kartik\select2\Select2::widget([
                     'model' => $searchModel,
                     'attribute' => 'subject_type',
@@ -38,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'subject_id',
                 'value' => function ($model) {
-                    return \common\models\Views::getSubject($model->subject_type, $model->subject_id);
+                    return $model->getSubjectName();
                 },
             ],
             [
