@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\classes\Debug;
 use Yii;
 
 /**
@@ -54,5 +55,34 @@ class Views extends \yii\db\ActiveRecord
     public function afterFind()
     {
         $this->dt_view = date('d-m-Y', $this->dt_view);
+    }
+
+    public static function getCompany($id)
+    {
+        return Company::find()->where(['id' => $id])->one();
+    }
+
+    public static function getVacancy($id)
+    {
+        return Vacancy::find()->where(['id' => $id])->one();
+    }
+
+    public static function getViewer($id)
+    {
+        $viewer['username'] = 'Гость';
+
+        if ($id !== null) {
+            $viewer = User::find()->where(['id' => $id])->asArray()->one();
+        }
+
+        return $viewer;
+    }
+
+    public static function getAllUsers()
+    {
+        $users = \yii\helpers\ArrayHelper::map(\common\models\User::find()->asArray()->all(), 'id', 'username');
+        $users[0] = 'Гость';
+
+        return $users;
     }
 }

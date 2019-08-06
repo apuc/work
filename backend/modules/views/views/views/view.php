@@ -28,11 +28,26 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'company_id',
-            'vacancy_id',
-            'viewer_id',
+            [
+                'attribute' => 'Компания',
+                'value' => function ($model) {
+                    return \common\models\Views::getCompany($model->company_id)->name;
+                },
+            ],
+            [
+                'attribute' => 'vacancy_id',
+                'value' => function ($model) {
+                    return \common\models\Views::getVacancy($model->vacancy_id)->post;
+                },
+            ],
+            [
+                'attribute' => 'viewer_id',
+                'value' => function ($model) {
+                    return \common\models\Views::getViewer($model->viewer_id)['username'];
+                },
+            ],
             'dt_view',
-            'options:ntext',
+//            'options:ntext',
         ],
     ]) ?>
 

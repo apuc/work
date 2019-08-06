@@ -1,5 +1,6 @@
 <?php
 
+use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -14,20 +15,70 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Добавить просмотр', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute' => 'company_id',
+                'value' => function ($model) {
+                    return \common\models\Views::getCompany($model->company_id)->name;
+                },
+                'filter' => \kartik\select2\Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'company_id',
+                    'data' => \yii\helpers\ArrayHelper::map(\common\models\Company::find()->asArray()->all(), 'id',
+                        'name'),
+                    'options' => ['placeholder' => 'Выберите компанию...', 'class' => 'form-control'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
+            ],
+            [
+                'attribute' => 'vacancy_id',
+                'value' => function ($model) {
+                    return \common\models\Views::getVacancy($model->vacancy_id)->post;
+                },
+                'filter' => \kartik\select2\Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'vacancy_id',
+                    'data' => \yii\helpers\ArrayHelper::map(\common\models\Vacancy::find()->asArray()->all(), 'id',
+                        'post'),
+                    'options' => ['placeholder' => 'Выберите вакансию...', 'class' => 'form-control'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
+            ],
+            [
+                'attribute' => 'viewer_id',
+                'value' => function ($model) {
+                    return \common\models\Views::getViewer($model->viewer_id)['username'];
+                },
+                'filter' => \kartik\select2\Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'viewer_id',
+                    'data' => \common\models\Views::getAllUsers(),
+                    'options' => ['placeholder' => 'Выберите просмотревшего...', 'class' => 'form-control'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
+            ],
+            [
+                'attribute' => 'dt_view',
+                'filter' => \kartik\date\DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'dt_view',
+                    'type' => DatePicker::TYPE_INPUT,
+                    'language' => 'ru',
+                    'options' => ['placeholder' => 'Выберите дату'],
+                ]),
+            ],
 
-            'company_id',
-            'vacancy_id',
-            'viewer_id',
-            'dt_view',
+
             //'options:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
