@@ -11,6 +11,7 @@ use common\models\Resume;
 use common\models\Skill;
 use common\models\User;
 use common\models\Vacancy;
+use common\models\Views;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
@@ -26,6 +27,12 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         $model = Resume::findOne($id);
+        $view = new Views();
+        $view->subject_type = 'резюме';
+        $view->subject_id = $model->id;
+        $view->viewer_id = Yii::$app->user->id;
+        $view->dt_view = strtotime(date("Y-m-d H:i:s"));
+        $view->save();
         $model->views++;
         $model->save();
         return $this->render('view', [

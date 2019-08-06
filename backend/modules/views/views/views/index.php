@@ -21,36 +21,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
-                'attribute' => 'company_id',
-                'value' => function ($model) {
-                    return \common\models\Views::getCompany($model->company_id)->name;
-                },
+                'attribute' => 'subject_type',
+//                'value' => function ($model) {
+//                    return \common\models\Views::getCompany($model->company_id)->name;
+//                },
                 'filter' => \kartik\select2\Select2::widget([
                     'model' => $searchModel,
-                    'attribute' => 'company_id',
-                    'data' => \yii\helpers\ArrayHelper::map(\common\models\Company::find()->asArray()->all(), 'id',
-                        'name'),
-                    'options' => ['placeholder' => 'Выберите компанию...', 'class' => 'form-control'],
+                    'attribute' => 'subject_type',
+                    'data' => \common\models\Views::getSubjectType(),
+                    'options' => ['placeholder' => 'Выберите тип...', 'class' => 'form-control'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
                 ]),
             ],
             [
-                'attribute' => 'vacancy_id',
+                'attribute' => 'subject_id',
                 'value' => function ($model) {
-                    return \common\models\Views::getVacancy($model->vacancy_id)->post;
+                    return \common\models\Views::getSubject($model->subject_type, $model->subject_id);
                 },
-                'filter' => \kartik\select2\Select2::widget([
-                    'model' => $searchModel,
-                    'attribute' => 'vacancy_id',
-                    'data' => \yii\helpers\ArrayHelper::map(\common\models\Vacancy::find()->asArray()->all(), 'id',
-                        'post'),
-                    'options' => ['placeholder' => 'Выберите вакансию...', 'class' => 'form-control'],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ]),
             ],
             [
                 'attribute' => 'viewer_id',

@@ -4,19 +4,23 @@ namespace common\models;
 
 use common\classes\Debug;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "views".
  *
  * @property int $id
- * @property int $company_id
- * @property int $vacancy_id
+ * @property string $subject_type
+ * @property int $subject_id
  * @property int $viewer_id
  * @property int $dt_view
  * @property string $options
  */
 class Views extends \yii\db\ActiveRecord
 {
+    const TYPE_RESUME = 'резюме';
+    const TYPE_VACANCY = 'вакансия';
+
     /**
      * {@inheritdoc}
      */
@@ -31,9 +35,9 @@ class Views extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'vacancy_id', 'viewer_id', 'dt_view'], 'integer'],
-            [['vacancy_id'], 'required'],
-            [['options'], 'string'],
+            [['subject_id', 'viewer_id', 'dt_view'], 'integer'],
+            [['subject_id'], 'required'],
+            [['subject_type', 'options'], 'string'],
         ];
     }
 
@@ -44,8 +48,8 @@ class Views extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'company_id' => 'Компания',
-            'vacancy_id' => 'Вакансия',
+            'subject_type' => 'Тип',
+            'subject_id' => 'Идентификатор',
             'viewer_id' => 'Просмотрел',
             'dt_view' => 'Дата просмотра',
             'options' => 'Дополнительно',
@@ -55,16 +59,6 @@ class Views extends \yii\db\ActiveRecord
     public function afterFind()
     {
         $this->dt_view = date('d-m-Y', $this->dt_view);
-    }
-
-    public static function getCompany($id)
-    {
-        return Company::find()->where(['id' => $id])->one();
-    }
-
-    public static function getVacancy($id)
-    {
-        return Vacancy::find()->where(['id' => $id])->one();
     }
 
     public static function getViewer($id)
@@ -84,5 +78,45 @@ class Views extends \yii\db\ActiveRecord
         $users[0] = 'Гость';
 
         return $users;
+    }
+
+    public static function getSubjectType()
+    {
+        return [
+            self::TYPE_RESUME => 'резюме',
+            self::TYPE_VACANCY => 'вакансия',
+        ];
+    }
+
+    public static function getSubject($type, $id)
+    {
+        if ($type == 'вакансия') {
+            $vacancy = Vacancy::find()->where(['id' => $id])->one();
+            if(!empty($vacancy)) {
+                return $vacancy->post;
+            }
+            return false;
+        }
+
+        if ($type == 'резюме') {
+            $resume = Resume::find()->where(['id' => $id])->one();
+            if(!empty($resume)) {
+                return $resume->title;
+            }
+            return false;
+        }
+    }
+
+    public static function findSubject($type)
+    {
+        if ($type == 'вакансия') {
+            return ArrayHelper::map(\common\models\Vacancy::find()->asArray()->all(), 'id',
+                'post');
+        }
+
+        if ($type == 'резюме') {
+            return ArrayHelper::map(\common\models\Resume::find()->asArray()->all(), 'id',
+                'title');
+        }
     }
 }

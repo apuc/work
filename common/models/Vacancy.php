@@ -4,6 +4,7 @@ namespace common\models;
 use common\models\base\WorkActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\web\View;
 
 /**
  * This is the model class for table "vacancy".
@@ -193,5 +194,15 @@ class Vacancy extends WorkActiveRecord
     public function getCan_update()
     {
         return (time()-self::UPDATE_MIN_SEC_PASSED) > $this->update_time;
+    }
+
+    public function getViews()
+    {
+        return $this->hasMany(Views::className(), ['subject_id' => 'id']);
+    }
+
+    public function getCountViews()
+    {
+        return Views::find()->where(['id' => $this->id])->andWhere(['subject_type' => 'вакансия'])->count();
     }
 }

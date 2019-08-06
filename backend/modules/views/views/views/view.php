@@ -29,15 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             [
-                'attribute' => 'Компания',
-                'value' => function ($model) {
-                    return \common\models\Views::getCompany($model->company_id)->name;
-                },
+                'attribute' => 'subject_type',
             ],
             [
-                'attribute' => 'vacancy_id',
+                'attribute' => 'subject_id',
                 'value' => function ($model) {
-                    return \common\models\Views::getVacancy($model->vacancy_id)->post;
+                    return \common\models\Views::getSubject($model->subject_type, $model->subject_id);
                 },
             ],
             [

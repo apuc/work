@@ -15,17 +15,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'company_id')->widget(Select2::className(),
-        [
-            'data' => ArrayHelper::map(\common\models\Company::find()->all(), 'id', 'name'),
-            'options' => ['placeholder' => 'Начните вводить название компании ...'],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ]
-    ); ?>
+    <?= $form->field($model, 'subject_type')->dropDownList([
+            'резюме' => 'резюме',
+            'вакансия' => 'вакансия'
+    ]);?>
 
-    <?= $form->field($model, 'vacancy_id')->textInput() ?>
+    <?= $form->field($model, 'subject_id')->textInput() ?>
 
     <?= $form->field($model, 'viewer_id')->widget(Select2::className(),
         [

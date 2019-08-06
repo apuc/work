@@ -18,8 +18,9 @@ class ViewsSearch extends Views
     public function rules()
     {
         return [
-            [['id', 'company_id', 'vacancy_id', 'viewer_id', 'dt_view'], 'integer'],
+            [['id', 'subject_id', 'viewer_id', 'dt_view'], 'integer'],
             [['options'], 'safe'],
+            [['subject_type'], 'string'],
         ];
     }
 
@@ -64,9 +65,10 @@ class ViewsSearch extends Views
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'company_id' => $this->company_id,
-            'vacancy_id' => $this->vacancy_id,
+            'subject_id' => $this->subject_id,
         ]);
+
+        $query->andFilterWhere(['like', 'subject_type', $this->subject_type]);
 
         $query->andFilterWhere(['like', 'options', $this->options]);
 
