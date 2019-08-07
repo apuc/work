@@ -13,7 +13,7 @@ class m190806_092720_change_views_table extends Migration
     public function safeUp()
     {
         $views = Yii::$app->db->createCommand('SELECT * FROM views')->queryAll();
-        Yii::$app->db->createCommand('DELETE * FROM views')->queryAll();
+        Yii::$app->db->createCommand()->truncateTable('views');
         $this->dropColumn('views', 'company_id');
         $this->dropColumn('views', 'vacancy_id');
         $this->addColumn('views', 'subject_type', $this->string(255));
