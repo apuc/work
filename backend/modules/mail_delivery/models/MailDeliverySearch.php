@@ -35,6 +35,7 @@ class MailDeliverySearch extends MailDelivery
             'id' => $this->id,
         ]);
         $query->andFilterWhere(['status' => $this->status]);
+        $query->andFilterWhere(['like', 'email', $this->email]);
 
         if(!empty($this->dt_send)) {
             $query->andFilterWhere(['>=', 'dt_send', strtotime($this->dt_send)]);

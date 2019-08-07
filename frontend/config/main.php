@@ -211,6 +211,7 @@ return [
                         'request/schedule',
                         'request/skill',
                         'request/vacancy',
+                        'request/views',
                     ],
                     'pluralize'=>false],
 

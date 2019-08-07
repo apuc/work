@@ -29,8 +29,8 @@ class DefaultController extends Controller
         $last_vacancies = Vacancy::find()->where(['status' => Vacancy::STATUS_ACTIVE])->orderBy('id DESC')->limit(2)->all();
         $model = Vacancy::findOne($id);
         $view = new Views();
-        $view->company_id = $model->company_id;
-        $view->vacancy_id = $model->id;
+        $view->subject_type = 'Vacancy';
+        $view->subject_id = $model->id;
         $view->viewer_id = Yii::$app->user->id;
         $view->dt_view = strtotime(date("Y-m-d H:i:s"));
         $view->save();
