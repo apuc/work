@@ -1,3 +1,113 @@
+POST http://work.loc/request/vacancy/create?company_id=19&post=httpclient&status=1&category=1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer ybIDrMSwmOnRZKpjAKSshfWue5cabRyo
+
+<> 2019-08-07T033433.400.json
+
+###
+
+POST http://work.loc/request/vacancy/create?company_id=19&post=httpclient&status=1&category=1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer ybIDrMSwmOnRZKpjAKSshfWue5cabRyo
+
+<> 2019-08-07T033303.400.json
+
+###
+
+POST http://work.loc/request/vacancy/create?company_id=19&post=httpclient&status=1&category=1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer ybIDrMSwmOnRZKpjAKSshfWue5cabRyo
+
+<> 2019-08-07T033151.400.json
+
+###
+
+POST http://work.loc/request/vacancy/create?company_id=19&post=httpclient&status=1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer ybIDrMSwmOnRZKpjAKSshfWue5cabRyo
+
+<> 2019-08-07T033056.400.json
+
+###
+
+GET http://work.loc/request/vacancy/5?expand=views0
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer ybIDrMSwmOnRZKpjAKSshfWue5cabRyo
+
+<> 2019-08-07T112626.200.json
+
+###
+
+GET http://work.loc/request/vacancy/5?=
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer ybIDrMSwmOnRZKpjAKSshfWue5cabRyo
+
+<> 2019-08-07T111701.200.json
+
+###
+
+GET http://work.loc/request/category?=
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer ybIDrMSwmOnRZKpjAKSshfWue5cabRyo
+
+<> 2019-08-07T111234.200.json
+
+###
+
+GET http://work.loc/request/category/1?=
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer ybIDrMSwmOnRZKpjAKSshfWue5cabRyo
+
+<> 2019-08-07T111232.200.json
+
+###
+
+GET http://work.loc/request/category/5?=
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer ybIDrMSwmOnRZKpjAKSshfWue5cabRyo
+
+<> 2019-08-07T111201.200.json
+
+###
+
+GET http://work.loc/request/vacancy/5?expand=views0,countViews
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer ybIDrMSwmOnRZKpjAKSshfWue5cabRyo
+
+<> 2019-08-07T101013.200.json
+
+###
+
+GET http://work.loc/request/vacncy/5?expand=views0,countViews
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Bearer ybIDrMSwmOnRZKpjAKSshfWue5cabRyo
+
+<> 2019-08-07T101006.404.html
+
+###
+
 GET http://work.loc/request/resume/?expand=views0,countViews
 Accept: */*
 Cache-Control: no-cache
@@ -383,100 +493,6 @@ Content-Type: application/json
 Authorization: Bearer heLv-yHzbt3aWGlogjbQLSnVhZrhWDKp
 
 <> 2019-06-06T013631.200.json
-
-###
-
-GET http://work.loc/request/employer/my-index
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer heLv-yHzbt3aWGlogjbQLSnVhZrhWDKp
-
-<> 2019-06-06T012429.200.json
-
-###
-
-GET http://work.loc/request/employer/my-index
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer heLv-yHzbt3aWGlogjbQLSnVhZrhWDKp
-
-<> 2019-06-06T012355.500.html
-
-###
-
-GET http://work.loc/request/employer/my-index
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer heLv-yHzbt3aWGlogjbQLSnVhZrhWDKp
-
-<> 2019-06-06T012203.200.json
-
-###
-
-GET http://work.loc/request/employer/my-index
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-
-<> 2019-06-06T012133.401.json
-
-###
-
-GET http://work.loc/request/emploer/my-index
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-
-<> 2019-06-06T012114.404.html
-
-###
-
-DELETE http://work.loc/request/vacancy/1
-Content-Type: application/json; charset=UTF-8
-
-{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"2","year_from":"456456","month_to":"2","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"2","year_from":"123123","year_to":"12312","month_to":"5"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
-
-###
-
-DELETE http://work.loc/request/vacancy/1
-Content-Type: application/json; charset=UTF-8
-
-{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"2","year_from":"456456","month_to":"2","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"2","year_from":"123123","year_to":"12312","month_to":"5"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
-
-<> 2019-04-11T031839.500.json
-
-###
-
-DELETE http://work.loc/request/resume/32
-Content-Type: application/json; charset=UTF-8
-
-{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"2","year_from":"456456","month_to":"2","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"2","year_from":"123123","year_to":"12312","month_to":"5"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
-
-###
-
-DELETE http://work.loc/request/resume/3
-Content-Type: application/json; charset=UTF-8
-
-{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"2","year_from":"456456","month_to":"2","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"2","year_from":"123123","year_to":"12312","month_to":"5"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
-
-###
-
-DELETE http://work.loc/request/resume/2
-Content-Type: application/json; charset=UTF-8
-
-{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"2","year_from":"456456","month_to":"2","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"2","year_from":"123123","year_to":"12312","month_to":"5"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
-
-###
-
-DELETE http://work.loc/request/resume/2
-Content-Type: application/json; charset=UTF-8
-
-{"employer_id":1,"image_url":"image.png","title":"HUI","min_salary":"123","max_salary":"1234","description":"HUI","vk":"3rgrg3","facebook":"12312312","instagram":"fsdfsadf","skype":"sdfsdafds","education":[{"name":"dfdfdfdfd","year_from":"1231","year_to":"1231","academic_degree":"Магистр","faculty":"gbgfggffg","specialisation":"","specialization":"fgreggfgfgfga"},{"name":"erwerwerwer","year_from":"123123","year_to":"123123","academic_degree":"Магистр","faculty":"sdfsdf","specialization":"sdfsdfds"}],"work":[{"name":"iulio;;;l;ljkl;kjkll","post":"12314","department":"l;kkl;kjl;","month_from":"2","year_from":"456456","month_to":"2","year_to":"1231"},{"name":"hghfgh","post":"fghfgh","department":"fghfgh","month_from":"2","year_from":"123123","year_to":"12312","month_to":"5"}],"skills":[{"name":"123123123"},{"name":"gdfgfdgdf"},{"name":"gdfgdfgdfg"},{"name":"dgdfgdfgdf"}]}
-
-<> 2019-04-11T030204.500.json
 
 ###
 
