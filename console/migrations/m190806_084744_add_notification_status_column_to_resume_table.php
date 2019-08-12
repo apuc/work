@@ -12,7 +12,7 @@ class m190806_084744_add_notification_status_column_to_resume_table extends Migr
      */
     public function safeUp()
     {
-        $this->addColumn('resume', 'notification_status', $this->tinyInteger()->after('views')->comment('Статус для отправления уведомлений'));
+        $this->addColumn('resume', 'notification_status', $this->tinyInteger()->defaultValue(0)->after('views')->comment('Статус для отправления уведомлений'));
     }
 
     /**

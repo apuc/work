@@ -46,6 +46,10 @@ class Vacancy extends WorkActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
+    const NOTIFICATION_STATUS_OK=0;
+    const NOTIFICATION_STATUS_1_WEEK=1;
+    const NOTIFICATION_STATUS_2_WEEKS=2;
+
     const UPDATE_MIN_SEC_PASSED = 86400;
 
     public static $experiences = [
@@ -80,7 +84,7 @@ class Vacancy extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'views'], 'integer'],
+            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'views', 'notification_status'], 'integer'],
             [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions'], 'string'],
             [['company_id', 'post'], 'required'],

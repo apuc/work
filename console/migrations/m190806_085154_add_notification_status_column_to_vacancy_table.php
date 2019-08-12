@@ -12,7 +12,7 @@ class m190806_085154_add_notification_status_column_to_vacancy_table extends Mig
      */
     public function safeUp()
     {
-        $this->addColumn('vacancy', 'notification_status', $this->tinyInteger()->after('views')->comment('Статус для отправления уведомлений'));
+        $this->addColumn('vacancy', 'notification_status', $this->tinyInteger()->defaultValue(0)->after('views')->comment('Статус для отправления уведомлений'));
     }
 
     /**

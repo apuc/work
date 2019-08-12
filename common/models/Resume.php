@@ -48,6 +48,10 @@ class Resume extends WorkActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
+    const NOTIFICATION_STATUS_OK=0;
+    const NOTIFICATION_STATUS_1_WEEK=1;
+    const NOTIFICATION_STATUS_2_WEEKS=2;
+
     const UPDATE_MIN_SEC_PASSED = 86400;
 
     public function getRelateDeleteList()
@@ -78,7 +82,7 @@ class Resume extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'views'], 'integer'],
+            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'views', 'notification_status'], 'integer'],
             [['title', 'city', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['min_salary', 'max_salary'], 'safe'],
