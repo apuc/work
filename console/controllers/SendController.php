@@ -4,6 +4,7 @@ namespace console\controllers;
 
 use backend\modules\mail_delivery\models\MailDelivery;
 use common\classes\Debug;
+use common\models\Message;
 use common\models\SendMail;
 use common\models\Vacancy;
 use Yii;
@@ -44,8 +45,33 @@ class SendController extends Controller
     {
         $vacancies=Vacancy::find()->where(['notification_status'=>Vacancy::NOTIFICATION_STATUS_OK])->andWhere(['<=', 'update_time', time()-86400*7]);
         /** @var Vacancy $vacancy */
-        foreach ($vacancies->each(2) as $vacancy){
-            echo $vacancy->post."\n";
+        foreach ($vacancies->each(50) as $vacancy){
+            echo $vacancy->post.": 1 неделя\n";
+            $vacancy->notification_status=Vacancy::NOTIFICATION_STATUS_1_WEEK;
+            $vacancy->save();
+            $this->sendNotificationMessageVacancy($vacancy, "неделю");
         }
+        $vacancies=Vacancy::find()->where(['notification_status'=>Vacancy::NOTIFICATION_STATUS_1_WEEK])->andWhere(['<=', 'update_time', time()-86400*14]);
+        /** @var Vacancy $vacancy */
+        foreach ($vacancies->each(50) as $vacancy){
+            echo $vacancy->post.": 2 неделя\n";
+            $vacancy->notification_status=Vacancy::NOTIFICATION_STATUS_2_WEEKS;
+            $vacancy->save();
+            $this->sendNotificationMessageVacancy($vacancy, "2 недели");
+        }
+    }
+
+    /**
+     * @param Vacancy $vacancy
+     */
+    public function sendNotificationMessageVacancy($vacancy, $text)
+    {
+        $message=new Message();
+        $message->load([
+            'title'=>$vacancy->post,
+            'text'=>"Ваша вакансия $vacancy->post не обновлялась уже $text"
+        ], '');
+        $message->receiver_id=$vacancy->owner;
+        $message->save();
     }
 }
