@@ -2,6 +2,7 @@
 
 namespace backend\modules\views\models;
 
+use common\classes\Debug;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Views;
@@ -17,8 +18,9 @@ class ViewsSearch extends Views
     public function rules()
     {
         return [
-            [['id', 'company_id', 'vacancy_id', 'viewer_id', 'dt_view'], 'integer'],
+            [['id', 'subject_id', 'viewer_id', 'dt_view'], 'integer'],
             [['options'], 'safe'],
+            [['subject_type'], 'string'],
         ];
     }
 
@@ -41,7 +43,6 @@ class ViewsSearch extends Views
     public function search($params)
     {
         $query = Views::find();
-
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -49,6 +50,11 @@ class ViewsSearch extends Views
         ]);
 
         $this->load($params);
+        if (empty($this->dt_view)) {
+            $this->dt_view = null;
+        } else {
+            $this->dt_view = strtotime($this->dt_view);
+        }
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -59,13 +65,23 @@ class ViewsSearch extends Views
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'company_id' => $this->company_id,
-            'vacancy_id' => $this->vacancy_id,
-            'viewer_id' => $this->viewer_id,
-            'dt_view' => $this->dt_view,
+            'subject_id' => $this->subject_id,
         ]);
 
+        $query->andFilterWhere(['like', 'subject_type', $this->subject_type]);
+
         $query->andFilterWhere(['like', 'options', $this->options]);
+
+        if(isset($this->dt_view)) {
+            $query->andFilterWhere(['>=', 'dt_view', $this->dt_view]);
+            $query->andFilterWhere(['<=', 'dt_view', $this->dt_view + 86400]);
+        }
+
+        if($this->viewer_id === '0') {
+            $query->andWhere(['viewer_id' => null]);
+        } else {
+            $query->andFilterWhere(['viewer_id' => $this->viewer_id]);
+        }
 
         return $dataProvider;
     }

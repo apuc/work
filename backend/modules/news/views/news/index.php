@@ -49,9 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => \common\models\News::getStatusList(),
             ],
             [
-                    'attribute' => 'dt_create',
+                'attribute' => 'dt_create',
                 'filter' => \kartik\date\DatePicker::widget([
-                        'model' => $searchModel,
+                    'model' => $searchModel,
                     'attribute' => 'dt_create',
                     'type' => DatePicker::TYPE_INPUT,
                     'language' => 'ru',
@@ -59,10 +59,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]),
             ],
             [
-                'attribute' =>  'dt_public',
+                'attribute' => 'dt_public',
                 'filter' => \kartik\date\DatePicker::widget([
                     'model' => $searchModel,
-                    'attribute' =>  'dt_public',
+                    'attribute' => 'dt_public',
                     'type' => DatePicker::TYPE_INPUT,
                     'language' => 'ru',
                     'options' => ['placeholder' => 'Выберите дату'],
