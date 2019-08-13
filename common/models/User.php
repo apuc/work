@@ -9,4 +9,13 @@ class User extends \dektrium\user\models\User implements IdentityInterface
     {
         return ['id', 'email'];
     }
+    public function extraFields()
+    {
+        return ['employer'];
+    }
+
+    public function getEmployer()
+    {
+        return $this->hasOne(Employer::className(), ['user_id'=>'id']);
+    }
 }
