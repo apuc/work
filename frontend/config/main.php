@@ -153,7 +153,7 @@ return [
         ],
         'user' => [
             //'class' => 'app\components\User',
-            'identityClass' => 'common\models\base\User',
+            'identityClass' => 'common\models\User',
         ],
 //        'security' => [
 //            'identityClass' => 'common\models\User',
