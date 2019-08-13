@@ -4,6 +4,7 @@ namespace common\models;
 use common\models\base\WorkActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\web\View;
 
 /**
  * This is the model class for table "vacancy".
@@ -25,6 +26,7 @@ use yii\db\ActiveRecord;
  * @property integer $employment_type_id
  * @property integer $schedule_id
  * @property integer $views
+ * @property integer $notification_status
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -44,6 +46,10 @@ class Vacancy extends WorkActiveRecord
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
+
+    const NOTIFICATION_STATUS_OK=0;
+    const NOTIFICATION_STATUS_1_WEEK=1;
+    const NOTIFICATION_STATUS_2_WEEKS=2;
 
     const UPDATE_MIN_SEC_PASSED = 86400;
 
@@ -79,7 +85,7 @@ class Vacancy extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'views'], 'integer'],
+            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'views', 'notification_status'], 'integer'],
             [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions'], 'string'],
             [['company_id', 'post'], 'required'],
@@ -88,7 +94,7 @@ class Vacancy extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['company', 'schedule', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category'];
+        return ['company', 'schedule', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews'];
     }
 
     /**
@@ -193,5 +199,15 @@ class Vacancy extends WorkActiveRecord
     public function getCan_update()
     {
         return (time()-self::UPDATE_MIN_SEC_PASSED) > $this->update_time;
+    }
+
+    public function getViews0()
+    {
+        return $this->hasMany(Views::className(), ['subject_id' => 'id'])->where(['subject_type' => 'Vacancy']);
+    }
+
+    public function getCountViews()
+    {
+        return Views::find()->where(['subject_id' => $this->id])->andWhere(['subject_type' => 'Vacancy'])->count();
     }
 }

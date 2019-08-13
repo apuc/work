@@ -145,7 +145,7 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
                     <?php endif ?>
                     <p><?=StringHelper::truncate($vacancy->responsibilities, 80, '...')?></p>
                 </div>
-                <div class="d-flex flex-wrap align-items-center justify-content-start mt-auto">
+                <div class="d-flex flex-wrap align-items-center justify-content-start">
                     <a class="btn-card btn-red jsVacancyModal" data-id="<?=$vacancy->id?>">Откликнуться</a>
 <!--                    <a class="single-card__like" href="#">-->
 <!--                        <i class="fa fa-heart-o"></i>-->

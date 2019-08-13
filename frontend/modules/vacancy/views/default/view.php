@@ -90,7 +90,7 @@ use yii\helpers\Url; ?>
                     <p class="single-block__requirements-text"><?= nl2br($model->qualification_requirements) ?></p>
                 </div>
                 <div class="single-block__duties">
-                    <h3 class="single-block__duties-head">Обязаности
+                    <h3 class="single-block__duties-head">Обязанности:
                     </h3>
                     <p class="single-block__duties-text"><?= nl2br($model->responsibilities) ?></p>
                 </div>

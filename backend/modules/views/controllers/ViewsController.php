@@ -2,6 +2,7 @@
 
 namespace backend\modules\views\controllers;
 
+use common\classes\Debug;
 use Yii;
 use common\models\Views;
 use backend\modules\views\models\ViewsSearch;
@@ -86,7 +87,9 @@ class ViewsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->dt_view = strtotime($model->dt_view);
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

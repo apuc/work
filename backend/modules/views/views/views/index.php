@@ -1,5 +1,6 @@
 <?php
 
+use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -14,20 +15,56 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Добавить просмотр', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute' => 'subject_type',
+                'filter' => \kartik\select2\Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'subject_type',
+                    'data' => \common\models\Views::getSubjectType(),
+                    'options' => ['placeholder' => 'Выберите тип...', 'class' => 'form-control'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
+            ],
+            [
+                'attribute' => 'subject_id',
+                'value' => function ($model) {
+                    return $model->getSubjectName();
+                },
+            ],
+            [
+                'attribute' => 'viewer_id',
+                'value' => function ($model) {
+                    return \common\models\Views::getViewer($model->viewer_id)['username'];
+                },
+                'filter' => \kartik\select2\Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'viewer_id',
+                    'data' => \common\models\Views::getAllUsers(),
+                    'options' => ['placeholder' => 'Выберите просмотревшего...', 'class' => 'form-control'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
+            ],
+            [
+                'attribute' => 'dt_view',
+                'filter' => \kartik\date\DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'dt_view',
+                    'type' => DatePicker::TYPE_INPUT,
+                    'language' => 'ru',
+                    'options' => ['placeholder' => 'Выберите дату'],
+                ]),
+            ],
 
-            'company_id',
-            'vacancy_id',
-            'viewer_id',
-            'dt_view',
+
             //'options:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
