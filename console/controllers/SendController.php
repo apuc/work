@@ -63,6 +63,7 @@ class SendController extends Controller
 
     /**
      * @param Vacancy $vacancy
+     * @param string $text
      */
     public function sendNotificationMessageVacancy($vacancy, $text)
     {
