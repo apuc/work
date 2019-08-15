@@ -66,6 +66,7 @@
                 drawer: true,
                 firstName: '',
                 secondName: '',
+                userId: '',
                 email: '',
                 loginImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/login.png',
                 mainImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/main.png',
@@ -119,15 +120,17 @@
                 ],
             }
         },
-        mounted() {
+        beforeMount() {
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
                 .then(response => {
 
                         this.firstName = response.data[0].first_name;
                         this.secondName = response.data[0].second_name;
+                        this.userId = response.data[0].user_id;
                         this.email = response.data[0].user.email;
                         this.email = this.email.match(/.+@/)[0];
-                        this.email = this.email.slice(0, this.email.length-1)
+                        this.email = this.email.slice(0, this.email.length-1);
+                        localStorage.userId = this.userId;
 
                     }, response => {
                         this.$swal({

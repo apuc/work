@@ -23,8 +23,7 @@
                             <v-list-tile-content>
                                 <v-list-tile-title v-if="item.name.length > 0" class="mt-auto mb-auto"> {{ item.name }}</v-list-tile-title>
                                 <v-list-tile-title v-else class="mt-auto mb-auto"> {{ item.contact_person }}</v-list-tile-title>
-                                <v-list-tile-sub-title class="mt-auto mb-auto">Последнее обновление: {{ item.updated_at
-                                    }}
+                                <v-list-tile-sub-title class="mt-auto mb-auto">Последнее обновление: {{ item.updated_at }}
                                 </v-list-tile-sub-title>
                                 <v-divider style="width: 100%;"></v-divider>
                             </v-list-tile-content>
@@ -34,6 +33,16 @@
                                        type="button"
                                 >
                                     <v-icon>edit</v-icon>
+
+                                </v-btn>
+                            </router-link>
+                            <router-link :to="`${companyRight}/${item.id}`" v-if="item.user_id == userID">
+                                <v-btn outline small fab
+                                       class="edit-btn"
+                                       type="button"
+                                       title="Доступ к компании"
+                                >
+                                    <v-icon>colorize</v-icon>
 
                                 </v-btn>
                             </router-link>
@@ -72,13 +81,16 @@
         data() {
             return {
                 editLink: '/personal-area/edit-company',
+                companyRight: '/personal-area/company-right',
                 getAllCompany: [],
+                userID: '',
                 paginationPageCount: 1,
                 paginationCurrentPage: 1
             }
         },
         mounted() {
             document.title = this.$route.meta.title;
+            this.userID = localStorage.userId;
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index`)
                 .then(response => {
                         this.getAllCompany = response.data;
@@ -86,7 +98,14 @@
                             let timestamp = element.updated_at;
                             let date = new Date();
                             date.setTime(timestamp * 1000);
-                            element.updated_at = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                            let options = {
+                                year: 'numeric',
+                                month: 'numeric',
+                                day: 'numeric',
+                                hour: 'numeric',
+                                minute: 'numeric',
+                            };
+                            element.updated_at = date.toLocaleString("ru", options);
                         });
                         this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
                     }, response => {

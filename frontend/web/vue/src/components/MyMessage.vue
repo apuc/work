@@ -32,7 +32,10 @@
                                     <v-list-tile-content>
                                         <v-list-tile-title v-html="incoming.subject"></v-list-tile-title>
                                         <v-list-tile-title v-html="incoming.subject_from"></v-list-tile-title>
-                                        <v-list-tile-sub-title class="text--primary">{{ incoming.sender.employer.first_name }} {{
+                                        <v-list-tile-sub-title class="text--primary" v-if="incoming.sender == 'Системное сообщение'">
+                                            {{ incoming.sender }}
+                                        </v-list-tile-sub-title>
+                                        <v-list-tile-sub-title class="text--primary" v-else>{{ incoming.sender.employer.first_name }} {{
                                             incoming.sender.employer.second_name }} - {{ incoming.sender.email }}
                                         </v-list-tile-sub-title>
                                         <v-list-tile-sub-title class="message__text">{{ incoming.text }}</v-list-tile-sub-title>
@@ -130,6 +133,9 @@
                             this.messagesIncoming = response.data;
                             let domen = `${process.env.VUE_APP_API_URL}`;
                             this.messagesIncoming.forEach((element) => {
+                                if(element.subject_id === null) {
+                                    element.sender = 'Системное сообщение'
+                                }
                                 if (element.subject === 'Resume') {
                                     element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
                                     element.subject_from = 'Предлагают вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.post + '</a>';
@@ -141,7 +147,15 @@
                                 let timestamp = element.created_at;
                                 let date = new Date();
                                 date.setTime(timestamp * 1000);
-                                element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+
+                                let options = {
+                                    year: 'numeric',
+                                    month: 'numeric',
+                                    day: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                };
+                                element.created_at = date.toLocaleString("ru", options);
                             });
                             this.paginationPageCountIncoming = response.headers.map['x-pagination-page-count'][0];
                         }, response => {
@@ -176,8 +190,14 @@
                                 let timestamp = element.created_at;
                                 let date = new Date();
                                 date.setTime(timestamp * 1000);
-                                element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-                            });
+                                let options = {
+                                    year: 'numeric',
+                                    month: 'numeric',
+                                    day: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                };
+                                element.created_at = date.toLocaleString("ru", options);                            });
                             this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
                         }, response => {
                             this.$swal({
