@@ -39,16 +39,6 @@
 
                 </div>
 
-                <template v-if="paginationPageCount > 1">
-                    <div class="text-xs-center">
-                        <v-pagination
-                                v-model="paginationCurrentPage"
-                                :length="paginationPageCount"
-                                @input="changePage"
-                        ></v-pagination>
-                    </div>
-                </template>
-
             </div>
         </template>
 
@@ -96,8 +86,23 @@
                 };
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/company/add-user`, data)
                     .then(response => {
-                            this.$router.push('/personal-area/all-company');
-                            return response;
+                        this.formData.companyRight = '';
+                        let mainBtn = document.querySelector('#main-btn');
+                        mainBtn.disabled = false;
+                        this.$http.get(`${process.env.VUE_APP_API_URL}/request/company?expand=users.employer`)
+                            .then(response => {
+                                    this.allUsers = response.data[0].users;
+                                }, response => {
+                                    this.$swal({
+                                        toast: true,
+                                        position: 'bottom-end',
+                                        showConfirmButton: false,
+                                        timer: 4000,
+                                        type: 'error',
+                                        title: response.data.message
+                                    })
+                                }
+                            );
                         }, response => {
                             this.$swal({
                                 toast: true,
@@ -108,7 +113,8 @@
                                 title: response.data.message
                             })
                         }
-                    )
+                    );
+
             },
             getFormData() {
                 return CompanyRight;
