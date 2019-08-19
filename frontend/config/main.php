@@ -153,7 +153,7 @@ return [
         ],
         'user' => [
             //'class' => 'app\components\User',
-            'identityClass' => 'common\models\base\User',
+            'identityClass' => 'common\models\User',
         ],
 //        'security' => [
 //            'identityClass' => 'common\models\User',
@@ -193,6 +193,8 @@ return [
                 'vacancy/view/<id>' => 'vacancy/default/view',
                 'msg' => 'msg/default/index',
                 'vacancy/search' => 'vacancy/default/search',
+                'vacancy/search/<search_text>' => 'vacancy/default/search',
+                'vacancy/search/<search_text>/<city>' => 'vacancy/default/search',
                 'resume/search' => 'resume/default/search',
                 'personal-area/<action>' => 'personal_area/default/index',
                 'personal-area/<action>/<id>' => 'personal_area/default/index',

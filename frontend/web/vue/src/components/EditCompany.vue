@@ -112,7 +112,12 @@
                         this.formData.addSocial.skype = response.data.skype;
                         this.formData.aboutCompany = response.data.description;
                         this.formData.contactPerson = response.data.contact_person;
-                        this.formData.companyPhone = response.data.phone.number;
+                        if(response.data.phone === null) {
+							this.formData.companyPhone = '';
+						} else {
+							this.formData.companyPhone = response.data.phone.number;
+						}
+
 
 
                         if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
