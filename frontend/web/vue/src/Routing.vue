@@ -22,7 +22,7 @@
 
             <v-list class="pt-0" dense>
                 <v-divider></v-divider>
-                <div class="main-page">
+                <div class="main-page menu-hover">
                     <img :src="mainImg" alt="">
                     <a href="/">Главная</a>
                 </div>
@@ -30,13 +30,23 @@
                         v-for="link in linkMenu"
                         :key="link.title"
                         :to="link.url"
+                        class="menu-hover"
+                        @click="getMessage(link.title)"
                 >
                     <v-list-tile-content>
                         <img :src="link.img" alt="">
-                        <v-list-tile-title>{{ link.title }}</v-list-tile-title>
+                        <v-list-tile-title class="menu-text">
+                            {{ link.title }}
+                            <template v-if="link.title === 'Сообщения'">
+                                <v-list-tile-title v-if="unreadMessages > 0"
+                                                   class="menu-notification">
+                                    {{ unreadMessages }}
+                                </v-list-tile-title>
+                            </template>
+                        </v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
-                <form class="logout-btn" action="/site/logout" method="post">
+                <form class="logout-btn menu-hover" action="/site/logout" method="post">
                     <img :src="logOutImg" alt="">
                     <button type="submit">Выход</button>
                 </form>
@@ -68,6 +78,7 @@
                 secondName: '',
                 userId: '',
                 email: '',
+                unreadMessages: '',
                 loginImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/login.png',
                 mainImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/main.png',
                 logOutImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/exit.png',
@@ -120,14 +131,38 @@
                 ],
             }
         },
+        methods: {
+            getMessage(title) {
+                if(title !== 'Сообщения') {
+                    this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages`)
+                        .then(response => {
+                                this.unreadMessages = response.data[0].user.unreadMessages;
+                            }, response => {
+                                this.$swal({
+                                    toast: true,
+                                    position: 'bottom-end',
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    type: 'error',
+                                    title: response.data.message
+                                })
+                            }
+                        )
+                }
+            },
+            async getUser() {
+                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages`)
+            },
+        },
         beforeMount() {
-            this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
+            this.getUser()
                 .then(response => {
 
                         this.firstName = response.data[0].first_name;
                         this.secondName = response.data[0].second_name;
                         this.userId = response.data[0].user_id;
                         this.email = response.data[0].user.email;
+                        this.unreadMessages = response.data[0].user.unreadMessages;
                         this.email = this.email.match(/.+@/)[0];
                         this.email = this.email.slice(0, this.email.length-1);
                         localStorage.userId = this.userId;
@@ -257,5 +292,27 @@
 
     .login-image {
         width: 25px !important;
+    }
+    .menu-text {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+    .menu-hover:hover {
+        background-color: #deddd9;
+    }
+    .menu-notification {
+        position: absolute;
+        top: 5px;
+        left: 75px;
+        width: 15px;
+        height: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        background: #ff0000;
+        color: #ffffff !important;
+        border-radius: 50%;
     }
 </style>

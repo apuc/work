@@ -84,4 +84,23 @@ class MessageController extends MyActiveController
         }
         return 1;
     }
+
+    public function actionDeleteMessage(){
+        if(!Yii::$app->request->isPost)
+            throw new HttpException(404, 'Not found');
+        if(Yii::$app->user->isGuest)
+            throw new HttpException(403, 'Вы не авторизированы');
+        $type = Yii::$app->request->post('type');
+        if($type=='incoming'){
+            $message=Message::find()->where(['id'=>Yii::$app->request->post('id'), 'receiver_id'=>Yii::$app->user->id])->one();
+            $message->deleted_by_receiver=1;
+            $message->save();
+        }
+        if($type=='outgoing'){
+            $message=Message::find()->where(['id'=>Yii::$app->request->post('id'), 'sender_id'=>Yii::$app->user->id])->one();
+            $message->deleted_by_sender=1;
+            $message->save();
+        }
+        return 1;
+    }
 }
