@@ -28,11 +28,13 @@
                                         :key="incoming.id"
                                         avatar
                                         ripple
+                                        :class="{'system-message':incoming.sender == 'Системное сообщение'}"
                                 >
                                     <v-list-tile-content>
-                                        <v-list-tile-title v-html="incoming.subject"></v-list-tile-title>
-                                        <v-list-tile-title v-html="incoming.subject_from"></v-list-tile-title>
-                                        <v-list-tile-sub-title class="text--primary" v-if="incoming.sender == 'Системное сообщение'">
+                                        <v-list-tile-title v-if="incoming.subject !== null" v-html="incoming.subject"></v-list-tile-title>
+                                        <v-list-tile-title v-if="incoming.subject_from !== null" v-html="incoming.subject_from"></v-list-tile-title>
+                                        <v-list-tile-sub-title v-if="incoming.sender == 'Системное сообщение'"
+                                                               :class="{'system-message__head':incoming.sender == 'Системное сообщение'}">
                                             {{ incoming.sender }}
                                         </v-list-tile-sub-title>
                                         <v-list-tile-sub-title class="text--primary" v-else>{{ incoming.sender.employer.first_name }} {{
@@ -306,6 +308,13 @@
     }
     .message-block .v-list__tile__action {
         min-width: 100px;
+    }
+    .system-message {
+        padding: 10px 0;
+        background-color: #dddddd;
+    }
+    .system-message .system-message__head {
+        color: #b50100 !important;
     }
     @media (max-width: 550px) {
         .message-block .v-list__tile {

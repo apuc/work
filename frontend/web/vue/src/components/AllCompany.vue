@@ -42,7 +42,7 @@
                                        type="button"
                                        title="Доступ к компании"
                                 >
-                                    <v-icon>colorize</v-icon>
+                                    <v-icon>how_to_reg</v-icon>
 
                                 </v-btn>
                             </router-link>
