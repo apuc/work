@@ -82,6 +82,13 @@ class DefaultController extends Controller
             'search_text' => \Yii::$app->request->get('search_text'),
             'city' => \Yii::$app->request->get('city'),
         ];
+        $exploded_string=explode(':',$params['search_text']);
+        if(count($exploded_string)===2){
+            if($exploded_string[0]==='город'){
+                $params['city']=$exploded_string[1];
+                $params['search_text']='';
+            }
+        }
         $categories = Category::find()->all();
         $employment_types = EmploymentType::find()->all();
         $cities = City::find()->where(['status' => 1])->all();
@@ -91,6 +98,14 @@ class DefaultController extends Controller
             'category',
             'company'
         ])->where(['status' => Vacancy::STATUS_ACTIVE])->orderBy('id DESC');
+        if($params['search_text'][0]===':')
+        {
+            switch (substr($params['search_text'], 1)){
+                case 'hot':
+                    $vacancies_query->andWhere(['hot'=>1]);
+                    break;
+            }
+        }
         if ($params['experience_ids']) {
             if (!in_array(0, $params['experience_ids'])) {
                 $or = ['or'];
@@ -119,13 +134,13 @@ class DefaultController extends Controller
         if ($params['max_salary']) {
             $vacancies_query->andWhere(['<=', 'min_salary', $params['max_salary']]);
         }
-        if ($params['search_text']) {
+        if ($params['search_text'] && $params['search_text'][0]!=':') {
             $vacancies_query->andWhere(['like', 'post', $params['search_text']]);
         }
         if ($params['city']) {
             $vacancies_query->andWhere(['like', 'city', $params['city']]);
         }
-        $vacancies_query->orderBy('created_at DESC');
+        $vacancies_query->orderBy('update_time DESC');
         $vacancies = new ActiveDataProvider([
             'query' => $vacancies_query,
             'pagination' => [
