@@ -1,6 +1,8 @@
 <?php
 /* @var $employer \common\models\Employer */
+
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 <header class="header-wrap jsHeaderIndex">
@@ -9,44 +11,45 @@ use yii\helpers\Html;
         <div class="header">
             <div class="home__main-top">
                 <div class="home__main-header">
-										<button class="mobile-nav-btn jsOpenNavMenu"><img src="/images/menu.png" alt="" role="presentation"/>
-										</button>
-										<div class="filter-overlay nav-overlay jsNavOverlay">
-										</div>
+                    <button class="mobile-nav-btn jsOpenNavMenu"><img src="/images/menu.png" alt=""
+                                                                      role="presentation"/>
+                    </button>
+                    <div class="filter-overlay nav-overlay jsNavOverlay">
+                    </div>
                     <nav class="home__nav jsNavMenu">
                         <a class="home__nav-item home__nav-item_logo" href="/">
                             <img src="/images/logo-main.png" alt="" role="presentation"/>
                             <img src="/images/logo_mob.png" alt="" role="presentation"/>
                         </a>
-												<a class="home__nav-item" href="<?=yii\helpers\Url::to('/resume/search')?>">Резюме</a>
-                            <?php
-                            if (Yii::$app->user->isGuest): ?>
-														<button class="home__nav-item jsLogin">
+                        <a class="home__nav-item" href="<?= yii\helpers\Url::to('/resume/search') ?>">Резюме</a>
+                        <?php
+                        if (Yii::$app->user->isGuest): ?>
+                            <button class="home__nav-item jsLogin">
                                 Вход
-														</button>
-                            <?php else: ?>
-															<div class="dropdown jsMenu">
-																<span class="home__nav-item jsOpenMenu">
-																	<?php if(!$employer->first_name && !$employer->second_name):?>
-                                                                        <?=explode('@', Yii::$app->user->identity->email)[0]?>
-                                                                    <?php else:?>
-                                                                        <?= $employer->first_name.' '.$employer->second_name ?>
-                                                                    <?php endif?> <span>></span>
-																</span>
-																<div class="dropdown__menu jsShowMenu">
-                                                                    <span class="nhome__nav-item mobile-prev jsMenuPrev">Назад</span>
-																	<a class="home__nav-item" href="/personal-area">
-																		Личный кабинект
-																	</a>
+                            </button>
+                        <?php else: ?>
+                            <div class="dropdown jsMenu">
+                                <span class="home__nav-item jsOpenMenu">
+                                    <?php if (!$employer->first_name && !$employer->second_name): ?>
+                                        <?= explode('@', Yii::$app->user->identity->email)[0] ?>
+                                    <?php else: ?>
+                                        <?= $employer->first_name . ' ' . $employer->second_name ?>
+                                    <?php endif ?> <span>></span>
+                                </span>
+                                <?php $messages=Yii::$app->user->identity->unreadMessages ?>
+                                <div class="dropdown__menu jsShowMenu">
+                                    <span class="nhome__nav-item mobile-prev jsMenuPrev">Назад</span>
+                                    <a class="home__nav-item" href="/personal-area">Личный кабинект</a>
+                                    <a class="home__nav-item" href="<?=Url::to(['/personal-area/my-message'])?>">Сообщения <?=$messages>0?"($messages)":""?></a>
                                     <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
                                     <?= Html::submitButton(
                                         'Выйти',
                                         ['class' => 'home__nav-item btn-logout']
                                     ) ?>
                                     <?= Html::endForm() ?>
-																</div>
-															</div>
-                            <?php endif ?>
+                                </div>
+                            </div>
+                        <?php endif ?>
                     </nav>
                     <div class="home__main-email d-flex align-items-center"><span class="home__main-ico">@</span><a
                                 href="mailto:info@rabota.today">info@rabota.today</a>
@@ -59,13 +62,13 @@ use yii\helpers\Html;
                 </div>
                 <div class="home__main-content">
                     <?= Html::beginForm(['/main_page/default/search'], 'post', ['class' => 'home__form']) ?>
-                        <input name="search_text" class="home__form-input" placeholder="Я ищу..." type="text"/>
-                        <div class="home__form-select">
-                            <select name="search_type" class="home__form-select-js">
-                                <option value="vacancy">Работу</option>
-                                <option value="resume">Сотрудников</option>
-                            </select>
-                        </div>
+                    <input name="search_text" class="home__form-input" placeholder="Я ищу..." type="text"/>
+                    <div class="home__form-select">
+                        <select name="search_type" class="home__form-select-js">
+                            <option value="vacancy">Работу</option>
+                            <option value="resume">Сотрудников</option>
+                        </select>
+                    </div>
                     <?= Html::submitButton(
                         '<i class="fa fa-search"></i>',
                         ['class' => 'home__search btn-red']
