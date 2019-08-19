@@ -34,7 +34,9 @@ use yii\helpers\Url;
                                         <?= explode('@', Yii::$app->user->identity->email)[0] ?>
                                     <?php else: ?>
                                         <?= $employer->first_name . ' ' . $employer->second_name ?>
-                                    <?php endif ?> <span>></span>
+                                    <?php endif ?>
+                                    <img src="/images/down-arrow.svg" alt="" role="presentation"/>
+                                    <span>></span>
                                 </span>
                                 <?php $messages=Yii::$app->user->identity->unreadMessages ?>
                                 <div class="dropdown__menu jsShowMenu">

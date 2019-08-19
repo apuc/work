@@ -55,6 +55,7 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
                             <?php else:?>
                             <?= $employer->first_name.' '.$employer->second_name ?>
                             <?php endif?>
+                            <img src="/images/down-arrow.svg" alt="" role="presentation"/>
                             <span>></span>
                         </span>
                         <div class="dropdown__menu jsShowMenu">
