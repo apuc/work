@@ -89,7 +89,7 @@
                         this.formData.companyRight = '';
                         let mainBtn = document.querySelector('#main-btn');
                         mainBtn.disabled = false;
-                        this.$http.get(`${process.env.VUE_APP_API_URL}/request/company?expand=users.employer`)
+                        this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id + `?expand=users.employer`)
                             .then(response => {
                                     this.allUsers = response.data[0].users;
                                 }, response => {
