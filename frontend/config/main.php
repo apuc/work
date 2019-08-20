@@ -196,6 +196,8 @@ return [
                 'vacancy/search/<search_text>' => 'vacancy/default/search',
                 'vacancy/search/<search_text>/<city>' => 'vacancy/default/search',
                 'resume/search' => 'resume/default/search',
+                'resume/search/<search_text>' => 'resume/default/search',
+                'resume/search/<search_text>/<city>' => 'resume/default/search',
                 'personal-area/<action>' => 'personal_area/default/index',
                 'personal-area/<action>/<id>' => 'personal_area/default/index',
                 'personal-area' => 'personal_area/default/index',

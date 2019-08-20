@@ -216,7 +216,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                                                     src="/images/icon-eye.png" alt=""
                                                                     role="presentation"/><span><?= $vacancy->views ?></span>
                                 </div>
-                                <a class="d-flex align-items-center mt5 mb5" href="<?=Url::toRoute(['/vacancy/search', 'city' => $vacancy->city])?>"><img
+                                <a class="d-flex align-items-center mt5 mb5" href="<?=Url::toRoute(["/vacancy/search/город:$vacancy->city"])?>"><img
                                             class="single-card__icon"
                                             src="/images/arr-place.png"
                                             alt=""

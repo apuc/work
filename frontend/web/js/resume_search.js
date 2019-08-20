@@ -21,16 +21,84 @@ $(document).ready(function(){
         var search_text = $("input[name='resume_search_text']");
         var jsCitiesSelect = $(".jsCitiesSelect");
         var jsDutiesSelect = $(".jsDutiesSelect");
-        console.log(jsDutiesSelect.val());
-        window.location.href="/resume/search?" +
-            "experience_ids=" + JSON.stringify(experienceIds) +
-            "&category_ids=" + JSON.stringify(categoryIds) +
-            "&employment_type_ids="+JSON.stringify(employment_typeIds) +
-            "&tags_id="+JSON.stringify(jsDutiesSelect.val()) +
-            "&min_salary="+min_salary.val() +
-            "&max_salary="+max_salary.val() +
-            "&search_text="+search_text.val()+
-            "&city="+jsCitiesSelect.val();
+        var href="/resume/search";
+        if(search_text.val()){
+            href+="/"+search_text.val();
+            if(jsCitiesSelect.val()){
+                href+="/"+jsCitiesSelect.val();
+            }
+        } else if(jsCitiesSelect.val()) {
+            href+="/город:"+jsCitiesSelect.val();
+        }
+        var quetion_mark=false;
+        var and=false;
+        if(experienceIds.length>0){
+            if(!quetion_mark){
+                quetion_mark=true;
+                href+="?";
+            }
+            if(and)
+                href+="&";
+            else
+                and=true;
+            href+="experience_ids=" + JSON.stringify(experienceIds);
+        }
+        if(categoryIds.length>0){
+            if(!quetion_mark){
+                quetion_mark=true;
+                href+="?";
+            }
+            if(and)
+                href+="&";
+            else
+                and=true;
+            href+="category_ids=" + JSON.stringify(categoryIds);
+        }
+        if(employment_typeIds.length>0){
+            if(!quetion_mark){
+                quetion_mark=true;
+                href+="?";
+            }
+            if(and)
+                href+="&";
+            else
+                and=true;
+            href+="employment_type_ids=" + JSON.stringify(employment_typeIds);
+        }
+        if(jsDutiesSelect.val().length>0){
+            if(!quetion_mark){
+                quetion_mark=true;
+                href+="?";
+            }
+            if(and)
+                href+="&";
+            else
+                and=true;
+            href+="tags_id=" + JSON.stringify(jsDutiesSelect.val());
+        }
+        if(min_salary.val()){
+            if(!quetion_mark){
+                quetion_mark=true;
+                href+="?";
+            }
+            if(and)
+                href+="&";
+            else
+                and=true;
+            href+="min_salary=" + min_salary.val();
+        }
+        if(max_salary.val()){
+            if(!quetion_mark){
+                quetion_mark=true;
+                href+="?";
+            }
+            if(and)
+                href+="&";
+            else
+                and=true;
+            href+="max_salary=" + max_salary.val();
+        }
+        window.location.href=href;
     }
     $(document).on('click', '#accept', function () {
         search();
