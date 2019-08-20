@@ -98,12 +98,14 @@ class DefaultController extends Controller
             'category',
             'company'
         ])->where(['status' => Vacancy::STATUS_ACTIVE])->orderBy('id DESC');
-        if($params['search_text'][0]===':')
-        {
-            switch (substr($params['search_text'], 1)){
-                case 'hot':
-                    $vacancies_query->andWhere(['hot'=>1]);
-                    break;
+        if($params['search_text']){
+            if($params['search_text'][0]===':')
+            {
+                switch (substr($params['search_text'], 1)){
+                    case 'hot':
+                        $vacancies_query->andWhere(['hot'=>1]);
+                        break;
+                }
             }
         }
         if ($params['experience_ids']) {
