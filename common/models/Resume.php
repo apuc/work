@@ -25,6 +25,7 @@ use yii\db\ActiveRecord;
  * @property string $facebook
  * @property string $vk
  * @property integer $views
+ * @property integer $hot
  * @property integer $notification_status
  * @property integer $status
  * @property integer $created_at
@@ -82,7 +83,7 @@ class Resume extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'views', 'notification_status'], 'integer'],
+            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'views', 'notification_status', 'hot'], 'integer'],
             [['title', 'city', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['min_salary', 'max_salary'], 'safe'],

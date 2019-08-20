@@ -78,12 +78,29 @@ class DefaultController extends Controller
             'search_text' => Yii::$app->request->get('search_text'),
             'city' => Yii::$app->request->get('city'),
         ];
+        $exploded_string=explode(':',$params['search_text']);
+        if(count($exploded_string)===2){
+            if($exploded_string[0]==='город'){
+                $params['city']=$exploded_string[1];
+                $params['search_text']='';
+            }
+        }
         $tags = Skill::find()->all();
         $categories = Category::find()->all();
         $employment_types = EmploymentType::find()->all();
         $cities = City::find()->where(['status' => 1])->all();
 
         $resume_query = Resume::find()->with(['employer', 'employment_type'])->where([Resume::tableName().'.status' => Resume::STATUS_ACTIVE])->groupBy('id')->orderBy('id DESC');
+        if($params['search_text']){
+            if($params['search_text'][0]===':')
+            {
+                switch (substr($params['search_text'], 1)){
+                    case 'hot':
+                        $resume_query->andWhere(['hot'=>1]);
+                        break;
+                }
+            }
+        }
         if($params['experience_ids']) {
             if(!in_array(0,$params['experience_ids'])) {
                 $tmp_exp_ids = [];
@@ -115,7 +132,7 @@ class DefaultController extends Controller
         if($params['max_salary']){
             $resume_query->andWhere(['<=', 'min_salary', $params['max_salary']]);
         }
-        if($params['search_text']){
+        if($params['search_text'] && $params['search_text'][0]!=':'){
             $resume_query->joinWith(['skills', 'experience', 'education']);
             $resume_query->andWhere(['or',
                 ['like', 'title', $params['search_text']],
