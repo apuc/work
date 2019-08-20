@@ -132,7 +132,7 @@ class DefaultController extends Controller
         if($params['max_salary']){
             $resume_query->andWhere(['<=', 'min_salary', $params['max_salary']]);
         }
-        if($params['search_text']){
+        if($params['search_text'] && $params['search_text'][0]!=':'){
             $resume_query->joinWith(['skills', 'experience', 'education']);
             $resume_query->andWhere(['or',
                 ['like', 'title', $params['search_text']],
