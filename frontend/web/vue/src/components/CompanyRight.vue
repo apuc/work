@@ -65,7 +65,7 @@
             document.title = this.$route.meta.title;
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id + `?expand=users.employer`)
                 .then(response => {
-                      this.allUsers = response.data[0].users;
+                      this.allUsers = response.data.users;
                     }, response => {
                         this.$swal({
                             toast: true,
@@ -91,7 +91,7 @@
                         mainBtn.disabled = false;
                         this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id + `?expand=users.employer`)
                             .then(response => {
-                                    this.allUsers = response.data[0].users;
+                                    this.allUsers = response.data.users;
                                 }, response => {
                                     this.$swal({
                                         toast: true,
