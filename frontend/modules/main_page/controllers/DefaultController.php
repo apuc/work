@@ -33,7 +33,7 @@ class DefaultController extends Controller
             return $this->redirect('/vacancy/search/'.\Yii::$app->request->post('search_text'));
         }
         else if(\Yii::$app->request->post('search_type') === 'resume'){
-            return $this->redirect('/resume/search?search_text='.\Yii::$app->request->post('search_text'));
+            return $this->redirect('/resume/search/'.\Yii::$app->request->post('search_text'));
         }
         else{
             return $this->redirect ('/');
