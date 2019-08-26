@@ -41,7 +41,7 @@ use yii\helpers\Url;
                                 <?php $messages=Yii::$app->user->identity->unreadMessages ?>
                                 <div class="dropdown__menu jsShowMenu">
                                     <span class="nhome__nav-item mobile-prev jsMenuPrev">Назад</span>
-                                    <a class="home__nav-item" href="/personal-area">Личный кабинект</a>
+                                    <a class="home__nav-item" href="/personal-area">Личный кабинет</a>
                                     <a class="home__nav-item" href="<?=Url::to(['/personal-area/my-message'])?>">Сообщения <?=$messages>0?"($messages)":""?></a>
                                     <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
                                     <?= Html::submitButton(

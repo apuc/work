@@ -61,7 +61,7 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
                         <div class="dropdown__menu jsShowMenu">
                             <span class="nhome__nav-item mobile-prev jsMenuPrev">Назад</span>
                             <?php $messages=Yii::$app->user->identity->unreadMessages ?>
-                            <a class="nhome__nav-item" href="<?=Url::to(['/personal_area/default/index'])?>">Личный кабинект</a>
+                            <a class="nhome__nav-item" href="<?=Url::to(['/personal_area/default/index'])?>">Личный кабинет</a>
                             <a class="nhome__nav-item" href="<?=Url::to(['/personal-area/my-message'])?>">Сообщения <?=$messages>0?"($messages)":""?></a>
                             <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
                             <?= Html::submitButton(
