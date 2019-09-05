@@ -297,7 +297,8 @@ $(document).ready(function () {
 
 if ($('.jsCitiesSelect').length > 0) {
   $('.jsCitiesSelect').select2({
-    placeholder: "Выберите город"
+    placeholder: "Выберите город",
+    allowClear: true
   });
 }
 

@@ -103,7 +103,6 @@
                                     })
                                 }
                             );
-                        return response;
                         }, response => {
                             this.$swal({
                                 toast: true,

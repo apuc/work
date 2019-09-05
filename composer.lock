@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b7ab819dbda9d2c17b993e96725d041",
+    "content-hash": "17180d3fbec7f00c841ec6caa265d939",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -893,9 +893,9 @@
             "authors": [
                 {
                     "name": "Mihail",
+                    "role": "Developer",
                     "email": "mihail.kucher@gmail.com",
-                    "homepage": "https://github.com/MihailDev",
-                    "role": "Developer"
+                    "homepage": "https://github.com/MihailDev"
                 }
             ],
             "description": "Yii2 CKEditor",
@@ -1529,6 +1529,75 @@
                 "yii2"
             ],
             "time": "2019-03-26T11:39:06+00:00"
+        },
+        {
+            "name": "wapmorgan/morphos",
+            "version": "3.2.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wapmorgan/Morphos.git",
+                "reference": "de177b3759119c3ff9ff3e55d4555e65e0508791"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wapmorgan/Morphos/zipball/de177b3759119c3ff9ff3e55d4555e65e0508791",
+                "reference": "de177b3759119c3ff9ff3e55d4555e65e0508791",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-readline": "For using interactive version of script"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/English/functions.php",
+                    "src/Russian/functions.php"
+                ],
+                "psr-4": {
+                    "morphos\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Vanyushin",
+                    "role": "developer",
+                    "email": "wapmorgan@gmail.com"
+                }
+            ],
+            "description": "A morphological solution for Russian and English language written completely in PHP. Provides classes to inflect personal names, geographical names, decline and pluralize nouns, generate cardinal and ordinal numerals, spell out money amounts and time.",
+            "homepage": "http://morphos.io",
+            "keywords": [
+                "Numerals",
+                "adjectives",
+                "cardinal",
+                "declension",
+                "english",
+                "geographical names",
+                "human-friendly",
+                "inflection",
+                "language",
+                "money",
+                "morphology",
+                "nouns",
+                "ordinal",
+                "personal names",
+                "pluralization",
+                "russian",
+                "spelling",
+                "time"
+            ],
+            "time": "2019-08-17T13:33:23+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -3000,8 +3069,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Utility class for timing",
@@ -4540,8 +4609,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",

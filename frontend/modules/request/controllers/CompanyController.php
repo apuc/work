@@ -62,8 +62,8 @@ class CompanyController extends MyActiveController
         }
     }
 
-    public function addUser(){
-        $user=User::find()->where(['email'=>Yii::$app->request->post('email')]);
+    public function actionAddUser(){
+        $user=User::find()->where(['email'=>Yii::$app->request->post('email')])->one();
         if(!$user)
             throw new HttpException(403, 'Такого пользователя не существует');
         $company=Company::find()->where(['id'=>Yii::$app->request->post('company_id')])->one();
@@ -71,6 +71,8 @@ class CompanyController extends MyActiveController
             throw new HttpException(403, 'Такой компании не существует');
         if($company->owner!=Yii::$app->user->id)
             throw new HttpException(403, 'У вас нет прав для совершения этого действия');
+        if(UserCompany::find()->where(['user_id'=>$user->id, 'company_id'=>$company->id])->one())
+            throw new HttpException(403, 'Этот пользователь уже добавлен в вашу компанию');
         $user_company=new UserCompany();
         $user_company->user_id=$user->id;
         $user_company->company_id=$company->id;
@@ -78,7 +80,7 @@ class CompanyController extends MyActiveController
         return true;
     }
 
-    public function deleteUser(){
+    public function actionDeleteUser(){
         $company=Company::find()->where(['id'=>Yii::$app->request->post('company_id')])->one();
         if(!$company)
             throw new HttpException(403, 'Такой компании не существует');

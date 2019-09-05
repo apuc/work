@@ -10,6 +10,7 @@ use Yii;
  *
  * @property int $id
  * @property string $name
+ * @property string $prepositional
  * @property string $region_id
  * @property string $latitude
  * @property string $longitude
@@ -35,7 +36,7 @@ class City extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string', 'max' => 50],
+            [['name', 'prepositional'], 'string', 'max' => 50],
             [['region_id', 'status'], 'integer'],
             [['latitude', 'longitude'], 'safe'],
         ];

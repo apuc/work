@@ -19,6 +19,9 @@ use yii\db\ActiveRecord;
  * @property int $subject_id
  * @property string $subject_from
  * @property int $subject_from_id
+ * @property int $is_read
+ * @property int $deleted_by_receiver
+ * @property int $deleted_by_sender
  * @property int $created_at
  * @property int $updated_at
  */
@@ -47,7 +50,7 @@ class Message extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['receiver_id', 'sender_id', 'subject_id', 'subject_from_id'], 'integer'],
+            [['receiver_id', 'sender_id', 'subject_id', 'subject_from_id', 'is_read', 'deleted_by_receiver', 'deleted_by_sender'], 'integer'],
             [['text'], 'string'],
             [['title', 'subject', 'subject_from'], 'string', 'max'=>255],
             [['created_at', 'updated_at'], 'safe'],

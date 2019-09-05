@@ -40,9 +40,9 @@ class MessageController extends MyActiveController
         $query=Message::find();
         if(isset($requestParams['type'])){
             if($requestParams['type']==='incoming'){
-                $query->andWhere(['receiver_id'=>Yii::$app->user->id]);
+                $query->andWhere(['receiver_id'=>Yii::$app->user->id, 'deleted_by_receiver'=>0]);
             } else if($requestParams['type']==='outgoing'){
-                $query->andWhere(['sender_id'=>Yii::$app->user->id]);
+                $query->andWhere(['sender_id'=>Yii::$app->user->id, 'deleted_by_sender'=>0]);
             }
         }
         return Yii::createObject([
@@ -72,4 +72,35 @@ class MessageController extends MyActiveController
         }
     }
 
+    public function actionReadAllMessages(){
+        if(!Yii::$app->request->isPost)
+            throw new HttpException(404, 'Not found');
+        if(Yii::$app->user->isGuest)
+            throw new HttpException(403, 'Вы не авторизированы');
+        $messages=Message::find()->where(['receiver_id'=>Yii::$app->user->id])->all();
+        foreach ($messages as $message){
+            $message->is_read=1;
+            $message->save();
+        }
+        return 1;
+    }
+
+    public function actionDeleteMessage(){
+        if(!Yii::$app->request->isPost)
+            throw new HttpException(404, 'Not found');
+        if(Yii::$app->user->isGuest)
+            throw new HttpException(403, 'Вы не авторизированы');
+        $type = Yii::$app->request->post('type');
+        if($type=='incoming'){
+            $message=Message::find()->where(['id'=>Yii::$app->request->post('id'), 'receiver_id'=>Yii::$app->user->id])->one();
+            $message->deleted_by_receiver=1;
+            $message->save();
+        }
+        if($type=='outgoing'){
+            $message=Message::find()->where(['id'=>Yii::$app->request->post('id'), 'sender_id'=>Yii::$app->user->id])->one();
+            $message->deleted_by_sender=1;
+            $message->save();
+        }
+        return 1;
+    }
 }

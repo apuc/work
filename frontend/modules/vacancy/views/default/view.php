@@ -40,7 +40,7 @@ use yii\helpers\Url; ?>
                                                                       role="presentation"/><span><?= $model->views ?></span>
                     </div>
                     <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5"
-                       href="<?=\yii\helpers\Url::to(['/vacancy/search', 'city' => $model->city])?>"><img class="single-block__icon" src="/images/arr-place.png" alt=""
+                       href="<?=\yii\helpers\Url::to(["/vacancy/search/город:$model->city"])?>"><img class="single-block__icon" src="/images/arr-place.png" alt=""
                                      role="presentation"/><span class="ml5"><?= $model->city ?></span></a>
                 </div>
                 <h1 class="single-block__head"><?= $model->post ?>

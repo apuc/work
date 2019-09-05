@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use frontend\assets\MainAsset;
+use frontend\widgets\Footer;
 use frontend\widgets\GoogleAnalytics;
 use frontend\widgets\Modals;
 use frontend\widgets\SecondHeader;
@@ -31,6 +32,7 @@ MainAsset::register($this);
 <?=SecondHeader::widget()?>
 <?php $this->beginBody() ?>
     <?=$content?>
+    <?=Footer::widget()?>
 </div>
 <?=Modals::widget()?>
 <?php $this->endBody() ?>

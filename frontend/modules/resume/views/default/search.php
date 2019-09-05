@@ -20,7 +20,16 @@ use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
-$this->title=KeyValue::findValueByKey('resume_search_page_title')?:"Поиск резюме";
+$city_model=\common\models\City::find()->where(['name'=>$city])->one();
+if($city_model && $search_text){
+    $this->title="Соискатели в $city_model->prepositional: $search_text";
+} else if($city_model) {
+    $this->title="Соискатели в $city_model->prepositional";
+} else if($search_text) {
+    $this->title="Поиск соискателей: $search_text";
+} else {
+    $this->title=KeyValue::findValueByKey('resume_search_page_title')?:"Поиск соискателей";
+}
 $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueByKey('resume_search_page_description')]);
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['depends' => [MainAsset::className()]]);
 ?>

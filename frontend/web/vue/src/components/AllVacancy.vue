@@ -90,8 +90,14 @@
                             let timestamp = element.update_time;
                             let date = new Date();
                             date.setTime(timestamp * 1000);
-                            element.update_time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-                        });
+                            let options = {
+                                year: 'numeric',
+                                month: 'numeric',
+                                day: 'numeric',
+                                hour: 'numeric',
+                                minute: 'numeric',
+                            };
+                            element.update_time = date.toLocaleString("ru", options);                        });
                         this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
                     }, response => {
                     this.$swal({
@@ -114,7 +120,14 @@
                             let newData = response.data;
                             let date = new Date();
                             date.setTime(newData.update_time * 1000);
-                            newData.update_time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                            let options = {
+                                year: 'numeric',
+                                month: 'numeric',
+                                day: 'numeric',
+                                hour: 'numeric',
+                                minute: 'numeric',
+                            };
+                            element.update_time = date.toLocaleString("ru", options);
                             this.getAllVacancy.unshift(newData);
                         }, response => {
                         this.$swal({

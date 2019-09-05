@@ -55,11 +55,14 @@ $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueB
                             <?php else:?>
                             <?= $employer->first_name.' '.$employer->second_name ?>
                             <?php endif?>
+                            <img src="/images/down-arrow.svg" alt="" role="presentation"/>
                             <span>></span>
                         </span>
                         <div class="dropdown__menu jsShowMenu">
                             <span class="nhome__nav-item mobile-prev jsMenuPrev">Назад</span>
-                            <a class="nhome__nav-item" href="<?=Url::to(['/personal_area/default/index'])?>">Личный кабинект</a>
+                            <?php $messages=Yii::$app->user->identity->unreadMessages ?>
+                            <a class="nhome__nav-item" href="<?=Url::to(['/personal_area/default/index'])?>">Личный кабинет</a>
+                            <a class="nhome__nav-item" href="<?=Url::to(['/personal-area/my-message'])?>">Сообщения <?=$messages>0?"($messages)":""?></a>
                             <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
                             <?= Html::submitButton(
                                 'Выйти',

@@ -23,16 +23,22 @@
                     <v-card-text>
                         <v-subheader v-if="messagesIncoming.length === 0">У вас нет сообщений</v-subheader>
                         <v-list v-else two-line class="message-block">
-                            <template v-for="incoming in messagesIncoming">
+                            <template v-for="(incoming, index) in messagesIncoming">
                                 <v-list-tile
                                         :key="incoming.id"
                                         avatar
                                         ripple
+                                        class="message-item"
+                                        :class="{'system-message':incoming.sender == 'Системное сообщение', 'unread-messages':incoming.is_read == 0}"
                                 >
                                     <v-list-tile-content>
-                                        <v-list-tile-title v-html="incoming.subject"></v-list-tile-title>
-                                        <v-list-tile-title v-html="incoming.subject_from"></v-list-tile-title>
-                                        <v-list-tile-sub-title class="text--primary">{{ incoming.sender.employer.first_name }} {{
+                                        <v-list-tile-title v-if="incoming.subject !== null" v-html="incoming.subject"></v-list-tile-title>
+                                        <v-list-tile-title v-if="incoming.subject_from !== null" v-html="incoming.subject_from"></v-list-tile-title>
+                                        <v-list-tile-sub-title v-if="incoming.sender == 'Системное сообщение'"
+                                                               :class="{'system-message__head':incoming.sender == 'Системное сообщение'}">
+                                            {{ incoming.sender }}
+                                        </v-list-tile-sub-title>
+                                        <v-list-tile-sub-title class="text--primary" v-else>{{ incoming.sender.employer.first_name }} {{
                                             incoming.sender.employer.second_name }} - {{ incoming.sender.email }}
                                         </v-list-tile-sub-title>
                                         <v-list-tile-sub-title class="message__text">{{ incoming.text }}</v-list-tile-sub-title>
@@ -41,6 +47,14 @@
                                     <v-list-tile-action>
                                         <v-list-tile-action-text class="message__data">{{ incoming.created_at }}</v-list-tile-action-text>
                                     </v-list-tile-action>
+
+                                    <v-btn outline small fab
+                                           class="remove-message"
+                                           type="button"
+                                           @click="removeMessage(index, incoming.id, 'incoming')"
+                                    >
+                                        <v-icon>clear</v-icon>
+                                    </v-btn>
 
                                 </v-list-tile>
                                 <v-divider class="message__hr"></v-divider>
@@ -65,11 +79,12 @@
                     <v-card-text>
                         <v-subheader v-if="messagesOutgoing.length === 0">У вас нет сообщений</v-subheader>
                         <v-list v-else two-line class="message-block">
-                            <template v-for="outgoing in messagesOutgoing">
+                            <template v-for="(outgoing, index) in messagesOutgoing">
                                 <v-list-tile
                                         :key="outgoing.id"
                                         avatar
                                         ripple
+                                        class="message-item"
                                 >
                                     <v-list-tile-content>
                                         <v-list-tile-title v-html="outgoing.subject"></v-list-tile-title>
@@ -83,6 +98,14 @@
                                     <v-list-tile-action>
                                         <v-list-tile-action-text class="message__data">{{ outgoing.created_at }}</v-list-tile-action-text>
                                     </v-list-tile-action>
+
+                                    <v-btn outline small fab
+                                           class="remove-message"
+                                           type="button"
+                                           @click="removeMessage(index, outgoing.id, 'outgoing')"
+                                    >
+                                        <v-icon>clear</v-icon>
+                                    </v-btn>
 
                                 </v-list-tile>
                                 <v-divider class="message__hr"></v-divider>
@@ -120,8 +143,52 @@
         mounted() {
             document.title = this.$route.meta.title;
             this.getIncoming();
+            this.$http.post(`${process.env.VUE_APP_API_URL}/request/message/read-all-messages`)
+                .then(response => {
+                    this.$forceUpdate();
+                        return response;
+                    }, response => {
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
+                    }
+                );
         },
         methods: {
+            removeMessage(index, messageId, type) {
+                let data = {
+                    type: '',
+                    id: messageId
+                };
+                if(type == 'incoming') {
+                    this.messagesIncoming.splice(index, 1);
+                    data.type = type;
+                }
+                if(type == 'outgoing') {
+                    this.messagesOutgoing.splice(index, 1);
+                    data.type = type;
+                }
+                console.log(data);
+                this.$http.post(`${process.env.VUE_APP_API_URL}/request/message/delete-message`, data)
+                    .then(response => {
+                            return response;
+                        }, response => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
+                        }
+                    );
+            },
             getIncoming() {
                 this.messagesIncoming = [];
                 this.paginationPageCountIncoming = 1;
@@ -130,6 +197,9 @@
                             this.messagesIncoming = response.data;
                             let domen = `${process.env.VUE_APP_API_URL}`;
                             this.messagesIncoming.forEach((element) => {
+                                if(element.subject_id === null) {
+                                    element.sender = 'Системное сообщение'
+                                }
                                 if (element.subject === 'Resume') {
                                     element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
                                     element.subject_from = 'Предлагают вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.post + '</a>';
@@ -141,7 +211,15 @@
                                 let timestamp = element.created_at;
                                 let date = new Date();
                                 date.setTime(timestamp * 1000);
-                                element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+
+                                let options = {
+                                    year: 'numeric',
+                                    month: 'numeric',
+                                    day: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                };
+                                element.created_at = date.toLocaleString("ru", options);
                             });
                             this.paginationPageCountIncoming = response.headers.map['x-pagination-page-count'][0];
                         }, response => {
@@ -176,8 +254,14 @@
                                 let timestamp = element.created_at;
                                 let date = new Date();
                                 date.setTime(timestamp * 1000);
-                                element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-                            });
+                                let options = {
+                                    year: 'numeric',
+                                    month: 'numeric',
+                                    day: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                };
+                                element.created_at = date.toLocaleString("ru", options);                            });
                             this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
                         }, response => {
                             this.$swal({
@@ -287,6 +371,30 @@
     .message-block .v-list__tile__action {
         min-width: 100px;
     }
+    .message-block .message-item {
+        padding: 10px 0;
+    }
+    .system-message .system-message__head {
+        color: #b50100 !important;
+    }
+    .unread-messages {
+        background-color: #dddddd;
+    }
+    .remove-message {
+        position: absolute;
+        top: -5px;
+        right: 5px;
+        width: 20px !important;
+        height: 20px !important;
+        margin: 0 !important;
+        border: none !important;
+    }
+    .remove-message:active, .remove-message:focus, .remove-message:hover {
+        position: absolute !important;
+    }
+    .message-block .v-list__tile__action {
+        margin-right: 20px;
+    }
     @media (max-width: 550px) {
         .message-block .v-list__tile {
             flex-direction: column;
@@ -297,6 +405,7 @@
         }
         .message-block .v-list__tile__action {
             margin-top: 15px;
+            margin-right: 0;
         }
     }
 </style>
