@@ -14,6 +14,27 @@ use yii\web\HttpException;
 
 class MyActiveController extends ActiveController
 {
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['index'] = [
+            'class' => 'yii\rest\IndexAction',
+            'modelClass' => $this->modelClass,
+            'checkAccess' => [$this, 'checkAccess'],
+            'prepareDataProvider' => function(){
+                $query =$this->modelClass::find();
+                if(in_array('status', $this->modelClass::attributes())){
+                    $query->andWhere(['status'=>1]);
+                }
+                return new ActiveDataProvider([
+                    'query' => $query,
+                    'sort' => []
+                ]);
+            }
+        ];
+
+        return $actions;
+    }
     /**
      * Запрос, показывающий сущности, принадлежащие пользователю
      * @return object
@@ -27,9 +48,13 @@ class MyActiveController extends ActiveController
         if (empty($requestParams)) {
             $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
+        $query = $this->modelClass::find()->where(['owner'=>Yii::$app->user->id]);
+        if(in_array('status', $this->modelClass::attributes())){
+            $query->andWhere(['status'=>1]);
+        }
         return Yii::createObject([
             'class' => ActiveDataProvider::className(),
-            'query' => $this->modelClass::find()->where(['owner'=>Yii::$app->user->id]),
+            'query' => $query,
             'pagination' => [
                 'params' => $requestParams,
             ],

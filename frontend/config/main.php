@@ -207,6 +207,9 @@ return [
                     [
                         'request/category',
                         'request/company',
+                        'request/dialog',
+                        'request/dialog-message',
+                        'request/dialog-user',
                         'request/education',
                         'request/employer',
                         'request/employment-type',
