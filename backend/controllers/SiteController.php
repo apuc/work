@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use dektrium\user\models\UserSearch;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -27,7 +28,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'users'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -62,6 +63,23 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    /**
+     * Lists all User models.
+     *
+     * @return mixed
+     */
+    public function actionUsers()
+    {
+        Url::remember('', 'actions-redirect');
+        $searchModel  = \Yii::createObject(UserSearch::className());
+        $dataProvider = $searchModel->search(\Yii::$app->request->get());
+
+        return $this->render('users', [
+            'dataProvider' => $dataProvider,
+            'searchModel'  => $searchModel,
+        ]);
     }
 
     /**
