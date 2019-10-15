@@ -116,7 +116,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'user/admin/index' => 'site/users'
+                'user/admin/update' => 'site/users'
             ],
         ],
     ],
