@@ -27,7 +27,9 @@
         "eugene-kei/yii2-simple-news": "*",
         "mihaildev/yii2-ckeditor": "*",
         "mihaildev/yii2-elfinder": "*",
-        "wapmorgan/morphos": "^3.2"
+        "wapmorgan/morphos": "^3.2",
+        "apuc/websocket": "dev-master",
+        "apuc/yii2-channels-webhook": "dev-master"
 
     },
     "require-dev": {

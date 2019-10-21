@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17180d3fbec7f00c841ec6caa265d939",
+    "content-hash": "d20a7f89ec2a7c04ab8af1f2b7206359",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -48,6 +48,74 @@
                 "web"
             ],
             "time": "2019-07-16T15:40:03+00:00"
+        },
+        {
+            "name": "apuc/websocket",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/apuc/websocket.git",
+                "reference": "678ef5d74a1fdde8512115fa786c9aceb014e2b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/apuc/websocket/zipball/678ef5d74a1fdde8512115fa786c9aceb014e2b9",
+                "reference": "678ef5d74a1fdde8512115fa786c9aceb014e2b9",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kavalar",
+                    "email": "apuc06@mail.ru"
+                }
+            ],
+            "description": "chat extention",
+            "time": "2019-10-17T08:45:11+00:00"
+        },
+        {
+            "name": "apuc/yii2-channels-webhook",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/apuc/yii2-channels-webhook.git",
+                "reference": "7fb42e549f50daee15e2e887efa7c29d1e446167"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/apuc/yii2-channels-webhook/zipball/7fb42e549f50daee15e2e887efa7c29d1e446167",
+                "reference": "7fb42e549f50daee15e2e887efa7c29d1e446167",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "apuc\\channels_webhook\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kavalar",
+                    "email": "apuc06@mail.ru"
+                }
+            ],
+            "description": "Extention, that allows you to throw a webhook after saving model",
+            "keywords": [
+                "extension",
+                "yii2"
+            ],
+            "time": "2019-10-18T07:52:57+00:00"
         },
         {
             "name": "bower-asset/bootstrap",
@@ -4815,7 +4883,9 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "dektrium/yii2-rbac": 20,
-        "kartik-v/yii2-widget-datepicker": 20
+        "kartik-v/yii2-widget-datepicker": 20,
+        "apuc/websocket": 20,
+        "apuc/yii2-channels-webhook": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
