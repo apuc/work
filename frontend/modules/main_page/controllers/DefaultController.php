@@ -6,6 +6,7 @@ use common\classes\Debug;
 use common\models\Category;
 use common\models\Employer;
 use common\models\Vacancy;
+use yii\helpers\Url;
 use yii\web\Controller;
 
 /**
@@ -30,10 +31,16 @@ class DefaultController extends Controller
     public function actionSearch()
     {
         if(\Yii::$app->request->post('search_type') === 'vacancy'){
-            return $this->redirect('/vacancy/search/'.\Yii::$app->request->post('search_text'));
+            $url = '/vacancy/search';
+            if(\Yii::$app->request->post('search_text'))
+                $url .= '/' . \Yii::$app->request->post('search_text');
+            return $this->redirect($url);
         }
         else if(\Yii::$app->request->post('search_type') === 'resume'){
-            return $this->redirect('/resume/search/'.\Yii::$app->request->post('search_text'));
+            $url = '/resume/search';
+            if(\Yii::$app->request->post('search_text'))
+                $url .= '/' . \Yii::$app->request->post('search_text');
+            return $this->redirect($url);
         }
         else{
             return $this->redirect ('/');
