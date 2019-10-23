@@ -83,18 +83,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/apuc/yii2-channels-webhook.git",
-                "reference": "7da8cfd7a198697096b80049da0bd754607aedae"
+                "reference": "5dcdf6988ca073bf26e6cca3f5d46078d2571068"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apuc/yii2-channels-webhook/zipball/7da8cfd7a198697096b80049da0bd754607aedae",
-                "reference": "7da8cfd7a198697096b80049da0bd754607aedae",
+                "url": "https://api.github.com/repos/apuc/yii2-channels-webhook/zipball/5dcdf6988ca073bf26e6cca3f5d46078d2571068",
+                "reference": "5dcdf6988ca073bf26e6cca3f5d46078d2571068",
                 "shasum": ""
             },
             "require": {
                 "yiisoft/yii2": "~2.0.0"
             },
             "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.1-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "apuc\\channels_webhook\\": ""
@@ -115,7 +120,7 @@
                 "extension",
                 "yii2"
             ],
-            "time": "2019-10-23T08:06:22+00:00"
+            "time": "2019-10-23T09:55:12+00:00"
         },
         {
             "name": "bower-asset/bootstrap",

@@ -16,6 +16,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
+        $result = null;
         $post = \Yii::$app->request->post();
         if(isset($post['attributes'])
             && isset($post['url'])
@@ -43,8 +44,11 @@ class DefaultController extends Controller
             $className="common\models\\".$post['class_name'];
             $model = $className::findOne($post['model_id']);
             $behavior->owner = $model;
-            $behavior->throwHook();
+            $result = $behavior->throwHook();
         }
-        return $this->render('index');
+        return $this->render('index', [
+            'result' => $result,
+            'post' => $post
+        ]);
     }
 }
