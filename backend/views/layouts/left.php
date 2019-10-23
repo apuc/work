@@ -52,6 +52,7 @@
                     ],
                     ['label' => 'Тэги', 'url' => ['/tags/tags/index']],
                     ['label' => 'Просмотры', 'url' => ['/views/views/index']],
+                    ['label' => 'Тест', 'url' => ['/test/default/index']],
                 ],
             ]
         ) ?>

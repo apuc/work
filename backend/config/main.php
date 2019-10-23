@@ -61,6 +61,9 @@ return [
         'views' => [
             'class' => 'backend\modules\views\Views',
         ],
+        'test' => [
+            'class' => 'backend\modules\test\Test',
+        ],
         'user' => [
             'class'  => 'dektrium\user\Module',
             'admins' => ['test', 'millenion94@gmail.com', 'kirill.bouko@gmail.com'],
