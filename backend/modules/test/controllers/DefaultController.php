@@ -47,7 +47,8 @@ class DefaultController extends Controller
             $result = $behavior->throwHook();
         }
         return $this->render('index', [
-            'result' => $result,
+            'request' => $result['attributes'],
+            'response' => $result['response'],
             'post' => $post
         ]);
     }

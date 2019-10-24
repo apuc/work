@@ -27,8 +27,11 @@ Url, куда отправится запрос
 <?=Html::submitButton('Отправить')?>
 <?=Html::endForm()?>
 <pre>
-<?php if($result !== null) print_r(json_encode($result))?>
+<?php if($request !== null) print_r(json_encode($request))?>
 </pre>
 <pre>
-<?php print_r($result)?>
+<?php print_r($request)?>
+</pre>
+<pre>
+<?php print_r($response)?>
 </pre>
