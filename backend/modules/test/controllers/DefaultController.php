@@ -10,6 +10,13 @@ use yii\web\Controller;
  */
 class DefaultController extends Controller
 {
+    public function beforeAction($action)
+    {
+        if ($action->id == 'index') {
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
     /**
      * Renders the index view for the module
      * @return string
