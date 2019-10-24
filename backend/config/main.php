@@ -62,7 +62,7 @@ return [
             'class' => 'backend\modules\views\Views',
         ],
         'test' => [
-            'class' => 'backend\modules\test\Test',
+            'class' => 'apuc\channels_webhook\modules\test\Test',
         ],
         'user' => [
             'class'  => 'dektrium\user\Module',

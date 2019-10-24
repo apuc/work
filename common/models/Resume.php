@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use apuc\channels_webhook\behaviors\WebHookBehavior;
 use common\models\base\WorkActiveRecord;
 use Exception;
 use phpDocumentor\Reflection\Types\Boolean;
@@ -75,6 +76,9 @@ class Resume extends WorkActiveRecord
     {
         return [
             TimestampBehavior::className(),
+            'webHook' => ['class'=>WebHookBehavior::className(),
+                'url' => 'https://webhooks.mychannels.gq/rabota/13'
+            ]
         ];
     }
     /**

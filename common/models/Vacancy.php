@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use apuc\channels_webhook\behaviors\WebHookBehavior;
 use common\models\base\WorkActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -78,6 +79,9 @@ class Vacancy extends WorkActiveRecord
     {
         return [
             TimestampBehavior::className(),
+            'webHook' => ['class'=>WebHookBehavior::className(),
+                'url' => 'https://webhooks.mychannels.gq/rabota/13'
+            ]
         ];
     }
     /**
