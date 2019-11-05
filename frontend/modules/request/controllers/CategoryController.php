@@ -20,7 +20,7 @@ class CategoryController extends MyActiveController
                 return new ActiveDataProvider([
                     'query' => Category::find(),
                     'pagination' => [
-                        'pageSizeLimit' =>-1,
+                        'pageSize' =>-1,
                     ],
                     'sort' => []
                 ]);

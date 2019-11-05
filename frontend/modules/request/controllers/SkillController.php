@@ -18,7 +18,7 @@ class SkillController extends MyActiveController
                 return new ActiveDataProvider([
                     'query' => Skill::find(),
                     'pagination' => [
-                        'pageSizeLimit' =>-1,
+                        'pageSize' =>-1,
                     ],
                     'sort' => []
                 ]);
