@@ -38,6 +38,11 @@ if($city_model && $search_text){
 }
 
 $this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueByKey('vacancy_search_page_description')]);
+$this->registerMetaTag(['name'=>'og:title', 'content' => $this->title]);
+$this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
+$this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
+$this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->hostInfo.'/images/logo-main.png']);
+$this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findValueByKey('vacancy_search_page_description')]);
 
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
 ?>

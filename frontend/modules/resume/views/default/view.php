@@ -2,12 +2,19 @@
 /* @var $this yii\web\View */
 /* @var $model \common\models\Resume */
 
-$this->title = $model->title;
-
 use common\models\Experience;
-use yii\helpers\Html;
-use yii\helpers\Url; ?>
+use yii\helpers\StringHelper;
+use yii\helpers\Url;
 
+$this->title = $model->title;
+$this->registerMetaTag(['name'=>'description', 'content' => StringHelper::truncate($model->description, 100, '...')]);
+$this->registerMetaTag(['name'=>'og:title', 'content' => $model->title]);
+$this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
+$this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
+$this->registerMetaTag(['name'=>'og:image', 'content' => $model->image_url?:'/images/empty_user.jpg']);
+$this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::truncate($model->description, 100, '...')]);
+
+?>
 
 <div class="resume"><img class="resume__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
     <div class="resume__circle">
@@ -32,7 +39,7 @@ use yii\helpers\Url; ?>
                     </p><span><?= Yii::$app->formatter->asDate($model->update_time, 'dd MM yyyy') ?></span>
                 </div>
             </div>
-            <section class="resume-top"><img class="resume-top__left" src="<?=$model->image_url?$model->image_url:'/images/empty_user.jpg'?>" alt=""
+            <section class="resume-top"><img class="resume-top__left" src="<?=$model->image_url?:'/images/empty_user.jpg'?>" alt=""
                                          role="presentation"/>
                 <div class="resume-top__right">
 <!--                    <div class="resume-top__header">-->

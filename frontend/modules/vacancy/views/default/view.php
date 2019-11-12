@@ -3,10 +3,17 @@
 /* @var $model \common\models\Vacancy */
 /* @var $last_vacancies \common\models\Vacancy[] */
 
-$this->title = $model->post;
-
 use yii\helpers\StringHelper;
-use yii\helpers\Url; ?>
+use yii\helpers\Url;
+
+$this->title = $model->post;
+$this->registerMetaTag(['name'=>'description', 'content' => \yii\helpers\StringHelper::truncate($model->qualification_requirements, 100, '...')]);
+$this->registerMetaTag(['name'=>'og:title', 'content' => $model->post]);
+$this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
+$this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
+$this->registerMetaTag(['name'=>'og:image', 'content' => $model->image_url?:'/images/empty_user.jpg']);
+$this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::truncate($model->qualification_requirements, 100, '...')]);
+?>
 
 <section class="single-vacancy"><img class="single-vacancy__dots2" src="/images/bg-dots.png" alt=""
                                      role="presentation"/>
