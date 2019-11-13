@@ -11,6 +11,7 @@ use Yii;
  * @property int $id
  * @property string $name
  * @property string $prepositional
+ * @property string $image
  * @property string $region_id
  * @property string $latitude
  * @property string $longitude
@@ -36,7 +37,7 @@ class City extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['name', 'prepositional'], 'string', 'max' => 50],
+            [['name', 'prepositional', 'image'], 'string', 'max' => 50],
             [['region_id', 'status'], 'integer'],
             [['latitude', 'longitude'], 'safe'],
         ];
@@ -48,6 +49,7 @@ class City extends WorkActiveRecord
           'latitude' => 'Широта',
             'longitude' => 'Долгота',
             'region_id' => 'Область',
+            'image' => 'Фотография',
         ];
     }
 

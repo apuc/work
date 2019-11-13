@@ -24,6 +24,9 @@ class DefaultController extends Controller
 {
     public $layout = '@frontend/views/layouts/main-layout.php';
 
+    public $background_image;
+    public $background_emblem;
+
     public function actionView($id)
     {
         $last_vacancies = Vacancy::find()->where(['status' => Vacancy::STATUS_ACTIVE])->orderBy('id DESC')->limit(2)->all();
@@ -88,10 +91,15 @@ class DefaultController extends Controller
                 $params['city']=$exploded_string[1];
             }
         }
+        $current_city = City::findOne(['name'=>$params['city']]);
+        if($current_city)
+            $this->background_image = $current_city->image;
+        //Debug::dd($this->background_emblem);
         $current_category = null;
         if(Yii::$app->request->get('category')){
             $current_category = Category::findOne(['name'=>Yii::$app->request->get('category')]);
             if($current_category){
+                $this->background_emblem = $current_category->image;
                 $params['category_ids']=[$current_category->id];
             }
         }

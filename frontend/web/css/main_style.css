@@ -2098,16 +2098,17 @@ button {
 @media (max-width: 993px) {
     .header-wrap__dots {
         display: none; } }
-.header-wrap:before {
-    content: '';
+.header-wrap__bg {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
     display: block;
-    background: url("../images/bg_header_vacancies.png") no-repeat;
-    background-size: cover; }
+    object-fit: cover;
+}
 .header-wrap__emblem {
     position: absolute;
     bottom: 0;

@@ -33,6 +33,13 @@ use yii\helpers\Html; ?>
                 ]),
             ],
             [
+                'attribute'=>'image',
+                'format'=>'html',
+                'value' => function($model){
+                    return Html::img($model->image, ['height'=>'300px']);
+                }
+            ],
+            [
                 'attribute' => 'region_id',
                 'value' => function ($model) {
                     return $model->region->name;

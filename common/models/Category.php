@@ -10,6 +10,7 @@ use Yii;
  *
  * @property int $id
  * @property string $name
+ * @property string $image
  *
  * @property int $vacancy_count
  * @property ResumeCategory[] $resumeCategories
@@ -30,7 +31,7 @@ class Category extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string', 'max' => 255],
+            [['name', 'image'], 'string', 'max' => 255],
             [['name'], 'required']
         ];
     }
@@ -53,6 +54,7 @@ class Category extends WorkActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Название',
+            'image' => 'Фотография',
         ];
     }
 
