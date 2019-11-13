@@ -31,13 +31,13 @@ class DefaultController extends Controller
     public function actionSearch()
     {
         if(\Yii::$app->request->post('search_type') === 'vacancy'){
-            $url = '/vacancy/search';
+            $url = '/vacancy';
             if(\Yii::$app->request->post('search_text'))
                 $url .= '/' . \Yii::$app->request->post('search_text');
             return $this->redirect($url);
         }
         else if(\Yii::$app->request->post('search_type') === 'resume'){
-            $url = '/resume/search';
+            $url = '/resume';
             if(\Yii::$app->request->post('search_text'))
                 $url .= '/' . \Yii::$app->request->post('search_text');
             return $this->redirect($url);

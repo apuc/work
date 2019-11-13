@@ -82,11 +82,17 @@ class DefaultController extends Controller
             'search_text' => \Yii::$app->request->get('search_text'),
             'city' => \Yii::$app->request->get('city'),
         ];
-        $exploded_string=explode(':',$params['search_text']);
+        $exploded_string=explode(':',Yii::$app->request->get('category'));
         if(count($exploded_string)===2){
             if($exploded_string[0]==='город'){
                 $params['city']=$exploded_string[1];
-                $params['search_text']='';
+            }
+        }
+        $current_category = null;
+        if(Yii::$app->request->get('category')){
+            $current_category = Category::findOne(['name'=>Yii::$app->request->get('category')]);
+            if($current_category){
+                $params['category_ids']=[$current_category->id];
             }
         }
         $categories = Category::find()->all();
@@ -163,6 +169,7 @@ class DefaultController extends Controller
             'vacancies' => $vacancies,
             'categories' => $categories,
             'employment_types' => $employment_types,
+            'current_category' => $current_category,
         ]);
     }
 }

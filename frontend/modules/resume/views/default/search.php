@@ -8,6 +8,7 @@
 /* @var $city string */
 /* @var $search_text string */
 /* @var $experience_ids array */
+/* @var $current_category Category|null */
 
 /* @var $cities \common\models\City[] */
 
@@ -21,12 +22,12 @@ use yii\web\View;
 use yii\widgets\LinkPager;
 
 $city_model=\common\models\City::find()->where(['name'=>$city])->one();
-if($city_model && $search_text){
-    $this->title="Соискатели в $city_model->prepositional: $search_text";
+if($city_model && $current_category){
+    $this->title="Работа в $city_model->prepositional: $current_category->name";
 } else if($city_model) {
-    $this->title="Соискатели в $city_model->prepositional";
-} else if($search_text) {
-    $this->title="Поиск соискателей: $search_text";
+    $this->title="Работа в $city_model->prepositional";
+} else if($current_category) {
+    $this->title="Поиск работы: $current_category->name";
 } else {
     $this->title=KeyValue::findValueByKey('resume_search_page_title')?:"Поиск соискателей";
 }

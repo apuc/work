@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
+
 <header class="header-wrap jsHeaderIndex">
     <img class="header-wrap__emblem" src="/images/img2.png" alt="" role="presentation"/>
     <div class="container">
@@ -21,7 +22,11 @@ use yii\helpers\Url;
                             <img src="/images/logo-main.png" alt="" role="presentation"/>
                             <img src="/images/logo_mob.png" alt="" role="presentation"/>
                         </a>
-                        <a class="home__nav-item" href="<?= yii\helpers\Url::to('/resume/search') ?>">Резюме</a>
+                        <?php if(Yii::$app->controller->uniqueId === "vacancy/default"):?>
+                            <a class="home__nav-item" href="<?= yii\helpers\Url::toRoute('/resume/default/search') ?>">Резюме</a>
+                        <?php else:?>
+                            <a class="home__nav-item" href="<?= yii\helpers\Url::toRoute('/vacancy/default/search') ?>">Вакансии</a>
+                        <?php endif?>
                         <?php
                         if (Yii::$app->user->isGuest): ?>
                             <button class="home__nav-item jsLogin">

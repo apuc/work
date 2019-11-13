@@ -12,6 +12,7 @@
 /* @var $max_salary int */
 /* @var $search_text string */
 /* @var $city string */
+/* @var $current_category Category|null */
 
 /* @var $employment_types EmploymentType[] */
 /* @var $cities City[] */
@@ -27,12 +28,12 @@ use yii\web\View;
 use yii\widgets\LinkPager;
 
 $city_model=\common\models\City::find()->where(['name'=>$city])->one();
-if($city_model && $search_text){
-    $this->title="Работа в $city_model->prepositional: $search_text";
+if($city_model && $current_category){
+    $this->title="Работа в $city_model->prepositional: $current_category->name";
 } else if($city_model) {
     $this->title="Работа в $city_model->prepositional";
-} else if($search_text) {
-    $this->title="Поиск работы: $search_text";
+} else if($current_category) {
+    $this->title="Поиск работы: $current_category->name";
 } else {
     $this->title=KeyValue::findValueByKey('vacancy_search_page_title')?:"Поиск Вакансий";
 }
@@ -51,27 +52,24 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
     <div class="all-block__circle">
     </div>
     <div class="all-block__content">
-        <button class="filter-btn jsShowFilter">Фильтр
-        </button>
+        <button class="filter-btn jsShowFilter">Фильтр</button>
         <div class="container">
             <div class="v-content-top">
                 <div class="home__aside-header">
                     <div class="logo">
-                        <div class="logo__img"><img class="logo__main" src="/images/logo.png" alt=""
-                                                    role="presentation"/><img class="logo__info"
-                                                                              src="/images/ico-i.png" alt=""
-                                                                              role="presentation"/>
+                        <div class="logo__img">
+                            <img class="logo__main" src="/images/logo.png" alt="" role="presentation"/>
+                            <img class="logo__info" src="/images/ico-i.png" alt="" role="presentation"/>
                         </div>
                         <span class="logo__text">Актуальных вакансий сейчас</span>
                     </div>
-									<div class="search">
-										<input type="text" name="vacancy_search_text" placeholder="Поиск" value="<?=$search_text?>"/>
-										<button class="btn-red" id="search">
-											<i class="fa fa-search"></i>
-										</button>
-									</div>
+                    <div class="search">
+                        <input type="text" name="vacancy_search_text" placeholder="Поиск" value="<?=$search_text?>"/>
+                        <button class="btn-red" id="search">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
                 </div>
-
             </div>
             <div class="v-content-bottom container-for-sidebar">
                 <div class="filter-overlay jsFilterOverlay">
@@ -146,8 +144,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         </div>
                         <div class="vl-block">
                             <div class="vl-block__head jsOpenCheck">
-                                <p>Категория
-                                </p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
+                                <p>Категория</p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
                             </div>
                             <div class="vl-block__check jsCheckBlock">
                                 <?php foreach ($categories as $category): ?>
@@ -156,7 +153,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                             <?php if(isset($category_ids) && $category_ids !== []): ?>
                                             <?=in_array($category->id, $category_ids)?'checked':''?>
                                             <?php endif ?>
-                                               name="category" data-id="<?=$category->id?>"/>
+                                            name="category" data-id="<?=$category->id?>"/>
                                         <div class="checkbox__text"><?= $category->name ?></div>
                                     </label>
                                 <?php endforeach ?>
@@ -164,8 +161,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         </div>
                         <div class="vl-block">
                             <div class="vl-block__head jsOpenCheck">
-                                <p>Вид занятости
-                                </p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
+                                <p>Вид занятости</p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
                             </div>
                             <div class="vl-block__check jsCheckBlock">
                                 <?php foreach ($employment_types as $employment_type): ?>
@@ -190,8 +186,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 <input type="text" name="max_salary" value="<?=isset($max_salary)?$max_salary:''?>" />
                             </div>
                         </div>
-                        <button class="vl-btn btn-card btn-red" id = "accept">Применить
-                        </button>
+                        <button class="vl-btn btn-card btn-red" id = "accept">Применить</button>
                     </div>
                 </div>
                 <div class="v-content-bottom__center scroll">
@@ -238,7 +233,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 <?php else: ?>
                                     Зарплата договорная
                                 <?php endif?>
-                    </span>
                             </span>
                             <div class="single-card__info">
                                 <p><?= nl2br(StringHelper::truncate($vacancy->responsibilities, 80, '...')) ?></p>

@@ -46,8 +46,8 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                         <img src="/images/logo-main.png" alt="" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="" role="presentation"/>
                     </a>
-                    <a class="nhome__nav-item" href="<?=Url::to(['/resume/default/search'])?>">Поиск резюме</a>
-                    <a class="nhome__nav-item" href="<?=Url::to(['/vacancy/default/search'])?>">Поиск вакансий</a>
+                    <a class="nhome__nav-item" href="<?=Url::toRoute(['/resume/default/search'])?>">Поиск резюме</a>
+                    <a class="nhome__nav-item" href="<?=Url::toRoute(['/vacancy/default/search'])?>">Поиск вакансий</a>
                     <?php if (Yii::$app->user->isGuest): ?>
                     <button class="nhome__nav-item nav-btn jsLogin">
                         Вход

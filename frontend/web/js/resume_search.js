@@ -21,31 +21,35 @@ $(document).ready(function(){
         var search_text = $("input[name='resume_search_text']");
         var jsCitiesSelect = $(".jsCitiesSelect");
         var jsDutiesSelect = $(".jsDutiesSelect");
-        var href="/resume/search";
-        if(search_text.val()){
-            href+="/"+search_text.val();
-            if(jsCitiesSelect.val()){
-                href+="/"+jsCitiesSelect.val();
-            }
-        } else if(jsCitiesSelect.val()) {
-            href+="/город:"+jsCitiesSelect.val();
-        }
-        var quetion_mark=false;
+        var href="/resume";
+        var question_mark=false;
         var and=false;
-        if(experienceIds.length>0){
-            if(!quetion_mark){
-                quetion_mark=true;
-                href+="?";
+
+        if(jsCitiesSelect.val()) {
+            if(categories.length === 1) {
+                href+="/"+jsCitiesSelect.val();
+                href+="/"+$(categories[0]).next().html();
             }
-            if(and)
-                href+="&";
-            else
-                and=true;
-            href+="experience_ids=" + JSON.stringify(experienceIds);
-        }
-        if(categoryIds.length>0){
-            if(!quetion_mark){
-                quetion_mark=true;
+            else if(categories.length === 0) {
+                href+="/город:"+jsCitiesSelect.val();
+            }
+            else {
+                href+="/город:"+jsCitiesSelect.val();
+                if(!question_mark){
+                    question_mark=true;
+                    href+="?";
+                }
+                if(and)
+                    href+="&";
+                else
+                    and=true;
+                href+="category_ids=" + JSON.stringify(categoryIds);
+            }
+        } else if(categories.length === 1) {
+            href+="/"+$(categories[0]).next().html();
+        } else if(categories.length > 1) {
+            if(!question_mark){
+                question_mark=true;
                 href+="?";
             }
             if(and)
@@ -54,9 +58,31 @@ $(document).ready(function(){
                 and=true;
             href+="category_ids=" + JSON.stringify(categoryIds);
         }
+        if(search_text.val()){
+            if(!question_mark){
+                question_mark=true;
+                href+="?";
+            }
+            if(and)
+                href+="&";
+            else
+                and=true;
+            href+="search_text=" + search_text.val();
+        }
+        if(experienceIds.length>0){
+            if(!question_mark){
+                question_mark=true;
+                href+="?";
+            }
+            if(and)
+                href+="&";
+            else
+                and=true;
+            href+="experience_ids=" + JSON.stringify(experienceIds);
+        }
         if(employment_typeIds.length>0){
-            if(!quetion_mark){
-                quetion_mark=true;
+            if(!question_mark){
+                question_mark=true;
                 href+="?";
             }
             if(and)
@@ -66,8 +92,8 @@ $(document).ready(function(){
             href+="employment_type_ids=" + JSON.stringify(employment_typeIds);
         }
         if(jsDutiesSelect.val().length>0){
-            if(!quetion_mark){
-                quetion_mark=true;
+            if(!question_mark){
+                question_mark=true;
                 href+="?";
             }
             if(and)
@@ -77,8 +103,8 @@ $(document).ready(function(){
             href+="tags_id=" + JSON.stringify(jsDutiesSelect.val());
         }
         if(min_salary.val()){
-            if(!quetion_mark){
-                quetion_mark=true;
+            if(!question_mark){
+                question_mark=true;
                 href+="?";
             }
             if(and)
@@ -88,8 +114,8 @@ $(document).ready(function(){
             href+="min_salary=" + min_salary.val();
         }
         if(max_salary.val()){
-            if(!quetion_mark){
-                quetion_mark=true;
+            if(!question_mark){
+                question_mark=true;
                 href+="?";
             }
             if(and)
