@@ -28,13 +28,13 @@ $(document).ready(function(){
         if(jsCitiesSelect.val()) {
             if(categories.length === 1) {
                 href+="/"+jsCitiesSelect.val();
-                href+="/"+$(categories[0]).next().html();
+                href+="/"+categories[0].getAttribute('data-slug');
             }
             else if(categories.length === 0) {
-                href+="/город:"+jsCitiesSelect.val();
+                href+="/city:"+jsCitiesSelect.val();
             }
             else {
-                href+="/город:"+jsCitiesSelect.val();
+                href+="/city:"+jsCitiesSelect.val();
                 if(!question_mark){
                     question_mark=true;
                     href+="?";
@@ -46,7 +46,7 @@ $(document).ready(function(){
                 href+="category_ids=" + JSON.stringify(categoryIds);
             }
         } else if(categories.length === 1) {
-            href+="/"+$(categories[0]).next().html();
+            href+="/"+categories[0].getAttribute('data-slug');
         } else if(categories.length > 1) {
             if(!question_mark){
                 question_mark=true;

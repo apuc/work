@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\base\WorkActiveRecord;
 use Yii;
+use yii\behaviors\SluggableBehavior;
 
 /**
  * This is the model class for table "category".
@@ -11,6 +12,7 @@ use Yii;
  * @property int $id
  * @property string $name
  * @property string $image
+ * @property string $slug
  *
  * @property int $vacancy_count
  * @property ResumeCategory[] $resumeCategories
@@ -23,6 +25,12 @@ class Category extends WorkActiveRecord
     public static function tableName()
     {
         return 'category';
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->slug = \common\classes\LocoTranslitFilter::cyrillicToLatin($this->name, 100, true);
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -55,6 +63,7 @@ class Category extends WorkActiveRecord
             'id' => 'ID',
             'name' => 'Название',
             'image' => 'Фотография',
+            'slug' => 'Slug',
         ];
     }
 

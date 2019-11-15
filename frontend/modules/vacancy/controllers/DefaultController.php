@@ -87,17 +87,17 @@ class DefaultController extends Controller
         ];
         $exploded_string=explode(':',Yii::$app->request->get('category'));
         if(count($exploded_string)===2){
-            if($exploded_string[0]==='город'){
+            if($exploded_string[0]==='city'){
                 $params['city']=$exploded_string[1];
             }
         }
-        $current_city = City::findOne(['name'=>$params['city']]);
+        $current_city = City::findOne(['slug'=>$params['city']]);
         if($current_city)
             $this->background_image = $current_city->image;
         //Debug::dd($this->background_emblem);
         $current_category = null;
         if(Yii::$app->request->get('category')){
-            $current_category = Category::findOne(['name'=>Yii::$app->request->get('category')]);
+            $current_category = Category::findOne(['slug'=>Yii::$app->request->get('category')]);
             if($current_category){
                 $this->background_emblem = $current_category->image;
                 $params['category_ids']=[$current_category->id];
@@ -153,8 +153,8 @@ class DefaultController extends Controller
         if ($params['search_text'] && $params['search_text'][0]!=':') {
             $vacancies_query->andWhere(['like', 'post', $params['search_text']]);
         }
-        if ($params['city']) {
-            $vacancies_query->andWhere(['like', 'city', $params['city']]);
+        if ($current_city) {
+            $vacancies_query->andWhere(['like', 'city', $current_city->name]);
         }
         $vacancies_query->orderBy('update_time DESC');
         $vacancies = new ActiveDataProvider([

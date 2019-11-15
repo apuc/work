@@ -16,6 +16,7 @@ use Yii;
  * @property string $latitude
  * @property string $longitude
  * @property string $status
+ * @property string $slug
  *
  */
 class City extends WorkActiveRecord
@@ -37,7 +38,7 @@ class City extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['name', 'prepositional', 'image'], 'string', 'max' => 50],
+            [['name', 'prepositional', 'image', 'slug'], 'string', 'max' => 50],
             [['region_id', 'status'], 'integer'],
             [['latitude', 'longitude'], 'safe'],
         ];
@@ -46,11 +47,18 @@ class City extends WorkActiveRecord
     public function attributeLabels()
     {
         return [
-          'latitude' => 'Широта',
+            'latitude' => 'Широта',
             'longitude' => 'Долгота',
             'region_id' => 'Область',
             'image' => 'Фотография',
+            'slug' => 'Slug',
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->slug = \common\classes\LocoTranslitFilter::cyrillicToLatin($this->name, 100, true);
+        return parent::beforeSave($insert);
     }
 
     public static function getStatusList()

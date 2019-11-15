@@ -94,7 +94,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             <select class="vl-block__cities jsCitiesSelect">
                                 <option></option>
                                 <?php foreach($cities as $sel_city):?>
-                                <option <?=$sel_city->name == $city?'selected':''?>><?=$sel_city->name?></option>
+                                <option <?=$sel_city->slug == $city?'selected':''?> value="<?=$sel_city->slug?>"><?=$sel_city->name?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -153,7 +153,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                             <?php if(isset($category_ids) && $category_ids !== []): ?>
                                             <?=in_array($category->id, $category_ids)?'checked':''?>
                                             <?php endif ?>
-                                            name="category" data-id="<?=$category->id?>"/>
+                                            name="category" data-slug="<?=$category->slug?>" data-id="<?=$category->id?>"/>
                                         <div class="checkbox__text"><?= $category->name ?></div>
                                     </label>
                                 <?php endforeach ?>
