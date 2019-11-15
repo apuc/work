@@ -14,6 +14,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <label class="control-label" for="city-image">Фотография(398*387)</label>
     <div class="media__upload_img"><img src="<?= $model->image; ?>" width="100px"/></div>
     <?=InputFile::widget([
         'language' => 'ru',
@@ -30,6 +31,7 @@ use yii\widgets\ActiveForm;
         'buttonName' => 'Выбрать фотографию',
     ]);
     ?>
+    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>

@@ -57,7 +57,8 @@ class City extends WorkActiveRecord
 
     public function beforeSave($insert)
     {
-        $this->slug = \common\classes\LocoTranslitFilter::cyrillicToLatin($this->name, 100, true);
+        if($insert)
+            $this->slug = \common\classes\LocoTranslitFilter::cyrillicToLatin($this->name, 100, true);
         return parent::beforeSave($insert);
     }
 

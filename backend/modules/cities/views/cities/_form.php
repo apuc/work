@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm; ?>
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    <label class="control-label" for="city-image">Фотография</label>
+    <label class="control-label" for="city-image">Фотография(1920*262)</label>
     <div class="media__upload_img"><img src="<?= $model->image; ?>" width="100px"/></div>
     <?=InputFile::widget([
         'language' => 'ru',
@@ -29,6 +29,7 @@ use yii\widgets\ActiveForm; ?>
     <?= $form->field($model, 'status')->dropDownList(\common\models\City::getStatusList()); ?>
     <?= $form->field($model, 'longitude'); ?>
     <?= $form->field($model, 'latitude'); ?>
+    <?= $form->field($model, 'slug'); ?>
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>

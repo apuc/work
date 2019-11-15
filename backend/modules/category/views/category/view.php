@@ -37,7 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     return Html::img($model->image, ['height'=>'300px']);
                 }
-            ]
+            ],
+            'slug',
         ],
     ]) ?>
 

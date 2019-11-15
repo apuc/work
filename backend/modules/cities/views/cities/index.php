@@ -72,6 +72,7 @@ use yii\helpers\Html; ?>
             ],
             'latitude',
             'longitude',
+            'slug',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

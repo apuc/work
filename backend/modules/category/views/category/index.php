@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::img($model->image, ['height'=>'150px']);
                 }
             ],
+            'slug',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
