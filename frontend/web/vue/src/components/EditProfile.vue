@@ -80,7 +80,9 @@
                 (this.formData.second_name != this.dataProfile.second_name) ||
                     (this.formData.birth_date != this.dataProfile.birth_date) ||
                         (this.formData.email != this.dataProfile.user.email) ||
-                            (this.formData.phone != this.dataProfile.phone.number)) {
+                        (this.dataProfile.phone != null && this.formData.phone != this.dataProfile.phone.number) ||
+                        (this.dataProfile.phone == null && this.formData.phone != ''))
+            {
                 next(false);
                 this.$swal({
                     title: 'Вы точно не хотите сохранить изменения?',
