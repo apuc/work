@@ -95,6 +95,10 @@ return [
         'main_page' => [
             'class' => 'frontend\modules\main_page\MainPage',
         ],
+        'dialog' => [
+            //'basePath' => '@vendor/apuc/yii2-msg-module/controllers',
+            'class' => 'apuc\msg_module\Module',
+        ],
         'vacancy' => [
             'class' => 'frontend\modules\vacancy\Vacancy',
         ],
@@ -219,6 +223,9 @@ return [
                         'request/skill',
                         'request/vacancy',
                         'request/views',
+                        'dialog/dialog-message',
+                        'dialog/dialog',
+                        'dialog/dialog-user',
                     ],
                     'pluralize'=>false],
 

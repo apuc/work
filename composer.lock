@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "920bec62b1b381906ec3d0c4def9abd4",
+    "content-hash": "8b97aefb6016f57353dd9b7fa0326fd1",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -123,6 +123,51 @@
             "time": "2019-10-24T10:21:47+00:00"
         },
         {
+            "name": "apuc/yii2-msg-module",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/apuc/yii2-msg-module.git",
+                "reference": "68f288f4464761333c47df3db31833179f274811"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/apuc/yii2-msg-module/zipball/68f288f4464761333c47df3db31833179f274811",
+                "reference": "68f288f4464761333c47df3db31833179f274811",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "apuc\\msg_module\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kavalar",
+                    "email": "apuc06@mail.ru"
+                }
+            ],
+            "description": "Entyties needed for chat api",
+            "keywords": [
+                "extension",
+                "yii2"
+            ],
+            "time": "2019-11-27T12:39:30+00:00"
+        },
+        {
             "name": "bower-asset/bootstrap",
             "version": "v3.4.1",
             "source": {
@@ -149,7 +194,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -4935,7 +4980,8 @@
         "dektrium/yii2-rbac": 20,
         "kartik-v/yii2-widget-datepicker": 20,
         "apuc/websocket": 20,
-        "apuc/yii2-channels-webhook": 20
+        "apuc/yii2-channels-webhook": 20,
+        "apuc/yii2-msg-module": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
