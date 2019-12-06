@@ -212,23 +212,19 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 <?php foreach ($vacancy->category as $category): ?>
                                     <a class="btn-card btn-card-small btn-gray" href="<?=Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
                                 <?php endforeach ?>
-                                <img
-                                        class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt=""
-                                        role="presentation"/>
+                                <img class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt="" role="presentation"/>
                             </div>
-                            <h3 class="single-card__title mt5"><?= $vacancy->post ?></h3>
+                            <a href="/vacancy/view/<?= $vacancy->id ?>"><h3 class="single-card__title mt5"><?= $vacancy->post ?></h3></a>
                             <div class="single-card__info-second"><span
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->created_at, 'dd.MM.yyyy') ?></span>
                                 <div class="single-card__view"><img class="single-card__icon mr5"
                                                                     src="/images/icon-eye.png" alt=""
                                                                     role="presentation"/><span><?= $vacancy->views ?></span>
                                 </div>
-                                <a class="d-flex align-items-center mt5 mb5" href="<?=Url::toRoute(["/vacancy/search/город:$vacancy->city"])?>"><img
-                                            class="single-card__icon"
-                                            src="/images/arr-place.png"
-                                            alt=""
-                                            role="presentation"/><span
-                                            class="ml5"><?= $vacancy->city ?></span></a>
+                                <a class="d-flex align-items-center mt5 mb5" href="<?=Url::toRoute(["/vacancy/search/город:$vacancy->city"])?>">
+                                    <img class="single-card__icon" src="/images/arr-place.png" alt="" role="presentation"/>
+                                    <span class="ml5"><?= $vacancy->city ?></span>
+                                </a>
                             </div>
                             <span class="single-card__price">
                                 <?php if($vacancy->min_salary && $vacancy->max_salary):?>
