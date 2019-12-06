@@ -73,3 +73,11 @@
 .select2-container--default .select2-selection--single .select2-selection__clear {
   padding: 0 10px;
 }
+
+.v-content-bottom__center .single-card__title {
+  text-decoration: none;
+}
+
+.v-content-bottom__center .single-card__title:hover {
+  text-decoration: underline;
+}
