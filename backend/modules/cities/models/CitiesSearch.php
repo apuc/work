@@ -32,6 +32,10 @@ class CitiesSearch extends City
         $query->andFilterWhere(['like', 'name', $this->name]);
         $query->andFilterWhere(['status' => $this->status]);
         $query->andFilterWhere(['region_id' => $this->region_id]);
+        $query->andFilterWhere(['slug' => $this->slug]);
+        $query->andFilterWhere(['meta_title' => $this->meta_title]);
+        $query->andFilterWhere(['meta_description' => $this->meta_description]);
+        $query->andFilterWhere(['header' => $this->header]);
 
 
         return $dataProvider;

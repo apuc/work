@@ -13,6 +13,9 @@ use yii\behaviors\SluggableBehavior;
  * @property string $name
  * @property string $image
  * @property string $slug
+ * @property string $meta_title
+ * @property string $meta_description
+ * @property string $header
  *
  * @property int $vacancy_count
  * @property ResumeCategory[] $resumeCategories
@@ -40,7 +43,7 @@ class Category extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['name', 'image'], 'string', 'max' => 255],
+            [['name', 'image', 'meta_title', 'meta_description', 'header'], 'string', 'max' => 255],
             [['name'], 'required']
         ];
     }
@@ -65,6 +68,9 @@ class Category extends WorkActiveRecord
             'name' => 'Название',
             'image' => 'Фотография',
             'slug' => 'Slug',
+            'meta_title' => 'Meta title',
+            'meta_description' => 'Meta description',
+            'header' => 'h1 заголовок',
         ];
     }
 

@@ -32,6 +32,12 @@ use yii\widgets\ActiveForm;
     ]);
     ?>
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'meta_description')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'header')->textInput(['maxlength' => true]) ?>
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>

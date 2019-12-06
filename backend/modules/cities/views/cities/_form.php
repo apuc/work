@@ -30,6 +30,9 @@ use yii\widgets\ActiveForm; ?>
     <?= $form->field($model, 'longitude'); ?>
     <?= $form->field($model, 'latitude'); ?>
     <?= $form->field($model, 'slug'); ?>
+    <?= $form->field($model, 'meta_title'); ?>
+    <?= $form->field($model, 'meta_description'); ?>
+    <?= $form->field($model, 'header'); ?>
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>

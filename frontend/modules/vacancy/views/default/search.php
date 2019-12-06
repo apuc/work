@@ -27,23 +27,30 @@ use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
+$description = null;
+$header = null;
+/** @var \common\models\City $city_model */
 $city_model=\common\models\City::find()->where(['name'=>$city])->one();
 if($city_model && $current_category){
     $this->title="Работа в $city_model->prepositional: $current_category->name";
 } else if($city_model) {
-    $this->title="Работа в $city_model->prepositional";
+    $this->title=$city_model->meta_title?:"Работа в $city_model->prepositional";
+    $description=$city_model->meta_description?:null;
+    $header=$city_model->header?:null;
 } else if($current_category) {
-    $this->title="Поиск работы: $current_category->name";
+    $this->title=$current_category->meta_title?:"Поиск работы: $current_category->name";
+    $description=$current_category->meta_description?:null;
+    $header=$current_category->header?:null;
 } else {
     $this->title=KeyValue::findValueByKey('vacancy_search_page_title')?:"Поиск Вакансий";
 }
 
-$this->registerMetaTag(['name'=>'description', 'content' => KeyValue::findValueByKey('vacancy_search_page_description')]);
+$this->registerMetaTag(['name'=>'description', 'content' => $description?:KeyValue::findValueByKey('vacancy_search_page_description')]);
 $this->registerMetaTag(['name'=>'og:title', 'content' => $this->title]);
 $this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
 $this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
 $this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->hostInfo.'/images/logo-main.png']);
-$this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findValueByKey('vacancy_search_page_description')]);
+$this->registerMetaTag(['name'=>'og:description', 'content' => $description?:KeyValue::findValueByKey('vacancy_search_page_description')]);
 
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
 ?>

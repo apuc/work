@@ -36,7 +36,7 @@ use yii\helpers\Html; ?>
                 'attribute'=>'image',
                 'format'=>'html',
                 'value' => function($model){
-                    return Html::img($model->image, ['height'=>'300px']);
+                    return Html::img($model->image, ['height'=>'150px']);
                 }
             ],
             [
@@ -73,6 +73,9 @@ use yii\helpers\Html; ?>
             'latitude',
             'longitude',
             'slug',
+            'meta_title',
+            'meta_description',
+            'header',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

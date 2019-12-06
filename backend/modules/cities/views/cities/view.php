@@ -42,6 +42,9 @@ use yii\widgets\DetailView; ?>
             'latitude',
             'longitude',
             'slug',
+            'meta_title',
+            'meta_description',
+            'header',
         ],
     ]) ?>
 
