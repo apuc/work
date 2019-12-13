@@ -12,10 +12,10 @@ class m191115_084553_generate_slugs extends Migration
      */
     public function safeUp()
     {
-        foreach (\common\models\City::find()->each(100) as $city){
-            /** @var \common\models\City $city */
-            $city->slug = \common\classes\LocoTranslitFilter::cyrillicToLatin($city->name, 100, true);
-            $city->save();
+        $cities = new \yii\db\Query();
+        $cities = $cities->from('geobase_city')->all();
+        foreach ($cities as $city){
+            $this->update('geobase_city', ['slug'=>\common\classes\LocoTranslitFilter::cyrillicToLatin($city['name'], 100, true)], ['id'=>$city['id']]);
         }
     }
 

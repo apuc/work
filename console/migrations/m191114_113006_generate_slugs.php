@@ -12,10 +12,10 @@ class m191114_113006_generate_slugs extends Migration
      */
     public function safeUp()
     {
-        foreach (\common\models\Category::find()->each(100) as $category){
-            /** @var \common\models\Category $category */
-            $category->slug = \common\classes\LocoTranslitFilter::cyrillicToLatin($category->name, 100, true);
-            $category->save();
+        $categories = new \yii\db\Query();
+        $categories = $categories->from('category')->all();
+        foreach ($categories as $category){
+            $this->update('category', ['slug'=>\common\classes\LocoTranslitFilter::cyrillicToLatin($category['name'], 100, true)], ['id'=>$category['id']]);
         }
     }
 
