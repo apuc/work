@@ -5,7 +5,7 @@
 /* @var $tags \common\models\Skill[] */
 /* @var $resumes \yii\data\ActiveDataProvider */
 /* @var $employment_types \common\models\EmploymentType[] */
-/* @var $city string */
+/* @var $city \common\models\City */
 /* @var $search_text string */
 /* @var $experience_ids array */
 /* @var $current_category Category|null */
@@ -21,35 +21,21 @@ use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
-$description = null;
-$header = null;
-/** @var \common\models\City $city_model */
-$city_model=\common\models\City::find()->where(['name'=>$city])->one();
-if($city_model && $current_category){
-    $this->title="Работа в $city_model->prepositional: $current_category->name";
-} else if($city_model) {
-    $this->title=$city_model->meta_title?:"Работа в $city_model->prepositional";
-    $description=$city_model->meta_description?:null;
-    $header=$city_model->header?:null;
-} else if($current_category) {
-    $this->title=$current_category->meta_title?:"Поиск работы: $current_category->name";
-    $description=$current_category->meta_description?:null;
-    $header=$current_category->header?:null;
-} else {
-    $this->title=KeyValue::findValueByKey('resume_search_page_title')?:"Поиск Резюме";
-}
-$this->registerMetaTag(['name'=>'description', 'content' => $description?:KeyValue::findValueByKey('resume_search_page_description')]);
-$this->registerMetaTag(['name'=>'og:title', 'content' => $this->title]);
+$meta_data = Resume::getMetaData($city, $current_category);
+$this->title = $meta_data['title'];
+$this->registerMetaTag(['name'=>'description', 'content' => $meta_data['description']]);
+$this->registerMetaTag(['name'=>'og:title', 'content' => $meta_data['title']]);
 $this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
 $this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
 $this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->hostInfo.'/images/logo-main.png']);
-$this->registerMetaTag(['name'=>'og:description', 'content' => $description?:KeyValue::findValueByKey('resume_search_page_description')]);
+$this->registerMetaTag(['name'=>'og:description', 'content' => $meta_data['description']]);
 
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['depends' => [MainAsset::className()]]);
 ?>
 
-<section class="all-block all-resume"><img class="all-block__dots2" src="/images/bg-dots.png" alt=""
-                                           role="presentation"/>
+<section class="all-block all-resume">
+    <h1 class="hide"><?=$meta_data['header']?></h1>
+    <img class="all-block__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
     <div class="all-block__circle">
     </div>
     <div class="all-block__content">
@@ -94,8 +80,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         <div class="vl-block">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <option></option>
+                                <?php $city_id = $city?$city->id:null;?>
                                 <?php foreach ($cities as $sel_city): ?>
-                                    <option <?= $sel_city->slug == $city ? 'selected' : '' ?> value="<?=$sel_city->slug?>"><?= $sel_city->name ?></option>
+                                    <option <?= $sel_city->id == $city_id ? 'selected' : '' ?> value="<?=$sel_city->slug?>"><?= $sel_city->name ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>

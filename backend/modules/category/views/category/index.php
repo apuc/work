@@ -33,8 +33,25 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'slug',
             'meta_title',
-            'meta_description',
+            [
+                'attribute' => 'meta_description',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \yii\helpers\StringHelper::truncate($model->meta_description, 100, '...');
+                },
+            ],
             'header',
+            'meta_title_with_city',
+            [
+                'attribute' => 'meta_description_with_city',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \yii\helpers\StringHelper::truncate($model->meta_description_with_city, 100, '...');
+                },
+            ],
+            'header_with_city',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

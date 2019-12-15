@@ -38,6 +38,17 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'meta_description')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'header')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'meta_title_with_city')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'meta_description_with_city')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'header_with_city')->textInput(['maxlength' => true]) ?>
+
+    <p>
+        Для мета полей, учитывающих город: {city}: город, {region}: регион
+    </p>
+
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>

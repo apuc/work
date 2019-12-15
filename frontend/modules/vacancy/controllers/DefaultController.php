@@ -169,7 +169,7 @@ class DefaultController extends Controller
             'employment_type_ids' => $params['employment_type_ids'],
             'experience_ids' => $params['experience_ids'],
             'search_text' => $params['search_text'],
-            'city' => $current_city?$current_city->slug:false,
+            'city' => $current_city,
             'tags_id' => $params['tags_id'],
             'vacancies' => $vacancies,
             'categories' => $categories,
