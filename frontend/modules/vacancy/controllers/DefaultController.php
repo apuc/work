@@ -104,6 +104,8 @@ class DefaultController extends Controller
                 $params['category_ids']=[$current_category->id];
             }
         }
+        if(!$current_city)
+            $current_city = City::findOne(Yii::$app->request->cookies['city']);
         $tags = Skill::find()->all();
         $categories = Category::find()->all();
         $employment_types = EmploymentType::find()->all();
