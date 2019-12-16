@@ -100,7 +100,7 @@ class DefaultController extends Controller
                 $params['category_ids']=[$current_category->id];
             }
         }
-        if(!$current_city)
+        if(!$current_city && Yii::$app->request->get('city_disable')!=1)
             $current_city = City::findOne(Yii::$app->request->cookies['city']);
         $tags = Skill::find()->all();
         $categories = Category::find()->all();
