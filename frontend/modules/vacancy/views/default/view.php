@@ -3,6 +3,7 @@
 /* @var $model \common\models\Vacancy */
 /* @var $last_vacancies \common\models\Vacancy[] */
 
+use common\classes\MoneyFormat;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
@@ -57,11 +58,11 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                 <div class="single-block__price">
                     <span>
                         <?php if($model->min_salary && $model->max_salary):?>
-                            <?= $model->min_salary ?>-<?= $model->max_salary ?> RUB
+                            <?= MoneyFormat::getFormattedAmount($model->min_salary)?>-<?= MoneyFormat::getFormattedAmount($model->max_salary) ?> RUB
                         <?php elseif ($model->min_salary):?>
-                            От <?= $model->min_salary ?> RUB
+                            От <?= MoneyFormat::getFormattedAmount($model->min_salary) ?> RUB
                         <?php elseif ($model->max_salary):?>
-                            До <?= $model->max_salary ?> RUB
+                            До <?= MoneyFormat::getFormattedAmount($model->max_salary) ?> RUB
                         <?php else: ?>
                             Зарплата договорная
                         <?php endif?>

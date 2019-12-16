@@ -2,6 +2,7 @@
 /* @var $this yii\web\View */
 /* @var $model \common\models\Resume */
 
+use common\classes\MoneyFormat;
 use common\models\Experience;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
@@ -58,11 +59,11 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                     </p>
                     <span class="resume-top__price">
                         <?php if($model->min_salary>0 && $model->max_salary>0):?>
-                            <?= (int)$model->min_salary ?>-<?= (int)$model->max_salary ?> RUB
+                            <?= MoneyFormat::getFormattedAmount($model->min_salary)?>-<?= MoneyFormat::getFormattedAmount($model->max_salary)?> RUB
                         <?php elseif($model->max_salary>0):?>
-                            До <?= (int)$model->max_salary ?> RUB
+                            До <?= MoneyFormat::getFormattedAmount($model->max_salary)?> RUB
                         <?php elseif($model->min_salary>0):?>
-                            От <?= (int)$model->min_salary ?> RUB
+                            От <?= MoneyFormat::getFormattedAmount($model->min_salary)?> RUB
                         <?php else:?>
                             По договоренности
                         <?php endif?>
