@@ -9,9 +9,11 @@ use Yii;
 class MoneyFormat
 {
     public static function getFormattedAmount($number){
-        $str = Yii::$app->formatter->asCurrency($number);
-        $result = substr($str, 0, strlen($str)-3);
-        $result = substr($result, 4, strlen($result));
-        return $result;
+        $number = (int)$number;
+        $number = (string)$number;
+        for ($i=strlen($number)-3; $i>0; $i-=3) {
+            $number = substr($number, 0, $i).' '.substr($number, $i, strlen($number));
+        }
+        return $number;
     }
 }
