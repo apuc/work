@@ -203,7 +203,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                         </div>
                                         <span class="single-card-resume__price">
                                             <?php if($resume->min_salary>0 && $resume->max_salary>0):?>
-                                            <?= MoneyFormat::getFormattedAmount($resume->min_salary) ?>-<?= MoneyFormat::getFormattedAmount($resume->max_salary) ?> RUB
+                                            <?= MoneyFormat::getFormattedAmount($resume->min_salary) ?> - <?= MoneyFormat::getFormattedAmount($resume->max_salary) ?> RUB
                                             <?php elseif($resume->max_salary>0):?>
                                             До <?= MoneyFormat::getFormattedAmount($resume->max_salary) ?> RUB
                                             <?php elseif($resume->min_salary>0):?>

@@ -234,7 +234,7 @@ return [
         'formatter' => [
             'locale' => 'ru-RU',
             'thousandSeparator' => ' ',
-            'currencyCode' => '',
+            'currencyCode' => 'RUB',
         ],
         'i18n' => [
             'translations' => [
