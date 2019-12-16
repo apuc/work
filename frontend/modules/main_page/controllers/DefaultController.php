@@ -40,4 +40,14 @@ class DefaultController extends Controller
             return $this->redirect ('/');
         }
     }
+
+    public function actionSelectCity()
+    {
+        $value = \Yii::$app->request->post('city');
+        \Yii::$app->response->cookies->add(new \yii\web\Cookie([
+            'name' => 'city',
+            'value' => $value
+        ]));
+        return $value;
+    }
 }

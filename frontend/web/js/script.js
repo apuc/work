@@ -293,6 +293,13 @@ $(document).ready(function () {
       scrollTop: $(".scroll").offset().top-50
     }, 2000);
   }
+  $("#city_select").on('change', function () {
+    $.ajax({
+      type: "POST",
+      url: "main_page/default/select-city",
+      data: {city: $(this).val(), _csrf:$('meta[name=csrf-token]').attr("content")}
+    });
+  })
 });
 
 if ($('.jsCitiesSelect').length > 0) {
@@ -307,4 +314,5 @@ if ($('.jsDutiesSelect').length > 0) {
     placeholder: "Выберите навыки"
   });
 }
+
 //# sourceMappingURL=script.js.map
