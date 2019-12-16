@@ -85,3 +85,18 @@
 .hide {
   display: none;
 }
+
+.nhome__main-content .select2-container .select2-selection--single {
+  height: 37px;
+  border-radius: 25px;
+}
+
+.nhome__main-content .select2-container .select2-selection--single .select2-selection__rendered {
+  line-height: 1;
+}
+
+.nhome__main-content .select2-container--krajee .select2-selection--single .select2-selection__arrow {
+  right: 7px;
+  height: 98%;
+  border: none;
+}

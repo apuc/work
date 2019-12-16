@@ -59,17 +59,6 @@ use yii\helpers\Url;
                                 </div>
                             </div>
                         <?php endif ?>
-                        <?= \kartik\select2\Select2::widget(
-                            [
-                                'name' => 'CitySelect',
-                                'value' => Yii::$app->request->cookies['city'],
-                                'data' => ArrayHelper::map(\common\models\City::find()->all(), 'id', 'name'),
-                                'options' => ['placeholder' => 'Выберите город', 'id'=>'city_select'],
-                                'pluginOptions' => [
-                                    'allowClear' => true
-                                ],
-                            ]
-                        ); ?>
                     </nav>
                     <div class="home__main-email d-flex align-items-center"><span class="home__main-ico">@</span><a
                                 href="mailto:info@rabota.today">info@rabota.today</a>
