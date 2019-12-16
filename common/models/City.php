@@ -43,7 +43,9 @@ class City extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['name', 'prepositional', 'image', 'slug', 'meta_title', 'meta_description', 'header'], 'string', 'max' => 50],
+            [['name'], 'string', 'max' => 50],
+            [['prepositional', 'image', 'slug', 'meta_title', 'header'], 'string', 'max' => 255],
+            [['meta_description'], 'string'],
             [['region_id', 'status'], 'integer'],
             [['latitude', 'longitude'], 'safe'],
         ];
