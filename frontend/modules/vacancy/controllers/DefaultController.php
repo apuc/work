@@ -19,6 +19,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\HttpException;
 
 class DefaultController extends Controller
 {
@@ -31,6 +32,11 @@ class DefaultController extends Controller
     {
         $last_vacancies = Vacancy::find()->where(['status' => Vacancy::STATUS_ACTIVE])->orderBy('id DESC')->limit(2)->all();
         $model = Vacancy::findOne($id);
+        if(!$model)
+            throw new HttpException(404, 'Not found');
+        $referer_category = false;
+        if(Yii::$app->request->get('referer_category'))
+            $referer_category = Category::findOne(Yii::$app->request->get('referer_category'));
         $view = new Views();
         $view->subject_type = 'Vacancy';
         $view->subject_id = $model->id;
@@ -43,6 +49,7 @@ class DefaultController extends Controller
             'model' => $model,
             'last_vacancies' => $last_vacancies,
             'view' => $view,
+            'referer_category' => $referer_category
         ]);
     }
 

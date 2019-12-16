@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $model \common\models\Resume */
+/* @var $referer_category \common\models\Category */
 
 use common\classes\MoneyFormat;
 use common\models\Experience;
@@ -27,11 +28,16 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
             </button>
             <div class="resume-results">
                 <ul class="breadcrumbs">
-                    <li><a href="<?=Url::to('/resume/search')?>">К результатам поиска</a>
-                    </li>
                     <?php if($model->city):?>
-                    <li><a href="<?=Url::to(["/resume/search/$model->city"])?>"><?= $model->city ?></a>
-                    </li>
+                        <?php $city = \common\models\City::findOne(['name'=>$model->city]);?>
+                        <li>
+                            <a href="<?=Url::to(["/resume/$city->slug"])?>"><?= $model->city ?></a>
+                        </li>
+                    <?php endif?>
+                    <?php if($referer_category):?>
+                        <li>
+                            <a href="<?=Url::to(["/resume/$referer_category->slug"])?>"><?= $referer_category->name ?></a>
+                        </li>
                     <?php endif?>
                     <li><?= $model->title ?></li>
                 </ul>

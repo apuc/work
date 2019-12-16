@@ -201,7 +201,15 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 <?php endforeach ?>
                                 <img class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt="" role="presentation"/>
                             </div>
-                            <a href="/vacancy/view/<?= $vacancy->id ?>" class="single-card__title mt5"><?= $vacancy->post ?></a>
+                            <?php if($category_ids && count($category_ids) === 1):?>
+                                <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$category_ids[0]])?>" class="single-card__title mt5">
+                                    <?= $vacancy->post ?>
+                                </a>
+                            <?php else: ?>
+                                <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title mt5">
+                                    <?= $vacancy->post ?>
+                                </a>
+                            <?php endif ?>
                             <div class="single-card__info-second"><span
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->created_at, 'dd.MM.yyyy') ?></span>
                                 <div class="single-card__view"><img class="single-card__icon mr5"
@@ -242,8 +250,15 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                         <?php endif ?>
                                     <?php endif ?>
                                 </div>
-                                <a class="btn-card btn-red" href="/vacancy/view/<?= $vacancy->id ?>">Посмотреть
-                                    полностью</a>
+                                <?php if($category_ids && count($category_ids) === 1):?>
+                                    <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$category_ids[0]])?>" class="btn-card btn-red">
+                                        Посмотреть полностью
+                                    </a>
+                                <?php else: ?>
+                                    <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="btn-card btn-red">
+                                        Посмотреть полностью
+                                    </a>
+                                <?php endif ?>
                             </div>
                         </div>
                     <?php endforeach; ?>

@@ -192,14 +192,21 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                     if ($resumes->models):
                         foreach ($resumes->models as $resume):?>
                             <div class="single-card-resume">
-                                <div class="single-card-resume__top"><img class="single-card-resume__left-img"
-                                                                          src="<?=$resume->image_url?$resume->image_url:'/images/empty_user.jpg'?>" alt=""
-                                                                          role="presentation"/>
+                                <div class="single-card-resume__top">
+                                    <img class="single-card-resume__left-img" src="<?=$resume->image_url?$resume->image_url:'/images/empty_user.jpg'?>" alt="" role="presentation"/>
                                     <div class="single-card-resume__top-left">
                                         <div class="single-card-resume__head">
-                                            <h3><a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id])?>"><?= $resume->title ?></a></h3>
-                                            <!--                                    <p class="single-card-resume__status vr-head">Онлайн-->
-                                            <!--                                    </p>-->
+                                            <h3>
+                                                <?php if($category_ids && count($category_ids) === 1):?>
+                                                <a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id, 'referer_category'=>$category_ids[0]])?>">
+                                                    <?= $resume->title ?>
+                                                </a>
+                                                <?php else: ?>
+                                                <a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id])?>">
+                                                    <?= $resume->title ?>
+                                                </a>
+                                                <?php endif ?>
+                                            </h3>
                                         </div>
                                         <span class="single-card-resume__price">
                                             <?php if($resume->min_salary>0 && $resume->max_salary>0):?>

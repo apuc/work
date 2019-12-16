@@ -16,6 +16,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\UrlManager;
 
 /**
@@ -31,6 +32,11 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         $model = Resume::findOne($id);
+        if(!$model)
+            throw new HttpException(404, 'Not found');
+        $referer_category = false;
+        if(Yii::$app->request->get('referer_category'))
+            $referer_category = Category::findOne(Yii::$app->request->get('referer_category'));
         $view = new Views();
         $view->subject_type = 'Resume';
         $view->subject_id = $model->id;
@@ -40,7 +46,8 @@ class DefaultController extends Controller
         $model->views++;
         $model->save();
         return $this->render('view', [
-            'model' => $model
+            'model' => $model,
+            'referer_category' => $referer_category
         ]);
     }
 
