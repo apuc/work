@@ -29,7 +29,7 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                     <li><a href="<?=Url::to('/resume/search')?>">К результатам поиска</a>
                     </li>
                     <?php if($model->city):?>
-                    <li><a href="<?=Url::to(["/resume/search/город:$model->city"])?>"><?= $model->city ?></a>
+                    <li><a href="<?=Url::to(["/resume/search/$model->city"])?>"><?= $model->city ?></a>
                     </li>
                     <?php endif?>
                     <li><?= $model->title ?></li>

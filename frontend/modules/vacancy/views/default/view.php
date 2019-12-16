@@ -36,18 +36,20 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                 <img class="single-block__logo" src="<?=$model->company->getPhotoOrEmptyPhoto()?>" alt=""
                      role="presentation"/>
                 <div class="single-block__first">
-                    <div class="category-block">
-                        <?php foreach ($model->category as $category): ?>
-                            <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::to(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
-                        <?php endforeach ?>
-                    </div>
+                    <?php if($model->category):?>
+                        <div class="category-block">
+                            <?php foreach ($model->category as $category): ?>
+                                <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::to(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
+                            <?php endforeach ?>
+                        </div>
+                    <?php endif ?>
                     <span>Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd MM yyyy') ?></span>
                     <div class="single-block__view"><img class="single-block__icon mr5"
                                                                       src="/images/icon-eye.png" alt=""
                                                                       role="presentation"/><span><?= $model->views ?></span>
                     </div>
                     <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5"
-                       href="<?=\yii\helpers\Url::to(["/vacancy/search/город:$model->city"])?>"><img class="single-block__icon" src="/images/arr-place.png" alt=""
+                       href="<?=\yii\helpers\Url::to(["/vacancy/search/$model->city"])?>"><img class="single-block__icon" src="/images/arr-place.png" alt=""
                                      role="presentation"/><span class="ml5"><?= $model->city ?></span></a>
                 </div>
                 <h1 class="single-block__head"><?= $model->post ?>
