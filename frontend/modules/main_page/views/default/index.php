@@ -131,12 +131,16 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                     <div class="single-card__top">
                         <div class="single-card__cat-city">
                             <?php if($vacancy->category):?>
-                            <a class="btn-card btn-card-small btn-gray" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$vacancy->category[0]->id])])?>"><?=$vacancy->category[0]->name?></a>
+                            <?php $category_slug = $vacancy->category[0]->slug ?>
+                            <a class="btn-card btn-card-small btn-gray" href="<?=Url::to(["/vacancy/$category_slug"])?>"><?=$vacancy->category[0]->name?></a>
                             <?php endif ?>
-                            <a class="d-flex align-items-center" href="<?=Url::to(['/vacancy/default/search', 'city' => $vacancy->city])?>">
+                            <?php $city = \common\models\City::findOne(['name'=>$vacancy->city])?>
+                            <?php if($city): ?>
+                            <a class="d-flex align-items-center" href="<?=Url::to(["/vacancy/$city->slug"])?>">
                                 <img class="single-card__icon" src="/images/arr-place.png" alt="" role="presentation"/>
                                 <span class="ml5"><?=$vacancy->city?></span>
                             </a>
+                            <?php endif ?>
                         </div>
                         <a href="<?=Url::to(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title" title="<?=$vacancy->post?>"><?=$vacancy->post?></a>
                         <div class="single-card__info-second"><span class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd MM yyyy, hh:mm') ?></span>
