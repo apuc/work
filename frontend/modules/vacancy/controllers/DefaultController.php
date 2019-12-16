@@ -156,10 +156,14 @@ class DefaultController extends Controller
                 ['like', Skill::tableName().'.name', $params['search_text']]
             ]);
         }
+        $get = $_GET;
+        unset($get['first_query_param'], $get['second_query_param']);
         $vacancies = new ActiveDataProvider([
             'query' => $vacancies_query,
             'pagination' => [
-                'pageSize' => 10
+                'defaultPageSize' => 10,
+                'params' => $get,
+                'route' => Yii::$app->request->getPathInfo()
             ]
         ]);
         return $this->render('search', [

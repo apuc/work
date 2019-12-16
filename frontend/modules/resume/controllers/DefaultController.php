@@ -16,6 +16,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\UrlManager;
 
 /**
  * Default controller for the `resume` module
@@ -161,10 +162,14 @@ class DefaultController extends Controller
                 ['like', 'education.specialization', $params['search_text']],
             ]);
         }
+        $get = $_GET;
+        unset($get['first_query_param'], $get['second_query_param']);
         $resumes = new ActiveDataProvider([
             'query' => $resume_query,
             'pagination' => [
-                'pageSize' => 10
+                'defaultPageSize' => 10,
+                'params' => $get,
+                'route' => Yii::$app->request->getPathInfo()
             ]
         ]);
 
