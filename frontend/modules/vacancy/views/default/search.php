@@ -197,7 +197,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                             <div class="single-card__header">
                                 <?php foreach ($vacancy->category as $category): ?>
-                                    <a class="btn-card btn-card-small btn-gray" href="<?=Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
+                                    <a class="btn-card btn-card-small btn-gray" href="<?=Url::toRoute(["/vacancy/search/$category->slug"])?>"><?= $category->name ?></a>
                                 <?php endforeach ?>
                                 <img class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt="" role="presentation"/>
                             </div>
@@ -208,7 +208,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                                                     src="/images/icon-eye.png" alt=""
                                                                     role="presentation"/><span><?= $vacancy->views ?></span>
                                 </div>
-                                <a class="d-flex align-items-center mt5 mb5" href="<?=Url::toRoute(["/vacancy/search/город:$vacancy->city"])?>">
+                                <a class="d-flex align-items-center mt5 mb5" href="<?=Url::toRoute(["/vacancy/search/$vacancy->city"])?>">
                                     <img class="single-card__icon" src="/images/arr-place.png" alt="" role="presentation"/>
                                     <span class="ml5"><?= $vacancy->city ?></span>
                                 </a>

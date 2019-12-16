@@ -39,7 +39,7 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                     <?php if($model->category):?>
                         <div class="category-block">
                             <?php foreach ($model->category as $category): ?>
-                                <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::to(['/vacancy/search', 'category_ids' => json_encode([$category->id])])?>"><?= $category->name ?></a>
+                                <a class="btn-card btn-card-small btn-gray" href="<?=\yii\helpers\Url::to(["/vacancy/search/$category->slug"])?>"><?= $category->name ?></a>
                             <?php endforeach ?>
                         </div>
                     <?php endif ?>
