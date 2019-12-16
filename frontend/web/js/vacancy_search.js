@@ -29,10 +29,10 @@ $(document).ready(function(){
                 href+="/"+categories[0].getAttribute('data-slug');
             }
             else if(categories.length === 0) {
-                href+="/city:"+jsCitiesSelect.val();
+                href+="/"+jsCitiesSelect.val();
             }
             else {
-                href+="/city:"+jsCitiesSelect.val();
+                href+="/"+jsCitiesSelect.val();
                 if(!question_mark){
                     question_mark=true;
                     href+="?";

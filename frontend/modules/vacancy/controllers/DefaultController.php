@@ -82,36 +82,48 @@ class DefaultController extends Controller
             'tags_id' => json_decode(\Yii::$app->request->get('tags_id')),
             'min_salary' => \Yii::$app->request->get('min_salary'),
             'max_salary' => \Yii::$app->request->get('max_salary'),
-            'search_text' => \Yii::$app->request->get('search_text'),
-            'city' => \Yii::$app->request->get('city'),
+            'search_text' => \Yii::$app->request->get('search_text')
         ];
-        $exploded_string=explode(':',Yii::$app->request->get('category'));
-        if(count($exploded_string)===2){
-            if($exploded_string[0]==='city'){
-                $params['city']=$exploded_string[1];
+        $first_query_param = Yii::$app->request->get('first_query_param');
+        $second_query_param = Yii::$app->request->get('second_query_param');
+        $current_category = false;
+        $current_city = false;
+        if($second_query_param) {
+            if($current_city = City::findOne(['slug'=>$first_query_param])) {
+                $this->background_image = $current_city->image;
             }
-        }
-        $current_city = City::findOne(['slug'=>$params['city']]);
-        if($current_city)
-            $this->background_image = $current_city->image;
-        //Debug::dd($this->background_emblem);
-        $current_category = null;
-        if(Yii::$app->request->get('category')){
-            $current_category = Category::findOne(['slug'=>Yii::$app->request->get('category')]);
-            if($current_category){
+            if($current_category = Category::findOne(['slug'=>$second_query_param])) {
+                $this->background_emblem = $current_category->image;
+                $params['category_ids']=[$current_category->id];
+            }
+        } else if ($first_query_param) {
+            if($current_city = City::findOne(['slug'=>$first_query_param])) {
+                $this->background_image = $current_city->image;
+            } else if ($current_category = Category::findOne(['slug'=>$first_query_param])) {
                 $this->background_emblem = $current_category->image;
                 $params['category_ids']=[$current_category->id];
             }
         }
+        $tags = Skill::find()->all();
         $categories = Category::find()->all();
         $employment_types = EmploymentType::find()->all();
         $cities = City::find()->where(['status' => 1])->all();
-        $tags = Skill::find()->all();
 
-        $vacancies_query = Vacancy::find()->with([
-            'category',
-            'company'
-        ])->where(['status' => Vacancy::STATUS_ACTIVE])->orderBy('id DESC');
+        $vacancies_query = Vacancy::find()
+            ->with(['category', 'company'])
+            ->where(['status' => Vacancy::STATUS_ACTIVE])
+            ->orderBy('update_time DESC')
+            ->joinWith(['category', 'skill', 'employment_type'])
+            ->andFilterWhere([
+                'category.id' => $params['category_ids'],
+                'skill.id' => $params['tags_id'],
+                'employment_type.id' => $params['employment_type_ids'],
+
+            ])
+            ->andFilterWhere(['>=', 'max_salary', $params['min_salary']])
+            ->andFilterWhere(['<=', 'min_salary', $params['max_salary']]);
+        if($current_city)
+            $vacancies_query->andFilterWhere(['like', 'city', $current_city->name]);
         if($params['search_text']){
             if($params['search_text'][0]===':')
             {
@@ -131,32 +143,17 @@ class DefaultController extends Controller
                 $vacancies_query->andWhere($or);
             }
         }
-        if ($params['category_ids']) {
-            $vacancies_query->joinWith(['category']);
-            $vacancies_query->andWhere(['category.id' => $params['category_ids']]);
-        }
-        if ($params['tags_id']) {
-            $vacancies_query->joinWith(['skill']);
-            $vacancies_query->andWhere(['skill.id' => $params['tags_id']]);
-        }
-        if ($params['employment_type_ids']) {
-            $vacancies_query->joinWith(['employment_type']);
-            $vacancies_query->andWhere(['employment_type.id' => $params['employment_type_ids']]);
-        }
-
-        if ($params['min_salary']) {
-            $vacancies_query->andWhere(['>=', 'max_salary', $params['min_salary']]);
-        }
-        if ($params['max_salary']) {
-            $vacancies_query->andWhere(['<=', 'min_salary', $params['max_salary']]);
-        }
         if ($params['search_text'] && $params['search_text'][0]!=':') {
-            $vacancies_query->andWhere(['like', 'post', $params['search_text']]);
+            $vacancies_query->joinWith(['skill']);
+            $vacancies_query->andWhere(['or',
+                ['like', 'post', $params['search_text']],
+                ['like', 'responsibilities', $params['search_text']],
+                ['like', 'qualification_requirements', $params['search_text']],
+                ['like', 'working_conditions', $params['search_text']],
+                ['like', 'working_conditions', $params['search_text']],
+                ['like', Skill::tableName().'.name', $params['search_text']]
+            ]);
         }
-        if ($current_city) {
-            $vacancies_query->andWhere(['like', 'city', $current_city->name]);
-        }
-        $vacancies_query->orderBy('update_time DESC');
         $vacancies = new ActiveDataProvider([
             'query' => $vacancies_query,
             'pagination' => [
@@ -172,7 +169,7 @@ class DefaultController extends Controller
             'employment_type_ids' => $params['employment_type_ids'],
             'experience_ids' => $params['experience_ids'],
             'search_text' => $params['search_text'],
-            'city' => $params['city'],
+            'city' => $current_city,
             'tags_id' => $params['tags_id'],
             'vacancies' => $vacancies,
             'categories' => $categories,

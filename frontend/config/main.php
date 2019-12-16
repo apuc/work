@@ -232,8 +232,9 @@ return [
             ],
         ],
         'formatter' => [
-
-            'locale' => 'ru-RU'
+            'locale' => 'ru-RU',
+            'thousandSeparator' => ' ',
+            'currencyCode' => '',
         ],
         'i18n' => [
             'translations' => [

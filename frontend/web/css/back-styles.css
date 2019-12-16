@@ -81,3 +81,7 @@
 .v-content-bottom__center .single-card__title:hover {
   text-decoration: underline;
 }
+
+.hide {
+  display: none;
+}

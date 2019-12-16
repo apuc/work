@@ -216,4 +216,41 @@ class Vacancy extends WorkActiveRecord
     {
         return Views::find()->where(['subject_id' => $this->id])->andWhere(['subject_type' => 'Vacancy'])->count();
     }
+
+    /**
+     * @param $city City
+     * @param $category Category
+     * @return array
+     */
+    public static function getMetaData($city, $category){
+        $description = null;
+        $header = null;
+        $title = null;
+        if($city && $category){
+            $title=str_replace('{city}', $city->name, $category->meta_title_with_city);
+            $title=str_replace('{region}', $city->region->name, $title);
+            $description=str_replace('{city}', $city->name, $category->meta_description_with_city);
+            $description=str_replace('{region}', $city->region->name, $description);
+            $header=str_replace('{city}', $city->name, $category->header_with_city);
+            $header=str_replace('{region}', $city->region->name, $header);
+        }
+        if($city &&(!$title || !$description || !$header)) {
+            $title=$title?:$city->meta_title;
+            $description=$description?:$city->meta_description;
+            $header=$header?:$city->header;
+        }
+        if($category &&(!$title || !$description || !$header)) {
+            $title=$title?:$category->meta_title;
+            $description=$title?:$category->meta_description;
+            $header=$header?:$category->header;
+        }
+        $title=$title?:KeyValue::findValueByKey('vacancy_search_page_title')?:"Поиск Вакансий";
+        $description=$description?:KeyValue::findValueByKey('vacancy_search_page_description')?:"Поиск Вакансий";
+        $header=$header?:KeyValue::findValueByKey('vacancy_search_page_h1')?:"Поиск Вакансий";
+        return [
+            'title' => $title,
+            'description' => $description,
+            'header' => $header
+        ];
+    }
 }
