@@ -86,26 +86,34 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                     </p>
                     <?php endif ?>
                 </div>
-                <div class="single-block__description">
-                    <h3 class="single-block__description-head">Описание вакансии
-                    </h3>
-                    <p class="single-block__requirements-text"><?= $model->company->description ?></p>
-                </div>
-                <div class="single-block__requirements">
-                    <h3 class="single-block__requirements-head">Требования:
-                    </h3>
-                    <p class="single-block__requirements-text"><?= nl2br($model->qualification_requirements) ?></p>
-                </div>
-                <div class="single-block__duties">
-                    <h3 class="single-block__duties-head">Обязанности:
-                    </h3>
-                    <p class="single-block__duties-text"><?= nl2br($model->responsibilities) ?></p>
-                </div>
-                <div class="single-block__conditions">
-                    <h3 class="single-block__conditions-head">Условия работы:
-                    </h3>
-                    <p class="single-block__conditions-text"><?= nl2br($model->working_conditions) ?></p>
-                </div>
+                <?php if($model->company->description):?>
+                    <div class="single-block__description">
+                        <h3 class="single-block__description-head">Описание вакансии
+                        </h3>
+                        <p class="single-block__requirements-text"><?= $model->company->description ?></p>
+                    </div>
+                <?php endif ?>
+                <?php if($model->qualification_requirements):?>
+                    <div class="single-block__requirements">
+                        <h3 class="single-block__requirements-head">Требования:
+                        </h3>
+                        <p class="single-block__requirements-text"><?= nl2br($model->qualification_requirements) ?></p>
+                    </div>
+                <?php endif ?>
+                <?php if($model->responsibilities):?>
+                    <div class="single-block__duties">
+                        <h3 class="single-block__duties-head">Обязанности:
+                        </h3>
+                        <p class="single-block__duties-text"><?= nl2br($model->responsibilities) ?></p>
+                    </div>
+                <?php endif ?>
+                <?php if($model->working_conditions):?>
+                    <div class="single-block__conditions">
+                        <h3 class="single-block__conditions-head">Условия работы:
+                        </h3>
+                        <p class="single-block__conditions-text"><?= nl2br($model->working_conditions) ?></p>
+                    </div>
+                <?php endif ?>
             </div>
             <aside class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">
                 <div class="single-vacancy-overlay jsHideContacts">

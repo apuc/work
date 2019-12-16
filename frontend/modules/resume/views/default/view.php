@@ -99,73 +99,77 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
             </section>
             <div class="resume-block single-block-slider">
                 <section class="resume-description">
+                    <?php if($model->experience):?>
                     <div class="resume-description__item">
-                        <div class="resume-description__main-head">
-                            <h4 class="resume-description__title-main">Опыт работы
-                            </h4><span
-                                    class="resume-description__experience"><?= Experience::getPeriod_string(Experience::getPeriod_sum($model->experience)) ?></span>
+                            <div class="resume-description__main-head">
+                                <h4 class="resume-description__title-main">Опыт работы</h4>
+                                <span class="resume-description__experience"><?= Experience::getPeriod_string(Experience::getPeriod_sum($model->experience)) ?></span>
+                            </div>
+                            <?php foreach ($model->experience as $experience): ?>
+                                <h4 class="resume-description__title-bold"><?= $experience->name ?>
+                                </h4>
+                                <p class="resume-description__text">
+                                    с <?= $experience->month_from >= 10 ? $experience->month_from : ('0' . $experience->month_from) ?>
+                                    .<?= $experience->year_from ?>
+                                    по
+                                    <?= $experience->month_to >= 10 ? $experience->month_to : ('0' . $experience->month_to) ?>
+                                    .<?= $experience->year_to ?>
+                                    (<?= Experience::getPeriod_string($experience->getPeriod()) ?>)
+                                </p>
+                                <p class="resume-description__text">
+                                    <?= $experience->post ?>
+                                </p>
+                                <p class="resume-description__text">
+                                    <?= $experience->responsibility ?>
+                                </p>
+                            <?php endforeach; ?>
+                    </div>
+                    <?php endif?>
+                    <?php if($model->education):?>
+                        <div class="resume-description__item">
+                            <h4 class="resume-description__title-main">Образование
+                            </h4>
+                            <?php foreach ($model->education as $education): ?>
+                                <h4 class="resume-description__title-bold">
+                                    <?= $education->name ?>
+                                </h4>
+                                <p class="resume-description__text"><?= $education->academic_degree ?><?php if($education->year_from || $education->year_to):?>,<?php endif?>
+                                    <br>
+                                    <?php if($education->year_from):?>
+                                    с <?= $education->year_from ?>
+                                    <?php endif ?>
+                                    <?php if($education->year_to):?>
+                                    по
+                                    <?= $education->year_to ?>
+                                    <?php endif?>
+                                    <?php if($education->year_from || $education->year_to):?>
+                                    г.
+                                    <?php endif?>
+                                </p>
+                            <?php endforeach; ?>
                         </div>
-                        <?php foreach ($model->experience as $experience): ?>
-                            <h4 class="resume-description__title-bold"><?= $experience->name ?>
-                            </h4>
-                            <p class="resume-description__text">
-                                с <?= $experience->month_from >= 10 ? $experience->month_from : ('0' . $experience->month_from) ?>
-                                .<?= $experience->year_from ?>
-                                по
-                                <?= $experience->month_to >= 10 ? $experience->month_to : ('0' . $experience->month_to) ?>
-                                .<?= $experience->year_to ?>
-                                (<?= Experience::getPeriod_string($experience->getPeriod()) ?>)
-                            </p>
-                            <p class="resume-description__text">
-                                <?= $experience->post ?>
-                            </p>
-                            <p class="resume-description__text">
-                                <?= $experience->responsibility ?>
-                            </p>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="resume-description__item">
-                        <h4 class="resume-description__title-main">Образование
-                        </h4>
-                        <?php foreach ($model->education as $education): ?>
-                            <h4 class="resume-description__title-bold">
-                                <?= $education->name ?>
-                            </h4>
-                            <p class="resume-description__text"><?= $education->academic_degree ?><?php if($education->year_from || $education->year_to):?>,<?php endif?>
-                                <br>
-                                <?php if($education->year_from):?>
-                                с <?= $education->year_from ?>
-                                <?php endif ?>
-                                <?php if($education->year_to):?>
-                                по
-                                <?= $education->year_to ?>
-                                <?php endif?>
-                                <?php if($education->year_from || $education->year_to):?>
-                                г.
-                                <?php endif?>
-                            </p>
-                        <?php endforeach; ?>
-                    </div>
-                    <?php if($model->skills):?>
-                    <div class="resume-description__item">
-                        <h4 class="resume-description__title-main">Профессиональные и другие навыки
-                        </h4>
-                        <p class="resume-description__text">
-
-                            <?php
-                            $i=true;
-                            foreach ($model->skills as $skill) {
-                                if($i){
-                                    echo $skill->name;
-                                    $i=false;
-                                } else {
-                                    echo ', '.$skill->name;
-                                }
-                            }
-                            ?>.
-                        </p>
-                    </div>
                     <?php endif ?>
+                    <?php if($model->skills):?>
+                        <div class="resume-description__item">
+                            <h4 class="resume-description__title-main">Профессиональные и другие навыки
+                            </h4>
+                            <p class="resume-description__text">
+
+                                <?php
+                                $i=true;
+                                foreach ($model->skills as $skill) {
+                                    if($i){
+                                        echo $skill->name;
+                                        $i=false;
+                                    } else {
+                                        echo ', '.$skill->name;
+                                    }
+                                }
+                                ?>.
+                            </p>
+                        </div>
+                    <?php endif ?>
+                    <?php if($model->description): ?>
                     <div class="resume-description__item">
                         <h4 class="resume-description__title-main">Дополнительная информация
                         </h4>
@@ -173,6 +177,7 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                             <?= nl2br($model->description) ?>
                         </p>
                     </div>
+                    <?php endif ?>
                 </section>
                 <aside class="resume-info jsOpenContacts" id="sidebar-single">
                     <div class="single-vacancy-overlay jsHideContacts"></div>
