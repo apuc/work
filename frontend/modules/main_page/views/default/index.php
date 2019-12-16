@@ -169,9 +169,9 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
     $i=0;
     foreach($categories as $category): ?>
     <?php if($i<9): ?>
-        <a class="nhome__footer-item" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?=$category->name?> <?=$category->getVacancyCategories()->count()?></a>
+        <a class="nhome__footer-item" href="<?=Url::toRoute(['/vacancy/'.$category->slug])?>"><?=$category->name?> <?=$category->getVacancyCategories()->count()?></a>
     <?php else:?>
-        <a class="nhome__footer-item mob-hide" href="<?=Url::to(['/vacancy/default/search', 'category_ids' => json_encode([$category->id])])?>"><?=$category->name?> <?=$category->getVacancyCategories()->count()?></a>
+        <a class="nhome__footer-item mob-hide" href="<?=Url::toRoute(['/vacancy/'.$category->slug])?>"><?=$category->name?> <?=$category->getVacancyCategories()->count()?></a>
     <?php
     endif;
     $i++;
