@@ -50,4 +50,10 @@ class DefaultController extends Controller
         ]));
         return $value;
     }
+
+    public function actionCity()
+    {
+        $this->layout = '@frontend/views/layouts/main-layout.php';
+        return $this->render('cities');
+    }
 }
