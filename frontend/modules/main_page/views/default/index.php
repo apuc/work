@@ -153,7 +153,7 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                         <a href="<?=Url::to(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title" title="<?=$vacancy->post?>"><?=$vacancy->post?></a>
                         <div class="single-card__info-second"><span class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd MM yyyy, hh:mm') ?></span>
                             <div class="single-card__view"><img class="single-card__icon mr5" src="/images/icon-eye.png"
-                                                                alt="" role="presentation"/><span><?=$vacancy->views?></span>
+                                                                alt="" role="presentation"/><span><?=$vacancy->countViews?></span>
                             </div>
                         </div>
                     </div>

@@ -17,7 +17,7 @@ class VacancySearch extends Vacancy
     public function rules()
     {
         return [
-            [['id', 'company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['post', 'responsibilities', 'qualification_requirements', 'work_experience', 'education', 'working_conditions', 'video', 'address', 'home_number'], 'safe'],
         ];
     }
@@ -63,7 +63,6 @@ class VacancySearch extends Vacancy
             'min_salary' => $this->min_salary,
             'max_salary' => $this->max_salary,
             'employment_type_id' => $this->employment_type_id,
-            'schedule_id' => $this->schedule_id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

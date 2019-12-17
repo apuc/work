@@ -214,7 +214,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->created_at, 'dd.MM.yyyy') ?></span>
                                 <div class="single-card__view"><img class="single-card__icon mr5"
                                                                     src="/images/icon-eye.png" alt=""
-                                                                    role="presentation"/><span><?= $vacancy->views ?></span>
+                                                                    role="presentation"/><span><?= $vacancy->countViews ?></span>
                                 </div>
                                 <?php $vacancy_city = \common\models\City::findOne(['name'=>$vacancy->city]);?>
                                 <a class="d-flex align-items-center mt5 mb5" href="<?=Vacancy::getSearchPageUrl(false, $city->slug)?>">

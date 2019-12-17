@@ -25,7 +25,6 @@ use yii\web\View;
  * @property string $address
  * @property string $home_number
  * @property integer $employment_type_id
- * @property integer $schedule_id
  * @property integer $hot
  * @property integer $notification_status
  * @property integer $status
@@ -36,7 +35,6 @@ use yii\web\View;
  *
  * @property Company $company
  * @property EmploymentType $employment_type
- * @property Schedule $schedule
  * @property VacancySkill[] $vacancy_skill
  * @property Skill[] $skill
  * @property Category[] $category
@@ -90,7 +88,7 @@ class Vacancy extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status'], 'integer'],
+            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status'], 'integer'],
             [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions'], 'string'],
             [['company_id', 'post'], 'required'],
@@ -99,7 +97,7 @@ class Vacancy extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['company', 'schedule', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews'];
+        return ['company', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews'];
     }
 
     /**
@@ -123,7 +121,6 @@ class Vacancy extends WorkActiveRecord
             'address' => 'Адрес офиса',
             'home_number' => 'Номер дома',
             'employment_type_id' => 'Вид занятости',
-            'schedule_id' => 'Расписание',
             'hot' => 'Горячая',
             'status' => 'Статус',
             'created_at' => 'Создана',
@@ -145,14 +142,6 @@ class Vacancy extends WorkActiveRecord
     public function getEmployment_type()
     {
         return $this->hasOne(EmploymentType::className(), ['id' => 'employment_type_id']);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getSchedule()
-    {
-        return $this->hasOne(Schedule::className(), ['id' => 'schedule_id']);
     }
 
     /**
