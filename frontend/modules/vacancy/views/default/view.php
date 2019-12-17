@@ -51,7 +51,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                         <div class="category-block">
                             <?php foreach ($model->category as $category): ?>
                                 <a class="btn-card btn-card-small btn-gray"
-                                   href="<?= \yii\helpers\Url::to(["/vacancy/search/$category->slug"]) ?>"><?= $category->name ?></a>
+                                   href="<?= \yii\helpers\Url::to(["/vacancy/$category->slug"]) ?>"><?= $category->name ?></a>
                             <?php endforeach ?>
                         </div>
                     <?php endif ?>

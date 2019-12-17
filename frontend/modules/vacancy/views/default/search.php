@@ -197,7 +197,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                             <div class="single-card__header">
                                 <?php foreach ($vacancy->category as $category): ?>
-                                    <a class="btn-card btn-card-small btn-gray" href="<?=Url::toRoute(["/vacancy/search/$category->slug"])?>"><?= $category->name ?></a>
+                                    <a class="btn-card btn-card-small btn-gray" href="<?=Url::toRoute(["/vacancy/$category->slug"])?>"><?= $category->name ?></a>
                                 <?php endforeach ?>
                                 <img class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt="" role="presentation"/>
                             </div>
