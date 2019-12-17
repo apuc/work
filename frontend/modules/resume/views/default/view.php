@@ -4,7 +4,9 @@
 /* @var $referer_category \common\models\Category */
 
 use common\classes\MoneyFormat;
+use common\models\City;
 use common\models\Experience;
+use common\models\Resume;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
@@ -29,14 +31,14 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
             <div class="resume-results">
                 <ul class="breadcrumbs">
                     <?php if($model->city):?>
-                        <?php $city = \common\models\City::findOne(['name'=>$model->city]);?>
+                        <?php $city = City::findOne(['name'=>$model->city]);?>
                         <li>
-                            <a href="<?=Url::to(["/resume/$city->slug"])?>"><?= $model->city ?></a>
+                            <a href="<?=Resume::getSearchPageUrl(false, $city->slug)?>"><?= $model->city ?></a>
                         </li>
                     <?php endif?>
                     <?php if($referer_category):?>
                         <li>
-                            <a href="<?=Url::to(["/resume/$referer_category->slug"])?>"><?= $referer_category->name ?></a>
+                            <a href="<?=Resume::getSearchPageUrl($referer_category->slug)?>"><?= $referer_category->name ?></a>
                         </li>
                     <?php endif?>
                     <li><?= $model->title ?></li>

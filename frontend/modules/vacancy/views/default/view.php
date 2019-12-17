@@ -25,15 +25,14 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
     <div class="container">
         <div class="resume-results">
             <ul class="breadcrumbs">
-                <?php if ($model->city): ?>
-                    <?php $city = \common\models\City::findOne(['name' => $model->city]); ?>
+                <?php if ($model->city && $city = \common\models\City::findOne(['name' => $model->city])): ?>
                     <li>
-                        <a href="<?= Url::to(["/vacancy/$city->slug"]) ?>"><?= $model->city ?></a>
+                        <a href="<?=\common\models\Vacancy::getSearchPageUrl(false, $city->slug)?>"><?= $model->city ?></a>
                     </li>
                 <?php endif ?>
                 <?php if ($referer_category): ?>
                     <li>
-                        <a href="<?= Url::to(["/vacancy/$referer_category->slug"]) ?>"><?= $referer_category->name ?></a>
+                        <a href="<?=\common\models\Vacancy::getSearchPageUrl($referer_category->slug, $city->slug)?>"><?= $referer_category->name ?></a>
                     </li>
                 <?php endif ?>
                 <li><?= $model->post ?></li>
@@ -51,7 +50,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                         <div class="category-block">
                             <?php foreach ($model->category as $category): ?>
                                 <a class="btn-card btn-card-small btn-gray"
-                                   href="<?= \yii\helpers\Url::to(["/vacancy/$category->slug"]) ?>"><?= $category->name ?></a>
+                                   href="<?=\common\models\Vacancy::getSearchPageUrl($category->slug)?>"><?= $category->name ?></a>
                             <?php endforeach ?>
                         </div>
                     <?php endif ?>
@@ -60,10 +59,12 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                                                          src="/images/icon-eye.png" alt=""
                                                          role="presentation"/><span><?= $model->views ?></span>
                     </div>
-                    <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5"
-                       href="<?= \yii\helpers\Url::to(["/vacancy/search/$model->city"]) ?>"><img
-                                class="single-block__icon" src="/images/arr-place.png" alt=""
-                                role="presentation"/><span class="ml5"><?= $model->city ?></span></a>
+                    <?php if ($city): ?>
+                        <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5" href="<?= \common\models\Vacancy::getSearchPageUrl(false, $city->slug) ?>">
+                            <img class="single-block__icon" src="/images/arr-place.png" alt="" role="presentation"/>
+                            <span class="ml5"><?= $model->city ?></span>
+                        </a>
+                    <?php endif ?>
                 </div>
                 <h1 class="single-block__head"><?= $model->post ?>
                 </h1>
@@ -180,7 +181,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                                         <?php if ($vacancy->category): ?>
                                             <div class="last-vacancy__cat-city">
                                                 <a class="btn-card btn-card-small btn-gray"
-                                                   href="<?= Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$vacancy->category[0]->id])]) ?>"><?= $vacancy->category[0]->name ?></a>
+                                                   href="<?= \common\models\Vacancy::getSearchPageUrl($vacancy->category[0]->slug)?>"><?= $vacancy->category[0]->name ?></a>
                                             </div>
                                         <?php endif ?>
                                         <a class="last-vacancy__title" href="/vacancy/view/<?= $vacancy->id ?>"
@@ -210,7 +211,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                                 <?php if ($vacancy->category): ?>
                                     <div class="last-vacancy__cat-city">
                                         <a class="btn-card btn-card-small btn-gray"
-                                           href="<?= Url::toRoute(['/vacancy/search', 'category_ids' => json_encode([$vacancy->category[0]->id])]) ?>"><?= $vacancy->category[0]->name ?></a>
+                                           href="<?= \common\models\Vacancy::getSearchPageUrl($vacancy->category[0]->slug)?>"><?= $vacancy->category[0]->name ?></a>
                                     </div>
                                 <?php endif ?>
                                 <a class="last-vacancy__title" href="/vacancy/view/<?= $vacancy->id ?>"

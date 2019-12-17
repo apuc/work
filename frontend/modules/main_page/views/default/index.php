@@ -7,6 +7,7 @@
 
 
 use common\models\KeyValue;
+use common\models\Resume;
 use common\models\Vacancy;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -58,8 +59,8 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                             ],
                         ]
                     ); ?>
-                    <a class="nhome__nav-item" href="<?=Url::toRoute(['/resume/default/search'])?>">Поиск резюме</a>
-                    <a class="nhome__nav-item" href="<?=Url::toRoute(['/vacancy/default/search'])?>">Поиск вакансий</a>
+                    <a class="nhome__nav-item" href="<?=Resume::getSearchPageUrl()?>">Поиск резюме</a>
+                    <a class="nhome__nav-item" href="<?=Vacancy::getSearchPageUrl()?>">Поиск вакансий</a>
                     <?php if (Yii::$app->user->isGuest): ?>
                     <button class="nhome__nav-item nav-btn jsLogin">
                         Вход
@@ -92,11 +93,11 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                 </nav>
             </div>
             <div class="nhome__main-content">
-                <?= Html::beginForm(['/vacancy'], 'get', ['class' => 'nhome__form']) ?>
+                <?= Html::beginForm([Vacancy::getSearchPageUrl()], 'get', ['class' => 'nhome__form']) ?>
                     <span class="nhome__form-text">
                         Сейчас на сайте свыше
-                        <a href="<?=Url::to(['/vacancy/default/search'])?>" class='white-text'> <?=Vacancy::find()->count()?> вакансий </a> и
-                        <a href="<?=Url::to(['/resume/default/search'])?>" class='white-text'> <?=\common\models\Resume::find()->count()?> резюме</a>
+                        <a href="<?=Vacancy::getSearchPageUrl()?>" class='white-text'> <?=Vacancy::find()->count()?> вакансий </a> и
+                        <a href="<?=Resume::getSearchPageUrl()?>" class='white-text'> <?=Resume::find()->count()?> резюме</a>
                     </span>
                 <input name="search_text" class="nhome__form-input" placeholder="Я ищу..." type="text"/>
                 <?= Html::submitButton(

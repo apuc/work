@@ -253,4 +253,18 @@ class Vacancy extends WorkActiveRecord
             'header' => $header
         ];
     }
+
+    public static function getSearchPageUrl($category_slug = false, $city_slug=false) {
+        $url = "/vacancy";
+        if($city_slug) {
+            $url .= "/$city_slug";
+        }
+        else if(\Yii::$app->request->cookies['city'] && $city = City::findOne(\Yii::$app->request->cookies['city'])) {
+            $url .= "/$city->slug";
+        }
+        if($category_slug) {
+            $url .= "/$category_slug";
+        }
+        return $url;
+    }
 }

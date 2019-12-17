@@ -2,6 +2,8 @@
 /* @var $employer \common\models\Employer */
 /* @var $this \yii\web\View */
 
+use common\models\Resume;
+use common\models\Vacancy;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -25,9 +27,9 @@ use yii\helpers\Url;
                             <img src="/images/logo_mob.png" alt="" role="presentation"/>
                         </a>
                         <?php if(Yii::$app->controller->uniqueId === "vacancy/default"):?>
-                            <a class="home__nav-item" href="<?= yii\helpers\Url::toRoute('/resume/default/search') ?>">Резюме</a>
+                            <a class="home__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Резюме</a>
                         <?php else:?>
-                            <a class="home__nav-item" href="<?= yii\helpers\Url::toRoute('/vacancy/default/search') ?>">Вакансии</a>
+                            <a class="home__nav-item" href="<?= Vacancy::getSearchPageUrl() ?>">Вакансии</a>
                         <?php endif?>
                         <?php
                         if (Yii::$app->user->isGuest): ?>
@@ -81,7 +83,7 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="home__main-content">
-                    <?= Html::beginForm(['/vacancy'], 'get', ['class' => 'home__form']) ?>
+                    <?= Html::beginForm([Vacancy::getSearchPageUrl()], 'get', ['class' => 'home__form']) ?>
                     <input name="search_text" class="home__form-input" placeholder="Я ищу..." type="text"/>
                     <?= Html::submitButton(
                         '<i class="fa fa-search"></i>',
