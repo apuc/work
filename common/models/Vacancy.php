@@ -26,7 +26,6 @@ use yii\web\View;
  * @property string $home_number
  * @property integer $employment_type_id
  * @property integer $schedule_id
- * @property integer $views
  * @property integer $hot
  * @property integer $notification_status
  * @property integer $status
@@ -43,6 +42,7 @@ use yii\web\View;
  * @property Category[] $category
  * @property VacancyCategory[] $vacancy_category
  * @property bool $can_update
+ * @property integer $countViews
  */
 class Vacancy extends WorkActiveRecord
 {
@@ -90,7 +90,7 @@ class Vacancy extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'views', 'hot', 'notification_status'], 'integer'],
+            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'schedule_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status'], 'integer'],
             [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions'], 'string'],
             [['company_id', 'post'], 'required'],
@@ -124,7 +124,6 @@ class Vacancy extends WorkActiveRecord
             'home_number' => 'Номер дома',
             'employment_type_id' => 'Вид занятости',
             'schedule_id' => 'Расписание',
-            'views' => 'Просмотры',
             'hot' => 'Горячая',
             'status' => 'Статус',
             'created_at' => 'Создана',

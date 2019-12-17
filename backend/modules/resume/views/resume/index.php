@@ -53,35 +53,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return '<img alt="" width="100px" src="'.$model->image_url.'">';
                 },
             ],
-            'title',
+            [
+                'contentOptions' => ['style' => 'width:250px; white-space: normal;'],
+                'attribute' => 'title',
+            ],
             'min_salary',
             'max_salary',
             'city',
-//            [
-//                'attribute' => 'description',
-//                'contentOptions' => ['style' => 'width:400px; white-space: normal;'],
-//                'value' => function ($model) {
-//                    return nl2br(\yii\helpers\StringHelper::truncate($model->description, 100, '...'));
-//                },
-//            ],
-//            [
-//                'label' => 'Социальные сети',
-//                'format' => 'html',
-//                'value' =>
-//                    function ($model) {
-//                        /** @var Resume $model */
-//                        $result = '';
-//                        if($model->vk)
-//                            $result.='VK: '.$model->vk.'<br>';
-//                        if($model->facebook)
-//                            $result.='Facebook: '.$model->facebook.'<br>';
-//                        if($model->instagram)
-//                            $result.='Instagram: '.$model->instagram.'<br>';
-//                        if($model->skype)
-//                            $result.='Skype: '.$model->skype;
-//                        return $result;
-//                }
-//            ],
             [
                 'label' => 'Умения',
                 'contentOptions' => ['style' => 'width:400px; white-space: normal;'],
@@ -100,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'Категории',
-                'contentOptions' => ['style' => 'width:400px; white-space: normal;'],
+                'contentOptions' => ['style' => 'width:250px; white-space: normal;'],
                 'attribute' => 'category',
                 'format' => 'raw',
                 'value' => function ($model) {
@@ -130,7 +108,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     Resume::STATUS_INACTIVE => 'Не активно',
                 ], [ 'class' => 'form-control', 'prompt' => '' ] ),
             ],
-            'created_at',
+            [
+                'attribute' => 'created_at',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return date('d-m-Y  G:i:s', $model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'countViews',
+                'label' => 'Просмотры'
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

@@ -99,6 +99,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $d->format('d-m-Y G:i:s');
                 },
             ],
+            [
+                'attribute' => 'countViews',
+                'label' => 'Просмотры'
+            ],
         ],
     ]) ?>
 

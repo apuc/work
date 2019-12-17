@@ -44,7 +44,6 @@ $this->params['breadcrumbs'][] = $model->post;
             'post',
             'responsibilities:ntext',
             'employment_type.name',
-            'views',
             'min_salary',
             'max_salary',
             'qualification_requirements',
@@ -104,6 +103,10 @@ $this->params['breadcrumbs'][] = $model->post;
                     $d->setTimestamp($model->updated_at);
                     return $d->format('d-m-Y G:i:s');
                 },
+            ],
+            [
+                'attribute' => 'countViews',
+                'label' => 'Просмотры'
             ],
         ],
     ]) ?>

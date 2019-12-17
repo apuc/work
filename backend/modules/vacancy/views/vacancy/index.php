@@ -46,7 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ])
             ],
-            'post',
+            [
+                'attribute' => 'post',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
             [
                 'attribute' => 'responsibilities',
                 'contentOptions' => ['style' => 'white-space: normal;'],
@@ -62,7 +65,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     \yii\helpers\ArrayHelper::map(EmploymentType::find()->asArray()->all(),'id', 'name'),
                     [ 'class' => 'form-control', 'prompt' => '' ] ),
             ],
-            'views',
             'min_salary',
             'max_salary',
             [
@@ -102,7 +104,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     Vacancy::STATUS_INACTIVE => 'Не активна',
                 ], [ 'class' => 'form-control', 'prompt' => '' ] ),
             ],
-
+            [
+                'attribute' => 'countViews',
+                'label' => 'Просмотры'
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

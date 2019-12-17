@@ -57,7 +57,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                     <span>Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd MM yyyy') ?></span>
                     <div class="single-block__view"><img class="single-block__icon mr5"
                                                          src="/images/icon-eye.png" alt=""
-                                                         role="presentation"/><span><?= $model->views ?></span>
+                                                         role="presentation"/><span><?= $model->countViews ?></span>
                     </div>
                     <?php if ($city): ?>
                         <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5" href="<?= \common\models\Vacancy::getSearchPageUrl(false, $city->slug) ?>">

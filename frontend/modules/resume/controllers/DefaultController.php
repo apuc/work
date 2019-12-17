@@ -41,10 +41,8 @@ class DefaultController extends Controller
         $view->subject_type = 'Resume';
         $view->subject_id = $model->id;
         $view->viewer_id = Yii::$app->user->id;
-        $view->dt_view = strtotime(date("Y-m-d H:i:s"));
+        $view->dt_view = time();
         $view->save();
-        $model->views++;
-        $model->save();
         return $this->render('view', [
             'model' => $model,
             'referer_category' => $referer_category
