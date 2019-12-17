@@ -47,6 +47,17 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                         <img src="/images/logo-main.png" alt="" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="" role="presentation"/>
                     </a>
+                    <?= \kartik\select2\Select2::widget(
+                        [
+                            'name' => 'CitySelect',
+                            'value' => Yii::$app->request->cookies['city'],
+                            'data' => ArrayHelper::map(\common\models\City::find()->all(), 'id', 'name'),
+                            'options' => ['placeholder' => 'Выберите город', 'id'=>'city_select'],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]
+                    ); ?>
                     <a class="nhome__nav-item" href="<?=Url::toRoute(['/resume/default/search'])?>">Поиск резюме</a>
                     <a class="nhome__nav-item" href="<?=Url::toRoute(['/vacancy/default/search'])?>">Поиск вакансий</a>
                     <?php if (Yii::$app->user->isGuest): ?>
@@ -81,22 +92,18 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                 </nav>
             </div>
             <div class="nhome__main-content">
+                <?= Html::beginForm(['/vacancy'], 'get', ['class' => 'nhome__form']) ?>
                     <span class="nhome__form-text">
                         Сейчас на сайте свыше
                         <a href="<?=Url::to(['/vacancy/default/search'])?>" class='white-text'> <?=Vacancy::find()->count()?> вакансий </a> и
                         <a href="<?=Url::to(['/resume/default/search'])?>" class='white-text'> <?=\common\models\Resume::find()->count()?> резюме</a>
                     </span>
-                <?= \kartik\select2\Select2::widget(
-                    [
-                        'name' => 'CitySelect',
-                        'value' => Yii::$app->request->cookies['city'],
-                        'data' => ArrayHelper::map(\common\models\City::find()->all(), 'id', 'name'),
-                        'options' => ['placeholder' => 'Выберите город', 'id'=>'city_select'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ]
-                ); ?>
+                <input name="search_text" class="nhome__form-input" placeholder="Я ищу..." type="text"/>
+                <?= Html::submitButton(
+                    '<i class="fa fa-search"></i>',
+                    ['class' => 'nhome__search btn-red']
+                ) ?>
+                <?= Html::endForm() ?>
                 <a class="btn btn-red mr20" href="/personal-area/add-resume">разместить резюме</a>
                 <a class="btn btn-red" href="/personal-area/add-vacancy">создать вакансию</a>
             </div>

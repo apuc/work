@@ -28,19 +28,6 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionSearch()
-    {
-        if(\Yii::$app->request->post('search_type') === 'vacancy'){
-            return $this->redirect(['/vacancy/default/search', 'search_text'=>\Yii::$app->request->post('search_text')]);
-        }
-        else if(\Yii::$app->request->post('search_type') === 'resume'){
-            return $this->redirect(['/resume/default/search', 'search_text'=>\Yii::$app->request->post('search_text')]);
-        }
-        else{
-            return $this->redirect ('/');
-        }
-    }
-
     public function actionSelectCity()
     {
         $value = \Yii::$app->request->post('city');

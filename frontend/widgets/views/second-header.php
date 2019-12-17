@@ -2,6 +2,7 @@
 /* @var $employer \common\models\Employer */
 /* @var $this \yii\web\View */
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
@@ -58,6 +59,17 @@ use yii\helpers\Url;
                                 </div>
                             </div>
                         <?php endif ?>
+                        <?= \kartik\select2\Select2::widget(
+                            [
+                                'name' => 'CitySelect',
+                                'value' => Yii::$app->request->cookies['city'],
+                                'data' => ArrayHelper::map(\common\models\City::find()->all(), 'id', 'name'),
+                                'options' => ['placeholder' => 'Выберите город', 'id'=>'city_select'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]
+                        ); ?>
                     </nav>
                     <div class="home__main-email d-flex align-items-center"><span class="home__main-ico">@</span><a
                                 href="mailto:info@rabota.today">info@rabota.today</a>
@@ -69,14 +81,8 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="home__main-content">
-                    <?= Html::beginForm(['/main_page/default/search'], 'post', ['class' => 'home__form']) ?>
+                    <?= Html::beginForm(['/vacancy'], 'get', ['class' => 'home__form']) ?>
                     <input name="search_text" class="home__form-input" placeholder="Я ищу..." type="text"/>
-                    <div class="home__form-select">
-                        <select name="search_type" class="home__form-select-js">
-                            <option value="vacancy">Работу</option>
-                            <option value="resume">Сотрудников</option>
-                        </select>
-                    </div>
                     <?= Html::submitButton(
                         '<i class="fa fa-search"></i>',
                         ['class' => 'home__search btn-red']
