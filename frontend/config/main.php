@@ -205,6 +205,7 @@ return [
                 'personal-area/<action>' => 'personal_area/default/index',
                 'personal-area/<action>/<id>' => 'personal_area/default/index',
                 'personal-area' => 'personal_area/default/index',
+                'cities' => 'main_page/default/city',
                 'sitemap.xml' => 'sitemap/index',
                 'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
                 ['class' => 'yii\rest\UrlRule', 'controller' =>

@@ -17,21 +17,22 @@ class SitemapController extends Controller
     public function actionIndex()
     {
         Yii::$app->cache->delete('sitemap');
+        $host = Yii::$app->request->hostInfo;
         if (!$xml_sitemap = Yii::$app->cache->get('sitemap')) {
 
             $urls = [
                 [
-                    'loc' => '/',
+                    'loc' => $host,
                     'changefreq' => 'daily',
                     'priority' => 1.0,
                 ],
                 [
-                    'loc' => '/vacancy/search',
+                    'loc' => "$host/vacancy/search",
                     'changefreq' => 'daily',
                     'priority' => 0.9,
                 ],
                 [
-                    'loc' => '/resume/search',
+                    'loc' => "$host/resume/search",
                     'changefreq' => 'daily',
                     'priority' => 0.9,
                 ],
@@ -41,7 +42,7 @@ class SitemapController extends Controller
             $vacancies = Vacancy::find()->where(['status'=>Vacancy::STATUS_ACTIVE])->orderBy('id DESC')->all();
             foreach ($vacancies as $vacancy) {
                 $urls[] = [
-                    'loc' => '/vacancy/view/'.$vacancy->id,
+                    'loc' => "$host/vacancy/view/$vacancy->id",
                     'lastmod' => date( DATE_W3C, $vacancy->updated_at),
                     'changefreq' => 'daily',
                     'priority' => 0.8
@@ -52,7 +53,7 @@ class SitemapController extends Controller
             $resumes = Resume::find()->where(['status'=>Resume::STATUS_ACTIVE])->orderBy('id DESC')->all();
             foreach ($resumes as $resume) {
                 $urls[] = [
-                    'loc' => '/resume/view/'.$resume->id,
+                    'loc' => "$host/resume/view/$resume->id",
                     'lastmod' => date( DATE_W3C, $resume->updated_at),
                     'changefreq' => 'daily',
                     'priority' => 0.8
@@ -66,12 +67,13 @@ class SitemapController extends Controller
 
             Yii::$app->cache->set('sitemap', $xml_sitemap, 3600);
         }
+        Yii::$app->response->format = \yii\web\Response::FORMAT_XML;
+        Yii::$app->response->formatters = ['xml' => ['class' => 'yii\web\XmlResponseFormatter', 'rootTag' => 'urlset', 'itemTag'=>'ulr']];
+//        Yii::$app->getResponse()
+//            ->getHeaders()
+//            ->set('Content-Type', 'text/xml; charset=utf-8;');
 
-        //Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
-        $headers = Yii::$app->response->headers;
-        $headers->add('Content-Type', 'text/xml');
-
-        return $xml_sitemap;
+        return $urls;
     }
 
 }
