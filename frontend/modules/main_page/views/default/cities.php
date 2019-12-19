@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
                     [
                         'name' => 'CitySelect',
                         'value' => Yii::$app->request->cookies['city'],
-                        'data' => ArrayHelper::map(\common\models\City::find()->all(), 'id', 'name'),
+                        'data' => ArrayHelper::map(\common\models\City::find()->where(['status'=>1])->all(), 'id', 'name'),
                         'options' => ['placeholder' => 'Выберите город', 'id'=>'city_select'],
                         'pluginOptions' => [
                             'allowClear' => true
