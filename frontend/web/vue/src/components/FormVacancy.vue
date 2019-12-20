@@ -28,10 +28,10 @@
         mounted() {
             document.title = this.$route.meta.title;
             this.getCategory().then(response => {
-                FormVacancy.categoriesVacancy.items = response.data;
-                for (let i = 0; i < response.data.length; i++) {
-                    this.$set(FormVacancy.categoriesVacancy.items, i, response.data[i]);
-                }
+                FormVacancy.categoriesVacancy.items = response.data.map(vacancy => ({
+                    id: vacancy.id,
+                    name: vacancy.name,
+                }));
             }, response => {
                         this.$swal({
                             toast: true,
