@@ -66,32 +66,38 @@ if ($('.home__slider').length > 0) {
     verticalSwiping: true,
     vertical: true,
     arrows: true,
-    prevArrow: '<button type="button" class="prevSlickHome"><img src="/images/arrow-down.svg"></button>',
-    nextArrow: '<button type="button" class="nextSlickHome"><img src="/images/arrow-up.svg"></button>',
+    prevArrow: '<button type="button" class="prevSlickHome"><img src="assets/images/arrow-down.svg"></button>',
+    nextArrow: '<button type="button" class="nextSlickHome"><img src="assets/images/arrow-up.svg"></button>',
     slidesToShow: 3,
     autoplay: true,
     autoplaySpeed: 2000,
-    responsive: [{
-      breakpoint: 1500,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1
+    responsive: [
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          arrows: false,
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          arrows: true,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          vertical: false,
+          verticalSwiping: false,
+        }
       }
-    }, {
-      breakpoint: 992,
-      settings: {
-        arrows: false,
-        slidesToShow: 2,
-        slidesToScroll: 1
-      }
-    }, {
-      breakpoint: 576,
-      settings: {
-        arrows: false,
-        slidesToShow: 2,
-        slidesToScroll: 1
-      }
-    }]
+    ]
   });
 }
 
