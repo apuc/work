@@ -194,6 +194,11 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                                     src="/images/add-contact.svg" alt="" role="presentation"/>
                         </button>
                         <div class="resume-info__head">
+                            <?php if(Yii::$app->user->isGuest):?>
+                                <span style="display: flex; flex-direction: column;">
+                                    Для просмотра контактных данных <a href="/?tab=login" style="text-decoration: none;">войдите или зарегистрируйтесь</a>
+                                </span>
+                            <?php else:?>
                             <h4>Контактная информация
                             </h4>
                             <p>Телефон:
@@ -203,6 +208,7 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                             <?php endif ?>
                             <p>Почта:
                             </p><a href="mailto:<?= $model->employer->user->email ?>"><?= $model->employer->user->email ?></a>
+                            <?php endif ?>
                         </div>
                         <div class="resume-info__soc">
                             <?php if ($model->hasSocials()): ?>

@@ -140,6 +140,11 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                                 src="assets/images/add-contact.svg" alt="" role="presentation"/>
                     </button>
                     <div class="sr-block">
+                            <?php if(Yii::$app->user->isGuest):?>
+                                <span style="display: flex; flex-direction: column;">
+                                    Для просмотра контактных данных <a href="/?tab=login" style="text-decoration: none;">войдите или зарегистрируйтесь</a>
+                                </span>
+                            <?php else:?>
                         <ul class="sr-block__text">
                             <?php if (!empty($model->company->name)): ?>
                                 <li class="sr-block__text__company">
@@ -161,6 +166,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                                 </li>
                             <?php endif ?>
                         </ul>
+                        <?php endif?>
                     </div>
                     <div class="sr-btn">
                         <button class="sr-btn__btn btn btn-red jsVacancyModal" data-id="<?= $model->id ?>">Отправить
