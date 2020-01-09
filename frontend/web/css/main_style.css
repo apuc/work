@@ -4365,7 +4365,7 @@ button {
     text-decoration: none;
     white-space: nowrap; }
 .breadcrumbs li:first-child:after {
-    content: 'Â·';
+    content: '·';
     margin: 0 5px 0 3px; }
 .breadcrumbs li:nth-child(2):after {
     content: '-';
