@@ -86,6 +86,7 @@
     import FormResume from '../lk-form/resume-form';
     import FormTemplate from "./FormTemplate";
     import Resume from "../mixins/resume";
+	import FormVacancy from "../lk-form/vacancy-form";
 
     export default {
         name: 'FormResume',
@@ -94,10 +95,10 @@
         mounted() {
             document.title = this.$route.meta.title;
             this.getEmploymentType().then(response => {
-                FormResume.categoriesResume.items = response.data;
-                for (let i = 0; i < response.data.length; i++) {
-                    this.$set(FormResume.categoriesResume.items, i, response.data[i]);
-                }
+				FormResume.categoriesResume.items = response.data.map(resume => ({
+					id: resume.id,
+					name: resume.name,
+				}));
             }, response => {
                 this.$swal({
                     toast: true,
