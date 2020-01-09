@@ -70,10 +70,6 @@ class SitemapController extends Controller
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
         $headers = Yii::$app->response->headers;
         $headers->add('Content-Type', 'text/xml');
-//        Yii::$app->getResponse()
-//            ->getHeaders()
-//            ->set('Content-Type', 'application/xml;');
-        Yii::$app->response->setStatusCode(200);
 
         return $xml_sitemap;
     }
