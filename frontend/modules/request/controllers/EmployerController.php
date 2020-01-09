@@ -72,7 +72,7 @@ class EmployerController extends MyActiveController
             $result['Vacancy'][]=[
                 'id' => $vacancy->id,
                 'name' => $vacancy->post,
-                'views' => $vacancy->views,
+                'views' => $vacancy->countViews,
                 'responses' => $responses
             ];
         }
@@ -83,7 +83,7 @@ class EmployerController extends MyActiveController
             $result['Resume'][]=[
                 'id' => $resume->id,
                 'name' => $resume->title,
-                'views' => $resume->views,
+                'views' => $resume->countViews,
                 'responses' => $responses
             ];
         }
