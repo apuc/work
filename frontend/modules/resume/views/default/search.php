@@ -35,7 +35,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
 ?>
 
 <section class="all-block all-resume">
-    <h1 class="hide"><?=$meta_data['header']?></h1>
     <img class="all-block__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
     <div class="all-block__circle">
     </div>
@@ -45,13 +44,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
         <div class="container">
             <div class="v-content-top">
                 <div class="home__aside-header">
-                    <div class="logo">
-                        <div class="logo__img"><img class="logo__main" src="/images/logo.png" alt=""
-                                                    role="presentation"/><img class="logo__info" src="/images/ico-i.png"
-                                                                              alt="" role="presentation"/>
-                        </div>
-                        <span class="logo__text">Актуальных вакансий сейчас</span>
-                    </div>
+                    <h1 class="resume__title"><?=$meta_data['header']?></h1>
                     <div class="search"><input type="text" placeholder="Поиск" name="resume_search_text"
                                                <?php if (isset($search_text)): ?>value="<?= $search_text ?>"<?php endif ?>/>
                         <button id="search" class="btn-red"><i class="fa fa-search"></i>

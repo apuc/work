@@ -48,19 +48,21 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                         <img src="/images/logo-main.png" alt="" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="" role="presentation"/>
                     </a>
-                    <?=''
-//                    \kartik\select2\Select2::widget(
-//                        [
-//                            'name' => 'CitySelect',
-//                            'value' => Yii::$app->request->cookies['city'],
-//                            'data' => ArrayHelper::map(\common\models\City::find()->all(), 'id', 'name'),
-//                            'options' => ['placeholder' => 'Выберите город', 'id'=>'city_select'],
-//                            'pluginOptions' => [
-//                                'allowClear' => true
-//                            ],
-//                        ]
-                    //);
-?>
+                    <div class="geolocation">
+                        <img src="/images/geolocation.png" alt="">
+                        <p class="geolocation-description">Выберете ваш<br> город</p>
+                    </div>
+                    <?=\kartik\select2\Select2::widget(
+                        [
+                            'name' => 'CitySelect',
+                            'value' => Yii::$app->request->cookies['city'],
+                            'data' => ArrayHelper::map(\common\models\City::find()->all(), 'id', 'name'),
+                            'options' => ['placeholder' => 'Выберите город', 'id'=>'city_select'],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]
+                    );?>
                     <a class="nhome__nav-item" href="<?=Resume::getSearchPageUrl()?>">Поиск резюме</a>
                     <a class="nhome__nav-item" href="<?=Vacancy::getSearchPageUrl()?>">Поиск вакансий</a>
                     <?php if (Yii::$app->user->isGuest): ?>

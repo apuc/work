@@ -26,6 +26,23 @@ use yii\helpers\Url;
                             <img src="/images/logo-main.png" alt="" role="presentation"/>
                             <img src="/images/logo_mob.png" alt="" role="presentation"/>
                         </a>
+                        <div class="geolocation">
+                            <img src="/images/geolocation.png" alt="">
+                            <p class="geolocation-description">Выберете ваш<br> город</p>
+                        </div>
+                        <?=
+                        \kartik\select2\Select2::widget(
+                            [
+                                'name' => 'CitySelect',
+                                'value' => Yii::$app->request->cookies['city'],
+                                'data' => ArrayHelper::map(\common\models\City::find()->all(), 'id', 'name'),
+                                'options' => ['placeholder' => 'Выберите город', 'id'=>'city_select'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]
+                        );
+                        ?>
                         <?php if(Yii::$app->controller->uniqueId === "vacancy/default"):?>
                             <a class="home__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Резюме</a>
                         <?php else:?>
@@ -61,19 +78,7 @@ use yii\helpers\Url;
                                 </div>
                             </div>
                         <?php endif ?>
-                        <?= ''
-//                        \kartik\select2\Select2::widget(
-//                            [
-//                                'name' => 'CitySelect',
-//                                'value' => Yii::$app->request->cookies['city'],
-//                                'data' => ArrayHelper::map(\common\models\City::find()->all(), 'id', 'name'),
-//                                'options' => ['placeholder' => 'Выберите город', 'id'=>'city_select'],
-//                                'pluginOptions' => [
-//                                    'allowClear' => true
-//                                ],
-//                            ]
-//                        );
-                        ?>
+
                     </nav>
                     <div class="home__main-email d-flex align-items-center"><span class="home__main-ico">@</span><a
                                 href="mailto:info@rabota.today">info@rabota.today</a>
