@@ -242,6 +242,15 @@ class Vacancy extends WorkActiveRecord
         ];
     }
 
+
+    /**
+     * @param bool|string $category_slug
+     * @param bool|string $city_slug
+     * @return string
+     *
+     * Получение урл для страницы поиска вакансий, с учётом переданных города и категории. Если город не указывать, будет использован город из cookie
+     *
+     */
     public static function getSearchPageUrl($category_slug = false, $city_slug=false) {
         $url = "/vacancy";
         if($city_slug) {
