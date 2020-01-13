@@ -17912,33 +17912,63 @@ address p {
 
 /*# sourceMappingURL=maps/style.css.map */
 
+.mobile-nav-btn img {
+  width: 100%;
+}
+
 .nhome__nav .select2-container{
-  width: 19% !important;
+  width: 200px !important;
   margin-right: auto;
 }
 
 .home__main-header .select2-container .select2-selection--single {
+  display: flex;
+  align-items: center;
   height: 34px;
   border-radius: 16px;
 }
 
+.home__main-header .select2-container .select2-selection__rendered {
+  width: 100%;
+}
+
+.home__main-header .select2-container .select2-selection__arrow {
+  top: 4px !important;
+}
+
 .nhome__nav .select2-container .select2-selection--single {
+  display: flex;
+  align-items: center;
   padding: 0;
   line-height: normal;
   height: 34px;
   border-radius: 16px;
 }
 
+.nhome__nav .select2-container .select2-selection__rendered {
+  width: 100%;
+}
+
+.nhome__nav .select2-container .select2-selection__arrow {
+  top: 4px !important;
+}
+
 .nhome__nav .select2-container .select2-selection--single .select2-selection__rendered {
-  color: black;
   text-decoration: none;
   line-height: 28px;
   font-family: Muller-Bold, sans-serif;
   font-size: 16px;
+  color: #243b9b;
 }
 
-.nhome__nav{
-  align-items: center;
+.home__nav .select2-container .select2-selection--single .select2-selection__rendered {
+  color: #243b9b;
+}
+
+@media (min-width: 1200px) {
+  .nhome__nav{
+    align-items: center;
+  }
 }
 
 .nhome-white-line__square {
@@ -17988,8 +18018,25 @@ address p {
   margin-right: 15px;
 }
 
-.nhome__nav-item {
-  width: 190px;
+@media (min-width: 1200px) {
+  .nhome__nav-item {
+    width: 190px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .geolocation {
+    margin-left: -5px;
+    padding-top: 20px;
+    padding-bottom: 5px;
+  }
+  .home__nav .select2-container, .nhome__nav .select2-container {
+    padding-left: 20px;
+    padding-bottom: 20px;
+  }
+  .border-top-header {
+    border-top: 1px solid #e8e8e8;
+  }
 }
 
 .nhome-white-line:nth-child(1) .nhome-white-line__square {
@@ -18014,5 +18061,5 @@ address p {
 }
 
 .home__nav .select2-container{
-  width: 40% !important;
+  width: 200px !important;
 }

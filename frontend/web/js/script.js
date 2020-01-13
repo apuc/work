@@ -299,13 +299,7 @@ $(document).ready(function () {
       scrollTop: $(".scroll").offset().top-50
     }, 2000);
   }
-  $("#city_select").on('change', function () {
-    $.ajax({
-      type: "POST",
-      url: "main_page/default/select-city",
-      data: {city: $(this).val(), _csrf:$('meta[name=csrf-token]').attr("content")}
-    });
-  })
+
 });
 
 if ($('.jsCitiesSelect').length > 0) {
@@ -319,6 +313,19 @@ if ($('.jsDutiesSelect').length > 0) {
   $('.jsDutiesSelect').select2({
     placeholder: "Выберите навыки"
   });
+}
+
+if ($('.jsCityHeaderSelect').length > 0) {
+  $('.jsCityHeaderSelect').select2({
+    placeholder: "Выберите город",
+    allowClear: true
+  }).on('change', function () {
+    console.log(123);
+    $.ajax({
+      type: "POST",
+      url: "/main_page/default/select-city",
+      data: {city: $(this).val(), _csrf:$('meta[name=csrf-token]').attr("content")}
+    });});
 }
 
 //# sourceMappingURL=script.js.map

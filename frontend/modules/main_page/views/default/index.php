@@ -26,16 +26,10 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
 <div class="nhome">
     <div class="nhome__main">
         <div class="nhome-white-line">
-            <div class="nhome-white-line__square">
-            </div>
         </div>
         <div class="nhome-white-line">
-            <div class="nhome-white-line__square">
-            </div>
         </div>
         <div class="nhome-white-line">
-            <div class="nhome-white-line__square">
-            </div>
         </div>
         <div class="nhome__main-top">
             <div class="nhome__main-header">
@@ -50,20 +44,15 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                     </a>
                     <div class="geolocation">
                         <img src="/images/geolocation.png" alt="">
-                        <p class="geolocation-description">Выберете ваш<br> город</p>
+                        <p class="geolocation-description">Выберите ваш<br> город</p>
                     </div>
-                    <?=\kartik\select2\Select2::widget(
-                        [
-                            'name' => 'CitySelect',
-                            'value' => Yii::$app->request->cookies['city'],
-                            'data' => ArrayHelper::map(\common\models\City::find()->all(), 'id', 'name'),
-                            'options' => ['placeholder' => 'Выберите город', 'id'=>'city_select'],
-                            'pluginOptions' => [
-                                'allowClear' => true
-                            ],
-                        ]
-                    );?>
-                    <a class="nhome__nav-item" href="<?=Resume::getSearchPageUrl()?>">Поиск резюме</a>
+                    <select class="city-header jsCityHeaderSelect" id="city_select">
+                        <option></option>
+                        <?php foreach (\common\models\City::find()->all() as $city):?>
+                            <option <?=(Yii::$app->request->cookies['city']==(string)$city->id)?"selected":''?> value="<?=$city->id?>"><?=$city->name?></option>
+                        <?php endforeach;?>
+                    </select>
+                    <a class="nhome__nav-item border-top-header" href="<?=Resume::getSearchPageUrl()?>">Поиск резюме</a>
                     <a class="nhome__nav-item" href="<?=Vacancy::getSearchPageUrl()?>">Поиск вакансий</a>
                     <?php if (Yii::$app->user->isGuest): ?>
                     <button class="nhome__nav-item nav-btn jsLogin">

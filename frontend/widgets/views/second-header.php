@@ -28,23 +28,16 @@ use yii\helpers\Url;
                         </a>
                         <div class="geolocation">
                             <img src="/images/geolocation.png" alt="">
-                            <p class="geolocation-description">Выберете ваш<br> город</p>
+                            <p class="geolocation-description">Выберите ваш<br> город</p>
                         </div>
-                        <?=
-                        \kartik\select2\Select2::widget(
-                            [
-                                'name' => 'CitySelect',
-                                'value' => Yii::$app->request->cookies['city'],
-                                'data' => ArrayHelper::map(\common\models\City::find()->all(), 'id', 'name'),
-                                'options' => ['placeholder' => 'Выберите город', 'id'=>'city_select'],
-                                'pluginOptions' => [
-                                    'allowClear' => true
-                                ],
-                            ]
-                        );
-                        ?>
+                        <select class="city-header jsCityHeaderSelect">
+                            <option></option>
+                            <?php foreach (\common\models\City::find()->all() as $city):?>
+                                <option <?=(Yii::$app->request->cookies['city']==(string)$city->id)?"selected":''?> value="<?=$city->id?>"><?=$city->name?></option>
+                            <?php endforeach;?>
+                        </select>
                         <?php if(Yii::$app->controller->uniqueId === "vacancy/default"):?>
-                            <a class="home__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Резюме</a>
+                            <a class="home__nav-item border-top-header" href="<?= Resume::getSearchPageUrl() ?>">Резюме</a>
                         <?php else:?>
                             <a class="home__nav-item" href="<?= Vacancy::getSearchPageUrl() ?>">Вакансии</a>
                         <?php endif?>

@@ -12,12 +12,12 @@ class MainAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        'css/main_style.css',
+        'css/style.css',
         'font-awesome-4.7.0/css/font-awesome.css',
         'js/select2/select2.min.css',
         'css/bootstrap-grid.min.css',
         'js/slick/slick.css',
-        'css/main_style.css',
-        'css/style.css',
         'css/back-styles.css',
     ];
     public $js = [
