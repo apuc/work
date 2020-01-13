@@ -18063,3 +18063,12 @@ address p {
 .home__nav .select2-container{
   width: 200px !important;
 }
+
+.modal-style > p {
+  display: block;
+  margin: 0 0 40px;
+  font-weight: 700;
+  font-size: 42px;
+  color: #262626;
+  text-align: center;
+}

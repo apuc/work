@@ -178,8 +178,8 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                         </button>
                     </div>
                     <div class="last-vacancy pc-last-vacancy">
-                        <h2 class="last-vacancy__head">Последние вакансии
-                        </h2>
+                        <p class="last-vacancy__head">Последние вакансии
+                        </p>
                         <?php foreach ($last_vacancies as $vacancy): ?>
                             <div class="last-vacancy__item">
                                 <div class="last-vacancy__tr">
@@ -209,8 +209,8 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                 </div>
             </aside>
             <div class="last-vacancy mob-last-vacancy">
-                <h2 class="last-vacancy__head">Последние вакансии
-                </h2>
+                <p class="last-vacancy__head">Последние вакансии
+                </p>
                 <?php foreach ($last_vacancies as $vacancy): ?>
                     <div class="last-vacancy__item">
                         <div class="last-vacancy__tr">
