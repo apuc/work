@@ -217,11 +217,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                             <span class="single-card__price">
                                 <?php if($vacancy->min_salary && $vacancy->max_salary):?>
-                                    <?= MoneyFormat::getFormattedAmount($vacancy->min_salary) ?> - <?= MoneyFormat::getFormattedAmount($vacancy->max_salary) ?> RUB
+                                    <?= MoneyFormat::getFormattedAmount($vacancy->min_salary) ?> - <?= MoneyFormat::getFormattedAmount($vacancy->max_salary) ?> ₽
                                 <?php elseif ($vacancy->min_salary):?>
-                                    От <?= MoneyFormat::getFormattedAmount($vacancy->min_salary)?> RUB
+                                    От <?= MoneyFormat::getFormattedAmount($vacancy->min_salary)?> ₽
                                 <?php elseif ($vacancy->max_salary):?>
-                                    До <?= MoneyFormat::getFormattedAmount($vacancy->max_salary)?> RUB
+                                    До <?= MoneyFormat::getFormattedAmount($vacancy->max_salary)?> ₽
                                 <?php else: ?>
                                     Зарплата договорная
                                 <?php endif?>

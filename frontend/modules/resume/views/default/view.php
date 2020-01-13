@@ -66,11 +66,11 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                     </p>
                     <span class="resume-top__price">
                         <?php if($model->min_salary>0 && $model->max_salary>0):?>
-                            <?= MoneyFormat::getFormattedAmount($model->min_salary)?>-<?= MoneyFormat::getFormattedAmount($model->max_salary)?> RUB
+                            <?= MoneyFormat::getFormattedAmount($model->min_salary)?>-<?= MoneyFormat::getFormattedAmount($model->max_salary)?> ₽
                         <?php elseif($model->max_salary>0):?>
-                            До <?= MoneyFormat::getFormattedAmount($model->max_salary)?> RUB
+                            До <?= MoneyFormat::getFormattedAmount($model->max_salary)?> ₽
                         <?php elseif($model->min_salary>0):?>
-                            От <?= MoneyFormat::getFormattedAmount($model->min_salary)?> RUB
+                            От <?= MoneyFormat::getFormattedAmount($model->min_salary)?> ₽
                         <?php else:?>
                             По договоренности
                         <?php endif?>

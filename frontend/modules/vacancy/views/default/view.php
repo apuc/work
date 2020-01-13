@@ -75,11 +75,11 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                 <div class="single-block__price">
                     <span>
                         <?php if ($model->min_salary && $model->max_salary): ?>
-                            <?= MoneyFormat::getFormattedAmount($model->min_salary) ?>-<?= MoneyFormat::getFormattedAmount($model->max_salary) ?> RUB
+                            <?= MoneyFormat::getFormattedAmount($model->min_salary) ?>-<?= MoneyFormat::getFormattedAmount($model->max_salary) ?> ₽
                         <?php elseif ($model->min_salary): ?>
-                            От <?= MoneyFormat::getFormattedAmount($model->min_salary) ?> RUB
+                            От <?= MoneyFormat::getFormattedAmount($model->min_salary) ?> ₽
                         <?php elseif ($model->max_salary): ?>
-                            До <?= MoneyFormat::getFormattedAmount($model->max_salary) ?> RUB
+                            До <?= MoneyFormat::getFormattedAmount($model->max_salary) ?> ₽
                         <?php else: ?>
                             Зарплата договорная
                         <?php endif ?>
