@@ -25,9 +25,6 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
     </div>
     <div class="container container-for-sidebar">
         <div class="resume__left">
-            <button class="mobile-contacts jsShowContacts jsShowContactsFlag"><img
-                        src="/images/add-contact.svg" alt="" role="presentation"/>
-            </button>
             <div class="resume-results">
                 <ul class="breadcrumbs">
                     <?php if($model->city && $city = City::findOne(['name'=>$model->city])):?>
@@ -188,11 +185,7 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                     <?php endif ?>
                 </section>
                 <aside class="resume-info jsOpenContacts" id="sidebar-single">
-                    <div class="single-vacancy-overlay jsHideContacts"></div>
                     <div class="sidebar-inner">
-                        <button class="mobile-contacts sidebar-mobile-contacts jsShowContacts"><img
-                                    src="/images/add-contact.svg" alt="" role="presentation"/>
-                        </button>
                         <div class="resume-info__head">
                             <?php if(Yii::$app->user->isGuest):?>
                                 <span style="display: flex; flex-direction: column;">

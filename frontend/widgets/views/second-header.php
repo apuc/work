@@ -39,7 +39,7 @@ use yii\helpers\Url;
                         <?php if(Yii::$app->controller->uniqueId === "vacancy/default"):?>
                             <a class="home__nav-item border-top-header" href="<?= Resume::getSearchPageUrl() ?>">Резюме</a>
                         <?php else:?>
-                            <a class="home__nav-item" href="<?= Vacancy::getSearchPageUrl() ?>">Вакансии</a>
+                            <a class="home__nav-item border-top-header"" href="<?= Vacancy::getSearchPageUrl() ?>">Вакансии</a>
                         <?php endif?>
                         <?php
                         if (Yii::$app->user->isGuest): ?>
@@ -76,11 +76,11 @@ use yii\helpers\Url;
                     <div class="home__main-email d-flex align-items-center"><span class="home__main-ico">@</span><a
                                 href="mailto:info@rabota.today">info@rabota.today</a>
                     </div>
-                    <div class="d-flex align-items-center"><i class="home__main-ico fa fa-phone"></i>
-                        <div class="d-flex flex-column"><a href="tel:88003553505">+8 800 355-35-05</a><a
-                                    class="home__callback" href="#">Заказать обратный звонок</a>
-                        </div>
-                    </div>
+<!--                    <div class="d-flex align-items-center"><i class="home__main-ico fa fa-phone"></i>-->
+<!--                        <div class="d-flex flex-column"><a href="tel:88003553505">+8 800 355-35-05</a><a-->
+<!--                                    class="home__callback" href="#">Заказать обратный звонок</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
                 <div class="home__main-content">
                     <?= Html::beginForm([Vacancy::getSearchPageUrl()], 'get', ['class' => 'home__form']) ?>

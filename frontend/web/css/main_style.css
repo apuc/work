@@ -2130,7 +2130,7 @@ button {
     display: block;
     width: 100%;
     height: 100%;
-    background-size: cover; }
+    object-fit: cover; }
 .header-wrap__emblem {
     position: absolute;
     bottom: 0;
@@ -4509,6 +4509,12 @@ button {
     align-items: flex-start;
     width: 100%; }
 
+@media (max-width: 993px) {
+    .resume-block {
+        flex-direction: column;
+    }
+}
+
 .resume-description {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -4596,15 +4602,9 @@ button {
     margin-left: auto; }
 @media (max-width: 993px) {
     .resume-info {
-        position: fixed;
-        bottom: 15%;
-        right: 0;
-        width: auto;
-        margin: 0;
-        -webkit-transition: all ease 1s;
-        -o-transition: all ease 1s;
-        transition: all ease 1s;
-        z-index: -1; } }
+        width: 100%;
+    }
+}
 .resume-info .sidebar-inner {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -4619,15 +4619,18 @@ button {
     width: 100%; }
 @media (max-width: 993px) {
     .resume-info .sidebar-inner {
-        max-width: 270px;
-        background-color: #ffffff;
-        z-index: 7;
-        -webkit-transform: translateX(400px);
-        -ms-transform: translateX(400px);
-        transform: translateX(400px);
-        -webkit-transition: all ease 1s;
-        -o-transition: all ease 1s;
-        transition: all ease 1s; } }
+        margin-top: 15px;
+/*        max-width: 270px;*/
+/*        background-color: #ffffff;*/
+/*        z-index: 7;*/
+/*        -webkit-transform: translateX(400px);*/
+/*        -ms-transform: translateX(400px);*/
+/*        transform: translateX(400px);*/
+/*        -webkit-transition: all ease 1s;*/
+/*        -o-transition: all ease 1s;*/
+/*        transition: all ease 1s; */
+    }
+}
 .resume-info.active-single-contacts {
     z-index: 6; }
 .resume-info.active-single-contacts .single-vacancy-overlay {
@@ -5893,14 +5896,10 @@ button {
         min-width: 250px; } }
 @media (max-width: 993px) {
     .single-block__right {
-        position: fixed;
-        bottom: 15%;
-        right: 0;
-        margin: 0;
-        -webkit-transition: all ease 1s;
-        -o-transition: all ease 1s;
-        transition: all ease 1s;
-        z-index: -1; } }
+        min-width: 100%;
+        margin: 15px 0 0;
+    }
+}
 .single-block__right .sidebar-inner {
     width: 100% !important;
     max-width: 375px; }
@@ -5909,14 +5908,19 @@ button {
         max-width: 250px; } }
 @media (max-width: 993px) {
     .single-block__right .sidebar-inner {
-        max-width: 270px;
-        z-index: 7;
-        -webkit-transform: translateX(350px);
-        -ms-transform: translateX(350px);
-        transform: translateX(350px);
-        -webkit-transition: all ease 1s;
-        -o-transition: all ease 1s;
-        transition: all ease 1s; } }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .single-block__right .sidebar-inner {
+        flex-direction: column;
+    }
+}
 
 .sr-block {
     display: -webkit-box;
@@ -5943,7 +5947,15 @@ button {
         -webkit-box-orient: horizontal;
         -webkit-box-direction: normal;
         -ms-flex-direction: row;
-        flex-direction: row; } }
+        flex-direction: row;
+        width: 50%;
+    }
+}
+@media (max-width: 768px) {
+    .sr-block {
+        width: 100%;
+    }
+}
 .sr-block__image {
     width: 100px;
     height: 100%;
@@ -6035,12 +6047,29 @@ button {
 @media (max-width: 993px) {
     .sr-btn {
         margin-top: 0;
-        padding-bottom: 20px;
-        background-color: #ffffff; } }
+        width: 50%;
+        background-color: #ffffff;
+    }
+}
+@media (max-width: 768px) {
+    .sr-btn {
+        width: 100%;
+    }
+}
 .sr-btn__btn {
     margin-bottom: 20px;
     border: none;
     cursor: pointer; }
+@media (max-width: 993px) {
+    .sr-btn__btn {
+        margin-bottom: 0;
+    }
+}
+@media (max-width: 768px) {
+    .sr-btn__btn {
+        margin-bottom: 20px;
+    }
+}
 .sr-btn__text {
     margin: 0;
     font-weight: 500;

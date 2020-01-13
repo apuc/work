@@ -43,9 +43,6 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
             </ul>
         </div>
         <div class="single-block single-block-slider">
-            <button class="mobile-contacts jsShowContacts jsShowContactsFlag"><img
-                        src="/images/add-contact.svg" alt="" role="presentation"/>
-            </button>
             <div class="single-block__left">
                 <img class="single-block__logo" src="<?= $model->company->getPhotoOrEmptyPhoto() ?>" alt=""
                      role="presentation"/>
@@ -137,12 +134,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                 <?php endif ?>
             </div>
             <aside class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">
-                <div class="single-vacancy-overlay jsHideContacts">
-                </div>
                 <div class="sidebar-inner">
-                    <button class="mobile-contacts sidebar-mobile-contacts jsShowContacts"><img
-                                src="assets/images/add-contact.svg" alt="" role="presentation"/>
-                    </button>
                     <div class="sr-block">
                             <?php if(Yii::$app->user->isGuest):?>
                                 <span style="display: flex; flex-direction: column;">
