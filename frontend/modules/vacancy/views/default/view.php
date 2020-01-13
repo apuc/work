@@ -28,7 +28,8 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
     <div class="container">
         <div class="resume-results">
             <ul class="breadcrumbs">
-                <?php if ($city = City::findOne(['name' => $model->city]) && $model->city): ?>
+                <?php $city = City::find()->where(['name' => $model->city])->one(); ?>
+                <?php if ($city && $model->city): ?>
                     <li>
                         <a href="<?=Vacancy::getSearchPageUrl(false, $city->slug)?>"><?= $model->city ?></a>
                     </li>
