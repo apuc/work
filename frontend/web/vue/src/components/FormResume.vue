@@ -136,7 +136,9 @@
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/resume`, data)
                     .then(response => {
                             this.$router.push('/personal-area/all-resume');
-                            return response;
+							gtag('event', 'vacancyAdd', { 'event_category': 'form', 'event_action': 'vacancyAdd', });
+							yaCounter53666866.reachGoal('vacancyAdd');
+							return true;
                         }, response => {
                             this.$swal({
                                 toast: true,
