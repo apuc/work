@@ -48,7 +48,7 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                     </div>
                     <select class="city-header jsCityHeaderSelect" id="city_select">
                         <option></option>
-                        <?php foreach (\common\models\City::find()->all() as $city):?>
+                        <?php foreach (\common\models\City::find()->where(['status'=>1])->all() as $city):?>
                             <option <?=(Yii::$app->request->cookies['city']==(string)$city->id)?"selected":''?> value="<?=$city->id?>"><?=$city->name?></option>
                         <?php endforeach;?>
                     </select>

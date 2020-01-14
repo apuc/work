@@ -32,7 +32,7 @@ use yii\helpers\Url;
                         </div>
                         <select class="city-header jsCityHeaderSelect">
                             <option></option>
-                            <?php foreach (\common\models\City::find()->all() as $city):?>
+                            <?php foreach (\common\models\City::find()->where(['status'=>1])->all() as $city):?>
                                 <option <?=(Yii::$app->request->cookies['city']==(string)$city->id)?"selected":''?> value="<?=$city->id?>"><?=$city->name?></option>
                             <?php endforeach;?>
                         </select>
