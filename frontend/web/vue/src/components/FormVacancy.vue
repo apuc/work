@@ -112,10 +112,14 @@
                     address: this.formData.officeAddress,
                     home_number: this.formData.houseNumber,
                 };
+                let res;
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/vacancy`, data)
                     .then(response => {
                             this.$router.push('/personal-area/all-vacancy');
-                            return response;
+                            res = response;
+                            gtag('event', 'vacancyAdd', { 'event_category': 'form', 'event_action': 'vacancyAdd', });
+                            yaCounter53666866.reachGoal('vacancyAdd');
+                            return true;
                         }, response => {
                         this.$swal({
                             toast: true,
