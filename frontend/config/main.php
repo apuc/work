@@ -212,6 +212,7 @@ return [
                 'vacancy_<number:\d+>.xml'=>'sitemap/vacancy',
                 'resume_<number:\d+>.xml'=>'sitemap/resume',
                 'city_<number:\d+>.xml'=>'sitemap/city',
+                'category_<number:\d+>.xml'=>'sitemap/category',
                 'city_with_category_<number:\d+>.xml'=>'sitemap/city-with-category',
                 'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
                 ['class' => 'yii\rest\UrlRule', 'controller' =>

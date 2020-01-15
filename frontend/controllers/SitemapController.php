@@ -29,12 +29,17 @@ class SitemapController extends Controller
             $siteMaps[] = "resume_$i";
 
         $citiesCount = City::find()->where(['status'=>City::TYPE_SHOWN])->count();
+        $categoriesCount = Category::find()->count();
 
-        $cityPagesCount = ceil($citiesCount/10000);
+        $cityPagesCount = ceil($citiesCount/5000);
         for($i=1;$i<=$cityPagesCount;$i++)
             $siteMaps[] = "city_$i";
 
-        $cityWithCategoryPagesCount = ceil(($citiesCount*Category::find()->count())/5000);
+        $categoryPagesCount = ceil($categoriesCount/5000);
+        for($i=1;$i<=$cityPagesCount;$i++)
+            $siteMaps[] = "category_$i";
+
+        $cityWithCategoryPagesCount = ceil(($citiesCount*$categoriesCount)/5000);
         for($i=1;$i<=$cityWithCategoryPagesCount;$i++)
             $siteMaps[] = "city_with_category_$i";
 
@@ -52,6 +57,7 @@ class SitemapController extends Controller
             /** @var Vacancy[] $vacancies */
             $vacancies = Vacancy::find()
                 ->where(['status' => Vacancy::STATUS_ACTIVE])
+                ->select(['id', 'updated_at'])
                 ->limit($number * 10000)
                 ->offset(($number - 1) * 10000)
                 ->all();
@@ -84,6 +90,7 @@ class SitemapController extends Controller
             /** @var Resume[] $resumes */
             $resumes = Resume::find()
                 ->where(['status' => Resume::STATUS_ACTIVE])
+                ->select(['id', 'updated_at'])
                 ->limit($number * 10000)
                 ->offset(($number - 1) * 10000)
                 ->all();
@@ -116,8 +123,9 @@ class SitemapController extends Controller
             /** @var City[] $cities */
             $cities = City::find()
                 ->where(['status' => City::TYPE_SHOWN])
-                ->limit($number * 10000)
-                ->offset(($number - 1) * 10000)
+                ->select(['slug'])
+                ->limit($number * 5000)
+                ->offset(($number - 1) * 5000)
                 ->all();
             $host = Yii::$app->request->hostInfo;
             $urls = [];
@@ -147,13 +155,50 @@ class SitemapController extends Controller
         return $xml_sitemap;
     }
 
+    public function actionCategory($number) {
+        if (!$xml_sitemap = Yii::$app->cache->get("category_$number")) {
+            /** @var Category[] $categories */
+            $categories = Category::find()
+                ->select(['slug'])
+                ->limit($number * 5000)
+                ->offset(($number - 1) * 5000)
+                ->all();
+            $host = Yii::$app->request->hostInfo;
+            $urls = [];
+            foreach ($categories as $category) {
+                $urls[] = [
+                    'loc' => "$host/resume/$category->slug",
+                    'changefreq' => 'daily',
+                    'priority' => 0.8
+                ];
+                $urls[] = [
+                    'loc' => "$host/vacancy/$category->slug",
+                    'changefreq' => 'daily',
+                    'priority' => 0.8
+                ];
+            }
+            $xml_sitemap = $this->renderPartial('urlset', [
+                'host' => Yii::$app->request->hostInfo,
+                'urls' => $urls,
+            ]);
+            if (!$urls)
+                throw new HttpException(404, 'Not Found');
+            Yii::$app->cache->set("category_$number", $xml_sitemap, 3600);
+        }
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        $headers = Yii::$app->response->headers;
+        $headers->add('Content-Type', 'text/xml');
+        return $xml_sitemap;
+    }
+
     public function actionCityWithCategory($number) {
         if (!$xml_sitemap = Yii::$app->cache->get("city_with_category_$number")) {
             /** @var Category[] $categories */
-            $categories = Category::find()->all();
+            $categories = Category::find()->select(['slug'])->all();
             /** @var City[] $cities */
             $cities = City::find()
                 ->where(['status' => City::TYPE_SHOWN])
+                ->select(['slug'])
                 ->limit((int)($number * (5000/count($categories))))
                 ->offset((int)(($number - 1) * (5000/count($categories))))
                 ->all();
