@@ -2366,8 +2366,6 @@ button {
     color: #ffffff; }
 @media (max-width: 1350px) {
     .home__main-header {
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
         -webkit-box-pack: start;
         -ms-flex-pack: start;
         justify-content: flex-start; } }
@@ -3434,8 +3432,6 @@ button {
     color: #ffffff; }
 @media (max-width: 1350px) {
     .nhome__main-header {
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
         -webkit-box-pack: start;
         -ms-flex-pack: start;
         justify-content: flex-start; } }
