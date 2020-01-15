@@ -133,10 +133,14 @@
                 if (image.classList.contains('fileinput--loaded')) {
                     data.image = this.image;
                 }
+                let res;
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/resume`, data)
                     .then(response => {
                             this.$router.push('/personal-area/all-resume');
-                            return response;
+                            res = response;
+                            gtag('event', 'rezumeAdd', { 'event_category': 'form', 'event_action': 'rezumeAdd', });
+                            yaCounter53666866.reachGoal('rezumeAdd');
+                            return true;
                         }, response => {
                             this.$swal({
                                 toast: true,
