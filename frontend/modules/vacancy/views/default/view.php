@@ -10,9 +10,24 @@ use common\models\City;
 use common\models\Vacancy;
 use yii\helpers\StringHelper;
 
-$this->title = $model->post;
+if ($model->min_salary && $model->max_salary)
+    $money_string = MoneyFormat::getFormattedAmount($model->min_salary).'-'.MoneyFormat::getFormattedAmount($model->max_salary).'₽';
+elseif ($model->min_salary)
+    $money_string = MoneyFormat::getFormattedAmount($model->min_salary).'₽';
+elseif ($model->max_salary)
+    $money_string = MoneyFormat::getFormattedAmount($model->max_salary).'₽';
+else
+    $money_string = 'Зарплата договорная';
+
+
+if($model->company->name)
+    $title = $model->post . ', ' . $model->company->name . ' - Работа ' . $model->city;
+else
+    $title = $model->post . ', ' . $money_string . ' - Работа '. $model->city;
+
+$this->title = $title;
 $this->registerMetaTag(['name' => 'description', 'content' => \yii\helpers\StringHelper::truncate($model->qualification_requirements, 100, '...')]);
-$this->registerMetaTag(['name' => 'og:title', 'content' => $model->post]);
+$this->registerMetaTag(['name' => 'og:title', 'content' => $title]);
 $this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
 $this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
 $this->registerMetaTag(['name' => 'og:image', 'content' => $model->company->image_url ?: '/images/empty_user.jpg']);
@@ -70,17 +85,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                 <h1 class="single-block__head"><?= $model->post ?>
                 </h1>
                 <div class="single-block__price">
-                    <span>
-                        <?php if ($model->min_salary && $model->max_salary): ?>
-                            <?= MoneyFormat::getFormattedAmount($model->min_salary) ?>-<?= MoneyFormat::getFormattedAmount($model->max_salary) ?> ₽
-                        <?php elseif ($model->min_salary): ?>
-                            От <?= MoneyFormat::getFormattedAmount($model->min_salary) ?> ₽
-                        <?php elseif ($model->max_salary): ?>
-                            До <?= MoneyFormat::getFormattedAmount($model->max_salary) ?> ₽
-                        <?php else: ?>
-                            Зарплата договорная
-                        <?php endif ?>
-                    </span>
+                    <span><?=$money_string?></span>
                     <div class="single-block__soc">
                         <?php if ($model->company->hasSocials()): ?>
                             <span>Написать соискателю в сетях</span>
