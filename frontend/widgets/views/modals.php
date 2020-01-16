@@ -144,5 +144,11 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             <p><?= Yii::$app->request->get('message')?>
             </p>
         </div>
+        <?php if(Yii::$app->request->get('message')):?>
+            <script>
+                gtag('event', 'registerVerify', { 'event_category': 'form', 'event_action': 'registerVerify', }); yaCounter53666866.reachGoal('registerVerify');
+            </script>
+        <?php endif;?>
+
     </div>
 </div>
