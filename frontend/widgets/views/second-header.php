@@ -23,7 +23,7 @@ use yii\helpers\Url;
                     </div>
                     <nav class="home__nav jsNavMenu">
                         <a class="home__nav-item home__nav-item_logo" href="/">
-                            <img src="/images/logo-main.png" alt="" role="presentation"/>
+                            <img src="/images/logo-main.png" alt="rabota.today" role="presentation"/>
                             <img src="/images/logo_mob.png" alt="" role="presentation"/>
                         </a>
                         <div class="geolocation">
