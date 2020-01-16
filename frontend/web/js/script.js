@@ -299,6 +299,9 @@ $(document).ready(function () {
       scrollTop: $(".scroll").offset().top-50
     }, 2000);
   }
+  $("#registration-form").submit(function(){
+    gtag('event', 'register', { 'event_category': 'form', 'event_action': 'register', }); yaCounter53666866.reachGoal('register');
+  });
 
 });
 
