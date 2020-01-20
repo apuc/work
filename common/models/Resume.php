@@ -55,6 +55,8 @@ class Resume extends WorkActiveRecord
 
     const UPDATE_MIN_SEC_PASSED = 86400;
 
+    const SOFT_DELETE = 1;
+
     public function getRelateDeleteList()
     {
         return ['experience', 'education', 'resume_category', 'resume_skill'];

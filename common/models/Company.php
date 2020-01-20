@@ -35,6 +35,8 @@ class Company extends WorkActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
+    const SOFT_DELETE = 1;
+
     public function getRelateDeleteList()
     {
         return ['vacancy', 'phone'];

@@ -24,6 +24,7 @@ use yii\db\ActiveRecord;
  */
 class Education extends WorkActiveRecord
 {
+    const SOFT_DELETE = 1;
 
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;

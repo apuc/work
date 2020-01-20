@@ -20,6 +20,7 @@ class ResumeController extends MyActiveController
 {
     public $modelClass = 'common\models\Resume';
 
+
     public function actions()
     {
         $actions = parent::actions();

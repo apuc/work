@@ -3,6 +3,7 @@
 namespace frontend\modules\request\controllers;
 
 
+use common\actions\DeleteAction;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
@@ -31,6 +32,11 @@ class MyActiveController extends ActiveController
                     'sort' => []
                 ]);
             }
+        ];
+        $actions['delete'] = [
+            'class' => 'common\actions\DeleteAction',
+            'modelClass' => $this->modelClass,
+            'checkAccess' => [$this, 'checkAccess'],
         ];
 
         return $actions;

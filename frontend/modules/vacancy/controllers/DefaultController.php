@@ -31,7 +31,7 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         $last_vacancies = Vacancy::find()->where(['status' => Vacancy::STATUS_ACTIVE])->orderBy('id DESC')->limit(2)->all();
-        $model = Vacancy::findOne($id);
+        $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->one();
         if(!$model)
             throw new HttpException(404, 'Not found');
         $referer_category = false;

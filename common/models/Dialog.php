@@ -16,6 +16,9 @@ use Yii;
  */
 class Dialog extends \yii\db\ActiveRecord
 {
+
+    const SOFT_DELETE = 1;
+
     /**
      * {@inheritdoc}
      */
