@@ -4184,6 +4184,9 @@ button {
     margin-left: 10px;
     font-size: 10px;
     text-decoration: none; }
+.home-card .single-card__cat-city .home-city {
+    color: #a8a8a8;
+}
 .home-card .single-card__title {
     display: block;
     width: 280px;
