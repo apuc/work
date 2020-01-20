@@ -265,7 +265,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                      ]);?>
                     <?php else: ?>
                         <div class="single-card">
-                            <p>По вашему запросу не найдено результатов.</p>
+                            <p>К сожалению по заданным критериям вакансии не найдены. Разместите свое резюме на сайте и работодатели позвонят Вам!</p>
+                            <a class="btn btn-red create__resume__button" href="/personal-area/add-resume">разместить резюме</a>
                         </div>
                     <?php endif ?>
 

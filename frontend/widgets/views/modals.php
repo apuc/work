@@ -61,7 +61,10 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 'action' => '/registration/register',
                 'enableAjaxValidation' => true,
                 'enableClientValidation' => false,
-                'class' => 'jsModalRegForm'
+                'class' => 'jsModalRegForm',
+//                'options' => [
+//                    "onsubmit"=>"gtag('event', 'register', { 'event_category': 'form', 'event_action': 'register', }); yaCounter53666866.reachGoal('register'); return true;"
+//                ]
             ]); ?>
             <input class="jsName" type="text" name="first_name" placeholder="Имя"/>
             <input class="jsSurname" type="text" name="second_name" placeholder="Фамилия"/>
@@ -141,5 +144,13 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             <p><?= Yii::$app->request->get('message')?>
             </p>
         </div>
+        <?php if(Yii::$app->request->get('message')==='Ваш аккаунт был успешно активирован'):?>
+            <script>
+                $(document).ready(function () {
+                    gtag('event', 'registerVerify', { 'event_category': 'form', 'event_action': 'registerVerify', }); yaCounter53666866.reachGoal('registerVerify');
+                });
+            </script>
+        <?php endif;?>
+
     </div>
 </div>

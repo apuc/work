@@ -85,3 +85,7 @@
 .hide {
   display: none;
 }
+
+.create__resume__button {
+  max-width: 200px;
+}

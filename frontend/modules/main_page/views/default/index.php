@@ -39,7 +39,7 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                 </div>
                 <nav class="nhome__nav jsNavMenu">
                     <a class="nhome__nav-item nhome__nav-item_logo" href="/">
-                        <img src="/images/logo-main.png" alt="" role="presentation"/>
+                        <img src="/images/logo-main.png" alt="rabota.today" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="" role="presentation"/>
                     </a>
                     <div class="geolocation">
