@@ -8,6 +8,7 @@ use frontend\widgets\Footer;
 use frontend\widgets\GoogleAnalytics;
 use frontend\widgets\Modals;
 use frontend\widgets\SecondHeader;
+use frontend\widgets\VKPixel;
 use frontend\widgets\YandexMetrika;
 use yii\helpers\Html;
 
@@ -26,6 +27,7 @@ MainAsset::register($this);
     <link rel="shortcut icon" href="/images/favicon.png" />
     <?=YandexMetrika::widget()?>
     <?=GoogleAnalytics::widget()?>
+    <?=VKPixel::widget()?>
 </head>
 <body>
 <div class="root">

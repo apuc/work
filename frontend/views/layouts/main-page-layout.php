@@ -26,6 +26,7 @@ MainAsset::register($this);
     <link rel="shortcut icon" href="../images/favicon.png" />
     <?=YandexMetrika::widget()?>
     <?=GoogleAnalytics::widget()?>
+    <?=VKPixel::widget()?>
 </head>
 <body>
 <div class="root">
