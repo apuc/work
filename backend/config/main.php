@@ -69,6 +69,9 @@ return [
             'admins' => ['test', 'millenion94@gmail.com', 'kirill.bouko@gmail.com', 'test@test.test'],
             'as backend' => 'dektrium\user\filters\BackendFilter',
         ],
+        'professions' => [
+            'class' => 'backend\modules\professions\Professions',
+        ],
     ],
     'components' => [
 //        'request' => [
@@ -103,7 +106,7 @@ return [
             'errorAction' => 'site/error',
         ],
         'request' => [
-            'baseUrl' => '/secure',
+            'baseUrl' => '',
             //'class' => 'frontend\components\LangRequest',
         ],
         'urlManagerFrontend' => [
