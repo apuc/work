@@ -106,7 +106,7 @@ return [
             'errorAction' => 'site/error',
         ],
         'request' => [
-            'baseUrl' => '',
+            'baseUrl' => '/secure',
             //'class' => 'frontend\components\LangRequest',
         ],
         'urlManagerFrontend' => [
