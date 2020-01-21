@@ -53,6 +53,8 @@ class Vacancy extends WorkActiveRecord
 
     const UPDATE_MIN_SEC_PASSED = 86400;
 
+    const SOFT_DELETE = 1;
+
     public static $experiences = [
       'Не имеет значения', 'Менее года', '1 год', '2 года'
     ];

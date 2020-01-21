@@ -21,6 +21,9 @@ use yii\behaviors\TimestampBehavior;
  */
 class DialogMessage extends WorkActiveRecord
 {
+
+
+    const SOFT_DELETE = 1;
     /**
      * {@inheritdoc}
      */

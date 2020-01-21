@@ -137,7 +137,7 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                             <?php endif ?>
                             <?php $city = \common\models\City::findOne(['name'=>$vacancy->city])?>
                             <?php if($city): ?>
-                            <a class="d-flex align-items-center" href="<?=Url::to(["/vacancy/$city->slug"])?>">
+                            <a class="d-flex align-items-center home-city" href="<?=Url::to(["/vacancy/$city->slug"])?>">
                                 <img class="single-card__icon" src="/images/arr-place.png" alt="" role="presentation"/>
                                 <span class="ml5"><?=$vacancy->city?></span>
                             </a>
