@@ -127,7 +127,7 @@ class DefaultController extends Controller
         $resume_query->andFilterWhere(['>=', 'max_salary', $params['min_salary']]);
         $resume_query->andFilterWhere(['<=', 'min_salary', $params['max_salary']]);
         if($current_city)
-            $resume_query->andFilterWhere(['like', 'city', $current_city->name]);
+            $resume_query->andFilterWhere(['like', 'city_id', $current_city->id]);
         if($params['search_text']){
             if($params['search_text'][0]===':')
             {
@@ -155,7 +155,6 @@ class DefaultController extends Controller
             $resume_query->joinWith(['skills', 'experience', 'education']);
             $resume_query->andWhere(['or',
                 ['like', 'title', $params['search_text']],
-                ['like', 'city', $params['search_text']],
                 ['like', 'description', $params['search_text']],
                 ['like', Skill::tableName().'.name', $params['search_text']],
                 ['like', 'experience.name', $params['search_text']],

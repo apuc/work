@@ -27,9 +27,9 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
         <div class="resume__left">
             <div class="resume-results">
                 <ul class="breadcrumbs">
-                    <?php if($model->city && $city = City::findOne(['name'=>$model->city])):?>
+                    <?php if($model->city0):?>
                         <li>
-                            <a href="<?=Resume::getSearchPageUrl(false, $city->slug)?>"><?= $model->city ?></a>
+                            <a href="<?=Resume::getSearchPageUrl(false, $model->city0->slug)?>"><?= $model->city0->name ?></a>
                         </li>
                     <?php endif?>
                     <?php if($referer_category):?>
@@ -90,11 +90,11 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                             </td>
                         </tr>
                         <?php endif ?>
-                        <?php if($model->city):?>
+                        <?php if($model->city0):?>
                         <tr>
                             <th>Город:
                             </th>
-                            <td><?= $model->city ?>
+                            <td><?= $model->city0->name ?>
                             </td>
                         </tr>
                         <?php endif?>

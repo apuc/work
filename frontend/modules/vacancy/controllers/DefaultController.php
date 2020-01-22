@@ -130,7 +130,7 @@ class DefaultController extends Controller
             ->andFilterWhere(['>=', 'max_salary', $params['min_salary']])
             ->andFilterWhere(['<=', 'min_salary', $params['max_salary']]);
         if($current_city)
-            $vacancies_query->andFilterWhere(['like', 'city', $current_city->name]);
+            $vacancies_query->andFilterWhere(['like', 'city_id', $current_city->id]);
         if($params['search_text']){
             if($params['search_text'][0]===':')
             {

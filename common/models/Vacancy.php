@@ -41,6 +41,7 @@ use yii\web\View;
  * @property VacancyCategory[] $vacancy_category
  * @property bool $can_update
  * @property integer $countViews
+ * @property City $city0
  */
 class Vacancy extends WorkActiveRecord
 {
@@ -99,7 +100,7 @@ class Vacancy extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['company', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews'];
+        return ['company', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews', 'city0'];
     }
 
     /**
@@ -205,6 +206,10 @@ class Vacancy extends WorkActiveRecord
     public function getCountViews()
     {
         return Views::find()->where(['subject_id' => $this->id])->andWhere(['subject_type' => 'Vacancy'])->count();
+    }
+
+    public function getCity0() {
+        return $this->hasOne(City::className(), ['id'=>'city_id']);
     }
 
     /**

@@ -209,10 +209,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                                                     src="/images/icon-eye.png" alt=""
                                                                     role="presentation"/><span><?= $vacancy->countViews ?></span>
                                 </div>
-                                <?php $vacancy_city = \common\models\City::findOne(['name'=>$vacancy->city]);?>
-                                <a class="d-flex align-items-center mt5 mb5" href="<?=Vacancy::getSearchPageUrl(false, $city?$city->slug:false)?>">
+                                <a class="d-flex align-items-center mt5 mb5" href="<?=Vacancy::getSearchPageUrl(false, $vacancy->city0?$vacancy->city0->slug:false)?>">
                                     <img class="single-card__icon" src="/images/arr-place.png" alt="" role="presentation"/>
-                                    <span class="ml5"><?= $vacancy->city ?></span>
+                                    <span class="ml5"><?= $vacancy->city0?$vacancy->city0->name:'' ?></span>
                                 </a>
                             </div>
                             <span class="single-card__price">
