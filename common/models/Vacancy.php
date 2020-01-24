@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models;
 
 use apuc\channels_webhook\behaviors\WebHookBehavior;
@@ -47,16 +48,16 @@ class Vacancy extends WorkActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
-    const NOTIFICATION_STATUS_OK=0;
-    const NOTIFICATION_STATUS_1_WEEK=1;
-    const NOTIFICATION_STATUS_2_WEEKS=2;
+    const NOTIFICATION_STATUS_OK = 0;
+    const NOTIFICATION_STATUS_1_WEEK = 1;
+    const NOTIFICATION_STATUS_2_WEEKS = 2;
 
     const UPDATE_MIN_SEC_PASSED = 86400;
 
     const SOFT_DELETE = 1;
 
     public static $experiences = [
-      'Не имеет значения', 'Менее года', '1 год', '2 года'
+        'Не имеет значения', 'Менее года', '1 год', '2 года'
     ];
 
     /**
@@ -79,11 +80,12 @@ class Vacancy extends WorkActiveRecord
     {
         return [
             TimestampBehavior::className(),
-            'webHook' => ['class'=>WebHookBehavior::className(),
+            'webHook' => ['class' => WebHookBehavior::className(),
                 'url' => 'https://webhooks.mychannels.gq/rabota/13'
             ]
         ];
     }
+
     /**
      * @inheritdoc
      */
@@ -194,7 +196,7 @@ class Vacancy extends WorkActiveRecord
      */
     public function getCan_update()
     {
-        return (time()-self::UPDATE_MIN_SEC_PASSED) > $this->update_time;
+        return (time() - self::UPDATE_MIN_SEC_PASSED) > $this->update_time;
     }
 
     public function getViews0()
@@ -212,31 +214,32 @@ class Vacancy extends WorkActiveRecord
      * @param $category Category
      * @return array
      */
-    public static function getMetaData($city, $category){
+    public static function getMetaData($city, $category)
+    {
         $description = null;
         $header = null;
         $title = null;
-        if($city && $category){
-            $title=str_replace('{city}', $city->name, $category->meta_title_with_city);
-            $title=str_replace('{region}', $city->region->name, $title);
-            $description=str_replace('{city}', $city->name, $category->meta_description_with_city);
-            $description=str_replace('{region}', $city->region->name, $description);
-            $header=str_replace('{city}', $city->name, $category->header_with_city);
-            $header=str_replace('{region}', $city->region->name, $header);
+        if ($city && $category) {
+            $title = str_replace('{city}', $city->name, $category->meta_title_with_city);
+            $title = str_replace('{region}', $city->region->name, $title);
+            $description = str_replace('{city}', $city->name, $category->meta_description_with_city);
+            $description = str_replace('{region}', $city->region->name, $description);
+            $header = str_replace('{city}', $city->name, $category->header_with_city);
+            $header = str_replace('{region}', $city->region->name, $header);
         }
-        if($city &&(!$title || !$description || !$header)) {
-            $title=$title?:$city->meta_title;
-            $description=$description?:$city->meta_description;
-            $header=$header?:$city->header;
+        if ($city && (!$title || !$description || !$header)) {
+            $title = $title ?: $city->meta_title;
+            $description = $description ?: $city->meta_description;
+            $header = $header ?: $city->header;
         }
-        if($category &&(!$title || !$description || !$header)) {
-            $title=$title?:$category->meta_title;
-            $description=$title?:$category->meta_description;
-            $header=$header?:$category->header;
+        if ($category && (!$title || !$description || !$header)) {
+            $title = $title ?: $category->meta_title;
+            $description = $title ?: $category->meta_description;
+            $header = $header ?: $category->header;
         }
-        $title=$title?:KeyValue::findValueByKey('vacancy_search_page_title')?:"Поиск Вакансий";
-        $description=$description?:KeyValue::findValueByKey('vacancy_search_page_description')?:"Поиск Вакансий";
-        $header=$header?:KeyValue::findValueByKey('vacancy_search_page_h1')?:"Поиск Вакансий";
+        $title = $title ?: KeyValue::findValueByKey('vacancy_search_page_title') ?: "Поиск Вакансий";
+        $description = $description ?: KeyValue::findValueByKey('vacancy_search_page_description') ?: "Поиск Вакансий";
+        $header = $header ?: KeyValue::findValueByKey('vacancy_search_page_h1') ?: "Поиск Вакансий";
         return [
             'title' => $title,
             'description' => $description,
@@ -253,17 +256,32 @@ class Vacancy extends WorkActiveRecord
      * Получение урл для страницы поиска вакансий, с учётом переданных города и категории. Если город не указывать, будет использован город из cookie
      *
      */
-    public static function getSearchPageUrl($category_slug = false, $city_slug=false) {
+    public static function getSearchPageUrl($category_slug = false, $city_slug = false)
+    {
         $url = "/vacancy";
-        if($city_slug) {
+        if ($city_slug) {
             $url .= "/$city_slug";
-        }
-        else if(\Yii::$app->request->cookies['city'] && $city = City::findOne(\Yii::$app->request->cookies['city'])) {
+        } else if (\Yii::$app->request->cookies['city'] && $city = City::findOne(\Yii::$app->request->cookies['city'])) {
             $url .= "/$city->slug";
         }
-        if($category_slug) {
+        if ($category_slug) {
             $url .= "/$category_slug";
         }
         return $url;
+    }
+
+    /**
+     * @param int $hoursCount
+     * @param int $status
+     * @return array|ActiveRecord[]
+     *
+     * получение новых вакансий за определенное кол-во времени
+     */
+    public static function getNewVacancy($hoursCount = 24, $status = self::STATUS_ACTIVE)
+    {
+        return self::find()
+            ->where('created_at > UNIX_TIMESTAMP() - ' . $hoursCount . '*60*60')
+            ->andWhere(['status' => $status])
+            ->all();
     }
 }
