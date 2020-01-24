@@ -29,7 +29,7 @@ class ViewController extends Controller
 
     public function actionVacancyUpdate()
     {
-        $model = Vacancy::getNewVacancy();
+        $model = Vacancy::getUpdateVacancy();
         foreach ($model as $item){
             $viewCount = rand(1, 3);
             for ($i=0; $i<$viewCount; $i++){

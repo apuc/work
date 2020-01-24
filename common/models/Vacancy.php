@@ -284,4 +284,19 @@ class Vacancy extends WorkActiveRecord
             ->andWhere(['status' => $status])
             ->all();
     }
+
+    /**
+     * @param int $hoursCount
+     * @param int $status
+     * @return array|ActiveRecord[]
+     *
+     * получение новых вакансий за определенное кол-во времени
+     */
+    public static function getUpdateVacancy($hoursCount = 24, $status = self::STATUS_ACTIVE)
+    {
+        return self::find()
+            ->where('updated_at > UNIX_TIMESTAMP() - ' . $hoursCount . '*60*60')
+            ->andWhere(['status' => $status])
+            ->all();
+    }
 }
