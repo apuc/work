@@ -296,6 +296,7 @@ class Vacancy extends WorkActiveRecord
     {
         return self::find()
             ->where('updated_at > UNIX_TIMESTAMP() - ' . $hoursCount . '*60*60')
+            ->andWhere('created_at < UNIX_TIMESTAMP() - ' . $hoursCount . '*60*60')
             ->andWhere(['status' => $status])
             ->all();
     }
