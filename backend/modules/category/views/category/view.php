@@ -45,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'meta_title_with_city',
             'meta_description_with_city',
             'header_with_city',
+            'bottom_text',
         ],
     ]) ?>
 

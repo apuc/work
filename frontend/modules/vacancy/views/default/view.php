@@ -21,9 +21,9 @@ else
 
 
 if($model->company->name)
-    $title = $model->post . ', ' . $model->company->name . ' - Работа ' . $model->city;
+    $title = $model->post . ', ' . $model->company->name . ' - Работа ' . $model->city0?$model->city0->name:'';
 else
-    $title = $model->post . ', ' . $money_string . ' - Работа '. $model->city;
+    $title = $model->post . ', ' . $money_string . ' - Работа '. ($model->city0?$model->city0->name:'');
 
 $this->title = $title;
 $this->registerMetaTag(['name' => 'description', 'content' => \yii\helpers\StringHelper::truncate($model->qualification_requirements, 100, '...')]);
@@ -43,15 +43,14 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
     <div class="container">
         <div class="resume-results">
             <ul class="breadcrumbs">
-                <?php $city = City::find()->where(['name' => $model->city])->one(); ?>
-                <?php if ($city && $model->city): ?>
+                <?php if ($model->city0): ?>
                     <li>
-                        <a href="<?=Vacancy::getSearchPageUrl(false, $city->slug)?>"><?= $model->city ?></a>
+                        <a href="<?=Vacancy::getSearchPageUrl(false, $model->city0->slug)?>"><?= $model->city0->name ?></a>
                     </li>
                 <?php endif ?>
                 <?php if ($referer_category): ?>
                     <li>
-                        <a href="<?=Vacancy::getSearchPageUrl($referer_category->slug, $city->slug)?>"><?= $referer_category->name ?></a>
+                        <a href="<?=Vacancy::getSearchPageUrl($referer_category->slug, $model->city0?$model->city0->slug:false)?>"><?= $referer_category->name ?></a>
                     </li>
                 <?php endif ?>
                 <li><?= $model->post ?></li>
@@ -75,10 +74,10 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                                                          src="/images/icon-eye.png" alt=""
                                                          role="presentation"/><span><?= $model->countViews ?></span>
                     </div>
-                    <?php if ($city): ?>
-                        <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5" href="<?= \common\models\Vacancy::getSearchPageUrl(false, $city->slug) ?>">
+                    <?php if ($model->city0): ?>
+                        <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5" href="<?= \common\models\Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>">
                             <img class="single-block__icon" src="/images/arr-place.png" alt="" role="presentation"/>
-                            <span class="ml5"><?= $model->city ?></span>
+                            <span class="ml5"><?= $model->city0->name ?></span>
                         </a>
                     <?php endif ?>
                 </div>

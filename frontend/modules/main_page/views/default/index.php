@@ -48,7 +48,8 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                     </div>
                     <select class="city-header jsCityHeaderSelect" id="city_select">
                         <option></option>
-                        <?php foreach (\common\models\City::find()->where(['status'=>1])->all() as $city):?>
+                        <?php /** @var \common\models\City $city */
+                        foreach (\common\models\City::find()->where(['status'=>1])->all() as $city):?>
                             <option <?=(Yii::$app->request->cookies['city']==(string)$city->id)?"selected":''?> value="<?=$city->id?>"><?=$city->name?></option>
                         <?php endforeach;?>
                     </select>
@@ -135,11 +136,10 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                             <?php $category_slug = $vacancy->category[0]->slug ?>
                             <a class="btn-card btn-card-small btn-gray" href="<?=Url::to(["/vacancy/$category_slug"])?>"><?=$vacancy->category[0]->name?></a>
                             <?php endif ?>
-                            <?php $city = \common\models\City::findOne(['name'=>$vacancy->city])?>
-                            <?php if($city): ?>
+                            <?php if($city = $vacancy->city0): ?>
                             <a class="d-flex align-items-center home-city" href="<?=Url::to(["/vacancy/$city->slug"])?>">
                                 <img class="single-card__icon" src="/images/arr-place.png" alt="" role="presentation"/>
-                                <span class="ml5"><?=$vacancy->city?></span>
+                                <span class="ml5"><?=$city->name?></span>
                             </a>
                             <?php endif ?>
                         </div>

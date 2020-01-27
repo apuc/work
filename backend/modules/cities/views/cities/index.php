@@ -73,9 +73,26 @@ use yii\helpers\Html; ?>
             'latitude',
             'longitude',
             'slug',
-            'meta_title',
-            'meta_description',
-            'header',
+            [
+                'attribute' => 'meta_title',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
+            [
+                'attribute' => 'meta_description',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
+            [
+                'attribute' => 'header',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
+            [
+                'attribute' => 'bottom_text',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

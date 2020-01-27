@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property float $min_salary
  * @property float $max_salary
  * @property string $city
+ * @property integer $city_id
  * @property string $description
  * @property integer $years_of_exp
  * @property string $skype
@@ -43,6 +44,7 @@ use yii\db\ActiveRecord;
  * @property Skill[] $skills
  * @property Experience $lastExperience
  * @property bool $can_update
+ * @property City $city0
  */
 class Resume extends WorkActiveRecord
 {
@@ -88,7 +90,7 @@ class Resume extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'notification_status', 'hot'], 'integer'],
+            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'notification_status', 'hot', 'city_id'], 'integer'],
             [['title', 'city', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['min_salary', 'max_salary'], 'safe'],
@@ -98,7 +100,7 @@ class Resume extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['employer', 'experience', 'education', 'resume_skill', 'skills', 'resume_category', 'category', 'employment_type', 'can_update', 'views0', 'countViews'];
+        return ['employer', 'experience', 'education', 'resume_skill', 'skills', 'resume_category', 'category', 'employment_type', 'can_update', 'views0', 'countViews', 'city0'];
     }
 
     /**
@@ -115,6 +117,7 @@ class Resume extends WorkActiveRecord
             'min_salary' => 'Минимальная заработная плата',
             'max_salary' => 'Максимальная заработная плата',
             'city' => 'Город',
+            'city_id' => 'Город',
             'description' => 'Описание',
             'years_of_exp' => 'Количество полных лет опыта',
             'skype' => 'Skype',
@@ -309,5 +312,9 @@ class Resume extends WorkActiveRecord
             $url .= "/$category_slug";
         }
         return $url;
+    }
+
+    public function getCity0() {
+        return $this->hasOne(City::className(), ['id'=>'city_id']);
     }
 }
