@@ -23,7 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'name',
+            [
+                'attribute' => 'name',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
             [
                 'attribute'=>'image',
                 'format'=>'html',
@@ -31,8 +35,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::img($model->image, ['height'=>'150px']);
                 }
             ],
-            'slug',
-            'meta_title',
+            [
+                'attribute' => 'slug',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
+            [
+                'attribute' => 'meta_title',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
             [
                 'attribute' => 'meta_description',
                 'contentOptions' => ['style' => 'white-space: normal;'],
@@ -41,8 +53,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     return \yii\helpers\StringHelper::truncate($model->meta_description, 100, '...');
                 },
             ],
-            'header',
-            'meta_title_with_city',
+            [
+                'attribute' => 'header',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
+            [
+                'attribute' => 'meta_title_with_city',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
             [
                 'attribute' => 'meta_description_with_city',
                 'contentOptions' => ['style' => 'white-space: normal;'],
@@ -51,7 +71,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     return \yii\helpers\StringHelper::truncate($model->meta_description_with_city, 100, '...');
                 },
             ],
-            'header_with_city',
+            [
+                'attribute' => 'header_with_city',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
+            [
+                'attribute' => 'bottom_text',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

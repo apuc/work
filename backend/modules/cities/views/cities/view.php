@@ -45,6 +45,7 @@ use yii\widgets\DetailView; ?>
             'meta_title',
             'meta_description',
             'header',
+            'bottom_text',
         ],
     ]) ?>
 
