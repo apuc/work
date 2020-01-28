@@ -231,6 +231,7 @@ return [
                         'request/skill',
                         'request/vacancy',
                         'request/views',
+                        'request/city',
                         'dialog/dialog-message',
                         'dialog/dialog',
                         'dialog/dialog-user',
