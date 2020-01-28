@@ -252,16 +252,16 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             </p>
                                             <div class="single-card-resume__soc-block">
                                                 <?php if ($resume->vk): ?>
-                                                    <a class="vk-bg" target="_blank" href="<?= $resume->vk ?>"><img src="/images/vk.svg"
+                                                    <a class="vk-bg" target="_blank" href="https://vk.com/<?= $resume->vk ?>"><img src="/images/vk.svg"
                                                                                                     alt=""
                                                                                                     role="presentation"/></a>
                                                 <?php endif ?>
                                                 <?php if ($resume->facebook): ?>
-                                                    <a class="fb-bg" target="_blank" href="<?= $resume->facebook ?>"><img
+                                                    <a class="fb-bg" target="_blank" href="https://facebook.com/<?= $resume->facebook ?>"><img
                                                                 src="/images/fb.svg" alt="" role="presentation"/></a>
                                                 <?php endif ?>
                                                 <?php if ($resume->instagram): ?>
-                                                    <a class="inst-bg" target="_blank" href="<?= $resume->instagram ?>"><img
+                                                    <a class="inst-bg" target="_blank" href="https://instagram.com/<?= $resume->instagram ?>"><img
                                                                 src="/images/instagram.svg" alt="" role="presentation"/></a>
                                                 <?php endif ?>
                                             </div>

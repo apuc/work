@@ -45,6 +45,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'header_with_city')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'bottom_text')->textInput(['maxlength' => true]) ?>
+
     <p>
         Для мета полей, учитывающих город: {city}: город, {region}: регион
     </p>

@@ -233,13 +233,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                     <?php if($vacancy->company->hasSocials()): ?>
                                         <span>Написать соискателю в сетях</span>
                                         <?php if($vacancy->company->vk):?>
-                                        <a target="_blank" class="vk-bg" href="<?=$vacancy->company->vk?>"><img src="/images/vk.svg" alt="" role="presentation"/></a>
+                                        <a target="_blank" class="vk-bg" href="https://vk.com/<?=$vacancy->company->vk?>"><img src="/images/vk.svg" alt="" role="presentation"/></a>
                                         <?php endif ?>
                                         <?php if($vacancy->company->instagram):?>
-                                        <a target="_blank" class="ok-bg" href="<?=$vacancy->company->instagram?>"><img src="/images/ok.svg" alt="" role="presentation"/></a>
+                                        <a target="_blank" class="ok-bg" href="https://instagram.com/<?=$vacancy->company->instagram?>"><img src="/images/ok.svg" alt="" role="presentation"/></a>
                                         <?php endif ?>
                                         <?php if($vacancy->company->facebook):?>
-                                        <a target="_blank" class="fb-bg" href="<?=$vacancy->company->facebook?>"><img src="/images/fb.svg" alt="" role="presentation"/></a>
+                                        <a target="_blank" class="fb-bg" href="https://facebook.com/<?=$vacancy->company->facebook?>"><img src="/images/fb.svg" alt="" role="presentation"/></a>
                                         <?php endif ?>
                                     <?php endif ?>
                                 </div>

@@ -21,7 +21,7 @@ else
 
 
 if($model->company->name)
-    $title = $model->post . ', ' . $model->company->name . ' - Работа ' . $model->city0?$model->city0->name:'';
+    $title = $model->post . ', ' . $model->company->name . ' - Работа ' . ($model->city0?$model->city0->name:'');
 else
     $title = $model->post . ', ' . $money_string . ' - Работа '. ($model->city0?$model->city0->name:'');
 
@@ -89,13 +89,13 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                         <?php if ($model->company->hasSocials()): ?>
                             <span>Написать соискателю в сетях</span>
                             <?php if ($model->company->vk): ?><a class="vk-bg" target="_blank"
-                                                                 href="<?= $model->company->vk ?>"><img
+                                                                 href="https://vk.com/<?= $model->company->vk ?>"><img
                                             src="/images/vk.svg" alt="" role="presentation"/></a><?php endif ?>
                             <?php if ($model->company->instagram): ?><a class="ok-bg" target="_blank"
-                                                                        href="<?= $model->company->instagram ?>"><img
+                                                                        href="https://instagram.com/<?= $model->company->instagram ?>"><img
                                             src="/images/ok.svg" alt="" role="presentation"/></a><?php endif ?>
                             <?php if ($model->company->facebook): ?><a class="fb-bg" target="_blank"
-                                                                       href="<?= $model->company->facebook ?>"><img
+                                                                       href="https://facebook.com/<?= $model->company->facebook ?>"><img
                                             src="/images/fb.svg" alt="" role="presentation"/></a><?php endif ?>
                         <?php endif ?>
                     </div>
