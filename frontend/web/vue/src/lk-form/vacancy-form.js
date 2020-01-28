@@ -2,11 +2,17 @@ import Field from '../models/Field';
 import {VTextarea, VTextField, VSelect} from 'vuetify/lib'
 
 export default {
-  city: Object.assign({}, Field, {
-    name: 'city',
+  vacancyCity: Object.assign({}, Field, {
+    name: 'vacancyCity',
     label: 'Город*',
     rules: [v => !!v || 'Город обязателен к заполнению'],
-    component: VTextField
+    component: VSelect,
+    items: [
+      {
+        name: '',
+        id: ''
+      }
+    ],
   }),
   companyName: Object.assign({}, Field, {
     name: 'companyName',

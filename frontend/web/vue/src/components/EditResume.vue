@@ -112,12 +112,27 @@
                         title: response.data.message
                     })
                 });
+            this.getCity().then(response => {
+                FormResume.resumeCity.items = response.data.map(resumeCity => ({
+                    id: resumeCity.id,
+                    name: resumeCity.name,
+                }));
+            }, response => {
+                this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: response.data.message
+                })
+            });
 
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skills,category')
                 .then(response => {
                         this.dataResume = response.data;
 
-                        this.formData.resumeCity = response.data.city;
+                        this.formData.resumeCity = response.data.city_id;
                         if (response.data.image_url) {
                             this.formData.image_url = response.data.image_url;
                         }
@@ -170,7 +185,7 @@
         methods: {
             saveData() {
                 let data = {
-                    city: this.formData.resumeCity,
+					city_id: this.formData.resumeCity,
                     image: {},
                     title: this.formData.careerObjective,
                     category: this.formData.categoriesResume,
@@ -214,58 +229,61 @@
             async getEmploymentType() {
                 return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`)
             },
+            async getCity() {
+                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`);
+            },
             setImage: function (output) {
                 this.hasImage = true;
                 this.image = output;
-				let img = document.querySelector('.my-avatar');
-				if (img != null) {
-					img.classList.add('hide');
-				}
+                let img = document.querySelector('.my-avatar');
+                if (img != null) {
+                    img.classList.add('hide');
+                }
             },
-			valHandler(val) {
-				this.valid = val;
-			},
+            valHandler(val) {
+                this.valid = val;
+            },
         },
         beforeRouteLeave(to, from, next) {
             if (this.dataResume.max_salary == null) {
                 this.dataResume.max_salary = '';
             }
-			if (this.dataResume.min_salary == null) {
-				this.dataResume.min_salary = '';
-			}
-			const tmpResume = {
-				'city': this.dataResume.city,
-				'title': this.dataResume.title,
-				'category': this.dataResume.category,
-				'min_salary': this.dataResume.min_salary,
-				'max_salary': this.dataResume.max_salary,
-				'description': this.dataResume.description,
-				'vk': this.dataResume.vk,
-				'facebook': this.dataResume.facebook,
-				'instagram': this.dataResume.instagram,
-				'skype': this.dataResume.skype,
-				'skills': this.dataResume.skills,
-			};
-			const tmpFormData = {
-				'city': this.formData.resumeCity,
-				'title': this.formData.careerObjective,
-				'category': this.formData.categoriesResume,
-				'min_salary': this.formData.salaryFrom,
-				'max_salary': this.formData.salaryBefore,
-				'description': this.formData.aboutMe,
-				'vk': this.formData.addSocial.vkontakte,
-				'facebook': this.formData.addSocial.facebook,
-				'instagram': this.formData.addSocial.instagram,
-				'skype': this.formData.addSocial.skype,
-				'skills': this.formData.dutiesSelect,
-			};
-			let formValid = true;
-			for (let i in tmpResume) {
-				if(tmpResume[i] !== tmpFormData[i]) {
-					formValid = false;
-					break;
-				}
-			}
+            if (this.dataResume.min_salary == null) {
+                this.dataResume.min_salary = '';
+            }
+            const tmpResume = {
+                'city': this.dataResume.city_id,
+                'title': this.dataResume.title,
+                'category': this.dataResume.category,
+                'min_salary': this.dataResume.min_salary,
+                'max_salary': this.dataResume.max_salary,
+                'description': this.dataResume.description,
+                'vk': this.dataResume.vk,
+                'facebook': this.dataResume.facebook,
+                'instagram': this.dataResume.instagram,
+                'skype': this.dataResume.skype,
+                'skills': this.dataResume.skills,
+            };
+            const tmpFormData = {
+                'city': this.formData.resumeCity,
+                'title': this.formData.careerObjective,
+                'category': this.formData.categoriesResume,
+                'min_salary': this.formData.salaryFrom,
+                'max_salary': this.formData.salaryBefore,
+                'description': this.formData.aboutMe,
+                'vk': this.formData.addSocial.vkontakte,
+                'facebook': this.formData.addSocial.facebook,
+                'instagram': this.formData.addSocial.instagram,
+                'skype': this.formData.addSocial.skype,
+                'skills': this.formData.dutiesSelect,
+            };
+            let formValid = true;
+            for (let i in tmpResume) {
+                if (tmpResume[i] !== tmpFormData[i]) {
+                    formValid = false;
+                    break;
+                }
+            }
             if (!formValid && !this.valid) {
                 next(false);
                 this.$swal({

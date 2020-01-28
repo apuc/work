@@ -82,7 +82,7 @@
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id + '?expand=employment-type,category')
                 .then(response => {
                         this.dataVacancy = response.data;
-                        this.formData.city = response.data.city;
+                        this.formData.vacancyCity = response.data.city_id;
                         this.formData.companyName = response.data.company_id;
                         this.formData.categoriesVacancy = response.data.category;
                         this.formData.post = response.data.post;
@@ -111,12 +111,27 @@
                         title: response.data.message
                     })
                     }
-                )
+                );
+            this.getCity().then(response => {
+                FormVacancy.vacancyCity.items = response.data.map(vacancyCity => ({
+                    id: vacancyCity.id,
+                    name: vacancyCity.name,
+                }));
+            }, response => {
+                this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: response.data.message
+                })
+            });
         },
         methods: {
             saveData() {
                 let data = {
-                    city: this.formData.city,
+                    city_id: this.formData.vacancyCity,
                     company_id: this.formData.companyName,
                     category: this.formData.categoriesVacancy,
                     post: this.formData.post,
@@ -164,6 +179,9 @@
             async getExperience() {
                 return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/get-experiences`)
             },
+            async getCity() {
+                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`);
+            },
             valHandler(val) {
                 this.valid = val;
             },
@@ -176,7 +194,7 @@
                 this.dataVacancy.min_salary = '';
             }
             const tmpResume = {
-                'city': this.dataVacancy.city,
+                'city': this.dataVacancy.city_id,
                 'company_id': this.dataVacancy.company_id,
                 'category': this.dataVacancy.category,
                 'post': this.dataVacancy.post,
@@ -193,7 +211,7 @@
                 'home_number': this.dataVacancy.home_number,
             };
             const tmpFormData = {
-                'city': this.formData.city,
+                'city': this.formData.vacancyCity,
                 'company_id': this.formData.companyName,
                 'category': this.formData.categoriesVacancy,
                 'post': this.formData.post,

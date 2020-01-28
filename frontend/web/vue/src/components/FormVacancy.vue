@@ -92,11 +92,27 @@
                             title: response.data.message
                         })
                     });
+            this.getCity().then(response => {
+                console.log(response);
+                FormVacancy.vacancyCity.items = response.data.map(vacancyCity => ({
+                    id: vacancyCity.id,
+                    name: vacancyCity.name,
+                }));
+            }, response => {
+                this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: response.data.message
+                })
+            });
         },
         methods: {
             saveData() {
                 let data = {
-                    city: this.formData.city,
+                    city_id: this.formData.vacancyCity,
                     company_id: this.formData.companyName,
                     category: this.formData.categoriesVacancy,
                     post: this.formData.post,
@@ -147,12 +163,15 @@
             async getExperience() {
                 return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/get-experiences`)
             },
+            async getCity() {
+                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`);
+            },
             valHandler(val) {
                 this.valid = val;
             },
         },
         beforeRouteLeave(to, from, next) {
-            if ((this.formData.city.length > 0 || this.formData.companyName.length > 0 || this.formData.post.length > 0 || this.formData.duties.length > 0) && !this.valid) {
+            if ((this.formData.vacancyCity.length > 0 || this.formData.companyName.length > 0 || this.formData.post.length > 0 || this.formData.duties.length > 0) && !this.valid) {
                 next(false);
                 this.$swal({
                     title: 'Вы точно не хотите сохранить резюме?',

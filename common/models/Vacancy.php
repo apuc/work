@@ -93,7 +93,7 @@ class Vacancy extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status'], 'integer'],
+            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id'], 'integer'],
             [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions'], 'string'],
             [['company_id', 'post'], 'required'],
