@@ -9,8 +9,10 @@
                    :is="input.component"
                    :key="index"
                    :name="input.name"
+                   :placeholder="input.placeholder"
                    :label="input.label"
                    :rules="input.rules"
+                   :prefix="input.prefix"
                    v-model="value[input.name]"
         >
         </component>

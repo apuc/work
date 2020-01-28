@@ -6,24 +6,32 @@ export default {
     name: 'vkontakte',
     label: 'Vkontakte',
     rules: [],
-    component: VTextField
+    component: VTextField,
+    prefix: 'https://vk.com/',
+    placeholder: 'id'
   }),
   facebook: Object.assign({}, Field, {
     name: 'facebook',
     label: 'Facebook',
     rules: [],
-    component: VTextField
+    component: VTextField,
+    prefix: 'https://www.facebook.com/',
+    placeholder: 'nikname'
   }),
   instagram: Object.assign({}, Field, {
     name: 'instagram',
     label: 'Instagram',
     rules: [],
-    component: VTextField
+    component: VTextField,
+    prefix: 'https://www.instagram.com/',
+    placeholder: 'nikname'
   }),
   skype: Object.assign({}, Field, {
     name: 'skype',
     label: 'Skype',
     rules: [],
-    component: VTextField
+    component: VTextField,
+    prefix: '',
+    placeholder: 'login'
   }),
 }
