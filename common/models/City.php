@@ -45,8 +45,8 @@ class City extends WorkActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 50],
-            [['prepositional', 'image', 'slug', 'meta_title', 'header', 'bottom_text'], 'string', 'max' => 255],
-            [['meta_description'], 'string'],
+            [['prepositional', 'image', 'slug', 'meta_title', 'header'], 'string', 'max' => 255],
+            [['meta_description', 'bottom_text'], 'string'],
             [['region_id', 'status'], 'integer'],
             [['latitude', 'longitude'], 'safe'],
         ];

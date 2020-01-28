@@ -47,8 +47,8 @@ class Category extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['name', 'image', 'meta_title', 'header', 'meta_title_with_city', 'header_with_city', 'bottom_text'], 'string', 'max' => 255],
-            [['meta_description', 'meta_description_with_city'], 'string'],
+            [['name', 'image', 'meta_title', 'header', 'meta_title_with_city', 'header_with_city'], 'string', 'max' => 255],
+            [['meta_description', 'meta_description_with_city', 'bottom_text'], 'string'],
             [['name'], 'required']
         ];
     }
