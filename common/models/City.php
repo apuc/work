@@ -20,6 +20,7 @@ use Yii;
  * @property string $meta_title
  * @property string $meta_description
  * @property string $header
+ * @property string $bottom_text
  *
  * @property Region $region
  *
@@ -45,7 +46,7 @@ class City extends WorkActiveRecord
         return [
             [['name'], 'string', 'max' => 50],
             [['prepositional', 'image', 'slug', 'meta_title', 'header'], 'string', 'max' => 255],
-            [['meta_description'], 'string'],
+            [['meta_description', 'bottom_text'], 'string'],
             [['region_id', 'status'], 'integer'],
             [['latitude', 'longitude'], 'safe'],
         ];
@@ -62,6 +63,7 @@ class City extends WorkActiveRecord
             'meta_title' => 'Meta title',
             'meta_description' => 'Meta description',
             'header' => 'h1 заголовок',
+            'bottom_text' => 'Текст страницы поиска'
         ];
     }
 

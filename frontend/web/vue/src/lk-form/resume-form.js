@@ -10,7 +10,13 @@ export default {
     name: 'resumeCity',
     label: 'Город*',
     rules: [v => !!v  || 'Город обязателен к заполнению'],
-    component: VTextField
+    component: VSelect,
+    items: [
+      {
+        name: '',
+        id: ''
+      }
+    ],
   }),
   careerObjective: Object.assign({}, Field, {
     name: 'careerObjective',

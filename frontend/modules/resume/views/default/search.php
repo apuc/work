@@ -217,8 +217,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             <?php if($resume->employer->age && $resume->employer->age > 0):?>
                                             · возраст - <?= $resume->employer->age ?>
                                             <?php endif ?>
-                                            <?php if($resume->city):?>
-                                            · <?= $resume->city ?>
+                                            <?php if($resume->city0):?>
+                                            · <?= $resume->city0->name ?>
                                             <?php endif ?>
                                         </p>
                                         <?php if($resume->employment_type): ?>

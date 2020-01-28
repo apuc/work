@@ -209,10 +209,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                                                     src="/images/icon-eye.png" alt=""
                                                                     role="presentation"/><span><?= $vacancy->countViews ?></span>
                                 </div>
-                                <?php $vacancy_city = \common\models\City::findOne(['name'=>$vacancy->city]);?>
-                                <a class="d-flex align-items-center mt5 mb5" href="<?=Vacancy::getSearchPageUrl(false, $city?$city->slug:false)?>">
+                                <a class="d-flex align-items-center mt5 mb5" href="<?=Vacancy::getSearchPageUrl(false, $vacancy->city0?$vacancy->city0->slug:false)?>">
                                     <img class="single-card__icon" src="/images/arr-place.png" alt="" role="presentation"/>
-                                    <span class="ml5"><?= $vacancy->city ?></span>
+                                    <span class="ml5"><?= $vacancy->city0?$vacancy->city0->name:'' ?></span>
                                 </a>
                             </div>
                             <span class="single-card__price">
@@ -269,6 +268,20 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             <a class="btn btn-red create__resume__button" href="/personal-area/add-resume">разместить резюме</a>
                         </div>
                     <?php endif ?>
+                    <?php if($city && $current_category):?>
+                        <p class="bottom__center-text">
+                            Вакансии в <?=$city->prepositional?> из категории - <?=$category->name?>.
+                            Ищите работу в <?=$city->prepositional?>, выберите вакансию и отправьте свое резюме!
+                            На странице вакансии Вы так же найдете контактный телефон работодателя и Email.
+                            Если Вы не нашли интересующую вакансию в категории <?=$category->name?>
+                            в <?=$city->prepositional?>, разместите резюме в категорию - <?=$category->name?>,
+                            при добавлении резюме укажите город поиска работы, например <?=$city->name?>.
+                        </p>
+                    <?php elseif($city && $city->bottom_text):?>
+                        <p class="bottom__center-text"><?=$city->bottom_text?></p>
+                    <?php elseif ($current_category && $current_category->bottom_text): ?>
+                        <p class="bottom__center-text"><?=$current_category->bottom_text?></p>
+                    <?php endif; ?>
 
                 </div>
 <!--                <div class="soc-sidebar" id="sidebar-vr">-->

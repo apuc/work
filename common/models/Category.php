@@ -19,6 +19,7 @@ use yii\behaviors\SluggableBehavior;
  * @property string $meta_title_with_city
  * @property string $meta_description_with_city
  * @property string $header_with_city
+ * @property string $bottom_text
  *
  * @property int $vacancy_count
  * @property ResumeCategory[] $resumeCategories
@@ -47,7 +48,7 @@ class Category extends WorkActiveRecord
     {
         return [
             [['name', 'image', 'meta_title', 'header', 'meta_title_with_city', 'header_with_city'], 'string', 'max' => 255],
-            [['meta_description', 'meta_description_with_city'], 'string'],
+            [['meta_description', 'meta_description_with_city', 'bottom_text'], 'string'],
             [['name'], 'required']
         ];
     }
@@ -78,6 +79,7 @@ class Category extends WorkActiveRecord
             'meta_title_with_city' => 'Meta title с городом',
             'meta_description_with_city' => 'Meta description с городом',
             'header_with_city' => 'h1 заголовок с городом',
+            'bottom_text' => 'Текст страницы поиска'
         ];
     }
 

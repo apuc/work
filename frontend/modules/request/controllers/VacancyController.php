@@ -43,7 +43,8 @@ class VacancyController extends MyActiveController
                     ['=', 'vacancy.owner', Yii::$app->user->id],
                     ['=', 'user_company.user_id', Yii::$app->user->id],
                     ['=', 'company.owner', Yii::$app->user->id]
-                ]),
+                ])
+            ->andWhere([Vacancy::tableName().'.status'=>Vacancy::STATUS_ACTIVE]),
             'pagination' => [
                 'params' => $requestParams,
             ],

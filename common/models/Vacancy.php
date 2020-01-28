@@ -42,6 +42,7 @@ use yii\web\View;
  * @property VacancyCategory[] $vacancy_category
  * @property bool $can_update
  * @property integer $countViews
+ * @property City $city0
  */
 class Vacancy extends WorkActiveRecord
 {
@@ -92,7 +93,7 @@ class Vacancy extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status'], 'integer'],
+            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id'], 'integer'],
             [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions'], 'string'],
             [['company_id', 'post'], 'required'],
@@ -101,7 +102,7 @@ class Vacancy extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['company', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews'];
+        return ['company', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews', 'city0'];
     }
 
     /**
@@ -207,6 +208,10 @@ class Vacancy extends WorkActiveRecord
     public function getCountViews()
     {
         return Views::find()->where(['subject_id' => $this->id])->andWhere(['subject_type' => 'Vacancy'])->count();
+    }
+
+    public function getCity0() {
+        return $this->hasOne(City::className(), ['id'=>'city_id']);
     }
 
     /**

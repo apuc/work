@@ -86,7 +86,7 @@
     import FormResume from '../lk-form/resume-form';
     import FormTemplate from "./FormTemplate";
     import Resume from "../mixins/resume";
-	import FormVacancy from "../lk-form/vacancy-form";
+    import FormVacancy from "../lk-form/vacancy-form";
 
     export default {
         name: 'FormResume',
@@ -95,10 +95,10 @@
         mounted() {
             document.title = this.$route.meta.title;
             this.getEmploymentType().then(response => {
-				FormResume.categoriesResume.items = response.data.map(resume => ({
-					id: resume.id,
-					name: resume.name,
-				}));
+                FormResume.categoriesResume.items = response.data.map(resume => ({
+                    id: resume.id,
+                    name: resume.name,
+                }));
             }, response => {
                 this.$swal({
                     toast: true,
@@ -109,11 +109,27 @@
                     title: response.data.message
                 })
             });
+            this.getCity().then(response => {
+            	console.log(response);
+                FormResume.resumeCity.items = response.data.map(resumeCity => ({
+                    id: resumeCity.id,
+                    name: resumeCity.name,
+                }));
+            }, response => {
+				this.$swal({
+					toast: true,
+					position: 'bottom-end',
+					showConfirmButton: false,
+					timer: 4000,
+					type: 'error',
+					title: response.data.message
+				})
+			});
         },
         methods: {
             saveData() {
                 let data = {
-                    city: this.formData.resumeCity,
+					city_id: this.formData.resumeCity,
                     image: {},
                     title: this.formData.careerObjective,
                     category: this.formData.categoriesResume,
@@ -138,7 +154,7 @@
                     .then(response => {
                             this.$router.push('/personal-area/all-resume');
                             res = response;
-                            gtag('event', 'rezumeAdd', { 'event_category': 'form', 'event_action': 'rezumeAdd', });
+                            gtag('event', 'rezumeAdd', {'event_category': 'form', 'event_action': 'rezumeAdd',});
                             yaCounter53666866.reachGoal('rezumeAdd');
                             return true;
                         }, response => {
@@ -159,33 +175,36 @@
             async getEmploymentType() {
                 return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`);
             },
+            async getCity() {
+                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`);
+            },
             setImage: function (output) {
                 this.hasImage = true;
                 this.image = output;
             },
-			valHandler(val) {
-				this.valid = val;
-			},
+            valHandler(val) {
+                this.valid = val;
+            },
         },
         beforeRouteLeave(to, from, next) {
-                if ((this.formData.resumeCity.length > 0 || this.formData.careerObjective.length > 0 || this.formData.categoriesResume.length > 0) && !this.valid) {
-                    next(false);
-                    this.$swal({
-                        title: 'Вы точно не хотите сохранить резюме?',
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Да',
-                        cancelButtonText: 'Нет'
-                    }).then((result) => {
-                        if (result.value) {
-                            next();
-                        }
-                    })
-                } else {
-                    next();
-                }
+            if ((this.formData.resumeCity.length > 0 || this.formData.careerObjective.length > 0 || this.formData.categoriesResume.length > 0) && !this.valid) {
+                next(false);
+                this.$swal({
+                    title: 'Вы точно не хотите сохранить резюме?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Да',
+                    cancelButtonText: 'Нет'
+                }).then((result) => {
+                    if (result.value) {
+                        next();
+                    }
+                })
+            } else {
+                next();
+            }
         }
     }
 </script>

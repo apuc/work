@@ -33,6 +33,7 @@ use yii\widgets\ActiveForm; ?>
     <?= $form->field($model, 'meta_title'); ?>
     <?= $form->field($model, 'meta_description'); ?>
     <?= $form->field($model, 'header'); ?>
+    <?= $form->field($model, 'bottom_text'); ?>
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
