@@ -90,8 +90,7 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                 <?= Html::beginForm([Vacancy::getSearchPageUrl()], 'get', ['class' => 'nhome__form']) ?>
                     <span class="nhome__form-text">
                         Сейчас на сайте свыше
-                        <a href="<?=Vacancy::getSearchPageUrl()?>" class='white-text'> <?=Vacancy::find()->count()?> вакансий </a> и
-                        <a href="<?=Resume::getSearchPageUrl()?>" class='white-text'> <?=Resume::find()->count()?> резюме</a>
+                        <a href="<?=Vacancy::getSearchPageUrl()?>" class='white-text'> <?=Vacancy::find()->count()?> вакансий </a>
                     </span>
                 <input name="search_text" class="nhome__form-input" placeholder="Я ищу..." type="text"/>
                 <?= Html::submitButton(
@@ -107,13 +106,16 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
             <img class="nhome__main-big-circle" src="/images/home-big-circle.png" alt="" role="presentation"/>
             <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="" role="presentation"/>
             <h1 class="nhome__title">Работа</h1>
-            <p class="nhome__desc desc-pc">Сделайте грамотный выбор! Предлагаем размещение и продвижение на новой и
-                перспективной площадке <span class="yellow-text">РаботаДНР</span>. Станьте первым и получайте максимум
-                продаж, опережая конкурентов на несколько шагов. Полностью берем на себя все, что связано с размещением
-                на маркетплейсе, эффективно управляем ценами и поставками
+            <p class="nhome__desc desc-pc">
+                Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из <a class="yellow-text" href="<?=Vacancy::getSearchPageUrl()?>">2000+ вакансий</a> и 500+ компаний ДНР и ЛНР!<br>
+                <a class="yellow-text" href="/personal-area/add-resume">Разместите резюме</a> и получите приглашения на работу от лучших работодателей.<br>
+                Размещение вакансий и резюме - бесплатно.
+                Размести сегодня - улучши качество жизни завтра!<br>
+                Поиск работы в ДНР и ЛНР - это <a class="yellow-text" href="/">rabota.today.</a>
             </p>
-            <p class="nhome__desc desc-mob">Сделайте грамотный выбор! Предлагаем размещение и продвижение на новой и
-                перспективной площадке <span class="yellow-text">РаботаДНР</span>.
+            <p class="nhome__desc desc-mob">
+                Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из 2000+ вакансий и 500+ компаний ДНР и ЛНР!
+                <a class="yellow-text" href="/">Поиск работы в ДНР и ЛНР - это rabota.today.</a>
             </p>
             <img class="nhome__main-bottom-img" src="/images/img1.png" img="" alt="" role="presentation"/>
         </div>
