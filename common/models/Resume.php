@@ -310,4 +310,35 @@ class Resume extends WorkActiveRecord
         }
         return $url;
     }
+
+    /**
+     * @param int $hoursCount
+     * @param int $status
+     * @return array|ActiveRecord[]
+     *
+     * получение новых резюме за определенное кол-во времени
+     */
+    public static function getNewResume($hoursCount = 24, $status = self::STATUS_ACTIVE)
+    {
+        return self::find()
+            ->where('created_at > UNIX_TIMESTAMP() - ' . $hoursCount . '*60*60')
+            ->andWhere(['status' => $status])
+            ->all();
+    }
+
+    /**
+     * @param int $hoursCount
+     * @param int $status
+     * @return array|ActiveRecord[]
+     *
+     * получение обновленных резюме за определенное кол-во времени
+     */
+    public static function getUpdateResume($hoursCount = 24, $status = self::STATUS_ACTIVE)
+    {
+        return self::find()
+            ->where('updated_at > UNIX_TIMESTAMP() - ' . $hoursCount . '*60*60')
+            ->andWhere('created_at < UNIX_TIMESTAMP() - ' . $hoursCount . '*60*60')
+            ->andWhere(['status' => $status])
+            ->all();
+    }
 }
