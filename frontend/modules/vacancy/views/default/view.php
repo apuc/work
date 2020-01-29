@@ -56,7 +56,11 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                 <li><?= $model->post ?></li>
             </ul>
         </div>
-        <div class="single-block single-block-slider">
+        <div class="single-block single-block-slider" itemscope="itemscope" itemtype="http://schema.org/JobPosting">
+            <meta itemprop="url" content="<?=Yii::$app->request->getHostInfo()."/vacancy/view/".$model->id?>>">
+            <?php foreach ($model->category as $category):?>
+            <meta itemprop="industry" content="<?=$category->name?>">
+            <?php endforeach; ?>
             <div class="single-block__left">
                 <img class="single-block__logo" src="<?= $model->company->getPhotoOrEmptyPhoto() ?>" alt=""
                      role="presentation"/>
@@ -81,8 +85,17 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         </a>
                     <?php endif ?>
                 </div>
-                <h1 class="single-block__head"><?= $model->post ?>
+                <h1 class="single-block__head" itemprop="title">
+                    <?= $model->post ?>
                 </h1>
+                <span itemprop="baseSalary" itemscope="" itemtype="http://schema.org/MonetaryAmount">
+                    <meta itemprop="currency" content="RUB">
+                    <span itemprop="value" itemscope="" itemtype="http://schema.org/QuantitativeValue">
+                        <meta itemprop="minValue" content="<?=$model->min_salary?>">
+                        <meta itemprop="maxValue" content="<?=$model->max_salary?>">
+                        <meta itemprop="unitText" content="MONTH">
+                    </span>
+                </span>
                 <div class="single-block__price">
                     <span><?=$money_string?></span>
                     <div class="single-block__soc">
@@ -139,6 +152,10 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
             </div>
             <aside class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">
                 <div class="sidebar-inner">
+                    <span itemprop="identifier" itemscope="" itemtype="http://schema.org/PropertyValue">
+                        <meta itemprop="name" content="<?=$model->company->name?>">
+                        <meta itemprop="value" content="<?=$model->id?>">
+                    </span>
                     <div class="sr-block">
                             <?php if(Yii::$app->user->isGuest):?>
                                 <span style="display: flex; flex-direction: column;">
