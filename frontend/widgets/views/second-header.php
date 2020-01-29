@@ -10,7 +10,7 @@ use yii\helpers\Url;
 ?>
 
 <header class="header-wrap jsHeaderIndex">
-    <img class="header-wrap__bg" src="<?=!empty(Yii::$app->controller->background_image)?Yii::$app->controller->background_image:'/images/bg_header_vacancies.png'?>" alt="">
+    <img class="header-wrap__bg" src="<?=!empty(Yii::$app->controller->background_image)?Yii::$app->controller->background_image:'/images/bg_header_vacancies.jpeg'?>" alt="">
     <img class="header-wrap__emblem" src="<?=!empty(Yii::$app->controller->background_emblem)?Yii::$app->controller->background_emblem:'/images/img2.png'?>" alt="" role="presentation"/>
     <div class="container">
         <div class="header">

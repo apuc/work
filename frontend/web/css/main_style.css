@@ -2123,6 +2123,7 @@ button {
         display: none; } }
 .header-wrap__bg {
     position: absolute;
+    opacity: 0.35;
     top: 0;
     right: 0;
     bottom: 0;
