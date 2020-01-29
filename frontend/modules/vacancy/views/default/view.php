@@ -88,13 +88,13 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::t
                     <div class="single-block__soc">
                         <?php if ($model->company->hasSocials()): ?>
                             <span>Написать соискателю в сетях</span>
-                            <?php if ($model->company->vk): ?><a class="vk-bg" target="_blank"
+                            <?php if ($model->company->vk): ?><a class="vk-bg" rel="nofollow" target="_blank"
                                                                  href="https://vk.com/<?= $model->company->vk ?>"><img
                                             src="/images/vk.svg" alt="" role="presentation"/></a><?php endif ?>
-                            <?php if ($model->company->instagram): ?><a class="ok-bg" target="_blank"
+                            <?php if ($model->company->instagram): ?><a class="ok-bg" rel="nofollow" target="_blank"
                                                                         href="https://instagram.com/<?= $model->company->instagram ?>"><img
                                             src="/images/ok.svg" alt="" role="presentation"/></a><?php endif ?>
-                            <?php if ($model->company->facebook): ?><a class="fb-bg" target="_blank"
+                            <?php if ($model->company->facebook): ?><a class="fb-bg" rel="nofollow" target="_blank"
                                                                        href="https://facebook.com/<?= $model->company->facebook ?>"><img
                                             src="/images/fb.svg" alt="" role="presentation"/></a><?php endif ?>
                         <?php endif ?>
