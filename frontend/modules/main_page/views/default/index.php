@@ -113,10 +113,14 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => KeyValue::findVal
                 Размести сегодня - улучши качество жизни завтра!<br>
                 Поиск работы в ДНР и ЛНР - это <a class="yellow-text" href="/">rabota.today.</a>
             </p>
+            <!--googleoff: all-->
+            <!--noindex-->
             <p class="nhome__desc desc-mob">
-                Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из 2000+ вакансий и 500+ компаний ДНР и ЛНР!
+                Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из 2000+ вакансий и 500+ компаний ДНР и ЛНР!<br>
                 <a class="yellow-text" href="/">Поиск работы в ДНР и ЛНР - это rabota.today.</a>
             </p>
+            <!--googleoff: all-->
+            <!--noindex-->
             <img class="nhome__main-bottom-img" src="/images/img1.png" img="" alt="" role="presentation"/>
         </div>
     </div>
