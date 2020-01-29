@@ -189,7 +189,7 @@ $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::tru
                         <div class="resume-info__head">
                             <?php if(Yii::$app->user->isGuest):?>
                                 <span style="display: flex; flex-direction: column;">
-                                    Для просмотра контактных данных <a href="/?tab=login" style="text-decoration: none;">войдите или зарегистрируйтесь</a>
+                                    Для просмотра контактных данных <a class="jsLogin" style="text-decoration: none;cursor: pointer">войдите или зарегистрируйтесь</a>
                                 </span>
                             <?php else:?>
                             <h4>Контактная информация

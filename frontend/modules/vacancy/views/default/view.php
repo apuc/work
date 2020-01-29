@@ -169,7 +169,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         <?php endif?>
                     </div>
                     <div class="sr-btn">
-                        <button class="sr-btn__btn btn btn-red jsVacancyModal" data-id="<?= $model->id ?>">Отправить
+                        <button class="sr-btn__btn btn btn-red <?=Yii::$app->user->isGuest?'jsLogin':'jsVacancyModal'?>" data-id="<?= $model->id ?>">Отправить
                             резюме
                         </button>
                     </div>
