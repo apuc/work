@@ -33,6 +33,7 @@ use yii\web\View;
  * @property integer $updated_at
  * @property integer $owner
  * @property integer $update_time
+ * @property integer $description
  *
  * @property Company $company
  * @property EmploymentType $employment_type
@@ -95,7 +96,7 @@ class Vacancy extends WorkActiveRecord
         return [
             [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id'], 'integer'],
             [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
-            [['responsibilities', 'qualification_requirements', 'working_conditions'], 'string'],
+            [['responsibilities', 'qualification_requirements', 'working_conditions', 'description'], 'string'],
             [['company_id', 'post'], 'required'],
         ];
     }
@@ -129,7 +130,8 @@ class Vacancy extends WorkActiveRecord
             'hot' => 'Горячая',
             'status' => 'Статус',
             'created_at' => 'Создана',
-            'updated_at' => 'Изменена'
+            'updated_at' => 'Изменена',
+            'description' => 'Описание'
         ];
     }
 

@@ -47,6 +47,7 @@ $this->params['breadcrumbs'][] = $model->post;
             'min_salary',
             'max_salary',
             'qualification_requirements',
+            'description',
             'work_experience',
             'education',
             [

@@ -98,34 +98,50 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                 </span>
                 <div class="single-block__price">
                     <span><?=$money_string?></span>
-                    <div class="single-block__soc">
-                        <?php if ($model->company->hasSocials()): ?>
-                            <span>Написать соискателю в сетях</span>
-                            <?php if ($model->company->vk): ?><a class="vk-bg" rel="nofollow" target="_blank"
-                                                                 href="https://vk.com/<?= $model->company->vk ?>"><img
-                                            src="/images/vk.svg" alt="" role="presentation"/></a><?php endif ?>
-                            <?php if ($model->company->instagram): ?><a class="ok-bg" rel="nofollow" target="_blank"
-                                                                        href="https://instagram.com/<?= $model->company->instagram ?>"><img
-                                            src="/images/ok.svg" alt="" role="presentation"/></a><?php endif ?>
-                            <?php if ($model->company->facebook): ?><a class="fb-bg" rel="nofollow" target="_blank"
-                                                                       href="https://facebook.com/<?= $model->company->facebook ?>"><img
-                                            src="/images/fb.svg" alt="" role="presentation"/></a><?php endif ?>
-                        <?php endif ?>
-                    </div>
+                    <?php if(Yii::$app->user->isGuest && $model->company->hasSocials()):?>
+                        <div>
+                            <button class="btn-for-login jsLogin">Войдите или зарегистрируйтесь</button> что-бы увидеть контакты работодателя
+                        </div>
+                    <?php else: ?>
+                        <div class="single-block__soc">
+                            <?php if ($model->company->hasSocials()): ?>
+                                <?php if(Yii::$app->user->isGuest):?>
+
+                                <?php else: ?>
+                                    <span>Написать работодателю в соц.сетях</span>
+                                    <?php if ($model->company->vk): ?>
+                                        <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/<?= $model->company->vk ?>">
+                                            <img src="/images/vk.svg" alt="" role="presentation"/>
+                                        </a>
+                                    <?php endif ?>
+                                    <?php if ($model->company->instagram): ?>
+                                        <a class="ok-bg" rel="nofollow" target="_blank" href="https://instagram.com/<?= $model->company->instagram ?>">
+                                            <img src="/images/ok.svg" alt="" role="presentation"/>
+                                        </a>
+                                    <?php endif ?>
+                                    <?php if ($model->company->facebook): ?>
+                                        <a class="fb-bg" rel="nofollow" target="_blank" href="https://facebook.com/<?= $model->company->facebook ?>">
+                                            <img src="/images/fb.svg" alt="" role="presentation"/>
+                                        </a>
+                                    <?php endif ?>
+                                <?php endif; ?>
+                            <?php endif ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
-                <div class="single-block__employment">
-                    <?php if ($model->employment_type): ?>
+                <?php if ($model->employment_type): ?>
+                    <div class="single-block__employment">
                         <h3 class="single-block__employment-head">Вид занятости:
                         </h3>
                         <p class="single-block__employment-text"><?= $model->employment_type->name ?>
                         </p>
-                    <?php endif ?>
-                </div>
-                <?php if ($model->company->description): ?>
+                    </div>
+                <?php endif ?>
+                <?php if ($model->description): ?>
                     <div class="single-block__description">
                         <h3 class="single-block__description-head">Описание вакансии
                         </h3>
-                        <p class="single-block__requirements-text"><?= $model->company->description ?></p>
+                        <p class="single-block__requirements-text"><?= $model->description ?></p>
                     </div>
                 <?php endif ?>
                 <?php if ($model->qualification_requirements): ?>
@@ -140,6 +156,22 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         <h3 class="single-block__duties-head">Обязанности:
                         </h3>
                         <p class="single-block__duties-text"><?= nl2br($model->responsibilities) ?></p>
+                    </div>
+                <?php endif ?>
+                <?php if ($model->work_experience!==null): ?>
+                    <div class="single-block__employment">
+                        <h3 class="single-block__employment-head">Необходимый опыт работы:
+                        </h3>
+                        <p class="single-block__employment-text"><?= Vacancy::$experiences[$model->work_experience] ?>
+                        </p>
+                    </div>
+                <?php endif ?>
+                <?php if ($model->education!==null): ?>
+                    <div class="single-block__employment">
+                        <h3 class="single-block__employment-head">Необходимое образование:
+                        </h3>
+                        <p class="single-block__employment-text"><?= $model->education ?>
+                        </p>
                     </div>
                 <?php endif ?>
                 <?php if ($model->working_conditions): ?>

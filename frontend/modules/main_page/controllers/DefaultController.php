@@ -4,6 +4,7 @@ namespace frontend\modules\main_page\controllers;
 
 use common\classes\Debug;
 use common\models\Category;
+use common\models\City;
 use common\models\Employer;
 use common\models\Vacancy;
 use yii\helpers\Url;
@@ -40,7 +41,10 @@ class DefaultController extends Controller
 
     public function actionCity()
     {
+        $cities = City::find()->where(['status'=> City::TYPE_SHOWN])->all();
         $this->layout = '@frontend/views/layouts/main-layout.php';
-        return $this->render('cities');
+        return $this->render('cities', [
+            'cities' => $cities
+        ]);
     }
 }

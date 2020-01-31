@@ -47,6 +47,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'working_conditions')->textInput() ?>
 
+    <?= $form->field($model, 'description')->textInput() ?>
+
     <?= $form->field($model, 'video')->textInput() ?>
 
     <?= $form->field($model, 'address')->textInput() ?>

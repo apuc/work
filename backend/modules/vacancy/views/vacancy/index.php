@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'company_id',
                 'format'    => 'html',
+                'contentOptions' => ['style' => 'white-space: normal;'],
                 'value' => function($model)
                 {
                     $company=Company::findOne($model->company_id);
@@ -61,6 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'employment_type.name',
                 'format' => 'raw',
+                'contentOptions' => ['style' => 'white-space: normal;'],
                 'filter'    => Html::activeDropDownList( $searchModel, 'employment_type_id',
                     \yii\helpers\ArrayHelper::map(EmploymentType::find()->asArray()->all(),'id', 'name'),
                     [ 'class' => 'form-control', 'prompt' => '' ] ),
@@ -71,10 +73,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'qualification_requirements',
                 'contentOptions' => ['style' => 'white-space: normal;'],
             ],
-            'work_experience',
+            [
+                'attribute' => 'work_experience',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
+            [
+                'attribute' => 'description',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
             'education',
             [
                 'label' => 'Категории',
+                'contentOptions' => ['style' => 'white-space: normal;'],
                 'format' => 'html',
                 'value' => function($model) {
                     $result='';
