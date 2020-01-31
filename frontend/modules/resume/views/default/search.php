@@ -192,11 +192,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             <h3>
                                                 <?php if($category_ids && count($category_ids) === 1):?>
                                                 <a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id, 'referer_category'=>$category_ids[0]])?>">
-                                                    <?= $resume->title ?>
+                                                    <?= ucfirst($resume->title) ?>
                                                 </a>
                                                 <?php else: ?>
                                                 <a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id])?>">
-                                                    <?= $resume->title ?>
+                                                    <?= ucfirst($resume->title) ?>
                                                 </a>
                                                 <?php endif ?>
                                             </h3>

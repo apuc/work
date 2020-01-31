@@ -21,9 +21,9 @@ else
 
 
 if($model->company->name)
-    $title = $model->post . ', ' . $model->company->name . ' - Работа ' . ($model->city0?$model->city0->name:'');
+    $title = ucfirst($model->post) . ', ' . $model->company->name . ' - Работа ' . ($model->city0?$model->city0->name:'');
 else
-    $title = $model->post . ', ' . $money_string . ' - Работа '. ($model->city0?$model->city0->name:'');
+    $title = ucfirst($model->post) . ', ' . $money_string . ' - Работа '. ($model->city0?$model->city0->name:'');
 
 $this->title = $title;
 $this->registerMetaTag(['name' => 'description', 'content' => \yii\helpers\StringHelper::truncate($model->qualification_requirements, 100, '...')]);
@@ -86,7 +86,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                     <?php endif ?>
                 </div>
                 <h1 class="single-block__head" itemprop="title">
-                    <?= $model->post ?>
+                    <?= ucfirst($model->post) ?>
                 </h1>
                 <span itemprop="baseSalary" itemscope="" itemtype="http://schema.org/MonetaryAmount">
                     <meta itemprop="currency" content="RUB">

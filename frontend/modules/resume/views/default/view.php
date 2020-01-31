@@ -38,7 +38,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                             <a href="<?=Resume::getSearchPageUrl($referer_category->slug)?>"><?= $referer_category->name ?></a>
                         </li>
                     <?php endif?>
-                    <li><?= $model->title ?></li>
+                    <li><?= ucfirst($model->title) ?></li>
                 </ul>
                 <div class="resume-results__date">
                     <p>Резюме от

@@ -196,11 +196,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             </div>
                             <?php if($category_ids && count($category_ids) === 1):?>
                                 <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$category_ids[0]])?>" class="single-card__title mt5">
-                                    <?= $vacancy->post ?>
+                                    <?= ucfirst($vacancy->post) ?>
                                 </a>
                             <?php else: ?>
                                 <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title mt5">
-                                    <?= $vacancy->post ?>
+                                    <?= ucfirst($vacancy->post) ?>
                                 </a>
                             <?php endif ?>
                             <div class="single-card__info-second"><span
