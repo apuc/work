@@ -166,7 +166,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         </p>
                     </div>
                 <?php endif ?>
-                <?php if ($model->education!==null): ?>
+                <?php if ($model->education): ?>
                     <div class="single-block__employment">
                         <h3 class="single-block__employment-head">Необходимое образование:
                         </h3>
