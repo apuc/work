@@ -35,8 +35,8 @@ MainAsset::register($this);
     <?=$content?>
     <?=Footer::widget()?>
 </div>
-<?=Modals::widget()?>
 <?php $this->endBody() ?>
+<?=Modals::widget()?>
 </body>
 
 </html>

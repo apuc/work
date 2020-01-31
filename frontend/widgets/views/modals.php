@@ -151,6 +151,14 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 });
             </script>
         <?php endif;?>
+        <?php if(Yii::$app->request->get('message')==='Ваш аккаунт успешно зарегистрирован, проверьте почту для получения дальнейших инструкций'):?>
+            <script>
+                $(document).ready(function () {
+                    VK.Retargeting.Init('VK-RTRG-443042-1VhMa');
+                    VK.Retargeting.Event('Registration');
+                });
+            </script>
+        <?php endif;?>
 
     </div>
 </div>

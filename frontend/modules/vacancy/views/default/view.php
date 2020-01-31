@@ -284,3 +284,8 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
         </div>
     </div>
 </section>
+<script>
+        console.log(123);
+        VK.Retargeting.Init('VK-RTRG-443042-1VhMa');
+        VK.Retargeting.Event('vacancy_search');
+</script>

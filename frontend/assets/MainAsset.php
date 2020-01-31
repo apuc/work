@@ -27,6 +27,7 @@ class MainAsset extends AssetBundle
         'js/slick/slick.min.js',
         'js/select2/select2.min.js',
         'js/script.js',
+        'https://vk.com/js/api/openapi.js?165'
     ];
     public $depends = [
         //'yii\web\YiiAsset',
