@@ -12,6 +12,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <p>
+        Для мета полей, учитывающих город: {city}: город, {region}: регион
+    </p>
+
     <?= $form->field($model, 'vacancy_meta_title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'vacancy_meta_description')->textarea(['rows' => 6]) ?>

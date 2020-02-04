@@ -1,16 +1,17 @@
 <?php
 
 namespace backend\modules\meta_data\models;
-
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\MetaData;
 
+
 /**
- * MetaDataSearch represents the model behind the search form of `common\models\MetaData`.
+ * @property string $category_string
  */
 class MetaDataSearch extends MetaData
 {
+    public $category_string;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class MetaDataSearch extends MetaData
     {
         return [
             [['id', 'category_id'], 'integer'],
-            [['vacancy_meta_title', 'vacancy_meta_description', 'vacancy_header', 'vacancy_meta_title_with_city', 'vacancy_meta_description_with_city', 'vacancy_header_with_city', 'vacancy_bottom_text', 'resume_meta_title', 'resume_meta_description', 'resume_header', 'resume_meta_title_with_city', 'resume_meta_description_with_city', 'resume_header_with_city', 'resume_bottom_text'], 'safe'],
+            [['category_string', 'vacancy_meta_title', 'vacancy_meta_description', 'vacancy_header', 'vacancy_meta_title_with_city', 'vacancy_meta_description_with_city', 'vacancy_header_with_city', 'vacancy_bottom_text', 'resume_meta_title', 'resume_meta_description', 'resume_header', 'resume_meta_title_with_city', 'resume_meta_description_with_city', 'resume_header_with_city', 'resume_bottom_text'], 'safe'],
         ];
     }
 
@@ -61,7 +62,7 @@ class MetaDataSearch extends MetaData
             'id' => $this->id,
             'category_id' => $this->category_id,
         ]);
-
+        $query->joinWith('category');
         $query->andFilterWhere(['like', 'vacancy_meta_title', $this->vacancy_meta_title])
             ->andFilterWhere(['like', 'vacancy_meta_description', $this->vacancy_meta_description])
             ->andFilterWhere(['like', 'vacancy_header', $this->vacancy_header])
@@ -75,7 +76,8 @@ class MetaDataSearch extends MetaData
             ->andFilterWhere(['like', 'resume_meta_title_with_city', $this->resume_meta_title_with_city])
             ->andFilterWhere(['like', 'resume_meta_description_with_city', $this->resume_meta_description_with_city])
             ->andFilterWhere(['like', 'resume_header_with_city', $this->resume_header_with_city])
-            ->andFilterWhere(['like', 'resume_bottom_text', $this->resume_bottom_text]);
+            ->andFilterWhere(['like', 'resume_bottom_text', $this->resume_bottom_text])
+            ->andFilterWhere(['like', 'category.name', $this->category_string]);
 
         return $dataProvider;
     }

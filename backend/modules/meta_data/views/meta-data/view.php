@@ -22,8 +22,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'category_id',
+            [
+                'label' => 'Категория',
+                'format' => 'html',
+                'value' => function($model) {
+                    return '<a href="/secure/category/category/view?id='.$model->category->id.'">'.$model->category->name.'</a>';
+                },
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
             'vacancy_meta_title',
             'vacancy_meta_description:ntext',
             'vacancy_header',

@@ -25,11 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{view} {update}'
             ],
             [
-                'attribute' => 'category_id',
+                'label' => 'Категория',
                 'format' => 'html',
                 'value' => function($model) {
                     return '<a href="/secure/category/category/view?id='.$model->category->id.'">'.$model->category->name.'</a>';
                 },
+                'filter'    => Html::activeTextInput($searchModel, 'category_string'),
                 'contentOptions' => ['style' => 'white-space: normal;'],
             ],
             [
