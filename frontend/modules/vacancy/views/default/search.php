@@ -279,8 +279,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         </p>
                     <?php elseif($city && $city->bottom_text):?>
                         <p class="bottom__center-text"><?=$city->bottom_text?></p>
-                    <?php elseif ($current_category && $current_category->bottom_text): ?>
-                        <p class="bottom__center-text"><?=$current_category->bottom_text?></p>
+                    <?php elseif ($current_category && $current_category->metaData): ?>
+                        <p class="bottom__center-text"><?=$current_category->metaData->vacancy_bottom_text?></p>
                     <?php endif; ?>
 
                 </div>

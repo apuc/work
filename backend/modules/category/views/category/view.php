@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Изменить мета данные', ['/meta-data/meta-data/update', 'id' => $model->metaData->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -39,13 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'slug',
-            'meta_title',
-            'meta_description',
-            'header',
-            'meta_title_with_city',
-            'meta_description_with_city',
-            'header_with_city',
-            'bottom_text',
         ],
     ]) ?>
 

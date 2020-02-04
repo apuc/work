@@ -13,16 +13,10 @@ use yii\behaviors\SluggableBehavior;
  * @property string $name
  * @property string $image
  * @property string $slug
- * @property string $meta_title
- * @property string $meta_description
- * @property string $header
- * @property string $meta_title_with_city
- * @property string $meta_description_with_city
- * @property string $header_with_city
- * @property string $bottom_text
  *
  * @property int $vacancy_count
  * @property ResumeCategory[] $resumeCategories
+ * @property MetaData $metaData
  */
 class Category extends WorkActiveRecord
 {
@@ -47,8 +41,7 @@ class Category extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['name', 'image', 'meta_title', 'header', 'meta_title_with_city', 'header_with_city'], 'string', 'max' => 255],
-            [['meta_description', 'meta_description_with_city', 'bottom_text'], 'string'],
+            [['name', 'image', 'slug'], 'string', 'max' => 255],
             [['name'], 'required']
         ];
     }
@@ -73,13 +66,6 @@ class Category extends WorkActiveRecord
             'name' => 'Название',
             'image' => 'Фотография',
             'slug' => 'Slug',
-            'meta_title' => 'Meta title',
-            'meta_description' => 'Meta description',
-            'header' => 'h1 заголовок',
-            'meta_title_with_city' => 'Meta title с городом',
-            'meta_description_with_city' => 'Meta description с городом',
-            'header_with_city' => 'h1 заголовок с городом',
-            'bottom_text' => 'Текст страницы поиска'
         ];
     }
 
@@ -115,6 +101,14 @@ class Category extends WorkActiveRecord
     {
         return $this->hasMany(Vacancy::className(), ['id' => 'vacancy_id'])
             ->viaTable('vacancy_category', ['category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMetaData()
+    {
+        return $this->hasOne(MetaData::className(), ['category_id' => 'id']);
     }
 
 }

@@ -43,6 +43,7 @@
                     ['label' => 'Переменные', 'url' => ['/key_value/key-value/index']],
                     ['label' => 'Города', 'url' => ['/cities/cities/index']],
                     ['label' => 'Новости', 'url' => ['/news/news/index']],
+                    ['label' => 'Мета данные', 'url' => ['/meta-data/meta-data/index']],
                     [
                             'label' => 'Рассылка почты', 'url' => '#',
                         'items' => [
