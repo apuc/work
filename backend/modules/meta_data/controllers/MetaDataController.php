@@ -1,21 +1,18 @@
 <?php
 
-namespace backend\modules\category\controllers;
+namespace backend\modules\meta_data\controllers;
 
-use backend\modules\meta_data\MetaData;
-use dektrium\user\filters\AccessRule;
 use Yii;
-use common\models\Category;
-use backend\modules\category\models\CategorySearch;
-use yii\filters\AccessControl;
+use common\models\MetaData;
+use backend\modules\meta_data\models\MetaDataSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CategoryController implements the CRUD actions for Category model.
+ * MetaDataController implements the CRUD actions for MetaData model.
  */
-class CategoryController extends Controller
+class MetaDataController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -29,36 +26,16 @@ class CategoryController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'denyCallback' => function ($rule, $action) {
-                    return $this->redirect('/');
-                },
-                'ruleConfig' => [
-                    'class' => AccessRule::className(),
-                ],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['switch'],
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['admin'],
-                    ],
-                ],
-            ],
         ];
     }
 
     /**
-     * Lists all Category models.
+     * Lists all MetaData models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CategorySearch();
+        $searchModel = new MetaDataSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -68,7 +45,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a single Category model.
+     * Displays a single MetaData model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -81,18 +58,15 @@ class CategoryController extends Controller
     }
 
     /**
-     * Creates a new Category model.
+     * Creates a new MetaData model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Category();
+        $model = new MetaData();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $meta_data = new \common\models\MetaData();
-            $meta_data->category_id = $model->id;
-            $meta_data->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -102,7 +76,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Updates an existing Category model.
+     * Updates an existing MetaData model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -122,7 +96,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Deletes an existing Category model.
+     * Deletes an existing MetaData model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -130,22 +104,21 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        \common\models\MetaData::deleteAll(['category_id'=>$id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Category model based on its primary key value.
+     * Finds the MetaData model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Category the loaded model
+     * @return MetaData the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Category::findOne($id)) !== null) {
+        if (($model = MetaData::findOne($id)) !== null) {
             return $model;
         }
 

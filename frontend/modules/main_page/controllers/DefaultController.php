@@ -41,10 +41,12 @@ class DefaultController extends Controller
 
     public function actionCity()
     {
-        $cities = City::find()->where(['status'=> City::TYPE_SHOWN])->all();
+        $cities_dnr = City::find()->where(['status'=> City::TYPE_SHOWN, 'region_id'=>21])->all();
+        $cities_lug = City::find()->where(['status'=> City::TYPE_SHOWN, 'region_id'=>19])->all();
         $this->layout = '@frontend/views/layouts/main-layout.php';
         return $this->render('cities', [
-            'cities' => $cities
+            'cities_dnr' => $cities_dnr,
+            'cities_lug' => $cities_lug
         ]);
     }
 }

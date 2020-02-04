@@ -33,20 +33,6 @@ use yii\widgets\ActiveForm;
     ?>
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'meta_description')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'header')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'meta_title_with_city')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'meta_description_with_city')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'header_with_city')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'bottom_text')->textInput(['maxlength' => true]) ?>
-
     <p>
         Для мета полей, учитывающих город: {city}: город, {region}: регион
     </p>

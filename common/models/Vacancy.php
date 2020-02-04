@@ -227,11 +227,11 @@ class Vacancy extends WorkActiveRecord
         $header = null;
         $title = null;
         if ($city && $category) {
-            $title = str_replace('{city}', $city->name, $category->meta_title_with_city);
+            $title = str_replace('{city}', $city->name, $category->metaData->vacancy_meta_title_with_city);
             $title = str_replace('{region}', $city->region->name, $title);
-            $description = str_replace('{city}', $city->name, $category->meta_description_with_city);
+            $description = str_replace('{city}', $city->name, $category->metaData->vacancy_meta_description_with_city);
             $description = str_replace('{region}', $city->region->name, $description);
-            $header = str_replace('{city}', $city->name, $category->header_with_city);
+            $header = str_replace('{city}', $city->name, $category->metaData->vacancy_header_with_city);
             $header = str_replace('{region}', $city->region->name, $header);
         }
         if ($city && (!$title || !$description || !$header)) {
@@ -240,9 +240,9 @@ class Vacancy extends WorkActiveRecord
             $header = $header ?: $city->header;
         }
         if ($category && (!$title || !$description || !$header)) {
-            $title = $title ?: $category->meta_title;
-            $description = $title ?: $category->meta_description;
-            $header = $header ?: $category->header;
+            $title = $title ?: $category->metaData->vacancy_meta_title;
+            $description = $title ?: $category->metaData->vacancy_meta_description;
+            $header = $header ?: $category->metaData->vacancy_header;
         }
         $title = $title ?: KeyValue::findValueByKey('vacancy_search_page_title') ?: "Поиск Вакансий";
         $description = $description ?: KeyValue::findValueByKey('vacancy_search_page_description') ?: "Поиск Вакансий";

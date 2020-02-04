@@ -15,7 +15,7 @@ use yii\helpers\ArrayHelper;
                 <div class="cities">
 
                     <ul>
-                        <?php foreach ($cities as $city): ?>
+                        <?php foreach ($cities_dnr as $city): ?>
                         <li><a class="city" href="<?=\common\models\Vacancy::getSearchPageUrl(false, $city->slug)?>"><?=$city->name?></a></li>
                         <?php endforeach; ?>
                     </ul>
@@ -27,11 +27,11 @@ use yii\helpers\ArrayHelper;
             </div>
 
             <div class="part">
-                <p class="region">ДНР ( Донецкая Народная Республика )</p>
+                <p class="region">ЛНР ( Луганская Народная Республика )</p>
                 <div class="cities">
 
                     <ul>
-                        <?php foreach ($cities as $city): ?>
+                        <?php foreach ($cities_lug as $city): ?>
                             <li><a class="city" href="#"><?=$city->name?></a></li>
                         <?php endforeach; ?>
                     </ul>

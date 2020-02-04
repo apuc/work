@@ -72,6 +72,9 @@ return [
         'professions' => [
             'class' => 'backend\modules\professions\Professions',
         ],
+        'meta-data' => [
+            'class' => 'backend\modules\meta_data\MetaData',
+        ],
     ],
     'components' => [
 //        'request' => [
