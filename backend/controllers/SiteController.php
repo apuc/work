@@ -1,10 +1,13 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Resume;
 use common\models\User;
+use common\models\Vacancy;
 use dektrium\user\models\UserSearch;
 use dektrium\user\traits\EventTrait;
 use Yii;
+use yii\db\Query;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -34,7 +37,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'users'],
+                        'actions' => ['logout', 'index', 'users', 'export', 'users-with-vacancies', 'users-with-resumes', 'users-with-resumes-and-vacancies', 'not-active-users'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -141,5 +144,85 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionExport()
+    {
+        return $this->render('export');
+    }
+
+    public function exportFile ($file) {
+        header('Content-Description: File Transfer');
+        header('Content-Disposition: attachment; filename='.basename($file));
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($file));
+        header("Content-Type: text/plain");
+        readfile($file);
+    }
+
+    public function actionUsersWithVacancies()
+    {
+        $file = "Users with vacancies.csv";
+        $txt = fopen($file, "w") or die("Unable to open file!");
+        foreach (User::find()->each() as $user) {
+            if(Vacancy::find()->where(['owner'=>$user->id])->count()) {
+                fwrite($txt, "$user->email\n");
+            }
+        }
+        fclose($txt);
+
+        $this->exportFile($file);
+        unlink("Users with vacancies.csv");
+
+    }
+
+    public function actionUsersWithResumes()
+    {
+        $file = "Users with resumes.csv";
+        $txt = fopen($file, "w") or die("Unable to open file!");
+        foreach (User::find()->each() as $user) {
+            if(Resume::find()->where(['owner'=>$user->id])->count()) {
+                fwrite($txt, "$user->email\n");
+            }
+        }
+        fclose($txt);
+
+        $this->exportFile($file);
+        unlink("Users with resumes.csv");
+
+    }
+
+    public function actionUsersWithResumesAndVacancies()
+    {
+        $file = "Users with resumes and vacancies.csv";
+        $txt = fopen($file, "w") or die("Unable to open file!");
+        foreach (User::find()->each() as $user) {
+            if(Resume::find()->where(['owner'=>$user->id])->count() && Vacancy::find()->where(['owner'=>$user->id])->count()) {
+                fwrite($txt, "$user->email\n");
+            }
+        }
+        fclose($txt);
+
+        $this->exportFile($file);
+        unlink("Users with resumes and vacancies.csv");
+
+    }
+
+    public function actionNotActiveUsers()
+    {
+        $file = "Not active users.csv";
+        $txt = fopen($file, "w") or die("Unable to open file!");
+        foreach (User::find()->each() as $user) {
+            if(!Resume::find()->where(['owner'=>$user->id])->count() && !Vacancy::find()->where(['owner'=>$user->id])->count()) {
+                fwrite($txt, "$user->email\n");
+            }
+        }
+        fclose($txt);
+
+        $this->exportFile($file);
+        unlink("Not active users.csv");
+
     }
 }

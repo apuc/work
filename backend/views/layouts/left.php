@@ -55,6 +55,7 @@
                     ['label' => 'Просмотры', 'url' => ['/views/views/index']],
                     ['label' => 'Профессии', 'url' => ['/professions/professions/index']],
                     ['label' => 'Тест', 'url' => ['/test/default/index']],
+                    ['label' => 'Экспорт', 'url' => ['/site/export']],
                 ],
             ]
         ) ?>
