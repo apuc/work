@@ -17,6 +17,7 @@ use Swift_Message;
 use Swift_SmtpTransport;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\HttpException;
@@ -30,10 +31,18 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
-        $last_vacancies = Vacancy::find()->where(['status' => Vacancy::STATUS_ACTIVE])->orderBy('id DESC')->limit(2)->all();
+        /** @var Vacancy $model */
         $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->one();
         if(!$model)
             throw new HttpException(404, 'Not found');
+        $last_vacancies = Vacancy::find()->where(['status' => Vacancy::STATUS_ACTIVE])->andWhere(['!=', Vacancy::tableName().'.id', $model->id])->orderBy('update_time DESC')->limit(2);
+        if($model->category){
+            $last_vacancies->joinWith('category')->andWhere(['category.id'=>ArrayHelper::getColumn($model->category, 'id')]);
+        }
+        if($model->city_id){
+            $last_vacancies->andWhere(['city_id'=>$model->city_id]);
+        }
+        $last_vacancies = $last_vacancies->all();
         $referer_category = false;
         if(Yii::$app->request->get('referer_category'))
             $referer_category = Category::findOne(Yii::$app->request->get('referer_category'));

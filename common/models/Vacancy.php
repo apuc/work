@@ -23,6 +23,7 @@ use yii\web\View;
  * @property string $working_conditions
  * @property string $video
  * @property string $city
+ * @property int $city_id
  * @property string $address
  * @property string $home_number
  * @property integer $employment_type_id
