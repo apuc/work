@@ -45,13 +45,13 @@ class ResetPasswordController extends Controller
         $model = new ResetPasswordForm();
         $this->layout = "@frontend/views/layouts/main-layout";
         $model->code = \Yii::$app->request->get('token');
-        if(!$model->code)
-            throw new HttpException(404, 'Not found');
-        /** @var Token $token */
-        if(!$token = Token::find()->where(['code' => $model->code, 'type'=>Token::TYPE_RECOVERY])->one())
-            throw new HttpException(404, 'Not found');
-        if($token->getIsExpired())
-            throw new HttpException(400, 'Срок действия ссылки истёк');
+//        if(!$model->code)
+//            throw new HttpException(404, 'Not found');
+//        /** @var Token $token */
+//        if(!$token = Token::find()->where(['code' => $model->code, 'type'=>Token::TYPE_RECOVERY])->one())
+//            throw new HttpException(404, 'Not found');
+//        if($token->getIsExpired())
+//            throw new HttpException(400, 'Срок действия ссылки истёк');
 
         return $this->render('reset-password', [
             'model' => $model,
