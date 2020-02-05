@@ -223,6 +223,14 @@ $(document).ready(function () {
     $('.jsModalReg').fadeOut(1);
     $('.jsModalLogin').fadeIn();
   });
+  $('.jsForgotPass').click(function () {
+    $('.jsModalLogin').fadeOut(1);
+    $('.jsForgotPassModal').fadeIn();
+  });
+  $('.jsBackLogin').click(function () {
+    $('.jsForgotPassModal').fadeOut(1);
+    $('.jsModalLogin').fadeIn();
+  });
   $('.jsSendMessage').click(function () {
     var resume_id=$(this).attr('data-id');
     if(resume_id!==undefined)
@@ -246,6 +254,7 @@ $(document).ready(function () {
     $('.jsModalMessage').fadeOut();
     $('.jsModalMessageVacancy').fadeOut();
     $('.jsModalSuccess').fadeOut();
+    $('.jsForgotPassModal').fadeOut();
     $('body').removeClass('body-overflow');
   });
 

@@ -87,6 +87,13 @@ export default {
     counter: 2000,
     component: VTextarea
   }),
+  description: Object.assign({}, Field, {
+    name: 'description',
+    label: 'Описание',
+    rules: [],
+    counter: 2000,
+    component: VTextarea
+  }),
   experience: Object.assign({}, Field, {
     name: 'experience',
     label: 'Опыт работы',

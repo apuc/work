@@ -89,15 +89,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-//        $company = new ResumeSkill();
-//        $company->setAttributes([
-//            'resume_id' => 1,
-//            'skill_id'=> 1
-//
-//        ]);
-//        $company->save();
-        //Debug::dd(\common\models\skill::find()->with(['resume', 'vacancy'])->one());
-        return $this->render('index');
+        $this->layout = "@frontend/views/layouts/main-layout";
+        return $this->render('reset-password');
     }
     /**
      * Logs in a security.

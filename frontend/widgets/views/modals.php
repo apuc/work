@@ -49,9 +49,19 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 'baseAuthUrl' => ['/user/security/auth']
             ]) ?>
             <?php ActiveForm::end(); ?>
-            <div class="modal-style__text"><span>Забыли пароль?</span>
+            <div class="modal-style__text">
+                <button class="jsForgotPass">Забыли пароль?</button>
                 <button class="jsRegForm">Зарегистрироваться
                 </button>
+            </div>
+        </div>
+        <div class="modal-style modal-error jsForgotPassModal">
+            <p>Восстановление пароля</p>
+            <form action="">
+                <input type="email" placeholder="Ваш Email">
+            </form>
+            <div class="modal-style__text">
+                <button class="jsBackLogin">Авторизация</button>
             </div>
         </div>
         <div class="modal-style modal-reg jsModalReg">

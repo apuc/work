@@ -13,6 +13,7 @@ const vacancy = {
         salaryFrom: '',
         salaryBefore: '',
         qualificationRequirements: '',
+        description: '',
         experience: '',
         education: '',
         workingConditions: '',

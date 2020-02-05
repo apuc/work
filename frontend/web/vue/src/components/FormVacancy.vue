@@ -121,6 +121,7 @@
                     min_salary: this.formData.salaryFrom,
                     max_salary: this.formData.salaryBefore,
                     qualification_requirements: this.formData.qualificationRequirements,
+                    description: this.formData.description,
                     work_experience: this.formData.experience,
                     education: this.formData.education,
                     working_conditions: this.formData.workingConditions,
