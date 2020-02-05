@@ -57,8 +57,9 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
         </div>
         <div class="modal-style modal-error jsForgotPassModal">
             <p>Восстановление пароля</p>
-            <form action="">
-                <input type="email" placeholder="Ваш Email">
+            <form method="post" action="/reset-password/send-token" id="reset_token_form">
+                <input type="email" placeholder="Ваш Email" name="email">
+                <button>Отправить</button>
             </form>
             <div class="modal-style__text">
                 <button class="jsBackLogin">Авторизация</button>

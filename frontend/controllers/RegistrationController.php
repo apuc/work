@@ -96,4 +96,9 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
         ]);
         Yii::$app->getResponse()->getCookies()->add($cookie);
     }
+
+    public function actionSendToken()
+    {
+        echo 123; die;
+    }
 }

@@ -308,8 +308,24 @@ $(document).ready(function () {
       scrollTop: $(".scroll").offset().top-50
     }, 2000);
   }
-  $("#registration-form").submit(function(){
+  $('#registration-form').submit(function(){
     gtag('event', 'register', { 'event_category': 'form', 'event_action': 'register', }); yaCounter53666866.reachGoal('register');
+  });
+  $('#reset_token_form').submit(function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: '/reset-password/send-token',
+      dataType: 'json',
+      data: $(this).serialize(),
+      success: function (data) {
+        if(data != false) {
+          $('.jsForgotPassModal').fadeOut(1);
+          $('.jsModalSuccess').fadeIn();
+          $('.jsModalSuccess p')[0].innerText='Сообщение с дальнейшими инструкциями было отправлено на ваш Email';
+        }
+      }
+    });
   });
 
 });

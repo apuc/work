@@ -21,7 +21,7 @@ class MainAsset extends AssetBundle
         'css/back-styles.css',
     ];
     public $js = [
-        'js/jquery-3.3.1.min.js',
+        //'js/jquery-3.3.1.min.js',
         'js/resizeSensor.js',
         'js/jquery.sticky-kit.js',
         'js/slick/slick.min.js',
@@ -30,7 +30,8 @@ class MainAsset extends AssetBundle
         'https://vk.com/js/api/openapi.js?165'
     ];
     public $depends = [
-        //'yii\web\YiiAsset',
-        //'yii\bootstrap\BootstrapAsset',
+//        'yii\web\YiiAsset',
+//        'yii\bootstrap\BootstrapAsset',
     ];
+    public $jsOptions = ['position' => \yii\web\View::POS_END];
 }
