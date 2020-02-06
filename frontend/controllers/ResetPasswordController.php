@@ -26,6 +26,7 @@ class ResetPasswordController extends Controller
     {
         if(!$email = \Yii::$app->request->post('email'))
             return false;
+        /** @var User $user */
         if(!$user = User::find()->where(['email'=>$email])->one())
             return false;
         /** @var Token $token */
@@ -37,6 +38,12 @@ class ResetPasswordController extends Controller
         if (!$token->save(false)) {
             return false;
         }
+        Yii::$app->mailer->viewPath='@common/mail';
+        Yii::$app->mailer->compose('passwordResetToken-html', ['token'=>$token])
+            ->setFrom('noreply@rabota.today')
+            ->setTo($user->email)
+            ->setSubject('Спасибо за регистрацию')
+            ->send();
         return true;
     }
 
@@ -45,14 +52,17 @@ class ResetPasswordController extends Controller
         $model = new ResetPasswordForm();
         $this->layout = "@frontend/views/layouts/main-layout";
         $model->code = \Yii::$app->request->get('token');
-//        if(!$model->code)
-//            throw new HttpException(404, 'Not found');
-//        /** @var Token $token */
-//        if(!$token = Token::find()->where(['code' => $model->code, 'type'=>Token::TYPE_RECOVERY])->one())
-//            throw new HttpException(404, 'Not found');
-//        if($token->getIsExpired())
-//            throw new HttpException(400, 'Срок действия ссылки истёк');
-
+        if(!$model->code)
+            throw new HttpException(404, 'Not found');
+        /** @var Token $token */
+        if(!$token = Token::find()->where(['code' => $model->code, 'type'=>Token::TYPE_RECOVERY])->one())
+            throw new HttpException(404, 'Not found');
+        if($token->getIsExpired())
+            throw new HttpException(400, 'Срок действия ссылки истёк');
+        if($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $token->user->resetPassword($model->password1);
+            return $this->redirect('/');
+        }
         return $this->render('reset-password', [
             'model' => $model,
         ]);

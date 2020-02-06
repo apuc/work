@@ -18,9 +18,19 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
-            [['password1', 'password2', 'code'],'required'],
-            [['password1', 'password2', 'code'], 'string', 'min' => 6],
-            ['password1', 'compare', 'compareAttribute' => 'password2'],
+            [['password1', 'password2', 'code'],'required', 'message' => 'Необходимо заполнить поле'],
+            [['password1', 'password2', 'code'], 'string', 'min' => 6, 'message' => 'Поле не может содержать менее 6 символов'],
+            ['password2', 'compare', 'compareAttribute' => 'password1', 'message' => 'Пароли не совпадают'],
+        ];
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'password1' => 'пароль',
+            'password2' => 'пароль',
         ];
     }
 }

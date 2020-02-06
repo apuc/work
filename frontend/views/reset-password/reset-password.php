@@ -7,12 +7,9 @@ use yii\widgets\ActiveForm; ?>
     <div class="container">
         <h2>Придумайте новый пароль</h2>
         <?php $form = ActiveForm::begin([
-//            'fieldConfig' => [
-//                'options' => [
-//                    'tag' => false,
-//                ],
-//            ],
             'id' => 'reset-password-form',
+            'validateOnBlur'=>false,
+            'validateOnChange'=>false,
         ]); ?>
             <?= $form->field($model, 'password1')->passwordInput(['maxlength' => true, 'placeholder'=>'Новый пароль'])->label(false) ?>
             <?= $form->field($model, 'password2')->passwordInput(['maxlength' => true, 'placeholder'=>'Повторите пароль'])->label(false) ?>
