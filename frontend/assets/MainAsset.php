@@ -21,16 +21,18 @@ class MainAsset extends AssetBundle
         'css/back-styles.css',
     ];
     public $js = [
-        'js/jquery-3.3.1.min.js',
+        //'js/jquery-3.3.1.min.js',
         'js/resizeSensor.js',
         'js/jquery.sticky-kit.js',
         'js/slick/slick.min.js',
         'js/select2/select2.min.js',
         'js/script.js',
-        'https://vk.com/js/api/openapi.js?165'
+        'https://vk.com/js/api/openapi.js?165',
     ];
     public $depends = [
-//        'yii\web\YiiAsset',
+        'yii\authclient\widgets\AuthChoiceAsset',
+        'yii\widgets\ActiveFormAsset',
+        'yii\web\YiiAsset',
 //        'yii\bootstrap\BootstrapAsset',
     ];
     public $jsOptions = ['position' => \yii\web\View::POS_END];

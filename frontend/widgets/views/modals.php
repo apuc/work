@@ -26,9 +26,9 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 'id' => 'login-form',
                 'enableAjaxValidation' => true,
                 'enableClientValidation' => true,
-                'validateOnBlur' => false,
-                'validateOnType' => false,
-                'validateOnChange' => false,
+//                'validateOnBlur' => false,
+//                'validateOnType' => false,
+//                'validateOnChange' => false,
             ]); ?>
 
 
@@ -71,7 +71,10 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 'id' => 'registration-form',
                 'action' => '/registration/register',
                 'enableAjaxValidation' => true,
-                'enableClientValidation' => false,
+                'enableClientValidation' => true,
+//                'validateOnBlur' => false,
+//                'validateOnType' => false,
+//                'validateOnChange' => false,
                 'class' => 'jsModalRegForm',
 //                'options' => [
 //                    "onsubmit"=>"gtag('event', 'register', { 'event_category': 'form', 'event_action': 'register', }); yaCounter53666866.reachGoal('register'); return true;"

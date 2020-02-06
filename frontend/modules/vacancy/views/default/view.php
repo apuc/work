@@ -191,7 +191,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                     <div class="sr-block">
                             <?php if(Yii::$app->user->isGuest):?>
                                 <span style="display: flex; flex-direction: column;">
-                                    Для просмотра контактных данных <a href="/?tab=login" style="text-decoration: none;">войдите или зарегистрируйтесь</a>
+                                    Для просмотра контактных данных <a href="#" class="jsLogin" style="text-decoration: none;">войдите или зарегистрируйтесь</a>
                                 </span>
                             <?php else:?>
                         <ul class="sr-block__text">
