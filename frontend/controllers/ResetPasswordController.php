@@ -57,8 +57,8 @@ class ResetPasswordController extends Controller
         /** @var Token $token */
         if(!$token = Token::find()->where(['code' => $model->code, 'type'=>Token::TYPE_RECOVERY])->one())
             throw new HttpException(404, 'Not found');
-//        if($token->getIsExpired())
-//            throw new HttpException(400, 'Срок действия ссылки истёк');
+        if($token->getIsExpired())
+            throw new HttpException(400, 'Срок действия ссылки истёк');
         if($model->load(Yii::$app->request->post()) && $model->validate()) {
             $token->user->resetPassword($model->password1);
             return $this->redirect('/');
