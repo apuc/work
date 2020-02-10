@@ -15,25 +15,25 @@
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/53666866" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!— /Yandex.Metrika counter —>
-    <script type='text/javascript'>
-        (function () {
-            window['yandexChatWidgetCallback'] = function() {
-                try {
-                    window.yandexChatWidget = new Ya.ChatWidget({
-                        guid: '32c7f20c-e2f8-4b8e-95c6-e2c5c4b865a7',
-                        buttonText: 'Ответим на ваши вопросы',
-                        title: 'Поиск работы в ДНР - rabota.today',
-                        theme: 'dark',
-                        collapsedDesktop: 'never',
-                        collapsedTouch: 'always'
-                    });
-                } catch(e) { }
-            };
-            var n = document.getElementsByTagName('script')[0],
-                s = document.createElement('script');
-            s.async = true;
-            s.src = 'https://chat.s3.yandex.net/widget.js';
-            n.parentNode.insertBefore(s, n);
-        })();
-    </script>
+<!--    <script type='text/javascript'>-->
+<!--        (function () {-->
+<!--            window['yandexChatWidgetCallback'] = function() {-->
+<!--                try {-->
+<!--                    window.yandexChatWidget = new Ya.ChatWidget({-->
+<!--                        guid: '32c7f20c-e2f8-4b8e-95c6-e2c5c4b865a7',-->
+<!--                        buttonText: 'Ответим на ваши вопросы',-->
+<!--                        title: 'Поиск работы в ДНР - rabota.today',-->
+<!--                        theme: 'dark',-->
+<!--                        collapsedDesktop: 'never',-->
+<!--                        collapsedTouch: 'always'-->
+<!--                    });-->
+<!--                } catch(e) { }-->
+<!--            };-->
+<!--            var n = document.getElementsByTagName('script')[0],-->
+<!--                s = document.createElement('script');-->
+<!--            s.async = true;-->
+<!--            s.src = 'https://chat.s3.yandex.net/widget.js';-->
+<!--            n.parentNode.insertBefore(s, n);-->
+<!--        })();-->
+<!--    </script>-->
 <?php endif ?>
