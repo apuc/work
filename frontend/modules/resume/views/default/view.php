@@ -15,7 +15,7 @@ $this->registerMetaTag(['name'=>'description', 'content' => StringHelper::trunca
 $this->registerMetaTag(['name'=>'og:title', 'content' => $model->title]);
 $this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
 $this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-$this->registerMetaTag(['name'=>'og:image', 'content' => $model->image_url?:'/images/empty_user.jpg']);
+$this->registerMetaTag(['name'=>'og:image', 'content' => $model->image_url?:'/images/og_image.jpg']);
 $this->registerMetaTag(['name'=>'og:description', 'content' => StringHelper::truncate($model->description, 100, '...')]);
 $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo.'/resume/view/'.$model->id]);
 

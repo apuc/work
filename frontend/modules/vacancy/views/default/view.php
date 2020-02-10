@@ -30,7 +30,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => \yii\helpers\Strin
 $this->registerMetaTag(['name' => 'og:title', 'content' => $title]);
 $this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
 $this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-$this->registerMetaTag(['name' => 'og:image', 'content' => $model->company->image_url ?: '/images/empty_user.jpg']);
+$this->registerMetaTag(['name' => 'og:image', 'content' => $model->company->image_url ?: '/images/og_image.jpg']);
 $this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::truncate($model->qualification_requirements, 100, '...')]);
 $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo.'/vacancy/view/'.$model->id]);
 

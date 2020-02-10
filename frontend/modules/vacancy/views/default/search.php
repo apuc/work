@@ -34,7 +34,7 @@ $this->registerMetaTag(['name'=>'description', 'content' => $meta_data['descript
 $this->registerMetaTag(['name'=>'og:title', 'content' => $this->title]);
 $this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
 $this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-$this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->hostInfo.'/images/logo-main.png']);
+$this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->hostInfo.'/images//og_image.jpg']);
 $this->registerMetaTag(['name'=>'og:description', 'content' => $meta_data['description']]);
 
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
