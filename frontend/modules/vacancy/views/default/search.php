@@ -231,7 +231,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             <div class="single-card__bottom">
                                 <div class="single-card__info__soc">
                                     <?php if($vacancy->company->hasSocials()): ?>
-                                        <span>Написать соискателю в сетях</span>
+                                        <span>Написать работодателю в сетях</span>
                                         <?php if($vacancy->company->vk):?>
                                         <a target="_blank" class="vk-bg" rel="nofollow" href="https://vk.com/<?=$vacancy->company->vk?>"><img src="/images/vk.svg" alt="" role="presentation"/></a>
                                         <?php endif ?>

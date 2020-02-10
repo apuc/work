@@ -23,16 +23,9 @@ $this->title = $name;
             Поиск работы в ДНР и ЛНР - это rabota.today.
         </p>
         <div class="page-error__soc">
-            <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/"><img
-                        src="/images/vk.svg"
-                        alt=""
-                        role="presentation"/></a>
-            <a class="fb-bg" rel="nofollow" target="_blank"
-               href="https://facebook.com/"><img
-                        src="/images/fb.svg" alt="" role="presentation"/></a>
-            <a class="inst-bg" rel="nofollow" target="_blank"
-               href="https://instagram.com/"><img
-                        src="/images/instagram.svg" alt="" role="presentation"/></a>
+            <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/rabotad0netsk">
+                <img src="/images/vk.svg" alt="" role="presentation"/>
+            </a>
         </div>
         <img class="page-error__dots" src="/images/dots__small.png" alt="">
     </div>
