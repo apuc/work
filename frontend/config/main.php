@@ -63,7 +63,8 @@ return [
                             $employer->user_id=Yii::$app->user->id;
                             $employer->first_name=$e->client->getUserAttributes()['first_name'];
                             $employer->second_name=$e->client->getUserAttributes()['last_name'];
-                            $employer->birth_date=date('Y-m-d', strtotime($e->client->getUserAttributes()['bdate']));
+                            if(isset($e->client->getUserAttributes()['bdate']))
+                                $employer->birth_date=date('Y-m-d', strtotime($e->client->getUserAttributes()['bdate']));
                             $employer->save();
                             Yii::$app->mailer->viewPath='@common/mail';
                             $token = Token::findOne(['user_id'=>Yii::$app->user->id]);
