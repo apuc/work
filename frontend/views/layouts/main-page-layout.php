@@ -7,7 +7,6 @@ use frontend\assets\MainAsset;
 use frontend\widgets\Footer;
 use frontend\widgets\GoogleAnalytics;
 use frontend\widgets\Modals;
-use frontend\widgets\SecondHeader;
 use frontend\widgets\VKPixel;
 use frontend\widgets\YandexMetrika;
 use yii\helpers\Html;
@@ -35,8 +34,8 @@ MainAsset::register($this);
     <?=$content?>
     <?=Footer::widget()?>
 </div>
+<?=Modals::widget();?>
 <?php $this->endBody() ?>
-<?=Modals::widget()?>
 </body>
 
 </html>

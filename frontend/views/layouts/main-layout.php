@@ -31,13 +31,13 @@ MainAsset::register($this);
 </head>
 <body>
 <div class="root">
-<?=SecondHeader::widget()?>
 <?php $this->beginBody() ?>
+<?=SecondHeader::widget()?>
     <?=$content?>
     <?=Footer::widget()?>
 </div>
-<?php $this->endBody() ?>
 <?=Modals::widget()?>
+<?php $this->endBody() ?>
 </body>
 
 </html>

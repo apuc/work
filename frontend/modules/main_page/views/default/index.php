@@ -9,7 +9,6 @@
 use common\models\KeyValue;
 use common\models\Resume;
 use common\models\Vacancy;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
