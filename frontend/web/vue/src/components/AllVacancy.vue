@@ -28,6 +28,7 @@
                                 <v-btn outline small fab
                                        class="edit-btn"
                                        type="button"
+                                       title="Редактировать"
                                 >
                                     <v-icon>edit</v-icon>
 
@@ -37,6 +38,7 @@
                                    v-bind:disabled="item.can_update == false"
                                    class="edit-btn"
                                    type="button"
+                                   title="Поднять в ТОП"
                                    @click="updateVacancy(index, item.id)"
                             >
                                 <v-icon>arrow_upward</v-icon>
@@ -44,6 +46,7 @@
                             <v-btn outline small fab
                                    class="edit-btn"
                                    type="button"
+                                   title="Удалить"
                                    @click="removeVacancy(index, item.id)"
                             >
                                 <v-icon>delete</v-icon>
@@ -142,21 +145,33 @@
                     );
             },
             removeVacancy(index, vacancyId) {
-                this.getAllVacancy.splice(index, 1);
-                this.$http.delete(`${process.env.VUE_APP_API_URL}/request/vacancy/` + vacancyId)
-                    .then(response => {
-                        return response;
-                        }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                        }
-                    );
+                this.$swal({
+                    title: 'Вы точно хотите удалить вакансию?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Да',
+                    cancelButtonText: 'Нет'
+                }).then((result) => {
+                    if (result.value) {
+                        this.getAllVacancy.splice(index, 1);
+                        this.$http.delete(`${process.env.VUE_APP_API_URL}/request/vacancy/` + vacancyId)
+                            .then(response => {
+                                    return response;
+                                }, response => {
+                                    this.$swal({
+                                        toast: true,
+                                        position: 'bottom-end',
+                                        showConfirmButton: false,
+                                        timer: 4000,
+                                        type: 'error',
+                                        title: response.data.message
+                                    })
+                                }
+                            );
+                    }
+                });
             },
             changePage(paginationCurrentPage) {
                 this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/my-index?page=` + paginationCurrentPage)

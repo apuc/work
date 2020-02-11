@@ -89,7 +89,7 @@
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/analysis.png'
                     },
                     {
-                        title: 'Сообщения',
+                        title: 'Отклики',
                         url: '/personal-area/my-message',
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/mail.png'
                     },
