@@ -146,7 +146,7 @@ class DefaultController extends Controller
                 }
                 $or = ['or'];
                 foreach ($tmp_exp_ids as $experience_id){
-                    $or[] = ['>=', 'years_of_exp', $experience_id];
+                    $or[] = ['>=', 'years_of_exp', ($experience_id*2)+1];
                 }
                 $resume_query->andWhere($or);
             }

@@ -139,7 +139,7 @@ class DefaultController extends Controller
             ->andFilterWhere(['>=', 'max_salary', $params['min_salary']])
             ->andFilterWhere(['<=', 'min_salary', $params['max_salary']]);
         if($current_city)
-            $vacancies_query->andFilterWhere(['like', 'city_id', $current_city->id]);
+            $vacancies_query->andFilterWhere(['city_id' => $current_city->id]);
         if($params['search_text']){
             if($params['search_text'][0]===':')
             {
@@ -151,13 +151,11 @@ class DefaultController extends Controller
             }
         }
         if ($params['experience_ids']) {
-            if (!in_array(0, $params['experience_ids'])) {
-                $or = ['or'];
-                foreach ($params['experience_ids'] as $experience_id) {
-                    $or[] = ['<=', 'work_experience', $experience_id];
-                }
-                $vacancies_query->andWhere($or);
+            $or = ['or'];
+            foreach ($params['experience_ids'] as $experience_id) {
+                $or[] = ['=', 'work_experience', $experience_id];
             }
+            $vacancies_query->andWhere($or);
         }
         if ($params['search_text'] && $params['search_text'][0]!=':') {
             $vacancies_query->joinWith(['skill']);

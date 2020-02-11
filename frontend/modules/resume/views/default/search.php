@@ -93,7 +93,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             <?= in_array(0, $experience_ids)?'checked':''?>
                                         <?php endif ?>
                                     />
-                                    <div class="checkbox__text">Не имеет значения
+                                    <div class="checkbox__text">Без опыта работы
                                     </div>
                                 </label>
                                 <label class="checkbox">
@@ -103,7 +103,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             <?= in_array(1, $experience_ids)?'checked':''?>
                                         <?php endif ?>
                                     />
-                                    <div class="checkbox__text">Менее года
+                                    <div class="checkbox__text">От 1 года
                                     </div>
                                 </label>
                                 <label class="checkbox">
@@ -113,7 +113,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             <?= in_array(2, $experience_ids)?'checked':''?>
                                         <?php endif ?>
                                     />
-                                    <div class="checkbox__text">1 год
+                                    <div class="checkbox__text">От 3 лет
                                     </div>
                                 </label>
                                 <label class="checkbox">
@@ -123,7 +123,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             <?= in_array(3, $experience_ids)?'checked':''?>
                                         <?php endif ?>
                                     />
-                                    <div class="checkbox__text">2 года
+                                    <div class="checkbox__text">От 5 лет
                                     </div>
                                 </label>
                             </div>

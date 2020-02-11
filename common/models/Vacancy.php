@@ -60,7 +60,7 @@ class Vacancy extends WorkActiveRecord
     const SOFT_DELETE = 1;
 
     public static $experiences = [
-        'Не имеет значения', 'Менее года', '1 год', '2 года'
+        'Без опыта работы', 'От 1 года', 'От 3 лет', 'От 5 лет'
     ];
 
     /**
