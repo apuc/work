@@ -139,10 +139,12 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                 <h4 class="resume-description__title-bold">
                                     <?= $education->name ?>
                                 </h4>
-                                <p class="resume-description__text"><?= $education->academic_degree ?><?php if($education->year_from || $education->year_to):?>,<?php endif?>
-                                    <br>
-                                    <?php if($education->year_from):?>
+                                <p class="resume-description__text"><?= $education->academic_degree ?><?php if($education->academic_degree):?>,<br><?php endif?>
+                                    <?php if($education->year_from && $education->academic_degree):?>
                                     с <?= $education->year_from ?>
+                                    <?php endif ?>
+                                    <?php if($education->year_from && !$education->academic_degree):?>
+                                        С <?= $education->year_from ?>
                                     <?php endif ?>
                                     <?php if($education->year_to):?>
                                     по
