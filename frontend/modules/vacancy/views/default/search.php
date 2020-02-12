@@ -13,6 +13,7 @@
 /* @var $search_text string */
 /* @var $city \common\models\City */
 /* @var $current_category Category|null */
+/* @var $canonical_rel string */
 
 /* @var $employment_types EmploymentType[] */
 /* @var $cities City[] */
@@ -36,6 +37,7 @@ $this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
 $this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
 $this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->hostInfo.'/images//og_image.jpg']);
 $this->registerMetaTag(['name'=>'og:description', 'content' => $meta_data['description']]);
+$this->registerLinkTag(['rel'=>'canonical', 'href'=>$canonical_rel]);
 
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
 ?>

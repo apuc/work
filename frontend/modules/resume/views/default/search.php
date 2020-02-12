@@ -9,6 +9,7 @@
 /* @var $search_text string */
 /* @var $experience_ids array */
 /* @var $current_category Category|null */
+/* @var $canonical_rel string */
 
 /* @var $cities \common\models\City[] */
 
@@ -30,6 +31,7 @@ $this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
 $this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
 $this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->hostInfo.'//og_image.jpg']);
 $this->registerMetaTag(['name'=>'og:description', 'content' => $meta_data['description']]);
+$this->registerLinkTag(['rel'=>'canonical', 'href'=>$canonical_rel]);
 
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['depends' => [MainAsset::className()]]);
 ?>

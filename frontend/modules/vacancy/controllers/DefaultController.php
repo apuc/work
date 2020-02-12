@@ -118,6 +118,7 @@ class DefaultController extends Controller
                 $params['category_ids']=[$current_category->id];
             }
         }
+        $canonical_rel = Yii::$app->request->hostInfo.'/resume'.($first_query_param?('/'.$first_query_param):'').($second_query_param?('/'.$second_query_param):'');
         if(!$current_city && Yii::$app->request->get('city_disable')!=1)
             $current_city = City::findOne(Yii::$app->request->cookies['city']);
         $tags = Skill::find()->all();
@@ -193,6 +194,7 @@ class DefaultController extends Controller
             'categories' => $categories,
             'employment_types' => $employment_types,
             'current_category' => $current_category,
+            'canonical_rel' => $canonical_rel
         ]);
     }
 }
