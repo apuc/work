@@ -65,11 +65,11 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                 <img class="single-block__logo" src="<?= $model->company->getPhotoOrEmptyPhoto() ?>" alt=""
                      role="presentation"/>
                 <div class="single-block__first">
-                    <?php if ($model->category): ?>
+                    <?php if($model->mainCategory->name !== 'Пустая категория'):?>
                         <div class="category-block">
+                            <a class="btn-card btn-card-small btn-gray" href="<?=\common\models\Vacancy::getSearchPageUrl($model->mainCategory->slug)?>"><?= $model->mainCategory->name ?></a>
                             <?php foreach ($model->category as $category): ?>
-                                <a class="btn-card btn-card-small btn-gray"
-                                   href="<?=\common\models\Vacancy::getSearchPageUrl($category->slug)?>"><?= $category->name ?></a>
+                                <a class="btn-card btn-card-small btn-gray" href="<?=\common\models\Vacancy::getSearchPageUrl($category->slug)?>"><?= $category->name ?></a>
                             <?php endforeach ?>
                         </div>
                     <?php endif ?>

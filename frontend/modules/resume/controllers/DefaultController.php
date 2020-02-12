@@ -88,6 +88,7 @@ class DefaultController extends Controller
         ];
         $first_query_param = Yii::$app->request->get('first_query_param');
         $second_query_param = Yii::$app->request->get('second_query_param');
+        $canonical_rel = Yii::$app->request->hostInfo.'/resume'.($first_query_param?('/'.$first_query_param):'').($second_query_param?('/'.$second_query_param):'');
         $current_category = false;
         $current_city = false;
         if($second_query_param) {
@@ -192,6 +193,7 @@ class DefaultController extends Controller
             'city' => $current_city,
             'tags_id' => $params['tags_id'],
             'current_category' => $current_category,
+            'canonical_rel' => $canonical_rel,
         ]);
     }
 }

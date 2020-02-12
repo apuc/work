@@ -122,7 +122,7 @@ class DefaultController extends Controller
         if(!$current_city && Yii::$app->request->get('city_disable')!=1)
             $current_city = City::findOne(Yii::$app->request->cookies['city']);
         $tags = Skill::find()->all();
-        $categories = Category::find()->all();
+        $categories = Category::find()->where(['!=', 'name', 'Пустая категория'])->all();
         $employment_types = EmploymentType::find()->all();
         $cities = City::find()->where(['status' => 1])->all();
 
