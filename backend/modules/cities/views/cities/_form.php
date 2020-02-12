@@ -34,6 +34,10 @@ use yii\widgets\ActiveForm; ?>
     <?= $form->field($model, 'meta_description'); ?>
     <?= $form->field($model, 'header'); ?>
     <?= $form->field($model, 'bottom_text'); ?>
+    <?= $form->field($model, 'resume_meta_title'); ?>
+    <?= $form->field($model, 'resume_meta_description'); ?>
+    <?= $form->field($model, 'resume_header'); ?>
+    <?= $form->field($model, 'resume_bottom_text'); ?>
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>

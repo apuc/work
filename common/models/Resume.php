@@ -273,9 +273,9 @@ class Resume extends WorkActiveRecord
             $header=str_replace('{region}', $city->region->name, $header);
         }
         if($city &&(!$title || !$description || !$header)) {
-            $title=$title?:$city->meta_title;
-            $description=$description?:$city->meta_description;
-            $header=$header?:$city->header;
+            $title=$title?:$city->resume_meta_title;
+            $description=$description?:$city->resume_meta_description;
+            $header=$header?:$city->resume_header;
         }
         if($category &&(!$title || !$description || !$header)) {
             $title=$title?:$category->metaData->resume_meta_title;

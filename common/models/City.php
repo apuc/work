@@ -21,6 +21,10 @@ use Yii;
  * @property string $meta_description
  * @property string $header
  * @property string $bottom_text
+ * @property string $resume_meta_title
+ * @property string $resume_meta_description
+ * @property string $resume_header
+ * @property string $resume_bottom_text
  *
  * @property Region $region
  *
@@ -45,8 +49,8 @@ class City extends WorkActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 50],
-            [['prepositional', 'image', 'slug', 'meta_title', 'header'], 'string', 'max' => 255],
-            [['meta_description', 'bottom_text'], 'string'],
+            [['prepositional', 'image', 'slug', 'meta_title', 'header', 'resume_meta_title', 'resume_header'], 'string', 'max' => 255],
+            [['meta_description', 'bottom_text', 'resume_meta_description', 'resume_bottom_text'], 'string'],
             [['region_id', 'status'], 'integer'],
             [['latitude', 'longitude'], 'safe'],
         ];
@@ -60,10 +64,14 @@ class City extends WorkActiveRecord
             'region_id' => 'Область',
             'image' => 'Фотография',
             'slug' => 'Slug',
-            'meta_title' => 'Meta title',
-            'meta_description' => 'Meta description',
-            'header' => 'h1 заголовок',
-            'bottom_text' => 'Текст страницы поиска'
+            'meta_title' => 'vacancy meta title',
+            'meta_description' => 'Vacancy meta description',
+            'header' => 'h1 заголовок вакансий',
+            'bottom_text' => 'Текст страницы поиска вакансий',
+            'resume_meta_title' => 'Resume meta title',
+            'resume_meta_description' => 'Resume meta description',
+            'resume_header' => 'h1 заголовок резюме',
+            'resume_bottom_text' => 'Текст страницы поиска резюме'
         ];
     }
 

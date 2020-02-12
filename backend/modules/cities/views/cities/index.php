@@ -93,6 +93,26 @@ use yii\helpers\Html; ?>
                 'format' => 'text',
                 'contentOptions' => ['style' => 'white-space: normal;']
             ],
+            [
+                'attribute' => 'resume_meta_title',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
+            [
+                'attribute' => 'resume_meta_description',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
+            [
+                'attribute' => 'resume_header',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
+            [
+                'attribute' => 'resume_bottom_text',
+                'format' => 'text',
+                'contentOptions' => ['style' => 'white-space: normal;']
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
