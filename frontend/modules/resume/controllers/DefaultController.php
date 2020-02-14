@@ -17,6 +17,7 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\UrlManager;
 
 /**
@@ -33,7 +34,7 @@ class DefaultController extends Controller
     {
         $model = Resume::find()->where(['id'=>$id, 'status'=>Resume::STATUS_ACTIVE])->one();
         if(!$model)
-            throw new HttpException(404, 'Not found');
+            throw new NotFoundHttpException();
         $referer_category = false;
         if(Yii::$app->request->get('referer_category'))
             $referer_category = Category::findOne(Yii::$app->request->get('referer_category'));
@@ -99,12 +100,17 @@ class DefaultController extends Controller
                 $this->background_emblem = $current_category->image;
                 $params['category_ids']=[$current_category->id];
             }
+            if(!$current_city || !$current_category) {
+                throw new NotFoundHttpException();
+            }
         } else if ($first_query_param) {
             if($current_city = City::findOne(['slug'=>$first_query_param])) {
                 $this->background_image = $current_city->image;
             } else if ($current_category = Category::findOne(['slug'=>$first_query_param])) {
                 $this->background_emblem = $current_category->image;
                 $params['category_ids']=[$current_category->id];
+            } else {
+                throw new NotFoundHttpException();
             }
         }
         if(!$current_city && Yii::$app->request->get('city_disable')!=1)

@@ -21,6 +21,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 
 class DefaultController extends Controller
 {
@@ -34,7 +35,7 @@ class DefaultController extends Controller
         /** @var Vacancy $model */
         $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->one();
         if(!$model)
-            throw new HttpException(404, 'Not found');
+            throw new NotFoundHttpException();
         $last_vacancies = Vacancy::find()->where(['status' => Vacancy::STATUS_ACTIVE])->andWhere(['!=', Vacancy::tableName().'.id', $model->id])->orderBy('update_time DESC')->limit(2);
         if($model->category){
             $last_vacancies->joinWith('category')->andWhere(['category.id'=>ArrayHelper::getColumn($model->category, 'id')]);
@@ -109,6 +110,8 @@ class DefaultController extends Controller
             if($current_category = Category::findOne(['slug'=>$second_query_param])) {
                 $this->background_emblem = $current_category->image;
                 $params['category_ids']=[$current_category->id];
+            } if(!$current_city || !$current_categoryte) {
+                throw new NotFoundHttpException();
             }
         } else if ($first_query_param) {
             if($current_city = City::findOne(['slug'=>$first_query_param])) {
@@ -116,6 +119,8 @@ class DefaultController extends Controller
             } else if ($current_category = Category::findOne(['slug'=>$first_query_param])) {
                 $this->background_emblem = $current_category->image;
                 $params['category_ids']=[$current_category->id];
+            } else {
+                throw new NotFoundHttpException();
             }
         }
         $canonical_rel = Yii::$app->request->hostInfo.'/resume'.($first_query_param?('/'.$first_query_param):'').($second_query_param?('/'.$second_query_param):'');

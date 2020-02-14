@@ -111,7 +111,10 @@ return [
         ],
         'news' => [
             'class' => 'eugenekei\news\Module',
-        ]
+        ],
+        'company' => [
+            'class' => 'frontend\modules\company\Company',
+        ],
     ],
     'components' => [
 //        'request' => [
