@@ -48,7 +48,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         <a href="<?=Vacancy::getSearchPageUrl(false, $model->city0->slug)?>"><?= $model->city0->name ?></a>
                     </li>
                 <?php endif ?>
-                <?php if ($referer_category): ?>
+                <?php if ($referer_category && $referer_category->name !== 'Пустая категория'): ?>
                     <li>
                         <a href="<?=Vacancy::getSearchPageUrl($referer_category->slug, $model->city0?$model->city0->slug:false)?>"><?= $referer_category->name ?></a>
                     </li>

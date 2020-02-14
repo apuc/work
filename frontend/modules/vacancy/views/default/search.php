@@ -210,15 +210,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 <?php endforeach ?>
                                 <img class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt="" role="presentation"/>
                             </div>
-                            <?php if($category_ids && count($category_ids) === 1):?>
-                                <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$category_ids[0]])?>" class="single-card__title mt5">
-                                    <?= ucfirst($vacancy->post) ?>
-                                </a>
-                            <?php else: ?>
-                                <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title mt5">
-                                    <?= ucfirst($vacancy->post) ?>
-                                </a>
-                            <?php endif ?>
+                            <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$vacancy->main_category_id])?>" class="single-card__title mt5">
+                                <?= ucfirst($vacancy->post) ?>
+                            </a>
                             <div class="single-card__info-second"><span
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->update_time, 'dd.MM.yyyy') ?></span>
                                 <div class="single-card__view"><img class="single-card__icon mr5"
