@@ -14,22 +14,25 @@
         components: {FormTemplate},
         mounted() {
             document.title = this.$route.meta.title;
-            this.getCategory()
-                .then(response => {
-                    FormVacancy.categoriesVacancy.items = response.data;
-                    for (let i = 0; i < response.data.length; i++) {
-                        this.$set(FormVacancy.categoriesVacancy.items, i, response.data[i]);
-                    }
-                }), response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                    };
+            this.getCategory().then(response => {
+                FormVacancy.mainCategoriesVacancy.items = response.data.map(vacancy => ({
+                    id: vacancy.id,
+                    name: vacancy.name,
+                }));
+                FormVacancy.subcategories.items = response.data.map(vacancy => ({
+                    id: vacancy.id,
+                    name: vacancy.name,
+                }));
+            }, response => {
+                this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: response.data.message
+                })
+            });
             this.getEmploymentType().then(response => {
                 FormVacancy.typeOfEmployment.items = response.data;
                 for (let i = 0; i < response.data.length; i++) {
@@ -84,7 +87,8 @@
                         this.dataVacancy = response.data;
                         this.formData.vacancyCity = response.data.city_id;
                         this.formData.companyName = response.data.company_id;
-                        this.formData.categoriesVacancy = response.data.category;
+                        this.formData.mainCategoriesVacancy = response.data.main_category_id;
+                        this.formData.subcategories = response.data.category;
                         this.formData.post = response.data.post;
                         this.formData.duties = response.data.responsibilities;
                         this.formData.typeOfEmployment = response.data.employment_type_id;
@@ -134,7 +138,8 @@
                 let data = {
                     city_id: this.formData.vacancyCity,
                     company_id: this.formData.companyName,
-                    category: this.formData.categoriesVacancy,
+                    main_category_id: this.formData.mainCategoriesVacancy,
+                    category: this.formData.subcategories,
                     post: this.formData.post,
                     responsibilities: this.formData.duties,
                     employment_type_id: this.formData.typeOfEmployment,
@@ -198,6 +203,7 @@
             const tmpResume = {
                 'city': this.dataVacancy.city_id,
                 'company_id': this.dataVacancy.company_id,
+                'main_category_id': this.dataVacancy.main_category_id,
                 'category': this.dataVacancy.category,
                 'post': this.dataVacancy.post,
                 'responsibilities': this.dataVacancy.responsibilities,
@@ -215,7 +221,8 @@
             const tmpFormData = {
                 'city': this.formData.vacancyCity,
                 'company_id': this.formData.companyName,
-                'category': this.formData.categoriesVacancy,
+                'main_category_id': this.formData.mainCategoriesVacancy,
+                'category': this.formData.subcategories,
                 'post': this.formData.post,
                 'responsibilities': this.formData.duties,
                 'employment_type_id': this.formData.typeOfEmployment,

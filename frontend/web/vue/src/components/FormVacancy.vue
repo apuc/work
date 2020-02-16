@@ -28,7 +28,11 @@
         mounted() {
             document.title = this.$route.meta.title;
             this.getCategory().then(response => {
-                FormVacancy.categoriesVacancy.items = response.data.map(vacancy => ({
+                FormVacancy.mainCategoriesVacancy.items = response.data.map(vacancy => ({
+                    id: vacancy.id,
+                    name: vacancy.name,
+                }));
+                FormVacancy.subcategories.items = response.data.map(vacancy => ({
                     id: vacancy.id,
                     name: vacancy.name,
                 }));
@@ -41,7 +45,7 @@
                             type: 'error',
                             title: response.data.message
                         })
-                    });
+            });
             this.getEmploymentType().then(response => {
                 FormVacancy.typeOfEmployment.items = response.data;
                 for (let i = 0; i < response.data.length; i++) {
@@ -91,9 +95,8 @@
                             type: 'error',
                             title: response.data.message
                         })
-                    });
+            });
             this.getCity().then(response => {
-                console.log(response);
                 FormVacancy.vacancyCity.items = response.data.map(vacancyCity => ({
                     id: vacancyCity.id,
                     name: vacancyCity.name,
@@ -114,7 +117,8 @@
                 let data = {
                     city_id: this.formData.vacancyCity,
                     company_id: this.formData.companyName,
-                    category: this.formData.categoriesVacancy,
+                    main_category_id: this.formData.mainCategoriesVacancy,
+                    category: this.formData.subcategories,
                     post: this.formData.post,
                     responsibilities: this.formData.duties,
                     employment_type_id: this.formData.typeOfEmployment,
@@ -170,6 +174,23 @@
             valHandler(val) {
                 this.valid = val;
             },
+            // subcategoriesclick() {
+                // let subSelect = document.querySelector('.subcategoriesSelect');
+                // subSelect.addEventListener('click', () => {
+                //     let subcategoriesArray = FormVacancy.mainCategoriesVacancy.items;
+                //     let selectedMainCategory = this.formData.mainCategoriesVacancy;
+                //     console.log(selectedMainCategory);
+                //     console.log(subcategoriesArray);
+                //     console.log(FormVacancy.mainCategoriesVacancy.items);
+                //     let indexCategory = subcategoriesArray.findIndex(item => item.id == selectedMainCategory );
+                //     subcategoriesArray.splice(indexCategory, 1);
+                //     FormVacancy.subcategories.items = subcategoriesArray.map(vacancy => ({
+                //         id: vacancy.id,
+                //         name: vacancy.name,
+                //     }));
+                //     this.$forceUpdate();
+                // });
+            // },
         },
         beforeRouteLeave(to, from, next) {
             if ((this.formData.vacancyCity.length > 0 || this.formData.companyName.length > 0 || this.formData.post.length > 0 || this.formData.duties.length > 0) && !this.valid) {

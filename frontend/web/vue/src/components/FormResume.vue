@@ -110,7 +110,6 @@
                 })
             });
             this.getCity().then(response => {
-            	console.log(response);
                 FormResume.resumeCity.items = response.data.map(resumeCity => ({
                     id: resumeCity.id,
                     name: resumeCity.name,
