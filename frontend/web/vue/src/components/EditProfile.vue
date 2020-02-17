@@ -1,16 +1,47 @@
 <template>
-    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" >
-    </FormTemplate>
+
+    <v-tabs
+            centered
+            light
+            icons-and-text
+    >
+        <v-tabs-slider color="black"></v-tabs-slider>
+
+        <v-tab href="#tab-1">
+            Основное
+        </v-tab>
+
+        <v-tab href="#tab-2">
+            Новый пароль
+        </v-tab>
+
+        <v-tab-item
+                value="tab-1"
+        >
+            <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" >
+            </FormTemplate>
+        </v-tab-item>
+
+        <v-tab-item
+                value="tab-2"
+        >
+            <FormTemplate :paramsFile="getFormDataNewPass()" v-model="formDataNewPass" :sendForm="saveDataNewPass" >
+            </FormTemplate>
+        </v-tab-item>
+    </v-tabs>
+
 </template>
 
 <script>
     import FormProfile from '../lk-form/profile-form';
+    import FormNewPass from '../lk-form/new-password';
     import FormTemplate from "./FormTemplate";
     import Profile from "../mixins/profile";
+    import NewPass from "../mixins/new-pass";
 
     export default {
         name: 'FormResume',
-        mixins: [Profile],
+        mixins: [Profile, NewPass],
         components: {FormTemplate},
         created() {
             document.title = this.$route.meta.title;
@@ -71,8 +102,40 @@
                         }
                     )
             },
+            saveDataNewPass() {
+                let data = {
+                    old_password: this.formDataNewPass.old_password,
+                    new_password_1: this.formDataNewPass.new_password_1,
+                    new_password_2: this.formDataNewPass.new_password_2,
+                };
+
+                this.$http.post(`${process.env.VUE_APP_API_URL}/request/security/change-password`, data)
+                    .then(response => {
+                            this.$swal({
+                                title: 'Данные сохранены'
+                            }).then((result) => {
+                                if (result.value) {
+                                    this.$router.go();
+                                }
+                            });
+                            return response;
+                        }, response => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
+                        }
+                    )
+            },
             getFormData() {
                 return FormProfile;
+            },
+            getFormDataNewPass() {
+                return FormNewPass;
             }
         },
         beforeRouteLeave(to, from, next) {
@@ -106,5 +169,8 @@
 </script>
 
 <style scoped>
-
+    .v-tabs {
+        background-color: #ffffff;
+        padding: 0 20px 20px;
+    }
 </style>
