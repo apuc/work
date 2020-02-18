@@ -6,8 +6,10 @@ const vacancy = {
       formData: {
         vacancyCity: '',
         companyName: [],
-        mainCategoriesVacancy: null,
-        subcategories: [],
+        category: {
+          mainCategoriesVacancy: null,
+          subcategories: [],
+        },
         post: '',
         duties: '',
         typeOfEmployment: null,

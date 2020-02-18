@@ -1,5 +1,6 @@
 import Field from '../models/Field';
 import {VTextarea, VTextField, VSelect} from 'vuetify/lib'
+import Category from "../components/Category";
 
 export default {
   vacancyCity: Object.assign({}, Field, {
@@ -26,35 +27,9 @@ export default {
       }
     ]
   }),
-  mainCategoriesVacancy: Object.assign({}, Field, {
-    name: 'mainCategoriesVacancy',
-    label: 'Основная категория*',
-    rules: [v => !!v  || 'Основная категория обязателена к заполнению'],
-    component: VSelect,
-    items: [
-      {
-        name: '',
-        id: ''
-      }
-    ],
-    attach: 'attach',
-    chips: 'chips'
-  }),
-  subcategories: Object.assign({}, Field, {
-    name: 'subcategories',
-    label: 'Подкатегории',
-    rules: [v => v.length < 4  || 'Не больше трех категорий'],
-    component: VSelect,
-    items: [
-      {
-        name: '',
-        id: ''
-      }
-    ],
-    attach: 'attach',
-    chips: 'chips',
-    multiple: 'multiple',
-    class: 'subcategoriesSelect'
+  category: Object.assign({}, Field, {
+    component: Category,
+    rules: []
   }),
   post: Object.assign({}, Field, {
     name: 'post',
