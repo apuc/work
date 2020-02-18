@@ -25,6 +25,7 @@ use yii\db\ActiveRecord;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $owner
+ * @property integer $countViews
  *
  * @property User $security
  * @property Vacancy[] $vacancy
@@ -153,6 +154,11 @@ class Company extends WorkActiveRecord
     public function getUsers()
     {
         return $this->hasMany(User::className(), ['id' => 'user_id'])->via('userCompany');
+    }
+
+    public function getCountViews()
+    {
+        return Views::find()->where(['subject_id' => $this->id])->andWhere(['subject_type' => 'Company'])->count();
     }
 
     /**

@@ -105,9 +105,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                     <?php else: ?>
                         <div class="single-block__soc">
                             <?php if ($model->company->hasSocials()): ?>
-                                <?php if(Yii::$app->user->isGuest):?>
-
-                                <?php else: ?>
+                                <?php if(!Yii::$app->user->isGuest):?>
                                     <span>Написать работодателю в соц.сетях</span>
                                     <?php if ($model->company->vk): ?>
                                         <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/<?= $model->company->vk ?>">

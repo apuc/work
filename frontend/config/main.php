@@ -199,6 +199,7 @@ return [
                 '/' => 'main_page/default/index',
                 'resume/view/<id>' => 'resume/default/view',
                 'vacancy/view/<id>' => 'vacancy/default/view',
+                'company/view/<id>' => 'company/default/view',
                 'msg' => 'msg/default/index',
                 'vacancy/default/send-message' => 'vacancy/default/send-message',
                 'vacancy' => 'vacancy/default/search',
