@@ -2,6 +2,7 @@
 
 namespace frontend\modules\request\controllers;
 
+use dektrium\user\helpers\Password;
 use frontend\modules\request\models\PasswordRestore;
 use Yii;
 use yii\rest\Controller;
@@ -15,8 +16,8 @@ class SecurityController extends Controller
             throw new HttpException(500, 'Ошибка');
         $password_restore = new PasswordRestore();
         if($password_restore->load($params, '') && $password_restore->validate()) {
-            if(Yii::$app->user->identity->password === md5($password_restore->old_password)) {
-                Yii::$app->user->identity->password = md5($password_restore->new_password_1);
+            if(Password::validate($password_restore->old_password, Yii::$app->user->identity->password_hash)) {
+                Yii::$app->user->identity->password_hash = Password::hash($password_restore->new_password_1);
                 Yii::$app->user->identity->save();
                 return true;
             } else {
