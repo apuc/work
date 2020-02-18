@@ -27,25 +27,6 @@
         mixins: [Vacancy],
         mounted() {
             document.title = this.$route.meta.title;
-            this.getCategory().then(response => {
-                FormVacancy.mainCategoriesVacancy.items = response.data.map(vacancy => ({
-                    id: vacancy.id,
-                    name: vacancy.name,
-                }));
-                FormVacancy.subcategories.items = response.data.map(vacancy => ({
-                    id: vacancy.id,
-                    name: vacancy.name,
-                }));
-            }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-            });
             this.getEmploymentType().then(response => {
                 FormVacancy.typeOfEmployment.items = response.data;
                 for (let i = 0; i < response.data.length; i++) {
@@ -117,8 +98,8 @@
                 let data = {
                     city_id: this.formData.vacancyCity,
                     company_id: this.formData.companyName,
-                    main_category_id: this.formData.mainCategoriesVacancy,
-                    category: this.formData.subcategories,
+                    main_category_id: this.formData.category.mainCategoriesVacancy,
+                    category: this.formData.category.subcategories,
                     post: this.formData.post,
                     responsibilities: this.formData.duties,
                     employment_type_id: this.formData.typeOfEmployment,
@@ -156,9 +137,6 @@
             getFormData() {
                 return FormVacancy;
             },
-            async getCategory() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`);
-            },
             async getEmploymentType() {
                 return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employment-type`)
             },
@@ -174,23 +152,6 @@
             valHandler(val) {
                 this.valid = val;
             },
-            // subcategoriesclick() {
-                // let subSelect = document.querySelector('.subcategoriesSelect');
-                // subSelect.addEventListener('click', () => {
-                //     let subcategoriesArray = FormVacancy.mainCategoriesVacancy.items;
-                //     let selectedMainCategory = this.formData.mainCategoriesVacancy;
-                //     console.log(selectedMainCategory);
-                //     console.log(subcategoriesArray);
-                //     console.log(FormVacancy.mainCategoriesVacancy.items);
-                //     let indexCategory = subcategoriesArray.findIndex(item => item.id == selectedMainCategory );
-                //     subcategoriesArray.splice(indexCategory, 1);
-                //     FormVacancy.subcategories.items = subcategoriesArray.map(vacancy => ({
-                //         id: vacancy.id,
-                //         name: vacancy.name,
-                //     }));
-                //     this.$forceUpdate();
-                // });
-            // },
         },
         beforeRouteLeave(to, from, next) {
             if ((this.formData.vacancyCity.length > 0 || this.formData.companyName.length > 0 || this.formData.post.length > 0 || this.formData.duties.length > 0) && !this.valid) {

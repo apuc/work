@@ -27,7 +27,7 @@ router.afterEach( async (to, from, next) => {
   }
 
   if (location.hostname === "localhost"){
-    Vue.http.headers.common['Authorization'] = 'Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW';
+    Vue.http.headers.common['Authorization'] = 'Bearer lCLRMuK9jOXl_ZUiHiVO0Lj1mZR9feEg';
   } else {
     let getCookKey = getCookie('key');
     localStorage.localKey = getCookKey;
