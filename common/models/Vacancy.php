@@ -106,7 +106,7 @@ class Vacancy extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['company', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews', 'city0'];
+        return ['company', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews', 'city0', 'mainCategory'];
     }
 
     /**
@@ -192,7 +192,7 @@ class Vacancy extends WorkActiveRecord
     /**
      * @inheritdoc
      */
-    public function GetMainCategory()
+    public function getMainCategory()
     {
         return $this->hasOne(Category::className(), ['id'=>'main_category_id']);
     }
