@@ -26,10 +26,24 @@ export default {
       }
     ]
   }),
-  categoriesVacancy: Object.assign({}, Field, {
-    name: 'categoriesVacancy',
-    label: 'Категория',
-    rules: [v => !!v  || 'Категория обязателена к заполнению'],
+  mainCategoriesVacancy: Object.assign({}, Field, {
+    name: 'mainCategoriesVacancy',
+    label: 'Основная категория*',
+    rules: [v => !!v  || 'Основная категория обязателена к заполнению'],
+    component: VSelect,
+    items: [
+      {
+        name: '',
+        id: ''
+      }
+    ],
+    attach: 'attach',
+    chips: 'chips'
+  }),
+  subcategories: Object.assign({}, Field, {
+    name: 'subcategories',
+    label: 'Подкатегории',
+    rules: [v => v.length < 4  || 'Не больше трех категорий'],
     component: VSelect,
     items: [
       {
@@ -39,7 +53,8 @@ export default {
     ],
     attach: 'attach',
     chips: 'chips',
-    multiple: 'multiple'
+    multiple: 'multiple',
+    class: 'subcategoriesSelect'
   }),
   post: Object.assign({}, Field, {
     name: 'post',

@@ -1,17 +1,48 @@
 <template>
-    <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" >
-    </FormTemplate>
+
+    <v-tabs
+            centered
+            light
+            icons-and-text
+    >
+        <v-tabs-slider color="black"></v-tabs-slider>
+
+        <v-tab href="#tab-1">
+            Основное
+        </v-tab>
+
+        <v-tab href="#tab-2">
+            Новый пароль
+        </v-tab>
+
+        <v-tab-item
+                value="tab-1"
+        >
+            <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" >
+            </FormTemplate>
+        </v-tab-item>
+
+        <v-tab-item
+                value="tab-2"
+        >
+                <NewPassword></NewPassword>
+<!--            <FormTemplate :paramsFile="getFormDataNewPass()" v-model="formDataNewPass" :sendForm="saveDataNewPass" >-->
+<!--            </FormTemplate>-->
+        </v-tab-item>
+    </v-tabs>
+
 </template>
 
 <script>
     import FormProfile from '../lk-form/profile-form';
     import FormTemplate from "./FormTemplate";
     import Profile from "../mixins/profile";
+    import NewPassword from "./NewPassword";
 
     export default {
         name: 'FormResume',
         mixins: [Profile],
-        components: {FormTemplate},
+        components: {FormTemplate, NewPassword},
         created() {
             document.title = this.$route.meta.title;
         },
@@ -73,7 +104,7 @@
             },
             getFormData() {
                 return FormProfile;
-            }
+            },
         },
         beforeRouteLeave(to, from, next) {
             if ((this.formData.first_name != this.dataProfile.first_name) ||
@@ -106,5 +137,8 @@
 </script>
 
 <style scoped>
-
+    .v-tabs {
+        background-color: #ffffff;
+        padding: 0 20px 20px;
+    }
 </style>

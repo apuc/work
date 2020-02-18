@@ -173,7 +173,6 @@
                     this.messagesOutgoing.splice(index, 1);
                     data.type = type;
                 }
-                console.log(data);
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/message/delete-message`, data)
                     .then(response => {
                             return response;
