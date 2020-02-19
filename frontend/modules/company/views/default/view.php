@@ -63,11 +63,13 @@ use yii\helpers\Url;
             </div>
             <aside class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">
                 <div class="sidebar-inner">
-                    <div class="sidebar-inner__call-contact">
-                        <img class="sidebar-inner__img" src="/images/vertical_line.png" alt="" role="presentation"/>
-                        <p class="sidebar-inner__title">Менеджер по персоналу</p>
-                        <p class="sidebar-inner__phone-number"><?=$model->phone->number?></p>
-                    </div>
+                    <?php if($model->phone):?>
+                        <div class="sidebar-inner__call-contact">
+                            <img class="sidebar-inner__img" src="/images/vertical_line.png" alt="" role="presentation"/>
+                            <p class="sidebar-inner__title">Менеджер по персоналу</p>
+                            <p class="sidebar-inner__phone-number"><?=$model->phone->number?></p>
+                        </div>
+                    <?php endif ?>
                     <div class="single-block__soc">
                         <?php if ($model->hasSocials() && !Yii::$app->user->isGuest): ?>
                             <span>Написать соискателю в сетях</span>
@@ -90,7 +92,7 @@ use yii\helpers\Url;
                     </div>
                     <div class="sr-btn">
                         <button class="sr-btn__btn btn btn-red jsVacancyModal">Хочу тут работать</button>
-                        <p class="sr-btn__text">На сйте</p>
+                        <p class="sr-btn__text">На сайте</p>
                         <p class="sr-btn__text">с 6 января 2019 г.</p>
                     </div>
                     <div class="last-vacancy pc-last-vacancy">

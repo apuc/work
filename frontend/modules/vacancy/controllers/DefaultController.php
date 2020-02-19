@@ -110,7 +110,7 @@ class DefaultController extends Controller
             if($current_category = Category::findOne(['slug'=>$second_query_param])) {
                 $this->background_emblem = $current_category->image;
                 $params['category_ids']=[$current_category->id];
-            } if(!$current_city || !$current_categoryte) {
+            } if(!$current_city || !$current_category) {
                 throw new NotFoundHttpException();
             }
         } else if ($first_query_param) {
