@@ -123,7 +123,7 @@ class DefaultController extends Controller
                 throw new NotFoundHttpException();
             }
         }
-        $canonical_rel = Yii::$app->request->hostInfo.'/resume'.($first_query_param?('/'.$first_query_param):'').($second_query_param?('/'.$second_query_param):'');
+        $canonical_rel = Yii::$app->request->hostInfo.'/vacancy'.($first_query_param?('/'.$first_query_param):'').($second_query_param?('/'.$second_query_param):'');
         if(!$current_city && Yii::$app->request->get('city_disable')!=1)
             $current_city = City::findOne(Yii::$app->request->cookies['city']);
         $tags = Skill::find()->all();
