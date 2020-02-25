@@ -176,7 +176,7 @@ class DefaultController extends Controller
         $get = $_GET;
         unset($get['first_query_param'], $get['second_query_param']);
         $resumes = new ActiveDataProvider([
-            'query' => $resume_query,
+            'query' => $resume_query->distinct(),
             'pagination' => [
                 'defaultPageSize' => 10,
                 'params' => $get,

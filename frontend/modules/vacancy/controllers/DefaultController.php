@@ -177,7 +177,7 @@ class DefaultController extends Controller
         $get = $_GET;
         unset($get['first_query_param'], $get['second_query_param']);
         $vacancies = new ActiveDataProvider([
-            'query' => $vacancies_query,
+            'query' => $vacancies_query->distinct(),
             'pagination' => [
                 'defaultPageSize' => 10,
                 'params' => $get,
