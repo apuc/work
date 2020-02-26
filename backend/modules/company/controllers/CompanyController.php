@@ -92,7 +92,7 @@ class CompanyController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $phone = new Phone();
             $phone->company_id = $model->id;
-            $phone->number = Yii::$app->request->post('Phone')['number'];
+            $phone->number = Yii::$app->request->post('phone_number');
             $phone->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -114,8 +114,15 @@ class CompanyController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->phone->number = Yii::$app->request->post('Phone')['number'];
-            $model->phone->save();
+            if($model->phone) {
+                $model->phone->number = Yii::$app->request->post('phone_number');
+                $model->phone->save();
+            } else if(Yii::$app->request->post('phone_number')) {
+                $phone = new Phone();
+                $phone->company_id = $model->id;
+                $phone->number = Yii::$app->request->post('phone_number');
+                $phone->save();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

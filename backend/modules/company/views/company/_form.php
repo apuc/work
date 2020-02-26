@@ -43,11 +43,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'contact_person')->textInput(['maxlength' => true]) ?>
 
-    <?php if(Yii::$app->controller->action->id === 'update'): ?>
-    <?= $form->field($model->phone, 'number')->textInput(['maxlength' => true]) ?>
-    <?php elseif(Yii::$app->controller->action->id === 'create'):?>
-    <?= $form->field(new \common\models\Phone(), 'number')->textInput(['maxlength' => true]) ?>
-    <?php endif ?>
+    <label class="control-label" for="company-contact_person">Номер телефона</label>
+    <?=Html::textInput('phone_number', $model->phone?$model->phone->number:null, ['class'=>'form-control'])?>
 
     <?=$form->field($model, 'is_trusted')->checkbox()?>
     <?= $form->field($model, 'status')->dropDownList([
