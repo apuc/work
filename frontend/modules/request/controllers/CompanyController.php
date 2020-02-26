@@ -42,7 +42,7 @@ class CompanyController extends MyActiveController
         }
         return Yii::createObject([
             'class' => ActiveDataProvider::className(),
-            'query' => $this->modelClass::find()->joinWith('userCompany')->where(['or', ['=', 'owner', Yii::$app->user->id], ['=', 'user_company.user_id', Yii::$app->user->id]]),
+            'query' => $this->modelClass::find()->joinWith('userCompany')->where(['or', ['=', 'owner', Yii::$app->user->id], ['=', 'user_company.user_id', Yii::$app->user->id]])->andWhere(['status'=>1]),
             'pagination' => [
                 'params' => $requestParams,
             ],
