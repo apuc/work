@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'user_id',
+                'contentOptions' => ['style' => 'white-space: normal;'],
                 'format'    => 'text',
                 'value' => function($model)
                 {
@@ -53,8 +54,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ])
             ],
-            'name',
-            'website',
+            [
+                'attribute' => 'name',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
+            [
+                'attribute' => 'website',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
             [
                 'attribute' => 'activity_field',
                 'format' => 'text',
@@ -71,7 +78,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     return StringHelper::truncate($model->description, 100);
                 }
             ],
-            'contact_person',
+            [
+                'attribute' => 'contact_person',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
             [
                 'attribute' => 'phone.number',
                 'format' => 'text',

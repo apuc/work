@@ -54,6 +54,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'contact_person',
             'phone.number',
             [
+                'attribute' => 'is_trusted',
+                'value' => function ($model) {
+                    switch ($model->is_trusted){
+                        case false: return 'Нет';
+                        case true: return 'Да';
+                    }
+                },
+            ],
+            [
                 'attribute' => 'status',
                 'value' => function ($model) {
                     switch ($model->status){

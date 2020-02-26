@@ -48,6 +48,8 @@ use yii\widgets\ActiveForm;
     <?php elseif(Yii::$app->controller->action->id === 'create'):?>
     <?= $form->field(new \common\models\Phone(), 'number')->textInput(['maxlength' => true]) ?>
     <?php endif ?>
+
+    <?=$form->field($model, 'is_trusted')->checkbox()?>
     <?= $form->field($model, 'status')->dropDownList([
         Company::STATUS_ACTIVE => 'Активен',
         Company::STATUS_INACTIVE => 'Не активен',

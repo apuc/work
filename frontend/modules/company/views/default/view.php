@@ -11,9 +11,9 @@ use yii\helpers\Url;
     <div class="single-vacancy__circle"></div>
     <div class="container">
         <ul class="result-search">
-            <li>Результаты поиска ·</li>
-            <li>Вакансии  в Донецке ·</li>
-            <li>Менеджер по холодным звонкамс</li>
+<!--            <li>Результаты поиска ·</li>-->
+<!--            <li>Вакансии  в Донецке ·</li>-->
+<!--            <li>Менеджер по холодным звонкамс</li>-->
         </ul>
         <div class="single-block single-block-slider">
             <div class="single-block__left">
@@ -35,7 +35,9 @@ use yii\helpers\Url;
                     <div class="content-part__block">
                         <p class="content-part__title">
                             <?=$model->name?>
-                            <img src="/images/correct.png" alt="" id="small-img" role="presentation"/>
+                            <?php if($model->is_trusted):?>
+                                <img src="/images/correct.png" alt="" id="small-img" role="presentation"/>
+                            <?php endif ?>
                         </p>
                         <img class="content-part__logo" src="<?=$model->image_url?>>" alt="" role="presentation"/>
                         <div class="vacancies">
@@ -45,7 +47,9 @@ use yii\helpers\Url;
                         </div>
                     </div>
                     <div class="content-part__block">
-                        <p class="content-part__title">Проверенная компания</p>
+                        <?php if($model->is_trusted):?>
+                            <p class="content-part__title">Проверенная компания</p>
+                        <?php endif ?>
                         <div class="central" style="align-items: center;">
                             <img src="/images/chip.png" alt="" role="presentation"/>
                             <span><?=$model->activity_field?></span>
@@ -74,17 +78,17 @@ use yii\helpers\Url;
                         <?php if ($model->hasSocials() && !Yii::$app->user->isGuest): ?>
                             <span>Написать соискателю в сетях</span>
                             <?php if ($model->vk): ?>
-                                <a class="vk-bg" href="#">
+                                <a class="vk-bg" href="https://vk.com/<?= $model->vk ?>">
                                     <img src="/images/vk.svg" alt="" role="presentation"/>
                                 </a>
                             <?php endif ?>
                             <?php if ($model->instagram): ?>
-                                <a class="ok-bg" href="#">
-                                    <img src="/images/ok.svg" alt="" role="presentation"/>
+                                <a class="inst-bg" href="https://instagram.com/<?= $model->instagram ?>">
+                                    <img src="/images/instagram.svg" alt="" role="presentation"/>
                                 </a>
                             <?php endif ?>
                             <?php if($model->facebook): ?>
-                                <a class="fb-bg" href="#">
+                                <a class="fb-bg" href="https://facebook.com/<?= $model->facebook ?>">
                                     <img src="/images/fb.svg" alt="" role="presentation"/>
                                 </a>
                             <?php endif ?>
@@ -93,7 +97,8 @@ use yii\helpers\Url;
                     <div class="sr-btn">
                         <button class="sr-btn__btn btn btn-red jsVacancyModal">Хочу тут работать</button>
                         <p class="sr-btn__text">На сайте</p>
-                        <p class="sr-btn__text">с 6 января 2019 г.</p>
+                        <?php $months = array( 1 => 'января' , 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня' , 'июля' , 'августа' , 'сентября' , 'октября' , 'ноября' , 'декабря' ); ?>
+                        <p class="sr-btn__text">с <?=date('j '.$months[date( 'n', $model->created_at )].' Y', $model->created_at)?> г.</p>
                     </div>
                     <div class="last-vacancy pc-last-vacancy">
                         <h2 class="last-vacancy__head">Вакансии компании</h2>
@@ -134,7 +139,7 @@ use yii\helpers\Url;
                                         <?=$vacancy->mainCategory->name?>
                                     </a>
                                 </div>
-                                <a class="last-vacancy__title" href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" title="Дизайнер презентаций">
+                                <a class="last-vacancy__title" href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" title="<?=$vacancy->post?>">
                                     <?=$vacancy->post?>
                                 </a>
                             </div>

@@ -25,10 +25,8 @@ use yii\widgets\ActiveForm; ?>
         'buttonName' => 'Выбрать фотографию'
     ]);
     ?>
-    <?= $form->field($model, 'region_id'); ?>
+    <?= $form->field($model, 'region_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Region::find()->all(), 'id', 'name')); ?>
     <?= $form->field($model, 'status')->dropDownList(\common\models\City::getStatusList()); ?>
-    <?= $form->field($model, 'longitude'); ?>
-    <?= $form->field($model, 'latitude'); ?>
     <?= $form->field($model, 'slug'); ?>
     <?= $form->field($model, 'meta_title'); ?>
     <?= $form->field($model, 'meta_description'); ?>

@@ -13,8 +13,6 @@ use Yii;
  * @property string $prepositional
  * @property string $image
  * @property string $region_id
- * @property string $latitude
- * @property string $longitude
  * @property string $status
  * @property string $slug
  * @property string $meta_title
@@ -49,18 +47,16 @@ class City extends WorkActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 50],
+            [['name', 'region_id'], 'required'],
             [['prepositional', 'image', 'slug', 'meta_title', 'header', 'resume_meta_title', 'resume_header'], 'string', 'max' => 255],
             [['meta_description', 'bottom_text', 'resume_meta_description', 'resume_bottom_text'], 'string'],
             [['region_id', 'status'], 'integer'],
-            [['latitude', 'longitude'], 'safe'],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'latitude' => 'Широта',
-            'longitude' => 'Долгота',
             'region_id' => 'Область',
             'image' => 'Фотография',
             'slug' => 'Slug',

@@ -26,6 +26,7 @@ use yii\db\ActiveRecord;
  * @property integer $updated_at
  * @property integer $owner
  * @property integer $countViews
+ * @property bool $is_trusted
  *
  * @property User $security
  * @property Vacancy[] $vacancy
@@ -69,6 +70,7 @@ class Company extends WorkActiveRecord
             [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person', 'image_url'], 'string', 'max' => 255],
             [['activity_field', 'description'], 'string'],
+            [['is_trusted'], 'boolean'],
             [['user_id', 'contact_person'], 'required'],
         ];
     }
@@ -98,7 +100,8 @@ class Company extends WorkActiveRecord
             'contact_person' => 'Контактное лицо',
             'status' => 'Статус',
             'created_at' => 'Создан',
-            'updated_at' => 'Изменен'
+            'updated_at' => 'Изменен',
+            'is_trusted' => 'Доверенная'
         ];
     }
 

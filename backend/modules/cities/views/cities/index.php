@@ -70,8 +70,6 @@ use yii\helpers\Html; ?>
                     ],
                 ]),
             ],
-            'latitude',
-            'longitude',
             'slug',
             [
                 'attribute' => 'meta_title',

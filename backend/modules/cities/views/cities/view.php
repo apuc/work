@@ -39,8 +39,6 @@ use yii\widgets\DetailView; ?>
                     return \common\models\City::getStatusName($model->status);
                 }
             ],
-            'latitude',
-            'longitude',
             'slug',
             'meta_title',
             'meta_description',
