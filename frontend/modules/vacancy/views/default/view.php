@@ -238,7 +238,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                             </div>
                                         <?php endif ?>
                                         <a class="last-vacancy__title" href="/vacancy/view/<?= $vacancy->id ?>"
-                                           title="$vacancy->post"><?= $vacancy->post ?></a>
+                                           title="<?=$vacancy->post?>"><?= $vacancy->post ?></a>
                                     </div>
                                 </div>
                                 <div class="last-vacancy__info">
@@ -268,7 +268,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                     </div>
                                 <?php endif ?>
                                 <a class="last-vacancy__title" href="/vacancy/view/<?= $vacancy->id ?>"
-                                   title="$vacancy->post"><?= $vacancy->post ?></a>
+                                   title="<?=$vacancy->post?>"><?= $vacancy->post ?></a>
                             </div>
                         </div>
                         <div class="last-vacancy__info">
