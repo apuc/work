@@ -4839,7 +4839,12 @@ button {
 .vacancies__img {
     position: absolute;
     left: 0;
-    top: 10%; }
+    top: 50%;
+    width: 3px;
+    height: 30px;
+    background-color: #ff0400;
+    transform: translateY(-50%);
+}
 
 .vacancies__title {
     padding-left: 20px;

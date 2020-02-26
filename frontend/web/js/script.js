@@ -247,6 +247,14 @@ $(document).ready(function () {
     $('.jsModalMessageVacancy').fadeIn();
     $('body').addClass('body-overflow');
   });
+  $('.jsCompanyModal').click(function () {
+    var company_id=$(this).attr('data-id');
+    if(company_id!==undefined)
+      $("input[name=company_company_id]").val(company_id);
+    $('.jsModal').fadeIn();
+    $('.jsModalMessageCompany').fadeIn();
+    $('body').addClass('body-overflow');
+  });
   $('.jsModalClose').click(function () {
     $('.jsModal').fadeOut();
     $('.jsModalLogin').fadeOut(1);
