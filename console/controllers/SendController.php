@@ -7,6 +7,7 @@ use common\classes\Debug;
 use common\models\Message;
 use common\models\Resume;
 use common\models\SendMail;
+use common\models\User;
 use common\models\Vacancy;
 use Yii;
 use yii\console\Controller;
@@ -96,6 +97,12 @@ class SendController extends Controller
                 $text="Ваше резюме $model->title не обновлялось уже $period";
                 break;
         }
+        Yii::$app->mailer->compose()
+            ->setFrom('noreply@rabota.today')
+            ->setTo(User::findOne($model->owner)->email)
+            ->setSubject($title)
+            ->setTextBody($text)
+            ->send();
         $message=new Message();
         $message->load([
             'title'=>$title,
