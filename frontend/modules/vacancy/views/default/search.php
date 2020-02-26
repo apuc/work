@@ -175,7 +175,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 <img class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt="" role="presentation"/>
                             </div>
                             <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$vacancy->main_category_id])?>" class="single-card__title mt5">
-                                <?= ucfirst($vacancy->post) ?>
+                                <?= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) ?>
                             </a>
                             <div class="single-card__info-second"><span
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->update_time, 'dd.MM.yyyy') ?></span>

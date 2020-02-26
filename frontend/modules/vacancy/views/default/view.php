@@ -53,7 +53,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         <a href="<?=Vacancy::getSearchPageUrl($referer_category->slug, $model->city0?$model->city0->slug:false)?>"><?= $referer_category->name ?></a>
                     </li>
                 <?php endif ?>
-                <li><?= $model->post ?></li>
+                <li><?= mb_convert_case ( $model->post , MB_CASE_TITLE) ?></li>
             </ul>
         </div>
         <div class="single-block single-block-slider" itemscope="itemscope" itemtype="http://schema.org/JobPosting">
@@ -86,7 +86,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                     <?php endif ?>
                 </div>
                 <h1 class="single-block__head" itemprop="title">
-                    <?= ucfirst($model->post) ?>
+                    <?= mb_convert_case ( $model->post , MB_CASE_TITLE) ?>
                 </h1>
                 <span itemprop="baseSalary" itemscope="" itemtype="http://schema.org/MonetaryAmount">
                     <meta itemprop="currency" content="RUB">
@@ -238,7 +238,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                             </div>
                                         <?php endif ?>
                                         <a class="last-vacancy__title" href="/vacancy/view/<?= $vacancy->id ?>"
-                                           title="<?=$vacancy->post?>"><?= $vacancy->post ?></a>
+                                           title="<?=mb_convert_case ( $vacancy->post , MB_CASE_TITLE)?>"><?= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) ?></a>
                                     </div>
                                 </div>
                                 <div class="last-vacancy__info">
@@ -268,7 +268,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                     </div>
                                 <?php endif ?>
                                 <a class="last-vacancy__title" href="/vacancy/view/<?= $vacancy->id ?>"
-                                   title="<?=$vacancy->post?>"><?= $vacancy->post ?></a>
+                                   title="<?=mb_convert_case ( $vacancy->post , MB_CASE_TITLE)?>"><?= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) ?></a>
                             </div>
                         </div>
                         <div class="last-vacancy__info">

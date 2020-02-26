@@ -38,7 +38,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                             <a href="<?=Resume::getSearchPageUrl($referer_category->slug)?>"><?= $referer_category->name ?></a>
                         </li>
                     <?php endif?>
-                    <li><?= ucfirst($model->title) ?></li>
+                    <li><?= mb_convert_case ( $model->title , MB_CASE_TITLE) ?></li>
                 </ul>
                 <div class="resume-results__date">
                     <p>Резюме от
@@ -57,7 +57,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
 <!--                        <p class="resume-top__status vr-head">Онлайн-->
 <!--                        </p>-->
 <!--                    </div>-->
-                    <h3 class="resume-top__head"><?= $model->title ?>
+                    <h3 class="resume-top__head"><?= mb_convert_case ( $model->title , MB_CASE_TITLE) ?>
                     </h3>
                     <p class="resume-description__text">
                         <?=$model->employer->first_name.' '.$model->employer->second_name?>
