@@ -43,6 +43,11 @@
                                     {{ unreadMessages }}
                                 </v-list-tile-title>
                             </template>
+                            <template v-if="link.addFlag">
+                                <router-link class="menu-add-link" :to="link.addTo" :title="link.addTitle">
+                                    <span>+</span>
+                                </router-link>
+                            </template>
                         </v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
@@ -86,47 +91,44 @@
                     {
                         title: 'Статистика',
                         url: '/personal-area/statistics',
-                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/analysis.png'
+                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/analysis.png',
+                        addFlag: false
                     },
                     {
                         title: 'Отклики',
                         url: '/personal-area/my-message',
-                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/mail.png'
+                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/mail.png',
+                        addFlag: false
                     },
                     {
-                        title: 'Добавить вакансию',
-                        url: '/personal-area/add-vacancy',
-                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/add_vacancy.png'
-                    },
-                    {
-                        title: 'Добавить резюме',
-                        url: '/personal-area/add-resume',
-                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/add_resume.png'
-                    },
-                    {
-                        title: 'Добавить компанию или частное лицо',
-                        url: '/personal-area/add-company',
-                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/add_company.png'
-                    },
-                    {
-                        title: 'Все вакансии',
+                        title: 'Вакансии',
                         url: '/personal-area/all-vacancy',
-                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_vacancy.png'
+                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_vacancy.png',
+                        addFlag: true,
+                        addTo: '/personal-area/add-vacancy',
+                        addTitle: 'Добавить вакансию'
                     },
                     {
-                        title: 'Все резюме',
+                        title: 'Резюме',
                         url: '/personal-area/all-resume',
-                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_resume.png'
+                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_resume.png',
+                        addFlag: true,
+                        addTo: '/personal-area/add-resume',
+                        addTitle: 'Добавить резюме'
                     },
                     {
-                        title: 'Все компании',
+                        title: 'Компании',
                         url: '/personal-area/all-company',
-                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_company.png'
+                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_company.png',
+                        addFlag: true,
+                        addTo: '/personal-area/add-company',
+                        addTitle: 'Добавить компанию'
                     },
                     {
                         title: 'Редактировать профиль',
                         url: '/personal-area/edit-profile',
-                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/profile.png'
+                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/profile.png',
+                        addFlag: false
                     },
                 ],
             }
@@ -271,6 +273,7 @@
     }
 
     .logout-btn img, .main-page img {
+        min-width: 20px;
         width: 20px;
         margin-right: 10px;
     }
@@ -281,6 +284,7 @@
     }
 
     .v-list__tile__content img {
+        min-width: 20px;
         width: 20px;
         margin-right: 10px;
     }
@@ -314,5 +318,22 @@
         background: #ff0000;
         color: #ffffff !important;
         border-radius: 50%;
+    }
+    .menu-add-link {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        width: 20px;
+        height: 20px;
+        transition: all ease .3s;
+        border: 1px solid #ffff00;
+        border-radius: 5px;
+        font-size: 20px;
+        box-shadow: 0 0 7px 1px #ffff00;
+        margin-right: 5px;
+    }
+    .menu-hover:hover .menu-add-link {
+        display: flex;
     }
 </style>
