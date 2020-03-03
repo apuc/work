@@ -6002,6 +6002,12 @@ button {
     margin: 0 0 20px;
     font-weight: 500;
     font-size: 16px; }
+.sr-block__text__company a{
+    text-decoration: none}
+.sr-block__text__company a:hover{
+    color: black;
+    text-decoration: underline;
+}
 .sr-block__text__contact p {
     margin: 0;
     color: #182c93; }

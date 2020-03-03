@@ -36,10 +36,9 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
 
 ?>
 
-<section class="single-vacancy"><img class="single-vacancy__dots2" src="/images/bg-dots.png" alt=""
-                                     role="presentation"/>
-    <div class="single-vacancy__circle">
-    </div>
+<section class="single-vacancy">
+    <img class="single-vacancy__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
+    <div class="single-vacancy__circle"></div>
     <div class="container">
         <div class="resume-results">
             <ul class="breadcrumbs">
@@ -186,7 +185,8 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         <meta itemprop="name" content="<?=$model->company->name?>">
                         <meta itemprop="value" content="<?=$model->id?>">
                     </span>
-                    <div class="sr-block">
+                    <div class="sr-block" itemscope="itemscope" itemtype="https://schema.org/Organization">
+                        <meta itemprop="name" content="<?=$model->company->name?>">
                             <?php if(Yii::$app->user->isGuest):?>
                                 <span style="display: flex; flex-direction: column;">
                                     Для просмотра контактных данных <a href="#" class="jsLogin" style="text-decoration: none;">войдите или зарегистрируйтесь</a>
@@ -195,9 +195,9 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         <ul class="sr-block__text">
                             <?php if (!empty($model->company->name)): ?>
                                 <li class="sr-block__text__company">
-                                    <p><strong>Компания:</strong><?= $model->company->name ?>
+                                    <a href="/company/view/<?=$model->company_id?>"><strong>Компания:</strong><br><?= $model->company->name ?>
                                         <br> <?= $model->company->activity_field ?>
-                                    </p>
+                                    </a>
                                 </li>
                             <?php endif ?>
                             <li class="sr-block__text__contact">

@@ -19,7 +19,7 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
-        $model = Company::find()->where(['id'=>$id, 'status'=>Company::STATUS_ACTIVE])->one();
+        $model = Company::find()->where(['id'=>$id, 'status'=>Company::STATUS_ACTIVE])->andWhere(['!=', 'name', ''])->andWhere(['!=', 'name', 'null'])->one();
         if(!$model)
             throw new NotFoundHttpException();
         $view = new Views();
