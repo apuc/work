@@ -58,7 +58,12 @@ class SendController extends Controller
             $vacancy->save();
             $this->sendNotificationMessage($vacancy, "неделю", Vacancy::className());
         }
-        $vacancies=Vacancy::find()->where(['notification_status'=>Vacancy::NOTIFICATION_STATUS_1_WEEK])->andWhere(['<=', 'update_time', time()-86400*14]);
+        $vacancies=Vacancy::find()
+            ->where(['notification_status'=>Vacancy::NOTIFICATION_STATUS_1_WEEK])
+            ->andWhere(['<=', 'update_time', time()-86400*14])
+            ->andWhere(['!=', 'status', Vacancy::STATUS_INACTIVE])
+            ->limit(5)
+            ->all();
         /** @var Vacancy $vacancy */
         foreach ($vacancies as $vacancy){
             echo $vacancy->post.": 2 неделя\n";
@@ -79,7 +84,12 @@ class SendController extends Controller
             $resume->save();
             $this->sendNotificationMessage($resume, "неделю", Resume::className());
         }
-        $resumes=Resume::find()->where(['notification_status'=>Resume::NOTIFICATION_STATUS_1_WEEK])->andWhere(['<=', 'update_time', time()-86400*14]);
+        $resumes=Resume::find()
+            ->where(['notification_status'=>Resume::NOTIFICATION_STATUS_1_WEEK])
+            ->andWhere(['<=', 'update_time', time()-86400*14])
+            ->andWhere(['!=', 'status', Resume::STATUS_INACTIVE])
+            ->limit(5)
+            ->all();
         /** @var Resume $resume */
         foreach ($resumes as $resume){
             echo $resume->title.": 2 неделя\n";
