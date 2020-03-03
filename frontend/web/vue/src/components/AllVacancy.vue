@@ -1,7 +1,14 @@
 <template>
 
     <div>
-        <v-subheader class="all-head">Ваши вакансии</v-subheader>
+        <v-subheader class="all-head">
+            Ваши вакансии
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy">
+                <v-btn class="vacancy__link">
+                    Добавить вакансию
+                </v-btn>
+            </router-link>
+        </v-subheader>
         <template v-if="getAllVacancy.length === 0">
             <v-subheader>У вас нет вакансий</v-subheader>
         </template>
@@ -18,7 +25,11 @@
                                 style="margin-top: 20px;"
                         >
                             <v-list-tile-content>
-                                <v-list-tile-title class="mt-auto mb-auto"> {{ item.post }}</v-list-tile-title>
+                                <v-list-tile-title class="mt-auto mb-auto">
+                                    <a :href="domen + '/vacancy/view/' + item.id" target="_blank">
+                                        {{ item.post | capitalize }}
+                                    </a>
+                                </v-list-tile-title>
                                 <v-list-tile-sub-title class="mt-auto mb-auto">Последнее обновление: {{ item.update_time
                                     }}
                                 </v-list-tile-sub-title>
@@ -82,12 +93,14 @@
                 getAllVacancy: [],
                 paginationPageCount: 1,
                 paginationCurrentPage: 1,
+                dome: ''
             }
         },
         created() {
             document.title = this.$route.meta.title;
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/my-index?expand=can_update&sort=-update_time`)
                 .then(response => {
+                        this.domen = `${process.env.VUE_APP_API_URL}`;
                         this.getAllVacancy = response.data;
                         this.getAllVacancy.forEach((element) => {
                             let timestamp = element.update_time;
@@ -100,17 +113,18 @@
                                 hour: 'numeric',
                                 minute: 'numeric',
                             };
-                            element.update_time = date.toLocaleString("ru", options);                        });
+                            element.update_time = date.toLocaleString("ru", options);
+                        });
                         this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
                     }, response => {
-                    this.$swal({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        type: 'error',
-                        title: response.data.message
-                    })
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: response.data.message
+                        })
                     }
                 );
 
@@ -130,17 +144,17 @@
                                 hour: 'numeric',
                                 minute: 'numeric',
                             };
-                            element.update_time = date.toLocaleString("ru", options);
+                            response.data.update_time = date.toLocaleString("ru", options);
                             this.getAllVacancy.unshift(newData);
                         }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
                         }
                     );
             },
@@ -178,17 +192,28 @@
                     .then(response => {
                             this.getAllVacancy = response.data;
                         }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
                         }
                     );
             }
+        },
+        filters: {
+            capitalize(val) {
+                if (!val) {
+                    return '';
+                }
+
+                val = val.toString();
+
+                return val.charAt(0).toUpperCase() + val.slice(1);
+            },
         }
     }
 </script>
@@ -208,5 +233,13 @@
         padding: 0;
         font-size: 22px;
         color: rgba(0, 0, 0, .74);
+    }
+
+    .all-head a {
+        margin-left: 15px;
+    }
+
+    .all-head a button {
+        text-transform: none !important;
     }
 </style>

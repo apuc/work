@@ -1,6 +1,6 @@
 <template>
     <div>
-        <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
+        <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveCheck" @val="valHandler">
 
             <image-uploader
                     class="input-file"
@@ -97,13 +97,38 @@
             document.title = this.$route.meta.title;
         },
         mounted() {
-			Object.assign(FormCompany.nameCompany.rules , [v => !!v || 'Название компании обязательно к заполнению']);
-			Object.assign(FormCompany.scopeOfTheCompany.rules , [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
-			this.inputsDisabled();
-			this.getUserData();
+            Object.assign(FormCompany.nameCompany.rules, [v => !!v || 'Название компании обязательно к заполнению']);
+            Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
+            this.inputsDisabled();
+            this.getUserData();
         },
         methods: {
+            saveCheck() {
+                if (this.image === null) {
+                    this.$swal({
+                        title: 'Вы уверены что хотите сохранить (компанию/частное лицо) без логотипа? ' +
+                            'Логотип увеличит количество просмотров вакансии и поможет найти сотрудниковы быстрее! ' +
+                            'А так же, повысит узнаваемость компании.',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Продолжить без лого',
+                        cancelButtonText: 'Добавить лого'
+                    }).then((result) => {
+                        if (result.value) {
+                        	this.saveData();
+                        } else {
+                            let btn = document.getElementById('main-btn');
+                            btn.disabled = false;
+                        }
+                    });
+                } else {
+					this.saveData();
+				}
+            },
             saveData() {
+
                 let data = {
                     image: {},
                     name: this.formData.nameCompany,
@@ -125,10 +150,13 @@
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/company`, data)
                     .then(response => {
                             this.$router.push('/personal-area/all-company');
-							res = response;
-							gtag('event', 'companyAdd', { 'event_category': 'form', 'event_action': 'companyAdd', });
-							yaCounter53666866.reachGoal('companyAdd');
-							return true;
+                            res = response;
+                            gtag('event', 'companyAdd', {
+                                'event_category': 'form',
+                                'event_action': 'companyAdd',
+                            });
+                            yaCounter53666866.reachGoal('companyAdd');
+                            return true;
                         }, response => {
                             this.$swal({
                                 toast: true,
@@ -141,25 +169,25 @@
                         }
                     )
             },
-			getUserData() {
-				this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
-						.then(response => {
-									this.formData.contactPerson = response.data[0].first_name + ' ' + response.data[0].second_name;
-									if (response.data[0].phone != null) {
-										this.formData.companyPhone = response.data[0].phone.number;
-									}
-								}, response => {
-									this.$swal({
-										toast: true,
-										position: 'bottom-end',
-										showConfirmButton: false,
-										timer: 4000,
-										type: 'error',
-										title: response.data.message
-									})
-								}
-						)
-			},
+            getUserData() {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
+                    .then(response => {
+                            this.formData.contactPerson = response.data[0].first_name + ' ' + response.data[0].second_name;
+                            if (response.data[0].phone != null) {
+                                this.formData.companyPhone = response.data[0].phone.number;
+                            }
+                        }, response => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
+                        }
+                    )
+            },
             getFormData() {
                 return FormCompany;
             },
@@ -167,78 +195,78 @@
                 this.hasImage = true;
                 this.image = output;
             },
-			inputsDisabled() {
-				let check = document.querySelector('.privatePerson .v-input__slot');
-				let inputCheck = check.querySelector('input');
-				let allInputs = document.querySelectorAll('.jsCompanyInput');
-				let nameCompany = document.getElementById('nameCompany');
-				let site = document.getElementById('site');
-				let scopeOfTheCompany = document.getElementById('scopeOfTheCompany');
-				let aboutCompany = document.getElementById('aboutCompany');
-				check.addEventListener('click', () => {
-					let attrCheck = inputCheck.getAttribute('aria-checked');
-					if (attrCheck == 'true') {
-						this.formData.nameCompany = '';
-						this.formData.site = '';
-						this.formData.scopeOfTheCompany = '';
-						this.formData.aboutCompany = '';
-						for (let i = 0; i < allInputs.length; i++) {
-							allInputs[i].classList.add('opacity');
-						}
-						nameCompany.disabled = true;
-						site.disabled = true;
-						scopeOfTheCompany.disabled = true;
-						aboutCompany.disabled = true;
-						FormCompany.nameCompany.rules = [];
-						FormCompany.scopeOfTheCompany.rules = [];
-						this.$forceUpdate();
-						let elem = document.getElementById('main-btn');
-						elem.disabled = false;
-						elem.classList.remove('v-btn--disabled');
-						elem.classList.remove('success--text');
-						elem.classList.add('success');
-					} else {
-						for (let i = 0; i < allInputs.length; i++) {
-							allInputs[i].classList.remove('opacity');
-						}
-						nameCompany.disabled = false;
-						site.disabled = false;
-						scopeOfTheCompany.disabled = false;
-						aboutCompany.disabled = false;
-						Object.assign(FormCompany.nameCompany.rules , [v => !!v || 'Название компании обязательно к заполнению']);
-						Object.assign(FormCompany.scopeOfTheCompany.rules , [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
-						let elem = document.getElementById('main-btn');
-						elem.disabled = false;
-						elem.classList.remove('v-btn--disabled');
-						elem.classList.remove('success--text');
-						elem.classList.add('success');
-					}
-				});
-			},
-			valHandler(val) {
-				this.valid = val;
-			},
+            inputsDisabled() {
+                let check = document.querySelector('.privatePerson .v-input__slot');
+                let inputCheck = check.querySelector('input');
+                let allInputs = document.querySelectorAll('.jsCompanyInput');
+                let nameCompany = document.getElementById('nameCompany');
+                let site = document.getElementById('site');
+                let scopeOfTheCompany = document.getElementById('scopeOfTheCompany');
+                let aboutCompany = document.getElementById('aboutCompany');
+                check.addEventListener('click', () => {
+                    let attrCheck = inputCheck.getAttribute('aria-checked');
+                    if (attrCheck == 'true') {
+                        this.formData.nameCompany = '';
+                        this.formData.site = '';
+                        this.formData.scopeOfTheCompany = '';
+                        this.formData.aboutCompany = '';
+                        for (let i = 0; i < allInputs.length; i++) {
+                            allInputs[i].classList.add('opacity');
+                        }
+                        nameCompany.disabled = true;
+                        site.disabled = true;
+                        scopeOfTheCompany.disabled = true;
+                        aboutCompany.disabled = true;
+                        FormCompany.nameCompany.rules = [];
+                        FormCompany.scopeOfTheCompany.rules = [];
+                        this.$forceUpdate();
+                        let elem = document.getElementById('main-btn');
+                        elem.disabled = false;
+                        elem.classList.remove('v-btn--disabled');
+                        elem.classList.remove('success--text');
+                        elem.classList.add('success');
+                    } else {
+                        for (let i = 0; i < allInputs.length; i++) {
+                            allInputs[i].classList.remove('opacity');
+                        }
+                        nameCompany.disabled = false;
+                        site.disabled = false;
+                        scopeOfTheCompany.disabled = false;
+                        aboutCompany.disabled = false;
+                        Object.assign(FormCompany.nameCompany.rules, [v => !!v || 'Название компании обязательно к заполнению']);
+                        Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
+                        let elem = document.getElementById('main-btn');
+                        elem.disabled = false;
+                        elem.classList.remove('v-btn--disabled');
+                        elem.classList.remove('success--text');
+                        elem.classList.add('success');
+                    }
+                });
+            },
+            valHandler(val) {
+                this.valid = val;
+            },
         },
-		beforeRouteLeave(to, from, next) {
-			if ((this.formData.nameCompany.length > 0 || this.formData.scopeOfTheCompany.length > 0) && !this.valid) {
-				next(false);
-				this.$swal({
-					title: 'Вы точно не хотите сохранить резюме?',
-					type: 'warning',
-					showCancelButton: true,
-					confirmButtonColor: '#3085d6',
-					cancelButtonColor: '#d33',
-					confirmButtonText: 'Да',
-					cancelButtonText: 'Нет'
-				}).then((result) => {
-					if (result.value) {
-						next();
-					}
-				})
-			} else {
-				next();
-			}
-		}
+        beforeRouteLeave(to, from, next) {
+            if ((this.formData.nameCompany.length > 0 || this.formData.scopeOfTheCompany.length > 0) && !this.valid) {
+                next(false);
+                this.$swal({
+                    title: 'Вы точно не хотите сохранить резюме?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Да',
+                    cancelButtonText: 'Нет'
+                }).then((result) => {
+                    if (result.value) {
+                        next();
+                    }
+                })
+            } else {
+                next();
+            }
+        }
     }
 </script>
 

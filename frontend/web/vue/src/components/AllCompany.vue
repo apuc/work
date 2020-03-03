@@ -1,6 +1,13 @@
 <template>
     <div>
-        <v-subheader class="all-head">Ваши компании</v-subheader>
+        <v-subheader class="all-head">
+            Ваши компании
+            <router-link class="vacancy__link" to="/personal-area/add-company">
+                <v-btn class="vacancy__link">
+                    Добавить компанию или частное лицо
+                </v-btn>
+            </router-link>
+        </v-subheader>
         <template v-if="getAllCompany.length === 0">
             <v-subheader>У вас нет компаний</v-subheader>
         </template>
@@ -188,5 +195,11 @@
         padding: 0;
         font-size: 22px;
         color: rgba(0, 0, 0, .74);
+    }
+    .all-head a {
+        margin-left: 15px;
+    }
+    .all-head a button {
+        text-transform: none !important;
     }
 </style>
