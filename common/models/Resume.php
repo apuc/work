@@ -48,8 +48,9 @@ use yii\db\ActiveRecord;
  */
 class Resume extends WorkActiveRecord
 {
-    const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_HIDDEN = 2;
 
     const NOTIFICATION_STATUS_OK=0;
     const NOTIFICATION_STATUS_1_WEEK=1;

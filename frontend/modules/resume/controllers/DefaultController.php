@@ -32,7 +32,7 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
-        $model = Resume::find()->where(['id'=>$id, 'status'=>Resume::STATUS_ACTIVE])->one();
+        $model = Resume::find()->where(['id'=>$id, 'status'=>[Resume::STATUS_ACTIVE, Resume::STATUS_HIDDEN]])->one();
         if(!$model)
             throw new NotFoundHttpException();
         $referer_category = false;
