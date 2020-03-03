@@ -45,9 +45,14 @@ class SendController extends Controller
 
     public function actionNotifications()
     {
-        $vacancies=Vacancy::find()->where(['notification_status'=>Vacancy::NOTIFICATION_STATUS_OK])->andWhere(['<=', 'update_time', time()-86400*7]);
-        /** @var Vacancy $vacancy */
-        foreach ($vacancies->each(50) as $vacancy){
+        $vacancies=Vacancy::find()
+            ->where(['notification_status'=>Vacancy::NOTIFICATION_STATUS_OK])
+            ->andWhere(['<=', 'update_time', time()-86400*7])
+            ->andWhere(['!=', 'status', Vacancy::STATUS_INACTIVE])
+            ->limit(5)
+            ->all();
+        /** @var Vacancy[] $vacancies */
+        foreach ($vacancies as $vacancy){
             echo $vacancy->post.": 1 неделя\n";
             $vacancy->notification_status=Vacancy::NOTIFICATION_STATUS_1_WEEK;
             $vacancy->save();
@@ -55,15 +60,20 @@ class SendController extends Controller
         }
         $vacancies=Vacancy::find()->where(['notification_status'=>Vacancy::NOTIFICATION_STATUS_1_WEEK])->andWhere(['<=', 'update_time', time()-86400*14]);
         /** @var Vacancy $vacancy */
-        foreach ($vacancies->each(50) as $vacancy){
+        foreach ($vacancies as $vacancy){
             echo $vacancy->post.": 2 неделя\n";
             $vacancy->notification_status=Vacancy::NOTIFICATION_STATUS_2_WEEKS;
             $vacancy->save();
             $this->sendNotificationMessage($vacancy, "2 недели", Vacancy::className());
         }
-        $resumes=Resume::find()->where(['notification_status'=>Resume::NOTIFICATION_STATUS_OK])->andWhere(['<=', 'update_time', time()-86400*7]);
+        $resumes=Resume::find()
+            ->where(['notification_status'=>Resume::NOTIFICATION_STATUS_OK])
+            ->andWhere(['<=', 'update_time', time()-86400*7])
+            ->andWhere(['!=', 'status', Resume::STATUS_INACTIVE])
+            ->limit(5)
+            ->all();
         /** @var Resume $resume */
-        foreach ($resumes->each(50) as $resume){
+        foreach ($resumes as $resume){
             echo $resume->title.": 1 неделя\n";
             $resume->notification_status=Resume::NOTIFICATION_STATUS_1_WEEK;
             $resume->save();
@@ -71,7 +81,7 @@ class SendController extends Controller
         }
         $resumes=Resume::find()->where(['notification_status'=>Resume::NOTIFICATION_STATUS_1_WEEK])->andWhere(['<=', 'update_time', time()-86400*14]);
         /** @var Resume $resume */
-        foreach ($resumes->each(50) as $resume){
+        foreach ($resumes as $resume){
             echo $resume->title.": 2 неделя\n";
             $resume->notification_status=Resume::NOTIFICATION_STATUS_2_WEEKS;
             $resume->save();
