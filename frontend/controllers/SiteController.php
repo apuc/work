@@ -28,7 +28,7 @@ class SiteController extends Controller
 {
 
     public function test() {
-        return 0;
+        return 1;
     }
 
     public function actionAutodeploy() {
