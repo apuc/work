@@ -33,9 +33,13 @@ class SiteController extends Controller
 
     public function actionAutodeploy() {
         $params = Yii::$app->request->getBodyParams();
-        if($params['ref'] === "refs/heads/master") {
-            print_r(shell_exec("../../deploy.sh"));
-        }
+        //if($params['ref'] === "refs/heads/master") {
+            $result = shell_exec("../../deploy.sh");
+            if($result)
+                print_r($result);
+            else
+                echo "Ошибка";
+        //}
     }
     /**
      * {@inheritdoc}
