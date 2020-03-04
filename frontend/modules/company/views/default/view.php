@@ -46,7 +46,7 @@ use yii\helpers\Url;
                     <div class="vacancies">
                         <span class="vacancies__img"></span>
                         <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="vacancies__active"><?=$vacancy->post?></a>
-                        <p class="vacancies__title"><?=$vacancy->employment_type?$vacancy->employment_type->name.', т':'Т'?>ребуемый опыт работы: <?=Vacancy::$experiences[$vacancy->work_experience]?></p>
+                        <p class="vacancies__title"><?=$vacancy->employment_type?$vacancy->employment_type->name.', т':'Т'?>ребуемый опыт работы: <?=$vacancy->work_experience?Vacancy::$experiences[$vacancy->work_experience]:'Не имеет значения'?></p>
                     </div>
                     <?php endforeach ?>
                 </div>
