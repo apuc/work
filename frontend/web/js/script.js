@@ -203,6 +203,8 @@ $(document).ready(function () {
     $('.jsFilterOverlay').removeClass('active-filter-overlay').css({ 'transition': 'all ease 0s' });
     $('.jsShowFilter').css({ 'display': 'block', 'transition': 'all ease 1s' });
   });
+
+
   $(document).on('click', '.jsLogin', function(event){
     event.preventDefault();
     $('.jsModal').fadeIn();

@@ -197,6 +197,7 @@ return [
             'rules' => [
                 'about' => 'site/about',
                 '/' => 'main_page/default/index',
+                '/employer' => 'main_page/company/index',
                 'resume/view/<id>' => 'resume/default/view',
                 'vacancy/view/<id>' => 'vacancy/default/view',
                 'company/view/<id>' => 'company/default/view',
