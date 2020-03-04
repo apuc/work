@@ -21,7 +21,7 @@ use yii\helpers\Url;
                                 <img src="/images/correct.png" alt="" id="small-img" role="presentation"/>
                             <?php endif ?>
                         </p>
-                        <img class="content-part__logo" src="<?=$model->image_url?>>" alt="" role="presentation"/>
+                        <img class="content-part__logo" src="<?=$model->image_url?>" alt="" role="presentation"/>
                     </div>
                     <div class="content-part__block">
                         <?php if($model->is_trusted):?>
