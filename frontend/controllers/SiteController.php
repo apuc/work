@@ -91,7 +91,7 @@ class SiteController extends Controller
 
     public function beforeAction($action)
     {
-        if ($action->id == 'logout') {
+        if ($action->id == 'logout' || $action->id == 'autodeploy') {
             $this->enableCsrfValidation = false;
         }
 
