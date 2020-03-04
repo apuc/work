@@ -6,6 +6,17 @@ use common\models\Vacancy;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
+$this->title = "Вакансии компании $model->name на сайте rabota.today";
+$description = "Список открытых вакансий компании $model->name, контакты и отзывы. На сайте поиска работы №1 rabota.today";
+
+$this->registerMetaTag(['name' => 'description', 'content' => $description]);
+$this->registerMetaTag(['name' => 'og:title', 'content' => $this->title]);
+$this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
+$this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
+$this->registerMetaTag(['name' => 'og:image', 'content' => '/images/og_image.jpg']);
+$this->registerMetaTag(['name' => 'og:description', 'content' => $description]);
+?>
+
 ?>
 <div class="single-company mt30">
     <img class="single-company__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
