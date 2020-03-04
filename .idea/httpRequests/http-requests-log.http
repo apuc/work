@@ -1,3 +1,69 @@
+POST http://work.loc/site/autodeploy
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-04T120057.200.html
+
+###
+
+POST http://work.loc/site/autodeploy
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-04T120021.200.html
+
+###
+
+POST http://work.loc/site/autodeploy
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-04T115948.200.html
+
+###
+
+POST http://work.loc/site/autodeploy
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-04T115839.500.html
+
+###
+
+POST http://work.loc/site/autodeploy
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-04T115752.400.html
+
+###
+
+POST https://rabota.today/site/autodeploy
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-04T115738.400.html
+
+###
+
 POST http://work.loc/request/vacancy/create?company_id=19&post=httpclient&status=1&category=1
 Accept: */*
 Cache-Control: no-cache
@@ -434,65 +500,6 @@ Cache-Control: no-cache
 Content-Type: application/json
 
 <> 2019-06-06T014115.200.html
-
-###
-
-OPTIONS http://work.loc/personal_area/default/statistics
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-
-<> 2019-06-06T014102.200.html
-
-###
-
-OPTIONS http://work.loc/request/employer/my-index
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer heLv-yHzbt3aWGlogjbQLSnVhZrhWDKp
-
-<> 2019-06-06T013638.200.json
-
-###
-
-OPTIONS http://work.loc/request/employer/my-index
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer heLv-yHzbt3aWGlogjbQLSnVhZrhWDKp
-
-<> 2019-06-06T013634.200.json
-
-###
-
-OPTIONS http://work.loc/request/employer/my-index
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer heLv-yHzbt3aWGlogjbQLSnVhZrhWDKp
-
-<> 2019-06-06T013633-1.200.json
-
-###
-
-OPTIONS http://work.loc/request/employer/my-index
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer heLv-yHzbt3aWGlogjbQLSnVhZrhWDKp
-
-<> 2019-06-06T013633.200.json
-
-###
-
-OPTIONS http://work.loc/request/employer/my-index
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer heLv-yHzbt3aWGlogjbQLSnVhZrhWDKp
-
-<> 2019-06-06T013631.200.json
 
 ###
 
