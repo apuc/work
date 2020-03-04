@@ -47,7 +47,10 @@ class KeyValue extends \yii\db\ActiveRecord
     }
 
     public static function findValueByKey($key){
-        return self::find()->where(['key' => $key])->one()->value;
+        if($model = self::find()->where(['key' => $key])->one())
+            return $model->value;
+        else
+            return null;
     }
 
 }
