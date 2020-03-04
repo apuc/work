@@ -1,3 +1,16 @@
+<?php
+
+use common\models\KeyValue;
+$this->title = KeyValue::findValueByKey('employer_page_title') ?: 'Работодателям - Поиск сотрудников на сайте rabota.today';
+$description = KeyValue::findValueByKey('employer_page_description') ?: 'Информация для работодателей, сайт поиска работы №1. Размещение вакансии, наши партнеры!';
+
+$this->registerMetaTag(['name' => 'description', 'content' => $description]);
+$this->registerMetaTag(['name' => 'og:title', 'content' => $this->title]);
+$this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
+$this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
+$this->registerMetaTag(['name' => 'og:image', 'content' => '/images/og_image.jpg']);
+$this->registerMetaTag(['name' => 'og:description', 'content' => $description]);
+?>
 <main>
 		<div class="background">
 			<div class="background_top">
