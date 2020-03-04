@@ -27,6 +27,10 @@ use frontend\models\ContactForm;
 class SiteController extends Controller
 {
 
+    public function test() {
+        return 0;
+    }
+
     public function actionAutodeploy() {
         $params = Yii::$app->request->getBodyParams();
         if($params['ref'] === "refs/heads/master") {
