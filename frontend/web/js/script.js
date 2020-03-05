@@ -358,7 +358,6 @@ if ($('.jsCityHeaderSelect').length > 0) {
     placeholder: "Выберите город",
     allowClear: true
   }).on('change', function () {
-    console.log(123);
     $.ajax({
       type: "POST",
       url: "/main_page/default/select-city",

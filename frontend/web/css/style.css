@@ -17913,7 +17913,6 @@ address p {
 
 .nhome__nav .select2-container{
   width: 200px !important;
-  margin-right: auto;
 }
 
 .home__main-header .select2-container .select2-selection--single {
@@ -17931,7 +17930,7 @@ address p {
   top: 4px !important;
 }
 
-.nhome__nav .select2-container .select2-selection--single {
+.nhome__nav .select2-container .select2-selection--single, .geolocation__block .select2-container .select2-selection--single {
   display: flex;
   align-items: center;
   padding: 0;
@@ -17940,15 +17939,15 @@ address p {
   border-radius: 16px;
 }
 
-.nhome__nav .select2-container .select2-selection__rendered {
+.nhome__nav .select2-container .select2-selection__rendered, .geolocation__block .select2-container .select2-selection__rendered {
   width: 100%;
 }
 
-.nhome__nav .select2-container .select2-selection__arrow {
+.nhome__nav .select2-container .select2-selection__arrow, .geolocation__block .select2-container .select2-selection__arrow {
   top: 4px !important;
 }
 
-.nhome__nav .select2-container .select2-selection--single .select2-selection__rendered {
+.nhome__nav .select2-container .select2-selection--single .select2-selection__rendered, .geolocation__block .select2-container .select2-selection--single .select2-selection__rendered {
   text-decoration: none;
   line-height: 28px;
   font-family: Muller-Bold, sans-serif;
@@ -17960,7 +17959,7 @@ address p {
   color: #243b9b;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1251px) {
   .nhome__nav{
     align-items: center;
   }
@@ -17995,42 +17994,74 @@ address p {
   border: 1px solid white;
 }
 
-.geolocation{
+.geolocation, .geolocation__block {
   display: flex;
   align-items: center;
+  margin-right: auto;
+}
+
+.geolocation > img, .geolocation__block > img {
   margin-right: 17px;
 }
 
-.geolocation-description{
-  margin-left: 15px;
-  margin-bottom: 0;
-  font-size: 10px;
-  font-family: Muller-Medium, sans-serif;
-  white-space: nowrap;
+.nhome__main-content .geolocation {
+  display: none;
 }
 
-.home__main-header .geolocation-description{
-  margin-right: 15px;
+.geolocation .nhome__form-text {
+  position: relative;
+  top: 0;
+  flex-direction: column;
+}
+
+@media (max-width: 1400px) {
+  .nhome__nav .geolocation {
+    display: none;
+  }
+  .nhome__main-content .geolocation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 26px;
+  }
+  .nhome__main-content .geolocation .nhome__form-text {
+    margin-top: 23px;
+    font-weight: 300;
+  }
+  .nhome__main-content .geolocation .nhome__form-text .white-text {
+    margin: 0;
+  }
+}
+
+@media (max-width: 1250px) {
+  .nhome__nav .geolocation {
+    display: none;
+  }
+  .home__nav .geolocation {
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+  }
+  .home__nav .geolocation > img {
+    display: none;
+  }
+  .border-top-header {
+    border-top: 1px solid #e8e8e8;
+  }
+}
+
+@media (max-width: 1150px) {
+  .nhome__main-content .geolocation {
+    align-items: center;
+    margin-left: auto;
+    margin-top: 20px;
+    text-align: center;
+  }
 }
 
 @media (min-width: 1200px) {
   .nhome__nav-item {
     width: 190px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .geolocation {
-    margin-left: -5px;
-    padding-top: 20px;
-    padding-bottom: 5px;
-  }
-  .home__nav .select2-container, .nhome__nav .select2-container {
-    padding-left: 20px;
-    padding-bottom: 20px;
-  }
-  .border-top-header {
-    border-top: 1px solid #e8e8e8;
   }
 }
 

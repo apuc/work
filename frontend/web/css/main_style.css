@@ -526,7 +526,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding-bottom: 15px; }
+}
 .dropdown > span > span {
     display: none; }
 @media (max-width: 1250px) {
@@ -543,7 +543,7 @@
 .dropdown__menu {
     position: absolute;
     top: 93%;
-    left: 0;
+    right: 0;
     display: none;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -592,6 +592,7 @@
     color: #000000;
     text-align: left; }
 .dropdown__menu .nhome__nav-item:first-child {
+    width: 100%;
     margin-top: 60px; }
 .dropdown__menu .home__nav-item {
     color: #000000;
@@ -2153,7 +2154,9 @@ button {
 .header .home__main-top:before {
     display: none; }
 .header .home__nav-item_logo {
-    width: 200px; }
+    width: 200px;
+    overflow: hidden;
+}
 @media (max-width: 1250px) {
     .header .home__nav-item_logo {
         position: relative;
@@ -3402,7 +3405,9 @@ button {
     height: 290px;
     padding-top: 38px;
     background-color: #243b9b;
-    border-radius: 0 33px 0 0; }
+    border-radius: 0 33px 0 0;
+    overflow: hidden;
+}
 @media (max-width: 993px) {
     .nhome__main-top {
         border-radius: 0; } }
@@ -3553,7 +3558,13 @@ button {
     align-items: center;
     margin-top: auto;
     margin-bottom: 80px;
+    margin-right: auto;
+    margin-left: 125px;
     z-index: 2; }
+.nhome__main-content-search {
+    display: flex;
+    align-items: center;
+}
 @media (max-width: 1750px) {
     .nhome__main-content {
         -ms-flex-wrap: wrap;
@@ -3561,24 +3572,64 @@ button {
         -webkit-box-pack: center;
         -ms-flex-pack: center;
         justify-content: center;
+        margin: auto auto 50px; }
+    .nhome__main-content-search {
+        flex-wrap: wrap;
+        justify-content: center;
         width: 500px;
-        margin: auto auto 50px; } }
+    }
+}
+@media (max-width: 1400px) {
+    .nhome__main-content-search {
+        width: 400px;
+    }
+    .nhome__main-content-search .nhome__form .nhome__form-text {
+        display: none;
+    }
+    .nhome__main-content-search .nhome__form {
+        margin-right: 0;
+    }
+    .nhome__main-content-search .btn {
+        font-size: 9px;
+    }
+    .nhome__main-content-search .btn:last-child {
+        margin-right: 0 !important;
+    }
+}
 @media (max-width: 1500px) {
     .nhome__main-content {
         margin-right: 70px; } }
 @media (max-width: 1200px) {
     .nhome__main-content {
         margin: auto auto 50px; } }
+@media (max-width: 1150px) {
+    .nhome__main-top {
+        height: 340px;
+        padding-top: 60px;
+    }
+    .nhome__main-content {
+        flex-direction: column;
+    }
+}
 @media (max-width: 576px) {
     .nhome__main-content {
+        width: 100%;
+        margin-bottom: 60px;
+    }
+    .nhome__main-content-search {
         width: 95%;
-        margin-bottom: 60px; } }
+    }
+}
 @media (max-width: 1350px) {
     .nhome__main-content .btn {
         margin-left: 0; } }
 @media (max-width: 400px) {
     .nhome__main-content .btn {
-        margin-right: 0 !important; } }
+        margin-right: 0 !important; }
+    .nhome__main-top {
+        height: 390px;
+    }
+}
 .nhome__main-content .btn:last-child {
     margin-right: 125px; }
 @media (max-width: 1880px) {
@@ -3867,13 +3918,34 @@ button {
     height: 60px;
     margin: -12px auto 0;
     padding: 0;
+    overflow: hidden;
     z-index: 2; }
 @media (max-width: 1250px) {
     .nhome__nav-item_logo img:first-child {
         display: none; } }
+.nhome__nav-item_logo img:nth-child(2) {
+    display: none;
+}
+@media (max-width: 1400px) {
+    .nhome__nav-item_logo {
+        width: auto !important;
+    }
+    .nhome__nav-item_logo img:first-child {
+        display: none;
+    }
+    .nhome__nav-item_logo img:nth-child(2) {
+        display: block;
+    }
+}
 .nhome__nav-item_logo img:last-child {
     display: none; }
 @media (max-width: 1250px) {
+    .nhome__nav-item_logo {
+        width: 100% !important;
+    }
+    .nhome__nav-item_logo img:nth-child(2) {
+        display: none;
+    }
     .nhome__nav-item_logo img:last-child {
         position: absolute;
         top: 50%;
