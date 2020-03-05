@@ -26,16 +26,16 @@ use yii\helpers\Url;
                             <img src="/images/logo-main.png" alt="rabota.today" role="presentation"/>
                             <img src="/images/logo_mob.png" alt="" role="presentation"/>
                         </a>
+                        <a class="home__nav-item" href="/employer">Работадателю</a>
                         <div class="geolocation">
                             <img src="/images/geolocation.png" alt="">
-                            <p class="geolocation-description">Выберите ваш<br> город</p>
+                            <select class="city-header jsCityHeaderSelect">
+                                <option></option>
+                                <?php foreach (\common\models\City::find()->where(['status'=>1])->all() as $city):?>
+                                    <option <?=(Yii::$app->request->cookies['city']==(string)$city->id)?"selected":''?> value="<?=$city->id?>"><?=$city->name?></option>
+                                <?php endforeach;?>
+                            </select>
                         </div>
-                        <select class="city-header jsCityHeaderSelect">
-                            <option></option>
-                            <?php foreach (\common\models\City::find()->where(['status'=>1])->all() as $city):?>
-                                <option <?=(Yii::$app->request->cookies['city']==(string)$city->id)?"selected":''?> value="<?=$city->id?>"><?=$city->name?></option>
-                            <?php endforeach;?>
-                        </select>
                         <?php if(Yii::$app->controller->uniqueId === "vacancy/default"):?>
                             <a class="home__nav-item border-top-header" href="<?= Resume::getSearchPageUrl() ?>">Резюме</a>
                         <?php else:?>
