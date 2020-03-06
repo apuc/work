@@ -25,12 +25,6 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
 
 <div class="nhome">
     <div class="nhome__main">
-        <div class="nhome-white-line">
-        </div>
-        <div class="nhome-white-line">
-        </div>
-        <div class="nhome-white-line">
-        </div>
         <div class="nhome__main-top">
             <div class="nhome__main-header">
                 <button class="mobile-nav-btn jsOpenNavMenu"><img src="/images/menu.png" alt="" role="presentation"/>
