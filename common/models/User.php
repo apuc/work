@@ -2,7 +2,11 @@
 namespace common\models;
 
 use yii\web\IdentityInterface;
-
+/**
+ * This is the model class for table "user".
+ *
+ * @property Employer $employer
+ */
 class User extends \dektrium\user\models\User implements IdentityInterface
 {
     public $loginUrl = '/';

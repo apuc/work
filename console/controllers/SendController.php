@@ -106,22 +106,24 @@ class SendController extends Controller
     public function sendNotificationMessage($model, $period, $className)
     {
         $title='Title';
-        $text='Text';
+        $template = '';
+        $text = '';
         switch ($className){
             case Vacancy::className():
                 $title=$model->post;
                 $text="Ваша вакансия $model->post не обновлялась уже $period";
+                $template = "notification_vacancy";
                 break;
             case Resume::className():
                 $title=$model->title;
                 $text="Ваше резюме $model->title не обновлялось уже $period";
+                $template = "notification_resume";
                 break;
         }
-        Yii::$app->mailer->compose()
+        Yii::$app->mailer->compose($template, ['model'=>$model])
             ->setFrom('noreply@rabota.today')
             ->setTo(User::findOne($model->owner)->email)
             ->setSubject($title)
-            ->setTextBody($text)
             ->send();
         $message=new Message();
         $message->load([
