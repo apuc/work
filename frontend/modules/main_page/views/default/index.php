@@ -72,6 +72,8 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                                 <a class="nhome__nav-item" href="<?= Url::to(['/personal_area/default/index']) ?>">Личный
                                     кабинет</a>
                                 <a class="nhome__nav-item" href="<?= Url::to(['/personal-area/my-message']) ?>">Сообщения <?= $messages > 0 ? "($messages)" : "" ?></a>
+                                <a class="nhome__nav-item" href="/personal-area/add-vacancy">Добавить вакансию</a>
+                                <a class="nhome__nav-item" href="/personal-area/add-resume">Добавить резюме</a>
                                 <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
                                 <?= Html::submitButton(
                                     'Выйти',
@@ -97,8 +99,8 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                         ['class' => 'nhome__search btn-red']
                     ) ?>
                     <?= Html::endForm() ?>
-                    <a class="btn btn-red mr20" href="/personal-area/add-resume">разместить резюме</a>
-                    <a class="btn btn-red" href="/personal-area/add-vacancy">создать вакансию</a>
+                    <a class="btn btn-red mr20" href="<?= Resume::getSearchPageUrl() ?>">резюме</a>
+                    <a class="btn btn-red" href="<?= Vacancy::getSearchPageUrl() ?>">вакансии</a>
                 </div>
                 <div class="geolocation">
                     <div class="geolocation__block">

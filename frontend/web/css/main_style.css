@@ -2372,7 +2372,9 @@ button {
     .home__main-header {
         -webkit-box-pack: start;
         -ms-flex-pack: start;
-        justify-content: flex-start; } }
+        justify-content: flex-start;
+        margin-bottom: 40px;
+    } }
 @media (max-width: 993px) {
     .home__main-header {
         -webkit-box-pack: center;
@@ -2478,14 +2480,18 @@ button {
     margin-bottom: 100px;
     z-index: 2; }
 @media (max-width: 1350px) {
+    /*.home__main-content {*/
+    /*    -ms-flex-wrap: wrap;*/
+    /*    flex-wrap: wrap;*/
+    /*    -webkit-box-pack: start;*/
+    /*    -ms-flex-pack: start;*/
+    /*    justify-content: flex-start;*/
+    /*    margin-bottom: 100px;*/
+    /*    margin-left: 50px; } }*/
     .home__main-content {
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        -webkit-box-pack: start;
-        -ms-flex-pack: start;
-        justify-content: flex-start;
-        margin-bottom: 100px;
-        margin-left: 50px; } }
+        display: none;
+    }
+}
 @media (max-width: 993px) {
     .home__main-content {
         -webkit-box-pack: center;
@@ -6099,6 +6105,7 @@ button {
     height: 24px;
     margin: 0 24px 0 11px; }
 .sr-block__text__phone > div {
+    position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -6959,6 +6966,18 @@ main {
     color: #0f0000; }
 .employer_question_links {
     margin: auto 0; }
+.home__mobile-logo {
+    display: none;
+}
+@media (max-width: 575px) {
+    .home__mobile-logo {
+        display: block;
+        width: 200px;
+    }
+    .home__main-email {
+        display: none !important;
+    }
+}
 @media (max-width: 1000px) {
     .employer {
         padding: 50px 15px; }
@@ -6999,6 +7018,25 @@ main {
         padding-bottom: 10px; }
     .employer_question_links {
         padding-bottom: 10px; } }
+
+.hide-phone {
+    display: none;
+}
+
+.show-phone {
+    display: block;
+    padding: 5px 5px 3px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    background: #af2a22;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
 
 /*# sourceMappingURL=styles.css.map */
 

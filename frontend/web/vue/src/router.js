@@ -32,7 +32,7 @@ export default new Router({
     {
       path: '/personal-area/my-message',
       name: 'my-message',
-      meta: {title: 'Сообщения'},
+      meta: {title: 'Отклики'},
       component: MyMessage
     },
     {

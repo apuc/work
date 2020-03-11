@@ -1,5 +1,5 @@
 import Field from '../models/Field';
-import {VTextarea, VTextField, VSelect, VSubheader,} from 'vuetify/lib'
+import {VTextarea, VTextField, VSelect, VSubheader, VCheckbox,} from 'vuetify/lib'
 import AddWork from "../components/AddWork";
 import AddEducation from "../components/AddEducation";
 import AddSocial from "../components/AddSocial";
@@ -81,5 +81,11 @@ export default {
     rules: [],
     counter: 2000,
     component: VTextarea
-  })
+  }),
+  hideResume: Object.assign({}, Field, {
+    name: 'hideResume',
+    label: 'Скрыть резюме (не отображается на сайте, доступно для откликов)',
+    rules: [],
+    component: VCheckbox
+  }),
 }

@@ -40,7 +40,8 @@ const resume = {
           skype: ''
         },
         dutiesSelect: [],
-        aboutMe: ''
+        aboutMe: '',
+        hideResume: false
       },
       valid: false
     };

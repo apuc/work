@@ -37,6 +37,7 @@
                                     }}
                                 </v-list-tile-sub-title>
                                 <v-divider style="width: 100%;"></v-divider>
+                                <span v-if="item.status == 2" class="all-resume-hide">скрыто</span>
                             </v-list-tile-content>
                             <router-link :to="`${editLink}/${item.id}`">
                                 <v-btn outline small fab
@@ -245,5 +246,18 @@
 
     .all-head a button {
         text-transform: none !important;
+    }
+    .v-list__tile__content {
+        position: relative;
+    }
+    .all-resume-hide {
+        position: absolute;
+        right: 40px;
+        padding: 3px;
+        font-size: 13px;
+        color: rgba(0,0,0,0.62);
+        line-height: 1;
+        border-radius: 6px;
+        border: 1px solid rgba(0,0,0,0.12);
     }
 </style>
