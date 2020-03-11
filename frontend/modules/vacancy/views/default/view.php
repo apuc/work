@@ -207,8 +207,9 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                             <?php if ($model->company->phone): ?>
                                 <li class="sr-block__text__phone"><img src="/images/phone.svg" alt=""
                                                                        role="presentation"/>
-                                    <div><strong>Телефон:</strong><a
-                                                href="tel:<?= $model->company->phone->number ?>"><?= $model->company->phone->number ?></a>
+                                    <div><strong>Телефон:</strong>
+                                        <a class="hide-phone jsShowPhone" href="tel:<?= $model->company->phone->number ?>"><?= $model->company->phone->number ?></a>
+                                        <button class="show-phone jsClickShowPhone">Показать</button>
                                     </div>
                                 </li>
                             <?php endif ?>

@@ -327,10 +327,11 @@
         width: 20px;
         height: 20px;
         transition: all ease .3s;
-        border: 1px solid #ffff00;
+        border: 1px solid #19a924e3;
+        color: #ffffff !important;
         border-radius: 5px;
         font-size: 20px;
-        box-shadow: 0 0 7px 1px #ffff00;
+        background: #19a924e3;
         margin-right: 5px;
     }
     .menu-hover:hover .menu-add-link {

@@ -142,12 +142,16 @@
                     education: this.formData.educationBlock,
                     work: this.formData.workBlock,
                     // skills: [],
-                    skills: this.formData.dutiesSelect
+                    skills: this.formData.dutiesSelect,
+					status: 1
                 };
                 let image = document.querySelector('.fileinput');
                 if (image.classList.contains('fileinput--loaded')) {
                     data.image = this.image;
                 }
+                if (this.formData.hideResume == true) {
+                	data.status = 2;
+				}
                 let res;
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/resume`, data)
                     .then(response => {
