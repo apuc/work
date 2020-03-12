@@ -47,6 +47,7 @@ use yii\web\View;
  * @property bool $can_update
  * @property integer $countViews
  * @property City $city0
+ * @property int $clickPhoneCount
  */
 class Vacancy extends WorkActiveRecord
 {
@@ -106,7 +107,7 @@ class Vacancy extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['company', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews', 'city0', 'mainCategory'];
+        return ['company', 'employment_type', 'vacancy_skill', 'skill', 'can_update', 'category', 'views0', 'countViews', 'city0', 'mainCategory', 'clickPhoneCount'];
     }
 
     /**
@@ -318,5 +319,19 @@ class Vacancy extends WorkActiveRecord
             ->andWhere('created_at < UNIX_TIMESTAMP() - ' . $hoursCount . '*60*60')
             ->andWhere(['status' => $status])
             ->all();
+    }
+
+    public function getClickPhoneCount() {
+        $action = Action::find()
+            ->where([
+                'type' => 'click_phone',
+                'subject' => 'vacancy',
+                'subject_id' => $this->id
+            ])
+            ->one();
+        if($action)
+            return $action->count;
+        else
+            return 0;
     }
 }

@@ -341,7 +341,27 @@ $(document).ready(function () {
   $('.jsClickShowPhone').click(function () {
     $(this).fadeOut(1);
     $('.jsShowPhone').fadeIn(1);
+    let url = '';
+    if($(this).attr('data-type') === 'vacancy') {
+      url = '/vacancy/default/click-phone';
+    } else if($(this).attr('data-type') === 'resume') {
+      url = '/resume/default/click-phone';
+    } else if($(this).attr('data-type') === 'company') {
+      url = '/company/default/click-phone';
+    }
+    $.ajax({
+      type: 'POST',
+      url: url,
+      data: {
+        csrf:$('meta[name=csrf-token]').attr('content'),
+        id:$(this).attr('data-id')
+      },
+      success: function (response) {
+        //console.log(response);
+      }
+    });
   });
+
 
 });
 

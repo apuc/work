@@ -45,6 +45,7 @@ use yii\db\ActiveRecord;
  * @property Experience $lastExperience
  * @property bool $can_update
  * @property City $city0
+ * @property int $clickPhoneCount
  */
 class Resume extends WorkActiveRecord
 {
@@ -94,14 +95,14 @@ class Resume extends WorkActiveRecord
             [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'notification_status', 'hot', 'city_id'], 'integer'],
             [['title', 'city', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
             [['description'], 'string'],
-            [['min_salary', 'max_salary'], 'safe'],
+            [['min_salary', 'max_1salary'], 'safe'],
             [['employer_id', 'title'], 'required'],
         ];
     }
 
     public function extraFields()
     {
-        return ['employer', 'experience', 'education', 'resume_skill', 'skills', 'resume_category', 'category', 'employment_type', 'can_update', 'views0', 'countViews', 'city0'];
+        return ['employer', 'experience', 'education', 'resume_skill', 'skills', 'resume_category', 'category', 'employment_type', 'can_update', 'views0', 'countViews', 'city0', 'clickPhoneCount'];
     }
 
     /**
@@ -348,5 +349,19 @@ class Resume extends WorkActiveRecord
 
     public function getCity0() {
         return $this->hasOne(City::className(), ['id'=>'city_id']);
+    }
+
+    public function getClickPhoneCount() {
+        $action = Action::find()
+            ->where([
+                'type' => 'click_phone',
+                'subject' => 'resume',
+                'subject_id' => $this->id
+            ])
+            ->one();
+        if($action)
+            return $action->count;
+        else
+            return 0;
     }
 }

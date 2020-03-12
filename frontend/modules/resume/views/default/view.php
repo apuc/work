@@ -201,7 +201,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                             </p>
                             <?php if($model->employer->phone): ?>
                                 <a class="hide-phone jsShowPhone" href="tel:<?= $model->employer->phone->number ?>"><?= $model->employer->phone->number ?></a>
-                                <button class="show-phone jsClickShowPhone">Показать</button>
+                                <button data-id="<?=$model->id?>" data-type="resume" class="show-phone jsClickShowPhone">Показать</button>
                             <?php endif ?>
                             <p>Почта:
                             </p><a href="mailto:<?= $model->employer->user->email ?>"><?= $model->employer->user->email ?></a>

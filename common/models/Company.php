@@ -28,9 +28,10 @@ use yii\db\ActiveRecord;
  * @property integer $countViews
  * @property bool $is_trusted
  *
- * @property User $security
+ * @property User $user
  * @property Vacancy[] $vacancy
  * @property Phone $phone
+ * @property int $clickPhoneCount
  */
 class Company extends WorkActiveRecord
 {
@@ -77,7 +78,7 @@ class Company extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['user', 'vacancy', 'phone', 'userCompany', 'users'];
+        return ['user', 'vacancy', 'phone', 'userCompany', 'users', 'clickPhoneCount'];
     }
 
     /**
@@ -173,5 +174,19 @@ class Company extends WorkActiveRecord
         if($this->instagram) return true;
         if($this->facebook) return true;
         return false;
+    }
+
+    public function getClickPhoneCount() {
+        $action = Action::find()
+            ->where([
+                'type' => 'click_phone',
+                'subject' => 'company',
+                'subject_id' => $this->id
+            ])
+            ->one();
+        if($action)
+            return $action->count;
+        else
+            return 0;
     }
 }

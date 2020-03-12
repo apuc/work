@@ -26,7 +26,7 @@ use yii\helpers\Url;
                             <img src="/images/logo-main.png" alt="rabota.today" role="presentation"/>
                             <img src="/images/logo_mob.png" alt="" role="presentation"/>
                         </a>
-                        <a class="home__nav-item" href="/employer">Работадателю</a>
+                        <a class="home__nav-item" href="/employer">Работодателю</a>
                         <div class="geolocation">
                             <img src="/images/geolocation.png" alt="">
                             <select class="city-header jsCityHeaderSelect">

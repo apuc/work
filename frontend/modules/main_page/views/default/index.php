@@ -37,7 +37,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                         <img src="/images/logo-main-small.png" alt="rabota.today" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="" role="presentation"/>
                     </a>
-                    <a class="nhome__nav-item" href="/employer">Работадателю</a>
+                    <a class="nhome__nav-item" href="/employer">Работодателю</a>
                     <div class="geolocation">
                         <img src="/images/geolocation.png" alt="">
                         <select class="city-header jsCityHeaderSelect">

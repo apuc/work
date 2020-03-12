@@ -209,7 +209,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                                                        role="presentation"/>
                                     <div><strong>Телефон:</strong>
                                         <a class="hide-phone jsShowPhone" href="tel:<?= $model->company->phone->number ?>"><?= $model->company->phone->number ?></a>
-                                        <button class="show-phone jsClickShowPhone">Показать</button>
+                                        <button data-id="<?=$model->id?>" data-type="vacancy" class="show-phone jsClickShowPhone">Показать</button>
                                     </div>
                                 </li>
                             <?php endif ?>
