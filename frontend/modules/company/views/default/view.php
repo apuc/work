@@ -99,7 +99,8 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                         <div class="sidebar-inner__call-contact">
                             <img class="sidebar-inner__img" src="/images/vertical_line.png" alt="" role="presentation"/>
                             <p class="sidebar-inner__title">Менеджер по персоналу</p>
-                            <p class="sidebar-inner__phone-number"><?=$model->phone->number?></p>
+                            <p class="sidebar-inner__phone-number hide-phone jsShowPhone"><?=$model->phone->number?></p>
+                            <button data-id="<?=$model->id?>" data-type="company" class="show-phone ml15 jsClickShowPhone">Показать</button>
                         </div>
                     <?php endif ?>
                     <div class="single-block__soc company-soc">

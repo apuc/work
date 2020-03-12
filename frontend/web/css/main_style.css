@@ -7029,6 +7029,7 @@ main {
 
 .show-phone {
     display: block;
+    width: max-content;
     padding: 5px 5px 3px;
     font-size: 10px;
     font-weight: 800;

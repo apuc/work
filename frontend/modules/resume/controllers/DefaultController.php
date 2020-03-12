@@ -3,6 +3,7 @@
 namespace frontend\modules\resume\controllers;
 
 use common\classes\Debug;
+use common\models\Action;
 use common\models\Category;
 use common\models\City;
 use common\models\EmploymentType;
@@ -201,5 +202,29 @@ class DefaultController extends Controller
             'current_category' => $current_category,
             'canonical_rel' => $canonical_rel,
         ]);
+    }
+
+    public function actionClickPhone() {
+        if(Yii::$app->request->isAjax && Yii::$app->request->isPost) {
+            if(!$id = Yii::$app->request->post('id')) {
+                throw new HttpException(404, 'Not Found');
+            } else if (Resume::findOne(intval($id))){
+                if($action = Action::find()->where(['type'=>'click_phone', 'subject'=>'resume', 'subject_id'=>$id])->one()) {
+                    $action->count++;
+                    $action->save();
+                } else {
+                    $action = new Action();
+                    $action->type = 'click_phone';
+                    $action->subject = 'resume';
+                    $action->subject_id = $id;
+                    $action->count = 1;
+                    $action->save();
+                }
+            } else {
+                throw new HttpException(404, 'Not Found');
+            }
+        } else {
+            throw new HttpException(404, 'Not Found');
+        }
     }
 }

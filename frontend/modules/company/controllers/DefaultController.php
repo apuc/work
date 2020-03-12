@@ -2,6 +2,7 @@
 
 namespace frontend\modules\company\controllers;
 
+use common\models\Action;
 use common\models\City;
 use common\models\Company;
 use common\models\Message;
@@ -76,5 +77,29 @@ class DefaultController extends Controller
         $url = explode('?', Yii::$app->request->referrer)[0];
         $url .= '?message=Ваше сообщение успешно отправлено';
         return $this->redirect($url);
+    }
+
+    public function actionClickPhone() {
+        if(Yii::$app->request->isAjax && Yii::$app->request->isPost) {
+            if(!$id = Yii::$app->request->post('id')) {
+                throw new HttpException(404, 'Not Found');
+            } else if (Company::findOne(intval($id))){
+                if($action = Action::find()->where(['type'=>'click_phone', 'subject'=>'company', 'subject_id'=>$id])->one()) {
+                    $action->count++;
+                    $action->save();
+                } else {
+                    $action = new Action();
+                    $action->type = 'click_phone';
+                    $action->subject = 'company';
+                    $action->subject_id = $id;
+                    $action->count = 1;
+                    $action->save();
+                }
+            } else {
+                throw new HttpException(404, 'Not Found');
+            }
+        } else {
+            throw new HttpException(404, 'Not Found');
+        }
     }
 }

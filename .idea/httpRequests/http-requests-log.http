@@ -1,3 +1,69 @@
+GET http://work.loc/request/resume/50?expand=clickPhoneCount
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-12T023554.200.json
+
+###
+
+GET http://work.loc/request/resume/50?expand=clickPhoneCount
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-12T023515.200.json
+
+###
+
+GET http://work.loc/request/resume/50?expand=clickPhoneCount
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-12T023512.200.json
+
+###
+
+GET http://work.loc/request/resume/50?expand=clickPhoneCount
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-12T023504.200.json
+
+###
+
+GET http://work.loc/request/resume/50
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-12T023444.200.json
+
+###
+
+GET http://work.loc/request/resume
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW
+
+{"new_password1":"1232edsaqw", "new_password2":"123edsaqw", "old_password":"123edsaqw"}
+
+<> 2020-03-12T023441.200.json
+
+###
+
 POST http://work.loc/site/autodeploy
 Accept: */*
 Cache-Control: no-cache
@@ -441,65 +507,6 @@ Content-Type: application/json
 Authorization: Bearer JiC9yyc7PcXl5Po-pcUk-0_xDFnim1lQ
 
 <> 2019-08-06T032639-2.200.json
-
-###
-
-GET http://work.loc/request/vacancy/5?expand=views
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer JiC9yyc7PcXl5Po-pcUk-0_xDFnim1lQ
-
-<> 2019-08-06T032639-1.200.json
-
-###
-
-GET http://work.loc/request/vacancy/5?expand=views
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer JiC9yyc7PcXl5Po-pcUk-0_xDFnim1lQ
-
-<> 2019-08-06T032639.200.json
-
-###
-
-GET http://work.loc/request/vacancy/5?expand=views
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer JiC9yyc7PcXl5Po-pcUk-0_xDFnim1lQ
-
-<> 2019-08-06T032608.200.json
-
-###
-
-GET http://work.loc/request/vacancy/5
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer JiC9yyc7PcXl5Po-pcUk-0_xDFnim1lQ
-
-<> 2019-08-06T032542.200.json
-
-###
-
-GET http://work.loc/request/vacancy
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Bearer JiC9yyc7PcXl5Po-pcUk-0_xDFnim1lQ
-
-<> 2019-08-06T032533.200.json
-
-###
-
-GET http://work.loc/personal_area/default/statistics
-Accept: application/json
-Cache-Control: no-cache
-Content-Type: application/json
-
-<> 2019-06-06T014115.200.html
 
 ###
 

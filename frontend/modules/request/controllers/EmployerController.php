@@ -2,6 +2,7 @@
 
 namespace frontend\modules\request\controllers;
 
+use common\models\Company;
 use common\models\Employer;
 use common\models\Message;
 use common\models\Phone;
@@ -73,18 +74,32 @@ class EmployerController extends MyActiveController
                 'id' => $vacancy->id,
                 'name' => $vacancy->post,
                 'views' => $vacancy->countViews,
-                'responses' => $responses
+                'responses' => $responses,
+                'click_phone_count' => $vacancy->clickPhoneCount
             ];
         }
         /** @var Resume[] $resumes */
-        $resumes = Resume::find()->where(['owner'=>\Yii::$app->user->id, 'status'=>Resume::STATUS_ACTIVE])->all();
+        $resumes = Resume::find()->where(['owner'=>\Yii::$app->user->id])->andWhere(['!=', 'status', Resume::STATUS_INACTIVE])->all();
         foreach ($resumes as $resume){
             $responses = Message::find()->where(['subject'=>'Resume', 'subject_id'=>$resume->id])->count();
             $result['Resume'][]=[
                 'id' => $resume->id,
                 'name' => $resume->title,
                 'views' => $resume->countViews,
-                'responses' => $responses
+                'responses' => $responses,
+                'click_phone_count' => $resume->clickPhoneCount
+            ];
+        }
+        /** @var Company[] $companies */
+        $companies = Company::find()->where(['owner'=>\Yii::$app->user->id, 'status'=>Company::STATUS_ACTIVE])->andWhere(['!=', 'name', ''])->all();
+        foreach ($companies as $company){
+            $responses = Message::find()->where(['subject'=>'Company', 'subject_id'=>$company->id])->count();
+            $result['Company'][]=[
+                'id' => $company->id,
+                'name' => $company->name?$company->name:($company->user->employer->first_name.' '.$company->user->employer->second_name),
+                'views' => $company->countViews,
+                'responses' => $responses,
+                'click_phone_count' => $company->clickPhoneCount
             ];
         }
         return $result;

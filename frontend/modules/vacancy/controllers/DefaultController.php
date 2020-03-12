@@ -3,6 +3,7 @@
 namespace frontend\modules\vacancy\controllers;
 
 use common\classes\Debug;
+use common\models\Action;
 use common\models\Category;
 use common\models\City;
 use common\models\EmploymentType;
@@ -59,33 +60,6 @@ class DefaultController extends Controller
             'view' => $view,
             'referer_category' => $referer_category
         ]);
-    }
-
-    public function actionSendMessage()
-    {
-        $post = Yii::$app->request->post();
-        $resume = Resume::findOne($post['vacancy_resume_id']);
-        $vacancy = Vacancy::findOne($post['vacancy_vacancy_id']);
-        if ($resume && $vacancy) {
-            $message = new Message();
-            $message->text = $post['vacancy_message'];
-            $message->sender_id = Yii::$app->user->id;
-            $message->subject = 'Vacancy';
-            $message->subject_id = $vacancy->id;
-            $message->receiver_id = $vacancy->owner;
-            $message->subject_from = 'Resume';
-            $message->subject_from_id = $post['vacancy_resume_id'];
-            $message->save();
-            Yii::$app->mailer->compose('vacancy_like',
-                ['resume' => $resume, 'vacancy' => $vacancy, 'text' => $message->text])
-                ->setFrom('noreply@rabota.today')
-                ->setTo(User::findOne($vacancy->owner)->email)
-                ->setSubject('Ответ на вашу вакансию ' . $vacancy->post . '.')
-                ->send();
-        }
-        $url = explode('?', Yii::$app->request->referrer)[0];
-        $url .= '?message=Ваше сообщение успешно отправлено';
-        return $this->redirect($url);
     }
 
     public function actionSearch()
@@ -201,5 +175,56 @@ class DefaultController extends Controller
             'current_category' => $current_category,
             'canonical_rel' => $canonical_rel
         ]);
+    }
+
+    public function actionSendMessage()
+    {
+        $post = Yii::$app->request->post();
+        $resume = Resume::findOne($post['vacancy_resume_id']);
+        $vacancy = Vacancy::findOne($post['vacancy_vacancy_id']);
+        if ($resume && $vacancy) {
+            $message = new Message();
+            $message->text = $post['vacancy_message'];
+            $message->sender_id = Yii::$app->user->id;
+            $message->subject = 'Vacancy';
+            $message->subject_id = $vacancy->id;
+            $message->receiver_id = $vacancy->owner;
+            $message->subject_from = 'Resume';
+            $message->subject_from_id = $post['vacancy_resume_id'];
+            $message->save();
+            Yii::$app->mailer->compose('vacancy_like',
+                ['resume' => $resume, 'vacancy' => $vacancy, 'text' => $message->text])
+                ->setFrom('noreply@rabota.today')
+                ->setTo(User::findOne($vacancy->owner)->email)
+                ->setSubject('Ответ на вашу вакансию ' . $vacancy->post . '.')
+                ->send();
+        }
+        $url = explode('?', Yii::$app->request->referrer)[0];
+        $url .= '?message=Ваше сообщение успешно отправлено';
+        return $this->redirect($url);
+    }
+
+    public function actionClickPhone() {
+        if(Yii::$app->request->isAjax && Yii::$app->request->isPost) {
+            if(!$id = Yii::$app->request->post('id')) {
+                throw new HttpException(404, 'Not Found');
+            } else if (Vacancy::findOne(intval($id))){
+                if($action = Action::find()->where(['type'=>'click_phone', 'subject'=>'vacancy', 'subject_id'=>$id])->one()) {
+                    $action->count++;
+                    $action->save();
+                } else {
+                    $action = new Action();
+                    $action->type = 'click_phone';
+                    $action->subject = 'vacancy';
+                    $action->subject_id = $id;
+                    $action->count = 1;
+                    $action->save();
+                }
+            } else {
+                throw new HttpException(404, 'Not Found');
+            }
+        } else {
+            throw new HttpException(404, 'Not Found');
+        }
     }
 }

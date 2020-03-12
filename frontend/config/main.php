@@ -203,6 +203,9 @@ return [
                 'company/view/<id>' => 'company/default/view',
                 'msg' => 'msg/default/index',
                 'vacancy/default/send-message' => 'vacancy/default/send-message',
+                'vacancy/default/click-phone'=>'vacancy/default/click-phone',
+                'resume/default/click-phone'=>'resume/default/click-phone',
+                'company/default/click-phone'=>'company/default/click-phone',
                 'vacancy' => 'vacancy/default/search',
                 'vacancy/<first_query_param>' => 'vacancy/default/search',
                 'vacancy/<first_query_param>/<second_query_param>' => 'vacancy/default/search',
@@ -219,6 +222,7 @@ return [
                 'resume_<number:\d+>.xml'=>'sitemap/resume',
                 'city_<number:\d+>.xml'=>'sitemap/city',
                 'category_<number:\d+>.xml'=>'sitemap/category',
+                'vacancy/click-phone'=>'vacancy/default/click-phone',
                 'city_with_category_<number:\d+>.xml'=>'sitemap/city-with-category',
                 'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
                 ['class' => 'yii\rest\UrlRule', 'controller' =>

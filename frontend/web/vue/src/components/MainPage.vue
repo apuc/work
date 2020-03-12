@@ -12,6 +12,11 @@
                 <v-subheader v-if="allRecords.Vacancy.length === 0">У вас нет вакансий</v-subheader>
             </template>
 
+            <template v-else-if="items === allRecords.Company">
+                <v-subheader class="main-head">Компании</v-subheader>
+                <v-subheader v-if="allRecords.Company.length === 0">У вас нет компаний</v-subheader>
+            </template>
+
             <v-card
                     class="main-card"
                     :class="selecetBg(index)"
@@ -31,6 +36,11 @@
                             {{ item.name }}
                         </a>
                     </template>
+                    <template v-else-if="items === allRecords.Company">
+                        <a :href="domen + '/company/view/' + item.id" target="_blank" class="statistics-link">
+                            {{ item.name }}
+                        </a>
+                    </template>
                 </v-card-text>
 
                 <v-card-actions>
@@ -41,6 +51,9 @@
                         >
                             <v-icon class="mr-1">remove_red_eye</v-icon>
                             <span class="subheading mr-2">{{ item.views }}</span>
+                            <span class="mr-1">·</span>
+                            <v-icon class="mr-1">phone</v-icon>
+                            <span class="subheading mr-2">{{ item.click_phone_count }}</span>
                             <span class="mr-1">·</span>
                             <router-link to="/personal-area/my-message" class="statistics-link">
                             <v-icon class="mr-1">message</v-icon>
@@ -120,10 +133,26 @@
         margin-bottom: 20px;
     }
     .main-card_resume {
+        display: flex;
+        flex-direction: column;
+        min-height: 160px;
         background-color: #0000FF !important;
     }
     .main-card_vacancy {
+        display: flex;
+        flex-direction: column;
+        min-height: 160px;
         background-color: #FF0000 !important;
+    }
+    .main-card_company {
+        display: flex;
+        flex-direction: column;
+        min-height: 160px;
+    }
+    .main-card_resume .v-card__actions,
+    .main-card_vacancy .v-card__actions,
+    .main-card_company .v-card__actions {
+        margin-top: auto;
     }
     @media (max-width: 1400px) {
         .main-card {
