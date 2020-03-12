@@ -78,8 +78,10 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                     </div>
                 </div><hr class="single-block__hr"/>
                 <div class="description">
-                    <h3>О компании:</h3>
-                    <p><?=$model->description?></p>
+                    <?php if($model->description):?>
+                        <h3>О компании:</h3>
+                        <p><?=$model->description?></p>
+                    <?php endif ?>
                 </div>
                 <div class="description">
                     <?php foreach ($model->vacancy as $vacancy): ?>
