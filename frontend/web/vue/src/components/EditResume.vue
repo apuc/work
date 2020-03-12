@@ -170,6 +170,11 @@
                         for (let i = 0; i < educationLength; i++) {
                             document.querySelector('.btnEducation').click();
                         }
+                        if (response.data.status === 1) {
+                        	this.formData.hideResume = false;
+						} else {
+							this.formData.hideResume = true;
+						}
                     }, response => {
                         this.$swal({
                             toast: true,
@@ -198,7 +203,8 @@
                     skype: this.formData.addSocial.skype,
                     education: this.formData.educationBlock,
                     work: this.formData.workBlock,
-                    skills: this.formData.dutiesSelect
+                    skills: this.formData.dutiesSelect,
+					status: 1
                 };
                 if (this.hasImage) {
                     data.image = this.image;
@@ -207,6 +213,9 @@
                         changeImg: false
                     }
                 }
+				if (this.formData.hideResume == true) {
+					data.status = 2;
+				}
                 this.$http.patch(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id, data)
                     .then(response => {
                             this.$router.push('/personal-area/all-resume');

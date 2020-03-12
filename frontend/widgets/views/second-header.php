@@ -62,6 +62,8 @@ use yii\helpers\Url;
                                     <span class="nhome__nav-item mobile-prev jsMenuPrev">Назад</span>
                                     <a class="home__nav-item" href="/personal-area">Личный кабинет</a>
                                     <a class="home__nav-item" href="<?=Url::to(['/personal-area/my-message'])?>">Сообщения <?=$messages>0?"($messages)":""?></a>
+                                    <a class="home__nav-item" href="/personal-area/add-vacancy">Добавить вакансию</a>
+                                    <a class="home__nav-item" href="/personal-area/add-resume">Добавить резюме</a>
                                     <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
                                     <?= Html::submitButton(
                                         'Выйти',
@@ -73,9 +75,12 @@ use yii\helpers\Url;
                         <?php endif ?>
 
                     </nav>
-                    <div class="home__main-email d-flex align-items-center"><span class="home__main-ico">@</span><a
+                    <div class="home__main-email align-items-center"><span class="home__main-ico">@</span><a
                                 href="mailto:info@rabota.today">info@rabota.today</a>
                     </div>
+                    <a class="home__mobile-logo" href="/">
+                        <img src="/images/logo-main.png" alt="rabota.today" role="presentation"/>
+                    </a>
 <!--                    <div class="d-flex align-items-center"><i class="home__main-ico fa fa-phone"></i>-->
 <!--                        <div class="d-flex flex-column"><a href="tel:88003553505">+8 800 355-35-05</a><a-->
 <!--                                    class="home__callback" href="#">Заказать обратный звонок</a>-->

@@ -201,11 +201,11 @@
                                 }
                                 if (element.subject === 'Resume') {
                                     element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
-                                    element.subject_from = 'Предлагают вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.post + '</a>';
+                                    element.subject_from = 'Предлагают вакансию ' + '<span>' + element.subject0_from.post + ' ' + '</span>' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
                                 }
                                 if (element.subject === 'Vacancy') {
                                     element.subject = 'Отклик на вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.post + '</a>';
-                                    element.subject_from = 'Прилагают резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.title + '</a>';
+                                    element.subject_from = 'Прилагают резюме ' + '<span>' + element.subject0_from.title + ' ' + '</span>' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
                                 }
                                 let timestamp = element.created_at;
                                 let date = new Date();
@@ -244,11 +244,11 @@
                             this.messagesOutgoing.forEach((element) => {
                                 if (element.subject === 'Resume') {
                                     element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
-                                    element.subject_from = 'Предлагают вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.post + '</a>';
+                                    element.subject_from = 'Предлагают вакансию ' + '<span>' + element.subject0_from.post + ' ' + '</span>' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
                                 }
                                 if (element.subject === 'Vacancy') {
                                     element.subject = 'Отклик на вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.post + '</a>';
-                                    element.subject_from = 'Прилагают резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.title + '</a>';
+                                    element.subject_from = 'Прилагают резюме ' + '<span>' + element.subject0_from.title + ' ' + '</span>' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
                                 }
                                 let timestamp = element.created_at;
                                 let date = new Date();
@@ -282,11 +282,11 @@
                         this.messagesIncoming.forEach((element) => {
                             if (element.subject === 'Resume') {
                                 element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
-                                element.subject_from = 'Предлагают вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.post + '</a>';
+                                element.subject_from = 'Предлагают вакансию ' + '<span>' + element.subject0_from.post + ' ' + '</span>' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
                             }
                             if (element.subject === 'Vacancy') {
                                 element.subject = 'Отклик на вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.post + '</a>';
-                                element.subject_from = 'Прилагают резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.title + '</a>';
+                                element.subject_from = 'Прилагают резюме ' + '<span>' + element.subject0_from.title + ' ' + '</span>' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
                             }
                             let timestamp = element.created_at;
                             let date = new Date();
@@ -313,11 +313,11 @@
                         this.messagesOutgoing.forEach((element) => {
                             if (element.subject === 'Resume') {
                                 element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
-                                element.subject_from = 'Предлагают вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.post + '</a>';
+                                element.subject_from = 'Предлагают вакансию ' + '<span>' + element.subject0_from.post + ' ' + '</span>' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
                             }
                             if (element.subject === 'Vacancy') {
                                 element.subject = 'Отклик на вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.post + '</a>';
-                                element.subject_from = 'Прилагают резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-link" target="_blank">' + element.subject0_from.title + '</a>';
+                                element.subject_from = 'Прилагают резюме ' + '<span>' + element.subject0_from.title + ' ' + '</span>' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
                             }
                             let timestamp = element.created_at;
                             let date = new Date();
@@ -393,6 +393,13 @@
     }
     .message-block .v-list__tile__action {
         margin-right: 20px;
+    }
+    .message-button {
+        padding: 3px;
+        border-radius: 5px;
+        background: #19a924e3;
+        color: #ffffff !important;
+        text-decoration: none;
     }
     @media (max-width: 550px) {
         .message-block .v-list__tile {

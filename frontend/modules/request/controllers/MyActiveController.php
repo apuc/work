@@ -56,7 +56,7 @@ class MyActiveController extends ActiveController
         }
         $query = $this->modelClass::find()->where(['owner'=>Yii::$app->user->id]);
         if(in_array('status', $this->modelClass::attributes())){
-            $query->andWhere(['status'=>1]);
+            $query->andWhere(['!=', 'status', 0]);
         }
         return Yii::createObject([
             'class' => ActiveDataProvider::className(),

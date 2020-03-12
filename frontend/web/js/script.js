@@ -313,11 +313,11 @@ $(document).ready(function () {
   if($('#jsInitialTab').val()==='login'){
     $('.jsLogin').click();
   }
-  if(window.innerWidth < 575 && $('.scroll').length > 0 && window.pageYOffset < 300) {
-    $('html, body').animate({
-      scrollTop: $(".scroll").offset().top-50
-    }, 2000);
-  }
+  // if(window.innerWidth < 575 && $('.scroll').length > 0 && window.pageYOffset < 300) {
+  //   $('html, body').animate({
+  //     scrollTop: $(".scroll").offset().top-50
+  //   }, 2000);
+  // }
   $('#registration-form').submit(function(){
     gtag('event', 'register', { 'event_category': 'form', 'event_action': 'register', }); yaCounter53666866.reachGoal('register');
   });
@@ -336,6 +336,11 @@ $(document).ready(function () {
         }
       }
     });
+  });
+
+  $('.jsClickShowPhone').click(function () {
+    $(this).fadeOut(1);
+    $('.jsShowPhone').fadeIn(1);
   });
 
 });
