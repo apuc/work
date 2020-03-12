@@ -2,12 +2,15 @@
 
 namespace frontend\modules\company\controllers;
 
+use common\models\City;
 use common\models\Company;
 use common\models\Message;
 use common\models\Resume;
 use common\models\User;
+use common\models\Vacancy;
 use common\models\Views;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
@@ -22,14 +25,29 @@ class DefaultController extends Controller
         $model = Company::find()->where(['id'=>$id, 'status'=>Company::STATUS_ACTIVE])->andWhere(['!=', 'name', ''])->andWhere(['!=', 'name', 'null'])->one();
         if(!$model)
             throw new NotFoundHttpException();
+        $last_vacancies = Vacancy::find()->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(2)->orderBy('update_time DESC')->all();
         $view = new Views();
         $view->subject_type = 'Company';
         $view->subject_id = $model->id;
         $view->viewer_id = Yii::$app->user->id;
         $view->dt_view = time();
         $view->save();
+        $cities = City::find()
+            ->select(['geobase_city.id', 'geobase_city.name'])
+            ->innerJoin('vacancy', 'vacancy.city_id = geobase_city.id')
+            ->where([
+                'vacancy.status' => 1,
+                'vacancy.company_id' => $id
+            ])
+            ->groupBy('geobase_city.id')
+            ->orderBy('count(geobase_city.id) DESC')
+            ->limit(3)
+            ->all();
+        $cities = City::find()->where(['id'=>ArrayHelper::getColumn($cities, 'id')])->all();
         return $this->render('view', [
-            'model' => $model
+            'model' => $model,
+            'cities' => $cities,
+            'last_vacancies' => $last_vacancies
         ]);
     }
 

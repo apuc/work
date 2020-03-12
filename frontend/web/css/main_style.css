@@ -5007,7 +5007,10 @@ button {
     position: absolute;
     top: -100px;
     right: 30px; }
-
+.content-part__logo {
+    max-width: 300px;
+    max-height: 200px;
+}
 @media (max-width: 993px) {
     .sidebar-inner {
         background-color: white; }
@@ -5972,7 +5975,8 @@ button {
     -ms-flex-align: center;
     align-items: center;
     min-width: 375px;
-    margin-left: 15px; }
+    margin-left: 15px;
+    margin-top: 20px; }
 @media (max-width: 1200px) {
     .single-block__right {
         min-width: 250px; } }
@@ -7036,6 +7040,15 @@ main {
     border-radius: 5px;
     outline: none;
     cursor: pointer;
+}
+
+.company-soc a {
+    width: 30px;
+    height: 30px;
+}
+
+.company-soc a img {
+    width: 21px;
 }
 
 /*# sourceMappingURL=styles.css.map */
