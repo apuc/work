@@ -220,6 +220,7 @@ return [
                 'sitemap.xml' => 'sitemap/index',
                 'vacancy_<number:\d+>.xml'=>'sitemap/vacancy',
                 'resume_<number:\d+>.xml'=>'sitemap/resume',
+                'company_<number:\d+>.xml'=>'sitemap/company',
                 'city_<number:\d+>.xml'=>'sitemap/city',
                 'category_<number:\d+>.xml'=>'sitemap/category',
                 'vacancy/click-phone'=>'vacancy/default/click-phone',
