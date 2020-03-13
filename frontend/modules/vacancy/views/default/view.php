@@ -37,7 +37,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
 ?>
 
 <section class="single-vacancy">
-    <img class="single-vacancy__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
+    <img class="single-vacancy__dots2" src="/images/bg-dots.png" alt="точки" role="presentation"/>
     <div class="single-vacancy__circle"></div>
     <div class="container">
         <div class="resume-results">
@@ -61,7 +61,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
             <meta itemprop="industry" content="<?=$category->name?>">
             <?php endforeach; ?>
             <div class="single-block__left">
-                <img class="single-block__logo" src="<?= $model->company->getPhotoOrEmptyPhoto() ?>" alt=""
+                <img class="single-block__logo" src="<?= $model->company->getPhotoOrEmptyPhoto() ?>" alt="<?=$model->company->image_url?('Логотив компани '.$model->company->name):'Пустая компания'?>"
                      role="presentation"/>
                 <div class="single-block__first">
                     <?php if($model->mainCategory->name !== 'Пустая категория'):?>
@@ -73,13 +73,13 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         </div>
                     <?php endif ?>
                     <span>Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd MM yyyy') ?></span>
-                    <div class="single-block__view"><img class="single-block__icon mr5"
-                                                         src="/images/icon-eye.png" alt=""
-                                                         role="presentation"/><span><?= $model->countViews ?></span>
+                    <div class="single-block__view">
+                        <img class="single-block__icon mr5" src="/images/icon-eye.png" alt="Иконка глаз" role="presentation"/>
+                        <span><?= $model->countViews ?></span>
                     </div>
                     <?php if ($model->city0): ?>
                         <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5" href="<?= \common\models\Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>">
-                            <img class="single-block__icon" src="/images/arr-place.png" alt="" role="presentation"/>
+                            <img class="single-block__icon" src="/images/arr-place.png" alt="Стрелка" role="presentation"/>
                             <span class="ml5"><?= $model->city0->name ?></span>
                         </a>
                     <?php endif ?>
@@ -108,17 +108,17 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                     <span>Написать работодателю в соц.сетях</span>
                                     <?php if ($model->company->vk): ?>
                                         <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/<?= $model->company->vk ?>">
-                                            <img src="/images/vk.svg" alt="" role="presentation"/>
+                                            <img src="/images/vk.svg" alt="Иконка VK" role="presentation"/>
                                         </a>
                                     <?php endif ?>
                                     <?php if ($model->company->instagram): ?>
-                                        <a class="ok-bg" rel="nofollow" target="_blank" href="https://instagram.com/<?= $model->company->instagram ?>">
-                                            <img src="/images/ok.svg" alt="" role="presentation"/>
+                                        <a class="inst-bg" rel="nofollow" target="_blank" href="https://instagram.com/<?= $model->company->instagram ?>">
+                                            <img src="/images/instagram.svg" alt="Иконка instagram" role="presentation"/>
                                         </a>
                                     <?php endif ?>
                                     <?php if ($model->company->facebook): ?>
                                         <a class="fb-bg" rel="nofollow" target="_blank" href="https://facebook.com/<?= $model->company->facebook ?>">
-                                            <img src="/images/fb.svg" alt="" role="presentation"/>
+                                            <img src="/images/fb.svg" alt="Иконка facebook" role="presentation"/>
                                         </a>
                                     <?php endif ?>
                                 <?php endif; ?>
@@ -205,9 +205,10 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                 </p>
                             </li>
                             <?php if ($model->publisher->employer->phone): ?>
-                                <li class="sr-block__text__phone"><img src="/images/phone.svg" alt=""
-                                                                       role="presentation"/>
-                                    <div><strong>Телефон:</strong>
+                                <li class="sr-block__text__phone">
+                                    <img src="/images/phone.svg" alt="Телефон" role="presentation"/>
+                                    <div>
+                                        <strong>Телефон:</strong>
                                         <a class="hide-phone jsShowPhone" href="tel:<?= $model->publisher->employer->phone->number ?>"><?= $model->publisher->employer->phone->number ?></a>
                                         <button data-id="<?=$model->id?>" data-type="vacancy" class="show-phone jsClickShowPhone">Показать</button>
                                     </div>
@@ -228,9 +229,11 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                             <div class="last-vacancy__item">
                                 <div class="last-vacancy__tr">
                                 </div>
-                                <div class="last-vacancy__header"><img
-                                            src="<?= $vacancy->company->getPhotoOrEmptyPhoto() ?>" alt=""
-                                            role="presentation"/>
+                                <div class="last-vacancy__header">
+                                    <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto() ?>"
+                                         alt="<?=$vacancy->company->image_url?('Логотив компани '.$vacancy->company->name):'Пустая компания'?>"
+                                         role="presentation"
+                                    />
                                     <div class="last-vacancy__top">
                                         <?php if ($vacancy->category): ?>
                                             <div class="last-vacancy__cat-city">
@@ -259,8 +262,11 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                     <div class="last-vacancy__item">
                         <div class="last-vacancy__tr">
                         </div>
-                        <div class="last-vacancy__header"><img src="<?= $vacancy->company->getPhotoOrEmptyPhoto() ?>"
-                                                               alt="" role="presentation"/>
+                        <div class="last-vacancy__header">
+                            <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto() ?>"
+                                 alt="<?=$vacancy->company->image_url?('Логотив компани '.$vacancy->company->name):'Пустая компания'?>"
+                                 role="presentation"
+                            />
                             <div class="last-vacancy__top">
                                 <?php if ($vacancy->category): ?>
                                     <div class="last-vacancy__cat-city">

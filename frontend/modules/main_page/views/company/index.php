@@ -14,10 +14,10 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => $description]);
 <main>
 		<div class="background">
 			<div class="background_top">
-				<img src="/images/background_points.png" alt="">
+				<img src="/images/background_points.png" alt="Точки">
 			</div>
 			<div class="background_bottom">
-				<img src="/images/background_points.png" alt="">
+				<img src="/images/background_points.png" alt="Точки">
 			</div>
 		</div>
 		<div class="employer">
@@ -27,7 +27,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => $description]);
 					<div class="employer_statisticks_block_img laptop">
 						<div class="employer_statisticks_block_img_circle">
 						</div>
-						<img src="/images/laptop.png" alt="">
+						<img src="/images/laptop.png" alt="Ноутбук">
 						<p>1000+</p>
 					</div>
 					<div class="employer_statisticks_block_text">
@@ -39,7 +39,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => $description]);
 					<div class="employer_statisticks_block_img shout">
 						<div class="employer_statisticks_block_img_circle">
 						</div>
-						<img src="/images/shout.png" alt="">
+						<img src="/images/shout.png" alt="Рупор">
 						<p>300+</p>
 					</div>
 					<div class="employer_statisticks_block_text">
@@ -51,7 +51,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => $description]);
 					<div class="employer_statisticks_block_img glasses">
 						<div class="employer_statisticks_block_img_circle">
 						</div>
-						<img src="/images/glasses.png" alt="">
+						<img src="/images/glasses.png" alt="Очки">
 						<p>500+</p>
 					</div>
 					<div class="employer_statisticks_block_text">
@@ -130,7 +130,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => $description]);
 				<div class="employer_question_links">
 					<div class="employer_question_links_block">
 						<a href="https://vk.com/rabotad0netsk">
-							<img src="/images/links/vk.png" alt="VK">
+							<img src="/images/links/vk.png" alt="Иконка VK">
 						</a>
 					</div>
 				</div>

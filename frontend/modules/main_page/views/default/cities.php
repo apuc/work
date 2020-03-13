@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 <main>
     <div class="container">
         <h1 class="cities_main_title">Вакансии по городам</h1>
-        <img src="images/dotted_line.png" class="title__underline" alt="">
+        <img src="images/dotted_line.png" class="title__underline" alt="Пунктирная линия">
 
         <div class="container__parts">
 
@@ -22,7 +22,7 @@ use yii\helpers\ArrayHelper;
 
                 </div>
 
-                <img src="images/dotted_line.png" class="left__underline" alt="">
+                <img src="images/dotted_line.png" class="left__underline" alt="Пунктирная линия">
 
             </div>
 
@@ -38,7 +38,7 @@ use yii\helpers\ArrayHelper;
 
                 </div>
 
-                <img src="images/dotted_line.png" class="right__underline" alt="">
+                <img src="images/dotted_line.png" class="right__underline" alt="Пунктирная линия">
 
             </div>
 

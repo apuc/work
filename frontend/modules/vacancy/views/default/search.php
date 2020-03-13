@@ -42,7 +42,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>$canonical_rel]);
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
 ?>
 <section class="all-block all-vacancies">
-    <img class="all-block__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
+    <img class="all-block__dots2" src="/images/bg-dots.png" alt="Точки" role="presentation"/>
     <div class="all-block__circle">
     </div>
     <div class="all-block__content">
@@ -172,19 +172,22 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 <?php foreach ($vacancy->category as $category): ?>
                                     <a class="btn-card btn-card-small btn-gray" href="<?=Vacancy::getSearchPageUrl($category->slug)?>"><?= $category->name ?></a>
                                 <?php endforeach ?>
-                                <img class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>" alt="" role="presentation"/>
+                                <img class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>"
+                                     alt="<?=$vacancy->company->image_url?('Логотив компани '.$vacancy->company->name):'Пустая компания'?>"
+                                     role="presentation"
+                                />
                             </div>
                             <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$vacancy->main_category_id])?>" class="single-card__title mt5">
                                 <?= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) ?>
                             </a>
                             <div class="single-card__info-second"><span
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->update_time, 'dd.MM.yyyy') ?></span>
-                                <div class="single-card__view"><img class="single-card__icon mr5"
-                                                                    src="/images/icon-eye.png" alt=""
-                                                                    role="presentation"/><span><?= $vacancy->countViews ?></span>
+                                <div class="single-card__view">
+                                    <img class="single-card__icon mr5" src="/images/icon-eye.png" alt="Иконка глаз"role="presentation"/>
+                                    <span><?= $vacancy->countViews ?></span>
                                 </div>
                                 <a class="d-flex align-items-center mt5 mb5" href="<?=Vacancy::getSearchPageUrl(false, $vacancy->city0?$vacancy->city0->slug:false)?>">
-                                    <img class="single-card__icon" src="/images/arr-place.png" alt="" role="presentation"/>
+                                    <img class="single-card__icon" src="/images/arr-place.png" alt="Стрелка" role="presentation"/>
                                     <span class="ml5"><?= $vacancy->city0?$vacancy->city0->name:'' ?></span>
                                 </a>
                             </div>
@@ -207,13 +210,19 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                     <?php if($vacancy->company->hasSocials()): ?>
                                         <span>Написать работодателю в сетях</span>
                                         <?php if($vacancy->company->vk):?>
-                                        <a target="_blank" class="vk-bg" rel="nofollow" href="https://vk.com/<?=$vacancy->company->vk?>"><img src="/images/vk.svg" alt="" role="presentation"/></a>
+                                            <a target="_blank" class="vk-bg" rel="nofollow" href="https://vk.com/<?=$vacancy->company->vk?>">
+                                                <img src="/images/vk.svg" alt="Иконка VK" role="presentation"/>
+                                            </a>
                                         <?php endif ?>
                                         <?php if($vacancy->company->instagram):?>
-                                        <a target="_blank" class="ok-bg" rel="nofollow" href="https://instagram.com/<?=$vacancy->company->instagram?>"><img src="/images/ok.svg" alt="" role="presentation"/></a>
+                                            <a target="_blank" class="inst-bg" rel="nofollow" href="https://instagram.com/<?=$vacancy->company->instagram?>">
+                                                <img src="/images/instagram.svg" alt="Иконка instagram" role="presentation"/>
+                                            </a>
                                         <?php endif ?>
                                         <?php if($vacancy->company->facebook):?>
-                                        <a target="_blank" class="fb-bg" rel="nofollow" href="https://facebook.com/<?=$vacancy->company->facebook?>"><img src="/images/fb.svg" alt="" role="presentation"/></a>
+                                            <a target="_blank" class="fb-bg" rel="nofollow" href="https://facebook.com/<?=$vacancy->company->facebook?>">
+                                                <img src="/images/fb.svg" alt="Иконка facebook" role="presentation"/>
+                                            </a>
                                         <?php endif ?>
                                     <?php endif ?>
                                 </div>

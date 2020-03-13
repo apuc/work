@@ -21,7 +21,8 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
 
 ?>
 
-<div class="resume"><img class="resume__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
+<div class="resume">
+    <img class="resume__dots2" src="/images/bg-dots.png" alt="Точки" role="presentation"/>
     <div class="resume__circle">
     </div>
     <div class="container container-for-sidebar">
@@ -41,12 +42,15 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                     <li><?= mb_convert_case ( $model->title , MB_CASE_TITLE) ?></li>
                 </ul>
                 <div class="resume-results__date">
-                    <p>Резюме от
-                    </p><span><?= Yii::$app->formatter->asDate($model->update_time, 'dd MM yyyy') ?></span>
+                    <p>Резюме от</p>
+                    <span><?= Yii::$app->formatter->asDate($model->update_time, 'dd MM yyyy') ?></span>
                 </div>
             </div>
-            <section class="resume-top"><img class="resume-top__left" src="<?=$model->image_url?:'/images/empty_user.jpg'?>" alt=""
-                                         role="presentation"/>
+            <section class="resume-top">
+                <img class="resume-top__left" src="<?=$model->image_url?:'/images/empty_user.jpg'?>"
+                     alt="<?=$model->image_url?('Фото '.$model->employer->second_name.' '.$model->employer->first_name):'Пустое фото резюме'?>"
+                     role="presentation"
+                />
                 <div class="resume-top__right">
 <!--                    <div class="resume-top__header">-->
 <!--                        <button class="resume-top__download"><img src="/images/resume_download.png" alt=""-->
@@ -210,12 +214,21 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         <div class="resume-info__soc">
                             <?php if ($model->hasSocials()): ?>
                                 <p>Написать соискателю в сетях</p>
-                                <?php if ($model->vk): ?><a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/<?= $model->vk ?>"><img
-                                            src="/images/vk.svg" alt="" role="presentation"/></a><?php endif ?>
-                                <?php if ($model->facebook): ?><a class="fb-bg" rel="nofollow" target="_blank" href="https://facebook.com/<?= $model->facebook ?>"><img
-                                            src="/images/fb.svg" alt="" role="presentation"/></a><?php endif ?>
-                                <?php if ($model->instagram): ?><a class="fb-bg" rel="nofollow" target="_blank" href="https://instagram.com/<?= $model->instagram ?>"><img
-                                            src="/images/fb.svg" alt="" role="presentation"/></a><?php endif ?>
+                                <?php if ($model->vk): ?>
+                                    <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/<?= $model->vk ?>">
+                                        <img src="/images/vk.svg" alt="Иконка VK" role="presentation"/>
+                                    </a>
+                                <?php endif ?>
+                                <?php if ($model->facebook): ?>
+                                    <a class="fb-bg" rel="nofollow" target="_blank" href="https://facebook.com/<?= $model->facebook ?>">
+                                        <img src="/images/fb.svg" alt="Иконка facebook" role="presentation"/>
+                                    </a>
+                                <?php endif ?>
+                                <?php if ($model->instagram): ?>
+                                    <a class="inst-bg" rel="nofollow" target="_blank" href="https://instagram.com/<?= $model->instagram ?>">
+                                        <img src="/images/instagram.svg" alt="Иконка instagram" role="presentation"/>
+                                    </a>
+                                <?php endif ?>
                             <?php endif ?>
                         </div>
                         <?php if(!Yii::$app->user->isGuest && $model->owner != Yii::$app->user->id): ?>

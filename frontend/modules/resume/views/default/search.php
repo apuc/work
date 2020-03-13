@@ -37,7 +37,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
 ?>
 
 <section class="all-block all-resume">
-    <img class="all-block__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
+    <img class="all-block__dots2" src="/images/bg-dots.png" alt="Точки" role="presentation"/>
     <div class="all-block__circle">
     </div>
     <div class="all-block__content">
@@ -188,7 +188,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         foreach ($resumes->models as $resume):?>
                             <div class="single-card-resume">
                                 <div class="single-card-resume__top">
-                                    <img class="single-card-resume__left-img" src="<?=$resume->image_url?$resume->image_url:'/images/empty_user.jpg'?>" alt="" role="presentation"/>
+                                    <img class="single-card-resume__left-img"
+                                         src="<?=$resume->image_url?$resume->image_url:'/images/empty_user.jpg'?>" alt="<?=$resume->image_url?('Фото '.$resume->employer->second_name.' '.$resume->employer->first_name):'Пустое фото резюме'?>"
+                                         role="presentation"
+                                    />
                                     <div class="single-card-resume__top-left">
                                         <div class="single-card-resume__head">
                                             <h3>
@@ -254,17 +257,16 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             </p>
                                             <div class="single-card-resume__soc-block">
                                                 <?php if ($resume->vk): ?>
-                                                    <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/<?= $resume->vk ?>"><img src="/images/vk.svg"
-                                                                                                    alt=""
-                                                                                                    role="presentation"/></a>
+                                                    <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/<?= $resume->vk ?>">
+                                                        <img src="/images/vk.svg" alt="Иконка vk" role="presentation"/></a>
                                                 <?php endif ?>
                                                 <?php if ($resume->facebook): ?>
-                                                    <a class="fb-bg" rel="nofollow" target="_blank" href="https://facebook.com/<?= $resume->facebook ?>"><img
-                                                                src="/images/fb.svg" alt="" role="presentation"/></a>
+                                                    <a class="fb-bg" rel="nofollow" target="_blank" href="https://facebook.com/<?= $resume->facebook ?>">
+                                                        <img src="/images/fb.svg" alt="Иконка facebook" role="presentation"/></a>
                                                 <?php endif ?>
                                                 <?php if ($resume->instagram): ?>
-                                                    <a class="inst-bg" rel="nofollow" target="_blank" href="https://instagram.com/<?= $resume->instagram ?>"><img
-                                                                src="/images/instagram.svg" alt="" role="presentation"/></a>
+                                                    <a class="inst-bg" rel="nofollow" target="_blank" href="https://instagram.com/<?= $resume->instagram ?>">
+                                                        <img src="/images/instagram.svg" alt="Иконка instagram" role="presentation"/></a>
                                                 <?php endif ?>
                                             </div>
                                         </div>
