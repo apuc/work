@@ -43,7 +43,7 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                                 $count = 0;
                                 foreach ($cities as $city):
                             ?>
-                                <a class="single-block__city" href="<?=Vacancy::getSearchPageUrl(false, $city->slug)?>"><?=$city->name?><?=$count<2?',':''?></a>
+                                <a class="single-block__city" href="<?=Vacancy::getSearchPageUrl(false, $city->slug)?>"><?=$city->name?><?=$count<(count($cities)-1)?',':''?></a>
                             <?php
                                 $count++;
                                 endforeach;
