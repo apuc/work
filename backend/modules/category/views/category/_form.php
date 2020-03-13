@@ -31,6 +31,23 @@ use yii\widgets\ActiveForm;
         'buttonName' => 'Выбрать фотографию',
     ]);
     ?>
+
+    <div class="media__upload_img"><img src="<?= $model->icon; ?>" width="100px"/></div>
+    <?=InputFile::widget([
+        'language' => 'ru',
+        'controller' => 'elfinder',
+        // вставляем название контроллера, по умолчанию равен elfinder
+        'filter' => 'image',
+        // фильтр файлов, можно задать массив фильтров https://github.com/Studio-42/elFinder/wiki/Client-con..
+        'name' => 'Category[icon]',
+        'id' => 'category-icon',
+        'template' => '<div class="input-group">{input}<span class="span-btn">{button}</span></div>',
+        'options' => ['class' => 'form-control itemImg', 'maxlength' => '255'],
+        'buttonOptions' => ['class' => 'btn btn-primary'],
+        'value' => $model->icon,
+        'buttonName' => 'Выбрать иконку',
+    ]);
+    ?>
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
     <p>

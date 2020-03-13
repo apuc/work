@@ -35,6 +35,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'attribute'=>'icon',
+                'format'=>'html',
+                'value' => function($model){
+                    return Html::img($model->icon, ['height'=>'150px']);
+                }
+            ],
+            [
                 'attribute' => 'slug',
                 'format' => 'text',
                 'contentOptions' => ['style' => 'white-space: normal;']

@@ -157,7 +157,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                     <div class="single-card__tr">
                     </div>
                     <div class="single-card__header">
-                        <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto() ?>" alt="Логотип <?=$vacancy->company->name?>" role="presentation"/>
+                        <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto($vacancy->mainCategory) ?>" alt="Логотип <?=$vacancy->company->name?>" role="presentation"/>
                         <div class="single-card__top">
                             <div class="single-card__cat-city">
                                 <?php if ($vacancy->mainCategory->name!='Пустая категория'): ?>

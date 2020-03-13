@@ -106,8 +106,13 @@ class Company extends WorkActiveRecord
         ];
     }
 
-    public function getPhotoOrEmptyPhoto(){
-        return $this->image_url?$this->image_url:'/images/company_empty.png';
+    public function getPhotoOrEmptyPhoto(Category $category){
+        if($this->image_url)
+            return $this->image_url;
+        else if($category && $category->icon)
+            return $category->icon;
+        else
+            return '/images/company_empty.png';
     }
 
     public function canAccess($user_id){

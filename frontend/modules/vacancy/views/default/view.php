@@ -61,7 +61,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
             <meta itemprop="industry" content="<?=$category->name?>">
             <?php endforeach; ?>
             <div class="single-block__left">
-                <img class="single-block__logo" src="<?= $model->company->getPhotoOrEmptyPhoto() ?>" alt="<?=$model->company->image_url?('Логотив компани '.$model->company->name):'Пустая компания'?>"
+                <img class="single-block__logo" src="<?= $model->company->getPhotoOrEmptyPhoto($model->mainCategory) ?>" alt="<?=$model->company->image_url?('Логотив компани '.$model->company->name):'Пустая компания'?>"
                      role="presentation"/>
                 <div class="single-block__first">
                     <?php if($model->mainCategory->name !== 'Пустая категория'):?>
@@ -237,7 +237,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                 <div class="last-vacancy__tr">
                                 </div>
                                 <div class="last-vacancy__header">
-                                    <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto() ?>"
+                                    <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto($vacancy->mainCategory) ?>"
                                          alt="<?=$vacancy->company->image_url?('Логотив компани '.$vacancy->company->name):'Пустая компания'?>"
                                          role="presentation"
                                     />
@@ -270,7 +270,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         <div class="last-vacancy__tr">
                         </div>
                         <div class="last-vacancy__header">
-                            <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto() ?>"
+                            <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto($vacancy->mainCategory) ?>"
                                  alt="<?=$vacancy->company->image_url?('Логотив компани '.$vacancy->company->name):'Пустая компания'?>"
                                  role="presentation"
                             />
