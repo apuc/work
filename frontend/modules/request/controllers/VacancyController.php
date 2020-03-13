@@ -94,6 +94,7 @@ class VacancyController extends MyActiveController
         }
         $model->load($params, '');
         $model->update_time = time();
+        $model->publisher_id = Yii::$app->user->id;
         if ($model->save()) {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);

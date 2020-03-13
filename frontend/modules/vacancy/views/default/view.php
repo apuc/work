@@ -204,11 +204,11 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                 <p><strong>Контактное лицо:</strong><?= $model->company->contact_person ?>
                                 </p>
                             </li>
-                            <?php if ($model->company->phone): ?>
+                            <?php if ($model->publisher->employer->phone): ?>
                                 <li class="sr-block__text__phone"><img src="/images/phone.svg" alt=""
                                                                        role="presentation"/>
                                     <div><strong>Телефон:</strong>
-                                        <a class="hide-phone jsShowPhone" href="tel:<?= $model->company->phone->number ?>"><?= $model->company->phone->number ?></a>
+                                        <a class="hide-phone jsShowPhone" href="tel:<?= $model->publisher->employer->phone->number ?>"><?= $model->publisher->employer->phone->number ?></a>
                                         <button data-id="<?=$model->id?>" data-type="vacancy" class="show-phone jsClickShowPhone">Показать</button>
                                     </div>
                                 </li>
