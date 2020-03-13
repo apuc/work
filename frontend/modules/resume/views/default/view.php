@@ -205,7 +205,12 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                             </p>
                             <?php if($model->employer->phone): ?>
                                 <a class="hide-phone jsShowPhone" href="tel:<?= $model->employer->phone->number ?>"><?= $model->employer->phone->number ?></a>
-                                <button data-id="<?=$model->id?>" data-type="resume" class="show-phone jsClickShowPhone">Показать</button>
+                                <button
+                                    data-id="<?=$model->id?>"
+                                    data-type="resume"
+                                    class="show-phone jsClickShowPhone"
+                                    onclick="gtag('event', 'resume_phone', { 'event_category': 'click', 'event_action': 'resume_phone', }); yaCounter53666866.reachGoal('resume_phone'); return true;"
+                                >Показать</button>
                             <?php endif ?>
                             <p>Почта:
                             </p><a href="mailto:<?= $model->employer->user->email ?>"><?= $model->employer->user->email ?></a>
