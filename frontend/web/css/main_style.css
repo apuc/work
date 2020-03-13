@@ -4885,6 +4885,11 @@ button {
     justify-content: center;
     margin-top: 40px; }
 
+.single-block__left > .content-part__title{
+    font-size: 22px;
+    margin-top: 20px;
+}
+
 .content-part__title {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -5702,6 +5707,7 @@ button {
     -ms-flex-pack: justify;
     justify-content: space-between;
     margin-bottom: 30px;
+    margin-top: 10px;
     z-index: 3; }
 @media (max-width: 993px) {
     .single-block {
@@ -7030,17 +7036,22 @@ main {
 .show-phone {
     display: block;
     width: max-content;
-    padding: 5px 5px 3px;
+    padding: 7px 14px 5px;
     font-size: 10px;
     font-weight: 800;
-    color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 1.1px;
-    background: #af2a22;
-    border: none;
-    border-radius: 5px;
+    background: none;
+    color: #dd3d34;
+    border-color: #dd3d34;
+    border-radius: 20px;
     outline: none;
     cursor: pointer;
+}
+
+.show-phone:hover {
+    background-color: #dd3d34;
+    color: white;
 }
 
 .company-soc a {

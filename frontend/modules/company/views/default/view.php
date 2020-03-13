@@ -51,20 +51,23 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                         </span>
                     </div>
                 </div>
+
+                <p class="content-part__title">
+                    <?=$model->name?>
+                    <?php if($model->is_trusted):?>
+                        <img src="/images/correct.png" alt=Галочка"" id="small-img" role="presentation" title="Проверенная компания"/>
+                    <?php endif ?>
+                </p>
+
                 <div class="content-part">
+
+
+
                     <div class="content-part__block">
-                        <p class="content-part__title">
-                            <?=$model->name?>
-                            <?php if($model->is_trusted):?>
-                                <img src="/images/correct.png" alt=Галочка"" id="small-img" role="presentation"/>
-                            <?php endif ?>
-                        </p>
+
                         <img class="content-part__logo" src="<?=$model->image_url?>" alt="" role="presentation"/>
                     </div>
                     <div class="content-part__block">
-                        <?php if($model->is_trusted):?>
-                            <p class="content-part__title">Проверенная компания</p>
-                        <?php endif ?>
                         <div class="central" style="align-items: center;">
                             <img src="/images/chip.png" alt="Чип" role="presentation"/>
                             <span><?=StringHelper::truncate($model->activity_field, 130, '...')?></span>
@@ -99,13 +102,13 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                         <div class="sidebar-inner__call-contact">
                             <img class="sidebar-inner__img" src="/images/vertical_line.png" alt="Линия" role="presentation"/>
                             <p class="sidebar-inner__title">Менеджер по персоналу</p>
-                            <p class="sidebar-inner__phone-number hide-phone jsShowPhone"><?=$model->phone->number?></p>
+                            <a class="sidebar-inner__phone-number hide-phone jsShowPhone" href="tel:<?=$model->phone->number?>"><?=$model->phone->number?></a>
                             <button
                                 data-id="<?=$model->id?>"
                                 data-type="company"
-                                class="show-phone ml15 jsClickShowPhone"
+                                class="show-phone ml15 jsClickShowPhone mt5"
                                 onclick="gtag('event', 'company_phone', { 'event_category': 'click', 'event_action': 'company_phone', }); yaCounter53666866.reachGoal('company_phone'); return true;"
-                            >Показать</button>
+                            >Позвонить</button>
                         </div>
                     <?php endif ?>
                     <div class="single-block__soc company-soc">
@@ -144,7 +147,7 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                             <div class="last-vacancy__tr">
                             </div>
                             <div class="last-vacancy__header">
-                                <img src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>"
+                                <img src="<?=$vacancy->company->getPhotoOrEmptyPhoto($vacancy->mainCategory)?>"
                                      alt="<?=$vacancy->company->image_url?('Логотив компани '.$vacancy->company->name):'Пустая компания'?>"
                                      role="presentation"
                                 />
@@ -169,7 +172,7 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                         <div class="last-vacancy__tr">
                         </div>
                         <div class="last-vacancy__header">
-                            <img src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>"
+                            <img src="<?=$vacancy->company->getPhotoOrEmptyPhoto($vacancy->mainCategory)?>"
                                  alt="<?=$vacancy->company->image_url?('Логотив компани '.$vacancy->company->name):'Пустая компания'?>"
                                  role="presentation"
                             />

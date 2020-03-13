@@ -174,7 +174,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                         <a class="btn-card btn-card-small btn-gray" href="<?=Vacancy::getSearchPageUrl($category->slug)?>"><?= $category->name ?></a>
                                     <?php endif ?>
                                 <?php endforeach ?>
-                                <img class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto()?>"
+                                <img class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto($vacancy->mainCategory)?>"
                                      alt="<?=$vacancy->company->image_url?('Логотив компани '.$vacancy->company->name):'Пустая компания'?>"
                                      role="presentation"
                                 />
