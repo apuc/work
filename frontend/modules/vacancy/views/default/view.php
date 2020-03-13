@@ -212,7 +212,12 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                     <div>
                                         <strong>Телефон:</strong>
                                         <a class="hide-phone jsShowPhone" href="tel:<?= $model->publisher->employer->phone->number ?>"><?= $model->publisher->employer->phone->number ?></a>
-                                        <button data-id="<?=$model->id?>" data-type="vacancy" class="show-phone jsClickShowPhone">Показать</button>
+                                        <button
+                                            data-id="<?=$model->id?>"
+                                            data-type="vacancy"
+                                            class="show-phone jsClickShowPhone"
+                                            onclick="gtag('event', 'vacancy_phone', { 'event_category': 'click', 'event_action': 'vacancy_phone', }); yaCounter53666866.reachGoal('vacancy_phone'); return true;"
+                                        >Показать</button>
                                     </div>
                                 </li>
                             <?php endif ?>

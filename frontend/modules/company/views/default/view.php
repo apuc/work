@@ -100,7 +100,12 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                             <img class="sidebar-inner__img" src="/images/vertical_line.png" alt="Линия" role="presentation"/>
                             <p class="sidebar-inner__title">Менеджер по персоналу</p>
                             <p class="sidebar-inner__phone-number hide-phone jsShowPhone"><?=$model->phone->number?></p>
-                            <button data-id="<?=$model->id?>" data-type="company" class="show-phone ml15 jsClickShowPhone">Показать</button>
+                            <button
+                                data-id="<?=$model->id?>"
+                                data-type="company"
+                                class="show-phone ml15 jsClickShowPhone"
+                                onclick="gtag('event', 'company_phone', { 'event_category': 'click', 'event_action': 'company_phone', }); yaCounter53666866.reachGoal('company_phone'); return true;"
+                            >Показать</button>
                         </div>
                     <?php endif ?>
                     <div class="single-block__soc company-soc">
