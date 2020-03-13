@@ -4243,7 +4243,7 @@ button {
         align-items: flex-start; } }
 .home-card .single-card__header > img {
     max-width: 70px;
-    max-height: 70px;
+    max-height: 40px;
     width: auto;
     height: auto;
     margin-right: 18px; }
