@@ -68,7 +68,9 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                         <div class="category-block">
                             <a class="btn-card btn-card-small btn-gray" href="<?=\common\models\Vacancy::getSearchPageUrl($model->mainCategory->slug)?>"><?= $model->mainCategory->name ?></a>
                             <?php foreach ($model->category as $category): ?>
-                                <a class="btn-card btn-card-small btn-gray" href="<?=\common\models\Vacancy::getSearchPageUrl($category->slug)?>"><?= $category->name ?></a>
+                                <?php if($category->id != $model->main_category_id):?>
+                                    <a class="btn-card btn-card-small btn-gray" href="<?=\common\models\Vacancy::getSearchPageUrl($category->slug)?>"><?= $category->name ?></a>
+                                <?php endif ?>
                             <?php endforeach ?>
                         </div>
                     <?php endif ?>

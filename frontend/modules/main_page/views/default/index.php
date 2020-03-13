@@ -160,10 +160,10 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                         <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto() ?>" alt="Логотип <?=$vacancy->company->name?>" role="presentation"/>
                         <div class="single-card__top">
                             <div class="single-card__cat-city">
-                                <?php if ($vacancy->category): ?>
-                                    <?php $category_slug = $vacancy->category[0]->slug ?>
+                                <?php if ($vacancy->mainCategory->name!='Пустая категория'): ?>
                                     <a class="btn-card btn-card-small btn-gray"
-                                       href="<?= Url::to(["/vacancy/$category_slug"]) ?>"><?= $vacancy->category[0]->name ?></a>
+                                       href="<?= Url::to(["/vacancy/".$vacancy->mainCategory->slug]) ?>"
+                                    ><?= $vacancy->mainCategory->name ?></a>
                                 <?php endif ?>
                                 <?php if ($city = $vacancy->city0): ?>
                                     <a class="d-flex align-items-center home-city"
