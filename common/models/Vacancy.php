@@ -36,6 +36,7 @@ use yii\web\View;
  * @property integer $update_time
  * @property integer $description
  * @property integer $main_category_id
+ * @property integer $publisher_id
  *
  * @property Company $company
  * @property EmploymentType $employment_type
@@ -48,6 +49,7 @@ use yii\web\View;
  * @property integer $countViews
  * @property City $city0
  * @property int $clickPhoneCount
+ * @property User $publisher
  */
 class Vacancy extends WorkActiveRecord
 {
@@ -98,7 +100,7 @@ class Vacancy extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id', 'main_category_id'], 'integer'],
+            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id', 'main_category_id', 'publisher_id'], 'integer'],
             [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions', 'description'], 'string'],
             [['company_id', 'post', 'main_category_id'], 'required'],
@@ -179,6 +181,14 @@ class Vacancy extends WorkActiveRecord
     public function getVacancy_category()
     {
         return $this->hasMany(VacancyCategory::className(), ['vacancy_id' => 'id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPublisher()
+    {
+        return $this->hasOne(User::className(), ['id' => 'publisher_id']);
     }
 
     /**
