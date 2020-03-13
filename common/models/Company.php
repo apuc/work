@@ -109,7 +109,7 @@ class Company extends WorkActiveRecord
     public function getPhotoOrEmptyPhoto(Category $category){
         if($this->image_url)
             return $this->image_url;
-        else if($category && $category->icon)
+        else if($category && $category->icon && $category->name != "Пустая категория")
             return $category->icon;
         else
             return '/images/company_empty.png';
