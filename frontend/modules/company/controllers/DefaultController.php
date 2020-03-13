@@ -44,7 +44,6 @@ class DefaultController extends Controller
             ->orderBy('count(geobase_city.id) DESC')
             ->limit(3)
             ->all();
-        $cities = City::find()->where(['id'=>ArrayHelper::getColumn($cities, 'id')])->all();
         return $this->render('view', [
             'model' => $model,
             'cities' => $cities,
