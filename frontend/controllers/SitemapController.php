@@ -7,6 +7,7 @@ namespace frontend\controllers;
 use common\classes\Debug;
 use common\models\Category;
 use common\models\City;
+use common\models\Company;
 use common\models\Resume;
 use common\models\Vacancy;
 use Yii;
@@ -24,9 +25,13 @@ class SitemapController extends Controller
         for($i=1;$i<=$vacanciesPagesCount;$i++)
             $siteMaps[] = "vacancy_$i";
 
-        $resumePagesCount = ceil(Resume::find()->where(['status'=>Resume::STATUS_ACTIVE])->count()/10000);
+        $resumePagesCount = ceil(Resume::find()->where(['!=', 'status', Resume::STATUS_INACTIVE])->count()/10000);
         for($i=1;$i<=$resumePagesCount;$i++)
             $siteMaps[] = "resume_$i";
+
+        $companyPagesCount = ceil(Company::find()->where(['status'=>Company::STATUS_ACTIVE])->count()/10000);
+        for($i=1;$i<=$companyPagesCount;$i++)
+            $siteMaps[] = "company_$i";
 
         $citiesCount = City::find()->where(['status'=>City::TYPE_SHOWN])->count();
         $categoriesCount = Category::find()->count();
@@ -85,11 +90,45 @@ class SitemapController extends Controller
         return $xml_sitemap;
     }
 
+    public function actionCompany($number) {
+        if (!$xml_sitemap = Yii::$app->cache->get("company_$number")) {
+            /** @var Company[] $companies */
+            $companies = Company::find()
+                ->where(['status' => Company::STATUS_ACTIVE])
+                ->andWhere(['!=', 'name', ''])
+                ->select(['id', 'updated_at'])
+                ->limit($number * 10000)
+                ->offset(($number - 1) * 10000)
+                ->all();
+            $host = Yii::$app->request->hostInfo;
+            $urls = [];
+            foreach ($companies as $company) {
+                $urls[] = [
+                    'loc' => "$host/company/view/$company->id",
+                    'lastmod' => date(DATE_W3C, $company->updated_at),
+                    'changefreq' => 'daily',
+                    'priority' => 0.8
+                ];
+            }
+            $xml_sitemap = $this->renderPartial('urlset', [
+                'host' => Yii::$app->request->hostInfo,
+                'urls' => $urls,
+            ]);
+            if (!$urls)
+                throw new HttpException(404, 'Not Found');
+            Yii::$app->cache->set("company_$number", $xml_sitemap, 3600);
+        }
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        $headers = Yii::$app->response->headers;
+        $headers->add('Content-Type', 'text/xml');
+        return $xml_sitemap;
+    }
+
     public function actionResume($number) {
         if (!$xml_sitemap = Yii::$app->cache->get("resume_$number")) {
             /** @var Resume[] $resumes */
             $resumes = Resume::find()
-                ->where(['status' => Resume::STATUS_ACTIVE])
+                ->where(['!=', 'status' => Resume::STATUS_INACTIVE])
                 ->select(['id', 'updated_at'])
                 ->limit($number * 10000)
                 ->offset(($number - 1) * 10000)
