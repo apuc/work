@@ -33,13 +33,13 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                 </div>
                 <nav class="nhome__nav jsNavMenu">
                     <a class="nhome__nav-item nhome__nav-item_logo" href="/">
-                        <img src="/images/logo-main.png" alt="rabota.today" role="presentation"/>
-                        <img src="/images/logo-main-small.png" alt="rabota.today" role="presentation"/>
-                        <img src="/images/logo_mob.png" alt="" role="presentation"/>
+                        <img src="/images/logo-main.png" alt="Логотип rabota.today" role="presentation"/>
+                        <img src="/images/logo-main-small.png" alt="Логотип rabota.today" role="presentation"/>
+                        <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
                     </a>
                     <a class="nhome__nav-item" href="/employer">Работодателю</a>
                     <div class="geolocation">
-                        <img src="/images/geolocation.png" alt="">
+                        <img src="/images/geolocation.png" alt="Геолокация">
                         <select class="city-header jsCityHeaderSelect">
                             <option></option>
                             <?php /** @var \common\models\City $city */
@@ -63,7 +63,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                             <?php else: ?>
                                 <?= $employer->first_name . ' ' . $employer->second_name ?>
                             <?php endif ?>
-                            <img src="/images/down-arrow.svg" alt="" role="presentation"/>
+                            <img src="/images/down-arrow.svg" alt="Стреклка вниз" role="presentation"/>
                             <span>></span>
                         </span>
                             <div class="dropdown__menu jsShowMenu">
@@ -104,7 +104,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                 </div>
                 <div class="geolocation">
                     <div class="geolocation__block">
-                        <img src="/images/geolocation.png" alt="">
+                        <img src="/images/geolocation.png" alt="Геолокация">
                         <select class="city-header jsCityHeaderSelect">
                             <option></option>
                             <?php /** @var \common\models\City $city */
@@ -122,8 +122,8 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
             </div>
         </div>
         <div class="nhome__main-bottom">
-            <img class="nhome__main-big-circle" src="/images/home-big-circle.png" alt="" role="presentation"/>
-            <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="" role="presentation"/>
+            <img class="nhome__main-big-circle" src="/images/home-big-circle.png" alt="Круг" role="presentation"/>
+            <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="Герб Донецка" role="presentation"/>
             <h1 class="nhome__title">Работа</h1>
             <p class="nhome__desc desc-pc">
                 Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из <a class="yellow-text"
@@ -143,11 +143,11 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
             </p>
             <!--googleoff: all-->
             <!--noindex-->
-            <img class="nhome__main-bottom-img" src="/images/img1.png" img="" alt="" role="presentation"/>
+            <img class="nhome__main-bottom-img" src="/images/img1.png" img="Офисный стул" alt="" role="presentation"/>
         </div>
     </div>
     <aside class="nhome__aside">
-        <img class="nhome__dots2" src="/images/bg-dots.png" alt="" role="presentation"/>
+        <img class="nhome__dots2" src="/images/bg-dots.png" alt="точки" role="presentation"/>
         <div class="nhome__aside-header">
             <h3 class="nhome__aside-header-vacancy">Вакансии дня</h3>
         </div>
@@ -157,7 +157,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                     <div class="single-card__tr">
                     </div>
                     <div class="single-card__header">
-                        <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto() ?>" alt="" role="presentation"/>
+                        <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto() ?>" alt="Логотип <?=$vacancy->company->name?>" role="presentation"/>
                         <div class="single-card__top">
                             <div class="single-card__cat-city">
                                 <?php if ($vacancy->category): ?>
@@ -168,7 +168,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                                 <?php if ($city = $vacancy->city0): ?>
                                     <a class="d-flex align-items-center home-city"
                                        href="<?= Url::to(["/vacancy/$city->slug"]) ?>">
-                                        <img class="single-card__icon" src="/images/arr-place.png" alt=""
+                                        <img class="single-card__icon" src="/images/arr-place.png" alt="Стрелка"
                                              role="presentation"/>
                                         <span class="ml5"><?= $city->name ?></span>
                                     </a>
@@ -179,10 +179,9 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                                title="<?= mb_convert_case($vacancy->post, MB_CASE_TITLE) ?>"><?= ucfirst($vacancy->post) ?></a>
                             <div class="single-card__info-second"><span
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd MM yyyy, hh:mm') ?></span>
-                                <div class="single-card__view"><img class="single-card__icon mr5"
-                                                                    src="/images/icon-eye.png"
-                                                                    alt=""
-                                                                    role="presentation"/><span><?= $vacancy->countViews ?></span>
+                                <div class="single-card__view">
+                                    <img class="single-card__icon mr5" src="/images/icon-eye.png" alt="иконка глаз" role="presentation"/>
+                                    <span><?= $vacancy->countViews ?></span>
                                 </div>
                             </div>
                         </div>
@@ -221,6 +220,6 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
         endforeach; ?>
         <a class="nhome__footer-item" href="#"></a>
     </div>
-    <img class="nhome__dots1" src="/images/bg-dots.png" alt="" role="presentation"/>
+    <img class="nhome__dots1" src="/images/bg-dots.png" alt="Точки" role="presentation"/>
     <div class="nhome__circle"></div>
 </div>
