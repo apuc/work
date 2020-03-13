@@ -34,7 +34,7 @@ class DefaultController extends Controller
         $view->dt_view = time();
         $view->save();
         $cities = City::find()
-            ->select(['geobase_city.id', 'geobase_city.name'])
+            ->select(['geobase_city.id', 'geobase_city.name', 'geobase_city.slug'])
             ->innerJoin('vacancy', 'vacancy.city_id = geobase_city.id')
             ->where([
                 'vacancy.status' => 1,
