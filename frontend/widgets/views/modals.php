@@ -120,13 +120,15 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
                 </p>
             <?php endif?>
             </div>
-        <?php endif ?>
+        <?php endif?>
         <?php
         /** @var Resume[] $resumes
          */
-        $resumes = Resume::find()->select(['id', 'title'])->where(['owner'=> Yii::$app->user->id, 'status'=>Resume::STATUS_ACTIVE])->all()?>
+        $resumes = null;
+        if (!Yii::$app->user->isGuest)
+            $resumes = Resume::find()->select(['id', 'title'])->where(['owner'=> Yii::$app->user->id, 'status'=>Resume::STATUS_ACTIVE])->all()?>
         <div class="modal-style modal-send-message jsModalMessageVacancy">
-            <?php if($resumes && !Yii::$app->user->isGuest):?>
+            <?php if($resumes):?>
             <p>Написать нам
             </p>
             <?= Html::beginForm(['/vacancy/default/send-message'], 'post', ['class' => 'jsModalRegForm']) ?>
@@ -149,7 +151,7 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             <?php endif?>
         </div>
         <div class="modal-style modal-send-message jsModalMessageCompany">
-            <?php if($resumes && !Yii::$app->user->isGuest):?>
+            <?php if($resumes):?>
                 <p>Написать нам</p>
                 <?= Html::beginForm(['/company/default/send-message'], 'post', ['class' => 'jsModalRegForm']) ?>
                 <span>Выберите резюме</span>
