@@ -7,6 +7,7 @@ use common\models\Category;
 use common\models\City;
 use common\models\Employer;
 use common\models\Vacancy;
+use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
 
@@ -19,13 +20,21 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
-        $categories = Category::find()->limit(18)->all();
+        if (!$categories = Yii::$app->cache->get("main_page_categories")) {
+            $categories = Category::find()->select(['name', 'slug'])->limit(18)->all();
+            Yii::$app->cache->set("main_page_categories", $categories, 3600);
+        }
+        if (!$cities = Yii::$app->cache->get("main_page_cities")) {
+            $cities = City::find()->select(['id', 'name'])->where(['status' => 1])->orderBy('priority ASC')->all();
+            Yii::$app->cache->set("main_page_cities", $cities, 3600);
+        }
         $vacancies = Vacancy::find()->with(['employment_type', 'category', 'company'])->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(10)->orderBy('id DESC')->all();
         $employer = \Yii::$app->user->isGuest?null:Employer::find()->where(['user_id'=>\Yii::$app->user->id])->one();
         return $this->render('index', [
             'categories' => $categories,
             'vacancies' => $vacancies,
-            'employer' => $employer
+            'employer' => $employer,
+            'cities' => $cities
         ]);
     }
 
