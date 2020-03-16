@@ -2,6 +2,7 @@
 /* @var $employer \common\models\Employer */
 /* @var $this \yii\web\View */
 
+use common\models\City;
 use common\models\Resume;
 use common\models\Vacancy;
 use yii\helpers\ArrayHelper;
@@ -38,7 +39,7 @@ use yii\helpers\Url;
                             <img src="/images/geolocation.png" alt="Геолокация">
                             <select class="city-header jsCityHeaderSelect">
                                 <option></option>
-                                <?php foreach (\common\models\City::find()->where(['status'=>1])->all() as $city):?>
+                                <?php foreach (City::find()->where(['status'=>1])->orderBy('priority ASC')->all() as $city):?>
                                     <option <?=(Yii::$app->request->cookies['city']==(string)$city->id)?"selected":''?> value="<?=$city->id?>"><?=$city->name?></option>
                                 <?php endforeach;?>
                             </select>

@@ -23,6 +23,7 @@ use Yii;
  * @property string $resume_meta_description
  * @property string $resume_header
  * @property string $resume_bottom_text
+ * @property integer $priority
  *
  * @property Region $region
  *
@@ -67,7 +68,8 @@ class City extends WorkActiveRecord
             'resume_meta_title' => 'Resume meta title',
             'resume_meta_description' => 'Resume meta description',
             'resume_header' => 'h1 заголовок резюме',
-            'resume_bottom_text' => 'Текст страницы поиска резюме'
+            'resume_bottom_text' => 'Текст страницы поиска резюме',
+            'priority' => 'Приоритет сортировки'
         ];
     }
 
@@ -94,5 +96,10 @@ class City extends WorkActiveRecord
     public function getRegion()
     {
         return $this->hasOne(Region::className(), ['id' => 'region_id']);
+    }
+
+    public function getVacancy()
+    {
+        return $this->hasMany(Vacancy::className(), ['city_id' => 'id']);
     }
 }
