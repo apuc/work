@@ -3,8 +3,8 @@
 
 /* @var $registration_form \dektrium\user\models\RegistrationForm */
 
-use common\classes\Debug;
 use common\models\Resume;
+use common\models\Vacancy;
 use dektrium\user\widgets\Connect;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -97,8 +97,8 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
             <span class="modal-style__error-text">Вы ввели не верные данные вернитесь и заполните форму верное</span>
         </div>
         <?php if (!Yii::$app->user->isGuest):?>
-            <?php /** @var \common\models\Vacancy[] $vacancies */
-            $vacancies = \common\models\Vacancy::find()->where(['owner'=> Yii::$app->user->id, 'status'=>\common\models\Vacancy::STATUS_ACTIVE])->all()?>
+            <?php /** @var Vacancy[] $vacancies */
+            $vacancies = Vacancy::find()->select(['id', 'post'])->where(['owner'=> Yii::$app->user->id, 'status'=>Vacancy::STATUS_ACTIVE])->all()?>
             <div class="modal-style modal-send-message jsModalMessage">
                 <?php if($vacancies):?>
                 <p>Сообщение</p>
@@ -124,7 +124,7 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
         <?php
         /** @var Resume[] $resumes
          */
-        $resumes = \common\models\Resume::find()->where(['owner'=> Yii::$app->user->id, 'status'=>\common\models\Resume::STATUS_ACTIVE])->all()?>
+        $resumes = Resume::find()->select(['id', 'title'])->where(['owner'=> Yii::$app->user->id, 'status'=>Resume::STATUS_ACTIVE])->all()?>
         <div class="modal-style modal-send-message jsModalMessageVacancy">
             <?php if($resumes && !Yii::$app->user->isGuest):?>
             <p>Написать нам

@@ -1,20 +1,24 @@
 <?php
 
-/* @var $this \yii\web\View */
-/* @var $categories \common\models\Category[] */
-/* @var $vacancies \common\models\Vacancy[] */
-/* @var $cities \common\models\City[] */
+/* @var $this View */
+/* @var $categories Category[] */
+/* @var $vacancies Vacancy[] */
+/* @var $cities City[] */
+/* @var $vacancy_count integer */
 
-/* @var $employer \common\models\Employer */
+/* @var $employer Employer */
 
 
+use common\models\Category;
 use common\models\City;
+use common\models\Employer;
 use common\models\KeyValue;
 use common\models\Resume;
 use common\models\Vacancy;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
+use yii\web\View;
 
 $this->title = KeyValue::findValueByKey('main_page_title') ?: 'Работа: главная';
 $this->registerMetaTag(['name' => 'description', 'content' => KeyValue::findValueByKey('main_page_description')]);
@@ -92,7 +96,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                     <span class="nhome__form-text">
                             Сейчас на сайте свыше
                             <a href="<?= Vacancy::getSearchPageUrl() ?>"
-                               class='white-text'> <?= Vacancy::find()->count() ?> вакансий </a>
+                               class='white-text'> <?= $vacancy_count ?> вакансий </a>
                         </span>
                     <input name="search_text" class="nhome__form-input" placeholder="Я ищу..." type="text"/>
                     <?= Html::submitButton(
@@ -117,7 +121,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                     </div>
                     <span class="nhome__form-text">
                         Сейчас на сайте свыше
-                        <a href="<?= Vacancy::getSearchPageUrl() ?>" class='white-text'> <?= Vacancy::find()->count() ?> вакансий </a>
+                        <a href="<?= Vacancy::getSearchPageUrl() ?>" class='white-text'> <?= $vacancy_count ?> вакансий </a>
                     </span>
                 </div>
             </div>
@@ -144,7 +148,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
             </p>
             <!--googleoff: all-->
             <!--noindex-->
-            <img class="nhome__main-bottom-img" src="/images/img1.png" img="Офисный стул" alt="" role="presentation"/>
+            <img class="nhome__main-bottom-img" src="/images/img1.png" alt="Офисный стул" role="presentation"/>
         </div>
     </div>
     <aside class="nhome__aside">
@@ -182,7 +186,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd MM yyyy, hh:mm') ?></span>
                                 <div class="single-card__view">
                                     <img class="single-card__icon mr5" src="/images/icon-eye.png" alt="иконка глаз" role="presentation"/>
-                                    <span><?= $vacancy->countViews ?></span>
+                                    <span><?= count($vacancy->views0) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -208,13 +212,16 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
 
         <?php
         $i = 0;
-        foreach ($categories as $category): ?>
+        foreach ($categories as $category):
+            $count = count($category->vacancyCategories);
+            ?>
+
             <?php if ($i < 9): ?>
                 <a class="nhome__footer-item"
-                   href="<?= Url::toRoute(['/vacancy/' . $category->slug]) ?>"><?= $category->name ?> <?= $category->getVacancyCategories()->count() ?></a>
+                   href="<?= Url::toRoute(['/vacancy/' . $category->slug]) ?>"><?= $category->name ?> <?= $count ?></a>
             <?php else: ?>
                 <a class="nhome__footer-item mob-hide"
-                   href="<?= Url::toRoute(['/vacancy/' . $category->slug]) ?>"><?= $category->name ?> <?= $category->getVacancyCategories()->count() ?></a>
+                   href="<?= Url::toRoute(['/vacancy/' . $category->slug]) ?>"><?= $category->name ?> <?= $count ?></a>
             <?php
             endif;
             $i++;

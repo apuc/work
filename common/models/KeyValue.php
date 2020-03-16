@@ -47,10 +47,16 @@ class KeyValue extends \yii\db\ActiveRecord
     }
 
     public static function findValueByKey($key){
-        if($model = self::find()->where(['key' => $key])->one())
-            return $model->value;
-        else
-            return null;
+        if (!$value = Yii::$app->cache->get("key_value_$key")) {
+            if($model = self::find()->where(['key' => $key])->one()) {
+                Yii::$app->cache->set("key_value_$key", $model->value, 3600);
+                return $model->value;
+            }
+            else
+                return null;
+        } else
+            return $value;
+
     }
 
 }
