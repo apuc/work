@@ -7,6 +7,7 @@
 /* @var $employer \common\models\Employer */
 
 
+use common\models\City;
 use common\models\KeyValue;
 use common\models\Resume;
 use common\models\Vacancy;
@@ -42,8 +43,8 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                         <img src="/images/geolocation.png" alt="Геолокация">
                         <select class="city-header jsCityHeaderSelect">
                             <option></option>
-                            <?php /** @var \common\models\City $city */
-                            foreach (\common\models\City::find()->where(['status' => 1])->all() as $city):?>
+                            <?php /** @var City $city */
+                            foreach (City::find()->where(['status' => 1])->orderBy('priority ASC')->all() as $city):?>
                                 <option <?= (Yii::$app->request->cookies['city'] == (string)$city->id) ? "selected" : '' ?>
                                         value="<?= $city->id ?>"><?= $city->name ?></option>
                             <?php endforeach; ?>
@@ -108,7 +109,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findV
                         <select class="city-header jsCityHeaderSelect">
                             <option></option>
                             <?php /** @var \common\models\City $city */
-                            foreach (\common\models\City::find()->where(['status' => 1])->all() as $city):?>
+                            foreach (City::find()->where(['status'=>1])->orderBy('priority ASC')->all() as $city):?>
                                 <option <?= (Yii::$app->request->cookies['city'] == (string)$city->id) ? "selected" : '' ?>
                                         value="<?= $city->id ?>"><?= $city->name ?></option>
                             <?php endforeach; ?>

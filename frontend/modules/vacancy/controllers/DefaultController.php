@@ -103,7 +103,7 @@ class DefaultController extends Controller
         $tags = Skill::find()->all();
         $categories = Category::find()->where(['!=', 'name', 'Пустая категория'])->all();
         $employment_types = EmploymentType::find()->all();
-        $cities = City::find()->where(['status' => 1])->all();
+        $cities = City::find()->where(['status' => 1])->orderBy('priority ASC')->all();
 
         $vacancies_query = Vacancy::find()
             ->with(['category', 'company'])
