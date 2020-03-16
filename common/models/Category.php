@@ -17,6 +17,7 @@ use yii\behaviors\SluggableBehavior;
  *
  * @property int $vacancy_count
  * @property ResumeCategory[] $resumeCategories
+ * @property VacancyCategory[] $vacancyCategories
  * @property MetaData $metaData
  */
 class Category extends WorkActiveRecord

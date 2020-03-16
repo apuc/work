@@ -21,7 +21,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         if (!$categories = Yii::$app->cache->get("main_page_categories")) {
-            $categories = Category::find()->select(['name', 'slug'])->limit(18)->all();
+            $categories = Category::find()->with(['vacancyCategories'])->select(['name', 'slug'])->limit(18)->all();
             Yii::$app->cache->set("main_page_categories", $categories, 3600);
         }
         if (!$cities = Yii::$app->cache->get("main_page_cities")) {
@@ -29,15 +29,20 @@ class DefaultController extends Controller
             Yii::$app->cache->set("main_page_cities", $cities, 3600);
         }
         if (!$vacancies = Yii::$app->cache->get("main_page_vacancies")) {
-            $vacancies = Vacancy::find()->with(['employment_type', 'category', 'company', 'mainCategory', 'city0'])->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(10)->orderBy('id DESC')->all();
+            $vacancies = Vacancy::find()->with(['employment_type', 'category', 'company', 'mainCategory', 'city0', 'views0'])->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(10)->orderBy('id DESC')->all();
             Yii::$app->cache->set("main_page_vacancies", $vacancies, 3600);
         }
-        $employer = \Yii::$app->user->isGuest?null:Employer::find()->where(['user_id'=>\Yii::$app->user->id])->one();
+        if (!$vacancy_count = Yii::$app->cache->get("main_page_vacancy_count")) {
+            $vacancy_count = Vacancy::find()->count();
+            Yii::$app->cache->set("main_page_vacancy_count", $vacancy_count, 3600);
+        }
+        $employer = \Yii::$app->user->isGuest?null:Employer::find()->select(['first_name', 'second_name'])->where(['user_id'=>\Yii::$app->user->id])->one();
         return $this->render('index', [
             'categories' => $categories,
             'vacancies' => $vacancies,
             'employer' => $employer,
-            'cities' => $cities
+            'cities' => $cities,
+            'vacancy_count' => $vacancy_count
         ]);
     }
 
