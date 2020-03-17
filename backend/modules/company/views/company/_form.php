@@ -2,6 +2,7 @@
 
 use common\models\Company;
 use kartik\select2\Select2;
+use mihaildev\elfinder\InputFile;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -24,6 +25,22 @@ use yii\widgets\ActiveForm;
             ],
         ]
     ); ?>
+
+    <?=InputFile::widget([
+        'language' => 'ru',
+        'controller' => 'elfinder',
+        // вставляем название контроллера, по умолчанию равен elfinder
+        'filter' => 'image',
+        // фильтр файлов, можно задать массив фильтров https://github.com/Studio-42/elFinder/wiki/Client-con..
+        'name' => 'Company[image_url]',
+        'id' => 'company-image_url',
+        'template' => '<div class="input-group">{input}<span class="span-btn">{button}</span></div>',
+        'options' => ['class' => 'form-control itemImg', 'maxlength' => '255'],
+        'buttonOptions' => ['class' => 'btn btn-primary'],
+        'value' => $model->image_url,
+        'buttonName' => 'Выбрать фотографию',
+    ]);
+    ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
