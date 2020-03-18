@@ -139,6 +139,7 @@ class Vacancy extends WorkActiveRecord
             'updated_at' => 'Изменена',
             'description' => 'Описание',
             'main_category_id' => 'Главная категория',
+            'publisher_id' => 'Опубликовавший',
         ];
     }
 
