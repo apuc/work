@@ -216,10 +216,10 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
         foreach ($categories as $category):?>
             <?php if ($i < 9): ?>
                 <a class="nhome__footer-item"
-                   href="<?= Url::toRoute(['/vacancy/' . $category->slug]) ?>"><?= $category->name ?></a>
+                   href="<?= Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
             <?php else: ?>
                 <a class="nhome__footer-item mob-hide"
-                   href="<?= Url::toRoute(['/vacancy/' . $category->slug]) ?>"><?= $category->name ?></a>
+                   href="<?= Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
             <?php
             endif;
             $i++;
