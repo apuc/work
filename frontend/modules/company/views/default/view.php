@@ -75,7 +75,10 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                     </div>
                     <div class="content-part__block">
                         <div class="right">
-                            <span><?=User::findOne($model->owner)->email?><br><?=$model->website?></span>
+                            <span><?=User::findOne($model->owner)->email?><br>
+                                <?php if($model->website):?>
+                                    <a href="<?=$model->website?>" rel="ugc"><?=$model->website?></a></span>
+                                <?php endif ?>
                             <span></span>
                         </div>
                     </div>
