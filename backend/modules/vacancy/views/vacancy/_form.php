@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Employer;
 use common\models\Vacancy;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -57,6 +58,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'employment_type_id')->dropDownList(ArrayHelper::map(\common\models\EmploymentType::find()->all(), 'id', 'name'), [ 'class' => 'form-control', 'prompt' => '' ] ) ?>
 
+    <?= $form->field($model, 'publisher_id')->widget(Select2::className(), [
+        'data' => ArrayHelper::map(Employer::find()->asArray()->all(),'user_id', 'first_name'),
+        'options' => ['placeholder' => 'Начните вводить имя пользователя ...', 'multiple' => false],
+        'pluginOptions' => [
+            'allowClear' => false
+        ],
+    ]) ?>
     <?= $form->field($model, 'status')->dropDownList([
         Vacancy::STATUS_ACTIVE => 'Активна',
         Vacancy::STATUS_INACTIVE => 'Не активна',

@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Company;
+use common\models\Employer;
 use common\models\EmploymentType;
 use common\models\Vacancy;
 use yii\helpers\Html;
@@ -25,8 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             [
                 'attribute' => 'company_id',
                 'format'    => 'html',
@@ -113,6 +112,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     Vacancy::STATUS_ACTIVE => 'Активна',
                     Vacancy::STATUS_INACTIVE => 'Не активна',
                 ], [ 'class' => 'form-control', 'prompt' => '' ] ),
+            ],
+            [
+                'attribute' => 'publisher_id',
+                'format' => 'html',
+                'value' => function ($model) {
+                    if($model->publisher)
+                        return '<a href="'.\yii\helpers\Url::to(['/employer/employer/view', 'id'=>$model->publisher->employer->id]).'">'.$model->publisher->employer->first_name.'</a>';
+                    return null;
+                },
+                'filter'    => \kartik\select2\Select2::widget(
+                    [
+                        'model' => $searchModel,
+                        'attribute' => 'publisher_id',
+                        'data' => \yii\helpers\ArrayHelper::map(Employer::find()->asArray()->all(),'user_id', 'first_name'),
+                        'options' => ['placeholder' => 'Select a state ...','class' => 'form-control'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]
+                )
             ],
             [
                 'attribute' => 'countViews',

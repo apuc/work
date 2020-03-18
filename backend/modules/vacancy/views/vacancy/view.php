@@ -106,6 +106,15 @@ $this->params['breadcrumbs'][] = $model->post;
                 },
             ],
             [
+                'attribute' => 'publisher_id',
+                'format' => 'html',
+                'value' => function ($model) {
+                    if($model->publisher)
+                        return '<a href="'.\yii\helpers\Url::to(['/employer/employer/view', 'id'=>$model->publisher->employer->id]).'">'.$model->publisher->employer->first_name.'</a>';
+                    return null;
+                },
+            ],
+            [
                 'attribute' => 'countViews',
                 'label' => 'Просмотры'
             ],
