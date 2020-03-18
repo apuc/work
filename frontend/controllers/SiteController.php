@@ -11,6 +11,7 @@ use common\models\Vacancy;
 use common\models\VacancySkill;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\httpclient\Exception;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -20,6 +21,8 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
@@ -72,16 +75,21 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionError() {
+        /** @var HttpException $exception */
+        $exception = Yii::$app->getErrorHandler()->exception;
+        if($exception->statusCode === 404) {
+            $this->layout = false;
+            return $this->render('error');
+        } else return 123;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function actions()
     {
         return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-                'layout' => 'main-layout'
-            ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,

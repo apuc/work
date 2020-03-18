@@ -13,6 +13,7 @@ use frontend\widgets\YandexMetrika;
 use yii\helpers\Html;
 
 MainAsset::register($this);
+Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

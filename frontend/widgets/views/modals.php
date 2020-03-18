@@ -8,7 +8,6 @@ use common\models\Vacancy;
 use dektrium\user\widgets\Connect;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
 ?>
 <input type="hidden" id="jsInitialTab" value="<?=Yii::$app->request->get('tab')?>">
 <div class="modal-block jsModal">
