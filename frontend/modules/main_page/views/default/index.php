@@ -213,16 +213,13 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
 
         <?php
         $i = 0;
-        foreach ($categories as $category):
-            $count = count($category->vacancyCategories);
-            ?>
-
+        foreach ($categories as $category):?>
             <?php if ($i < 9): ?>
                 <a class="nhome__footer-item"
-                   href="<?= Url::toRoute(['/vacancy/' . $category->slug]) ?>"><?= $category->name ?> <?= $count ?></a>
+                   href="<?= Url::toRoute(['/vacancy/' . $category->slug]) ?>"><?= $category->name ?></a>
             <?php else: ?>
                 <a class="nhome__footer-item mob-hide"
-                   href="<?= Url::toRoute(['/vacancy/' . $category->slug]) ?>"><?= $category->name ?> <?= $count ?></a>
+                   href="<?= Url::toRoute(['/vacancy/' . $category->slug]) ?>"><?= $category->name ?></a>
             <?php
             endif;
             $i++;
