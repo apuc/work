@@ -75,7 +75,8 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                     </div>
                     <div class="content-part__block">
                         <div class="right">
-                            <span><?=User::findOne($model->owner)->email?><br>
+                            <?php $email = User::findOne($model->owner)->email;?>
+                            <span><a href="mailto:<?=$email?>"><?=$email?></a><br>
                                 <?php if($model->website):?>
                                     <a href="<?=$model->website?>" rel="ugc"><?=$model->website?></a></span>
                                 <?php endif ?>
@@ -90,7 +91,8 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                     <?php endif ?>
                 </div>
                 <div class="description">
-                    <?php foreach ($model->vacancy as $vacancy): ?>
+                    <h3 style="margin-top: 10px">Открытые вакансии <?=$model->name?></h3>
+                    <?php foreach ($model->activeVacancies as $vacancy): ?>
                     <div class="vacancies">
                         <span class="vacancies__img"></span>
                         <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="vacancies__active"><?=$vacancy->post?></a>

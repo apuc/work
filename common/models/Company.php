@@ -30,6 +30,7 @@ use yii\db\ActiveRecord;
  *
  * @property User $user
  * @property Vacancy[] $vacancy
+ * @property Vacancy[] $activeVacancies
  * @property Phone $phone
  * @property int $clickPhoneCount
  */
@@ -139,6 +140,14 @@ class Company extends WorkActiveRecord
     public function getVacancy()
     {
         return $this->hasMany(Vacancy::className(), ['company_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getActiveVacancies()
+    {
+        return $this->getVacancy()->andWhere(['status'=>Vacancy::STATUS_ACTIVE]);
     }
 
     /**
