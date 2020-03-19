@@ -111,13 +111,15 @@ class DefaultController extends Controller
             ->orderBy('update_time DESC')
             ->joinWith(['category', 'skill', 'employment_type'])
             ->andFilterWhere([
-                'category.id' => $params['category_ids'],
                 'skill.id' => $params['tags_id'],
                 'employment_type.id' => $params['employment_type_ids'],
 
             ])
             ->andFilterWhere(['>=', 'max_salary', $params['min_salary']])
             ->andFilterWhere(['<=', 'min_salary', $params['max_salary']]);
+        if($params['category_ids']) {
+            $vacancies_query->andWhere(['or', ['IN', 'category.id', $params['category_ids']], ['IN', 'main_category_id', $params['category_ids']]]);
+        }
         if($current_city)
             $vacancies_query->andFilterWhere(['city_id' => $current_city->id]);
         if($params['search_text']){
