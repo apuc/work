@@ -45,8 +45,8 @@ $this->title = "Статистика: " . StatisticsController::$types[$type];
 ])?>
 <br>
 <?=Html::submitButton('Применить', ['class'=>'btn btn-success'])?>
-<div style="width: 600px;height: 400px">
-<canvas id="myChart" width="400" height="400"></canvas>
+<div style="width: 1000px;height: 400px">
+<canvas id="myChart"></canvas>
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
