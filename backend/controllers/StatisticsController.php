@@ -18,6 +18,9 @@ class StatisticsController extends Controller
     ];
 
     public function actionIndex(){
+        if(\Yii::$app->user->isguest) {
+            return $this->redirect('/secure/user/login');
+        }
         $date1 = \Yii::$app->request->get('date1');
         $date2 = \Yii::$app->request->get('date2')?:'today';
         if(!$date1)
@@ -28,6 +31,7 @@ class StatisticsController extends Controller
         $dates = ['dates'=>[], 'vacancies'=>[], 'label'=>''];
         $type = \Yii::$app->request->get('type')?:1;
         $view_type = \Yii::$app->request->get('view_type')?:0;
+        $total = 0;
         switch ($type) {
             default:
                 $dates['label'] = 'Созданные вакансии';
@@ -69,12 +73,15 @@ class StatisticsController extends Controller
                     if($view_type == 2)
                         $query->andWhere('viewer_id IS NULL');
                     break;
-        }
-            $dates['data'][] = $query->count();
+            }
+            $count = $query->count();
+            $total += $count;
+            $dates['data'][] = $count;
         }
         return $this->render('index', [
             'dates' => $dates,
-            'type' => $type
+            'type' => $type,
+            'total' => $total
         ]);
     }
 }

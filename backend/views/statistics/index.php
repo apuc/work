@@ -2,6 +2,7 @@
 /* @var $this View */
 /* @var $dates array */
 /* @var $type integer */
+/* @var $total integer */
 
 use backend\controllers\StatisticsController;
 use kartik\date\DatePicker;
@@ -45,7 +46,8 @@ $this->title = "Статистика: " . StatisticsController::$types[$type];
 ])?>
 <br>
 <?=Html::submitButton('Применить', ['class'=>'btn btn-success'])?>
-<div style="width: 1000px;height: 400px">
+<div style="width: 1000px;height: 400px;">
+    <h4 style="text-align: center">Всего за период: <strong><?=$total?></strong></h4>
 <canvas id="myChart"></canvas>
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
