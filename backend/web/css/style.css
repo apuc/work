@@ -67,3 +67,7 @@
 .polls-view .pa p{
     display: inline-block;
 }
+
+.hidden {
+    display: none;
+}
