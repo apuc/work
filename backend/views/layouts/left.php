@@ -32,6 +32,7 @@
                 'items' => [
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     ['label' => 'Пользователи', 'url' => ['/user/admin/index']],
+                    ['label' => 'Статистика', 'url' => ['/statistics/index']],
                     ['label' => 'Работодатели', 'url' => ['/company/company/index']],
                     ['label' => 'Сотрудники', 'url' => ['/employer/employer/index']],
                     ['label' => 'Резюме', 'url' => ['/resume/resume/index']],
