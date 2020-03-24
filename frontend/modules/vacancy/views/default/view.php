@@ -74,7 +74,7 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                             <?php endforeach ?>
                         </div>
                     <?php endif ?>
-                    <span>Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd MM yyyy') ?></span>
+                    <span>Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd.MM.yyyy') ?></span>
                     <div class="single-block__view">
                         <img class="single-block__icon mr5" src="/images/icon-eye.png" alt="Иконка глаз" role="presentation"/>
                         <span><?= $model->countViews ?></span>
@@ -242,10 +242,10 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                                          role="presentation"
                                     />
                                     <div class="last-vacancy__top">
-                                        <?php if ($vacancy->category): ?>
+                                        <?php if ($vacancy->mainCategory): ?>
                                             <div class="last-vacancy__cat-city">
                                                 <a class="btn-card btn-card-small btn-gray"
-                                                   href="<?= Vacancy::getSearchPageUrl($vacancy->category[0]->slug)?>"><?= $vacancy->category[0]->name ?></a>
+                                                   href="<?= Vacancy::getSearchPageUrl($vacancy->mainCategory->slug)?>"><?= $vacancy->mainCategory->name ?></a>
                                             </div>
                                         <?php endif ?>
                                         <a class="last-vacancy__title" href="/vacancy/view/<?= $vacancy->id ?>"
