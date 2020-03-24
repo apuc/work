@@ -7265,6 +7265,14 @@ main {
     min-width: 360px;
 }
 
+.btn-accept {
+    position: fixed;
+    bottom: 20px;
+    width: 247.5px;
+    z-index: 2;
+    margin: 0;
+}
+
 @media (max-width: 992px) {
     .news-view__block-text img {
         float: none;

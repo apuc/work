@@ -362,6 +362,21 @@ $(document).ready(function () {
     });
   });
 
+  let btnAcceptTop = $('.jsAcceptScroll').offset().top;
+
+  function btnAcceptScroll() {
+    if (($(window).scrollTop() + $(window).height()) >  (btnAcceptTop - 150)) {
+      $('.jsAcceptScrollFixed').fadeOut(300);
+    } else {
+      $('.jsAcceptScrollFixed').fadeIn(300);
+    }
+  }
+
+  btnAcceptScroll();
+
+  $(window).scroll(function () {
+    btnAcceptScroll();
+  });
 
 });
 
