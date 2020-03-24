@@ -145,6 +145,7 @@
                                 minute: 'numeric',
                             };
                             response.data.update_time = date.toLocaleString("ru", options);
+                            ym(53666866,'reachGoal','vacancy_to_top');
                             this.getAllVacancy.unshift(newData);
                         }, response => {
                             this.$swal({
