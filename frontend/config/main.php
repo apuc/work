@@ -109,8 +109,11 @@ return [
         'msg' => [
             'class' => 'frontend\modules\msg\Msg',
         ],
+//        'news' => [
+//            'class' => 'eugenekei\news\Module',
+//        ],
         'news' => [
-            'class' => 'eugenekei\news\Module',
+            'class' => 'frontend\modules\news\News',
         ],
         'company' => [
             'class' => 'frontend\modules\company\Company',
