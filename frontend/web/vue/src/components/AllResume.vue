@@ -150,6 +150,7 @@
                                 minute: 'numeric',
                             };
                             response.data.update_time = date.toLocaleString("ru", options);
+                            ym(53666866,'reachGoal','resume_to_top');
                             this.getAllResume.unshift(newData);
                         }, response => {
                             this.$swal({
