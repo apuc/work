@@ -101,7 +101,7 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                     <?php endforeach ?>
                 </div>
             </div>
-            <aside class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">
+            <aside class="single-block__right sidebar-single jsOpenContacts mt20" id="sidebar-single">
                 <div class="sidebar-inner">
                     <?php if($model->phone):?>
                         <div class="sidebar-inner__call-contact">
