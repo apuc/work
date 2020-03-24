@@ -136,7 +136,7 @@ $(document).ready(function(){
         console.log(href);
         window.location.href=href;
     }
-    $(document).on('click', '#accept', function () {
+    $(document).on('click', '.jsAccept', function () {
         search();
     });
     $(document).on('click', '#search', function () {

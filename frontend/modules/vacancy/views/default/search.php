@@ -63,6 +63,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                 <div class="filter-overlay jsFilterOverlay">
                 </div>
                 <div class="v-content-bottom__left sidebar jsOpenFilter" id="sidebar">
+                    <button class="vl-btn btn-card btn-red jsAccept btn-accept jsAcceptScrollFixed">Применить</button>
                     <div class="filter-close jsHideFilter"><span></span><span></span>
                     </div>
                     <div class="sidebar-inner">
@@ -150,7 +151,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 <input type="text" name="max_salary" value="<?=isset($max_salary)?$max_salary:''?>" />
                             </div>
                         </div>
-                        <button class="vl-btn btn-card btn-red" id = "accept">Применить</button>
+                        <button class="vl-btn btn-card btn-red jsAccept jsAcceptScroll">Применить</button>
                     </div>
                 </div>
                 <div class="v-content-bottom__center scroll">
