@@ -6,6 +6,7 @@ use common\classes\Debug;
 use common\models\Category;
 use common\models\City;
 use common\models\Employer;
+use common\models\Professions;
 use common\models\Vacancy;
 use Yii;
 use yii\helpers\Url;
@@ -16,10 +17,11 @@ use yii\web\Controller;
  */
 class DefaultController extends Controller
 {
-    public $layout = '@frontend/views/layouts/main-page-layout.php';
+    public $layout = '@frontend/views/layouts/main-layout.php';
 
     public function actionIndex()
     {
+        $this->layout = '@frontend/views/layouts/main-page-layout.php';
         if (!$categories = Yii::$app->cache->get("main_page_categories")) {
             $categories = Category::find()->with(['vacancyCategories'])->select(['name', 'slug'])->limit(18)->all();
             Yii::$app->cache->set("main_page_categories", $categories, 3600);
@@ -60,10 +62,22 @@ class DefaultController extends Controller
     {
         $cities_dnr = City::find()->where(['status'=> City::TYPE_SHOWN, 'region_id'=>21])->all();
         $cities_lug = City::find()->where(['status'=> City::TYPE_SHOWN, 'region_id'=>19])->all();
-        $this->layout = '@frontend/views/layouts/main-layout.php';
         return $this->render('cities', [
             'cities_dnr' => $cities_dnr,
             'cities_lug' => $cities_lug
         ]);
+    }
+
+    public function actionProfessions()
+    {
+        $professions = Professions::find()->all();
+        return $this->render('professions', [
+            'professions' => $professions,
+        ]);
+    }
+
+    public function actionHelp()
+    {
+        return $this->render('help');
     }
 }

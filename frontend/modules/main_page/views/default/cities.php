@@ -1,5 +1,6 @@
 <?php
-/* @var $cities \common\models\City[] */
+/* @var $cities_dnr \common\models\City[] */
+/* @var $cities_lug \common\models\City[] */
 use yii\helpers\ArrayHelper;
 
 ?>

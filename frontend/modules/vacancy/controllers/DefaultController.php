@@ -8,6 +8,7 @@ use common\models\Category;
 use common\models\City;
 use common\models\EmploymentType;
 use common\models\Message;
+use common\models\Professions;
 use common\models\Resume;
 use common\models\Skill;
 use common\models\User;
@@ -77,14 +78,20 @@ class DefaultController extends Controller
         $second_query_param = Yii::$app->request->get('second_query_param');
         $current_category = false;
         $current_city = false;
+        //Debug::dd(Professions::findOne(['slug'=>$second_query_param]));
         if($second_query_param) {
+            $profession = false;
             if($current_city = City::findOne(['slug'=>$first_query_param])) {
                 $this->background_image = $current_city->image;
             }
             if($current_category = Category::findOne(['slug'=>$second_query_param])) {
                 $this->background_emblem = $current_category->image;
                 $params['category_ids']=[$current_category->id];
-            } if(!$current_city || !$current_category) {
+            }
+            else if($profession = Professions::findOne(['slug'=>$second_query_param])) {
+                $params['search_text'] = $profession->title;
+            }
+            if(!$current_city || (!$current_category && !$profession)) {
                 throw new NotFoundHttpException();
             }
         } else if ($first_query_param) {
