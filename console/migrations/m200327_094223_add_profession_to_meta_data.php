@@ -24,7 +24,7 @@ class m200327_094223_add_profession_to_meta_data extends Migration
                 'vacancy_meta_title_with_city' => "Работа $profession->instrumental в {city_prep}. Вакансии $profession->genitive - {city}, {region}",
                 'vacancy_meta_description_with_city' => "Открытые вакансии $profession->genitive в {city_prep}, {region}. Поиск работы $profession->instrumental - {city}. Свежие вакансии на сегодня.",
                 'vacancy_header_with_city' => "Работа $profession->instrumental в {city_prep}",
-                "vacancy_bottom_text" => "Вакансии в {city_prep} по запросу - $profession->title. Свежие вакансии $profession->genitive в {city_prep}. Выбирайте работу и отправляйте резюме! Так же на странице вакансии Вы найдете контактный телефон работодателя. Если вы не нашли подходящую вакансию $profession->genitive в {city_prep}, разместите свое резюме на сайте и работодатели свяжутся с Вами! Сайт поиска работы №1 в {region}!"
+                "vacancy_bottom_text" => "Вакансии по запросу - $profession->title. Свежие вакансии $profession->genitive. Выбирайте работу и отправляйте резюме! Так же на странице вакансии Вы найдете контактный телефон работодателя. Если вы не нашли подходящую вакансию $profession->genitive, разместите свое резюме на сайте и работодатели свяжутся с Вами! Сайт поиска работы №1!"
             ]);
         }
 
