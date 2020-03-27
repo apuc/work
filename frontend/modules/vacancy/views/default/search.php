@@ -264,6 +264,18 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             в <?=$city->prepositional?>, разместите резюме в категорию - <?=$category->name?>,
                             при добавлении резюме укажите город поиска работы, например <?=$city->name?>.
                         </p>
+                    <?php elseif($city && $profession):?>
+                        <p class="bottom__center-text">
+                            Вакансии в <?=$city->prepositional?> по запросу - <?=$profession->title?>.
+                            Свежие вакансии <?=$profession->genitive?> в <?=$city->prepositional?>.
+                            Выбирайте работу и отправляйте резюме! Так же на странице вакансии
+                            Вы найдете контактный телефон работодателя.
+                            Если вы на нашлий подходящую вакансию <?=$profession->genitive?> в <?=$city->prepositional?>,
+                            разместите свое резюме на сайте и работодатели свяжуться с Вами!
+                            Сайт поиска работы №1 в <?=$city->region->name?>!
+                        </p>
+                    <?php elseif($profession && $profession->metaData):?>
+                        <p class="bottom__center-text"><?=$profession->metaData->vacancy_bottom_text?></p>
                     <?php elseif($city && $city->bottom_text):?>
                         <p class="bottom__center-text"><?=$city->bottom_text?></p>
                     <?php elseif ($current_category && $current_category->metaData): ?>
