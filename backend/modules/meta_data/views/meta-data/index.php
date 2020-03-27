@@ -28,9 +28,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Категория',
                 'format' => 'html',
                 'value' => function($model) {
-                    return '<a href="/secure/category/category/view?id='.$model->category->id.'">'.$model->category->name.'</a>';
+                    if($model->category)
+                        return '<a href="/secure/category/category/view?id='.$model->category->id.'">'.$model->category->name.'</a>';
+                    return '';
                 },
                 'filter'    => Html::activeTextInput($searchModel, 'category_string'),
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
+            [
+                'label' => 'Профессии',
+                'format' => 'html',
+                'value' => function($model) {
+                    if($model->profession)
+                        return '<a href="/secure/professions/professions/view?id='.$model->profession->id.'">'.$model->profession->title.'</a>';
+                    return '';
+                },
+                'filter'    => Html::activeTextInput($searchModel, 'profession_string'),
                 'contentOptions' => ['style' => 'white-space: normal;'],
             ],
             [

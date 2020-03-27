@@ -1,3 +1,9 @@
+<?php
+/** @var News $model */
+
+use common\models\News;
+
+?>
 <section class="news-view">
     <img class="single-vacancy__dots2" src="/images/bg-dots.png" alt="точки" role="presentation">
     <div class="single-vacancy__circle"></div>
@@ -14,7 +20,7 @@
             </ul>
         </div>
         <div class="news-view__block">
-            <h2>Как перевести работников на дистанционную работу в связи с короновирусом COVID-19?</h2>
+            <h2><?=$model->title?></h2>
             <div class="news-view__block-text">
                 <img src="/images/news_image.png" alt="">
                 <p class="red-line">

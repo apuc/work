@@ -78,7 +78,7 @@ class DefaultController extends Controller
         $second_query_param = Yii::$app->request->get('second_query_param');
         $current_category = false;
         $current_city = false;
-        //Debug::dd(Professions::findOne(['slug'=>$second_query_param]));
+        $profession = false;
         if($second_query_param) {
             $profession = false;
             if($current_city = City::findOne(['slug'=>$first_query_param])) {
@@ -100,7 +100,9 @@ class DefaultController extends Controller
             } else if ($current_category = Category::findOne(['slug'=>$first_query_param])) {
                 $this->background_emblem = $current_category->image;
                 $params['category_ids']=[$current_category->id];
-            } else {
+            } else if ($profession = Professions::findOne(['slug'=>$first_query_param])) {
+                $params['search_text'] = $profession->title;
+            }else {
                 throw new NotFoundHttpException();
             }
         }
@@ -182,6 +184,7 @@ class DefaultController extends Controller
             'categories' => $categories,
             'employment_types' => $employment_types,
             'current_category' => $current_category,
+            'profession' => $profession,
             'canonical_rel' => $canonical_rel
         ]);
     }

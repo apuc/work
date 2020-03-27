@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\modules\professions\models\Professions */
 
-$this->title = 'Update Professions: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Professions', 'url' => ['index']];
+$this->title = 'Изменить профессию: ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Профессии', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Изменить';
 ?>
 <div class="professions-update">
 

@@ -241,22 +241,32 @@ class Vacancy extends WorkActiveRecord
     }
 
     /**
-     * @param $city City
-     * @param $category Category
+     * @param $city City|false
+     * @param $category Category|false
+     * @param $profession Professions|false
      * @return array
      */
-    public static function getMetaData($city, $category)
+    public static function getMetaData($city, $category, $profession)
     {
         $description = null;
         $header = null;
         $title = null;
+        $meta_data = null;
         if ($city && $category) {
-            $title = str_replace('{city}', $city->name, $category->metaData->vacancy_meta_title_with_city);
+            $meta_data =$category->metaData;
+        } else if ($city && $profession) {
+            $meta_data =$profession->metaData;
+        }
+        if($meta_data) {
+            $title = str_replace('{city}', $city->name, $meta_data->vacancy_meta_title_with_city);
             $title = str_replace('{region}', $city->region->name, $title);
-            $description = str_replace('{city}', $city->name, $category->metaData->vacancy_meta_description_with_city);
+            $title = str_replace('{city_prep}', $city->prepositional, $title);
+            $description = str_replace('{city}', $city->name, $meta_data->vacancy_meta_description_with_city);
             $description = str_replace('{region}', $city->region->name, $description);
-            $header = str_replace('{city}', $city->name, $category->metaData->vacancy_header_with_city);
+            $description = str_replace('{city_prep}', $city->prepositional, $description);
+            $header = str_replace('{city}', $city->name, $meta_data->vacancy_header_with_city);
             $header = str_replace('{region}', $city->region->name, $header);
+            $header = str_replace('{city_prep}', $city->prepositional, $header);
         }
         if ($city && (!$title || !$description || !$header)) {
             $title = $title ?: $city->meta_title;
@@ -265,8 +275,13 @@ class Vacancy extends WorkActiveRecord
         }
         if ($category && (!$title || !$description || !$header)) {
             $title = $title ?: $category->metaData->vacancy_meta_title;
-            $description = $title ?: $category->metaData->vacancy_meta_description;
+            $description = $description ?: $category->metaData->vacancy_meta_description;
             $header = $header ?: $category->metaData->vacancy_header;
+        }
+        if ($profession && (!$title || !$description || !$header)) {
+            $title = $title ?: $profession->metaData->vacancy_meta_title;
+            $description = $description ?: $profession->metaData->vacancy_meta_description;
+            $header = $header ?: $profession->metaData->vacancy_header;
         }
         $title = $title ?: KeyValue::findValueByKey('vacancy_search_page_title') ?: "Поиск Вакансий";
         $description = $description ?: KeyValue::findValueByKey('vacancy_search_page_description') ?: "Поиск Вакансий";

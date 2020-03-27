@@ -1,3 +1,10 @@
+<?php
+/** @var News[] $news */
+
+use common\models\News;
+use yii\helpers\Url;
+
+?>
 <section class="news">
     <img class="single-vacancy__dots2" src="/images/bg-dots.png" alt="точки" role="presentation">
     <div class="single-vacancy__circle"></div>
@@ -16,40 +23,20 @@
 
         <div class="single-block single-block-slider">
             <div class="single-block__left news-items news-items-img">
+                <?php foreach ($news as $new):?>
                 <div class="news-item">
-                    <h2>Удаленная работа: как выстроить все процессы</h2>
+                    <h2><?=$new->title?></h2>
                     <div class="news-items-img__block">
                         <img src="/images/news_img.png" alt="">
                         <div>
                             <p class="red-line">
-                                Мы понимаем, какая нагрузка лежит сейчас на каждом отделе персонала .
-                                Если вы тоже занимаетесь переводом сотрудников на удаленку, предлагаем
-                                регулярно обмениваться опытом в формате открытых бесплатных вебинаров.
-                                На них мы обсудим все технические и юридические аспекты, Если вы тоже
-                                занимаетесь переводом сотрудников на удаленку, предлагаем регулярно
-                                опытом
+                                <?=$new->description?>
                             </p>
-                            <a href="/news/default/view">Читать полностью</a>
+                            <a href="<?=Url::to(['/news/default/view', 'id'=>$new->id])?>">Читать полностью</a>
                         </div>
                     </div>
                 </div>
-                <div class="news-item">
-                    <h2>Удаленная работа: как выстроить все процессы</h2>
-                    <div class="news-items-img__block">
-                        <img src="/images/news_img.png" alt="">
-                        <div>
-                            <p class="red-line">
-                                Мы понимаем, какая нагрузка лежит сейчас на каждом отделе персонала .
-                                Если вы тоже занимаетесь переводом сотрудников на удаленку, предлагаем
-                                регулярно обмениваться опытом в формате открытых бесплатных вебинаров.
-                                На них мы обсудим все технические и юридические аспекты, Если вы тоже
-                                занимаетесь переводом сотрудников на удаленку, предлагаем регулярно
-                                опытом
-                            </p>
-                            <a href="/news/default/view">Читать полностью</a>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach;?>
             </div>
             <aside class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">
                 <div class="sidebar-inner news-block">
@@ -62,15 +49,15 @@
                     </div>
                     <div class="resume-info__soc justify-center">
                         <p>Написать компании в сетях</p>
-                        <a class="vk-bg" rel="nofollow" target="_blank" href="#">
+                        <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/rabotad0netsk">
                             <img src="/images/vk.svg" alt="Иконка VK" role="presentation"/>
                         </a>
-                        <a class="fb-bg" rel="nofollow" target="_blank" href="#">
-                            <img src="/images/fb.svg" alt="Иконка facebook" role="presentation"/>
-                        </a>
-                        <a class="inst-bg" rel="nofollow" target="_blank" href="#">
-                            <img src="/images/instagram.svg" alt="Иконка instagram" role="presentation"/>
-                        </a>
+<!--                        <a class="fb-bg" rel="nofollow" target="_blank" href="#">-->
+<!--                            <img src="/images/fb.svg" alt="Иконка facebook" role="presentation"/>-->
+<!--                        </a>-->
+<!--                        <a class="inst-bg" rel="nofollow" target="_blank" href="#">-->
+<!--                            <img src="/images/instagram.svg" alt="Иконка instagram" role="presentation"/>-->
+<!--                        </a>-->
                     </div>
                     <div class="sr-btn">
                         <button class="sr-btn__btn btn btn-red">Задать свой вопрос</button>
