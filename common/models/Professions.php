@@ -12,6 +12,8 @@ use Yii;
  * @property string $slug
  * @property string $genitive
  * @property string $instrumental
+ *
+ * @property MetaData $metaData
  */
 class Professions extends \yii\db\ActiveRecord
 {
@@ -45,5 +47,12 @@ class Professions extends \yii\db\ActiveRecord
             'genitive' => 'Родительный',
             'instrumental' => 'Творительный',
         ];
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMetaData()
+    {
+        return $this->hasOne(MetaData::className(), ['profession_id' => 'id']);
     }
 }

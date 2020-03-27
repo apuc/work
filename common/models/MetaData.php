@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $category_id
+ * @property int $profession_id
  * @property string $vacancy_meta_title
  * @property string $vacancy_meta_description
  * @property string $vacancy_header
@@ -25,6 +26,7 @@ use Yii;
  * @property string $resume_bottom_text
  *
  * @property Category $category
+ * @property Professions $profession
  */
 class MetaData extends \yii\db\ActiveRecord
 {
@@ -42,7 +44,7 @@ class MetaData extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id'], 'integer'],
+            [['category_id', 'profession_id'], 'integer'],
             [['vacancy_meta_description', 'vacancy_meta_description_with_city', 'vacancy_bottom_text', 'resume_meta_description', 'resume_meta_description_with_city', 'resume_bottom_text'], 'string'],
             [['vacancy_meta_title', 'vacancy_header', 'vacancy_meta_title_with_city', 'vacancy_header_with_city', 'resume_meta_title', 'resume_header', 'resume_meta_title_with_city', 'resume_header_with_city'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
@@ -57,6 +59,7 @@ class MetaData extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'category_id' => 'Категория',
+            'profession_id' => 'Профессия',
             'vacancy_meta_title' => 'Vacancy Meta Title',
             'vacancy_meta_description' => 'Vacancy Meta Description',
             'vacancy_header' => 'Vacancy Header',
@@ -80,5 +83,13 @@ class MetaData extends \yii\db\ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProfession()
+    {
+        return $this->hasOne(Professions::className(), ['id' => 'profession_id']);
     }
 }

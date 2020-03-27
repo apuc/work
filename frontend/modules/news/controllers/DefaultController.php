@@ -2,7 +2,9 @@
 
 namespace frontend\modules\news\controllers;
 
+use common\models\News;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * Default controller for the `news` module
@@ -16,11 +18,18 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $news = News::find()->all();
+        return $this->render('index', [
+            'news' => $news
+        ]);
     }
 
-    public function actionView()
+    public function actionView($id)
     {
-        return $this->render('view');
+        if(!$model = News::findOne($id))
+            throw new NotFoundHttpException();
+        return $this->render('view', [
+            'model'=>$model
+        ]);
     }
 }

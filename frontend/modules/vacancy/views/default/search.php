@@ -13,6 +13,7 @@
 /* @var $search_text string */
 /* @var $city \common\models\City */
 /* @var $current_category Category|null */
+/* @var $profession \common\models\Professions|null */
 /* @var $canonical_rel string */
 
 /* @var $employment_types EmploymentType[] */
@@ -29,7 +30,7 @@ use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
-$meta_data = Vacancy::getMetaData($city, $current_category);
+$meta_data = Vacancy::getMetaData($city, $current_category, $profession);
 $this->title = $meta_data['title'];
 $this->registerMetaTag(['name'=>'description', 'content' => $meta_data['description']]);
 $this->registerMetaTag(['name'=>'og:title', 'content' => $this->title]);

@@ -67,6 +67,9 @@ class ProfessionsController extends Controller
         $model = new Professions();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $meta_data = new \common\models\MetaData();
+            $meta_data->profession_id = $model->id;
+            $meta_data->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -104,6 +107,7 @@ class ProfessionsController extends Controller
      */
     public function actionDelete($id)
     {
+        \common\models\MetaData::deleteAll(['profession_id'=>$id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

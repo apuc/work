@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <p>
-        Для мета полей, учитывающих город: {city}: город, {region}: регион
+        Для мета полей, учитывающих город: {city}: город, {region}: регион, {city_prep}: предложный падеж города (Донецке, Макеевке)
     </p>
 
     <?= $form->field($model, 'vacancy_meta_title')->textInput(['maxlength' => true]) ?>
@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'vacancy_header_with_city')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'vacancy_bottom_text')->textarea(['rows' => 6]) ?>
-
+    <?php if(!$model->profession):?>
     <?= $form->field($model, 'resume_meta_title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'resume_meta_description')->textarea(['rows' => 6]) ?>
@@ -43,7 +43,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'resume_header_with_city')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'resume_bottom_text')->textarea(['rows' => 6]) ?>
-
+    <?php endif; ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

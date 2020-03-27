@@ -8,6 +8,7 @@ use common\classes\Debug;
 use common\models\Category;
 use common\models\City;
 use common\models\Company;
+use common\models\Professions;
 use common\models\Resume;
 use common\models\Vacancy;
 use Yii;
@@ -35,18 +36,26 @@ class SitemapController extends Controller
 
         $citiesCount = City::find()->where(['status'=>City::TYPE_SHOWN])->count();
         $categoriesCount = Category::find()->count();
+        $professionsCount = Professions::find()->count();
 
         $cityPagesCount = ceil($citiesCount/5000);
         for($i=1;$i<=$cityPagesCount;$i++)
             $siteMaps[] = "city_$i";
 
         $categoryPagesCount = ceil($categoriesCount/5000);
-        for($i=1;$i<=$cityPagesCount;$i++)
+        for($i=1;$i<=$categoryPagesCount;$i++)
             $siteMaps[] = "category_$i";
+
+        $professionPagesCount = ceil($professionsCount/9999);
+        for($i=1;$i<=$professionPagesCount;$i++)
+            $siteMaps[] = "profession_$i";
 
         $cityWithCategoryPagesCount = ceil(($citiesCount*$categoriesCount)/5000);
         for($i=1;$i<=$cityWithCategoryPagesCount;$i++)
             $siteMaps[] = "city_with_category_$i";
+        $cityWithProfessionPagesCount = ceil($citiesCount*$professionsCount/10000);
+        for($i=1;$i<=$cityWithProfessionPagesCount;$i++)
+            $siteMaps[] = "city_with_profession_$i";
 
 
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
@@ -230,6 +239,37 @@ class SitemapController extends Controller
         return $xml_sitemap;
     }
 
+    public function actionProfession($number) {
+        if (!$xml_sitemap = Yii::$app->cache->get("profession_$number")) {
+            /** @var Professions[] $professions */
+        $professions = Professions::find()
+                ->select(['slug'])
+                ->limit($number * 9999)
+                ->offset(($number - 1) * 9999)
+                ->all();
+            $host = Yii::$app->request->hostInfo;
+            $urls = [];
+            foreach ($professions as $profession) {
+                $urls[] = [
+                    'loc' => "$host/vacancy/$profession->slug",
+                    'changefreq' => 'daily',
+                    'priority' => 0.8
+                ];
+            }
+            $xml_sitemap = $this->renderPartial('urlset', [
+                'host' => Yii::$app->request->hostInfo,
+                'urls' => $urls,
+            ]);
+            if (!$urls)
+                throw new HttpException(404, 'Not Found');
+            Yii::$app->cache->set("profession_$number", $xml_sitemap, 3600);
+        }
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        $headers = Yii::$app->response->headers;
+        $headers->add('Content-Type', 'text/xml');
+        return $xml_sitemap;
+    }
+
     public function actionCityWithCategory($number) {
         if (!$xml_sitemap = Yii::$app->cache->get("city_with_category_$number")) {
             /** @var Category[] $categories */
@@ -264,6 +304,42 @@ class SitemapController extends Controller
             if (!$urls)
                 throw new HttpException(404, 'Not Found');
             Yii::$app->cache->set("city_with_category_$number", $xml_sitemap, 3600);
+        }
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        $headers = Yii::$app->response->headers;
+        $headers->add('Content-Type', 'text/xml');
+        return $xml_sitemap;
+    }
+
+    public function actionCityWithProfession($number) {
+        if (!$xml_sitemap = Yii::$app->cache->get("city_with_profession_$number")) {
+            /** @var Professions[] $professions */
+            $professions = Professions::find()->select(['slug'])->all();
+            /** @var City[] $cities */
+            $cities = City::find()
+                ->where(['status' => City::TYPE_SHOWN])
+                ->select(['slug'])
+                ->limit((int)($number * (10000/count($professions))))
+                ->offset((int)(($number - 1) * (10000/count($professions))))
+                ->all();
+            $host = Yii::$app->request->hostInfo;
+            $urls = [];
+            foreach ($professions as $profession){
+                foreach ($cities as $city) {
+                    $urls[] = [
+                        'loc' => "$host/vacancy/$city->slug/$profession->slug",
+                        'changefreq' => 'daily',
+                        'priority' => 0.8
+                    ];
+                }
+            }
+            $xml_sitemap = $this->renderPartial('urlset', [
+                'host' => Yii::$app->request->hostInfo,
+                'urls' => $urls,
+            ]);
+            if (!$urls)
+                throw new HttpException(404, 'Not Found');
+            Yii::$app->cache->set("city_with_profession_$number", $xml_sitemap, 3600);
         }
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
         $headers = Yii::$app->response->headers;

@@ -5,8 +5,10 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\MetaData */
-
-$this->title = $model->category->name;
+if($model->category)
+    $this->title = $model->category->name;
+if($model->profession)
+    $this->title = $model->profession->title;
 $this->params['breadcrumbs'][] = ['label' => 'Мета данные', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -26,7 +28,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Категория',
                 'format' => 'html',
                 'value' => function($model) {
-                    return '<a href="/secure/category/category/view?id='.$model->category->id.'">'.$model->category->name.'</a>';
+                    if($model->category)
+                        return '<a href="/secure/category/category/view?id='.$model->category->id.'">'.$model->category->name.'</a>';
+                    return '';
+                },
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
+            [
+                'label' => 'Профессия',
+                'format' => 'html',
+                'value' => function($model) {
+                    if($model->profession)
+                        return '<a href="/secure/professions/professions/view?id='.$model->profession->id.'">'.$model->profession->title.'</a>';
+                    return '';
                 },
                 'contentOptions' => ['style' => 'white-space: normal;'],
             ],
