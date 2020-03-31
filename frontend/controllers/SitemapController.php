@@ -137,7 +137,7 @@ class SitemapController extends Controller
         if (!$xml_sitemap = Yii::$app->cache->get("resume_$number")) {
             /** @var Resume[] $resumes */
             $resumes = Resume::find()
-                ->where(['!=', 'status' => Resume::STATUS_INACTIVE])
+                ->where(['!=', 'status', Resume::STATUS_INACTIVE])
                 ->select(['id', 'updated_at'])
                 ->limit($number * 10000)
                 ->offset(($number - 1) * 10000)
