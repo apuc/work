@@ -1,7 +1,10 @@
 <?php
 
+/* @var $this yii\web\View */
+/* @var $name string */
+/* @var $message string */
 
-/** @var HttpException $exception */
+/* @var $exception Exception */
 
 use yii\helpers\Html;
 
@@ -20,7 +23,6 @@ use frontend\widgets\Modals;
 use frontend\widgets\SecondHeader;
 use frontend\widgets\VKPixel;
 use frontend\widgets\YandexMetrika;
-use yii\web\HttpException;
 
 MainAsset::register($this);
 ?>
@@ -45,8 +47,7 @@ MainAsset::register($this);
     <?=SecondHeader::widget()?>
     <section class="page-error">
         <div class="container">
-            <p class="error-page-code"><?=$exception->statusCode?></p>
-            <p class="mb15 error-page-description"><?=$exception->getMessage()?>></p>
+            <img src="/images/404_image.png">
             <a href="/">
                 на главную
             </a>
