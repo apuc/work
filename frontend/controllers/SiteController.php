@@ -80,8 +80,13 @@ class SiteController extends Controller
         $exception = Yii::$app->getErrorHandler()->exception;
         if($exception->statusCode === 404) {
             $this->layout = false;
-            return $this->render('error');
-        } else return 123;
+            return $this->render('error404');
+        } else {
+            $this->layout = false;
+            return $this->render('error', [
+                'exception' => $exception
+            ]);
+        }
     }
 
     /**

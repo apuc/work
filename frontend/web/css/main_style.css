@@ -7273,6 +7273,16 @@ main {
     margin: 0;
 }
 
+.error-page-code {
+    font-size: 20vw !important;
+    color: #2c2fff !important;
+    font-weight: 700 !important;
+}
+
+.error-page-description {
+    font-size: 16px !important;
+}
+
 @media (max-width: 992px) {
     .news-view__block-text img {
         float: none;
