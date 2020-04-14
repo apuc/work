@@ -78,7 +78,7 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                             <?php $email = User::findOne($model->owner)->email;?>
                             <span><a href="mailto:<?=$email?>"><?=$email?></a><br>
                                 <?php if($model->website):?>
-                                    <a href="<?=$model->website?>" rel="ugc"><?=$model->website?></a></span>
+                                    <a href="<?=$model->website?>"  target="_blank" rel="ugc"><?=$model->website?></a></span>
                                 <?php endif ?>
                             <span></span>
                         </div>
