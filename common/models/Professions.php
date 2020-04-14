@@ -12,6 +12,7 @@ use Yii;
  * @property string $slug
  * @property string $genitive
  * @property string $instrumental
+ * @property integer $status
  *
  * @property MetaData $metaData
  */
@@ -32,6 +33,7 @@ class Professions extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'slug', 'genitive', 'instrumental'], 'string', 'max' => 255],
+            [['status'], 'integer'],
         ];
     }
 
@@ -46,6 +48,7 @@ class Professions extends \yii\db\ActiveRecord
             'slug' => 'Slug',
             'genitive' => 'Родительный',
             'instrumental' => 'Творительный',
+            'status' => 'Статус',
         ];
     }
     /**

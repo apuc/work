@@ -90,7 +90,8 @@ class Vacancy extends WorkActiveRecord
             TimestampBehavior::className(),
             'webHook' => ['class' => WebHookBehavior::className(),
                 'url' => 'https://webhooks.mychannels.gq/rabota/13'
-            ]
+            ],
+
         ];
     }
 
