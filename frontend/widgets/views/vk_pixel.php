@@ -2,8 +2,9 @@
 <script type="text/javascript" src="https://vk.com/js/api/openapi.js?166"></script>
 
 <!-- VK Widget -->
+<!-- Отключен -->
 <div id="vk_community_messages"></div>
-<?php if (Yii::$app->request->getUserIP() != '127.0.0.1'): ?>
+<?php if (Yii::$app->request->getUserIP() != '127.0.0.1' && 0===1): ?>
 <script type="text/javascript">
     VK.Widgets.CommunityMessages("vk_community_messages", 80799057, {disableExpandChatSound: "1",disableButtonTooltip: "1"});
 </script>
