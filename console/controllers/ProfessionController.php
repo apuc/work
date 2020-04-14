@@ -11,7 +11,7 @@ use yii\console\Controller;
 
 class ProfessionController extends Controller
 {
-    public function actionLink() {
+    public function actionDefault($get_update_id) {
         foreach (\common\models\Professions::find()->where(['status'=>1])->each() as $profession) {
             $condition = ['or'];
             $condition[]=['like', 'post', $profession->title];
@@ -39,8 +39,17 @@ class ProfessionController extends Controller
                     unset($arr[$i]);
                 }
             }
-            $vacancies = \common\models\Vacancy::find()->where($condition)->all();
+            $vacancies = \common\models\Vacancy::find()->where($condition);
+            if($get_update_id === 1){
+                $vacancies = $vacancies->andWhere(['get_update_id' => $get_update_id])->all();
+            }else{
+                $vacancies = $vacancies->all();
+            }
             foreach ($vacancies as $vacancy) {
+                if($vacancy->get_update_id == 1){
+                    $vacancy->load(['get_update_id' => Vacancy::NOT_GET_UPDATE_ID], '');
+                    $vacancy->save();
+                }
                 $vacancy_profession = \common\models\VacancyProfession::find()
                     ->where([
                         'vacancy_id'=>$vacancy->id,
@@ -57,5 +66,15 @@ class ProfessionController extends Controller
                 }
             }
         }
+    }
+
+    public function actionLink()
+    {
+        return $this->actionDefault(Vacancy::NOT_GET_UPDATE_ID);
+    }
+
+    public function actionUp()
+    {
+        return $this->actionDefault(Vacancy::GET_UPDATE_ID);
     }
 }
