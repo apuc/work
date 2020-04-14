@@ -1,3 +1,4 @@
+php_value date.timezone Europe/Moscow
 AddDefaultCharset UTF-8
 # Mod_Autoindex
 <IfModule mod_autoindex.c>
@@ -13,7 +14,6 @@ AddDefaultCharset UTF-8
   IndexIgnore */*
   # Перенаправляем administrator на входной скрипт админки
   RewriteRule ^secure(.*)?$ /backend/web/$1 [L,PT]
-  RewriteRule ^api(.*)?$ /api/web/$1 [L,PT]
   # Перенаправляем все запросы на входной скрипт
   RewriteRule ^([^/].*)?$ /frontend/web/$1
 </IfModule>
