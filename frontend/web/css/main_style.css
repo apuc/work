@@ -2828,6 +2828,10 @@ button {
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     overflow: hidden; }
+.single-card__company{
+    margin-bottom: 5px;
+    color: dimgrey;
+}
 .single-card__info {
     font-size: 11px; }
 .single-card__info p {
@@ -6090,7 +6094,9 @@ button {
     font-weight: 500;
     font-size: 16px; }
 .sr-block__text__company a{
-    text-decoration: none}
+    text-decoration: none;
+    color: #182c93;
+}
 .sr-block__text__company a:hover{
     color: black;
     text-decoration: underline;

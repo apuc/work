@@ -213,6 +213,14 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->host
                     <div class="sr-block" itemscope="itemscope" itemtype="https://schema.org/Organization">
                         <meta itemprop="name" content="<?= $model->company->name ?>">
                         <?php if (Yii::$app->user->isGuest): ?>
+                        <ul class="sr-block__text">
+                            <?php if (!empty($model->company->name)): ?>
+                                <li class="sr-block__text__company">
+                                    <strong>Компания:</strong><br><a href="/company/view/<?= $model->company_id ?>"><?= $model->company->name ?>
+                                        <br> <?= $model->company->activity_field ?>
+                                    </a>
+                                </li>
+                            <?php endif ?>
                             <span style="display: flex; flex-direction: column;">
                                     Для просмотра контактных данных <a href="#" class="jsLogin"
                                                                        style="text-decoration: none;">войдите или зарегистрируйтесь</a>
@@ -221,7 +229,7 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->host
                             <ul class="sr-block__text">
                                 <?php if (!empty($model->company->name)): ?>
                                     <li class="sr-block__text__company">
-                                        <a href="/company/view/<?= $model->company_id ?>"><strong>Компания:</strong><br><?= $model->company->name ?>
+                                        <strong>Компания:</strong><br><a href="/company/view/<?= $model->company_id ?>"><?= $model->company->name ?>
                                             <br> <?= $model->company->activity_field ?>
                                         </a>
                                     </li>
@@ -230,6 +238,17 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->host
                                     <p><strong>Контактное лицо:</strong><?= $model->company->contact_person ?>
                                     </p>
                                 </li>
+                                <?php /*if (!empty($model->company->name)): */?><!--
+                                    <li class="sr-block__text__company">
+                                        <a href="/company/view/<?/*= $model->company_id */?>"><strong>Компания:</strong><br><?/*= $model->company->name */?>
+                                            <br> <?/*= $model->company->activity_field */?>
+                                        </a>
+                                    </li>
+                                <?php /*endif */?>
+                                <li class="sr-block__text__contact">
+                                    <p><strong>Контактное лицо:</strong><?/*= $model->company->contact_person */?>
+                                    </p>
+                                </li>-->
                                 <?php if ($model->publisher->employer->phone): ?>
                                     <li class="sr-block__text__phone">
                                         <img src="/images/phone.svg" alt="Телефон" role="presentation"/>

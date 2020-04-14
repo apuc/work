@@ -184,6 +184,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$vacancy->main_category_id])?>" class="single-card__title mt5">
                                 <?= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) ?>
                             </a>
+                            <div class="single-card__company">
+                                <p><?= $vacancy->company->name ?>
+                                    <?php if($vacancy->company->is_trusted):?>
+                                        <img src="/images/correct.png" alt=Галочка"" id="small-img" role="presentation" title="Проверенная компания"/>
+                                    <?php endif ?>
+                                </p>
+                            </div>
                             <div class="single-card__info-second"><span
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->update_time, 'dd.MM.yyyy') ?></span>
                                 <div class="single-card__view">
