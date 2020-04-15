@@ -5,12 +5,14 @@ namespace frontend\modules\main_page\controllers;
 use common\classes\Debug;
 use common\models\Category;
 use common\models\City;
+use common\models\Country;
 use common\models\Employer;
 use common\models\Professions;
 use common\models\Vacancy;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * Default controller for the `main_page` module
@@ -19,8 +21,11 @@ class DefaultController extends Controller
 {
     public $layout = '@frontend/views/layouts/main-layout.php';
 
-    public function actionIndex($region=false)
+    public function actionIndex($country_slug=false)
     {
+        $country = $country_slug?Country::find()->where(['slug'=>$country_slug])->one():null;
+        if($country_slug && !$country)
+            throw new NotFoundHttpException();
         $this->layout = '@frontend/views/layouts/main-page-layout.php';
         if (!$categories = Yii::$app->cache->get("main_page_categories")) {
             $categories = Category::find()->with(['vacancyCategories'])->select(['name', 'slug'])->limit(18)->all();
@@ -44,7 +49,8 @@ class DefaultController extends Controller
             'vacancies' => $vacancies,
             'employer' => $employer,
             'cities' => $cities,
-            'vacancy_count' => $vacancy_count
+            'vacancy_count' => $vacancy_count,
+            'country' => $country
         ]);
     }
 

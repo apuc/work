@@ -14,6 +14,7 @@ use Yii;
  * @property string $meta_description Описание главной страницы
  * @property string $meta_header h1 заголовок главной страницы
  * @property string $main_page_text Текст на главной странице
+ * @property string $main_page_mobile_text Текст на главной странице
  * @property string $main_page_background_image Фоновое изображение главной страницы
  * @property string $main_page_emblem Эмблема главной страницы
  *
@@ -36,7 +37,7 @@ class Country extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'slug'], 'required'],
-            [['meta_description', 'main_page_text'], 'string'],
+            [['meta_description', 'main_page_text', 'main_page_mobile_text'], 'string'],
             [['name', 'slug', 'meta_title', 'meta_header', 'main_page_background_image', 'main_page_emblem'], 'string', 'max' => 255],
         ];
     }
@@ -54,6 +55,7 @@ class Country extends \yii\db\ActiveRecord
             'meta_description' => 'Описание главной страницы',
             'meta_header' => 'h1 заголовок главной страницы',
             'main_page_text' => 'Текст на главной странице',
+            'main_page_mobile_text' => 'Текст на главной странице для мобильных устройств',
             'main_page_background_image' => 'Фоновое изображение главной страницы',
             'main_page_emblem' => 'Эмблема главной страницы',
         ];

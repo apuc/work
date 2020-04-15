@@ -32,6 +32,14 @@ use yii\widgets\ActiveForm;
         ]),
     ]); ?>
 
+    <?= $form->field($model, 'main_page_mobile_text')->widget(CKEditor::className(), [
+        'editorOptions' => \mihaildev\elfinder\ElFinder::ckeditorOptions('elfinder', [
+            'preset' => 'full',
+            'inline' => false,
+            'path' => 'frontend/web/media/upload',
+        ]),
+    ]); ?>
+
     <div class="imgUpload">
         <label class="control-label" for="country-main_page_background_image">Фоновое изображение главной страницы</label>
         <div class="media__upload_img"><img src="<?= $model->main_page_background_image; ?>" width="100px"/></div>
