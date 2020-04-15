@@ -256,7 +256,7 @@ return [
                     ],
                     'pluralize'=>false
                 ],
-                '<region:(dnr|lnr)>' => 'main_page/default/index',
+                '<country_slug:(dnr|lnr)>' => 'main_page/default/index',
 
             ],
         ],

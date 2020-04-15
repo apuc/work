@@ -45,6 +45,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['style' => 'white-space: normal;'],
             ],
             [
+                'attribute' => 'main_page_mobile_text',
+                'format' => 'html',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
+            [
                 'attribute' => 'main_page_background_image',
                 'format' => ['image',['width'=>'150']],
             ],

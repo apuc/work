@@ -3424,16 +3424,16 @@ button {
 @media (max-width: 576px) {
     .nhome__main-top {
         height: 350px; } }
-.nhome__main-top:before {
-    position: absolute;
-    content: '';
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    opacity: 0.22;
-    background: url(../images/new-home-bg.jpeg) no-repeat;
-    background-size: cover; }
+/*.nhome__main-top:before {*/
+/*    position: absolute;*/
+/*    content: '';*/
+/*    top: 0;*/
+/*    bottom: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    opacity: 0.22;*/
+/*    background: url(../images/new-home-bg.jpeg) no-repeat;*/
+/*    background-size: cover; }*/
 .nhome__main-header {
     position: relative;
     display: -webkit-box;

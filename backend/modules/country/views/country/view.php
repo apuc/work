@@ -38,6 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'html'
             ],
             [
+                'attribute' => 'main_page_mobile_text',
+                'format' => 'html'
+            ],
+            [
                 'attribute' => 'main_page_background_image',
                 'format' => 'image',
             ],
