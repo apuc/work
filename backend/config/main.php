@@ -75,6 +75,9 @@ return [
         'meta-data' => [
             'class' => 'backend\modules\meta_data\MetaData',
         ],
+        'country' => [
+            'class' => 'backend\modules\country\Country',
+        ],
     ],
     'components' => [
 //        'request' => [
