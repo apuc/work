@@ -43,6 +43,7 @@
                     ['label' => 'Категории', 'url' => ['/category/category/index']],
                     ['label' => 'Переменные', 'url' => ['/key_value/key-value/index']],
                     ['label' => 'Города', 'url' => ['/cities/cities/index']],
+                    ['label' => 'Страны', 'url' => ['/country/country/index']],
                     ['label' => 'Новости', 'url' => ['/news/news/index']],
                     ['label' => 'Мета данные', 'url' => ['/meta-data/meta-data/index']],
                     [

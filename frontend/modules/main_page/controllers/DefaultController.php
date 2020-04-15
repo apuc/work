@@ -19,7 +19,7 @@ class DefaultController extends Controller
 {
     public $layout = '@frontend/views/layouts/main-layout.php';
 
-    public function actionIndex()
+    public function actionIndex($region=false)
     {
         $this->layout = '@frontend/views/layouts/main-page-layout.php';
         if (!$categories = Yii::$app->cache->get("main_page_categories")) {

@@ -232,7 +232,8 @@ return [
                 'city_with_profession_<number:\d+>.xml'=>'sitemap/city-with-profession',
                 'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
                 'news/view/<id:\d+>' => 'news/default/view',
-                ['class' => 'yii\rest\UrlRule', 'controller' =>
+                [
+                    'class' => 'yii\rest\UrlRule', 'controller' =>
                     [
                         'request/category',
                         'request/company',
@@ -253,7 +254,9 @@ return [
                         'dialog/dialog',
                         'dialog/dialog-user',
                     ],
-                    'pluralize'=>false],
+                    'pluralize'=>false
+                ],
+                '<region:(dnr|lnr)>' => 'main_page/default/index',
 
             ],
         ],
