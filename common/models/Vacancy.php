@@ -368,4 +368,15 @@ class Vacancy extends WorkActiveRecord
         else
             return 0;
     }
+
+    public function getProfession()
+    {
+        return $this->hasMany(VacancyProfession::className(), ['vacancy_id' => 'id'])->orderBy('match_type')->limit(4);
+    }
+
+    public  function  getPro()
+    {
+        return $this->hasMany(Professions::className(), ['id' => 'profession_id'])
+            ->via('profession');
+    }
 }
