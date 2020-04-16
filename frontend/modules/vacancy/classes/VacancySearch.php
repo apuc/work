@@ -23,7 +23,6 @@ use yii\web\NotFoundHttpException;
  * @property array|string $category_ids
  * @property array|string $employment_type_ids
  * @property array|string $experience_ids
- * @property array|string $tags_id
  * @property string $search_text
  * @property string $first_query_param
  * @property string $second_query_param
@@ -42,7 +41,6 @@ class VacancySearch extends Vacancy
     public $category_ids;
     public $employment_type_ids;
     public $experience_ids;
-    public $tags_id;
     public $search_text;
     public $first_query_param;
     public $second_query_param;
@@ -53,7 +51,7 @@ class VacancySearch extends Vacancy
     {
         return [
             [['min_salary', 'max_salary', 'city_disable'], 'integer'],
-            [['category_ids', 'employment_type_ids', 'experience_ids', 'tags_id', 'search_text', 'first_query_param', 'second_query_param'], 'string'],
+            [['category_ids', 'employment_type_ids', 'experience_ids', 'search_text', 'first_query_param', 'second_query_param'], 'string'],
         ];
     }
 
@@ -79,7 +77,7 @@ class VacancySearch extends Vacancy
             ->with(['category', 'company'])
             ->where(['status' => Vacancy::STATUS_ACTIVE])
             ->orderBy('update_time DESC')
-            ->joinWith(['category', 'skill', 'employment_type'])
+            ->joinWith(['category', 'employment_type'])
             ->distinct();
 
         // add conditions that should always apply here
@@ -98,7 +96,6 @@ class VacancySearch extends Vacancy
 
         $this->category_ids = json_decode($this->category_ids);
         $this->employment_type_ids = json_decode($this->employment_type_ids);
-        $this->tags_id = json_decode($this->tags_id);
         $this->experience_ids = json_decode($this->experience_ids);
         if($this->second_query_param) {
             $this->current_city = City::findOne(['slug'=>$this->first_query_param]);
@@ -126,7 +123,6 @@ class VacancySearch extends Vacancy
             $this->current_city = City::findOne(Yii::$app->request->cookies['city']);
 
         $query->andFilterWhere([
-                'skill.id' => $this->tags_id,
                 'employment_type.id' => $this->employment_type_ids
             ])
             ->andFilterWhere(['>=', 'max_salary', $this->min_salary])
