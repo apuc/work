@@ -1,5 +1,6 @@
 <?php
 
+use common\models\City;
 use common\models\Resume;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -26,6 +27,8 @@ use yii\widgets\ActiveForm;
     ); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'city_id')->dropDownList(ArrayHelper::map(City::find()->where(['status'=>1])->all(), 'id', 'name')) ?>
 
     <?= $form->field($model, 'image_url')->textInput(['maxlength' => true]) ?>
 

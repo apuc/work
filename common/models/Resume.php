@@ -18,7 +18,6 @@ use yii\db\ActiveRecord;
  * @property string $image_url
  * @property float $min_salary
  * @property float $max_salary
- * @property string $city
  * @property integer $city_id
  * @property string $description
  * @property integer $years_of_exp
@@ -118,7 +117,6 @@ class Resume extends WorkActiveRecord
             'image_url' => 'Картинка',
             'min_salary' => 'Минимальная заработная плата',
             'max_salary' => 'Максимальная заработная плата',
-            'city' => 'Город',
             'city_id' => 'Город',
             'description' => 'Описание',
             'years_of_exp' => 'Количество полных лет опыта',
