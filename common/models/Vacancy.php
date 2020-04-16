@@ -3,6 +3,7 @@
 namespace common\models;
 
 use apuc\channels_webhook\behaviors\WebHookBehavior;
+use common\classes\MoneyFormat;
 use common\models\base\WorkActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -246,6 +247,18 @@ class Vacancy extends WorkActiveRecord
 
     public function getCity0() {
         return $this->hasOne(City::className(), ['id'=>'city_id']);
+    }
+
+    public function getMoneyString($uc_first=true) {
+        if ($this->min_salary && $this->max_salary)
+            return MoneyFormat::getFormattedAmount($this->min_salary) . '-' . MoneyFormat::getFormattedAmount($this->max_salary) . '₽';
+        elseif ($this->min_salary)
+            return MoneyFormat::getFormattedAmount($this->min_salary) . '₽';
+        elseif ($this->max_salary)
+            return MoneyFormat::getFormattedAmount($this->max_salary) . '₽';
+        else if($uc_first)
+            return 'Зарплата договорная';
+        else return 'зарплата договорная';
     }
 
     /**

@@ -8,44 +8,10 @@
 use common\classes\MoneyFormat;
 use common\models\City;
 use common\models\Vacancy;
+use frontend\modules\vacancy\classes\VacancyMetaFormer;
 use yii\helpers\StringHelper;
 
-if ($model->min_salary && $model->max_salary)
-    $money_string = MoneyFormat::getFormattedAmount($model->min_salary) . '-' . MoneyFormat::getFormattedAmount($model->max_salary) . '₽';
-elseif ($model->min_salary)
-    $money_string = MoneyFormat::getFormattedAmount($model->min_salary) . '₽';
-elseif ($model->max_salary)
-    $money_string = MoneyFormat::getFormattedAmount($model->max_salary) . '₽';
-else
-    $money_string = 'Зарплата договорная';
-
-
-if ($model->company->name)
-    $title = 'Вакансия: ' . ucfirst($model->post) . ' - в ' . ($model->city0 ? $model->city0->prepositional : '') . ', ' . $model->company->name;
-else
-    $title = 'Вакансия: ' . ucfirst($model->post) . ','  .
-        ' в ' . ($model->city0 ? $model->city0->prepositional : '') . ', ' . $money_string . ', ' . 'размещено ' .Yii::$app->formatter->asDate($model->update_time, 'dd.MM.yyyy');
-
-if ($model->company->name) {
-    $description = 'Вакансия ' . $model->post . ' в компании ' . $model->company->name . 'в категории ' .
-        $model->mainCategory->name . ', г' . $model->city0->name . ',' .
-        $model->city0->region->name .
-        '. Размещено ' . Yii::$app->formatter->asDate($model->update_time, 'dd MM yyyy');
-} else {
-    $description = 'Вакансия ' . $model->post . ' в категории ' .
-        $model->mainCategory->name . ', г' . $model->city0->name . ',' .
-        $model->city0->region->name . ' Контактное лицо ' . $model->company->contact_person .
-        '. Размещено ' . Yii::$app->formatter->asDate($model->update_time, 'dd MM yyyy');
-}
-$this->title = $title;
-$this->registerMetaTag(['name' => 'description', $description]);
-$this->registerMetaTag(['name' => 'og:title', 'content' => $title]);
-$this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
-$this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-$this->registerMetaTag(['name' => 'og:image', 'content' => $model->company->image_url ?: '/images/og_image.jpg']);
-$this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::truncate($model->qualification_requirements, 100, '...')]);
-$this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->hostInfo . '/vacancy/view/' . $model->id]);
-
+VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
 ?>
 
 <section class="single-vacancy">
@@ -107,7 +73,6 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->host
 
 <!--                <div class="profession-block">-->
 <!--                   --><?php //foreach ($model->professions as $profession): ?>
-<!--                       <a href="--><?//= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?><!--"><p> --><?//= $profession->title?><!-- </p></a>-->
 <!--                    --><?php //endforeach;?>
 <!--                </div>-->
                 <h1 class="single-block__head" itemprop="title">
@@ -122,7 +87,7 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->host
                     </span>
                 </span>
                 <div class="single-block__price">
-                    <span><?= $money_string ?></span>
+                    <span><?= $model->getMoneyString() ?></span>
                     <?php if (Yii::$app->user->isGuest && $model->company->hasSocials()): ?>
                         <div>
                             <button class="btn-for-login jsLogin">Войдите или зарегистрируйтесь</button>
