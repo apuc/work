@@ -37,6 +37,7 @@ use yii\web\View;
  * @property integer $description
  * @property integer $main_category_id
  * @property integer $publisher_id
+ * @property integer $get_update_id
  *
  * @property Company $company
  * @property EmploymentType $employment_type
@@ -63,6 +64,9 @@ class Vacancy extends WorkActiveRecord
     const UPDATE_MIN_SEC_PASSED = 86400;
 
     const SOFT_DELETE = 1;
+
+    const GET_UPDATE_ID = 1;
+    const NOT_GET_UPDATE_ID = 0;
 
     public static $experiences = [
         'Без опыта работы', 'От 1 года', 'От 3 лет', 'От 5 лет'
@@ -101,7 +105,7 @@ class Vacancy extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id', 'main_category_id', 'publisher_id'], 'integer'],
+            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id', 'main_category_id', 'publisher_id', 'get_update_id'], 'integer'],
             [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions', 'description'], 'string'],
             [['company_id', 'post', 'main_category_id'], 'required'],
@@ -141,6 +145,7 @@ class Vacancy extends WorkActiveRecord
             'description' => 'Описание',
             'main_category_id' => 'Главная категория',
             'publisher_id' => 'Опубликовавший',
+            'get_update_id' => 'Получить связаные профессии',
         ];
     }
 
@@ -362,5 +367,16 @@ class Vacancy extends WorkActiveRecord
             return $action->count;
         else
             return 0;
+    }
+
+    public function getProfession()
+    {
+        return $this->hasMany(VacancyProfession::className(), ['vacancy_id' => 'id'])->orderBy('match_type')->limit(4);
+    }
+
+    public  function  getPro()
+    {
+        return $this->hasMany(Professions::className(), ['id' => 'profession_id'])
+            ->via('profession');
     }
 }

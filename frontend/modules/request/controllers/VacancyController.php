@@ -93,6 +93,7 @@ class VacancyController extends MyActiveController
             throw new HttpException(400, 'Пользователь не авторизирован');
         }
         $model->load($params, '');
+        $model->get_update_id = 1;
         $model->update_time = time();
         $model->publisher_id = Yii::$app->user->id;
         if ($model->save()) {
@@ -130,6 +131,7 @@ class VacancyController extends MyActiveController
         $this->checkAccess($this->action->id, $model);
         $params = Yii::$app->getRequest()->getBodyParams();
         $model->load($params, '');
+        $model->get_update_id = 1;
         if ($model->save()) {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);

@@ -104,6 +104,12 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->host
                         </a>
                     <?php endif ?>
                 </div>
+
+                <!--<div class="profession-block">
+                       <?php /*foreach ($model['pro'] as $key => $value): */?>
+                           <a href="<?/*= \common\models\Vacancy::getSearchPageUrl(false, false, $value['slug']) */?>"><p> <?/*= $value['title']*/?> </p></a>
+                    <?php /*endforeach;*/?>
+                </div>-->
                 <h1 class="single-block__head" itemprop="title">
                     <?= mb_convert_case($model->post, MB_CASE_TITLE) ?>
                 </h1>
