@@ -31,7 +31,8 @@
         "apuc/websocket": "dev-master",
         "apuc/yii2-channels-webhook": "dev-master",
         "apuc/yii2-msg-module": "dev-master",
-      "ext-intl": "*"
+      "ext-intl": "*",
+      "ext-json": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
