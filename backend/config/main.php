@@ -74,6 +74,8 @@ return [
         ],
         'meta-data' => [
             'class' => 'backend\modules\meta_data\MetaData',
+        ],'spec-filters' => [
+            'class' => 'backend\modules\spec_filters\SpecFilters',
         ],
         'country' => [
             'class' => 'backend\modules\country\Country',

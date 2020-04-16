@@ -125,7 +125,7 @@ class Vacancy extends WorkActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            //'id' => 'ID',
             'company_id' => 'Работодатель',
             'post' => 'Должность',
             'responsibilities' => 'Обязанности',
