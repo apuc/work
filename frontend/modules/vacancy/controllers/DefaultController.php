@@ -39,14 +39,16 @@ class DefaultController extends Controller
         $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->with('professions')->one();
         if(!$model)
             throw new NotFoundHttpException();
-        $last_vacancies = Vacancy::find()->where(['status' => Vacancy::STATUS_ACTIVE])->andWhere(['!=', Vacancy::tableName().'.id', $model->id])->orderBy('update_time DESC')->limit(2);
-        if($model->category){
-            $last_vacancies->joinWith('category')->andWhere(['category.id'=>ArrayHelper::getColumn($model->category, 'id')]);
-        }
-        if($model->city_id){
-            $last_vacancies->andWhere(['city_id'=>$model->city_id]);
-        }
-        $last_vacancies = $last_vacancies->all();
+        $last_vacancies = Vacancy::find()
+            ->where([
+                'status' => Vacancy::STATUS_ACTIVE,
+                'main_category_id' => $model->main_category_id
+            ])
+            ->andWhere(['!=', Vacancy::tableName().'.id', $model->id])
+            ->andFilterWhere(['city_id'=>$model->city_id])
+            ->orderBy('update_time DESC')
+            ->limit(2)
+            ->all();
         $referer_category = false;
         if(Yii::$app->request->get('referer_category'))
             $referer_category = Category::findOne(Yii::$app->request->get('referer_category'));
@@ -68,8 +70,11 @@ class DefaultController extends Controller
     {
         $searchModel = new VacancySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->get());
+        if($searchModel->current_city)
+            $this->background_image = $searchModel->current_city->image;
+        if($searchModel->current_category)
+            $this->background_emblem = $searchModel->current_category->image;
         $canonical_rel = Yii::$app->request->hostInfo.'/vacancy'.($searchModel->first_query_param?('/'.$searchModel->first_query_param):'').($searchModel->second_query_param?('/'.$searchModel->second_query_param):'');
-        $tags = Skill::find()->all();
         $categories = Category::find()->where(['!=', 'name', 'Пустая категория'])->all();
         $employment_types = EmploymentType::find()->all();
         $cities = City::find()->where(['status' => 1])->orderBy('priority ASC')->all();
@@ -77,7 +82,6 @@ class DefaultController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'cities' => $cities,
-            'tags' => $tags,
             'categories' => $categories,
             'employment_types' => $employment_types,
             'canonical_rel' => $canonical_rel

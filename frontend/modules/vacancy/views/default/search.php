@@ -52,18 +52,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                     </div>
                     <div class="sidebar-inner">
                         <div class="vl-block">
-                            <select class="vl-block__cities jsDutiesSelect" multiple="multiple">
-                                <option></option>
-                                <?php foreach($tags as $tag):?>
-                                    <option value="<?=$tag->id?>"
-                                        <?php if(is_array($searchModel->tags_id)):?>
-                                            <?=in_array($tag->id, $searchModel->tags_id)?'selected':""?>
-                                        <?php endif?>
-                                    ><?=$tag->name?></option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
-                        <div class="vl-block">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <option></option>
                                 <?php $city_id = $searchModel->current_city?$searchModel->current_city->id:null;?>
