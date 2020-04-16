@@ -48,7 +48,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'min_salary',
             'max_salary',
-            'city',
+            [
+                'attribute'=>'city0.name',
+                'label'=>'Город'
+            ],
             'description:ntext',
             'skype',
             'instagram',

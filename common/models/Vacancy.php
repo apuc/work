@@ -3,6 +3,7 @@
 namespace common\models;
 
 use apuc\channels_webhook\behaviors\WebHookBehavior;
+use common\classes\MoneyFormat;
 use common\models\base\WorkActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -22,7 +23,6 @@ use yii\web\View;
  * @property string $education
  * @property string $working_conditions
  * @property string $video
- * @property string $city
  * @property int $city_id
  * @property string $address
  * @property string $home_number
@@ -51,6 +51,8 @@ use yii\web\View;
  * @property City $city0
  * @property int $clickPhoneCount
  * @property User $publisher
+ * @property VacancyProfession[] $vacancyProfessions
+ * @property Professions[] $professions
  */
 class Vacancy extends WorkActiveRecord
 {
@@ -106,7 +108,7 @@ class Vacancy extends WorkActiveRecord
     {
         return [
             [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id', 'main_category_id', 'publisher_id', 'get_update_id'], 'integer'],
-            [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
+            [['post', 'education', 'video', 'address', 'home_number'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions', 'description'], 'string'],
             [['company_id', 'post', 'main_category_id'], 'required'],
         ];
@@ -134,7 +136,7 @@ class Vacancy extends WorkActiveRecord
             'education' => 'Образование',
             'working_conditions' => 'Условия работы',
             'video' => 'Видео о вакансии',
-            'city' => 'Город',
+            'city_id' => 'Город',
             'address' => 'Адрес офиса',
             'home_number' => 'Номер дома',
             'employment_type_id' => 'Вид занятости',
@@ -246,59 +248,17 @@ class Vacancy extends WorkActiveRecord
         return $this->hasOne(City::className(), ['id'=>'city_id']);
     }
 
-    /**
-     * @param $city City|false
-     * @param $category Category|false
-     * @param $profession Professions|false
-     * @return array
-     */
-    public static function getMetaData($city, $category, $profession)
-    {
-        $description = null;
-        $header = null;
-        $title = null;
-        $meta_data = null;
-        if ($city && $category) {
-            $meta_data =$category->metaData;
-        } else if ($city && $profession) {
-            $meta_data =$profession->metaData;
-        }
-        if($meta_data) {
-            $title = str_replace('{city}', $city->name, $meta_data->vacancy_meta_title_with_city);
-            $title = str_replace('{region}', $city->region->name, $title);
-            $title = str_replace('{city_prep}', $city->prepositional, $title);
-            $description = str_replace('{city}', $city->name, $meta_data->vacancy_meta_description_with_city);
-            $description = str_replace('{region}', $city->region->name, $description);
-            $description = str_replace('{city_prep}', $city->prepositional, $description);
-            $header = str_replace('{city}', $city->name, $meta_data->vacancy_header_with_city);
-            $header = str_replace('{region}', $city->region->name, $header);
-            $header = str_replace('{city_prep}', $city->prepositional, $header);
-        }
-        if ($city && (!$title || !$description || !$header)) {
-            $title = $title ?: $city->meta_title;
-            $description = $description ?: $city->meta_description;
-            $header = $header ?: $city->header;
-        }
-        if ($category && (!$title || !$description || !$header)) {
-            $title = $title ?: $category->metaData->vacancy_meta_title;
-            $description = $description ?: $category->metaData->vacancy_meta_description;
-            $header = $header ?: $category->metaData->vacancy_header;
-        }
-        if ($profession && (!$title || !$description || !$header)) {
-            $title = $title ?: $profession->metaData->vacancy_meta_title;
-            $description = $description ?: $profession->metaData->vacancy_meta_description;
-            $header = $header ?: $profession->metaData->vacancy_header;
-        }
-        $title = $title ?: KeyValue::findValueByKey('vacancy_search_page_title') ?: "Поиск Вакансий";
-        $description = $description ?: KeyValue::findValueByKey('vacancy_search_page_description') ?: "Поиск Вакансий";
-        $header = $header ?: KeyValue::findValueByKey('vacancy_search_page_h1') ?: "Поиск Вакансий";
-        return [
-            'title' => $title,
-            'description' => $description,
-            'header' => $header
-        ];
+    public function getMoneyString($uc_first=true) {
+        if ($this->min_salary && $this->max_salary)
+            return MoneyFormat::getFormattedAmount($this->min_salary) . '-' . MoneyFormat::getFormattedAmount($this->max_salary) . '₽';
+        elseif ($this->min_salary)
+            return MoneyFormat::getFormattedAmount($this->min_salary) . '₽';
+        elseif ($this->max_salary)
+            return MoneyFormat::getFormattedAmount($this->max_salary) . '₽';
+        else if($uc_first)
+            return 'Зарплата договорная';
+        else return 'зарплата договорная';
     }
-
 
     /**
      * @param bool|string $category_slug
@@ -369,14 +329,14 @@ class Vacancy extends WorkActiveRecord
             return 0;
     }
 
-    public function getProfession()
+    public function getVacancyProfessions()
     {
         return $this->hasMany(VacancyProfession::className(), ['vacancy_id' => 'id'])->orderBy('match_type')->limit(4);
     }
 
-    public  function  getPro()
+    public  function  getProfessions()
     {
         return $this->hasMany(Professions::className(), ['id' => 'profession_id'])
-            ->via('profession');
+            ->via('vacancyProfessions');
     }
 }

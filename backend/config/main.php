@@ -77,6 +77,9 @@ return [
         ],'spec-filters' => [
             'class' => 'backend\modules\spec_filters\SpecFilters',
         ],
+        'country' => [
+            'class' => 'backend\modules\country\Country',
+        ],
     ],
     'components' => [
 //        'request' => [

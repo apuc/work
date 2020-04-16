@@ -1,45 +1,28 @@
 <?php
 
 /* @var $this View */
+/* @var $searchModel \frontend\modules\vacancy\classes\VacancySearch */
+/* @var $dataProvider \yii\data\ActiveDataProvider */
+/* @var $canonical_rel string */
 /* @var $categories Category[] */
 /* @var $tags \common\models\Skill[] */
-/* @var $vacancies \yii\data\ActiveDataProvider */
-/* @var $category_ids array */
-/* @var $tags_id array */
-/* @var $experience_ids array */
-/* @var $employment_type_ids array */
-/* @var $min_salary int */
-/* @var $max_salary int */
-/* @var $search_text string */
-/* @var $city \common\models\City */
-/* @var $current_category Category|null */
-/* @var $profession \common\models\Professions|null */
-/* @var $canonical_rel string */
-
 /* @var $employment_types EmploymentType[] */
 /* @var $cities City[] */
 
 use common\classes\MoneyFormat;
 use common\models\Category;
+use common\models\City;
 use common\models\EmploymentType;
-use common\models\KeyValue;
 use common\models\Vacancy;
 use frontend\assets\MainAsset;
+use frontend\modules\vacancy\classes\VacancyMetaFormer;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
-$meta_data = Vacancy::getMetaData($city, $current_category, $profession);
-$this->title = $meta_data['title'];
-$this->registerMetaTag(['name'=>'description', 'content' => $meta_data['description']]);
-$this->registerMetaTag(['name'=>'og:title', 'content' => $this->title]);
-$this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
-$this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-$this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->hostInfo.'/images//og_image.jpg']);
-$this->registerMetaTag(['name'=>'og:description', 'content' => $meta_data['description']]);
+VacancyMetaFormer::registerVacancySearchPageTags($this, $searchModel->current_city, $searchModel->current_category, $searchModel->current_profession);
 $this->registerLinkTag(['rel'=>'canonical', 'href'=>$canonical_rel]);
-
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
 ?>
 <section class="all-block all-vacancies">
@@ -51,9 +34,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
         <div class="container">
             <div class="v-content-top">
                 <div class="home__aside-header">
-                    <h1 class="resume__title"><?=$meta_data['header']?></h1>
+                    <h1 class="resume__title"><?=VacancyMetaFormer::getSearchPageHeader($searchModel->current_city, $searchModel->current_category, $searchModel->current_profession)?></h1>
                     <div class="search">
-                        <input type="text" name="vacancy_search_text" placeholder="Поиск" value="<?=$search_text?>"/>
+                        <input type="text" name="vacancy_search_text" placeholder="Поиск" value="<?=$searchModel->search_text?>"/>
                         <button class="btn-red" id="search">
                             <i class="fa fa-search"></i>
                         </button>
@@ -69,21 +52,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                     </div>
                     <div class="sidebar-inner">
                         <div class="vl-block">
-                            <select class="vl-block__cities jsDutiesSelect" multiple="multiple">
-                                <option></option>
-                                <?php foreach($tags as $tag):?>
-                                    <option value="<?=$tag->id?>"
-                                        <?php if(is_array($tags_id)):?>
-                                            <?=in_array($tag->id, $tags_id)?'selected':""?>
-                                        <?php endif?>
-                                    ><?=$tag->name?></option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
-                        <div class="vl-block">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <option></option>
-                                <?php $city_id = $city?$city->id:null;?>
+                                <?php $city_id = $searchModel->current_city?$searchModel->current_city->id:null;?>
                                 <?php foreach($cities as $sel_city):?>
                                 <option <?=$sel_city->id == $city_id?'selected':''?> value="<?=$sel_city->slug?>"><?=$sel_city->name?></option>
                                 <?php endforeach ?>
@@ -98,8 +69,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 <?php foreach (Vacancy::$experiences as $key => $experience):?>
                                 <label class="checkbox">
                                     <input type="checkbox"
-                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
-                                            <?=in_array($key, $experience_ids)?'checked':''?>
+                                        <?php if(isset($searchModel->experience_ids) && $searchModel->experience_ids !== []): ?>
+                                            <?=in_array($key, $searchModel->experience_ids)?'checked':''?>
                                         <?php endif ?>
                                            name="experience" data-id="<?=$key?>"/>
                                     <div class="checkbox__text"><?=$experience?>
@@ -116,8 +87,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 <?php foreach ($categories as $category): ?>
                                     <label class="checkbox">
                                         <input type="checkbox"
-                                            <?php if(isset($category_ids) && $category_ids !== []): ?>
-                                            <?=in_array($category->id, $category_ids)?'checked':''?>
+                                            <?php if(isset($searchModel->category_ids) && $searchModel->category_ids !== []): ?>
+                                            <?=in_array($category->id, $searchModel->category_ids)?'checked':''?>
                                             <?php endif ?>
                                             name="category" data-slug="<?=$category->slug?>" data-id="<?=$category->id?>"/>
                                         <div class="checkbox__text"><?= $category->name ?></div>
@@ -133,8 +104,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 <?php foreach ($employment_types as $employment_type): ?>
                                     <label class="checkbox">
                                         <input type="checkbox"
-                                            <?php if(isset($employment_type_ids) && $employment_type_ids !== []): ?>
-                                                <?=in_array($employment_type->id, $employment_type_ids)?'checked':''?>
+                                            <?php if(isset($searchModel->employment_type_ids) && $searchModel->employment_type_ids !== []): ?>
+                                                <?=in_array($employment_type->id, $searchModel->employment_type_ids)?'checked':''?>
                                             <?php endif ?>
                                                name="employment_type" data-id="<?=$employment_type->id?>"/>
                                         <div class="checkbox__text"><?= $employment_type->name ?></div>
@@ -156,13 +127,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                     </div>
                 </div>
                 <div class="v-content-bottom__center scroll">
-                    <?php if(!$vacancies): ?>
+                    <?php if(!$dataProvider): ?>
                     <div class="single-card">
                         <p>Нет результатов поиска</p>
                     </div>
                     <?php endif ?>
-                    <?php if($vacancies->models):
-                        foreach ($vacancies->models as $vacancy): ?>
+                    <?php if($dataProvider->models):
+                        foreach ($dataProvider->models as $vacancy): ?>
                         <?php /** @var Vacancy $vacancy */ ?>
                         <div class="single-card">
                             <div class="single-card__tr">
@@ -237,8 +208,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                         <?php endif ?>
                                     <?php endif ?>
                                 </div>
-                                <?php if($category_ids && count($category_ids) === 1):?>
-                                    <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$category_ids[0]])?>" class="btn-card btn-red">
+                                <?php if($searchModel->category_ids && count($searchModel->category_ids) === 1):?>
+                                    <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$searchModel->category_ids[0]])?>" class="btn-card btn-red">
                                         Посмотреть полностью
                                     </a>
                                 <?php else: ?>
@@ -250,7 +221,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                         </div>
                     <?php endforeach; ?>
                      <?= LinkPager::widget([
-                         'pagination' => $vacancies->pagination,
+                         'pagination' => $dataProvider->pagination,
                          'options' => ['class' => 'search-pagination'],
                          'maxButtonCount' => 5,
                          'nextPageLabel' => 'Вперед',
@@ -262,31 +233,31 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                             <a class="btn btn-red create__resume__button" href="/personal-area/add-resume">разместить резюме</a>
                         </div>
                     <?php endif ?>
-                    <?php if($city && $current_category):?>
+                    <?php if($searchModel->current_city && $searchModel->current_category):?>
                         <p class="bottom__center-text">
-                            Вакансии в <?=$city->prepositional?> из категории - <?=$category->name?>.
-                            Ищите работу в <?=$city->prepositional?>, выберите вакансию и отправьте свое резюме!
+                            Вакансии в <?=$searchModel->current_city->prepositional?> из категории - <?=$searchModel->current_category->name?>.
+                            Ищите работу в <?=$searchModel->current_city->prepositional?>, выберите вакансию и отправьте свое резюме!
                             На странице вакансии Вы так же найдете контактный телефон работодателя и Email.
-                            Если Вы не нашли интересующую вакансию в категории <?=$category->name?>
-                            в <?=$city->prepositional?>, разместите резюме в категорию - <?=$category->name?>,
-                            при добавлении резюме укажите город поиска работы, например <?=$city->name?>.
+                            Если Вы не нашли интересующую вакансию в категории <?=$searchModel->current_category->name?>
+                            в <?=$searchModel->current_city->prepositional?>, разместите резюме в категорию - <?=$searchModel->current_category->name?>,
+                            при добавлении резюме укажите город поиска работы, например <?=$searchModel->current_city->name?>.
                         </p>
-                    <?php elseif($city && $profession):?>
+                    <?php elseif($searchModel->current_city && $searchModel->current_profession):?>
                         <p class="bottom__center-text">
-                            Вакансии в <?=$city->prepositional?> по запросу - <?=$profession->title?>.
-                            Свежие вакансии <?=$profession->genitive?> в <?=$city->prepositional?>.
+                            Вакансии в <?=$searchModel->current_city->prepositional?> по запросу - <?=$searchModel->current_profession->title?>.
+                            Свежие вакансии <?=$searchModel->current_profession->genitive?> в <?=$searchModel->current_city->prepositional?>.
                             Выбирайте работу и отправляйте резюме! Так же на странице вакансии
                             Вы найдете контактный телефон работодателя.
-                            Если вы на нашлий подходящую вакансию <?=$profession->genitive?> в <?=$city->prepositional?>,
+                            Если вы на нашлий подходящую вакансию <?=$searchModel->current_profession->genitive?> в <?=$searchModel->current_city->prepositional?>,
                             разместите свое резюме на сайте и работодатели свяжуться с Вами!
-                            Сайт поиска работы №1 в <?=$city->region->name?>!
+                            Сайт поиска работы №1 в <?=$searchModel->current_city->region->name?>!
                         </p>
-                    <?php elseif($profession && $profession->metaData):?>
-                        <p class="bottom__center-text"><?=$profession->metaData->vacancy_bottom_text?></p>
-                    <?php elseif($city && $city->bottom_text):?>
-                        <p class="bottom__center-text"><?=$city->bottom_text?></p>
-                    <?php elseif ($current_category && $current_category->metaData): ?>
-                        <p class="bottom__center-text"><?=$current_category->metaData->vacancy_bottom_text?></p>
+                    <?php elseif($searchModel->current_profession && $searchModel->current_profession->metaData):?>
+                        <p class="bottom__center-text"><?=$searchModel->current_profession->metaData->vacancy_bottom_text?></p>
+                    <?php elseif($searchModel->current_city && $searchModel->current_city->bottom_text):?>
+                        <p class="bottom__center-text"><?=$searchModel->current_city->bottom_text?></p>
+                    <?php elseif ($searchModel->current_category && $searchModel->current_category->metaData): ?>
+                        <p class="bottom__center-text"><?=$searchModel->current_category->metaData->vacancy_bottom_text?></p>
                     <?php endif; ?>
 
                 </div>

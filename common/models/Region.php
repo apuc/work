@@ -9,6 +9,9 @@ use Yii;
  * @property int $id
  * @property string $name
  * @property int $status
+ * @property int $country_id
+ *
+ * @property Country $country
  */
 class Region extends \yii\db\ActiveRecord
 {
@@ -27,7 +30,7 @@ class Region extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['status'], 'integer'],
+            [['status', 'country_id'], 'integer'],
             [['name'], 'string', 'max' => 50],
         ];
     }
@@ -39,8 +42,17 @@ class Region extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'status' => 'Status',
+            'name' => 'Название',
+            'status' => 'Статус',
+            'country_id' => 'Страна',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCountry()
+    {
+        return $this->hasOne(Country::className(), ['id' => 'country_id']);
     }
 }

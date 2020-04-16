@@ -23,7 +23,7 @@ class ResumeSearch extends Resume
     public function rules()
     {
         return [
-            [['id', 'employer_id', 'status', 'created_at', 'updated_at', 'category_id', 'skill_id'], 'integer'],
+            [['id', 'employer_id', 'status', 'created_at', 'updated_at', 'category_id', 'skill_id', 'city_id'], 'integer'],
             [['title', 'image_url', 'min_salary', 'max_salary', 'city', 'description', 'skype', 'instagram', 'facebook', 'vk'], 'safe'],
         ];
     }
@@ -71,6 +71,7 @@ class ResumeSearch extends Resume
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'city_id' => $this->city_id,
             'skills.id' => $this->skill_id,
             'category.id' => $this->category_id
         ]);

@@ -1,5 +1,6 @@
 <?php
 
+use common\models\City;
 use common\models\Employer;
 use common\models\Resume;
 use yii\helpers\Html;
@@ -60,7 +61,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'min_salary',
             'max_salary',
-            'city',
+            [
+                'attribute' => 'city_id',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return $model->city0->name;
+                },
+                'filter'    => Html::activeDropDownList( $searchModel, 'city_id',
+                    \yii\helpers\ArrayHelper::map(City::find()->where(['status'=>1])->all(),'id', 'name'),
+                    [ 'class' => 'form-control', 'prompt' => '' ] ),
+            ],
             [
                 'label' => 'Умения',
                 'contentOptions' => ['style' => 'width:400px; white-space: normal;'],

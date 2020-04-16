@@ -5,34 +5,30 @@
 /* @var $vacancies Vacancy[] */
 /* @var $cities City[] */
 /* @var $vacancy_count integer */
+/* @var $country Country|false */
 
 /* @var $employer Employer */
 
 
 use common\models\Category;
 use common\models\City;
+use common\models\Country;
 use common\models\Employer;
-use common\models\KeyValue;
 use common\models\Resume;
 use common\models\Vacancy;
+use frontend\modules\main_page\classes\MetaFormer;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\web\View;
 
-$this->title = KeyValue::findValueByKey('main_page_title') ?: 'Работа: главная';
-$this->registerMetaTag(['name' => 'description', 'content' => KeyValue::findValueByKey('main_page_description')]);
-$this->registerMetaTag(['name' => 'og:title', 'content' => $this->title]);
-$this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
-$this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-$this->registerMetaTag(['name' => 'og:image', 'content' => Yii::$app->urlManager->hostInfo . '/images/og_image.jpg']);
-$this->registerMetaTag(['name' => 'og:description', 'content' => KeyValue::findValueByKey('main_page_description')]);
-$this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo]);
+MetaFormer::registerMainPageTags($this, $country);
+$background_image = $country?('..'.$country->main_page_background_image):'../images/new-home-bg.jpeg';
 ?>
 
 <div class="nhome">
     <div class="nhome__main">
-        <div class="nhome__main-top">
+        <div class="nhome__main-top" style="background: linear-gradient( rgba(36, 60, 156, 0.78),rgba(36, 60, 156, 0.78) ),url(<?=$background_image?>) no-repeat; background-size: cover; background-position-x: center;">
             <div class="nhome__main-header">
                 <button class="mobile-nav-btn jsOpenNavMenu"><img src="/images/menu.png" alt="" role="presentation"/>
                 </button>
@@ -129,9 +125,16 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
         </div>
         <div class="nhome__main-bottom">
             <img class="nhome__main-big-circle" src="/images/home-big-circle.png" alt="Круг" role="presentation"/>
-            <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="Герб Донецка" role="presentation"/>
-            <h1 class="nhome__title">Работа</h1>
-            <p class="nhome__desc desc-pc">
+            <?php if($country):?>
+                <img class="nhome__main-gerb" src="<?=$country->main_page_emblem?>" role="presentation"/>
+            <?php else:?>
+                <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="Герб Донецка" role="presentation"/>
+            <?php endif ?>
+            <h1 class="<?=$country?'nhome__custom-title':'nhome__title'?>"><?=$country?$country->meta_header:"Работа"?></h1>
+            <div class="nhome__desc desc-pc">
+                <?php if ($country):?>
+                    <?=$country->main_page_text?>
+                <?php else:?>
                 Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из <a class="yellow-text"
                                                                    href="<?= Vacancy::getSearchPageUrl() ?>">2000+
                     вакансий</a> и 500+ компаний ДНР и ЛНР!<br>
@@ -140,13 +143,18 @@ $this->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo
                 Размещение вакансий и резюме - бесплатно.
                 Размести сегодня - улучши качество жизни завтра!<br>
                 Поиск работы в ДНР и ЛНР - это <a class="yellow-text" href="/">rabota.today.</a>
-            </p>
+                <?php endif ?>
+            </div>
             <!--googleoff: all-->
             <!--noindex-->
-            <p class="nhome__desc desc-mob">
+            <div class="nhome__desc desc-mob">
+                <?php if ($country):?>
+                    <?=$country->main_page_mobile_text?>
+                <?php else:?>
                 Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из 2000+ вакансий и 500+ компаний ДНР и ЛНР!<br>
                 <a class="yellow-text" href="/">Поиск работы в ДНР и ЛНР - это rabota.today.</a>
-            </p>
+                <?php endif ?>
+            </div>
             <!--googleoff: all-->
             <!--noindex-->
             <img class="nhome__main-bottom-img" src="/images/img1.png" alt="Офисный стул" role="presentation"/>

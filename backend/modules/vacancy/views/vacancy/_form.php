@@ -1,5 +1,6 @@
 <?php
 
+use common\models\City;
 use common\models\Employer;
 use common\models\Vacancy;
 use kartik\select2\Select2;
@@ -27,6 +28,8 @@ use yii\widgets\ActiveForm;
     ); ?>
 
     <?= $form->field($model, 'post')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'city_id')->dropDownList(ArrayHelper::map(City::find()->where(['status'=>1])->all(), 'id', 'name')) ?>
 
     <?= $form->field($model, 'responsibilities')->textarea() ?>
 
