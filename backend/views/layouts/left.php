@@ -57,6 +57,7 @@
                     ['label' => 'Профессии', 'url' => ['/professions/professions/index']],
                     ['label' => 'Тест', 'url' => ['/test/default/index']],
                     ['label' => 'Экспорт', 'url' => ['/site/export']],
+                    ['label' => 'Спец. Фильтры', 'url' => ['/spec-filters/spec-filters/index']],
                 ],
             ]
         ) ?>
