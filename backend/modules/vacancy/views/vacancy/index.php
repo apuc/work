@@ -1,5 +1,6 @@
 <?php
 
+use common\models\City;
 use common\models\Company;
 use common\models\Employer;
 use common\models\EmploymentType;
@@ -71,6 +72,16 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'qualification_requirements',
                 'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
+            [
+                'attribute' => 'city_id',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return $model->city0->name;
+                },
+                'filter'    => Html::activeDropDownList( $searchModel, 'city_id',
+                    \yii\helpers\ArrayHelper::map(City::find()->where(['status'=>1])->all(),'id', 'name'),
+                    [ 'class' => 'form-control', 'prompt' => '' ] ),
             ],
             [
                 'attribute' => 'work_experience',

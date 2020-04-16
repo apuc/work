@@ -23,7 +23,6 @@ use yii\web\View;
  * @property string $education
  * @property string $working_conditions
  * @property string $video
- * @property string $city
  * @property int $city_id
  * @property string $address
  * @property string $home_number
@@ -109,7 +108,7 @@ class Vacancy extends WorkActiveRecord
     {
         return [
             [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id', 'main_category_id', 'publisher_id', 'get_update_id'], 'integer'],
-            [['post', 'education', 'video', 'address', 'home_number', 'city'], 'string', 'max' => 255],
+            [['post', 'education', 'video', 'address', 'home_number'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions', 'description'], 'string'],
             [['company_id', 'post', 'main_category_id'], 'required'],
         ];
@@ -137,7 +136,7 @@ class Vacancy extends WorkActiveRecord
             'education' => 'Образование',
             'working_conditions' => 'Условия работы',
             'video' => 'Видео о вакансии',
-            'city' => 'Город',
+            'city_id' => 'Город',
             'address' => 'Адрес офиса',
             'home_number' => 'Номер дома',
             'employment_type_id' => 'Вид занятости',
