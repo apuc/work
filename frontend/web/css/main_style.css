@@ -3645,6 +3645,44 @@ button {
 @media (max-width: 1880px) {
     .nhome__main-content .btn:last-child {
         margin-right: 25px; } }
+
+.nhome__custom-title {
+    position: relative;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    margin: -40px 150px 0 auto;
+    font-size: 130px;
+    font-weight: 800;
+    line-height: 0.8;
+    text-transform: uppercase;
+    z-index: 2;
+}
+@media (max-width: 1850px) {
+    .nhome__custom-title {
+        font-size: 120px; } }
+@media (max-width: 1750px) {
+    .nhome__custom-title {
+        margin: -20px 80px 0 auto; } }
+@media (max-width: 1600px) {
+    .nhome__custom-title {
+        font-size: 105px; } }
+@media (max-width: 1350px) {
+    .nhome__custom-title {
+        margin: -20px 85px 0 auto;
+        font-size: 90px; } }
+@media (max-width: 1200px) {
+    .nhome__custom-title {
+        font-size: 70px;
+        margin: -20px auto auto; } }
+@media (max-width: 993px) {
+    .nhome__custom-title {
+        margin: -20px auto 0 auto;
+        font-size: 11vw; } }
+@media (max-width: 576px) {
+    .nhome__custom-title {
+        font-size: 13vw; } }
+
 .nhome__title {
     position: relative;
     width: -webkit-max-content;

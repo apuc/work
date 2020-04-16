@@ -130,7 +130,7 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
             <?php else:?>
                 <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="Герб Донецка" role="presentation"/>
             <?php endif ?>
-            <h1 class="nhome__title"><?=$country?$country->meta_header:"Работа"?></h1>
+            <h1 class="<?=$country?'nhome__custom-title':'nhome__title'?>"><?=$country?$country->meta_header:"Работа"?></h1>
             <div class="nhome__desc desc-pc">
                 <?php if ($country):?>
                     <?=$country->main_page_text?>
