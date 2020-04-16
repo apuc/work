@@ -20,6 +20,35 @@ $(document).ready(function () {
         });
     }
 
+    $(function()
+    {
+        $('body').on('click', 'a.ajax-status', function(event)
+        {
+            event.preventDefault();
+            var url = $(this).attr('href');
+            var id = $(this).data('id');
+            var status = $(this).data('status');
+            var a = $(this);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {'id': id, 'status': status},
+                success: function () {
+                    if (status == '1') {
+                        a.text('Скрыть');
+                        a.data('status', 0);
+                    }
+                    else if (status == '0') {
+                        a.text('Показать');
+                        a.data('status', 1);
+                    }
+                }
+            });
+
+        });
+    });
+
     $('#reservation').datepicker({
         format: 'yyyy-mm-dd',
         language: 'ru'

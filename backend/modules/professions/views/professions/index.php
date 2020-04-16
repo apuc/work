@@ -28,6 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'slug',
             'genitive',
+            [
+                'header' => 'Статус',
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{change}',
+                'buttons' => [
+                    'change' => function ($url,$model) {
+                    if ($model->status == 1){
+                        return Html::a('Скрыть', $url, ['class' => 'ajax-status', 'data-id' => $model->id, 'data-status' => '0']);
+                    }else{
+                        return Html::a('Показать', $url, ['class' => 'ajax-status', 'data-id' => $model->id, 'data-status' => '1']);
+                    }
+                    },
+                ],
+            ],
             'instrumental',
 
             ['class' => 'yii\grid\ActionColumn'],

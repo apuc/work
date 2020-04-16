@@ -38,9 +38,12 @@ class ProfessionsController extends Controller
         $searchModel = new ProfessionsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $model = Professions::find()->all();
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
@@ -128,4 +131,20 @@ class ProfessionsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionChange()
+    {
+
+            $current_id =  Yii::$app->getRequest()->post('id');
+            $current_status =  Yii::$app->getRequest()->post('status');
+            $model = $this->findModel($current_id);
+            $model->status = $current_status;
+            if ($model->save()){
+                $e = "yes";
+            }else{
+                $e = "no";
+            }
+            echo json_encode($e);
+    }
+
 }
