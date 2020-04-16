@@ -51,6 +51,8 @@ use yii\web\View;
  * @property City $city0
  * @property int $clickPhoneCount
  * @property User $publisher
+ * @property VacancyProfession[] $vacancyProfessions
+ * @property Professions[] $professions
  */
 class Vacancy extends WorkActiveRecord
 {
@@ -369,14 +371,14 @@ class Vacancy extends WorkActiveRecord
             return 0;
     }
 
-    public function getProfession()
+    public function getVacancyProfessions()
     {
         return $this->hasMany(VacancyProfession::className(), ['vacancy_id' => 'id'])->orderBy('match_type')->limit(4);
     }
 
-    public  function  getPro()
+    public  function  getProfessions()
     {
         return $this->hasMany(Professions::className(), ['id' => 'profession_id'])
-            ->via('profession');
+            ->via('vacancyProfessions');
     }
 }

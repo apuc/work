@@ -97,7 +97,7 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->host
                     </div>
                     <?php if ($model->city0): ?>
                         <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5"
-                           href="<?= \common\models\Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>">
+                           href="<?= Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>">
                             <img class="single-block__icon" src="/images/arr-place.png" alt="Стрелка"
                                  role="presentation"/>
                             <span class="ml5"><?= $model->city0->name ?></span>
@@ -105,11 +105,11 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->host
                     <?php endif ?>
                 </div>
 
-                <!--<div class="profession-block">
-                       <?php /*foreach ($model['pro'] as $key => $value): */?>
-                           <a href="<?/*= \common\models\Vacancy::getSearchPageUrl(false, false, $value['slug']) */?>"><p> <?/*= $value['title']*/?> </p></a>
-                    <?php /*endforeach;*/?>
-                </div>-->
+<!--                <div class="profession-block">-->
+<!--                   --><?php //foreach ($model->professions as $profession): ?>
+<!--                       <a href="--><?//= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?><!--"><p> --><?//= $profession->title?><!-- </p></a>-->
+<!--                    --><?php //endforeach;?>
+<!--                </div>-->
                 <h1 class="single-block__head" itemprop="title">
                     <?= mb_convert_case($model->post, MB_CASE_TITLE) ?>
                 </h1>

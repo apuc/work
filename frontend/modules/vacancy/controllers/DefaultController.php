@@ -35,7 +35,7 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         /** @var Vacancy $model */
-        $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->with('pro')->one();
+        $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->with('professions')->one();
         if(!$model)
             throw new NotFoundHttpException();
         $last_vacancies = Vacancy::find()->where(['status' => Vacancy::STATUS_ACTIVE])->andWhere(['!=', Vacancy::tableName().'.id', $model->id])->orderBy('update_time DESC')->limit(2);
