@@ -11,7 +11,7 @@
 /* @var $min_salary int */
 /* @var $max_salary int */
 /* @var $search_text string */
-/* @var $city \common\models\City */
+/* @var $city City */
 /* @var $current_category Category|null */
 /* @var $profession \common\models\Professions|null */
 /* @var $canonical_rel string */
@@ -21,25 +21,19 @@
 
 use common\classes\MoneyFormat;
 use common\models\Category;
+use common\models\City;
 use common\models\EmploymentType;
 use common\models\KeyValue;
 use common\models\Vacancy;
 use frontend\assets\MainAsset;
+use frontend\modules\vacancy\classes\VacancyMetaFormer;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
-$meta_data = Vacancy::getMetaData($city, $current_category, $profession);
-$this->title = $meta_data['title'];
-$this->registerMetaTag(['name'=>'description', 'content' => $meta_data['description']]);
-$this->registerMetaTag(['name'=>'og:title', 'content' => $this->title]);
-$this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
-$this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-$this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->hostInfo.'/images//og_image.jpg']);
-$this->registerMetaTag(['name'=>'og:description', 'content' => $meta_data['description']]);
+VacancyMetaFormer::registerVacancySearchPageTags($this, $city, $current_category, $profession);
 $this->registerLinkTag(['rel'=>'canonical', 'href'=>$canonical_rel]);
-
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
 ?>
 <section class="all-block all-vacancies">
@@ -51,7 +45,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
         <div class="container">
             <div class="v-content-top">
                 <div class="home__aside-header">
-                    <h1 class="resume__title"><?=$meta_data['header']?></h1>
+                    <h1 class="resume__title"><?=VacancyMetaFormer::getSearchPageHeader($city, $current_category, $profession)?></h1>
                     <div class="search">
                         <input type="text" name="vacancy_search_text" placeholder="Поиск" value="<?=$search_text?>"/>
                         <button class="btn-red" id="search">
