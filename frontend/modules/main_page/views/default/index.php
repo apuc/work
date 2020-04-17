@@ -2,6 +2,7 @@
 
 /* @var $this View */
 /* @var $categories Category[] */
+/* @var $professions Professions[] */
 /* @var $vacancies Vacancy[] */
 /* @var $cities City[] */
 /* @var $vacancy_count integer */
@@ -14,6 +15,7 @@ use common\models\Category;
 use common\models\City;
 use common\models\Country;
 use common\models\Employer;
+use common\models\Professions;
 use common\models\Resume;
 use common\models\Vacancy;
 use frontend\modules\main_page\classes\MetaFormer;
@@ -218,22 +220,68 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
         </div>
     </aside>
     <div class="nhome__footer">
-
-        <?php
-        $i = 0;
-        foreach ($categories as $category):?>
-            <?php if ($i < 9): ?>
-                <a class="nhome__footer-item"
-                   href="<?= Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
-            <?php else: ?>
-                <a class="nhome__footer-item mob-hide"
-                   href="<?= Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
+        <div class="nhome__footer-left">
+            <a class="footer__craft-link" href="https://web-artcraft.com/" target="_blank">
+                Разработано CraftGroup
+            </a>
+            <a class="nhome__footer-left-soc" rel="nofollow" target="_blank" href="https://vk.com/sid4ik">
+                <img class="vk-bg" src="/images/vk.svg" alt="Иконка VK" role="presentation">Есть вопросы?<br>
+                Напиши нам в соц.сетях
+            </a>
+            <span>
+                © 2019–2020 <a href="/">Rabota.today</a>.<br>
+                Сайт поиска работы №1<br>
+                в ДНР и ЛНР
+            </span>
+        </div>
+        <div class="nhome__footer-item">
+            <div class="nhome__footer-item-head">
+                <img src="/images/index_city.png" alt="Города">
+                <p>Вакансии<br> по городам <span>1000+</span></p>
+            </div>
             <?php
-            endif;
-            $i++;
-        endforeach; ?>
-        <a class="nhome__footer-item" href="#"></a>
+            $i = 0;
+            foreach ($cities as $city):?>
+                <?php if ($i < 4): ?>
+                    <a href="<?= Vacancy::getSearchPageUrl(false, $city->slug) ?>"><?= $city->name ?></a>
+                <?php
+                endif;
+                $i++;
+            endforeach; ?>
+            <a href="/cities">все города</a>
+        </div>
+        <div class="nhome__footer-item">
+            <div class="nhome__footer-item-head">
+                <img src="/images/index_vacancy.png" alt="Города">
+                <p>Вакансии<br> по категориям <span>300+</span></p>
+            </div>
+            <?php
+            $i = 0;
+            foreach ($categories as $category):?>
+                <?php if ($i < 4): ?>
+                    <a href="<?= Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
+                <?php
+                endif;
+                $i++;
+            endforeach; ?>
+            <a href="/vacancy">все вакансии</a>
+        </div>
+        <div class="nhome__footer-item">
+            <div class="nhome__footer-item-head">
+                <img src="/images/index_prof.png" alt="Города">
+                <p>Вакансии<br> по профессиям <span>500+</span></p>
+            </div>
+            <?php
+            $i = 0;
+            foreach ($professions as $profession):?>
+                <?php if ($i < 4): ?>
+                    <a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a>
+                <?php
+                endif;
+                $i++;
+            endforeach; ?>
+            <a href="/main_page/default/professions">все профессии</a>
+        </div>
     </div>
-    <img class="nhome__dots1" src="/images/bg-dots.png" alt="Точки" role="presentation"/>
     <div class="nhome__circle"></div>
 </div>
