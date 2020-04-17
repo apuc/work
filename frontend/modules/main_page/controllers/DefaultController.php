@@ -81,7 +81,10 @@ class DefaultController extends Controller
 
     public function actionProfessions()
     {
-        $professions = Professions::find()->all();
+        $professions = Professions::find();
+        if($search_text = Yii::$app->request->get('search_text'))
+            $professions->where(['like', 'title', $search_text]);
+        $professions = $professions->all();
         return $this->render('professions', [
             'professions' => $professions,
         ]);
