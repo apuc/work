@@ -33,7 +33,6 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
 <div class="root">
 <?php $this->beginBody() ?>
     <?=$content?>
-    <?=Footer::widget()?>
 </div>
 <?=Modals::widget();?>
 <?php $this->endBody() ?>
