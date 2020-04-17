@@ -255,15 +255,9 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
                 <img src="/images/index_vacancy.png" alt="Города">
                 <p>Вакансии<br> по категориям <span>300+</span></p>
             </div>
-            <?php
-            $i = 0;
-            foreach ($categories as $category):?>
-                <?php if ($i < 4): ?>
-                    <a href="<?= Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
-                <?php
-                endif;
-                $i++;
-            endforeach; ?>
+            <?php foreach ($categories as $category):?>
+                <a href="<?= Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
+            <?php endforeach; ?>
             <a href="<?= Vacancy::getSearchPageUrl() ?>">все вакансии</a>
         </div>
         <div class="nhome__footer-item">
@@ -271,15 +265,9 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
                 <img src="/images/index_prof.png" alt="Города">
                 <p>Вакансии<br> по профессиям <span>500+</span></p>
             </div>
-            <?php
-            $i = 0;
-            foreach ($professions as $profession):?>
-                <?php if ($i < 4): ?>
-                    <a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a>
-                <?php
-                endif;
-                $i++;
-            endforeach; ?>
+            <?php foreach ($professions as $profession):?>
+                <a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a>
+            <?php endforeach; ?>
             <a href="<?=Url::toRoute(['/main_page/default/professions'])?>">все профессии</a>
         </div>
     </div>
