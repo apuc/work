@@ -28,11 +28,15 @@ class DefaultController extends Controller
             throw new NotFoundHttpException();
         $this->layout = '@frontend/views/layouts/main-page-layout.php';
         if (!$categories = Yii::$app->cache->get("main_page_categories")) {
-            $categories = Category::find()->with(['vacancyCategories'])->select(['name', 'slug'])->limit(18)->all();
+            $categories = Category::find()->with(['vacancyCategories'])->select(['name', 'slug'])->limit(4)->all();
             Yii::$app->cache->set("main_page_categories", $categories, 3600);
         }
+        if (!$professions = Yii::$app->cache->get("main_page_professions")) {
+            $professions = Professions::find()->select(['title', 'slug'])->limit(4)->all();
+            Yii::$app->cache->set("main_page_professions", $professions, 3600);
+        }
         if (!$cities = Yii::$app->cache->get("main_page_cities")) {
-            $cities = City::find()->select(['id', 'name'])->where(['status' => 1])->orderBy('priority ASC')->all();
+            $cities = City::find()->select(['id', 'name', 'slug'])->where(['status' => 1])->orderBy('priority ASC')->all();
             Yii::$app->cache->set("main_page_cities", $cities, 3600);
         }
         if (!$vacancies = Yii::$app->cache->get("main_page_vacancies")) {
@@ -46,6 +50,7 @@ class DefaultController extends Controller
         $employer = \Yii::$app->user->isGuest?null:Employer::find()->select(['first_name', 'second_name'])->where(['user_id'=>\Yii::$app->user->id])->one();
         return $this->render('index', [
             'categories' => $categories,
+            'professions' => $professions,
             'vacancies' => $vacancies,
             'employer' => $employer,
             'cities' => $cities,
@@ -76,7 +81,10 @@ class DefaultController extends Controller
 
     public function actionProfessions()
     {
-        $professions = Professions::find()->all();
+        $professions = Professions::find();
+        if($search_text = Yii::$app->request->get('search_text'))
+            $professions->where(['like', 'title', $search_text]);
+        $professions = $professions->all();
         return $this->render('professions', [
             'professions' => $professions,
         ]);
