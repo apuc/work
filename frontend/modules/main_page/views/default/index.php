@@ -248,7 +248,7 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
                 endif;
                 $i++;
             endforeach; ?>
-            <a href="/cities">все города</a>
+            <a href="<?=Url::toRoute(['/main_page/default/city'])?>">все города</a>
         </div>
         <div class="nhome__footer-item">
             <div class="nhome__footer-item-head">
@@ -264,7 +264,7 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
                 endif;
                 $i++;
             endforeach; ?>
-            <a href="/vacancy">все вакансии</a>
+            <a href="<?= Vacancy::getSearchPageUrl() ?>">все вакансии</a>
         </div>
         <div class="nhome__footer-item">
             <div class="nhome__footer-item-head">
@@ -280,7 +280,7 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
                 endif;
                 $i++;
             endforeach; ?>
-            <a href="/main_page/default/professions">все профессии</a>
+            <a href="<?=Url::toRoute(['/main_page/default/professions'])?>">все профессии</a>
         </div>
     </div>
     <div class="nhome__circle"></div>
