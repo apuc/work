@@ -3,11 +3,11 @@
 /* @var $this View */
 /* @var $searchModel \frontend\modules\vacancy\classes\VacancySearch */
 /* @var $dataProvider \yii\data\ActiveDataProvider */
-/* @var $canonical_rel string */
-/* @var $categories Category[] */
-/* @var $tags \common\models\Skill[] */
-/* @var $employment_types EmploymentType[] */
 /* @var $cities City[] */
+/* @var $categories Category[] */
+/* @var $employment_types EmploymentType[] */
+/* @var $countries \common\models\Country[] */
+/* @var $canonical_rel string */
 
 use common\classes\MoneyFormat;
 use common\models\Category;
@@ -21,7 +21,7 @@ use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
-VacancyMetaFormer::registerVacancySearchPageTags($this, $searchModel->current_city, $searchModel->current_category, $searchModel->current_profession);
+VacancyMetaFormer::registerVacancySearchPageTags($this, $searchModel->current_city, $searchModel->current_category, $searchModel->current_profession, $searchModel->current_country);
 $this->registerLinkTag(['rel'=>'canonical', 'href'=>$canonical_rel]);
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
 ?>
@@ -52,12 +52,28 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                     </div>
                     <div class="sidebar-inner">
                         <div class="vl-block">
+                            <select class="vl-block__cities jsCountriesSelect">
+                                <option></option>
+                                <?php if ($searchModel->current_country)
+                                    $country_id = $searchModel->current_country->id;
+                                else if ($searchModel->current_city)
+                                    $country_id = $searchModel->current_city->region->country_id;
+                                else
+                                    $country_id = null; ?>
+                                <?php foreach($countries as $country):?>
+                                    <option <?=$country->id == $country_id?'selected':''?> value="<?=$country->slug?>"><?=$country->name?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <div class="vl-block cities-select-block<?=$cities?'':' hide'?>">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <option></option>
-                                <?php $city_id = $searchModel->current_city?$searchModel->current_city->id:null;?>
-                                <?php foreach($cities as $sel_city):?>
-                                <option <?=$sel_city->id == $city_id?'selected':''?> value="<?=$sel_city->slug?>"><?=$sel_city->name?></option>
-                                <?php endforeach ?>
+                                <?php if($cities): ?>
+                                    <?php $city_id = $searchModel->current_city?$searchModel->current_city->id:null;?>
+                                    <?php foreach($cities as $city):?>
+                                    <option <?=$city->id == $city_id?'selected':''?> value="<?=$city->slug?>"><?=$city->name?></option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </select>
                         </div>
                         <div class="vl-block">

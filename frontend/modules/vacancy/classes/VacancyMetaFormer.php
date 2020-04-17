@@ -19,7 +19,7 @@ class VacancyMetaFormer
      * @param Category $category
      * @param Professions $profession
      */
-    public static function registerVacancySearchPageTags($view, $city, $category, $profession)
+    public static function registerVacancySearchPageTags($view, $city, $category, $profession, $country)
     {
         $description = null;
         $title = null;
