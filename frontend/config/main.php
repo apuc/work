@@ -229,6 +229,7 @@ return [
                 'category_<number:\d+>.xml'=>'sitemap/category',
                 'profession_<number:\d+>.xml'=>'sitemap/profession',
                 'vacancy/click-phone'=>'vacancy/default/click-phone',
+                'cities_by_country_id'=>'vacancy/default/cities',
                 'city_with_category_<number:\d+>.xml'=>'sitemap/city-with-category',
                 'city_with_profession_<number:\d+>.xml'=>'sitemap/city-with-profession',
                 'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',

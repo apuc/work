@@ -387,6 +387,13 @@ if ($('.jsCitiesSelect').length > 0) {
   });
 }
 
+if ($('.jsCountriesSelect').length > 0) {
+  $('.jsCountriesSelect').select2({
+    placeholder: "Выберите регион",
+    allowClear: true
+  });
+}
+
 if ($('.jsDutiesSelect').length > 0) {
   $('.jsDutiesSelect').select2({
     placeholder: "Выберите навыки"
