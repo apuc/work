@@ -224,7 +224,7 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
             <a class="footer__craft-link" href="https://web-artcraft.com/" target="_blank">
                 Разработано CraftGroup
             </a>
-            <a class="nhome__footer-left-soc" rel="nofollow" target="_blank" href="https://vk.com/sid4ik">
+            <a class="nhome__footer-left-soc" rel="nofollow" target="_blank" href="https://vk.com/rabotad0netsk">
                 <img class="vk-bg" src="/images/vk.svg" alt="Иконка VK" role="presentation">Есть вопросы?<br>
                 Напиши нам в соц.сетях
             </a>
