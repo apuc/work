@@ -1,5 +1,6 @@
 <?php
 /* @var $employer \common\models\Employer */
+/* @var $current_country \common\models\Country */
 /* @var $this \yii\web\View */
 
 use common\models\City;
@@ -30,7 +31,7 @@ use yii\helpers\Url;
                     <div class="filter-overlay nav-overlay jsNavOverlay">
                     </div>
                     <nav class="home__nav jsNavMenu">
-                        <a class="home__nav-item home__nav-item_logo" href="/">
+                        <a class="home__nav-item home__nav-item_logo" href="<?=$current_country?"/$current_country->slug":"/"?>">
                             <img src="/images/logo-main.png" alt="Логотип rabota.today" role="presentation"/>
                             <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
                         </a>

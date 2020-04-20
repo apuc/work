@@ -220,6 +220,7 @@ return [
                 'personal-area/<action>/<id>' => 'personal_area/default/index',
                 'personal-area' => 'personal_area/default/index',
                 'cities' => 'main_page/default/city',
+                '<country_slug:(dnr|lnr)>/professions' => 'main_page/default/professions',
                 'professions' => 'main_page/default/professions',
                 'sitemap.xml' => 'sitemap/index',
                 'vacancy_<number:\d+>.xml'=>'sitemap/vacancy',
