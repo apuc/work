@@ -268,13 +268,15 @@ class Vacancy extends WorkActiveRecord
      * Получение урл для страницы поиска вакансий, с учётом переданных города и категории. Если город не указывать, будет использован город из cookie
      *
      */
-    public static function getSearchPageUrl($category_slug = false, $city_slug = false, $profession_slug = false)
+    public static function getSearchPageUrl($category_slug = false, $city_slug = false, $profession_slug = false, $country_slug = false)
     {
         $url = "/vacancy";
         if ($city_slug) {
             $url .= "/$city_slug";
-        } else if (\Yii::$app->request->cookies['city'] && $city = City::findOne(\Yii::$app->request->cookies['city'])) {
-            $url .= "/$city->slug";
+        } else if ($country_slug) {
+            $url .= "/$country_slug";
+        } else if (\Yii::$app->request->cookies['country'] && $country = Country::findOne(\Yii::$app->request->cookies['country'])) {
+            $url .= "/$country->slug";
         }
         if ($category_slug) {
             $url .= "/$category_slug";

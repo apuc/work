@@ -305,9 +305,6 @@ class Resume extends WorkActiveRecord
         if($city_slug) {
             $url .= "/$city_slug";
         }
-        else if(\Yii::$app->request->cookies['city'] && $city = City::findOne(\Yii::$app->request->cookies['city'])) {
-            $url .= "/$city->slug";
-        }
         if($category_slug) {
             $url .= "/$category_slug";
         }
