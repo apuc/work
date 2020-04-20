@@ -38,7 +38,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 <div class="filter-overlay nav-overlay jsNavOverlay">
                 </div>
                 <nav class="nhome__nav jsNavMenu">
-                    <a class="nhome__nav-item nhome__nav-item_logo" href="/">
+                    <a class="nhome__nav-item nhome__nav-item_logo" href="<?=$current_country?"/$current_country->slug":"/"?>">
                         <img src="/images/logo-main.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo-main-small.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
@@ -269,7 +269,11 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
             <?php foreach ($professions as $profession):?>
                 <a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a>
             <?php endforeach; ?>
-            <a href="<?=Url::toRoute(['/main_page/default/professions'])?>">все профессии</a>
+            <?php if($current_country):?>
+                <a href="<?=Url::toRoute(["/$current_country->slug/professions"])?>">все профессии</a>
+            <?php else:?>
+                <a href="<?=Url::toRoute(['/main_page/default/professions'])?>">все профессии</a>
+            <?php endif ?>
         </div>
     </div>
     <div class="nhome__circle"></div>

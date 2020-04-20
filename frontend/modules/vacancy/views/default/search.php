@@ -34,7 +34,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
         <div class="container">
             <div class="v-content-top">
                 <div class="home__aside-header">
-                    <h1 class="resume__title"><?=VacancyMetaFormer::getSearchPageHeader($searchModel->current_city, $searchModel->current_category, $searchModel->current_profession)?></h1>
+                    <h1 class="resume__title"><?=VacancyMetaFormer::getSearchPageHeader($searchModel->current_city, $searchModel->current_category, $searchModel->current_profession, $searchModel->current_country)?></h1>
                     <div class="search">
                         <input type="text" name="vacancy_search_text" placeholder="Поиск" value="<?=$searchModel->search_text?>"/>
                         <button class="btn-red" id="search">
@@ -135,8 +135,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 </p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
                             </div>
                             <div class="vl-block__inputs jsCheckBlock">
-                                <input type="text" name="min_salary" value="<?=isset($min_salary)?$min_salary:''?>" />
-                                <input type="text" name="max_salary" value="<?=isset($max_salary)?$max_salary:''?>" />
+                                <input type="text" name="min_salary" value="<?=isset($searchModel->min_salary)?$searchModel->min_salary:''?>" />
+                                <input type="text" name="max_salary" value="<?=isset($searchModel->max_salary)?$searchModel->max_salary:''?>" />
                             </div>
                         </div>
                         <button class="vl-btn btn-card btn-red jsAccept jsAcceptScroll">Применить</button>

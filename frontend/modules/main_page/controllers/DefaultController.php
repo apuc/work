@@ -23,8 +23,12 @@ class DefaultController extends Controller
 
     public function actionIndex($country_slug=false)
     {
-        if($country_slug === false && $country = Country::findOne(Yii::$app->request->cookies['country']))
-            return $this->redirect('/'.$country->slug);
+        if($country = Country::findOne(Yii::$app->request->cookies['country'])) {
+            if($country->slug !== $country_slug)
+                return $this->redirect('/'.$country->slug);
+        }
+        else if ($country_slug!==false)
+            return $this->redirect('/');
         $current_country = $country_slug?Country::find()->where(['slug'=>$country_slug])->one():null;
         if($country_slug && !$current_country)
             throw new NotFoundHttpException();
@@ -86,14 +90,16 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionProfessions()
+    public function actionProfessions($country_slug = null)
     {
         $professions = Professions::find();
+        $country = Country::findOne(['slug'=>$country_slug]);
         if($search_text = Yii::$app->request->get('search_text'))
             $professions->where(['like', 'title', $search_text]);
         $professions = $professions->all();
         return $this->render('professions', [
             'professions' => $professions,
+            'country' => $country
         ]);
     }
 
