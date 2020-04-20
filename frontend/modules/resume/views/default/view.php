@@ -8,26 +8,11 @@ use common\classes\MoneyFormat;
 use common\models\City;
 use common\models\Experience;
 use common\models\Resume;
+use frontend\modules\resume\classes\ResumeMetaFormer;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
-if (!Experience::getPeriod_string(Experience::getPeriod_sum($model->experience)) == 0){
-    $exp = Experience::getPeriod_string(Experience::getPeriod_sum($model->experience));
-}else{
-    $exp = 'без опыта';
-}
 
-$this->title = 'Резюме' . ':' . $model->employer->second_name . ' ' . $model->employer->first_name . '- ' . $model->title . ',' . $model->city0->name;
-//$this->registerMetaTag(['name'=>'description', 'content' => StringHelper::truncate($model->description, 100, '...')]);
-$this->registerMetaTag(['name' => 'description', 'Резюме ' . $model->employer->second_name . ' ' . $model->employer->first_name .
-    ', на должность ' . $model->title . '. Опыт работы: ' . $exp . '. ' .
-    ' Размещено ' . Yii::$app->formatter->asDate($model->update_time, 'dd.MM.yyyy')]);
-$this->registerMetaTag(['name' => 'og:title', 'content' => $model->title]);
-$this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
-$this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-$this->registerMetaTag(['name' => 'og:image', 'content' => $model->image_url ?: '/images/og_image.jpg']);
-$this->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::truncate($model->description, 100, '...')]);
-$this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->hostInfo . '/resume/view/' . $model->id]);
-
+ResumeMetaFormer::registerResumeViewPageTags($this, $model);
 ?>
 
 <div class="resume">

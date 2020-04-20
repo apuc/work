@@ -1,5 +1,7 @@
 <?php
 /* @var $this View */
+/* @var $searchModel \frontend\modules\resume\classes\ResumeSearch */
+/* @var $dataProvider \yii\data\ActiveDataProvider */
 /* @var $categories Category[] */
 /* @var $tags_id array */
 /* @var $tags \common\models\Skill[] */
@@ -19,20 +21,12 @@ use common\models\Experience;
 use common\models\KeyValue;
 use common\models\Resume;
 use frontend\assets\MainAsset;
+use frontend\modules\resume\classes\ResumeMetaFormer;
 use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
-$meta_data = Resume::getMetaData($city, $current_category);
-$this->title = $meta_data['title'];
-$this->registerMetaTag(['name'=>'description', 'content' => $meta_data['description']]);
-$this->registerMetaTag(['name'=>'og:title', 'content' => $meta_data['title']]);
-$this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
-$this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-$this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->hostInfo.'//og_image.jpg']);
-$this->registerMetaTag(['name'=>'og:description', 'content' => $meta_data['description']]);
-$this->registerLinkTag(['rel'=>'canonical', 'href'=>$canonical_rel]);
-
+ResumeMetaFormer::registerResumeSearchPageTags($this, $searchModel->current_city, $searchModel->current_category, $searchModel->current_profession);
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['depends' => [MainAsset::className()]]);
 ?>
 
@@ -46,7 +40,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
         <div class="container">
             <div class="v-content-top">
                 <div class="home__aside-header">
-                    <h1 class="resume__title"><?=$meta_data['header']?></h1>
+                    <h1 class="resume__title"><?=ResumeMetaFormer::getSearchPageHeader($searchModel->current_city, $searchModel->current_category, $searchModel->current_profession)?></h1>
                     <div class="search"><input type="text" placeholder="Поиск" name="resume_search_text"
                                                <?php if (isset($search_text)): ?>value="<?= $search_text ?>"<?php endif ?>/>
                         <button id="search" class="btn-red"><i class="fa fa-search"></i>

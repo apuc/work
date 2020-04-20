@@ -13,6 +13,7 @@ use common\models\Skill;
 use common\models\User;
 use common\models\Vacancy;
 use common\models\Views;
+use frontend\modules\resume\classes\ResumeSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
@@ -79,6 +80,8 @@ class DefaultController extends Controller
 
     public function actionSearch()
     {
+        $searchModel = new ResumeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->get());
         $params = [
             'category_ids' => json_decode(\Yii::$app->request->get('category_ids')),
             'employment_type_ids' => json_decode(\Yii::$app->request->get('employment_type_ids')),
@@ -186,6 +189,8 @@ class DefaultController extends Controller
         ]);
 
         return $this->render('search', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
             'tags' => $tags,
             'cities' => $cities,
             'resumes' => $resumes,
