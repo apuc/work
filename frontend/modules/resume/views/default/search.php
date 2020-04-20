@@ -179,8 +179,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                 </div>
                 <div class="v-content-bottom__center scroll">
                     <?php /** @var Resume $resume */
-                    if ($resumes->models):
-                        foreach ($resumes->models as $resume):?>
+                    if ($dataProvider->models):
+                        foreach ($dataProvider->models as $resume):?>
                             <div class="single-card-resume">
                                 <div class="single-card-resume__top">
                                     <img class="single-card-resume__left-img"
@@ -273,7 +273,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                             </div>
                         <?php endforeach ?>
                         <?= LinkPager::widget([
-                        'pagination' => $resumes->pagination,
+                        'pagination' => $dataProvider->pagination,
                         'options' => ['class' => 'search-pagination'],
                         'maxButtonCount' => 5,
                         'firstPageLabel' => '<<',

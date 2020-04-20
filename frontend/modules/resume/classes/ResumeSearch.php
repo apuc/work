@@ -124,14 +124,14 @@ class ResumeSearch extends Resume
             ->andFilterWhere(['>=', 'max_salary', $this->min_salary])
             ->andFilterWhere(['<=', 'min_salary', $this->max_salary]);
         if ($this->category_ids){
-            $query->andWhere(['or', ['IN', 'category.id', $this->category_ids], ['IN', 'main_category_id', $this->category_ids]]);
+            $query->andWhere(['or', ['IN', 'category.id', $this->category_ids]]);
         }
         if ($this->current_city)
             $query->andFilterWhere(['city_id' => $this->current_city->id]);
         if ($this->experience_ids){
             $or = ['or'];
             foreach ($this->experience_ids as $experience_id){
-                $or[] = ['=', 'work_experience', $experience_id];
+                $or[] = ['=', 'years_of_exp', $experience_id];
             }
             $query->andWhere($or);
         }
@@ -145,11 +145,13 @@ class ResumeSearch extends Resume
         }
         $get = $_GET;
         unset($get['first_query_param'], $get['second_query_param']);
-        $dataProvider->pagination = new Pagination([
-            'defaultPageSize' => 10,
-            'params' => $get,
-            'route' => Yii::$app->request->getPathInfo()
-        ]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query->distinct(),
+            'pagination' => [
+                'defaultPageSize' => 10,
+                'params' => $get,
+                'route' => Yii::$app->request->getPathInfo()
+            ]]);
         return $dataProvider;
     }
 }
