@@ -128,15 +128,15 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
         </div>
         <div class="nhome__main-bottom">
             <img class="nhome__main-big-circle" src="/images/home-big-circle.png" alt="Круг" role="presentation"/>
-            <?php if($country):?>
+            <?php if($current_country):?>
                 <img class="nhome__main-gerb" src="<?=$current_country->main_page_emblem?>" role="presentation"/>
             <?php else:?>
                 <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="Герб Донецка" role="presentation"/>
             <?php endif ?>
-            <h1 class="<?=$country?'nhome__custom-title':'nhome__title'?>"><?=$country?$country->meta_header:"Работа"?></h1>
+            <h1 class="<?=$current_country?'nhome__custom-title':'nhome__title'?>"><?=$current_country?$current_country->meta_header:"Работа"?></h1>
             <div class="nhome__desc desc-pc">
-                <?php if ($country):?>
-                    <?=$country->main_page_text?>
+                <?php if ($current_country):?>
+                    <?=$current_country->main_page_text?>
                 <?php else:?>
                 Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из <a class="yellow-text"
                                                                    href="<?= Vacancy::getSearchPageUrl() ?>">2000+
@@ -151,8 +151,8 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
             <!--googleoff: all-->
             <!--noindex-->
             <div class="nhome__desc desc-mob">
-                <?php if ($country):?>
-                    <?=$country->main_page_mobile_text?>
+                <?php if ($current_country):?>
+                    <?=$current_country->main_page_mobile_text?>
                 <?php else:?>
                 Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из 2000+ вакансий и 500+ компаний ДНР и ЛНР!<br>
                 <a class="yellow-text" href="/">Поиск работы в ДНР и ЛНР - это rabota.today.</a>
