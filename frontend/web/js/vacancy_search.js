@@ -77,17 +77,6 @@ $(document).ready(function(){
                 and=true;
             href+="category_ids=" + JSON.stringify(categoryIds);
         }
-        if(!jsCitiesSelect.val()) {
-            if(!question_mark){
-                question_mark=true;
-                href+="?";
-            }
-            if(and)
-                href+="&";
-            else
-                and=true;
-            href+="city_disable=1";
-        }
         if(search_text.val()){
             if(!question_mark){
                 question_mark=true;
