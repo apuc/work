@@ -37,11 +37,12 @@ use yii\helpers\Url;
                         <a class="home__nav-item" href="/employer">Работодателю</a>
                         <div class="geolocation">
                             <img src="/images/geolocation.png" alt="Геолокация">
-                            <select class="city-header jsCityHeaderSelect">
+                            <select class="city-header jsCountryHeaderSelect">
                                 <option></option>
-                                <?php foreach (City::find()->where(['status'=>1])->orderBy('priority ASC')->all() as $city):?>
-                                    <option <?=(Yii::$app->request->cookies['city']==(string)$city->id)?"selected":''?> value="<?=$city->id?>"><?=$city->name?></option>
-                                <?php endforeach;?>
+                                <?php foreach (\common\models\Country::find()->all() as $country):?>
+                                    <option <?= (Yii::$app->request->cookies['country'] == (string)$country->id) ? "selected" : '' ?>
+                                            value="<?= $country->id ?>"><?= $country->name ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <?php if(Yii::$app->controller->uniqueId === "vacancy/default"):?>
