@@ -25,8 +25,8 @@ class DefaultController extends Controller
     {
         if($country_slug === false && $country = Country::findOne(Yii::$app->request->cookies['country']))
             return $this->redirect('/'.$country->slug);
-        $country = $country_slug?Country::find()->where(['slug'=>$country_slug])->one():null;
-        if($country_slug && !$country)
+        $current_country = $country_slug?Country::find()->where(['slug'=>$country_slug])->one():null;
+        if($country_slug && !$current_country)
             throw new NotFoundHttpException();
         $this->layout = '@frontend/views/layouts/main-page-layout.php';
         if (!$categories = Yii::$app->cache->get("main_page_categories")) {
@@ -62,7 +62,7 @@ class DefaultController extends Controller
             'cities' => $cities,
             'countries' => $countries,
             'vacancy_count' => $vacancy_count,
-            'country' => $country
+            'current_country' => $current_country
         ]);
     }
 

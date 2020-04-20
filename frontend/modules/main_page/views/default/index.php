@@ -7,7 +7,7 @@
 /* @var $cities City[] */
 /* @var $countries Country[] */
 /* @var $vacancy_count integer */
-/* @var $country Country|false */
+/* @var $current_country Country|false */
 
 /* @var $employer Employer */
 
@@ -25,8 +25,8 @@ use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\web\View;
 
-MetaFormer::registerMainPageTags($this, $country);
-$background_image = $country?('..'.$country->main_page_background_image):'../images/new-home-bg.jpeg';
+MetaFormer::registerMainPageTags($this, $current_country);
+$background_image = $current_country?('..'.$current_country->main_page_background_image):'../images/new-home-bg.jpeg';
 ?>
 
 <div class="nhome">
@@ -129,7 +129,8 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
         <div class="nhome__main-bottom">
             <img class="nhome__main-big-circle" src="/images/home-big-circle.png" alt="Круг" role="presentation"/>
             <?php if($country):?>
-                <img class="nhome__main-gerb" src="<?=$country->main_page_emblem?>" role="presentation"/>
+                <?=$current_country->main_page_emblem?>
+                <img class="nhome__main-gerb" src="<?=$current_country->main_page_emblem?>" role="presentation"/>
             <?php else:?>
                 <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="Герб Донецка" role="presentation"/>
             <?php endif ?>
