@@ -129,7 +129,6 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
         <div class="nhome__main-bottom">
             <img class="nhome__main-big-circle" src="/images/home-big-circle.png" alt="Круг" role="presentation"/>
             <?php if($country):?>
-                <?=$current_country->main_page_emblem?>
                 <img class="nhome__main-gerb" src="<?=$current_country->main_page_emblem?>" role="presentation"/>
             <?php else:?>
                 <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="Герб Донецка" role="presentation"/>
