@@ -123,8 +123,6 @@ class VacancySearch extends Vacancy
         if($this->current_city && !$this->current_country) {
             $this->current_country = $this->current_city->region->country;
         }
-        if(!$this->current_city && !$this->city_disable)
-            $this->current_city = City::findOne(Yii::$app->request->cookies['city']);
         if(!$this->current_city && $this->current_country) {
             $query->joinWith('city0.region');
             $query->andWhere([Region::tableName().'.country_id'=>$this->current_country->id]);
