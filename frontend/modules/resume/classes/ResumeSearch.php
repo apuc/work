@@ -27,6 +27,7 @@ use Yii;
  * @property string $search_text
  * @property string $first_query_param
  * @property string $second_query_param
+ * @property string $tags_id
  *
  * @property City|null $current_city
  * @property Category|null $current_category
@@ -44,6 +45,7 @@ class ResumeSearch extends Resume
     public $search_text;
     public $first_query_param;
     public $second_query_param;
+    public $tags_id;
     /**
      * {@inheritdoc}
      */
@@ -51,7 +53,7 @@ class ResumeSearch extends Resume
     {
         return [
             [['min_salary', 'max_salary', 'city_disable'], 'integer'],
-            [['category_ids', 'employment_type_ids', 'experience_ids', 'search_text', 'first_query_param', 'second_query_param'], 'string'],
+            [['category_ids', 'employment_type_ids', 'experience_ids', 'search_text', 'first_query_param', 'second_query_param', 'tags_id'], 'string'],
         ];
     }
 
@@ -77,7 +79,7 @@ class ResumeSearch extends Resume
             ->with('category')
             ->where(['status' => Resume::STATUS_ACTIVE])
             ->orderBy('update_time DESC')
-            ->joinWith(['category', 'employment_type'])
+            ->joinWith(['category', 'employment_type', 'skills'])
             ->distinct();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -92,6 +94,7 @@ class ResumeSearch extends Resume
         $this->category_ids = json_decode($this->category_ids);
         $this->employment_type_ids = json_decode($this->employment_type_ids);
         $this->experience_ids = json_decode($this->experience_ids);
+        $this->tags_id = json_decode($this->tags_id);
         if ($this->second_query_param){
             $this->current_city = City::findOne(['slug' => $this->first_query_param]);
             if ($this->current_category = Category::findOne(['slug' => $this->second_query_param])){
@@ -125,6 +128,9 @@ class ResumeSearch extends Resume
             ->andFilterWhere(['<=', 'min_salary', $this->max_salary]);
         if ($this->category_ids){
             $query->andWhere(['or', ['IN', 'category.id', $this->category_ids]]);
+        }
+        if ($this->tags_id){
+            $query->andWhere(['or', ['IN', 'skill.id', $this->tags_id]]);
         }
         if ($this->current_city)
             $query->andFilterWhere(['city_id' => $this->current_city->id]);

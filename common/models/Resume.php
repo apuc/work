@@ -60,6 +60,10 @@ class Resume extends WorkActiveRecord
 
     const SOFT_DELETE = 1;
 
+    public static $experiences = [
+        'Без опыта работы', 'От 1 года', 'От 3 лет', 'От 5 лет'
+    ];
+
     public function getRelateDeleteList()
     {
         return ['experience', 'education', 'resume_category', 'resume_skill'];

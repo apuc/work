@@ -82,15 +82,6 @@ class DefaultController extends Controller
     {
         $searchModel = new ResumeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->get());
-        $params = [
-            'category_ids' => json_decode(\Yii::$app->request->get('category_ids')),
-            'employment_type_ids' => json_decode(\Yii::$app->request->get('employment_type_ids')),
-            'experience_ids' => json_decode(\Yii::$app->request->get('experience_ids')),
-            'tags_id' => json_decode(\Yii::$app->request->get('tags_id')),
-            'min_salary' => Yii::$app->request->get('min_salary'),
-            'max_salary' => Yii::$app->request->get('max_salary'),
-            'search_text' => Yii::$app->request->get('search_text')
-        ];
         $canonical_rel = Yii::$app->request->hostInfo.'/resume'.($searchModel->first_query_param?('/'.$searchModel->first_query_param):'').($searchModel->second_query_param?('/'.$searchModel->second_query_param):'');
         if($searchModel->current_city) {
                 $this->background_image = $searchModel->current_city->image;
@@ -109,17 +100,9 @@ class DefaultController extends Controller
             'dataProvider' => $dataProvider,
             'tags' => $tags,
             'cities' => $cities,
-            //'resumes' => $resumes,
             'categories' => $categories,
             'employment_types' => $employment_types,
-            'min_salary' => $params['min_salary'],
-            'max_salary' => $params['max_salary'],
-            'category_ids' => $params['category_ids'],
-            'employment_type_ids' => $params['employment_type_ids'],
-            'experience_ids' => $params['experience_ids'],
-            'search_text' => $params['search_text'],
             'city' => $searchModel->current_city,
-            'tags_id' => $params['tags_id'],
             'current_category' => $searchModel->current_category,
             'canonical_rel' => $canonical_rel,
         ]);

@@ -61,8 +61,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                 <option></option>
                                 <?php foreach($tags as $tag):?>
                                     <option value="<?=$tag->id?>"
-                                            <?php if(is_array($tags_id)):?>
-                                        <?=in_array($tag->id, $tags_id)?'selected':""?>
+                                            <?php if(is_array($searchModel->tags_id)):?>
+                                        <?=in_array($tag->id, $searchModel->tags_id)?'selected':""?>
                                             <?php endif?>
                                     ><?=$tag->name?></option>
                                 <?php endforeach ?>
@@ -71,7 +71,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                         <div class="vl-block">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <option></option>
-                                <?php $city_id = $city?$city->id:null;?>
+                                <?php $city_id = $searchModel->current_city?$searchModel->current_city->id:null; //$city?$city->id:null;?>
                                 <?php foreach ($cities as $sel_city): ?>
                                     <option <?= $sel_city->id == $city_id ? 'selected' : '' ?> value="<?=$sel_city->slug?>"><?= $sel_city->name ?></option>
                                 <?php endforeach ?>
@@ -83,46 +83,18 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                 </p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
                             </div>
                             <div class="vl-block__check jsCheckBlock">
-                                <label class="checkbox">
-                                    <input type="checkbox"
-                                           name="experience" data-id="0"
-                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
-                                            <?= in_array(0, $experience_ids)?'checked':''?>
-                                        <?php endif ?>
-                                    />
-                                    <div class="checkbox__text">Без опыта работы
-                                    </div>
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox"
-                                           name="experience" data-id="1"
-                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
-                                            <?= in_array(1, $experience_ids)?'checked':''?>
-                                        <?php endif ?>
-                                    />
-                                    <div class="checkbox__text">От 1 года
-                                    </div>
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox"
-                                           name="experience" data-id="2"
-                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
-                                            <?= in_array(2, $experience_ids)?'checked':''?>
-                                        <?php endif ?>
-                                    />
-                                    <div class="checkbox__text">От 3 лет
-                                    </div>
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox"
-                                           name="experience" data-id="3"
-                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
-                                            <?= in_array(3, $experience_ids)?'checked':''?>
-                                        <?php endif ?>
-                                    />
-                                    <div class="checkbox__text">От 5 лет
-                                    </div>
-                                </label>
+
+                                <?php foreach (Resume::$experiences as $key => $experience):?>
+                                    <label class="checkbox">
+                                        <input type="checkbox"
+                                            <?php if(isset($searchModel->experience_ids) && $searchModel->experience_ids !== []): ?>
+                                                <?=in_array($key, $searchModel->experience_ids)?'checked':''?>
+                                            <?php endif ?>
+                                               name="experience" data-id="<?=$key?>"/>
+                                        <div class="checkbox__text"><?=$experience?>
+                                        </div>
+                                    </label>
+                                <?php endforeach ?>
                             </div>
                         </div>
                         <div class="vl-block">
@@ -134,8 +106,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                 <?php foreach ($categories as $category): ?>
                                     <label class="checkbox">
                                         <input type="checkbox"
-                                            <?php if (isset($category_ids) && $category_ids !== []): ?>
-                                                <?= in_array($category->id, $category_ids) ? 'checked' : '' ?>
+                                            <?php if (isset($searchModel->category_ids) && $searchModel->category_ids !== []): ?>
+                                                <?= in_array($category->id, $searchModel->category_ids) ? 'checked' : '' ?>
                                             <?php endif ?>
                                                name="category" data-slug="<?=$category->slug?>" data-id="<?= $category->id ?>"/>
                                         <div class="checkbox__text"><?= $category->name ?></div>
@@ -152,8 +124,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                 <?php foreach ($employment_types as $employment_type): ?>
                                     <label class="checkbox">
                                         <input type="checkbox"
-                                            <?php if (isset($employment_type_ids) && $employment_type_ids !== []): ?>
-                                                <?= in_array($employment_type->id, $employment_type_ids) ? 'checked' : '' ?>
+                                            <?php if (isset($searchModel->employment_type_ids) && $searchModel->employment_type_ids !== []): ?>
+                                                <?= in_array($employment_type->id, $searchModel->employment_type_ids) ? 'checked' : '' ?>
                                             <?php endif ?>
                                                name="employment_type" data-id="<?= $employment_type->id ?>"/>
                                         <div class="checkbox__text"><?= $employment_type->name ?></div>
@@ -168,9 +140,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                             </div>
                             <div class="vl-block__inputs jsCheckBlock">
                                 <input type="text" name="min_salary"
-                                       value="<?= isset($min_salary) ? $min_salary : '' ?>"/>
+                                       value="<?= isset($searchModel->min_salary) ? $searchModel->min_salary : '' ?>"/>
                                 <input type="text" name="max_salary"
-                                       value="<?= isset($max_salary) ? $max_salary : '' ?>"/>
+                                       value="<?= isset($searchModel->max_salary) ? $searchModel->max_salary : '' ?>"/>
                             </div>
                         </div>
                         <button class="vl-btn btn-card btn-red jsAccept jsAcceptScroll">Применить
@@ -190,8 +162,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                     <div class="single-card-resume__top-left">
                                         <div class="single-card-resume__head">
                                             <h3>
-                                                <?php if($category_ids && count($category_ids) === 1):?>
-                                                <a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id, 'referer_category'=>$category_ids[0]])?>">
+                                                <?php if($searchModel->category_ids && count($searchModel->category_ids) === 1):?>
+                                                <a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id, 'referer_category'=>$searchModel->category_ids[0]])?>">
                                                     <?= mb_convert_case ( $resume->title , MB_CASE_TITLE) ?>
                                                 </a>
                                                 <?php else: ?>
