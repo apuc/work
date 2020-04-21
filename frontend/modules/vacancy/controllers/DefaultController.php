@@ -76,13 +76,25 @@ class DefaultController extends Controller
             $this->background_image = $searchModel->current_city->image;
         if($searchModel->current_category)
             $this->background_emblem = $searchModel->current_category->image;
+
         $canonical_rel = Yii::$app->request->hostInfo.'/vacancy'.($searchModel->first_query_param?('/'.$searchModel->first_query_param):'').($searchModel->second_query_param?('/'.$searchModel->second_query_param):'');
-        $categories = Category::find()->where(['!=', 'name', 'Пустая категория'])->all();
-        $employment_types = EmploymentType::find()->all();
+
+        if (!$categories = Yii::$app->cache->get("search_page_categories")) {
+            $categories = Category::find()->select(['id', 'name', 'slug'])->where(['!=', 'name', 'Пустая категория'])->all();
+            Yii::$app->cache->set("search_page_categories", $categories, 3600);
+        }
+        if (!$employment_types = Yii::$app->cache->get("search_page_employment_types")) {
+            $employment_types = EmploymentType::find()->all();
+            Yii::$app->cache->set("search_page_employment_types", $employment_types, 3600);
+        }
+        if (!$countries = Yii::$app->cache->get("search_page_countries")) {
+            $countries = Country::find()->select(['name', 'slug'])->all();
+            Yii::$app->cache->set("search_page_countries", $countries, 3600);
+        }
         $cities = null;
         if($searchModel->current_country)
             $cities = City::find()->joinWith('region')->where([City::tableName().'.status' => 1, Region::tableName().'.country_id' => $searchModel->current_country->id])->orderBy('priority ASC')->all();
-        $countries = Country::find()->all();
+
         return $this->render('search', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
