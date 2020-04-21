@@ -23,7 +23,7 @@ use yii\widgets\LinkPager;
 
 VacancyMetaFormer::registerVacancySearchPageTags($this, $searchModel->current_city, $searchModel->current_category, $searchModel->current_profession, $searchModel->current_country);
 $this->registerLinkTag(['rel'=>'canonical', 'href'=>$canonical_rel]);
-$this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js', ['depends' => [MainAsset::className()]]);
 ?>
 <section class="all-block all-vacancies">
     <img class="all-block__dots2" src="/images/bg-dots.png" alt="Точки" role="presentation"/>
