@@ -34,8 +34,8 @@ class VacancyMetaFormer
                 $title = "Работа $profession->instrumental в $country->name. Вакансии $profession->genitive - $country->name";
                 $description = "Открытые вакансии $profession->genitive в $country->name. Поиск работы $profession->instrumental - $country->name. Свежие вакансии на сегодня.";
             } else {
-                $title = $country->meta_title;
-                $description = $country->meta_description;
+                $title = $country->search_page_title;
+                $description = $country->search_page_description;
             }
         } else {
             if ($city && $category) {
@@ -94,7 +94,7 @@ class VacancyMetaFormer
             } else if ($profession) {
                 $header = "Работа $profession->instrumental в $country->name";
             } else {
-                $header = $country->meta_header;
+                $header = $country->search_page_header;
             }
         }
         if ($city && $category) {
