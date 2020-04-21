@@ -1,6 +1,6 @@
 <?php
 /* @var $employer \common\models\Employer */
-/* @var $current_country \common\models\Country */
+/* @var $countries \common\models\Country[] */
 /* @var $this \yii\web\View */
 
 use common\models\City;
@@ -31,7 +31,7 @@ use yii\helpers\Url;
                     <div class="filter-overlay nav-overlay jsNavOverlay">
                     </div>
                     <nav class="home__nav jsNavMenu">
-                        <a class="home__nav-item home__nav-item_logo" href="<?=$current_country?"/$current_country->slug":"/"?>">
+                        <a class="home__nav-item home__nav-item_logo" href="<?=Yii::$app->request->cookies['country_id']?"/".Yii::$app->request->cookies['country_slug']:"/"?>">
                             <img src="/images/logo-main.png" alt="Логотип rabota.today" role="presentation"/>
                             <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
                         </a>
@@ -40,8 +40,8 @@ use yii\helpers\Url;
                             <img src="/images/geolocation.png" alt="Геолокация">
                             <select class="city-header jsCountryHeaderSelect">
                                 <option></option>
-                                <?php foreach (\common\models\Country::find()->all() as $country):?>
-                                    <option <?= (Yii::$app->request->cookies['country'] == (string)$country->id) ? "selected" : '' ?>
+                                <?php foreach ($countries as $country):?>
+                                    <option <?= (Yii::$app->request->cookies['country_id'] == (string)$country->id) ? "selected" : '' ?>
                                             value="<?= $country->id ?>"><?= $country->name ?></option>
                                 <?php endforeach; ?>
                             </select>

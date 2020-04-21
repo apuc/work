@@ -10,10 +10,13 @@ class SecondHeader extends Widget
 {
     public function run(){
         $employer = \Yii::$app->user->isGuest?null:Employer::find()->where(['user_id'=>\Yii::$app->user->id])->one();
-        $current_country = Country::findOne(Yii::$app->request->cookies['country']);
+        if (!$countries = Yii::$app->cache->get("main_page_countries")) {
+            $countries = Country::find()->select(['id', 'name'])->all();
+            Yii::$app->cache->set("main_page_countries", $countries, 3600);
+        }
         return $this->render('second-header', [
-            'employer'=>$employer,
-            'current_country' => $current_country
+            'employer' => $employer,
+            'countries' => $countries
         ]);
     }
 }
