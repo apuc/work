@@ -114,7 +114,7 @@ class ResumeMetaFormer
 
         $view->title = 'Резюме' . ':' . $resume->employer->second_name . ' ' . $resume->employer->first_name . '- ' . $resume->title . ',' . $resume->city0->name;
 //$view->registerMetaTag(['name'=>'description', 'content' => StringHelper::truncate($resume->description, 100, '...')]);
-        $view->registerMetaTag(['name' => 'description', 'Резюме ' . $resume->employer->second_name . ' ' . $resume->employer->first_name .
+        $view->registerMetaTag(['name' => 'description', 'content' => 'Резюме ' . $resume->employer->second_name . ' ' . $resume->employer->first_name .
             ', на должность ' . $resume->title . '. Опыт работы: ' . $exp . '. ' .
             ' Размещено ' . Yii::$app->formatter->asDate($resume->update_time, 'dd.MM.yyyy')]);
         $view->registerMetaTag(['name' => 'og:title', 'content' => $resume->title]);

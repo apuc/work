@@ -119,7 +119,7 @@ class VacancyMetaFormer
                 '. Размещено ' . Yii::$app->formatter->asDate($vacancy->update_time, 'dd MM yyyy');
         }
         $view->title = $title;
-        $view->registerMetaTag(['name' => 'description', $description]);
+        $view->registerMetaTag(['name' => 'description', 'content' => $description]);
         $view->registerMetaTag(['name' => 'og:title', 'content' => $title]);
         $view->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
         $view->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
