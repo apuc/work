@@ -12,6 +12,7 @@ use common\models\Vacancy;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -23,11 +24,10 @@ class DefaultController extends Controller
 
     public function actionIndex($country_slug=false)
     {
-        if($country = Country::findOne(Yii::$app->request->cookies['country'])) {
-            if($country->slug !== $country_slug)
-                return $this->redirect('/'.$country->slug);
-        }
-        else if ($country_slug!==false)
+        $cookie_country_id = Yii::$app->request->cookies['country_slug'];
+        if($cookie_country_id != $country_slug)
+            return $this->redirect('/'.$cookie_country_id);
+        else if ($country_slug!==false && !$cookie_country_id)
             return $this->redirect('/');
         $current_country = $country_slug?Country::find()->where(['slug'=>$country_slug])->one():null;
         if($country_slug && !$current_country)
@@ -47,7 +47,7 @@ class DefaultController extends Controller
         }
         if (!$countries = Yii::$app->cache->get("main_page_countries")) {
             $countries = Country::find()->select(['id', 'name'])->all();
-            Yii::$app->cache->set("main_page_cities", $cities, 3600);
+            Yii::$app->cache->set("main_page_countries", $countries, 3600);
         }
         if (!$vacancies = Yii::$app->cache->get("main_page_vacancies")) {
             $vacancies = Vacancy::find()->with(['employment_type', 'category', 'company', 'mainCategory', 'city0', 'views0'])->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(10)->orderBy('id DESC')->all();
@@ -72,12 +72,21 @@ class DefaultController extends Controller
 
     public function actionSelectCountry()
     {
-        $value = \Yii::$app->request->post('country');
-        \Yii::$app->response->cookies->add(new \yii\web\Cookie([
-            'name' => 'country',
-            'value' => $value
-        ]));
-        return $value;
+        $country = Country::findOne(Yii::$app->request->post('country'));
+        if(!$country) {
+            \Yii::$app->response->cookies->remove('country_id');
+            \Yii::$app->response->cookies->remove('country_slug');
+        } else {
+            \Yii::$app->response->cookies->add(new \yii\web\Cookie([
+                'name' => 'country_id',
+                'value' => $country->id
+            ]));
+            \Yii::$app->response->cookies->add(new \yii\web\Cookie([
+                'name' => 'country_slug',
+                'value' => $country->slug
+            ]));
+        }
+        return true;
     }
 
     public function actionCity()

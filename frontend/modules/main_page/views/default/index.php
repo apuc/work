@@ -49,7 +49,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                         <select class="city-header jsCountryHeaderSelect">
                             <option></option>
                             <?php foreach ($countries as $country):?>
-                                <option <?= (Yii::$app->request->cookies['country'] == (string)$country->id) ? "selected" : '' ?>
+                                <option <?= (Yii::$app->request->cookies['country_id'] == (string)$country->id) ? "selected" : '' ?>
                                         value="<?= $country->id ?>"><?= $country->name ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -114,7 +114,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             <option></option>
                             <?php /** @var \common\models\City $city */
                             foreach ($countries as $country):?>
-                                <option <?= (Yii::$app->request->cookies['country'] == (string)$country->id) ? "selected" : '' ?>
+                                <option <?= (Yii::$app->request->cookies['country_id'] == (string)$country->id) ? "selected" : '' ?>
                                         value="<?= $country->id ?>"><?= $country->name ?></option>
                             <?php endforeach; ?>
                         </select>

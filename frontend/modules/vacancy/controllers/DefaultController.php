@@ -87,10 +87,10 @@ class DefaultController extends Controller
             $employment_types = EmploymentType::find()->all();
             Yii::$app->cache->set("search_page_employment_types", $employment_types, 3600);
         }
-        if (!$countries = Yii::$app->cache->get("search_page_countries")) {
-            $countries = Country::find()->select(['name', 'slug'])->all();
+        //if (!$countries = Yii::$app->cache->get("search_page_countries")) {
+            $countries = Country::find()->select(['id', 'name', 'slug'])->all();
             Yii::$app->cache->set("search_page_countries", $countries, 3600);
-        }
+        //}
         $cities = null;
         if($searchModel->current_country)
             $cities = City::find()->joinWith('region')->where([City::tableName().'.status' => 1, Region::tableName().'.country_id' => $searchModel->current_country->id])->orderBy('priority ASC')->all();
