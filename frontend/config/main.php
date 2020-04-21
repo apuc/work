@@ -223,18 +223,21 @@ return [
                 '<country_slug:(dnr|lnr)>/professions' => 'main_page/default/professions',
                 'professions' => 'main_page/default/professions',
                 'sitemap.xml' => 'sitemap/index',
+                'other.xml' => 'sitemap/other',
                 'vacancy_<number:\d+>.xml'=>'sitemap/vacancy',
                 'resume_<number:\d+>.xml'=>'sitemap/resume',
                 'company_<number:\d+>.xml'=>'sitemap/company',
                 'city_<number:\d+>.xml'=>'sitemap/city',
                 'category_<number:\d+>.xml'=>'sitemap/category',
                 'profession_<number:\d+>.xml'=>'sitemap/profession',
-                'vacancy/click-phone'=>'vacancy/default/click-phone',
-                'cities_by_country_id'=>'vacancy/default/cities',
                 'city_with_category_<number:\d+>.xml'=>'sitemap/city-with-category',
                 'city_with_profession_<number:\d+>.xml'=>'sitemap/city-with-profession',
+                'country_with_category_<number:\d+>.xml'=>'sitemap/country-with-category',
+                'country_with_profession_<number:\d+>.xml'=>'sitemap/country-with-profession',
                 'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
                 'news/view/<id:\d+>' => 'news/default/view',
+                'vacancy/click-phone'=>'vacancy/default/click-phone',
+                'cities_by_country_id'=>'vacancy/default/cities',
                 [
                     'class' => 'yii\rest\UrlRule', 'controller' =>
                     [
