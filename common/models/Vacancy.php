@@ -5,6 +5,7 @@ namespace common\models;
 use apuc\channels_webhook\behaviors\WebHookBehavior;
 use common\classes\MoneyFormat;
 use common\models\base\WorkActiveRecord;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\View;
@@ -275,8 +276,8 @@ class Vacancy extends WorkActiveRecord
             $url .= "/$city_slug";
         } else if ($country_slug) {
             $url .= "/$country_slug";
-        } else if (\Yii::$app->request->cookies['country'] && $country = Country::findOne(\Yii::$app->request->cookies['country'])) {
-            $url .= "/$country->slug";
+        } else if (Yii::$app->request->cookies['country_slug']) {
+            $url .= "/".Yii::$app->request->cookies['country_slug'];
         }
         if ($category_slug) {
             $url .= "/$category_slug";
