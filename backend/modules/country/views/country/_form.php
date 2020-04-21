@@ -24,6 +24,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'meta_header')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'search_page_title')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'search_page_description')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'search_page_header')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'main_page_text')->widget(CKEditor::className(), [
         'editorOptions' => \mihaildev\elfinder\ElFinder::ckeditorOptions('elfinder', [
             'preset' => 'full',
