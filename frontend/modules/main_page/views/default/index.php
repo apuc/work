@@ -110,12 +110,12 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 <div class="geolocation">
                     <div class="geolocation__block">
                         <img src="/images/geolocation.png" alt="Геолокация">
-                        <select class="city-header jsCityHeaderSelect">
+                        <select class="city-header jsCountryHeaderSelect">
                             <option></option>
                             <?php /** @var \common\models\City $city */
-                            foreach ($cities as $city):?>
-                                <option <?= (Yii::$app->request->cookies['city'] == (string)$city->id) ? "selected" : '' ?>
-                                        value="<?= $city->id ?>"><?= $city->name ?></option>
+                            foreach ($countries as $country):?>
+                                <option <?= (Yii::$app->request->cookies['country'] == (string)$country->id) ? "selected" : '' ?>
+                                        value="<?= $country->id ?>"><?= $country->name ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
