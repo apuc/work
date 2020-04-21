@@ -22,6 +22,9 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
             <ul class="breadcrumbs">
                 <?php if ($model->city0): ?>
                     <li>
+                        <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) ?>"><?= $model->city0->region->country->name ?></a>
+                    </li>
+                    <li>
                         <a href="<?= Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>"><?= $model->city0->name ?></a>
                     </li>
                 <?php endif ?>

@@ -110,7 +110,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 <div class="geolocation">
                     <div class="geolocation__block">
                         <img src="/images/geolocation.png" alt="Геолокация">
-                        <select class="city-header jsCountryHeaderSelect">
+                        <select class="city-header jsCityHeaderSelect">
                             <option></option>
                             <?php /** @var \common\models\City $city */
                             foreach ($countries as $country):?>

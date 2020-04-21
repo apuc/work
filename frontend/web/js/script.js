@@ -416,4 +416,20 @@ if ($('.jsCountryHeaderSelect').length > 0) {
   });
 }
 
+if ($('.jsCityHeaderSelect').length > 0) {
+  $('.jsCityHeaderSelect').select2({
+    placeholder: "Выберите Страну",
+    allowClear: true
+  }).on('change', function () {
+    $.ajax({
+      type: "POST",
+      url: "/main_page/default/select-country",
+      data: {country: $(this).val(), _csrf:$('meta[name=csrf-token]').attr("content")},
+      success: function (result) {
+        window.location.reload();
+      }
+    });
+  });
+}
+
 //# sourceMappingURL=script.js.map
