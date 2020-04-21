@@ -10,7 +10,6 @@ use MatthiasMullie\Minify;
 class MinifyController extends Controller
 {
     public function actionIndex() {
-
         $this->minifyJS(Yii::getAlias("@frontend/web/js/script.js"), Yii::getAlias("@frontend/web/js/script.min.js"));
         $this->minifyJS(Yii::getAlias("@frontend/web/js/resizeSensor.js"), Yii::getAlias("@frontend/web/js/resizeSensor.min.js"));
         $this->minifyJS(Yii::getAlias("@frontend/web/js/resume_search.js"), Yii::getAlias("@frontend/web/js/resume_search.min.js"));
