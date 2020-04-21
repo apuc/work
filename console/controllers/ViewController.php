@@ -11,6 +11,15 @@ use yii\console\Controller;
 
 class ViewController extends Controller
 {
+    public function actionIndexVacancies() {
+        /** @var Vacancy $vacancy */
+        foreach (Vacancy::find()->where(['!=', 'status', 0])->each() as $vacancy) {
+            $vacancy->views += Views::find()->where(['indexed'=>0, 'subject_type'=>'Vacancy', 'subject_id'=>$vacancy->id])->count();
+            $vacancy->save();
+        }
+        Views::updateAll(['indexed'=>1]);
+    }
+
 
     /**
      * Просмотр новых вакансий
