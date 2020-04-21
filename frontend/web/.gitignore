@@ -3,3 +3,14 @@
 /robots.txt
 /node_modules
 /media
+
+/css/back-styles.min.css
+/css/main-style.min.css
+/css/style.min.css
+/js/slick.min.css
+
+/js/script.min.js
+/js/resizeSensor.min.js
+/js/resume_search.min.js
+/js/vacancy_search.min.js
+/js/jquery.sticky-kit.min.js
