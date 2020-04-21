@@ -33,7 +33,7 @@ $this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->
 $this->registerMetaTag(['name'=>'og:description', 'content' => $meta_data['description']]);
 $this->registerLinkTag(['rel'=>'canonical', 'href'=>$canonical_rel]);
 
-$this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['depends' => [MainAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', ['depends' => [MainAsset::className()]]);
 ?>
 
 <section class="all-block all-resume">

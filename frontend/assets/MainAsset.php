@@ -12,20 +12,20 @@ class MainAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $cssFiles = [
-        'css/main_style.css',
-        'css/style.css',
-        'font-awesome-4.7.0/css/font-awesome.css',
+        'css/main_style.min.css',
+        'css/style.min.css',
+        'font-awesome-4.7.0/css/font-awesome.min.css',
         'js/select2/select2.min.css',
         'css/bootstrap-grid.min.css',
-        'js/slick/slick.css',
-        'css/back-styles.css',
+        'js/slick/slick.min.css',
+        'css/back-styles.min.css',
     ];
     public $jsFiles = [
         'js/resizeSensor.js',
-        'js/jquery.sticky-kit.js',
+        'js/jquery.sticky-kit.min.js',
         'js/slick/slick.min.js',
         'js/select2/select2.min.js',
-        'js/script.js',
+        'js/script.min.js',
         'https://vk.com/js/api/openapi.js?165',
     ];
     public $depends = [
