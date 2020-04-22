@@ -1,5 +1,7 @@
 <?php
 /* @var $this View */
+/* @var $searchModel \frontend\modules\resume\classes\ResumeSearch */
+/* @var $dataProvider \yii\data\ActiveDataProvider */
 /* @var $categories Category[] */
 /* @var $tags_id array */
 /* @var $tags \common\models\Skill[] */
@@ -19,21 +21,13 @@ use common\models\Experience;
 use common\models\KeyValue;
 use common\models\Resume;
 use frontend\assets\MainAsset;
+use frontend\modules\resume\classes\ResumeMetaFormer;
 use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
-$meta_data = Resume::getMetaData($city, $current_category);
-$this->title = $meta_data['title'];
-$this->registerMetaTag(['name'=>'description', 'content' => $meta_data['description']]);
-$this->registerMetaTag(['name'=>'og:title', 'content' => $meta_data['title']]);
-$this->registerMetaTag(['name'=>'og:type', 'content' => 'website']);
-$this->registerMetaTag(['name'=>'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-$this->registerMetaTag(['name'=>'og:image', 'content' => Yii::$app->urlManager->hostInfo.'//og_image.jpg']);
-$this->registerMetaTag(['name'=>'og:description', 'content' => $meta_data['description']]);
-$this->registerLinkTag(['rel'=>'canonical', 'href'=>$canonical_rel]);
-
-$this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', ['depends' => [MainAsset::className()]]);
+ResumeMetaFormer::registerResumeSearchPageTags($this, $searchModel->current_city, $searchModel->current_category, $searchModel->current_profession);
+$this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['depends' => [MainAsset::className()]]);
 ?>
 
 <section class="all-block all-resume">
@@ -46,7 +40,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', 
         <div class="container">
             <div class="v-content-top">
                 <div class="home__aside-header">
-                    <h1 class="resume__title"><?=$meta_data['header']?></h1>
+                    <h1 class="resume__title"><?=ResumeMetaFormer::getSearchPageHeader($searchModel->current_city, $searchModel->current_category, $searchModel->current_profession)?></h1>
                     <div class="search"><input type="text" placeholder="Поиск" name="resume_search_text"
                                                <?php if (isset($search_text)): ?>value="<?= $search_text ?>"<?php endif ?>/>
                         <button id="search" class="btn-red"><i class="fa fa-search"></i>
@@ -67,8 +61,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', 
                                 <option></option>
                                 <?php foreach($tags as $tag):?>
                                     <option value="<?=$tag->id?>"
-                                            <?php if(is_array($tags_id)):?>
-                                        <?=in_array($tag->id, $tags_id)?'selected':""?>
+                                            <?php if(is_array($searchModel->tags_id)):?>
+                                        <?=in_array($tag->id, $searchModel->tags_id)?'selected':""?>
                                             <?php endif?>
                                     ><?=$tag->name?></option>
                                 <?php endforeach ?>
@@ -77,7 +71,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', 
                         <div class="vl-block">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <option></option>
-                                <?php $city_id = $city?$city->id:null;?>
+                                <?php $city_id = $searchModel->current_city?$searchModel->current_city->id:null; //$city?$city->id:null;?>
                                 <?php foreach ($cities as $sel_city): ?>
                                     <option <?= $sel_city->id == $city_id ? 'selected' : '' ?> value="<?=$sel_city->slug?>"><?= $sel_city->name ?></option>
                                 <?php endforeach ?>
@@ -89,46 +83,18 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', 
                                 </p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
                             </div>
                             <div class="vl-block__check jsCheckBlock">
-                                <label class="checkbox">
-                                    <input type="checkbox"
-                                           name="experience" data-id="0"
-                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
-                                            <?= in_array(0, $experience_ids)?'checked':''?>
-                                        <?php endif ?>
-                                    />
-                                    <div class="checkbox__text">Без опыта работы
-                                    </div>
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox"
-                                           name="experience" data-id="1"
-                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
-                                            <?= in_array(1, $experience_ids)?'checked':''?>
-                                        <?php endif ?>
-                                    />
-                                    <div class="checkbox__text">От 1 года
-                                    </div>
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox"
-                                           name="experience" data-id="2"
-                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
-                                            <?= in_array(2, $experience_ids)?'checked':''?>
-                                        <?php endif ?>
-                                    />
-                                    <div class="checkbox__text">От 3 лет
-                                    </div>
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox"
-                                           name="experience" data-id="3"
-                                        <?php if(isset($experience_ids) && $experience_ids !== []): ?>
-                                            <?= in_array(3, $experience_ids)?'checked':''?>
-                                        <?php endif ?>
-                                    />
-                                    <div class="checkbox__text">От 5 лет
-                                    </div>
-                                </label>
+
+                                <?php foreach (Resume::$experiences as $key => $experience):?>
+                                    <label class="checkbox">
+                                        <input type="checkbox"
+                                            <?php if(isset($searchModel->experience_ids) && $searchModel->experience_ids !== []): ?>
+                                                <?=in_array($key, $searchModel->experience_ids)?'checked':''?>
+                                            <?php endif ?>
+                                               name="experience" data-id="<?=$key?>"/>
+                                        <div class="checkbox__text"><?=$experience?>
+                                        </div>
+                                    </label>
+                                <?php endforeach ?>
                             </div>
                         </div>
                         <div class="vl-block">
@@ -140,8 +106,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', 
                                 <?php foreach ($categories as $category): ?>
                                     <label class="checkbox">
                                         <input type="checkbox"
-                                            <?php if (isset($category_ids) && $category_ids !== []): ?>
-                                                <?= in_array($category->id, $category_ids) ? 'checked' : '' ?>
+                                            <?php if (isset($searchModel->category_ids) && $searchModel->category_ids !== []): ?>
+                                                <?= in_array($category->id, $searchModel->category_ids) ? 'checked' : '' ?>
                                             <?php endif ?>
                                                name="category" data-slug="<?=$category->slug?>" data-id="<?= $category->id ?>"/>
                                         <div class="checkbox__text"><?= $category->name ?></div>
@@ -158,8 +124,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', 
                                 <?php foreach ($employment_types as $employment_type): ?>
                                     <label class="checkbox">
                                         <input type="checkbox"
-                                            <?php if (isset($employment_type_ids) && $employment_type_ids !== []): ?>
-                                                <?= in_array($employment_type->id, $employment_type_ids) ? 'checked' : '' ?>
+                                            <?php if (isset($searchModel->employment_type_ids) && $searchModel->employment_type_ids !== []): ?>
+                                                <?= in_array($employment_type->id, $searchModel->employment_type_ids) ? 'checked' : '' ?>
                                             <?php endif ?>
                                                name="employment_type" data-id="<?= $employment_type->id ?>"/>
                                         <div class="checkbox__text"><?= $employment_type->name ?></div>
@@ -174,9 +140,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', 
                             </div>
                             <div class="vl-block__inputs jsCheckBlock">
                                 <input type="text" name="min_salary"
-                                       value="<?= isset($min_salary) ? $min_salary : '' ?>"/>
+                                       value="<?= isset($searchModel->min_salary) ? $searchModel->min_salary : '' ?>"/>
                                 <input type="text" name="max_salary"
-                                       value="<?= isset($max_salary) ? $max_salary : '' ?>"/>
+                                       value="<?= isset($searchModel->max_salary) ? $searchModel->max_salary : '' ?>"/>
                             </div>
                         </div>
                         <button class="vl-btn btn-card btn-red jsAccept jsAcceptScroll">Применить
@@ -185,8 +151,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', 
                 </div>
                 <div class="v-content-bottom__center scroll">
                     <?php /** @var Resume $resume */
-                    if ($resumes->models):
-                        foreach ($resumes->models as $resume):?>
+                    if ($dataProvider->models):
+                        foreach ($dataProvider->models as $resume):?>
                             <div class="single-card-resume">
                                 <div class="single-card-resume__top">
                                     <img class="single-card-resume__left-img"
@@ -196,8 +162,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', 
                                     <div class="single-card-resume__top-left">
                                         <div class="single-card-resume__head">
                                             <h3>
-                                                <?php if($category_ids && count($category_ids) === 1):?>
-                                                <a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id, 'referer_category'=>$category_ids[0]])?>">
+                                                <?php if($searchModel->category_ids && count($searchModel->category_ids) === 1):?>
+                                                <a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id, 'referer_category'=>$searchModel->category_ids[0]])?>">
                                                     <?= mb_convert_case ( $resume->title , MB_CASE_TITLE) ?>
                                                 </a>
                                                 <?php else: ?>
@@ -279,7 +245,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.min.js', 
                             </div>
                         <?php endforeach ?>
                         <?= LinkPager::widget([
-                        'pagination' => $resumes->pagination,
+                        'pagination' => $dataProvider->pagination,
                         'options' => ['class' => 'search-pagination'],
                         'maxButtonCount' => 5,
                         'firstPageLabel' => '<<',
