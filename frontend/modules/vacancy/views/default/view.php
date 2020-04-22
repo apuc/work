@@ -21,9 +21,11 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
         <div class="resume-results">
             <ul class="breadcrumbs">
                 <?php if ($model->city0): ?>
-                    <li>
-                        <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) ?>"><?= $model->city0->region->country->name ?></a>
-                    </li>
+                    <?php if (isset($model->city0->region->country)):?>
+                        <li>
+                            <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) ?>"><?= $model->city0->region->country->name ?></a>
+                        </li>
+                    <?php endif;?>
                     <li>
                         <a href="<?= Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>"><?= $model->city0->name ?></a>
                     </li>
