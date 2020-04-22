@@ -177,11 +177,9 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                         <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto($vacancy->mainCategory) ?>" alt="Логотип <?=$vacancy->company->name?>" role="presentation"/>
                         <div class="single-card__top">
                             <div class="single-card__cat-city">
-                                <?php if ($vacancy->mainCategory->name!='Пустая категория'): ?>
-                                    <a class="btn-card btn-card-small btn-gray"
-                                       href="<?= Url::to(["/vacancy/".$vacancy->mainCategory->slug]) ?>"
-                                    ><?= $vacancy->mainCategory->name ?></a>
-                                <?php endif ?>
+                                <a class="btn-card btn-card-small btn-gray" href="<?= Url::to(["/vacancy/".$vacancy->mainCategory->slug]) ?>">
+                                    <?= $vacancy->mainCategory->name ?>
+                                </a>
                                 <?php if ($city = $vacancy->city0): ?>
                                     <a class="d-flex align-items-center home-city"
                                        href="<?= Url::to(["/vacancy/$city->slug"]) ?>">

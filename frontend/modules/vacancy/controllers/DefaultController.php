@@ -86,7 +86,7 @@ class DefaultController extends Controller
         $canonical_rel = Yii::$app->request->hostInfo.'/vacancy'.($searchModel->first_query_param?('/'.$searchModel->first_query_param):'').($searchModel->second_query_param?('/'.$searchModel->second_query_param):'');
 
         if (!$categories = Yii::$app->cache->get("search_page_categories")) {
-            $categories = Category::find()->select(['id', 'name', 'slug'])->where(['!=', 'name', 'Пустая категория'])->all();
+            $categories = Category::find()->select(['id', 'name', 'slug'])->all();
             Yii::$app->cache->set("search_page_categories", $categories, 3600);
         }
         if (!$employment_types = Yii::$app->cache->get("search_page_employment_types")) {
