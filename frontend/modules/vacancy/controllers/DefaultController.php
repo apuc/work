@@ -39,8 +39,14 @@ class DefaultController extends Controller
     {
         /** @var Vacancy $model */
         $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->with('professions')->one();
-        if(!$model)
-            throw new NotFoundHttpException();
+        if(!$model) {
+            $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_INACTIVE])->with('professions')->one();
+            if($model) {
+                Yii::$app->response->setStatusCode(410);
+                throw new NotFoundHttpException();
+            } else
+                throw new NotFoundHttpException();
+        }
         $last_vacancies = Vacancy::find()
             ->where([
                 'status' => Vacancy::STATUS_ACTIVE,
