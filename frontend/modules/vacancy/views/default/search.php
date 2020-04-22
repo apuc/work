@@ -3,11 +3,11 @@
 /* @var $this View */
 /* @var $searchModel \frontend\modules\vacancy\classes\VacancySearch */
 /* @var $dataProvider \yii\data\ActiveDataProvider */
-/* @var $canonical_rel string */
-/* @var $categories Category[] */
-/* @var $tags \common\models\Skill[] */
-/* @var $employment_types EmploymentType[] */
 /* @var $cities City[] */
+/* @var $categories Category[] */
+/* @var $employment_types EmploymentType[] */
+/* @var $countries \common\models\Country[] */
+/* @var $canonical_rel string */
 
 use common\classes\MoneyFormat;
 use common\models\Category;
@@ -21,9 +21,9 @@ use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
 
-VacancyMetaFormer::registerVacancySearchPageTags($this, $searchModel->current_city, $searchModel->current_category, $searchModel->current_profession);
+VacancyMetaFormer::registerVacancySearchPageTags($this, $searchModel->current_city, $searchModel->current_category, $searchModel->current_profession, $searchModel->current_country);
 $this->registerLinkTag(['rel'=>'canonical', 'href'=>$canonical_rel]);
-$this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['depends' => [MainAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js', ['depends' => [MainAsset::className()]]);
 ?>
 <section class="all-block all-vacancies">
     <img class="all-block__dots2" src="/images/bg-dots.png" alt="Точки" role="presentation"/>
@@ -34,7 +34,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
         <div class="container">
             <div class="v-content-top">
                 <div class="home__aside-header">
-                    <h1 class="resume__title"><?=VacancyMetaFormer::getSearchPageHeader($searchModel->current_city, $searchModel->current_category, $searchModel->current_profession)?></h1>
+                    <h1 class="resume__title"><?=VacancyMetaFormer::getSearchPageHeader($searchModel->current_city, $searchModel->current_category, $searchModel->current_profession, $searchModel->current_country)?></h1>
                     <div class="search">
                         <input type="text" name="vacancy_search_text" placeholder="Поиск" value="<?=$searchModel->search_text?>"/>
                         <button class="btn-red" id="search">
@@ -52,12 +52,28 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                     </div>
                     <div class="sidebar-inner">
                         <div class="vl-block">
+                            <select class="vl-block__cities jsCountriesSelect">
+                                <option></option>
+                                <?php if ($searchModel->current_country)
+                                    $country_id = $searchModel->current_country->id;
+                                else if ($searchModel->current_city)
+                                    $country_id = $searchModel->current_city->region->country_id;
+                                else
+                                    $country_id = null; ?>
+                                <?php foreach($countries as $country):?>
+                                    <option <?=$country->id == $country_id?'selected':''?> value="<?=$country->slug?>"><?=$country->name?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <div class="vl-block cities-select-block<?=$cities?'':' hide'?>">
                             <select class="vl-block__cities jsCitiesSelect">
                                 <option></option>
-                                <?php $city_id = $searchModel->current_city?$searchModel->current_city->id:null;?>
-                                <?php foreach($cities as $sel_city):?>
-                                <option <?=$sel_city->id == $city_id?'selected':''?> value="<?=$sel_city->slug?>"><?=$sel_city->name?></option>
-                                <?php endforeach ?>
+                                <?php if($cities): ?>
+                                    <?php $city_id = $searchModel->current_city?$searchModel->current_city->id:null;?>
+                                    <?php foreach($cities as $city):?>
+                                    <option <?=$city->id == $city_id?'selected':''?> value="<?=$city->slug?>"><?=$city->name?></option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </select>
                         </div>
                         <div class="vl-block">
@@ -119,8 +135,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                 </p><span class="jsBtnPlus btn-active">+</span><span class="jsBtnMinus">-</span>
                             </div>
                             <div class="vl-block__inputs jsCheckBlock">
-                                <input type="text" name="min_salary" value="<?=isset($min_salary)?$min_salary:''?>" />
-                                <input type="text" name="max_salary" value="<?=isset($max_salary)?$max_salary:''?>" />
+                                <input type="text" name="min_salary" value="<?=isset($searchModel->min_salary)?$searchModel->min_salary:''?>" />
+                                <input type="text" name="max_salary" value="<?=isset($searchModel->max_salary)?$searchModel->max_salary:''?>" />
                             </div>
                         </div>
                         <button class="vl-btn btn-card btn-red jsAccept jsAcceptScroll">Применить</button>
@@ -166,7 +182,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.js', ['d
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->update_time, 'dd.MM.yyyy') ?></span>
                                 <div class="single-card__view">
                                     <img class="single-card__icon mr5" src="/images/icon-eye.png" alt="Иконка глаз"role="presentation"/>
-                                    <span><?= $vacancy->countViews ?></span>
+                                    <span><?= $vacancy->views ?></span>
                                 </div>
                                 <a class="d-flex align-items-center mt5 mb5" href="<?=Vacancy::getSearchPageUrl(false, $vacancy->city0?$vacancy->city0->slug:false)?>">
                                     <img class="single-card__icon" src="/images/arr-place.png" alt="Стрелка" role="presentation"/>

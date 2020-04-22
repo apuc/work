@@ -17,6 +17,9 @@ use Yii;
  * @property string $main_page_mobile_text Текст на главной странице
  * @property string $main_page_background_image Фоновое изображение главной страницы
  * @property string $main_page_emblem Эмблема главной страницы
+ * @property string $search_page_title Заголовок страницы поиска
+ * @property string $search_page_header H1 страницы поиска
+ * @property string $search_page_description Описание страницы поиска
  *
  * @property Region[] $regions
  */
@@ -37,8 +40,8 @@ class Country extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'slug'], 'required'],
-            [['meta_description', 'main_page_text', 'main_page_mobile_text'], 'string'],
-            [['name', 'slug', 'meta_title', 'meta_header', 'main_page_background_image', 'main_page_emblem'], 'string', 'max' => 255],
+            [['meta_description', 'main_page_text', 'main_page_mobile_text', 'search_page_description'], 'string'],
+            [['name', 'slug', 'meta_title', 'meta_header', 'main_page_background_image', 'main_page_emblem', 'search_page_title', 'search_page_header'], 'string', 'max' => 255],
         ];
     }
 
@@ -58,6 +61,9 @@ class Country extends \yii\db\ActiveRecord
             'main_page_mobile_text' => 'Текст на главной странице для мобильных устройств',
             'main_page_background_image' => 'Фоновое изображение главной страницы',
             'main_page_emblem' => 'Эмблема главной страницы',
+            'search_page_title' => 'Заголовок страницы поиска',
+            'search_page_header' => 'H1 страницы поиска',
+            'search_page_description' => 'Описание страницы поиска',
         ];
     }
 

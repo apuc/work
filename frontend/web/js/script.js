@@ -362,21 +362,21 @@ $(document).ready(function () {
     });
   });
 
-  let btnAcceptTop = $('.jsAcceptScroll').offset().top;
-
-  function btnAcceptScroll() {
-    if (($(window).scrollTop() + $(window).height()) >  (btnAcceptTop - 150)) {
-      $('.jsAcceptScrollFixed').fadeOut(300);
-    } else {
-      $('.jsAcceptScrollFixed').fadeIn(300);
+  if ($('.jsAcceptScroll').length > 0) {
+    let btnAcceptTop = $('.jsAcceptScroll').offset().top;
+    function btnAcceptScroll() {
+      if (($(window).scrollTop() + $(window).height()) >  (btnAcceptTop - 150)) {
+        $('.jsAcceptScrollFixed').fadeOut(300);
+      } else {
+        $('.jsAcceptScrollFixed').fadeIn(300);
+      }
     }
+    btnAcceptScroll();
+    $(window).scroll(function () {
+      btnAcceptScroll();
+    });
   }
 
-  btnAcceptScroll();
-
-  $(window).scroll(function () {
-    btnAcceptScroll();
-  });
 
 });
 
@@ -387,22 +387,49 @@ if ($('.jsCitiesSelect').length > 0) {
   });
 }
 
+if ($('.jsCountriesSelect').length > 0) {
+  $('.jsCountriesSelect').select2({
+    placeholder: "Выберите регион",
+    allowClear: true
+  });
+}
+
 if ($('.jsDutiesSelect').length > 0) {
   $('.jsDutiesSelect').select2({
     placeholder: "Выберите навыки"
   });
 }
 
-if ($('.jsCityHeaderSelect').length > 0) {
-  $('.jsCityHeaderSelect').select2({
-    placeholder: "Выберите город",
+if ($('.jsCountryHeaderSelect').length > 0) {
+  $('.jsCountryHeaderSelect').select2({
+    placeholder: "Выберите Страну",
     allowClear: true
   }).on('change', function () {
     $.ajax({
       type: "POST",
-      url: "/main_page/default/select-city",
-      data: {city: $(this).val(), _csrf:$('meta[name=csrf-token]').attr("content")}
-    });});
+      url: "/main_page/default/select-country",
+      data: {country: $(this).val(), _csrf:$('meta[name=csrf-token]').attr("content")},
+      success: function (result) {
+        window.location.reload();
+      }
+    });
+  });
+}
+
+if ($('.jsCityHeaderSelect').length > 0) {
+  $('.jsCityHeaderSelect').select2({
+    placeholder: "Выберите Страну",
+    allowClear: true
+  }).on('change', function () {
+    $.ajax({
+      type: "POST",
+      url: "/main_page/default/select-country",
+      data: {country: $(this).val(), _csrf:$('meta[name=csrf-token]').attr("content")},
+      success: function (result) {
+        window.location.reload();
+      }
+    });
+  });
 }
 
 //# sourceMappingURL=script.js.map

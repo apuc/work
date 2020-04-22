@@ -12,6 +12,7 @@ use common\models\Vacancy;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -23,8 +24,13 @@ class DefaultController extends Controller
 
     public function actionIndex($country_slug=false)
     {
-        $country = $country_slug?Country::find()->where(['slug'=>$country_slug])->one():null;
-        if($country_slug && !$country)
+        $cookie_country_id = Yii::$app->request->cookies['country_slug'];
+        if($cookie_country_id != $country_slug)
+            return $this->redirect('/'.$cookie_country_id);
+        else if ($country_slug!==false && !$cookie_country_id)
+            return $this->redirect('/');
+        $current_country = $country_slug?Country::find()->where(['slug'=>$country_slug])->one():null;
+        if($country_slug && !$current_country)
             throw new NotFoundHttpException();
         $this->layout = '@frontend/views/layouts/main-page-layout.php';
         if (!$categories = Yii::$app->cache->get("main_page_categories")) {
@@ -38,6 +44,10 @@ class DefaultController extends Controller
         if (!$cities = Yii::$app->cache->get("main_page_cities")) {
             $cities = City::find()->select(['id', 'name', 'slug'])->where(['status' => 1])->orderBy('priority ASC')->all();
             Yii::$app->cache->set("main_page_cities", $cities, 3600);
+        }
+        if (!$countries = Yii::$app->cache->get("main_page_countries")) {
+            $countries = Country::find()->select(['id', 'name'])->all();
+            Yii::$app->cache->set("main_page_countries", $countries, 3600);
         }
         if (!$vacancies = Yii::$app->cache->get("main_page_vacancies")) {
             $vacancies = Vacancy::find()->with(['employment_type', 'category', 'company', 'mainCategory', 'city0', 'views0'])->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(10)->orderBy('id DESC')->all();
@@ -54,19 +64,29 @@ class DefaultController extends Controller
             'vacancies' => $vacancies,
             'employer' => $employer,
             'cities' => $cities,
+            'countries' => $countries,
             'vacancy_count' => $vacancy_count,
-            'country' => $country
+            'current_country' => $current_country
         ]);
     }
 
-    public function actionSelectCity()
+    public function actionSelectCountry()
     {
-        $value = \Yii::$app->request->post('city');
-        \Yii::$app->response->cookies->add(new \yii\web\Cookie([
-            'name' => 'city',
-            'value' => $value
-        ]));
-        return $value;
+        $country = Country::findOne(Yii::$app->request->post('country'));
+        if(!$country) {
+            \Yii::$app->response->cookies->remove('country_id');
+            \Yii::$app->response->cookies->remove('country_slug');
+        } else {
+            \Yii::$app->response->cookies->add(new \yii\web\Cookie([
+                'name' => 'country_id',
+                'value' => $country->id
+            ]));
+            \Yii::$app->response->cookies->add(new \yii\web\Cookie([
+                'name' => 'country_slug',
+                'value' => $country->slug
+            ]));
+        }
+        return true;
     }
 
     public function actionCity()
@@ -79,14 +99,16 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionProfessions()
+    public function actionProfessions($country_slug = null)
     {
         $professions = Professions::find();
+        $country = Country::findOne(['slug'=>$country_slug]);
         if($search_text = Yii::$app->request->get('search_text'))
             $professions->where(['like', 'title', $search_text]);
         $professions = $professions->all();
         return $this->render('professions', [
             'professions' => $professions,
+            'country' => $country
         ]);
     }
 
