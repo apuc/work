@@ -2,12 +2,16 @@
 /* @var $cities_dnr \common\models\City[] */
 /* @var $cities_lug \common\models\City[] */
 
+use common\models\KeyValue;
 use common\models\Vacancy;
 
+
+$this->title = KeyValue::findValueByKey('cities_page_title')?:'Вакансии по городам';
+$this->registerMetaTag(['name' => 'description', 'content' => KeyValue::findValueByKey('cities_page_description')?:'Вакансии по городам']);
 ?>
 <main>
     <div class="container">
-        <h1 class="cities_main_title">Вакансии по городам</h1>
+        <h1 class="cities_main_title"><?=KeyValue::findValueByKey('cities_page_h1')?:'Вакансии по городам'?></h1>
         <img src="images/dotted_line.png" class="title__underline" alt="Пунктирная линия">
 
         <div class="container__parts">
