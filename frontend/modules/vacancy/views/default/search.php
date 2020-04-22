@@ -155,9 +155,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                             <div class="single-card__tr">
                             </div>
                             <div class="single-card__header">
-                                <?php if($vacancy->mainCategory->name !== 'Пустая категория'):?>
                                 <a class="btn-card btn-card-small btn-gray" href="<?=Vacancy::getSearchPageUrl($vacancy->mainCategory->slug)?>"><?= $vacancy->mainCategory->name ?></a>
-                                <?php endif ?>
                                 <?php foreach ($vacancy->category as $category): ?>
                                     <?php if($category->id != $vacancy->main_category_id):?>
                                         <a class="btn-card btn-card-small btn-gray" href="<?=Vacancy::getSearchPageUrl($category->slug)?>"><?= $category->name ?></a>

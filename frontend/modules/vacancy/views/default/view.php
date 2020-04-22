@@ -5,8 +5,6 @@
 
 /* @var $referer_category \common\models\Category */
 
-use common\classes\MoneyFormat;
-use common\models\City;
 use common\models\Vacancy;
 use frontend\modules\vacancy\classes\VacancyMetaFormer;
 use yii\helpers\StringHelper;
@@ -30,7 +28,7 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                         <a href="<?= Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>"><?= $model->city0->name ?></a>
                     </li>
                 <?php endif ?>
-                <?php if ($referer_category && $referer_category->name !== 'Пустая категория'): ?>
+                <?php if ($referer_category): ?>
                     <li>
                         <a href="<?= Vacancy::getSearchPageUrl($referer_category->slug, $model->city0 ? $model->city0->slug : false) ?>"><?= $referer_category->name ?></a>
                     </li>
@@ -48,18 +46,16 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                      alt="<?= $model->company->image_url ? ('Логотив компани ' . $model->company->name) : 'Пустая компания' ?>"
                      role="presentation"/>
                 <div class="single-block__first">
-                    <?php if ($model->mainCategory->name !== 'Пустая категория'): ?>
-                        <div class="category-block">
-                            <a class="btn-card btn-card-small btn-gray"
-                               href="<?= \common\models\Vacancy::getSearchPageUrl($model->mainCategory->slug) ?>"><?= $model->mainCategory->name ?></a>
-                            <?php foreach ($model->category as $category): ?>
-                                <?php if ($category->id != $model->main_category_id): ?>
-                                    <a class="btn-card btn-card-small btn-gray"
-                                       href="<?= \common\models\Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
-                                <?php endif ?>
-                            <?php endforeach ?>
-                        </div>
-                    <?php endif ?>
+                    <div class="category-block">
+                        <a class="btn-card btn-card-small btn-gray"
+                           href="<?= Vacancy::getSearchPageUrl($model->mainCategory->slug) ?>"><?= $model->mainCategory->name ?></a>
+                        <?php foreach ($model->category as $category): ?>
+                            <?php if ($category->id != $model->main_category_id): ?>
+                                <a class="btn-card btn-card-small btn-gray"
+                                   href="<?= Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </div>
                     <span>Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd.MM.yyyy') ?></span>
                     <div class="single-block__view">
                         <img class="single-block__icon mr5" src="/images/icon-eye.png" alt="Иконка глаз"

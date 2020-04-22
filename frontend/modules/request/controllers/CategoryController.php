@@ -18,7 +18,7 @@ class CategoryController extends MyActiveController
             'checkAccess' => [$this, 'checkAccess'],
             'prepareDataProvider' => function(){
                 return new ActiveDataProvider([
-                    'query' => Category::find()->where(['!=', 'name', 'Пустая категория']),
+                    'query' => Category::find(),
                     'pagination' => [
                         'pageSize' =>-1,
                     ],
