@@ -3,13 +3,14 @@
 /* @var $country \common\models\Country */
 
 use common\models\Vacancy;
+use frontend\modules\main_page\classes\MetaFormer;
 use yii\helpers\Html;
 use yii\helpers\Url;
-
+MetaFormer::registerProfessionsPageTags($this, $country);
 ?>
 <main>
     <div class="container">
-        <h1 class="cities_main_title">Профессии</h1>
+        <h1 class="cities_main_title"><?=MetaFormer::getProfessionsPageHeader($this, $country)?></h1>
         <form class="search" style="width: 230px" action="<?=Url::toRoute(['/main_page/default/professions'])?>" method="get">
             <?=Html::textInput('search_text', Yii::$app->request->get('search_text')?:'', ['class'=>'home__form-input'])?>
             <?=Html::submitButton('<i class="fa fa-search" aria-hidden="true"></i>', ['class'=>'btn-red'])?>
