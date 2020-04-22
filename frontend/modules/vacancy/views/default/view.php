@@ -175,6 +175,14 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                         <p class="single-block__conditions-text"><?= nl2br($model->working_conditions) ?></p>
                     </div>
                 <?php endif ?>
+                <div class="profession-block">
+                    <p>Вакансии из других профобластей</p>
+                    <ul>
+                       <?php foreach ($model->professions as $profession): ?>
+                           <li><a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a></li>
+                        <?php endforeach;?>
+                    </ul>
+                </div>
             </div>
             <aside class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">
                 <div class="sidebar-inner">

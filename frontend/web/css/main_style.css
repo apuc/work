@@ -7429,6 +7429,85 @@ main {
     font-size: 16px !important;
 }
 
+.profession-block {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% + 40px);
+    margin-top: 20px;
+    margin-left: -20px;
+    padding: 60px 20px 0;
+    background-color: #f8f8f8;
+}
+
+.profession-block:before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background-color: #f8f8f8;
+}
+
+.profession-block p {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 0 0 40px;
+    color: #0d1566;
+    font-family: "Muller", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.38px;
+}
+
+.profession-block p:before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    display: block;
+    width: 4px;
+    height: 33px;
+    background-color: #dd3d34;
+    border-radius: 2px;
+}
+
+.profession-block ul {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    list-style: none;
+}
+
+.profession-block ul li {
+    margin-right: 15px;
+    margin-bottom: 15px;
+    border-radius: 30px;
+    border: 1px solid #ea9a96;
+    overflow: hidden;
+}
+
+.profession-block ul li:last-child {
+    margin-right: 0;
+}
+
+.profession-block ul li a {
+    display: block;
+    padding: 11px 17px 10px;
+    color: #000000;
+    font-family: "Muller", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.38px;
+    transition: all ease .3s;
+}
+
+.profession-block ul li a:hover {
+    background-color: #ea9a9652;
+}
+
 @media (max-width: 1500px) and (min-width: 576px){
     .home-card.slick-slide {
         height: 200px !important;
