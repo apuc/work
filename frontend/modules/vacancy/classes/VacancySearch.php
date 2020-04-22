@@ -109,7 +109,7 @@ class VacancySearch extends Vacancy
                 throw new NotFoundHttpException();
             }
         } else if ($this->first_query_param) {
-            $this->current_city = City::findOne(['slug'=>$this->first_query_param]);
+            $this->current_city = City::findOne(['slug'=>$this->first_query_param, 'status'=>1]);
             if(!$this->current_city) {
                 if($this->current_category = Category::findOne(['slug'=>$this->first_query_param]))
                     $this->category_ids=[$this->current_category->id];
