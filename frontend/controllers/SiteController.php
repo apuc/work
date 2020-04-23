@@ -35,6 +35,13 @@ class SiteController extends Controller
     }
 
     public function actionAutodeploy() {
+        if(Yii::$app->request->get('test') == 1) {
+            $result = shell_exec("../../deploy.sh");
+            if($result)
+                print_r($result);
+            else
+                echo "Ошибка";
+        }
 //        $oldApp = \Yii::$app;
 //        $newApp = new \yii\console\Application([
 //                'id' => 'Command runner',
@@ -51,11 +58,6 @@ class SiteController extends Controller
         print_r(shell_exec("php /var/www/work.art-craft.xyz/yii send/deploy"));
 //        $params = Yii::$app->request->getBodyParams();
 //        if($params['ref'] === "refs/heads/master") {
-//            $result = shell_exec("../../deploy.sh");
-//            if($result)
-//                print_r($result);
-//            else
-//                echo "Ошибка";
 //        }
     }
     /**
