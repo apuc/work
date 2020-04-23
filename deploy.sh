@@ -1,6 +1,6 @@
 cd /var/www/work.art-craft.xyz/
 #ls -la
-
+echo $USER
 echo "----git status----\n"
 git status
 
