@@ -24,7 +24,9 @@ class SendController extends Controller
     }
 
     public function actionDeploy() {
-        $result = shell_exec("../../deploy.sh");
+        $string = Yii::getAlias("@frontend");
+        $string = str_replace('/frontend', '', $string);
+        $result = shell_exec("$string/deploy.sh");
         if($result)
             print_r($result);
         else
