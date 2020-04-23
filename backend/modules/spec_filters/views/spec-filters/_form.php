@@ -18,8 +18,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'field_name')->dropDownList((new Vacancy())->attributeLabels()); ?>
     <?= $form->field($model, 'sign')->dropDownList(['=' => 'Равно', '<' => 'Меньше', '>' => 'Больше', '<=' => 'Меньше или равно', '>=' => 'Больше или равно']); ?>
     <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'dynamic')->dropDownList(['0' => 'Отключен', '1' => 'Включен',]); ?>
-    <?= $form->field($model, 'status')->dropDownList(['0' => 'Отключен', '1' => 'Включен',]); ?>
+    <?= $form->field($model, 'dynamic')->dropDownList(['Нет', 'Да']); ?>
+    <?= $form->field($model, 'status')->dropDownList(['Отключен', 'Включен']); ?>
     <label class="control-label" for="spec_filters-image">Иконка</label>
     <div class="media__upload_img"><img src="<?= $model->icon; ?>" width="75px"/></div>
     <?=\mihaildev\elfinder\InputFile::widget([

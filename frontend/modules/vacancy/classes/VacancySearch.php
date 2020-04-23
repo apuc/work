@@ -2,6 +2,7 @@
 
 namespace frontend\modules\vacancy\classes;
 
+use common\classes\Debug;
 use common\models\Category;
 use common\models\City;
 use common\models\Country;
@@ -9,6 +10,7 @@ use common\models\EmploymentType;
 use common\models\Professions;
 use common\models\Region;
 use common\models\Skill;
+use common\models\SpecFilters;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -33,6 +35,7 @@ use yii\web\NotFoundHttpException;
  * @property Country|null $current_country
  * @property Category|null $current_category
  * @property Professions|null $current_profession
+ * @property SpecFilters|null $current_spec_filter
  */
 
 class VacancySearch extends Vacancy
@@ -41,7 +44,7 @@ class VacancySearch extends Vacancy
     public $current_country;
     public $current_category;
     public $current_profession;
-    public $city_disable;
+    public $current_spec_filter;
     public $category_ids;
     public $employment_type_ids;
     public $experience_ids;
@@ -54,7 +57,7 @@ class VacancySearch extends Vacancy
     public function rules()
     {
         return [
-            [['min_salary', 'max_salary', 'city_disable'], 'integer'],
+            [['min_salary', 'max_salary'], 'integer'],
             [['category_ids', 'employment_type_ids', 'experience_ids', 'search_text', 'first_query_param', 'second_query_param'], 'string'],
         ];
     }
@@ -104,8 +107,10 @@ class VacancySearch extends Vacancy
             }
             else if($this->current_profession = Professions::findOne(['slug'=>$this->second_query_param])) {
                 $this->search_text = $this->current_profession->title;
+            } else if ($this->current_spec_filter = SpecFilters::findOne(['slug'=>$this->second_query_param])) {
+                $query->andWhere([$this->current_spec_filter->sign, $this->current_spec_filter->field_name, $this->current_spec_filter->value]);
             }
-            if((!$this->current_city && !$this->current_country) || (!$this->current_category && !$this->current_profession)) {
+            if((!$this->current_city && !$this->current_country) || (!$this->current_category && !$this->current_profession && !$this->current_spec_filter)) {
                 throw new NotFoundHttpException();
             }
         } else if ($this->first_query_param) {
@@ -115,8 +120,11 @@ class VacancySearch extends Vacancy
                     $this->category_ids=[$this->current_category->id];
                 else if($this->current_profession = Professions::findOne(['slug'=>$this->first_query_param]))
                     $this->search_text = $this->current_profession->title;
-                else if (!$this->current_country = Country::findOne(['slug'=>$this->first_query_param]))
-                    throw new NotFoundHttpException();
+                else if ($this->current_country = Country::findOne(['slug'=>$this->first_query_param])) {
+
+                } else if ($this->current_spec_filter = SpecFilters::findOne(['slug'=>$this->first_query_param, 'status'=>1])) {
+                    $query->andWhere([$this->current_spec_filter->sign, $this->current_spec_filter->field_name, $this->current_spec_filter->value]);
+                }
             }
         }
         if($this->current_city && !$this->current_country) {
