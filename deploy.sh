@@ -4,6 +4,7 @@ echo $USER
 echo "----git status----\n"
 git status
 
+
 echo "-----git pull-----\n"
 #git add .
 #git commit -m "merge"
