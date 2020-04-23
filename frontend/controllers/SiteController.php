@@ -38,7 +38,7 @@ class SiteController extends Controller
 //        $oldApp = \Yii::$app;
 //        $newApp = new \yii\console\Application([
 //                'id' => 'Command runner',
-//                'basePath' => '@app',
+//                'basePath' => '@app',ff
 //                'components' => [
 //                    'db' => $oldApp->db,
 //                ],
