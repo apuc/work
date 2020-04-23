@@ -24,11 +24,11 @@ class DefaultController extends Controller
 
     public function actionIndex($country_slug=false)
     {
-        $cookie_country_id = Yii::$app->request->cookies['country_slug'];
-        if($cookie_country_id != $country_slug)
-            return $this->redirect('/'.$cookie_country_id);
-        else if ($country_slug!==false && !$cookie_country_id)
-            return $this->redirect('/');
+//        $cookie_country_id = Yii::$app->request->cookies['country_slug'];
+//        if($cookie_country_id != $country_slug)
+//            return $this->redirect('/'.$cookie_country_id);
+//        else if ($country_slug!==false && !$cookie_country_id)
+//            return $this->redirect('/');
         $current_country = $country_slug?Country::find()->where(['slug'=>$country_slug])->one():null;
         if($country_slug && !$current_country)
             throw new NotFoundHttpException();
