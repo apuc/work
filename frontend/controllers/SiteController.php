@@ -46,7 +46,9 @@ class SiteController extends Controller
 //);
 //        $newApp->runAction('send/index');
         //print_r(shell_exec("cd /var/www/work"));
-        print_r(shell_exec("php /var/www/work/yii send/deploy"));
+        $string = Yii::getAlias("@frontend");
+        $string = str_replace('/frontend', '', $string);
+        print_r(shell_exec("php $string/yii send/deploy"));
 //        $params = Yii::$app->request->getBodyParams();
 //        if($params['ref'] === "refs/heads/master") {
 //            $result = shell_exec("../../deploy.sh");
