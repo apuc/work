@@ -23,6 +23,14 @@ class SendController extends Controller
         return ['all', 'id', 'limit'];
     }
 
+    public function actionDeploy() {
+        $result = shell_exec("../../deploy.sh");
+        if($result)
+            print_r($result);
+        else
+            echo "Ошибка";
+    }
+
     public function optionAliases()
     {
         return [
