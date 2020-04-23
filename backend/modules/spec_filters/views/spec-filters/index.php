@@ -1,5 +1,7 @@
 <?php
 
+use common\models\SpecFilters;
+use common\models\Vacancy;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -23,14 +25,42 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'name',
             'slug',
-            'field_name',
-            'sign',
+            [
+                'attribute' => 'field_name',
+                'value' => function($model) {
+                    return (new Vacancy())->attributeLabels()[$model->field_name];
+                },
+                'filter'    => Html::activeDropDownList( $searchModel, 'field_name',
+                    (new Vacancy())->attributeLabels(),
+                    [ 'class' => 'form-control', 'prompt' => '' ] ),
+            ],
+            [
+                'attribute'=>'sign',
+                'filter'    => Html::activeDropDownList( $searchModel, 'sign',
+                    SpecFilters::$signs,
+                    [ 'class' => 'form-control', 'prompt' => '' ] ),
+            ],
             'value',
-            'dynamic',
-            'status',
+            [
+                'attribute'=>'dynamic',
+                'value'=>function($model){
+                    return $model->dynamic==1?"Да":"Нет";
+                },
+                'filter'    => Html::activeDropDownList( $searchModel, 'dynamic',
+                    ['Нет', 'Да'],
+                    [ 'class' => 'form-control', 'prompt' => '' ] ),
+            ],
+            [
+                'attribute'=>'status',
+                'value'=>function($model){
+                    return $model->status==1?"Включен":"Отключен";
+                },
+                'filter'    => Html::activeDropDownList( $searchModel, 'status',
+                    ['Отключен', 'Включен'],
+                    [ 'class' => 'form-control', 'prompt' => '' ] ),
+            ],
             [
                 'attribute'=>'icon',
                 'format'=>'html',
