@@ -14,8 +14,10 @@ class ViewController extends Controller
     public function actionIndexVacancies() {
         /** @var Vacancy $vacancy */
         foreach (Vacancy::find()->where(['!=', 'status', 0])->each() as $vacancy) {
-            $vacancy->views += Views::find()->where(['indexed'=>0, 'subject_type'=>'Vacancy', 'subject_id'=>$vacancy->id])->count();
+            $views = Views::find()->where(['indexed'=>0, 'subject_type'=>'Vacancy', 'subject_id'=>$vacancy->id])->count();
+            $vacancy->views += $views;
             $vacancy->save();
+            echo $vacancy->id . "--->" . $vacancy->post . "---> +" . $views;
         }
         Views::updateAll(['indexed'=>1]);
     }
