@@ -13,8 +13,8 @@ git pull
 echo "-----migrate-----\n"
 php yii migrate --interactive=0
 
-#echo "-----minify-----\n"
-#php yii minify
+echo "-----minify-----\n"
+php yii minify
 
-cd /var/www/work.art-craft.xyz/frontend/web/vue
-sh build.sh
+#cd /var/www/work.art-craft.xyz/frontend/web/vue
+#sh build.sh
