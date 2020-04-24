@@ -7,19 +7,20 @@ namespace console\controllers;
 use common\models\Resume;
 use common\models\Vacancy;
 use common\models\Views;
+use Yii;
 use yii\console\Controller;
+use yii\db\Query;
 
 class ViewController extends Controller
 {
     public function actionIndexVacancies() {
-        /** @var Vacancy $vacancy */
-        foreach (Vacancy::find()->where(['!=', 'status', 0])->each() as $vacancy) {
-            $views = Views::find()->where(['indexed'=>0, 'subject_type'=>'Vacancy', 'subject_id'=>$vacancy->id])->count();
-            $vacancy->views += $views;
-            $vacancy->save();
-            echo $vacancy->id . "--->" . $vacancy->post . "---> +" . $views;
+        $views = (new Query())->from(Views::tableName())->select(['subject_id', 'count(subject_id)'])->where(['subject_type'=>'Vacancy', 'indexed'=>0])->groupBy('subject_id')->all();
+        foreach ($views as $view) {
+            $connection = Yii::$app->getDb();
+            $command = $connection->createCommand("update vacancy set views=views+".$view['count(subject_id)']." where id=1138")->query();
+            echo "ID: ".$view['subject_id'] . "---> +" . $view['count(subject_id)']."\n";
+            Views::updateAll(['indexed'=>1], ['subject_type'=>'Vacancy', 'subject_id'=>$view['subject_id'], 'indexed'=>0]);
         }
-        Views::updateAll(['indexed'=>1]);
     }
 
 
