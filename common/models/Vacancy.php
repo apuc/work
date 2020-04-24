@@ -314,7 +314,7 @@ class Vacancy extends WorkActiveRecord
     public static function getUpdateVacancy($hoursCount = 24, $status = self::STATUS_ACTIVE)
     {
         return self::find()
-            ->where('updated_at > UNIX_TIMESTAMP() - ' . $hoursCount . '*60*60')
+            ->where('update_time > UNIX_TIMESTAMP() - ' . $hoursCount . '*60*60')
             ->andWhere('created_at < UNIX_TIMESTAMP() - ' . $hoursCount . '*60*60')
             ->andWhere(['status' => $status])
             ->all();
