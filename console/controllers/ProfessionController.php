@@ -11,7 +11,7 @@ use yii\console\Controller;
 
 class ProfessionController extends Controller
 {
-    public function actionDefault($get_update_id) {
+    public function actionDefault($get_update_id = 0) {
         foreach (\common\models\Professions::find()->where(['status'=>1])->each() as $profession) {
             $condition = ['or'];
             $condition[]=['like', 'post', $profession->title];
@@ -28,7 +28,7 @@ class ProfessionController extends Controller
             }
             $arr = explode(' ', $profession->title);
             for ($i=0;$i<count($arr);$i++) {
-                if(strlen($arr[$i])>3) {
+                if(mb_strlen($arr[$i])>3) {
                     $condition[]=['like', 'post', $arr[$i]];
                     $condition[]=['like', 'responsibilities', $arr[$i]];
                     $condition[]=['like', 'qualification_requirements', $arr[$i]];
