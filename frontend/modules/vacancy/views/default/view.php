@@ -175,14 +175,16 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                         <p class="single-block__conditions-text"><?= nl2br($model->working_conditions) ?></p>
                     </div>
                 <?php endif ?>
-                <div class="profession-block">
-                    <p>Вакансии из других профобластей</p>
-                    <ul>
-                       <?php foreach ($model->professions as $profession): ?>
-                           <li><a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a></li>
-                        <?php endforeach;?>
-                    </ul>
-                </div>
+                <?php if($model->professions):?>
+                    <div class="profession-block">
+                        <p>Вакансии из других профобластей</p>
+                        <ul>
+                           <?php foreach ($model->professions as $profession): ?>
+                               <li><a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a></li>
+                            <?php endforeach;?>
+                        </ul>
+                    </div>
+                <?php endif ?>
             </div>
             <aside class="single-block__right sidebar-single jsOpenContacts" id="sidebar-single">
                 <div class="sidebar-inner">
@@ -301,12 +303,10 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                                  role="presentation"
                             />
                             <div class="last-vacancy__top">
-                                <?php if ($vacancy->category): ?>
-                                    <div class="last-vacancy__cat-city">
-                                        <a class="btn-card btn-card-small btn-gray"
-                                           href="<?= Vacancy::getSearchPageUrl($vacancy->category[0]->slug) ?>"><?= $vacancy->category[0]->name ?></a>
-                                    </div>
-                                <?php endif ?>
+                                <div class="last-vacancy__cat-city">
+                                    <a class="btn-card btn-card-small btn-gray"
+                                       href="<?= Vacancy::getSearchPageUrl($vacancy->mainCategory->slug) ?>"><?= $vacancy->mainCategory->name ?></a>
+                                </div>
                                 <a class="last-vacancy__title" href="/vacancy/view/<?= $vacancy->id ?>"
                                    title="<?= mb_convert_case($vacancy->post, MB_CASE_TITLE) ?>"><?= mb_convert_case($vacancy->post, MB_CASE_TITLE) ?></a>
                             </div>
@@ -323,7 +323,6 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
     </div>
 </section>
 <script>
-    console.log(123);
     VK.Retargeting.Init('VK-RTRG-443042-1VhMa');
     VK.Retargeting.Event('vacancy_search');
 </script>
