@@ -38,9 +38,9 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         /** @var Vacancy $model */
-        $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->with('professions')->one();
+        $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->with('mainCategory')->one();
         if(!$model) {
-            $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_INACTIVE])->with('professions')->one();
+            $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_INACTIVE])->one();
             if($model) {
                 Yii::$app->response->setStatusCode(410);
                 throw new NotFoundHttpException();
@@ -48,6 +48,7 @@ class DefaultController extends Controller
                 throw new NotFoundHttpException();
         }
         $last_vacancies = Vacancy::find()
+            ->select(['id', 'main_category_id', 'company_id', 'post', 'responsibilities'])
             ->where([
                 'status' => Vacancy::STATUS_ACTIVE,
                 'main_category_id' => $model->main_category_id
@@ -55,6 +56,7 @@ class DefaultController extends Controller
             ->andWhere(['!=', Vacancy::tableName().'.id', $model->id])
             ->andFilterWhere(['city_id'=>$model->city_id])
             ->orderBy('update_time DESC')
+            ->with(['mainCategory', 'company'])
             ->limit(2)
             ->all();
         $referer_category = false;
@@ -69,7 +71,6 @@ class DefaultController extends Controller
         return $this->render('view', [
             'model' => $model,
             'last_vacancies' => $last_vacancies,
-            'view' => $view,
             'referer_category' => $referer_category
         ]);
     }
