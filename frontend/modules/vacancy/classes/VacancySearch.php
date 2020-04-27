@@ -81,7 +81,7 @@ class VacancySearch extends Vacancy
     public function search($params)
     {
         $query = Vacancy::find()
-            ->joinWith(['category', 'company', 'city0', 'mainCategory as mainCategory', 'employment_type'])
+            ->joinWith(['category', 'company', 'city0', 'mainCategory as mainCategory'])
             ->where([Vacancy::tableName().'.status' => Vacancy::STATUS_ACTIVE])
             ->orderBy('update_time DESC')
             ->distinct();
@@ -134,11 +134,11 @@ class VacancySearch extends Vacancy
             $query->joinWith('city0.region');
             $query->andWhere([Region::tableName().'.country_id'=>$this->current_country->id]);
         }
-
-        $query->andFilterWhere([
-                'employment_type.id' => $this->employment_type_ids
-            ])
-            ->andFilterWhere(['>=', 'max_salary', $this->min_salary])
+        if($this->employment_type_ids) {
+            $query->joinWith(['employment_type']);
+            $query->andWhere(['employment_type.id' => $this->employment_type_ids]);
+        }
+        $query->andFilterWhere(['>=', 'max_salary', $this->min_salary])
             ->andFilterWhere(['<=', 'min_salary', $this->max_salary]);
         if($this->category_ids) {
             $query->andWhere(['or', ['IN', 'category.id', $this->category_ids], ['IN', 'main_category_id', $this->category_ids]]);
