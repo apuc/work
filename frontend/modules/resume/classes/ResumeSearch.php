@@ -76,8 +76,8 @@ class ResumeSearch extends Resume
     public function search($params)
     {
         $query = Resume::find()
-            ->with('category')
-            ->where(['status' => Resume::STATUS_ACTIVE])
+            ->joinWith(['category', 'city0', 'employment_type', 'employer'])
+            ->where([Resume::tableName().'.status' => Resume::STATUS_ACTIVE])
             ->orderBy('update_time DESC')
             ->joinWith(['category', 'employment_type', 'skills'])
             ->distinct();
@@ -127,10 +127,11 @@ class ResumeSearch extends Resume
             ->andFilterWhere(['>=', 'max_salary', $this->min_salary])
             ->andFilterWhere(['<=', 'min_salary', $this->max_salary]);
         if ($this->category_ids){
-            $query->andWhere(['or', ['IN', 'category.id', $this->category_ids]]);
+            $query->andWhere(['category.id' => $this->category_ids]);
         }
         if ($this->tags_id){
-            $query->andWhere(['or', ['IN', 'skill.id', $this->tags_id]]);
+            $query->joinWith(['skills']);
+            $query->andWhere(['skill.id' => $this->tags_id]);
         }
         if ($this->current_city)
             $query->andFilterWhere(['city_id' => $this->current_city->id]);
