@@ -82,6 +82,7 @@ class VacancySearch extends Vacancy
     {
         $query = Vacancy::find()
             ->joinWith(['category', 'company', 'city0', 'mainCategory as mainCategory'])
+            ->select(['vacancy.id', 'main_category_id', 'company_id', 'city_id', 'post', 'update_time', 'views', 'min_salary', 'max_salary', 'responsibilities'])
             ->where([Vacancy::tableName().'.status' => Vacancy::STATUS_ACTIVE])
             ->orderBy('update_time DESC')
             ->distinct();
