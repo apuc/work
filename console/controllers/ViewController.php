@@ -37,6 +37,7 @@ class ViewController extends Controller
                 $view->subject_id = $item->id;
                 $view->subject_type = Views::TYPE_VACANCY;
                 $view->dt_view = time();
+                $view->is_real = 0;
                 $view->save();
             }
             echo Views::TYPE_VACANCY . " id: " . $item->id . ", views: " . $viewCount . "\n";
@@ -56,6 +57,7 @@ class ViewController extends Controller
                 $view->subject_id = $item->id;
                 $view->subject_type = Views::TYPE_VACANCY;
                 $view->dt_view = time();
+                $view->is_real = 0;
                 $view->save();
             }
             echo Views::TYPE_VACANCY . " id: " . $item->id . ", views: " . $viewCount . "\n";
@@ -76,6 +78,7 @@ class ViewController extends Controller
                 $view->subject_id = $item->id;
                 $view->subject_type = Views::TYPE_RESUME;
                 $view->dt_view = time();
+                $view->is_real = 0;
                 $view->save();
             }
             echo Views::TYPE_RESUME . " id: " . $item->id . ", views: " . $viewCount . "\n";
@@ -95,6 +98,7 @@ class ViewController extends Controller
                 $view->subject_id = $item->id;
                 $view->subject_type = Views::TYPE_RESUME;
                 $view->dt_view = time();
+                $view->is_real = 0;
                 $view->save();
             }
             echo Views::TYPE_RESUME . " id: " . $item->id . ", views: " . $viewCount . "\n";
