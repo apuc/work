@@ -17,7 +17,7 @@ class ViewController extends Controller
         $views = (new Query())->from(Views::tableName())->select(['subject_id', 'count(subject_id)'])->where(['subject_type'=>'Vacancy', 'indexed'=>0])->groupBy('subject_id')->all();
         foreach ($views as $view) {
             $connection = Yii::$app->getDb();
-            $command = $connection->createCommand("update vacancy set views=views+".$view['count(subject_id)']." where id=1138")->query();
+            $command = $connection->createCommand("update vacancy set views=views+".$view['count(subject_id)']." where id=".$view['subject_id'])->query();
             echo "ID: ".$view['subject_id'] . "---> +" . $view['count(subject_id)']."\n";
             Views::updateAll(['indexed'=>1], ['subject_type'=>'Vacancy', 'subject_id'=>$view['subject_id'], 'indexed'=>0]);
         }
