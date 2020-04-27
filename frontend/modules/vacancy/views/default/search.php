@@ -178,10 +178,12 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                             </div>
                             <div class="single-card__info-second"><span
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->update_time, 'dd.MM.yyyy') ?></span>
-                                <div class="single-card__view">
-                                    <img class="single-card__icon mr5" src="/images/icon-eye.png" alt="Иконка глаз"role="presentation"/>
-                                    <span><?= $vacancy->views ?></span>
-                                </div>
+                                <?php if ($vacancy->views > 0):?>
+                                    <div class="single-card__view">
+                                        <img class="single-card__icon mr5" src="/images/icon-eye.png" alt="Иконка глаз"role="presentation"/>
+                                        <span><?= $vacancy->views ?></span>
+                                    </div>
+                                <?php endif ?>
                                 <a class="d-flex align-items-center mt5 mb5" href="<?=Vacancy::getSearchPageUrl(false, $vacancy->city0?$vacancy->city0->slug:false)?>">
                                     <img class="single-card__icon" src="/images/arr-place.png" alt="Стрелка" role="presentation"/>
                                     <span class="ml5"><?= $vacancy->city0?$vacancy->city0->name:'' ?></span>
