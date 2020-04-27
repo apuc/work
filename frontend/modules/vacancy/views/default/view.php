@@ -60,7 +60,7 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                     <div class="single-block__view">
                         <img class="single-block__icon mr5" src="/images/icon-eye.png" alt="Иконка глаз"
                              role="presentation"/>
-                        <span><?= $model->countViews ?></span>
+                        <span><?= $model->views ?></span>
                     </div>
                     <?php if ($model->city0): ?>
                         <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5"
