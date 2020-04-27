@@ -192,12 +192,14 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             <a href="<?= Url::to(['/vacancy/default/view', 'id' => $vacancy->id]) ?>"
                                class="single-card__title"
                                title="<?= mb_convert_case($vacancy->post, MB_CASE_TITLE) ?>"><?= ucfirst($vacancy->post) ?></a>
-                            <div class="single-card__info-second"><span
-                                        class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd.MM.yyyy, hh:mm') ?></span>
-                                <div class="single-card__view">
-                                    <img class="single-card__icon mr5" src="/images/icon-eye.png" alt="иконка глаз" role="presentation"/>
-                                    <span><?= $vacancy->views ?></span>
-                                </div>
+                            <div class="single-card__info-second">
+                                <span class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd.MM.yyyy, hh:mm') ?></span>
+                                <?php if ($vacancy->views > 0):?>
+                                    <div class="single-card__view">
+                                        <img class="single-card__icon mr5" src="/images/icon-eye.png" alt="иконка глаз" role="presentation"/>
+                                        <span><?= $vacancy->views ?></span>
+                                    </div>
+                                <?php endif ?>
                             </div>
                         </div>
                     </div>
