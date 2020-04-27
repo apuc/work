@@ -196,7 +196,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                                         class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd.MM.yyyy, hh:mm') ?></span>
                                 <div class="single-card__view">
                                     <img class="single-card__icon mr5" src="/images/icon-eye.png" alt="иконка глаз" role="presentation"/>
-                                    <span><?= count($vacancy->views0) ?></span>
+                                    <span><?= $vacancy->views ?></span>
                                 </div>
                             </div>
                         </div>

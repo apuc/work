@@ -50,7 +50,7 @@ class DefaultController extends Controller
             Yii::$app->cache->set("main_page_countries", $countries, 3600);
         }
         if (!$vacancies = Yii::$app->cache->get("main_page_vacancies")) {
-            $vacancies = Vacancy::find()->with(['employment_type', 'category', 'company', 'mainCategory', 'city0', 'views0'])->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(10)->orderBy('id DESC')->all();
+            $vacancies = Vacancy::find()->with(['employment_type', 'company', 'mainCategory', 'city0'])->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(10)->orderBy('id DESC')->all();
             Yii::$app->cache->set("main_page_vacancies", $vacancies, 3600);
         }
         if (!$vacancy_count = Yii::$app->cache->get("main_page_vacancy_count")) {
