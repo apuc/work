@@ -8,7 +8,7 @@ use Yii;
 
 class MetaFormer
 {
-    public static function registerMainPageTags($view, $country=null) {
+    public static function registerMainPageTags($view, Country $country=null) {
         if($country) {
             $title = $country->meta_title?:(KeyValue::findValueByKey('main_page_title') ?: 'Работа: главная');
             $description = $country->meta_description?:KeyValue::findValueByKey('main_page_description');
@@ -23,7 +23,10 @@ class MetaFormer
         $view->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
         $view->registerMetaTag(['name' => 'og:image', 'content' => Yii::$app->urlManager->hostInfo . '/images/og_image.jpg']);
         $view->registerMetaTag(['name' => 'og:description', 'content' => $description]);
-        $view->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo]);
+        if($country)
+            $view->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo.'/'.$country->slug]);
+        else
+            $view->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo]);
     }
 
     /**
