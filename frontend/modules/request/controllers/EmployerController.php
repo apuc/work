@@ -73,7 +73,7 @@ class EmployerController extends MyActiveController
             $result['Vacancy'][]=[
                 'id' => $vacancy->id,
                 'name' => $vacancy->post,
-                'views' => $vacancy->countViews,
+                'views' => $vacancy->views,
                 'responses' => $responses,
                 'click_phone_count' => $vacancy->clickPhoneCount
             ];

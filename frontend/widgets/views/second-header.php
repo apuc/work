@@ -47,9 +47,9 @@ use yii\helpers\Url;
                             </select>
                         </div>
                         <?php if(Yii::$app->controller->uniqueId === "vacancy/default"):?>
-                            <a class="home__nav-item border-top-header" href="<?= Resume::getSearchPageUrl() ?>">Резюме</a>
+                            <a class="home__nav-item border-top-header" href="<?= Vacancy::getSearchPageUrl() ?>">Вакансии</a>
                         <?php else:?>
-                            <a class="home__nav-item border-top-header"" href="<?= Vacancy::getSearchPageUrl() ?>">Вакансии</a>
+                            <a class="home__nav-item border-top-header"" href="<?= Resume::getSearchPageUrl() ?>">Резюме</a>
                         <?php endif?>
                         <?php
                         if (Yii::$app->user->isGuest): ?>

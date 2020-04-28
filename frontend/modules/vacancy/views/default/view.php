@@ -5,8 +5,6 @@
 
 /* @var $referer_category \common\models\Category */
 
-use common\classes\MoneyFormat;
-use common\models\City;
 use common\models\Vacancy;
 use frontend\modules\vacancy\classes\VacancyMetaFormer;
 use yii\helpers\StringHelper;
@@ -21,14 +19,16 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
         <div class="resume-results">
             <ul class="breadcrumbs">
                 <?php if ($model->city0): ?>
-                    <li>
-                        <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) ?>"><?= $model->city0->region->country->name ?></a>
-                    </li>
+                    <?php if (isset($model->city0->region->country)):?>
+                        <li>
+                            <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) ?>"><?= $model->city0->region->country->name ?></a>
+                        </li>
+                    <?php endif;?>
                     <li>
                         <a href="<?= Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>"><?= $model->city0->name ?></a>
                     </li>
                 <?php endif ?>
-                <?php if ($referer_category && $referer_category->name !== 'Пустая категория'): ?>
+                <?php if ($referer_category): ?>
                     <li>
                         <a href="<?= Vacancy::getSearchPageUrl($referer_category->slug, $model->city0 ? $model->city0->slug : false) ?>"><?= $referer_category->name ?></a>
                     </li>
@@ -46,23 +46,21 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                      alt="<?= $model->company->image_url ? ('Логотив компани ' . $model->company->name) : 'Пустая компания' ?>"
                      role="presentation"/>
                 <div class="single-block__first">
-                    <?php if ($model->mainCategory->name !== 'Пустая категория'): ?>
-                        <div class="category-block">
-                            <a class="btn-card btn-card-small btn-gray"
-                               href="<?= \common\models\Vacancy::getSearchPageUrl($model->mainCategory->slug) ?>"><?= $model->mainCategory->name ?></a>
-                            <?php foreach ($model->category as $category): ?>
-                                <?php if ($category->id != $model->main_category_id): ?>
-                                    <a class="btn-card btn-card-small btn-gray"
-                                       href="<?= \common\models\Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
-                                <?php endif ?>
-                            <?php endforeach ?>
-                        </div>
-                    <?php endif ?>
+                    <div class="category-block">
+                        <a class="btn-card btn-card-small btn-gray"
+                           href="<?= Vacancy::getSearchPageUrl($model->mainCategory->slug) ?>"><?= $model->mainCategory->name ?></a>
+                        <?php foreach ($model->category as $category): ?>
+                            <?php if ($category->id != $model->main_category_id): ?>
+                                <a class="btn-card btn-card-small btn-gray"
+                                   href="<?= Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </div>
                     <span>Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd.MM.yyyy') ?></span>
                     <div class="single-block__view">
                         <img class="single-block__icon mr5" src="/images/icon-eye.png" alt="Иконка глаз"
                              role="presentation"/>
-                        <span><?= $model->countViews ?></span>
+                        <span><?= $model->views ?></span>
                     </div>
                     <?php if ($model->city0): ?>
                         <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5"
@@ -175,6 +173,16 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                         <h3 class="single-block__conditions-head">Условия работы:
                         </h3>
                         <p class="single-block__conditions-text"><?= nl2br($model->working_conditions) ?></p>
+                    </div>
+                <?php endif ?>
+                <?php if($model->professions):?>
+                    <div class="profession-block">
+                        <p>Вакансии из других профобластей</p>
+                        <ul>
+                           <?php foreach ($model->professions as $profession): ?>
+                               <li><a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a></li>
+                            <?php endforeach;?>
+                        </ul>
                     </div>
                 <?php endif ?>
             </div>
@@ -295,12 +303,10 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                                  role="presentation"
                             />
                             <div class="last-vacancy__top">
-                                <?php if ($vacancy->category): ?>
-                                    <div class="last-vacancy__cat-city">
-                                        <a class="btn-card btn-card-small btn-gray"
-                                           href="<?= Vacancy::getSearchPageUrl($vacancy->category[0]->slug) ?>"><?= $vacancy->category[0]->name ?></a>
-                                    </div>
-                                <?php endif ?>
+                                <div class="last-vacancy__cat-city">
+                                    <a class="btn-card btn-card-small btn-gray"
+                                       href="<?= Vacancy::getSearchPageUrl($vacancy->mainCategory->slug) ?>"><?= $vacancy->mainCategory->name ?></a>
+                                </div>
                                 <a class="last-vacancy__title" href="/vacancy/view/<?= $vacancy->id ?>"
                                    title="<?= mb_convert_case($vacancy->post, MB_CASE_TITLE) ?>"><?= mb_convert_case($vacancy->post, MB_CASE_TITLE) ?></a>
                             </div>
@@ -317,7 +323,6 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
     </div>
 </section>
 <script>
-    console.log(123);
     VK.Retargeting.Init('VK-RTRG-443042-1VhMa');
     VK.Retargeting.Event('vacancy_search');
 </script>

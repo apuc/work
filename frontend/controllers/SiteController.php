@@ -35,14 +35,30 @@ class SiteController extends Controller
     }
 
     public function actionAutodeploy() {
-        $params = Yii::$app->request->getBodyParams();
-        //if($params['ref'] === "refs/heads/master") {
+        if(Yii::$app->request->get('test') == 1) {
             $result = shell_exec("../../deploy.sh");
             if($result)
                 print_r($result);
             else
                 echo "Ошибка";
-        //}
+        }
+//        $oldApp = \Yii::$app;
+//        $newApp = new \yii\console\Application([
+//                'id' => 'Command runner',
+//                'basePath' => '@app',ff
+//                'components' => [
+//                    'db' => $oldApp->db,
+//                ],
+//                ]
+//);
+//        $newApp->runAction('send/index');
+        //print_r(shell_exec("cd /var/www/work"));
+        $string = Yii::getAlias("@frontend");
+        $string = str_replace('/frontend', '', $string);
+        print_r(shell_exec("php $string/yii send/deploy"));
+//        $params = Yii::$app->request->getBodyParams();
+//        if($params['ref'] === "refs/heads/master") {
+//        }
     }
     /**
      * {@inheritdoc}

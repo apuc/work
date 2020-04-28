@@ -16,6 +16,7 @@ use yii\helpers\ArrayHelper;
  * @property int $dt_view
  * @property string $options
  * @property bool $indexed
+ * @property bool $is_real
  */
 class Views extends \yii\db\ActiveRecord
 {
@@ -37,7 +38,7 @@ class Views extends \yii\db\ActiveRecord
     {
         return [
             [['subject_id', 'viewer_id', 'dt_view'], 'integer'],
-            [['indexed'], 'boolean'],
+            [['indexed', 'is_real'], 'boolean'],
             [['subject_id'], 'required'],
             [['subject_type', 'options'], 'string'],
         ];
@@ -56,6 +57,7 @@ class Views extends \yii\db\ActiveRecord
             'dt_view' => 'Дата просмотра',
             'options' => 'Дополнительно',
             'indexed' => 'Проиндексирован',
+            'is_real' => 'Настоящий',
         ];
     }
 

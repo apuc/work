@@ -38,10 +38,17 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         /** @var Vacancy $model */
-        $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->with('professions')->one();
-        if(!$model)
-            throw new NotFoundHttpException();
+        $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->with('mainCategory')->one();
+        if(!$model) {
+            $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_INACTIVE])->one();
+            if($model) {
+                Yii::$app->response->setStatusCode(410);
+                throw new NotFoundHttpException();
+            } else
+                throw new NotFoundHttpException();
+        }
         $last_vacancies = Vacancy::find()
+            ->select(['id', 'main_category_id', 'company_id', 'post', 'responsibilities'])
             ->where([
                 'status' => Vacancy::STATUS_ACTIVE,
                 'main_category_id' => $model->main_category_id
@@ -49,6 +56,7 @@ class DefaultController extends Controller
             ->andWhere(['!=', Vacancy::tableName().'.id', $model->id])
             ->andFilterWhere(['city_id'=>$model->city_id])
             ->orderBy('update_time DESC')
+            ->with(['mainCategory', 'company'])
             ->limit(2)
             ->all();
         $referer_category = false;
@@ -63,7 +71,6 @@ class DefaultController extends Controller
         return $this->render('view', [
             'model' => $model,
             'last_vacancies' => $last_vacancies,
-            'view' => $view,
             'referer_category' => $referer_category
         ]);
     }
@@ -80,7 +87,7 @@ class DefaultController extends Controller
         $canonical_rel = Yii::$app->request->hostInfo.'/vacancy'.($searchModel->first_query_param?('/'.$searchModel->first_query_param):'').($searchModel->second_query_param?('/'.$searchModel->second_query_param):'');
 
         if (!$categories = Yii::$app->cache->get("search_page_categories")) {
-            $categories = Category::find()->select(['id', 'name', 'slug'])->where(['!=', 'name', 'Пустая категория'])->all();
+            $categories = Category::find()->select(['id', 'name', 'slug'])->all();
             Yii::$app->cache->set("search_page_categories", $categories, 3600);
         }
         if (!$employment_types = Yii::$app->cache->get("search_page_employment_types")) {

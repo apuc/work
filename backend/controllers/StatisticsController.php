@@ -60,14 +60,14 @@ class StatisticsController extends Controller
                     $query = Resume::find()->where(['>', 'created_at', $beginOfDay])->andWhere(['<', 'created_at', $endOfDay]);
                     break;
                 case 3:
-                    $query = Views::find()->where(['>', 'dt_view', $beginOfDay])->andWhere(['<', 'dt_view', $endOfDay])->andWhere(['subject_type'=>'Vacancy']);
+                    $query = Views::find()->where(['>', 'dt_view', $beginOfDay])->andWhere(['<', 'dt_view', $endOfDay])->andWhere(['subject_type'=>'Vacancy', 'is_real'=>1]);
                     if($view_type == 1)
                         $query->andWhere('viewer_id IS NOT NULL');
                     if($view_type == 2)
                         $query->andWhere('viewer_id IS NULL');
                     break;
                 case 4:
-                    $query = Views::find()->where(['>', 'dt_view', $beginOfDay])->andWhere(['<', 'dt_view', $endOfDay])->andWhere(['subject_type'=>'Resume']);
+                    $query = Views::find()->where(['>', 'dt_view', $beginOfDay])->andWhere(['<', 'dt_view', $endOfDay])->andWhere(['subject_type'=>'Resume', 'is_real'=>1]);
                     if($view_type == 1)
                         $query->andWhere('viewer_id IS NOT NULL');
                     if($view_type == 2)

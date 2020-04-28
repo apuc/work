@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Vacancy;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -16,8 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -32,11 +33,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'slug',
-            'field_name',
+            [
+                'attribute' => 'field_name',
+                'value' => function($model) {
+                    return (new Vacancy())->attributeLabels()[$model->field_name];
+                },
+            ],
             'sign',
             'value',
-            'dynamic',
-            'status',
+            [
+                'attribute'=>'dynamic',
+                'value'=>function($model){
+                    return $model->dynamic==1?"Да":"Нет";
+                }
+            ],
+            [
+                'attribute'=>'status',
+                'value'=>function($model){
+                    return $model->status==1?"Включен":"Отключен";
+                }
+            ],
             [
                 'attribute'=>'icon',
                 'format'=>'html',

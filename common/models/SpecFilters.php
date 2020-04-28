@@ -21,8 +21,9 @@ use common\models\base\WorkActiveRecord;
  */
 
 class SpecFilters extends WorkActiveRecord
-
 {
+    public static $signs = ['=', '<', '>', '<=', '>='];
+
     public static function tableName()
     {
         return 'spec_filters';
@@ -44,7 +45,7 @@ class SpecFilters extends WorkActiveRecord
         return [
             'id' => 'ID',
             'slug' => 'Slug',
-            'field_name' => 'Поля имя',
+            'field_name' => 'Имя поля',
             'name' => 'Имя',
             'sign' => 'Знак',
             'value' => 'Значение',

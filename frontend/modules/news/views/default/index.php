@@ -4,14 +4,13 @@
 use common\models\News;
 use yii\helpers\Url;
 
-$this->title = 'Новости';
 ?>
 <section class="news">
     <img class="single-vacancy__dots2" src="/images/bg-dots.png" alt="точки" role="presentation">
     <div class="single-vacancy__circle"></div>
     <div class="container">
         <div class="resume-results">
-            <!--<ul class="breadcrumbs">
+            <ul class="breadcrumbs">
                 <li>
                     <a href="#">Результаты поиска</a>
                 </li>
@@ -19,7 +18,7 @@ $this->title = 'Новости';
                     <a href="#">Помощь</a>
                 </li>
                 <li>База знаний</li>
-            </ul>-->
+            </ul>
         </div>
 
         <div class="single-block single-block-slider">
@@ -28,7 +27,7 @@ $this->title = 'Новости';
                 <div class="news-item">
                     <h2><?=$new->title?></h2>
                     <div class="news-items-img__block">
-                        <img src="<?= $new->img ?>" style="width: 175px;" alt="">
+                        <img src="/images/news_img.png" alt="">
                         <div>
                             <p class="red-line">
                                 <?=$new->description?>
@@ -45,7 +44,7 @@ $this->title = 'Новости';
                         <span class="image-rabota">Работа Донецк</span>
                         <div class="d-flex flex-column ml15">
                             <p>Работа в Донецке</p>
-                            <a href="https://vk.com/rabotad0netsk" target="_blank">https://rabota.today</a>
+                            <a href="/" target="_blank">https://rabota.today</a>
                         </div>
                     </div>
                     <div class="resume-info__soc justify-center">
@@ -60,10 +59,10 @@ $this->title = 'Новости';
 <!--                            <img src="/images/instagram.svg" alt="Иконка instagram" role="presentation"/>-->
 <!--                        </a>-->
                     </div>
-                    <!--<div class="sr-btn">
+                    <div class="sr-btn">
                         <button class="sr-btn__btn btn btn-red">Задать свой вопрос</button>
                         <p class="sr-btn__text">Для срочных вопросов и предлодений</p>
-                    </div>-->
+                    </div>
                     <div class="last-vacancy pc-last-vacancy">
                         <p class="last-vacancy__head">Немного о сайте</p>
                         <div class="last-vacancy__item">
