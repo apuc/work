@@ -26,10 +26,12 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
+        $random = News::find()->orderBy('rand()')->one();
         if(!$model = News::findOne($id))
             throw new NotFoundHttpException();
         return $this->render('view', [
-            'model'=>$model
+            'model'=>$model,
+            'random'=>$random,
         ]);
     }
 }
