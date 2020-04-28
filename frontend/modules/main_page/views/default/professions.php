@@ -1,5 +1,6 @@
 <?php
 /* @var $professions \common\models\Professions[] */
+/* @var $country \common\models\Country */
 
 use common\models\Vacancy;
 use yii\helpers\Html;
@@ -21,7 +22,7 @@ use yii\helpers\Url;
                         <?php
                         $count = count($professions);
                         for ($i=0;$i<ceil($count/2);$i++): ?>
-                            <li><a class="city" href="<?=Vacancy::getSearchPageUrl(false, false, $professions[$i]->slug)?>"><?=$professions[$i]->title?></a></li>
+                            <li><a class="city" href="<?=Vacancy::getSearchPageUrl(false, false, $professions[$i]->slug, $country?$country->slug:false)?>"><?=$professions[$i]->title?></a></li>
                         <?php endfor; ?>
                     </ul>
                 </div>
@@ -31,7 +32,7 @@ use yii\helpers\Url;
                 <div class="cities">
                     <ul>
                         <?php for ($i=ceil($count/2);$i<$count;$i++): ?>
-                            <li><a class="city" href="<?=Vacancy::getSearchPageUrl(false, false, $professions[$i]->slug)?>"><?=$professions[$i]->title?></a></li>
+                            <li><a class="city" href="<?=Vacancy::getSearchPageUrl(false, false, $professions[$i]->slug, $country?$country->slug:false)?>"><?=$professions[$i]->title?></a></li>
                         <?php endfor; ?>
                     </ul>
                 </div>

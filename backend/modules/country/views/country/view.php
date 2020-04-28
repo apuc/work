@@ -33,6 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'meta_title',
             'meta_description:ntext',
             'meta_header',
+            'search_page_title',
+            'search_page_header',
+            'search_page_description',
             [
                 'attribute' => 'main_page_text',
                 'format' => 'html'

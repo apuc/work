@@ -6,9 +6,11 @@ use common\classes\Debug;
 use common\models\Action;
 use common\models\Category;
 use common\models\City;
+use common\models\Country;
 use common\models\EmploymentType;
 use common\models\Message;
 use common\models\Professions;
+use common\models\Region;
 use common\models\Resume;
 use common\models\Skill;
 use common\models\User;
@@ -74,16 +76,35 @@ class DefaultController extends Controller
             $this->background_image = $searchModel->current_city->image;
         if($searchModel->current_category)
             $this->background_emblem = $searchModel->current_category->image;
+
         $canonical_rel = Yii::$app->request->hostInfo.'/vacancy'.($searchModel->first_query_param?('/'.$searchModel->first_query_param):'').($searchModel->second_query_param?('/'.$searchModel->second_query_param):'');
-        $categories = Category::find()->where(['!=', 'name', 'Пустая категория'])->all();
-        $employment_types = EmploymentType::find()->all();
-        $cities = City::find()->where(['status' => 1])->orderBy('priority ASC')->all();
+
+        if (!$categories = Yii::$app->cache->get("search_page_categories")) {
+            $categories = Category::find()->select(['id', 'name', 'slug'])->where(['!=', 'name', 'Пустая категория'])->all();
+            Yii::$app->cache->set("search_page_categories", $categories, 3600);
+        }
+        if (!$employment_types = Yii::$app->cache->get("search_page_employment_types")) {
+            $employment_types = EmploymentType::find()->all();
+            Yii::$app->cache->set("search_page_employment_types", $employment_types, 3600);
+        }
+        if (!$countries = Yii::$app->cache->get("search_page_countries")) {
+            $countries = Country::find()->select(['id', 'name', 'slug'])->all();
+            Yii::$app->cache->set("search_page_countries", $countries, 3600);
+        }
+        $cities = null;
+        if($searchModel->current_country) {
+            if (!$cities = Yii::$app->cache->get("search_page_cities_".$searchModel->current_country->name)) {
+                $cities = City::find()->joinWith('region')->where([City::tableName().'.status' => 1, Region::tableName().'.country_id' => $searchModel->current_country->id])->orderBy('priority ASC')->all();
+                Yii::$app->cache->set("search_page_cities_".$searchModel->current_country->name, $cities, 3600);
+            }
+        }
         return $this->render('search', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'cities' => $cities,
             'categories' => $categories,
             'employment_types' => $employment_types,
+            'countries' => $countries,
             'canonical_rel' => $canonical_rel
         ]);
     }
@@ -137,5 +158,22 @@ class DefaultController extends Controller
         } else {
             throw new HttpException(404, 'Not Found');
         }
+    }
+
+    public function actionCities(){
+        $country_slug = Yii::$app->request->get('slug');
+        $country = Country::find()->where(['slug'=>$country_slug])->one();
+        if($country)
+            $cities = City::find()
+                ->select([City::tableName().'.id', City::tableName().'.slug', City::tableName().'.name', 'region_id'])
+                ->joinWith('region')
+                ->where([City::tableName().'.status' => 1, Region::tableName().'.country_id' => $country->id])
+                ->orderBy('priority ASC')
+                ->all();
+        else
+            return false;
+        return $this->renderAjax('city_select', [
+            'cities' => $cities
+        ]);
     }
 }

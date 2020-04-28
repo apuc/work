@@ -5,6 +5,7 @@ namespace common\models;
 use apuc\channels_webhook\behaviors\WebHookBehavior;
 use common\classes\MoneyFormat;
 use common\models\base\WorkActiveRecord;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\View;
@@ -38,6 +39,7 @@ use yii\web\View;
  * @property integer $main_category_id
  * @property integer $publisher_id
  * @property integer $get_update_id
+ * @property integer $views
  *
  * @property Company $company
  * @property EmploymentType $employment_type
@@ -107,7 +109,7 @@ class Vacancy extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id', 'main_category_id', 'publisher_id', 'get_update_id'], 'integer'],
+            [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id', 'main_category_id', 'publisher_id', 'get_update_id', 'views'], 'integer'],
             [['post', 'education', 'video', 'address', 'home_number'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions', 'description'], 'string'],
             [['company_id', 'post', 'main_category_id'], 'required'],
@@ -148,6 +150,7 @@ class Vacancy extends WorkActiveRecord
             'main_category_id' => 'Главная категория',
             'publisher_id' => 'Опубликовавший',
             'get_update_id' => 'Получить связаные профессии',
+            'views' => 'Количество просмотров',
         ];
     }
 
@@ -268,13 +271,15 @@ class Vacancy extends WorkActiveRecord
      * Получение урл для страницы поиска вакансий, с учётом переданных города и категории. Если город не указывать, будет использован город из cookie
      *
      */
-    public static function getSearchPageUrl($category_slug = false, $city_slug = false, $profession_slug = false)
+    public static function getSearchPageUrl($category_slug = false, $city_slug = false, $profession_slug = false, $country_slug = false)
     {
         $url = "/vacancy";
         if ($city_slug) {
             $url .= "/$city_slug";
-        } else if (\Yii::$app->request->cookies['city'] && $city = City::findOne(\Yii::$app->request->cookies['city'])) {
-            $url .= "/$city->slug";
+        } else if ($country_slug) {
+            $url .= "/$country_slug";
+        } else if (Yii::$app->request->cookies['country_slug']) {
+            $url .= "/".Yii::$app->request->cookies['country_slug'];
         }
         if ($category_slug) {
             $url .= "/$category_slug";

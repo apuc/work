@@ -13,7 +13,7 @@ use common\models\Vacancy;
         <div class="container__parts">
 
             <div class="part">
-                <p class="region">ДНР ( Донецкая Народная Республика )</p>
+                <p class="region"><a href="/vacancy/dnr">Вакансии ДНР</a> ( Донецкая Народная Республика )</p>
                 <div class="cities">
 
                     <ul>
@@ -31,7 +31,7 @@ use common\models\Vacancy;
             </div>
 
             <div class="part">
-                <p class="region">ЛНР ( Луганская Народная Республика )</p>
+                <p class="region"><a href="/vacancy/lnr">Вакансии ЛНР</a> ( Луганская Народная Республика )</p>
                 <div class="cities">
 
                     <ul>

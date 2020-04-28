@@ -5,8 +5,9 @@
 /* @var $professions Professions[] */
 /* @var $vacancies Vacancy[] */
 /* @var $cities City[] */
+/* @var $countries Country[] */
 /* @var $vacancy_count integer */
-/* @var $country Country|false */
+/* @var $current_country Country|false */
 
 /* @var $employer Employer */
 
@@ -24,8 +25,8 @@ use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\web\View;
 
-MetaFormer::registerMainPageTags($this, $country);
-$background_image = $country?('..'.$country->main_page_background_image):'../images/new-home-bg.jpeg';
+MetaFormer::registerMainPageTags($this, $current_country);
+$background_image = $current_country?('..'.$current_country->main_page_background_image):'../images/new-home-bg.jpeg';
 ?>
 
 <div class="nhome">
@@ -37,7 +38,7 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
                 <div class="filter-overlay nav-overlay jsNavOverlay">
                 </div>
                 <nav class="nhome__nav jsNavMenu">
-                    <a class="nhome__nav-item nhome__nav-item_logo" href="/">
+                    <a class="nhome__nav-item nhome__nav-item_logo" href="<?=$current_country?"/$current_country->slug":"/"?>">
                         <img src="/images/logo-main.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo-main-small.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
@@ -45,11 +46,11 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
                     <a class="nhome__nav-item" href="/employer">Работодателю</a>
                     <div class="geolocation">
                         <img src="/images/geolocation.png" alt="Геолокация">
-                        <select class="city-header jsCityHeaderSelect">
+                        <select class="city-header jsCountryHeaderSelect">
                             <option></option>
-                            <?php foreach ($cities as $city):?>
-                                <option <?= (Yii::$app->request->cookies['city'] == (string)$city->id) ? "selected" : '' ?>
-                                        value="<?= $city->id ?>"><?= $city->name ?></option>
+                            <?php foreach ($countries as $country):?>
+                                <option <?= (Yii::$app->request->cookies['country_id'] == (string)$country->id) ? "selected" : '' ?>
+                                        value="<?= $country->id ?>"><?= $country->name ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -112,9 +113,9 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
                         <select class="city-header jsCityHeaderSelect">
                             <option></option>
                             <?php /** @var \common\models\City $city */
-                            foreach ($cities as $city):?>
-                                <option <?= (Yii::$app->request->cookies['city'] == (string)$city->id) ? "selected" : '' ?>
-                                        value="<?= $city->id ?>"><?= $city->name ?></option>
+                            foreach ($countries as $country):?>
+                                <option <?= (Yii::$app->request->cookies['country_id'] == (string)$country->id) ? "selected" : '' ?>
+                                        value="<?= $country->id ?>"><?= $country->name ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -127,15 +128,15 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
         </div>
         <div class="nhome__main-bottom">
             <img class="nhome__main-big-circle" src="/images/home-big-circle.png" alt="Круг" role="presentation"/>
-            <?php if($country):?>
-                <img class="nhome__main-gerb" src="<?=$country->main_page_emblem?>" role="presentation"/>
+            <?php if($current_country):?>
+                <img class="nhome__main-gerb" src="<?=$current_country->main_page_emblem?>" role="presentation"/>
             <?php else:?>
                 <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="Герб Донецка" role="presentation"/>
             <?php endif ?>
-            <h1 class="<?=$country?'nhome__custom-title':'nhome__title'?>"><?=$country?$country->meta_header:"Работа"?></h1>
+            <h1 class="<?=$current_country?'nhome__custom-title':'nhome__title'?>"><?=$current_country?$current_country->meta_header:"Работа"?></h1>
             <div class="nhome__desc desc-pc">
-                <?php if ($country):?>
-                    <?=$country->main_page_text?>
+                <?php if ($current_country):?>
+                    <?=$current_country->main_page_text?>
                 <?php else:?>
                 Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из <a class="yellow-text"
                                                                    href="<?= Vacancy::getSearchPageUrl() ?>">2000+
@@ -150,8 +151,8 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
             <!--googleoff: all-->
             <!--noindex-->
             <div class="nhome__desc desc-mob">
-                <?php if ($country):?>
-                    <?=$country->main_page_mobile_text?>
+                <?php if ($current_country):?>
+                    <?=$current_country->main_page_mobile_text?>
                 <?php else:?>
                 Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из 2000+ вакансий и 500+ компаний ДНР и ЛНР!<br>
                 <a class="yellow-text" href="/">Поиск работы в ДНР и ЛНР - это rabota.today.</a>
@@ -268,7 +269,11 @@ $background_image = $country?('..'.$country->main_page_background_image):'../ima
             <?php foreach ($professions as $profession):?>
                 <a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a>
             <?php endforeach; ?>
-            <a href="<?=Url::toRoute(['/main_page/default/professions'])?>">все профессии</a>
+            <?php if($current_country):?>
+                <a href="<?=Url::toRoute(["/$current_country->slug/professions"])?>">все профессии</a>
+            <?php else:?>
+                <a href="<?=Url::toRoute(['/main_page/default/professions'])?>">все профессии</a>
+            <?php endif ?>
         </div>
     </div>
     <div class="nhome__circle"></div>

@@ -19,6 +19,7 @@ $(document).ready(function(){
         var max_salary = $("input[name='max_salary']");
         var search_text = $("input[name='vacancy_search_text']");
         var jsCitiesSelect = $(".jsCitiesSelect");
+        var jsCountriesSelect = $(".jsCountriesSelect");
         var jsDutiesSelect = $(".jsDutiesSelect");
         var href="/vacancy";
         var question_mark=false;
@@ -43,7 +44,27 @@ $(document).ready(function(){
                     and=true;
                 href+="category_ids=" + JSON.stringify(categoryIds);
             }
-        } else if(categories.length === 1) {
+        } else if(jsCountriesSelect.val()) {
+            if(categories.length === 1) {
+                href+="/"+jsCountriesSelect.val();
+                href+="/"+categories[0].getAttribute('data-slug');
+            }
+            else if(categories.length === 0) {
+                href+="/"+jsCountriesSelect.val();
+            }
+            else {
+                href+="/"+jsCountriesSelect.val();
+                if(!question_mark){
+                    question_mark=true;
+                    href+="?";
+                }
+                if(and)
+                    href+="&";
+                else
+                    and=true;
+                href+="category_ids=" + JSON.stringify(categoryIds);
+            }
+        }else if(categories.length === 1) {
             href+="/"+categories[0].getAttribute('data-slug');
         } else if(categories.length > 1) {
             if(!question_mark){
@@ -55,17 +76,6 @@ $(document).ready(function(){
             else
                 and=true;
             href+="category_ids=" + JSON.stringify(categoryIds);
-        }
-        if(!jsCitiesSelect.val()) {
-            if(!question_mark){
-                question_mark=true;
-                href+="?";
-            }
-            if(and)
-                href+="&";
-            else
-                and=true;
-            href+="city_disable=1";
         }
         if(search_text.val()){
             if(!question_mark){
@@ -99,17 +109,6 @@ $(document).ready(function(){
             else
                 and=true;
             href+="employment_type_ids=" + JSON.stringify(employment_typeIds);
-        }
-        if(jsDutiesSelect.val().length>0){
-            if(!question_mark){
-                question_mark=true;
-                href+="?";
-            }
-            if(and)
-                href+="&";
-            else
-                and=true;
-            href+="tags_id=" + JSON.stringify(jsDutiesSelect.val());
         }
         if(min_salary.val()){
             if(!question_mark){
@@ -151,5 +150,22 @@ $(document).ready(function(){
         if (eventObject.keyCode == 13){
             search();
         }
+    });
+    $('.jsCountriesSelect').change(function(){
+        $.ajax({
+            type: "GET",
+            url: "/cities_by_country_id",
+            data: {slug: $(this).val(), _csrf:$('meta[name=csrf-token]').attr("content")},
+            success: function (result) {
+                $('.cities-select-block').html(result);
+                $('.cities-select-block').removeClass('hide');
+                if ($('.jsCitiesSelect').length > 0) {
+                    $('.jsCitiesSelect').select2({
+                        placeholder: "Выберите город",
+                        allowClear: true
+                    });
+                }
+            }
+        });
     });
 });

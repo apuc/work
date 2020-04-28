@@ -93,3 +93,7 @@
 .professions_search_input {
 
 }
+
+.geolocation .geolocation__block .select2-container {
+  width: 200px !important;
+}

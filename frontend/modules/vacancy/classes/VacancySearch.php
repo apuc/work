@@ -4,8 +4,10 @@ namespace frontend\modules\vacancy\classes;
 
 use common\models\Category;
 use common\models\City;
+use common\models\Country;
 use common\models\EmploymentType;
 use common\models\Professions;
+use common\models\Region;
 use common\models\Skill;
 use Yii;
 use yii\base\Model;
@@ -28,6 +30,7 @@ use yii\web\NotFoundHttpException;
  * @property string $second_query_param
  *
  * @property City|null $current_city
+ * @property Country|null $current_country
  * @property Category|null $current_category
  * @property Professions|null $current_profession
  */
@@ -35,6 +38,7 @@ use yii\web\NotFoundHttpException;
 class VacancySearch extends Vacancy
 {
     public $current_city;
+    public $current_country;
     public $current_category;
     public $current_profession;
     public $city_disable;
@@ -74,10 +78,9 @@ class VacancySearch extends Vacancy
     public function search($params)
     {
         $query = Vacancy::find()
-            ->with(['category', 'company'])
-            ->where(['status' => Vacancy::STATUS_ACTIVE])
+            ->joinWith(['category', 'company', 'city0', 'mainCategory as mainCategory', 'employment_type'])
+            ->where([Vacancy::tableName().'.status' => Vacancy::STATUS_ACTIVE])
             ->orderBy('update_time DESC')
-            ->joinWith(['category', 'employment_type'])
             ->distinct();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -94,13 +97,15 @@ class VacancySearch extends Vacancy
         $this->experience_ids = json_decode($this->experience_ids);
         if($this->second_query_param) {
             $this->current_city = City::findOne(['slug'=>$this->first_query_param]);
+            if(!$this->current_city)
+                $this->current_country = Country::findOne(['slug'=>$this->first_query_param]);
             if($this->current_category = Category::findOne(['slug'=>$this->second_query_param])) {
                 $this->category_ids = [$this->current_category->id];
             }
             else if($this->current_profession = Professions::findOne(['slug'=>$this->second_query_param])) {
                 $this->search_text = $this->current_profession->title;
             }
-            if(!$this->current_city || (!$this->current_category && !$this->current_profession)) {
+            if((!$this->current_city && !$this->current_country) || (!$this->current_category && !$this->current_profession)) {
                 throw new NotFoundHttpException();
             }
         } else if ($this->first_query_param) {
@@ -110,12 +115,17 @@ class VacancySearch extends Vacancy
                     $this->category_ids=[$this->current_category->id];
                 else if($this->current_profession = Professions::findOne(['slug'=>$this->first_query_param]))
                     $this->search_text = $this->current_profession->title;
-                else
+                else if (!$this->current_country = Country::findOne(['slug'=>$this->first_query_param]))
                     throw new NotFoundHttpException();
             }
         }
-        if(!$this->current_city && !$this->city_disable)
-            $this->current_city = City::findOne(Yii::$app->request->cookies['city']);
+        if($this->current_city && !$this->current_country) {
+            $this->current_country = $this->current_city->region->country;
+        }
+        if(!$this->current_city && $this->current_country) {
+            $query->joinWith('city0.region');
+            $query->andWhere([Region::tableName().'.country_id'=>$this->current_country->id]);
+        }
 
         $query->andFilterWhere([
                 'employment_type.id' => $this->employment_type_ids
