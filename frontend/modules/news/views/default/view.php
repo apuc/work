@@ -24,13 +24,7 @@ $this->title = $model->title;
         <div class="news-view__block">
             <h2><?=$model->title?></h2>
             <div class="news-view__block-text">
-                <img src="<?=$model->img?>" alt="">
-                <p class="red-line">
-                <?=$model->description?>
-                </p>
-                <p>
-                    <?=$model->content?>
-                </p>
+                <?=$model->content?>
             </div>
         </div>
         <div class="news-view__interesting">
