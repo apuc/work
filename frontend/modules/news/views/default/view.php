@@ -1,10 +1,8 @@
 <?php
 /** @var News $model */
-/** @var News $random */
 
 use common\models\News;
-use yii\helpers\Url;
-$this->title = $model->title;
+
 ?>
 <section class="news-view">
     <img class="single-vacancy__dots2" src="/images/bg-dots.png" alt="точки" role="presentation">
@@ -13,23 +11,49 @@ $this->title = $model->title;
         <div class="resume-results">
             <ul class="breadcrumbs">
                 <li>
-                    <a href="<?=Url::to('/news/')?>">Все новости</a>
+                    <a href="#">Результаты поиска</a>
                 </li>
-                <!--<li>
+                <li>
                     <a href="#">Помощь</a>
-                </li>-->
-                <li><?=$model->title?></li>
+                </li>
+                <li>База знаний</li>
             </ul>
         </div>
         <div class="news-view__block">
             <h2><?=$model->title?></h2>
             <div class="news-view__block-text">
-                <img src="<?=$model->img?>" alt="">
+                <img src="/images/news_image.png" alt="">
                 <p class="red-line">
-                <?=$model->description?>
+                    Власти и работодатели предпринимают меры по недопущению распространению
+                    коронавируса, в том числе переводят работников на дистанционную работу.
                 </p>
                 <p>
-                    <?=$model->content?>
+                    Коронавирус COVID-2019 (2019-nCoV) охватил около двухсот стран мира и дошел и
+                    до России. Граждане вынуждены уходить на карантин, работодатели частично переводят
+                    работников на работу дистанционно. Однако не все знают о своих правах. Вправе ли работник
+                    требовать перевода на работу дистанционно из-за опасности заразиться коронавирусом и
+                    вправе ли работодатель перевести его на дистанционную работу?
+                </p>
+                <p>
+                    Коронавирус COVID-2019 (2019-nCoV) охватил около двухсот стран мира и дошел и
+                    до России. Граждане вынуждены уходить на карантин, работодатели частично переводят
+                    работников на работу дистанционно. Однако не все знают о своих правах. Вправе ли работник
+                    требовать перевода на работу дистанционно из-за опасности заразиться коронавирусом и
+                    вправе ли работодатель перевести его на дистанционную работу?
+                    Коронавирус COVID-2019 (2019-nCoV) охватил около двухсот стран мира и дошел и
+                    до России. Граждане вынуждены уходить на карантин, работодатели частично переводят
+                    работников на работу дистанционно. Однако не все знают о своих правах. Вправе ли работник
+                    требовать перевода на работу дистанционно из-за опасности заразиться коронавирусом и
+                </p>
+                <p>
+                    Региональные и местные власти также издали нормативные предписания по профилактике коронавирусной инфекции 2019-nCoV. Так, в Москве работодателей обязали
+                    не допускать на рабочее место и территорию организации работников и прибывших из стран, где выявлены случаи заболевания (Китай, Южная Корея, Италия, Иран, Франция,
+                    Германия, Испания, Сербия и др.), и тех, в отношении кого введен режим изоляции.
+                </p>
+                <p>
+                    В Кирове руководителям предприятий и организаций порекомендовали обеспечить проведение утреннего мониторинга основных параметров состояния здоровья
+                    работников. В Нижегородской области помимо рекомендаций, содержащихся в письме Роспотребнадзора, предложено приостановить в предприятиях торговли реализацию
+                    салатов, кулинарной продукции и других готовых блюд по системе самообслуживания.
                 </p>
             </div>
         </div>
@@ -37,14 +61,19 @@ $this->title = $model->title;
             <h2>Вам может быть интересно</h2>
             <div class="news-view__interesting-block">
                 <div class="news-item">
-                    <h2><?=$random->title?></h2>
+                    <h2>Удаленная работа: как выстроить все процессы</h2>
                     <div class="news-items-img__block">
-                        <img src="<?=$random->img?>" style="width: 250px;" alt="">
+                        <img src="/images/news_img.png" alt="">
                         <div>
                             <p class="red-line">
-                                <?=$random->description?>
+                                Мы понимаем, какая нагрузка лежит сейчас на каждом отделе персонала .
+                                Если вы тоже занимаетесь переводом сотрудников на удаленку, предлагаем
+                                регулярно обмениваться опытом в формате открытых бесплатных вебинаров.
+                                На них мы обсудим все технические и юридические аспекты, Если вы тоже
+                                занимаетесь переводом сотрудников на удаленку, предлагаем регулярно
+                                опытом
                             </p>
-                            <a href="<?=Url::to(['/news/default/view', 'id'=>$random->id])?>">Читать полностью</a>
+                            <a href="/news/default/view">Читать полностью</a>
                         </div>
                     </div>
                 </div>
@@ -53,20 +82,20 @@ $this->title = $model->title;
                         <span class="image-rabota">Работа Донецк</span>
                         <div class="d-flex flex-column ml15">
                             <p>Работа в Донецке</p>
-                            <a href="https://vk.com/rabotad0netsk" target="_blank">https://rabota.today</a>
+                            <a href="/" target="_blank">https://rabota.today</a>
                         </div>
                     </div>
                     <div class="resume-info__soc justify-center">
                         <p>Написать компании в сетях</p>
-                        <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/rabotad0netsk">
+                        <a class="vk-bg" rel="nofollow" target="_blank" href="#">
                             <img src="/images/vk.svg" alt="Иконка VK" role="presentation"/>
                         </a>
-                        <!--                        <a class="fb-bg" rel="nofollow" target="_blank" href="#">-->
-                        <!--                            <img src="/images/fb.svg" alt="Иконка facebook" role="presentation"/>-->
-                        <!--                        </a>-->
-                        <!--                        <a class="inst-bg" rel="nofollow" target="_blank" href="#">-->
-                        <!--                            <img src="/images/instagram.svg" alt="Иконка instagram" role="presentation"/>-->
-                        <!--                        </a>-->
+                        <a class="fb-bg" rel="nofollow" target="_blank" href="#">
+                            <img src="/images/fb.svg" alt="Иконка facebook" role="presentation"/>
+                        </a>
+                        <a class="inst-bg" rel="nofollow" target="_blank" href="#">
+                            <img src="/images/instagram.svg" alt="Иконка instagram" role="presentation"/>
+                        </a>
                     </div>
                 </div>
             </div>
