@@ -2,7 +2,9 @@
 
 namespace frontend\modules\news\controllers;
 
+use common\classes\Debug;
 use common\models\News;
+use yii\db\Expression;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -24,12 +26,19 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionView($id)
     {
+        $random = News::find()->orderBy('rand()')->one();
         if(!$model = News::findOne($id))
             throw new NotFoundHttpException();
         return $this->render('view', [
-            'model'=>$model
+            'model'=>$model,
+            'random'=>$random,
         ]);
     }
 }
