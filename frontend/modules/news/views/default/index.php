@@ -27,7 +27,7 @@ use yii\helpers\Url;
                 <div class="news-item">
                     <h2><?=$new->title?></h2>
                     <div class="news-items-img__block">
-                        <img src="/images/news_img.png" alt="">
+                        <img src="<?=$new->img?>" alt="">
                         <div>
                             <p class="red-line">
                                 <?=$new->description?>
