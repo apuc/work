@@ -7330,6 +7330,7 @@ main {
 
 .news-items-img__block img {
     margin-right: 20px;
+    width: 30%;
 }
 
 .news-view__block {
