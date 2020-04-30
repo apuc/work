@@ -86,7 +86,7 @@ class DefaultController extends Controller
                 'value' => $country->slug
             ]));
         }
-        return true;
+        return $country?$country->slug:false;
     }
 
     public function actionCity()
