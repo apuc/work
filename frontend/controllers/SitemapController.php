@@ -467,6 +467,11 @@ class SitemapController extends Controller
                     'changefreq' => 'daily',
                     'priority' => 0.9,
                 ];
+                $urls[] = [
+                    'loc' => "$host/$country->slug",
+                    'changefreq' => 'daily',
+                    'priority' => 1.0,
+                ];
             }
 
             $xml_sitemap = $this->renderPartial('urlset', [
