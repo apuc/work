@@ -36,16 +36,6 @@ use yii\helpers\Url;
                             <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
                         </a>
                         <a class="home__nav-item" href="/employer">Работодателю</a>
-                        <div class="geolocation">
-                            <img src="/images/geolocation.png" alt="Геолокация">
-                            <select class="city-header jsCountryHeaderSelect">
-                                <option></option>
-                                <?php foreach ($countries as $country):?>
-                                    <option <?= (Yii::$app->request->cookies['country_id'] == (string)$country->id) ? "selected" : '' ?>
-                                            value="<?= $country->id ?>"><?= $country->name ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
                         <?php if(Yii::$app->controller->uniqueId === "vacancy/default"):?>
                             <a class="home__nav-item border-top-header" href="<?= Vacancy::getSearchPageUrl() ?>">Вакансии</a>
                         <?php else:?>
