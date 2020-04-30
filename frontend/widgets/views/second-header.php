@@ -1,6 +1,5 @@
 <?php
 /* @var $employer \common\models\Employer */
-/* @var $countries \common\models\Country[] */
 /* @var $this \yii\web\View */
 
 use common\models\City;
