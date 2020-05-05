@@ -138,14 +138,14 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 <?php if ($current_country):?>
                     <?=$current_country->main_page_text?>
                 <?php else:?>
-                Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из <a class="yellow-text"
+                Сайт поиска работы №1. Выбирайте из <a class="yellow-text"
                                                                    href="<?= Vacancy::getSearchPageUrl() ?>">2000+
-                    вакансий</a> и 500+ компаний ДНР и ЛНР!<br>
+                    вакансий</a> и 500+ компаний!<br>
                 <a class="yellow-text" href="/personal-area/add-resume">Разместите резюме</a> и получите приглашения на
                 работу от лучших работодателей.<br>
                 Размещение вакансий и резюме - бесплатно.
                 Размести сегодня - улучши качество жизни завтра!<br>
-                Поиск работы в ДНР и ЛНР - это <a class="yellow-text" href="/">rabota.today.</a>
+                Поиск работы - это <a class="yellow-text" href="/">rabota.today.</a>
                 <?php endif ?>
             </div>
             <!--googleoff: all-->
@@ -154,8 +154,8 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 <?php if ($current_country):?>
                     <?=$current_country->main_page_mobile_text?>
                 <?php else:?>
-                Сайт поиска работы №1 в ДНР и ЛНР. Выбирайте из 2000+ вакансий и 500+ компаний ДНР и ЛНР!<br>
-                <a class="yellow-text" href="/">Поиск работы в ДНР и ЛНР - это rabota.today.</a>
+                Сайт поиска работы №1. Выбирайте из 2000+ вакансий и 500+ компаний!<br>
+                <a class="yellow-text" href="/">Поиск работы - это rabota.today.</a>
                 <?php endif ?>
             </div>
             <!--googleoff: all-->
