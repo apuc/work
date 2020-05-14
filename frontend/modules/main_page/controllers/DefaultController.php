@@ -46,7 +46,7 @@ class DefaultController extends Controller
             Yii::$app->cache->set("main_page_cities", $cities, 3600);
         }
         if (!$countries = Yii::$app->cache->get("main_page_countries")) {
-            $countries = Country::find()->select(['id', 'name'])->all();
+            $countries = Country::find()->select(['id', 'name', 'slug'])->all();
             Yii::$app->cache->set("main_page_countries", $countries, 3600);
         }
         if (!$vacancies = Yii::$app->cache->get("main_page_vacancies")) {
@@ -86,7 +86,7 @@ class DefaultController extends Controller
                 'value' => $country->slug
             ]));
         }
-        return true;
+        return $country?$country->slug:false;
     }
 
     public function actionCity()

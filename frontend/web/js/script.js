@@ -410,7 +410,7 @@ if ($('.jsCountryHeaderSelect').length > 0) {
       url: "/main_page/default/select-country",
       data: {country: $(this).val(), _csrf:$('meta[name=csrf-token]').attr("content")},
       success: function (result) {
-        window.location.reload();
+        window.location.replace('/'+result);
       }
     });
   });
