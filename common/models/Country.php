@@ -20,6 +20,10 @@ use Yii;
  * @property string $search_page_title Заголовок страницы поиска
  * @property string $search_page_header H1 страницы поиска
  * @property string $search_page_description Описание страницы поиска
+ * @property string $news_meta_title Заголовок страницы новостей
+ * @property string $news_meta_description Описание страницы новостей
+ * @property string $news_meta_header h1 заголовок страницы новостей
+ * @property string $news_about О старнице новостей
  *
  * @property Region[] $regions
  */
@@ -41,7 +45,8 @@ class Country extends \yii\db\ActiveRecord
         return [
             [['name', 'slug'], 'required'],
             [['meta_description', 'main_page_text', 'main_page_mobile_text', 'search_page_description'], 'string'],
-            [['name', 'slug', 'meta_title', 'meta_header', 'main_page_background_image', 'main_page_emblem', 'search_page_title', 'search_page_header'], 'string', 'max' => 255],
+            [['name', 'slug', 'meta_title', 'meta_header', 'main_page_background_image', 'main_page_emblem', 'search_page_title', 'search_page_header',
+                'news_meta_title', 'news_meta_description', 'news_meta_header', 'news_about'], 'string', 'max' => 255],
         ];
     }
 
@@ -64,6 +69,10 @@ class Country extends \yii\db\ActiveRecord
             'search_page_title' => 'Заголовок страницы поиска',
             'search_page_header' => 'H1 страницы поиска',
             'search_page_description' => 'Описание страницы поиска',
+            'news_meta_title' => 'Заголовок страницы новостей',
+            'news_meta_description' => 'Описание страницы новостей',
+            'news_meta_header' => 'h1 заголовок страницы новостей',
+            'news_about' => 'Немного о сайте новостей',
         ];
     }
 
