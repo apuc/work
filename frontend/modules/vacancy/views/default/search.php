@@ -153,7 +153,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                         <?php /** @var Vacancy $vacancy */ ?>
                         <?php
                         $flag = false;
-                            if($vacancy->company->user->email === "rabotavdnr@mail.ru" && Yii::$app->user->identity->email === "test@test.test"){
+                            if($vacancy->company->user->email === "rabotavdnr@mail.ru" && !Yii::$app->user->isguest && Yii::$app->user->identity->email === "test@test.test"){
                                 $flag = true;
                             }
                             ?>
