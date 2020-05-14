@@ -151,7 +151,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                     <?php if($dataProvider->models):
                         foreach ($dataProvider->models as $vacancy): ?>
                         <?php /** @var Vacancy $vacancy */ ?>
-                        <div class="single-card">
+                        <?php
+                        $flag = false;
+                            if($vacancy->company->user->email === "rabotavdnr@mail.ru" && Yii::$app->user->identity->email === "test@test.test"){
+                                $flag = true;
+                            }
+                            ?>
+                        <div class="single-card" <?=$flag?'style="background-color: #676767"':''?>>
                             <div class="single-card__tr">
                             </div>
                             <div class="single-card__header">
