@@ -1,16 +1,28 @@
 import Field from '../models/Field';
-import {VTextarea, VTextField, VSelect, VSubheader, VCheckbox,} from 'vuetify/lib'
+import {VTextarea, VTextField, VSelect, VSubheader, VCheckbox, VAutocomplete} from 'vuetify/lib'
 import AddWork from "../components/AddWork";
 import AddEducation from "../components/AddEducation";
 import AddSocial from "../components/AddSocial";
 import DutiesSelect from "../components/DutiesSelect";
+import DatePicker from "../components/DatePicker";
 
 export default {
+  birth_date: Object.assign({}, Field, {
+    rules: [],
+    component: DatePicker
+  }),
+  phone: Object.assign({}, Field, {
+    name: 'phone',
+    label: 'Номер телефона',
+    rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
+    component: VTextField,
+    // maskPhone: '+## (###) ## - ## - ###'
+  }),
   resumeCity: Object.assign({}, Field, {
     name: 'resumeCity',
     label: 'Город*',
     rules: [v => !!v  || 'Город обязателен к заполнению'],
-    component: VSelect,
+    component: VAutocomplete,
     items: [
       {
         name: '',
@@ -28,7 +40,7 @@ export default {
     name: 'categoriesResume',
     label: 'Категория*',
     rules: [v => v.length >= 1  || 'Категория обязателена к заполнению'],
-    component: VSelect,
+    component: VAutocomplete,
     items: [
       {
         name: '',

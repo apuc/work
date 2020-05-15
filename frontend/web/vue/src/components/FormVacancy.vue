@@ -92,10 +92,30 @@
                     title: response.data.message
                 })
             });
+            this.getUserData();
         },
         methods: {
+            getUserData() {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
+                    .then(response => {
+                            if (response.data[0].phone != null) {
+                                this.formData.phone = response.data[0].phone.number;
+                            }
+                        }, response => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: response.data.message
+                            })
+                        }
+                    )
+            },
             saveData() {
                 let data = {
+                    phone: this.formData.phone,
                     city_id: this.formData.vacancyCity,
                     company_id: this.formData.companyName,
                     main_category_id: this.formData.category.mainCategoriesVacancy,

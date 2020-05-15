@@ -1,13 +1,20 @@
 import Field from '../models/Field';
-import {VTextarea, VTextField, VSelect} from 'vuetify/lib'
+import {VTextarea, VTextField, VSelect, VAutocomplete} from 'vuetify/lib'
 import Category from "../components/Category";
 
 export default {
+  phone: Object.assign({}, Field, {
+    name: 'phone',
+    label: 'Номер телефона',
+    rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
+    component: VTextField,
+    // maskPhone: '+## (###) ## - ## - ###'
+  }),
   vacancyCity: Object.assign({}, Field, {
     name: 'vacancyCity',
     label: 'Город*',
     rules: [v => !!v || 'Город обязателен к заполнению'],
-    component: VSelect,
+    component: VAutocomplete,
     items: [
       {
         name: '',
@@ -19,7 +26,7 @@ export default {
     name: 'companyName',
     label: 'Компания*',
     rules: [v => !!v || 'Компания обязателен к заполнению'],
-    component: VSelect,
+    component: VAutocomplete,
     items: [
       {
         name: '',

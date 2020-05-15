@@ -1,22 +1,22 @@
 <template>
     <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
 
-        <image-uploader
-                class="input-file"
-                :preview="true"
-                :className="['fileinput', { 'fileinput--loaded': hasImage }]"
-                :debug="1"
-                doNotResize="gif"
-                :autoRotate="true"
-                outputFormat="verbose"
-                @input="setImage"
-        >
-            <label for="fileInput" slot="upload-label">
+		<image-uploader
+				class="input-file"
+				:preview="true"
+				:className="['fileinput', { 'fileinput--loaded': hasImage }]"
+				:debug="1"
+				doNotResize="gif"
+				:autoRotate="true"
+				outputFormat="verbose"
+				@input="setImage"
+		>
+			<label for="fileInput" slot="upload-label">
         <span class="upload-caption">
           Выбрать фото
           <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-               x="0px" y="0px"
-               viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+			   x="0px" y="0px"
+			   viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 						<g>
 							<g>
 								<g>
@@ -76,8 +76,23 @@
 						</g>
 					</svg>
         </span>
-            </label>
-        </image-uploader>
+			</label>
+		</image-uploader>
+
+<!--		<div class="work-image-uploader">-->
+<!--			<button type="button" class="btn" @click="toggleShow">Выбрать фото</button>-->
+<!--			<my-upload field="img"-->
+<!--					   @crop-success="cropSuccess"-->
+<!--					   v-model="show"-->
+<!--					   :width="300"-->
+<!--					   :height="300"-->
+<!--					   img-format="png"-->
+<!--					   lang-type="ru"-->
+<!--					   no-square="true"-->
+<!--			>-->
+<!--			</my-upload>-->
+<!--			<img class="my-avatar" :src="formData.image_url">-->
+<!--		</div>-->
 
     </FormTemplate>
 </template>
@@ -87,11 +102,17 @@
     import FormTemplate from "./FormTemplate";
     import Resume from "../mixins/resume";
     import FormVacancy from "../lk-form/vacancy-form";
+	import myUpload from 'vue-image-crop-upload';
 
     export default {
         name: 'FormResume',
         mixins: [Resume],
-        components: {FormTemplate},
+        components: {FormTemplate, myUpload},
+		// data() {
+        // 	return {
+		// 		show: false,
+		// 	}
+		// },
         mounted() {
             document.title = this.$route.meta.title;
             this.getEmploymentType().then(response => {
@@ -124,10 +145,37 @@
 					title: response.data.message
 				})
 			});
+			this.getUserData();
         },
         methods: {
+			toggleShow() {
+				this.show = !this.show;
+			},
+			cropSuccess(imgDataUrl, field){
+				this.formData.image_url = imgDataUrl;
+			},
+			getUserData() {
+				this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
+						.then(response => {
+									if (response.data[0].phone != null) {
+										this.formData.phone = response.data[0].phone.number;
+									}
+								}, response => {
+									this.$swal({
+										toast: true,
+										position: 'bottom-end',
+										showConfirmButton: false,
+										timer: 4000,
+										type: 'error',
+										title: response.data.message
+									})
+								}
+						)
+			},
             saveData() {
                 let data = {
+					birth_date: this.formData.birth_date,
+					phone: this.formData.phone,
 					city_id: this.formData.resumeCity,
                     image: {},
                     title: this.formData.careerObjective,

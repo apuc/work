@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "vue": "^2.6.6",
+    "vue-image-crop-upload": "^2.5.0",
     "vue-image-upload-resize": "^2.0.4",
     "vue-multiselect": "^2.1.6",
     "vue-resource": "^1.5.1",

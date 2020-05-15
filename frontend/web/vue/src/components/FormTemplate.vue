@@ -88,4 +88,17 @@
     width: auto;
     max-width: 200px;
   }
+  .work-image-uploader {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  .work-image-uploader button {
+    margin-bottom: 20px;
+    outline: none;
+  }
+  .vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-right .vicp-preview .vicp-preview-item span {
+    left: 0;
+  }
 </style>
