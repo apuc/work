@@ -52,6 +52,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['style' => 'white-space: normal;'],
             ],
             [
+                'attribute' => 'news_meta_title',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
+            [
+                'attribute' => 'news_meta_description',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
+            [
+                'attribute' => 'news_meta_header',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
+            [
+                'attribute' => 'news_about',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
+            [
                 'attribute' => 'main_page_text',
                 'format' => 'html',
                 'contentOptions' => ['style' => 'white-space: normal;'],

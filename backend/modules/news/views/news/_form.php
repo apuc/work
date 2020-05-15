@@ -11,6 +11,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\News */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
 <div class="news-form">
@@ -18,8 +19,12 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'title')->textInput(['rows' => 6]) ?>
-
     <?= $form->field($model, 'description')->textInput(['rows' => 6]) ?>
+    <?= $form->field($model, 'country_id')->dropDownList((new \common\models\News())->getCountry1()); ?>
+    <?= $form->field($model, 'meta_title')->textInput(['rows' => 6]) ?>
+    <?= $form->field($model, 'meta_description')->textInput(['rows' => 6]) ?>
+    <?= $form->field($model, 'meta_header')->textInput(['rows' => 6]) ?>
+    <?= $form->field($model, 'slug')->textInput(['rows' => 6]) ?>
 
 
     <?php echo $form->field($model, 'content')->widget(CKEditor::className(), [

@@ -2,6 +2,7 @@
 
 namespace frontend\modules\news\controllers;
 
+use common\models\Country;
 use common\models\News;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -13,25 +14,68 @@ class DefaultController extends Controller
 {
     public $layout = '@frontend/views/layouts/main-layout.php';
     /**
-     * Renders the index view for the module
+     * @param null $slug
      * @return string
+     * @throws NotFoundHttpException
      */
-    public function actionIndex()
+
+    public function actionIndex($slug = null)
     {
+        if ($slug > null){
+            $model = Country::find()->where(['slug' => $slug])->one();
+            if (!$model) {
+                throw new \yii\web\NotFoundHttpException('404');
+            }
+            $news = News::find()->where(['country_id' => $model->id])->all();
+        }else{
         $news = News::find()->all();
+        }
+        if ($model){
+            $model1 = $model;
+            $model = $model->name;
+        }
         return $this->render('index', [
-            'news' => $news
+            'news' => $news,
+            'model' => $model,
+            'model1' => $model1
         ]);
     }
 
-    public function actionView($id)
+    /**
+     * @param null $slug
+     * @return string
+     * @throws NotFoundHttpException
+     */
+
+     public function actionView($slug = null)
+     {
+         $random = News::find()->orderBy('rand()')->one();
+         $model = News::find()->where(['slug' => $slug])->one();
+         if (!$model) {
+             throw new \yii\web\NotFoundHttpException('404');
+         }
+         return $this->render('view', [
+             'model'=>$model,
+             'random'=>$random,
+         ]);
+     }
+
+    /**
+     * @param null $slug
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionSearch($slug = null)
     {
-        $random = News::find()->orderBy('rand()')->one();
-        if(!$model = News::findOne($id))
-            throw new NotFoundHttpException();
-        return $this->render('view', [
-            'model'=>$model,
-            'random'=>$random,
-        ]);
+        $modelCountry = Country::find()->where(['slug' => $slug])->one();
+        $modelNews = News::find()->where(['slug' => $slug])->one();
+        if($modelCountry){
+            return $this->actionIndex($slug);
+        }elseif ($modelNews){
+            return $this->actionView($slug);
+        }else{
+            throw new \yii\web\NotFoundHttpException('404');
+        }
     }
+
 }
