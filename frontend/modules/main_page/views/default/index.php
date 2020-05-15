@@ -46,13 +46,23 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                     <a class="nhome__nav-item" href="/employer">Работодателю</a>
                     <div class="geolocation">
                         <img src="/images/geolocation.png" alt="Геолокация">
-                        <select class="city-header jsCountryHeaderSelect">
-                            <option></option>
-                            <?php foreach ($countries as $country):?>
-                                <option <?= (Yii::$app->request->cookies['country_id'] == (string)$country->id) ? "selected" : '' ?>
-                                        value="<?= $country->id ?>"><?= $country->name ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="country-select">
+                            <span class="jsOpenCountrySelect"><?= $current_country ? $current_country->name : 'Выберите Страну' ?> <b></b></span>
+                            <ul>
+                                <li>
+                                    <a href="/" data-id="" class="jsOpenCountrySelectUrl">
+                                        Выберите Страну
+                                    </a>
+                                </li>
+                                <?php foreach ($countries as $country):?>
+                                    <li>
+                                        <a href="<?= $country->slug ?>" data-id="<?= $country->id ?>" class="jsOpenCountrySelectUrl">
+                                            <?= $country->name ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
                     <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>
                     <a class="nhome__nav-item" href="<?= Vacancy::getSearchPageUrl() ?>">Поиск вакансий</a>
@@ -110,14 +120,23 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 <div class="geolocation">
                     <div class="geolocation__block">
                         <img src="/images/geolocation.png" alt="Геолокация">
-                        <select class="city-header jsCountryHeaderSelect">
-                            <option></option>
-                            <?php /** @var \common\models\City $city */
-                            foreach ($countries as $country):?>
-                                <option <?= (Yii::$app->request->cookies['country_id'] == (string)$country->id) ? "selected" : '' ?>
-                                        value="<?= $country->id ?>"><?= $country->name ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="country-select">
+                            <span class="jsOpenCountrySelect"><?= $current_country ? $current_country->name : 'Выберите Страну' ?> <b></b></span>
+                            <ul>
+                                <li>
+                                    <a href="/" data-id="" class="jsOpenCountrySelectUrl">
+                                        Выберите Страну
+                                    </a>
+                                </li>
+                                <?php foreach ($countries as $country):?>
+                                    <li>
+                                        <a href="<?= $country->slug ?>" data-id="<?= $country->id ?>" class="jsOpenCountrySelectUrl">
+                                            <?= $country->name ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
                     <span class="nhome__form-text">
                         Сейчас на сайте свыше
