@@ -235,7 +235,8 @@ return [
                 'country_with_category_<number:\d+>.xml'=>'sitemap/country-with-category',
                 'country_with_profession_<number:\d+>.xml'=>'sitemap/country-with-profession',
                 'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
-                'news/view/<id:\d+>' => 'news/default/view',
+                '/news/<slug>' => 'news/default/search',
+                '/news' => 'news/default/index',
                 'vacancy/click-phone'=>'vacancy/default/click-phone',
                 'cities_by_country_id'=>'vacancy/default/cities',
                 [

@@ -17,6 +17,11 @@ use Yii;
  * @property int $dt_create
  * @property int $dt_update
  * @property int $dt_public
+ * @property int $country_id
+ * @property string $meta_title
+ * @property string $meta_description
+ * @property string $meta_header
+ * @property string $slug
  */
 class News extends \yii\db\ActiveRecord
 {
@@ -37,9 +42,9 @@ class News extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content'], 'required'],
-            [['title', 'description', 'content', 'img'], 'string'],
-            [['status', 'dt_create', 'dt_update', 'dt_public'], 'integer'],
+            [['title', 'content', 'meta_title', 'meta_description', 'meta_header', 'slug'], 'required'],
+            [['title', 'description', 'content', 'img', 'meta_title', 'meta_description', 'meta_header', 'slug'], 'string'],
+            [['status', 'dt_create', 'dt_update', 'dt_public', 'country_id'], 'integer'],
         ];
     }
 
@@ -57,7 +62,12 @@ class News extends \yii\db\ActiveRecord
             'dt_create' => 'Дата создание',
             'dt_update' => 'Дата редактирования',
             'dt_public' => 'Дата публикации',
-            'img' => 'Титульная картинка'
+            'img' => 'Титульная картинка',
+            'country_id' => 'Страна',
+            'meta_title' => 'Заголовок страницы',
+            'meta_description' => 'Описание страницы',
+            'meta_header' => 'h1 заголовок страницы',
+            'slug' => 'SLUG'
         ];
     }
 
@@ -98,4 +108,20 @@ class News extends \yii\db\ActiveRecord
             ->limit(2)
             ->all();
     }
+
+    public function getCountry()
+    {
+        return $this->hasOne(Country::className(), ['id' => 'country_id']);
+    }
+
+    public function getCountry1()
+    {
+        $country = [];
+        foreach (Country::find()->all() as $value)
+        {
+            $country[$value->id] = $value->name;
+        }
+        return $country;
+    }
+
 }

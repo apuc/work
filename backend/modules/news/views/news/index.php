@@ -41,6 +41,18 @@ $this->params['breadcrumbs'][] = $this->title;
 //            [
 //                'attribute' => 'content',
 //            ],
+            /*'country_id',*/
+            [
+                'attribute' => 'country_id',
+                'value' => function ($model) {
+                    return $model->country->name;
+                },
+                'filter' => false,
+            ],
+            'meta_title',
+            'meta_description',
+            'meta_header',
+            'slug',
             [
                 'attribute' => 'status',
                 'value' => function ($model) {
