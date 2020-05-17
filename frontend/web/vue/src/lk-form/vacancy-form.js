@@ -130,22 +130,4 @@ export default {
     counter: 2000,
     component: VTextarea
   }),
-  vacancyVideo: Object.assign({}, Field, {
-    name: 'vacancyVideo',
-    label: 'Видео о вакансии',
-    rules: [],
-    component: VTextField
-  }),
-  officeAddress: Object.assign({}, Field, {
-    name: 'officeAddress',
-    label: 'Адрес офиса',
-    rules: [],
-    component: VTextField
-  }),
-  houseNumber: Object.assign({}, Field, {
-    name: 'houseNumber',
-    label: 'Номер дома',
-    rules: [],
-    component: VTextField
-  }),
 }

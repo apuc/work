@@ -20,10 +20,7 @@ const vacancy = {
         description: '',
         experience: '',
         education: '',
-        workingConditions: '',
-        vacancyVideo: '',
-        officeAddress: '',
-        houseNumber: '',
+        workingConditions: ''
       },
       valid: false
     };
