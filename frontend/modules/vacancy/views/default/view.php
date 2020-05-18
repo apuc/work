@@ -30,6 +30,9 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                         <li>
                             <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) ?>"><?= $model->city0->region->country->name ?></a>
                         </li>
+                        <li>
+                            <p>&nbsp;-&nbsp;</p>
+                        </li>
                     <?php endif;?>
                     <li>
                         <a href="<?= Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>"><?= $model->city0->name ?></a>
