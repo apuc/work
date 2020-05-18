@@ -35,8 +35,7 @@ class DefaultController extends Controller
             $model1 = $model;
             $model = $model->name;
         }else{
-            $model1 = null;
-            $model = null;
+            $model1 = $model;
         }
         return $this->render('index', [
             'news' => $news,
