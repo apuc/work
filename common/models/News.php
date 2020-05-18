@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\TagsRelation;
 use Yii;
+use yii\behaviors\SluggableBehavior;
 
 /**
  * This is the model class for table "news".
@@ -28,6 +29,18 @@ class News extends \yii\db\ActiveRecord
     const TYPE_ACTIVE = 1;
     const TYPE_UNACTIVE = 0;
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'title',
+                'slugAttribute' => 'slug',//default name slug
+            ],
+        ];
+    }
+
+
     /**
      * {@inheritdoc}
      */
@@ -42,7 +55,7 @@ class News extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content', 'meta_title', 'meta_description', 'meta_header', 'slug'], 'required'],
+            [['title', 'content', 'meta_title', 'meta_description', 'meta_header'/*, 'slug'*/], 'required'],
             [['title', 'description', 'content', 'img', 'meta_title', 'meta_description', 'meta_header', 'slug'], 'string'],
             [['status', 'dt_create', 'dt_update', 'dt_public', 'country_id'], 'integer'],
         ];
