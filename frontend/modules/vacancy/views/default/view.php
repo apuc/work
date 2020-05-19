@@ -19,21 +19,36 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
     <div class="container">
         <div class="resume-results">
             <ul class="breadcrumbs">
-                <li>
-                    <a href="<?=Url::to('/')?>">Главная</a>
-                </li>
-                <li>
-                    <a href="<?=Url::to('/vacancy')?>">Вакансии</a>
-                </li>
-                <?php if ($model->city0): ?>
-                    <?php if (isset($model->city0->region->country)):?>
+                 <?php if (isset($model->city0->region->country)):?>
                         <li>
-                            <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) ?>"><?= $model->city0->region->country->name ?></a>
+                          <a href="<?=Url::to('/' . $model->city0->region->country->slug )?>">Работа в <?= $model->city0->region->country->name ?></a>
+                         </li>
+                        <li>
+                          <p>&nbsp;-&nbsp;</p>
+                        </li>
+                        <li>
+                            <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) ?>">Вакансии</a>
                         </li>
                         <li>
                             <p>&nbsp;-&nbsp;</p>
                         </li>
-                    <?php endif;?>
+                 <?php else:  ?>
+                     <li>
+                         <a href="<?=Url::to('/')?>">Главная</a>
+                     </li>
+                     <li>
+                         <a href="<?=Url::to('/vacancy')?>">Вакансии</a>
+                     </li>
+                 <?php endif;?>
+                <?php if ($model->city0): ?>
+                   <!-- <?php /*if (isset($model->city0->region->country)):*/?>
+                        <li>
+                            <a href="<?/*= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) */?>"><?/*= $model->city0->region->country->name */?></a>
+                        </li>
+                        <li>
+                            <p>&nbsp;-&nbsp;</p>
+                        </li>
+                    --><?php /*endif;*/?>
                     <li>
                         <a href="<?= Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>"><?= $model->city0->name ?></a>
                     </li>

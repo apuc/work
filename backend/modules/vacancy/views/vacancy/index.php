@@ -144,10 +144,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 )
             ],
-            [
+            /*[
                 'attribute' => 'countViews',
                 'label' => 'Просмотры'
-            ],
+            ],*/
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

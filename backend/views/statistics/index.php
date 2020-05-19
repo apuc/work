@@ -46,7 +46,7 @@ $this->title = "Статистика: " . StatisticsController::$types[$type];
 ])?>
 <br>
 <?=Html::submitButton('Применить', ['class'=>'btn btn-success'])?>
-<div style="width: 1000px;height: 400px;">
+<div style="width: 1000px;height: 500px;">
     <h4 style="text-align: center">Всего за период: <strong><?=$total?></strong></h4>
 <canvas id="myChart"></canvas>
 <script>

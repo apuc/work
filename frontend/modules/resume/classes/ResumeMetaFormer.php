@@ -111,8 +111,11 @@ class ResumeMetaFormer
         }else{
             $exp = 'без опыта';
         }
-
-        $view->title = 'Резюме' . ':' . $resume->employer->second_name . ' ' . $resume->employer->first_name . '- ' . $resume->title . ',' . $resume->city0->name;
+        if ($resume->employer->second_name && $resume->employer->first_name && $resume->city0->name){
+            $view->title = 'Резюме' . ':' . $resume->employer->second_name . ' ' . $resume->employer->first_name . '- ' . $resume->title . ',' . $resume->city0->name;
+        }else{
+            $view->title = $resume->title;
+        }
 //$view->registerMetaTag(['name'=>'description', 'content' => StringHelper::truncate($resume->description, 100, '...')]);
         $view->registerMetaTag(['name' => 'description', 'content' => 'Резюме ' . $resume->employer->second_name . ' ' . $resume->employer->first_name .
             ', на должность ' . $resume->title . '. Опыт работы: ' . $exp . '. ' .
