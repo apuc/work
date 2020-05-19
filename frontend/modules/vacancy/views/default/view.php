@@ -24,13 +24,7 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                           <a href="<?=Url::to('/' . $model->city0->region->country->slug )?>">Работа в <?= $model->city0->region->country->name ?></a>
                          </li>
                         <li>
-                          <p>&nbsp;-&nbsp;</p>
-                        </li>
-                        <li>
                             <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) ?>">Вакансии</a>
-                        </li>
-                        <li>
-                            <p>&nbsp;-&nbsp;</p>
                         </li>
                  <?php else:  ?>
                      <li>
