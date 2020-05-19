@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'city_id',
                 'format' => 'raw',
                 'value' => function($model) {
-                    if ($model->city0->name){
+                    if ($model->city0){
                         return $model->city0->name;
                     }else{
                         return '';
