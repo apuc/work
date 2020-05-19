@@ -50,14 +50,20 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                         <p>&nbsp;-&nbsp;</p>
                     </li>
                 <?php endif ?>
-                <?php if ($referer_category): ?>
+                <?php /*if ($referer_category): */?><!--
                     <li>
-                        <a href="<?= Vacancy::getSearchPageUrl($referer_category->slug, $model->city0 ? $model->city0->slug : false) ?>"><?= $referer_category->name ?></a>
+                        <a href="<?/*= Vacancy::getSearchPageUrl($referer_category->slug, $model->city0 ? $model->city0->slug : false) */?>"><?/*= $referer_category->name */?></a>
                     </li>
                     <li>
                         <p>&nbsp;-&nbsp;</p>
                     </li>
-                <?php endif ?>
+                --><?php /*endif */?>
+                <li>
+                <a href="<?= Vacancy::getSearchPageUrl($model->mainCategory->slug) ?>"><?= $model->mainCategory->name ?></a>
+                </li>
+                <li>
+                    <p>&nbsp;-&nbsp;</p>
+                </li>
                 <li><?= mb_convert_case($model->post, MB_CASE_TITLE) ?></li>
             </ul>
         </div>
