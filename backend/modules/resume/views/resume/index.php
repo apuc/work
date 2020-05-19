@@ -65,7 +65,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'city_id',
                 'format' => 'raw',
                 'value' => function($model) {
-                    return $model->city0->name;
+                    if ($model->city0->name){
+                        return $model->city0->name;
+                    }else{
+                        return '';
+                    }
+
                 },
                 'filter'    => Html::activeDropDownList( $searchModel, 'city_id',
                     \yii\helpers\ArrayHelper::map(City::find()->where(['status'=>1])->all(),'id', 'name'),
@@ -126,10 +131,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     return date('d-m-Y  G:i:s', $model->created_at);
                 },
             ],
-            [
+            /*[
                 'attribute' => 'countViews',
                 'label' => 'Просмотры'
-            ],
+            ],*/
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
