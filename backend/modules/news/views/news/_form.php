@@ -24,7 +24,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'meta_title')->textInput(['rows' => 6]) ?>
     <?= $form->field($model, 'meta_description')->textInput(['rows' => 6]) ?>
     <?= $form->field($model, 'meta_header')->textInput(['rows' => 6]) ?>
-    <?/*= $form->field($model, 'slug')->textInput(['rows' => 6]) */?>
 
 
     <?php echo $form->field($model, 'content')->widget(CKEditor::className(), [
