@@ -14,26 +14,6 @@ return [
         'elfinder' => [
             'class' => 'mihaildev\elfinder\Controller',
             'access' => ['@', '?'],
-            'connectOptions' => [
-                'bind' => [
-                    'upload.pre mkdir.pre mkfile.pre rename.pre archive.pre ls.pre' => array(
-                        'Plugin.Sanitizer.cmdPreprocess'
-                    ),
-                    'ls' => array(
-                        'Plugin.Sanitizer.cmdPostprocess'
-                    ),
-                    'upload.presave' => array(
-                        'Plugin.Sanitizer.onUpLoadPreSave'
-                    )
-                ],
-                'plugin' => [
-                    'Sanitizer' => array(
-                        'enable' => true,
-                        'targets'  => array('\\','/',':','*','?','"','<','>','|'), // target chars
-                        'replace'  => '_'    // replace to this
-                    )
-                ],
-            ],
             'disabledCommands' => ['netmount'],
             'roots' => [
                 [
@@ -41,13 +21,6 @@ return [
                     'basePath' => '@frontend/web',
                     'path' => 'media/upload',
                     'name' => 'Изображения',
-                    'plugin' => [
-                        'Sanitizer' => array(
-                            'enable' => true,
-                            'targets'  => array('\\','/',':','*','?','"','<','>','|'), // target chars
-                            'replace'  => '_'    // replace to this
-                        )
-                    ]
                 ],
             ],
             'watermark' => [
