@@ -13,6 +13,7 @@ return [
     'controllerMap' => [
         'elfinder' => [
             'class' => 'mihaildev\elfinder\Controller',
+            'access' => ['@', '?'],
             'connectOptions' => [
                 'bind' => [
                     'upload.pre mkdir.pre mkfile.pre rename.pre archive.pre ls.pre' => array(
@@ -33,7 +34,6 @@ return [
                     )
                 ],
             ],
-            'access' => ['@', '?'],
             'disabledCommands' => ['netmount'],
             'roots' => [
                 [
@@ -41,6 +41,13 @@ return [
                     'basePath' => '@frontend/web',
                     'path' => 'media/upload',
                     'name' => 'Изображения',
+                    'plugin' => [
+                        'Sanitizer' => array(
+                            'enable' => true,
+                            'targets'  => array('\\','/',':','*','?','"','<','>','|'), // target chars
+                            'replace'  => '_'    // replace to this
+                        )
+                    ]
                 ],
             ],
             'watermark' => [
