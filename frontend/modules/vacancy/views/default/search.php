@@ -148,6 +148,85 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                         <p>Нет результатов поиска</p>
                     </div>
                     <?php endif ?>
+
+                    <div class="single-card vacancy-day">
+                        <img class="vacancy-day__bg" src="/images/vacancy_day_bd.png" alt="">
+                        <div class="single-card__tr">
+                        </div>
+                        <p class="vacancy-day__head relative-2"><img src="/images/vacancy_day_icon.png" alt=""> Вакансия дня</p>
+                        <div class="single-card__header relative-2">
+                            <a class="btn-card btn-card-small btn-gray" href="/vacancy/its">ITS</a>
+                            <a class="btn-card btn-card-small btn-gray" href="/vacancy/stroitelstvo">Строительство</a>
+                            <a class="btn-card btn-card-small btn-gray" href="/vacancy/fdsfsdfsdf">fdsfsdfsdf</a>
+                            <a class="btn-card btn-card-small btn-gray" href="/vacancy/sdfsdfsdf">sdfsdfsdf</a>
+                            <img class="single-card__image" src="/images/categories/its.svg" alt="Пустая компания" role="presentation">
+                        </div>
+                        <a href="/vacancy/view/16?referer_category=141" class="single-card__title mt5 relative-2">
+                            Asdas                            </a>
+                        <div class="single-card__company relative-2">
+                            <p>iqwwqdd</p>
+                        </div>
+                        <div class="single-card__info-second relative-2"><span class="mr10">Добавлено: 21.05.2020</span>
+                            <a class="d-flex align-items-center mt5 mb5" href="/vacancy/xmelnickii">
+                                <img class="single-card__icon" src="/images/arr-place.png" alt="Стрелка" role="presentation">
+                                <span class="ml5">Хмельницкий</span>
+                            </a>
+                        </div>
+                        <span class="single-card__price relative-2">
+                                                                    Зарплата договорная
+                                                            </span>
+                        <div class="single-card__info relative-2">
+                            <p>asdasdsa</p>
+                        </div>
+                        <div class="single-card__bottom relative-2">
+                            <div class="single-card__info__soc">
+                            </div>
+                            <a href="/vacancy/view/16" class="btn-card btn-red">
+                                Посмотреть полностью
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="banner-subscription">
+                        <img src="/images/banner_image.png" alt="">
+                        <div class="banner-subscription__right">
+                            <h3>Подписка на новые вакансии</h3>
+                            <div class="banner-subscription__right-bottom">
+                                <a href="#" class="btn-card btn-red">
+                                    Подписаться
+                                </a>
+                                <p>
+                                    Подписка позволяет <span>отслеживать
+                                    новые вакансии</span> по соответствующим
+                                    условиям на сайте иили получать
+                                    их по электронной почте
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="banner-subscription2">
+                        <h3>Получай <span>свежие вакансии</span> по выбранным условиям!</h3>
+                        <p>Получай <span>новые вакансии</span> по соответствующим условиям по электронной почте каждый день</p>
+                        <form action="">
+                            <input type="email" placeholder="Email">
+                            <button class="btn-card btn-red">Подписаться</button>
+                        </form>
+                    </div>
+
+                    <div class="banner-advertising">
+                        <img src="/images/banner_advertising_image.png" alt="">
+                        <div class="banner-advertising__right">
+                            <h3>Самые актуальные вакансии фирменных магазинов и гипермаркетов “МОЛОКО”</h3>
+                            <div class="banner-advertising__right-bottom">
+                                <img src="/images/banner_logo.png" alt="">
+                                <a href="#" class="btn-card btn-red">
+                                    Посмотреть полностью
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <?php if($dataProvider->models):
                         foreach ($dataProvider->models as $vacancy): ?>
                         <?php /** @var Vacancy $vacancy */ ?>
