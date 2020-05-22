@@ -9,7 +9,7 @@ $this->title = "Ошибка";
 ?>
 
 <?php
-
+//\common\classes\Debug::dd($exception);
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -46,7 +46,11 @@ MainAsset::register($this);
     <section class="page-error">
         <div class="container">
             <p class="error-page-code"><?=$exception->statusCode?></p>
-            <p class="mb15 error-page-description"><?=$exception->getMessage()?>></p>
+            <?php if($exception->statusCode != 0 && $exception->statusCode != 500):?>
+            <p class="mb15 error-page-description"><?=$exception->getMessage()?></p>
+            <?php else:?>
+            <p class="mb15 error-page-description">Возникла внутренняя ошибка сервера.</p>
+            <?php endif ?>
             <a href="/">
                 на главную
             </a>
