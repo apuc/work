@@ -32,6 +32,8 @@ use yii\db\ActiveRecord;
  * @property integer $updated_at
  * @property integer $owner
  * @property integer $update_time
+ * @property string $phone
+ * @property integer $birth_date
  *
  * @property Employer $employer
  * @property EmploymentType $employment_type
@@ -95,9 +97,9 @@ class Resume extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'notification_status', 'hot', 'city_id'], 'integer'],
+            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'notification_status', 'hot', 'city_id', 'birth_date'], 'integer'],
             [['title', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
-            [['description'], 'string'],
+            [['description','string'], 'string'],
             [['min_salary', 'max_1salary'], 'safe'],
             [['employer_id', 'title'], 'required'],
         ];
@@ -130,7 +132,9 @@ class Resume extends WorkActiveRecord
             'vk' => 'VK',
             'status' => 'Статус',
             'created_at' => 'Дата создания',
-            'updated_at' => 'Изменено'
+            'updated_at' => 'Изменено',
+            'phone' => 'Номер телефона',
+            'birth_date' => 'Дата рождения'
         ];
     }
 
