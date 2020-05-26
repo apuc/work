@@ -22,7 +22,30 @@ const vacancy = {
         education: '',
         workingConditions: ''
       },
-      valid: false
+      valid: false,
+      defaultCountry: {
+        iso2: '',
+        dialCode: ''
+      },
+      allCountries: [
+        {
+          areaCodes: null,
+          dialCode: "38",
+          iso2: "UA",
+          name: "Ukraine (Україна)",
+          priority: 0
+        },
+        {
+          areaCodes: null,
+          dialCode: "7",
+          iso2: "RU",
+          name: "Russia (Россия)",
+          priority: 0
+        }
+      ],
+      phone: {
+        valid: false,
+      },
     };
   }
 };

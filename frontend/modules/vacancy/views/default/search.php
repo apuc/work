@@ -150,7 +150,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                     <?php endif ?>
 
                     <div class="single-card vacancy-day">
-                        <img class="vacancy-day__bg" src="/images/vacancy_day_bd.png" alt="">
+                        <img class="vacancy-day__bg-2" src="/images/vacancy_day_bd_2.png" alt="">
+                        <img class="vacancy-day__bg-1" src="/images/vacancy_day_bd_1.png" alt="">
                         <div class="single-card__tr">
                         </div>
                         <p class="vacancy-day__head relative-2"><img src="/images/vacancy_day_icon.png" alt=""> Вакансия дня</p>
