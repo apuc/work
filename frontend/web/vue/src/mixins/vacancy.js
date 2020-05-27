@@ -22,7 +22,6 @@ const vacancy = {
         education: '',
         workingConditions: ''
       },
-      valid: false,
       defaultCountry: {
         iso2: '',
         dialCode: ''
@@ -30,7 +29,7 @@ const vacancy = {
       allCountries: [
         {
           areaCodes: null,
-          dialCode: "38",
+          dialCode: "380",
           iso2: "UA",
           name: "Ukraine (Україна)",
           priority: 0
@@ -44,6 +43,7 @@ const vacancy = {
         }
       ],
       phone: {
+        text: '',
         valid: false,
       },
     };

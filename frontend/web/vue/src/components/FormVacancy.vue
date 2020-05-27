@@ -15,13 +15,13 @@
                                :defaultCountry="defaultCountry.iso2"
                                v-model="formData.phone"
                                :allCountries="allCountries"
-                               :enabledCountryCode="true"
                                :validCharactersOnly="true"
                                :required="true"
+                               :inputOptions="{ showDialCode: true, tabindex: 0 }"
                                @country-changed="changeCountry"
                                @input="onInput"
                 ></vue-tel-input>
-                <p>{{ phone.valid }}</p>
+                <p>{{ phone.text }}</p>
 
             </FormTemplate>
         </template>
@@ -108,31 +108,35 @@
             this.getUserData();
         },
         methods: {
-            phoneValid() {
-                if (this.defaultCountry.iso2 === 'UA') {
-                    return this.formData.phone.length === 10;
-                }
-                if (this.defaultCountry.iso2 === 'Ru') {
-                    this.defaultCountry.iso2 = data.iso2;
-                }
-            },
             changeCountry(data) {
-                this.formData.phone = '';
                 if (data.iso2 === 'UA') {
                     this.defaultCountry.iso2 = data.iso2;
                     this.defaultCountry.dialCode = data.dialCode;
                 }
-                if (data.iso2 === 'Ru') {
+                if (data.iso2 === 'RU') {
                     this.defaultCountry.iso2 = data.iso2;
                     this.defaultCountry.dialCode = data.dialCode;
                 }
             },
             onInput() {
-                console.log(this.formData.phone.length)
-                if (this.formData.phone.length === 12) {
-                    this.phone.valid = '';
-                } else {
-                    this.phone.valid = 'Вы ввели не верный номер телефона';
+                this.phone.valid = false;
+                if (this.defaultCountry.iso2 === 'UA') {
+                    if (this.formData.phone.length === 16) {
+                        this.phone.text = '';
+                        this.phone.valid = true;
+                    } else {
+                        this.phone.text = 'Вы ввели не верный номер телефона';
+                        this.phone.valid = false;
+                    }
+                }
+                if (this.defaultCountry.iso2 === 'RU') {
+                    if (this.formData.phone.length === 16) {
+                        this.phone.text = '';
+                        this.phone.valid = true;
+                    } else {
+                        this.phone.text = 'Вы ввели не верный номер телефона';
+                        this.phone.valid = false;
+                    }
                 }
             },
             getUserData() {
