@@ -21,7 +21,7 @@ use common\models\Resume;
 use common\models\Vacancy;
 use frontend\modules\main_page\classes\MetaFormer;
 use yii\helpers\Html;
-use yii\helpers\StringHelper;
+use common\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\web\View;
 
@@ -210,7 +210,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             </div>
                             <a href="<?= Url::to(['/vacancy/default/view', 'id' => $vacancy->id]) ?>"
                                class="single-card__title"
-                               title="<?= mb_convert_case($vacancy->post, MB_CASE_TITLE) ?>"><?= ucfirst($vacancy->post) ?></a>
+                               title="<?= StringHelper::mb_ucfirst($vacancy->post) ?>"><?= StringHelper::mb_ucfirst($vacancy->post) ?></a>
                             <div class="single-card__info-second">
                                 <span class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd.MM.yyyy, hh:mm') ?></span>
                                 <?php if ($vacancy->views > 0):?>

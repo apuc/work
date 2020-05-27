@@ -10,13 +10,13 @@
 /* @var $canonical_rel string */
 
 use common\classes\MoneyFormat;
+use common\helpers\StringHelper;
 use common\models\Category;
 use common\models\City;
 use common\models\EmploymentType;
 use common\models\Vacancy;
 use frontend\assets\MainAsset;
 use frontend\modules\vacancy\classes\VacancyMetaFormer;
-use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
@@ -176,7 +176,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                                 <?/*= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) */?>
                             </a>-->
                             <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title mt5">
-                                <?= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) ?>
+                                <?= StringHelper::mb_ucfirst( $vacancy->post , MB_CASE_TITLE) ?>
                             </a>
                             <div class="single-card__company">
                                 <p><?= $vacancy->company->name ?>
