@@ -11,17 +11,17 @@
         <template v-else>
             <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
 
-                <vue-tel-input :placeholder="'Номер телефона'"
-                               :defaultCountry="defaultCountry.iso2"
-                               v-model="formData.phone"
-                               :allCountries="allCountries"
-                               :validCharactersOnly="true"
-                               :required="true"
-                               :inputOptions="{ showDialCode: true, tabindex: 0 }"
-                               @country-changed="changeCountry"
-                               @input="onInput"
-                ></vue-tel-input>
-                <p>{{ phone.text }}</p>
+<!--                <vue-tel-input :placeholder="'Номер телефона'"-->
+<!--                               :defaultCountry="defaultCountry.iso2"-->
+<!--                               v-model="formData.phone"-->
+<!--                               :allCountries="allCountries"-->
+<!--                               :validCharactersOnly="true"-->
+<!--                               :required="true"-->
+<!--                               :inputOptions="{ showDialCode: true, tabindex: 0 }"-->
+<!--                               @country-changed="changeCountry"-->
+<!--                               @input="onInput"-->
+<!--                ></vue-tel-input>-->
+<!--                <p>{{ phone.text }}</p>-->
 
             </FormTemplate>
         </template>
@@ -105,58 +105,61 @@
                     title: response.data.message
                 })
             });
-            this.getUserData();
+            // this.getUserData();
         },
         methods: {
-            changeCountry(data) {
-                if (data.iso2 === 'UA') {
-                    this.defaultCountry.iso2 = data.iso2;
-                    this.defaultCountry.dialCode = data.dialCode;
-                }
-                if (data.iso2 === 'RU') {
-                    this.defaultCountry.iso2 = data.iso2;
-                    this.defaultCountry.dialCode = data.dialCode;
-                }
-            },
-            onInput() {
-                this.phone.valid = false;
-                if (this.defaultCountry.iso2 === 'UA') {
-                    if (this.formData.phone.length === 16) {
-                        this.phone.text = '';
-                        this.phone.valid = true;
-                    } else {
-                        this.phone.text = 'Вы ввели не верный номер телефона';
-                        this.phone.valid = false;
-                    }
-                }
-                if (this.defaultCountry.iso2 === 'RU') {
-                    if (this.formData.phone.length === 16) {
-                        this.phone.text = '';
-                        this.phone.valid = true;
-                    } else {
-                        this.phone.text = 'Вы ввели не верный номер телефона';
-                        this.phone.valid = false;
-                    }
-                }
-            },
-            getUserData() {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
-                    .then(response => {
-                            if (response.data[0].phone != null) {
-                                this.formData.phone = response.data[0].phone.number;
-                            }
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    )
-            },
+            // changeCountry(data) {
+            //     if (data.iso2 === 'UA') {
+            //         this.defaultCountry.iso2 = data.iso2;
+            //         this.defaultCountry.dialCode = data.dialCode;
+            //     }
+            //     if (data.iso2 === 'RU') {
+            //         this.defaultCountry.iso2 = data.iso2;
+            //         this.defaultCountry.dialCode = data.dialCode;
+            //     }
+            // },
+            // onInput() {
+            //     this.phone.valid = false;
+            //     if (this.defaultCountry.iso2 === 'UA') {
+            //         if (this.formData.phone.length === 16) {
+            //             this.phone.text = '';
+            //             this.phone.valid = true;
+            //         } else {
+            //             this.phone.text = 'Вы ввели не верный номер телефона';
+            //             this.phone.valid = false;
+            //         }
+            //     }
+            //     if (this.defaultCountry.iso2 === 'RU') {
+            //         if (this.formData.phone.length === 16) {
+            //             this.phone.text = '';
+            //             this.phone.valid = true;
+            //         } else {
+            //             this.phone.text = 'Вы ввели не верный номер телефона';
+            //             this.phone.valid = false;
+            //         }
+            //     }
+            // },
+            // getUserData() {
+            //     this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
+            //         .then(response => {
+            //                 if (response.data[0].phone != null) {
+            //                     // this.formData.phone = response.data[0].phone.number;
+            //                     this.formData.phone = '+78126020876';
+            //                     let phoneCode = this.formData.phone.slice(0,2);
+            //                     console.log(phoneCode);
+            //                 }
+            //             }, response => {
+            //                 this.$swal({
+            //                     toast: true,
+            //                     position: 'bottom-end',
+            //                     showConfirmButton: false,
+            //                     timer: 4000,
+            //                     type: 'error',
+            //                     title: response.data.message
+            //                 })
+            //             }
+            //         )
+            // },
             saveData() {
                 let data = {
                     phone: this.formData.phone,
