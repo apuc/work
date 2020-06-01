@@ -6,6 +6,7 @@ import store from './store';
 import ImageUploader from "vue-image-upload-resize";
 import VueResource from 'vue-resource';
 import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import VueTelInput from 'vue-tel-input';
 
 Vue.use(ImageUploader);
