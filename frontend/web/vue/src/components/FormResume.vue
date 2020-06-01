@@ -174,8 +174,8 @@
 			},
             saveData() {
                 let data = {
-					birth_date: this.formData.birth_date,
-					phone: this.formData.phone,
+					// birth_date: this.formData.birth_date,
+					// phone: this.formData.phone,
 					city_id: this.formData.resumeCity,
                     image: {},
                     title: this.formData.careerObjective,

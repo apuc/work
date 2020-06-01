@@ -66,7 +66,7 @@
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id + '?expand=employment-type,category')
                 .then(response => {
                         this.dataVacancy = response.data;
-                        this.formData.phone = response.data.phone;
+                        // this.formData.phone = response.data.phone;
                         this.formData.vacancyCity = response.data.city_id;
                         this.formData.companyName = response.data.company_id;
                         this.formData.category.mainCategoriesVacancy = response.data.main_category_id;
@@ -120,7 +120,7 @@
         methods: {
             saveData() {
                 let data = {
-                    phone: this.formData.phone,
+                    // phone: this.formData.phone,
                     city_id: this.formData.vacancyCity,
                     company_id: this.formData.companyName,
                     main_category_id: this.formData.category.mainCategoriesVacancy,

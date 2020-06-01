@@ -132,7 +132,7 @@
                 .then(response => {
                         this.dataResume = response.data;
 
-						this.formData.phone = response.data.phone;
+						// this.formData.phone = response.data.phone;
 
                         this.formData.resumeCity = response.data.city_id;
                         if (response.data.image_url) {
@@ -192,7 +192,7 @@
         methods: {
             saveData() {
                 let data = {
-					phone: this.formData.phone,
+					// phone: this.formData.phone,
 					city_id: this.formData.resumeCity,
                     image: {},
                     title: this.formData.careerObjective,

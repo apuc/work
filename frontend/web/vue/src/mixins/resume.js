@@ -5,8 +5,8 @@ const resume = {
       hasImage: false,
       image: null,
       formData: {
-        birth_date: '',
-        phone: '',
+        // birth_date: '',
+        // phone: '',
         resumeCity: '',
         image_url: '',
         careerObjective: '',

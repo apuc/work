@@ -4,7 +4,7 @@ const vacancy = {
       dataVacancy: [],
       lengthCompany: 0,
       formData: {
-        phone: '',
+        // phone: '',
         vacancyCity: '',
         companyName: [],
         category: {
