@@ -99,7 +99,7 @@ class Resume extends WorkActiveRecord
         return [
             [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'notification_status', 'hot', 'city_id', 'birth_date', 'phone'], 'integer'],
             [['title', 'image_url', 'skype', 'instagram', 'facebook', 'vk'], 'string', 'max' => 255],
-            [['description','string'], 'string'],
+            [['description'], 'string'],
             [['min_salary', 'max_1salary'], 'safe'],
             [['employer_id', 'title'], 'required'],
         ];

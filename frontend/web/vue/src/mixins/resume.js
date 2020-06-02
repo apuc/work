@@ -5,9 +5,9 @@ const resume = {
       hasImage: false,
       image: null,
       formData: {
-        // birth_date: '',
-        // phone: '',
-        resumeCity: '',
+        birth_date: '',
+        phone: '',
+        resumeCity: null,
         image_url: '',
         careerObjective: '',
         categoriesResume: [],
@@ -43,7 +43,32 @@ const resume = {
         },
         dutiesSelect: [],
         aboutMe: '',
-        hideResume: false
+        hideResume: false,
+        phoneValid: false
+      },
+      defaultCountry: {
+        iso2: '',
+        dialCode: ''
+      },
+      allCountries: [
+        {
+          areaCodes: null,
+          dialCode: "380",
+          iso2: "UA",
+          name: "Ukraine (Україна)",
+          priority: 0
+        },
+        {
+          areaCodes: null,
+          dialCode: "7",
+          iso2: "RU",
+          name: "Russia (Россия)",
+          priority: 0
+        }
+      ],
+      phone: {
+        text: '',
+        valid: false,
       },
       valid: false
     };

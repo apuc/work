@@ -19,6 +19,17 @@
                 value="tab-1"
         >
             <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" >
+                <vue-tel-input :placeholder="'Номер телефона'"
+                               :defaultCountry="defaultCountry.iso2"
+                               v-model="formData.phone"
+                               :allCountries="allCountries"
+                               :validCharactersOnly="true"
+                               :required="true"
+                               :inputOptions="{ showDialCode: true, tabindex: 0 }"
+                               @country-changed="changeCountry"
+                               @input="onInput"
+                ></vue-tel-input>
+                <p class="custom-error">{{ phone.text }}</p>
             </FormTemplate>
         </v-tab-item>
 
@@ -26,8 +37,6 @@
                 value="tab-2"
         >
                 <NewPassword></NewPassword>
-<!--            <FormTemplate :paramsFile="getFormDataNewPass()" v-model="formDataNewPass" :sendForm="saveDataNewPass" >-->
-<!--            </FormTemplate>-->
         </v-tab-item>
     </v-tabs>
 
@@ -71,6 +80,41 @@
                 )
         },
         methods: {
+            changeCountry(data) {
+                if (data.iso2 === 'UA') {
+                    this.defaultCountry.iso2 = data.iso2;
+                    this.defaultCountry.dialCode = data.dialCode;
+                }
+                if (data.iso2 === 'RU') {
+                    this.defaultCountry.iso2 = data.iso2;
+                    this.defaultCountry.dialCode = data.dialCode;
+                }
+            },
+            onInput() {
+                this.phone.valid = false;
+                if (this.defaultCountry.iso2 === 'UA') {
+                    if (this.formData.phone.length === 16) {
+                        this.phone.text = '';
+                        this.phone.valid = true;
+                        this.formData.phoneValid = true;
+                    } else {
+                        this.phone.text = 'Вы ввели не верный номер телефона';
+                        this.phone.valid = false;
+                        this.formData.phoneValid = false;
+                    }
+                }
+                if (this.defaultCountry.iso2 === 'RU') {
+                    if (this.formData.phone.length === 16) {
+                        this.phone.text = '';
+                        this.phone.valid = true;
+                        this.formData.phoneValid = true;
+                    } else {
+                        this.phone.text = 'Вы ввели не верный номер телефона';
+                        this.phone.valid = false;
+                        this.formData.phoneValid = false;
+                    }
+                }
+            },
             saveData() {
                 let data = {
                     first_name: this.formData.first_name,

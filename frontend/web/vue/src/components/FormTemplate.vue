@@ -28,6 +28,8 @@
       {{ input.text }}
     </component>
 
+    <slot name="bottom" />
+
     <v-btn
       :disabled="!valid"
       color="success"
@@ -63,8 +65,9 @@
         btn.disabled = true;
         let valid = this.$refs.form.validate();
         this.$emit('val', valid);
-        if (valid) {
+        if (valid && this.value.phoneValid) {
           this.snackbar = true;
+          btn.disabled = false;
           this.sendForm();
         }
       },
@@ -100,5 +103,11 @@
   }
   .vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-right .vicp-preview .vicp-preview-item span {
     left: 0;
+  }
+  .custom-error {
+    height: 18px;
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: #ff5252;
   }
 </style>

@@ -7,17 +7,10 @@ import DutiesSelect from "../components/DutiesSelect";
 import DatePicker from "../components/DatePicker";
 
 export default {
-  // birth_date: Object.assign({}, Field, {
-  //   rules: [],
-  //   component: DatePicker
-  // }),
-  // phone: Object.assign({}, Field, {
-  //   name: 'phone',
-  //   label: 'Номер телефона',
-  //   rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
-  //   component: VTextField,
-  //   // maskPhone: '+## (###) ## - ## - ###'
-  // }),
+  birth_date: Object.assign({}, Field, {
+    rules: [],
+    component: DatePicker
+  }),
   resumeCity: Object.assign({}, Field, {
     name: 'resumeCity',
     label: 'Город*',

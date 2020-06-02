@@ -3,14 +3,6 @@ import {VTextarea, VTextField, VSelect, VAutocomplete} from 'vuetify/lib'
 import Category from "../components/Category";
 
 export default {
-  // phone: Object.assign({}, Field, {
-  //   name: 'phone',
-  //   label: 'Номер телефона',
-  //   rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
-  //   component: VTextField,
-  //   prefix: '+'
-  //   // maskPhone: '+## (###) ## - ## - ###'
-  // }),
   vacancyCity: Object.assign({}, Field, {
     name: 'vacancyCity',
     label: 'Город*',
