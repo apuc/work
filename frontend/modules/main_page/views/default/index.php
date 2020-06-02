@@ -44,7 +44,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                         <img src="/images/logo-main-small.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
                     </a>
-                    <?php if ($user->status == 1): ?>
+                    <?php if ($user && $user->status == 1): ?>
                     <a class="nhome__nav-item" href="/employer">Работодателю</a>
                     <?php endif; ?>
                     <div class="geolocation">
@@ -57,9 +57,9 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <?php if ($user->status == 1): ?>
+                    <?php if ($user && $user->status == 1): ?>
                     <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>
-                    <?php elseif($user->status == 2): ?>
+                    <?php elseif($user && $user->status == 2): ?>
                     <a class="nhome__nav-item" href="<?= Vacancy::getSearchPageUrl() ?>">Поиск вакансий</a>
                     <?php else: ?>
                     <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>

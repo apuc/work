@@ -28,6 +28,13 @@ class m200526_140725_alter_phone_number extends Migration
             if(strpos($phone->number, '071') === 0)
                 $phone->number = $this->str_replace_first('071', '+38071', $phone->number);
 
+            if(strpos($phone->number, '38063') === 0)
+                $phone->number = $this->str_replace_first('38063', '+38063', $phone->number);
+            if(strpos($phone->number, '8063') === 0)
+                $phone->number = $this->str_replace_first('8063', '+38063', $phone->number);
+            if(strpos($phone->number, '063') === 0)
+                $phone->number = $this->str_replace_first('063', '+38063', $phone->number);
+
             if(strpos($phone->number, '38095') === 0)
                 $phone->number = $this->str_replace_first('38095', '+38095', $phone->number);
             if(strpos($phone->number, '8095') === 0)

@@ -111,8 +111,8 @@ class Vacancy extends WorkActiveRecord
     {
         return [
             [['company_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'work_experience', 'created_at', 'updated_at', 'update_time', 'hot', 'notification_status', 'city_id', 'main_category_id', 'publisher_id', 'get_update_id', 'views'], 'integer'],
-            [['post', 'education', 'video', 'address', 'home_number'], 'string', 'max' => 255],
-            [['responsibilities', 'qualification_requirements', 'working_conditions', 'description', 'phone'], 'string'],
+            [['post', 'education', 'video', 'address', 'home_number', 'phone'], 'string', 'max' => 255],
+            [['responsibilities', 'qualification_requirements', 'working_conditions', 'description'], 'string'],
             [['company_id', 'post', 'main_category_id'], 'required'],
         ];
     }
