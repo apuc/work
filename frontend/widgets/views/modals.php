@@ -81,7 +81,7 @@ use yii\widgets\ActiveForm;
                 ['inputOptions' => ['class' => 'jsPass', 'placeholder' => 'Пароль']])
                 ->passwordInput()->label(false);
             ?>
-            <?php //$form->field($registration_form, 'status')->radioList( [1 => 'Работодатель', 2 => 'Соискатель'] );?>
+            <?= $form->field($registration_form, 'status')->radioList( [10 => 'Соискатель', 20 => 'Работодатель',  21 => 'Частное лицо'] );?>
             <?= Html::submitButton('Зарегистрироваться', ['class' => 'jsBtnReg jsBtn']) ?>
             <?php ActiveForm::end(); ?>
             <div class="modal-style__text"><span>Есть учетная запись?</span>

@@ -71,7 +71,7 @@ class Employer extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['resume', 'user', 'phone'];
+        return ['resume', 'user', 'phone', 'companiesCount'];
     }
 
     /**
@@ -124,5 +124,10 @@ class Employer extends WorkActiveRecord
     {
         if($this->birth_date===null) return 0;
         return date_diff(new DateTime($this->birth_date), date_create('now'))->y;
+    }
+
+    public function getCompaniesCount()
+    {
+        return (int)Company::find()->where(['owner'=>$this->owner])->count();
     }
 }
