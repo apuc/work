@@ -8,6 +8,7 @@
 /* @var $countries Country[] */
 /* @var $vacancy_count integer */
 /* @var $current_country Country|false */
+/* @var $user \common\models\User */
 
 /* @var $employer Employer */
 
@@ -43,7 +44,9 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                         <img src="/images/logo-main-small.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
                     </a>
+                    <?php if ($user && $user->status == 1): ?>
                     <a class="nhome__nav-item" href="/employer">Работодателю</a>
+                    <?php endif; ?>
                     <div class="geolocation">
                         <img src="/images/geolocation.png" alt="Геолокация">
                         <div class="country-select">
@@ -64,8 +67,14 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             </ul>
                         </div>
                     </div>
+                    <?php if ($user && $user->status == 1): ?>
+                    <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>
+                    <?php elseif($user && $user->status == 2): ?>
+                    <a class="nhome__nav-item" href="<?= Vacancy::getSearchPageUrl() ?>">Поиск вакансий</a>
+                    <?php else: ?>
                     <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>
                     <a class="nhome__nav-item" href="<?= Vacancy::getSearchPageUrl() ?>">Поиск вакансий</a>
+                    <?php endif; ?>
                     <?php if (Yii::$app->user->isGuest): ?>
                         <button class="nhome__nav-item nav-btn jsLogin">
                             Вход
@@ -86,7 +95,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                                 <?php $messages = Yii::$app->user->identity->unreadMessages ?>
                                 <a class="nhome__nav-item" href="<?= Url::to(['/personal_area/default/index']) ?>">Личный
                                     кабинет</a>
-                                <a class="nhome__nav-item" href="<?= Url::to(['/personal-area/my-message']) ?>">Сообщения <?= $messages > 0 ? "($messages)" : "" ?></a>
+                                <a class="nhome__nav-item" href="<?= Url::to(['/personal-area/my-message']) ?>">Отклики <?= $messages > 0 ? "($messages)" : "" ?></a>
                                 <a class="nhome__nav-item" href="/personal-area/add-vacancy">Добавить вакансию</a>
                                 <a class="nhome__nav-item" href="/personal-area/add-resume">Добавить резюме</a>
                                 <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>

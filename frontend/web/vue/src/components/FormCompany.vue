@@ -80,6 +80,20 @@
                 </label>
             </image-uploader>
 
+			<template slot="bottom">
+				<vue-tel-input :placeholder="'Номер телефона'"
+							   :defaultCountry="defaultCountry.iso2"
+							   v-model="formData.companyPhone"
+							   :allCountries="allCountries"
+							   :validCharactersOnly="true"
+							   :required="true"
+							   :inputOptions="{ showDialCode: true, tabindex: 0 }"
+							   @country-changed="changeCountry"
+							   @input="onInput"
+				></vue-tel-input>
+				<p class="custom-error">{{ phone.text }}</p>
+			</template>
+
         </FormTemplate>
     </div>
 </template>
@@ -103,6 +117,41 @@
             this.getUserData();
         },
         methods: {
+			changeCountry(data) {
+				if (data.iso2 === 'UA') {
+					this.defaultCountry.iso2 = data.iso2;
+					this.defaultCountry.dialCode = data.dialCode;
+				}
+				if (data.iso2 === 'RU') {
+					this.defaultCountry.iso2 = data.iso2;
+					this.defaultCountry.dialCode = data.dialCode;
+				}
+			},
+			onInput() {
+				this.phone.valid = false;
+				if (this.defaultCountry.iso2 === 'UA') {
+					if (this.formData.companyPhone.length === 16) {
+						this.phone.text = '';
+						this.phone.valid = true;
+						this.formData.phoneValid = true;
+					} else {
+						this.phone.text = 'Вы ввели не верный номер телефона';
+						this.phone.valid = false;
+						this.formData.phoneValid = false;
+					}
+				}
+				if (this.defaultCountry.iso2 === 'RU') {
+					if (this.formData.companyPhone.length === 16) {
+						this.phone.text = '';
+						this.phone.valid = true;
+						this.formData.phoneValid = true;
+					} else {
+						this.phone.text = 'Вы ввели не верный номер телефона';
+						this.phone.valid = false;
+						this.formData.phoneValid = false;
+					}
+				}
+			},
             saveCheck() {
                 if (this.image === null) {
                     this.$swal({
@@ -175,6 +224,15 @@
                             this.formData.contactPerson = response.data[0].first_name + ' ' + response.data[0].second_name;
                             if (response.data[0].phone != null) {
                                 this.formData.companyPhone = response.data[0].phone.number;
+								if (this.formData.companyPhone.length === 16) {
+									this.phone.text = '';
+									this.phone.valid = true;
+									this.formData.phoneValid = true;
+								} else {
+									this.phone.text = 'Вы ввели не верный номер телефона';
+									this.phone.valid = false;
+									this.formData.phoneValid = false;
+								}
                             }
                         }, response => {
                             this.$swal({

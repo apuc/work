@@ -377,7 +377,17 @@ $(document).ready(function () {
     });
   }
 
-
+  if(window.innerWidth < 992) {
+    $(".jsCitiesBtn .part__head").next().hide();
+    $(".jsCitiesBtn .part__head").click(function () {
+      if ($(this).hasClass("open-services-mob")) {
+        $(".jsCitiesBtn .part__head").removeClass("open-services-mob").next().slideUp()
+      } else {
+        $(".jsCitiesBtn .part__head.open-services-mob").not(this).removeClass("open-services-mob").next().slideUp();
+        $(this).addClass(" open-services-mob").next().slideToggle();
+      }
+    })
+  }
 });
 
 if ($('.jsCitiesSelect').length > 0) {

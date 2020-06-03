@@ -25,11 +25,4 @@ export default {
     rules: [v => /.+@.+/.test(v) || 'Email должен быть правильным'],
     component: VTextField
   }),
-  phone: Object.assign({}, Field, {
-    name: 'phone',
-    label: 'Номер телефона',
-    rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
-    component: VTextField,
-    // maskPhone: '+## (###) ## - ## - ###'
-  }),
 }

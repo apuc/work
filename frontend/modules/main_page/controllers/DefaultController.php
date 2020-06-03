@@ -8,6 +8,7 @@ use common\models\City;
 use common\models\Country;
 use common\models\Employer;
 use common\models\Professions;
+use common\models\User;
 use common\models\Vacancy;
 use Yii;
 use yii\helpers\Url;
@@ -58,6 +59,8 @@ class DefaultController extends Controller
             Yii::$app->cache->set("main_page_vacancy_count", $vacancy_count, 3600);
         }
         $employer = \Yii::$app->user->isGuest?null:Employer::find()->select(['first_name', 'second_name'])->where(['user_id'=>\Yii::$app->user->id])->one();
+
+        $user = User::find()->where(['id' => \Yii::$app->user->id])->one();
         return $this->render('index', [
             'categories' => $categories,
             'professions' => $professions,
@@ -66,7 +69,8 @@ class DefaultController extends Controller
             'cities' => $cities,
             'countries' => $countries,
             'vacancy_count' => $vacancy_count,
-            'current_country' => $current_country
+            'current_country' => $current_country,
+            'user' => $user
         ]);
     }
 

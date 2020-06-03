@@ -80,6 +80,17 @@
 				</span>
             </label>
         </image-uploader>
+		<vue-tel-input :placeholder="'Номер телефона'"
+					   :defaultCountry="defaultCountry.iso2"
+					   v-model="formData.phone"
+					   :allCountries="allCountries"
+					   :validCharactersOnly="true"
+					   :required="true"
+					   :inputOptions="{ showDialCode: true, tabindex: 0 }"
+					   @country-changed="changeCountry"
+					   @input="onInput"
+		></vue-tel-input>
+		<p class="custom-error">{{ phone.text }}</p>
 
     </FormTemplate>
 </template>
@@ -93,44 +104,19 @@
         name: 'FormResume',
         mixins: [Resume],
         components: {FormTemplate},
-        mounted() {
+		created() {
+			this.getEmploymentType();
+			this.getCity();
+		},
+		mounted() {
             document.title = this.$route.meta.title;
-
-            this.getEmploymentType()
-                .then(response => {
-                    FormResume.categoriesResume.items = response.data;
-                    for (let i = 0; i < response.data.length; i++) {
-                        this.$set(FormResume.categoriesResume.items, i, response.data[i]);
-                    }
-                }, response => {
-                    this.$swal({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        type: 'error',
-                        title: response.data.message
-                    })
-                });
-            this.getCity().then(response => {
-                FormResume.resumeCity.items = response.data.map(resumeCity => ({
-                    id: resumeCity.id,
-                    name: resumeCity.name,
-                }));
-            }, response => {
-                this.$swal({
-                    toast: true,
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 4000,
-                    type: 'error',
-                    title: response.data.message
-                })
-            });
 
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skills,category')
                 .then(response => {
                         this.dataResume = response.data;
+
+						this.formData.phone = response.data.phone;
+						this.formData.birth_date = response.data.birth_date;
 
                         this.formData.resumeCity = response.data.city_id;
                         if (response.data.image_url) {
@@ -188,8 +174,45 @@
                 )
         },
         methods: {
+			changeCountry(data) {
+				if (data.iso2 === 'UA') {
+					this.defaultCountry.iso2 = data.iso2;
+					this.defaultCountry.dialCode = data.dialCode;
+				}
+				if (data.iso2 === 'RU') {
+					this.defaultCountry.iso2 = data.iso2;
+					this.defaultCountry.dialCode = data.dialCode;
+				}
+			},
+			onInput() {
+				this.phone.valid = false;
+				if (this.defaultCountry.iso2 === 'UA') {
+					if (this.formData.phone.length === 16) {
+						this.phone.text = '';
+						this.phone.valid = true;
+						this.formData.phoneValid = true;
+					} else {
+						this.phone.text = 'Вы ввели не верный номер телефона';
+						this.phone.valid = false;
+						this.formData.phoneValid = false;
+					}
+				}
+				if (this.defaultCountry.iso2 === 'RU') {
+					if (this.formData.phone.length === 16) {
+						this.phone.text = '';
+						this.phone.valid = true;
+						this.formData.phoneValid = true;
+					} else {
+						this.phone.text = 'Вы ввели не верный номер телефона';
+						this.phone.valid = false;
+						this.formData.phoneValid = false;
+					}
+				}
+			},
             saveData() {
                 let data = {
+					phone: this.formData.phone,
+					birth_date: this.formData.birth_date,
 					city_id: this.formData.resumeCity,
                     image: {},
                     title: this.formData.careerObjective,
@@ -235,11 +258,40 @@
             getFormData() {
                 return FormResume;
             },
-            async getEmploymentType() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`)
+            getEmploymentType() {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`).then(response => {
+					FormResume.categoriesResume.items = response.data;
+					for (let i = 0; i < response.data.length; i++) {
+						this.$set(FormResume.categoriesResume.items, i, response.data[i]);
+					}
+				}, response => {
+					this.$swal({
+						toast: true,
+						position: 'bottom-end',
+						showConfirmButton: false,
+						timer: 4000,
+						type: 'error',
+						title: response.data.message
+					})
+				});
             },
-            async getCity() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`);
+            getCity() {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`).then(response => {
+					FormResume.resumeCity.items = response.data.map(resumeCity => ({
+						id: resumeCity.id,
+						name: resumeCity.name,
+					}));
+					this.$forceUpdate();
+				}, response => {
+					this.$swal({
+						toast: true,
+						position: 'bottom-end',
+						showConfirmButton: false,
+						timer: 4000,
+						type: 'error',
+						title: response.data.message
+					})
+				});
             },
             setImage: function (output) {
                 this.hasImage = true;
@@ -261,6 +313,7 @@
                 this.dataResume.min_salary = '';
             }
             const tmpResume = {
+            	'phone': this.formData.phone,
                 'city': this.dataResume.city_id,
                 'title': this.dataResume.title,
                 'category': this.dataResume.category,
@@ -274,6 +327,7 @@
                 'skills': this.dataResume.skills,
             };
             const tmpFormData = {
+            	'phone': this.formData.phone,
                 'city': this.formData.resumeCity,
                 'title': this.formData.careerObjective,
                 'category': this.formData.categoriesResume,

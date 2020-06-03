@@ -11,6 +11,7 @@ use dektrium\user\models\RegistrationForm;
 use dektrium\user\models\Token;
 use dektrium\user\models\User;
 use dektrium\user\Module;
+use frontend\models\user\RegUserForm;
 use Yii;
 use yii\base\ViewContextInterface;
 use yii\web\NotFoundHttpException;
@@ -29,7 +30,7 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
     public function actionRegister()
     {
         /** @var RegistrationForm $model */
-        $model = \Yii::createObject(RegistrationForm::className());
+        $model = \Yii::createObject(RegUserForm::className());
         $event = $this->getFormEvent($model);
 
         $this->trigger(self::EVENT_BEFORE_REGISTER, $event);

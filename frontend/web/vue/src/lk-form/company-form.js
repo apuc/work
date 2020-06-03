@@ -56,11 +56,4 @@ export default {
     counter: 50,
     component: VTextField
   }),
-  companyPhone: Object.assign({}, Field, {
-    name: 'companyPhone',
-    label: 'Телефон',
-    rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
-    component: VTextField,
-    // maskPhone: '+## (###) ## - ## - ###'
-  }),
 }

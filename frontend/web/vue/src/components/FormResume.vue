@@ -1,22 +1,22 @@
 <template>
     <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
 
-        <image-uploader
-                class="input-file"
-                :preview="true"
-                :className="['fileinput', { 'fileinput--loaded': hasImage }]"
-                :debug="1"
-                doNotResize="gif"
-                :autoRotate="true"
-                outputFormat="verbose"
-                @input="setImage"
-        >
-            <label for="fileInput" slot="upload-label">
+		<image-uploader
+				class="input-file"
+				:preview="true"
+				:className="['fileinput', { 'fileinput--loaded': hasImage }]"
+				:debug="1"
+				doNotResize="gif"
+				:autoRotate="true"
+				outputFormat="verbose"
+				@input="setImage"
+		>
+			<label for="fileInput" slot="upload-label">
         <span class="upload-caption">
           Выбрать фото
           <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-               x="0px" y="0px"
-               viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+			   x="0px" y="0px"
+			   viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 						<g>
 							<g>
 								<g>
@@ -76,8 +76,34 @@
 						</g>
 					</svg>
         </span>
-            </label>
-        </image-uploader>
+			</label>
+		</image-uploader>
+
+<!--		<div class="work-image-uploader">-->
+<!--			<button type="button" class="btn" @click="toggleShow">Выбрать фото</button>-->
+<!--			<my-upload field="img"-->
+<!--					   @crop-success="cropSuccess"-->
+<!--					   v-model="show"-->
+<!--					   :width="300"-->
+<!--					   :height="300"-->
+<!--					   img-format="png"-->
+<!--					   lang-type="ru"-->
+<!--					   no-square="true"-->
+<!--			>-->
+<!--			</my-upload>-->
+<!--			<img class="my-avatar" :src="formData.image_url">-->
+<!--		</div>-->
+		<vue-tel-input :placeholder="'Номер телефона'"
+					   :defaultCountry="defaultCountry.iso2"
+					   v-model="formData.phone"
+					   :allCountries="allCountries"
+					   :validCharactersOnly="true"
+					   :required="true"
+					   :inputOptions="{ showDialCode: true, tabindex: 0 }"
+					   @country-changed="changeCountry"
+					   @input="onInput"
+		></vue-tel-input>
+		<p class="custom-error">{{ phone.text }}</p>
 
     </FormTemplate>
 </template>
@@ -86,48 +112,93 @@
     import FormResume from '../lk-form/resume-form';
     import FormTemplate from "./FormTemplate";
     import Resume from "../mixins/resume";
-    import FormVacancy from "../lk-form/vacancy-form";
+	import myUpload from 'vue-image-crop-upload';
 
     export default {
         name: 'FormResume',
         mixins: [Resume],
-        components: {FormTemplate},
+        components: {FormTemplate, myUpload},
+		created() {
+			this.getEmploymentType();
+			this.getUserData();
+			this.getCity();
+		},
         mounted() {
             document.title = this.$route.meta.title;
-            this.getEmploymentType().then(response => {
-                FormResume.categoriesResume.items = response.data.map(resume => ({
-                    id: resume.id,
-                    name: resume.name,
-                }));
-            }, response => {
-                this.$swal({
-                    toast: true,
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 4000,
-                    type: 'error',
-                    title: response.data.message
-                })
-            });
-            this.getCity().then(response => {
-                FormResume.resumeCity.items = response.data.map(resumeCity => ({
-                    id: resumeCity.id,
-                    name: resumeCity.name,
-                }));
-            }, response => {
-				this.$swal({
-					toast: true,
-					position: 'bottom-end',
-					showConfirmButton: false,
-					timer: 4000,
-					type: 'error',
-					title: response.data.message
-				})
-			});
         },
         methods: {
+			toggleShow() {
+				this.show = !this.show;
+			},
+			cropSuccess(imgDataUrl, field){
+				this.formData.image_url = imgDataUrl;
+			},
+			changeCountry(data) {
+				if (data.iso2 === 'UA') {
+					this.defaultCountry.iso2 = data.iso2;
+					this.defaultCountry.dialCode = data.dialCode;
+				}
+				if (data.iso2 === 'RU') {
+					this.defaultCountry.iso2 = data.iso2;
+					this.defaultCountry.dialCode = data.dialCode;
+				}
+			},
+			onInput() {
+				this.phone.valid = false;
+				if (this.defaultCountry.iso2 === 'UA') {
+					if (this.formData.phone.length === 16) {
+						this.phone.text = '';
+						this.phone.valid = true;
+						this.formData.phoneValid = true;
+					} else {
+						this.phone.text = 'Вы ввели не верный номер телефона';
+						this.phone.valid = false;
+						this.formData.phoneValid = false;
+					}
+				}
+				if (this.defaultCountry.iso2 === 'RU') {
+					if (this.formData.phone.length === 16) {
+						this.phone.text = '';
+						this.phone.valid = true;
+						this.formData.phoneValid = true;
+					} else {
+						this.phone.text = 'Вы ввели не верный номер телефона';
+						this.phone.valid = false;
+						this.formData.phoneValid = false;
+					}
+				}
+			},
+			getUserData() {
+				this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
+						.then(response => {
+									if (response.data[0].phone != null) {
+										this.formData.phone = response.data[0].phone.number;
+										if (this.formData.phone.length === 16) {
+											this.phone.text = '';
+											this.phone.valid = true;
+											this.formData.phoneValid = true;
+										} else {
+											this.phone.text = 'Вы ввели не верный номер телефона';
+											this.phone.valid = false;
+											this.formData.phoneValid = false;
+										}
+									}
+								}, response => {
+									this.$swal({
+										toast: true,
+										position: 'bottom-end',
+										showConfirmButton: false,
+										timer: 4000,
+										type: 'error',
+										title: response.data.message
+									})
+								}
+						)
+			},
             saveData() {
                 let data = {
+					phone: this.formData.phone,
+					birth_date: this.formData.birth_date,
 					city_id: this.formData.resumeCity,
                     image: {},
                     title: this.formData.careerObjective,
@@ -175,11 +246,40 @@
             getFormData() {
                 return FormResume;
             },
-            async getEmploymentType() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`);
+            getEmploymentType() {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`).then(response => {
+					FormResume.categoriesResume.items = response.data.map(resume => ({
+						id: resume.id,
+						name: resume.name,
+					}));
+				}, response => {
+					this.$swal({
+						toast: true,
+						position: 'bottom-end',
+						showConfirmButton: false,
+						timer: 4000,
+						type: 'error',
+						title: response.data.message
+					})
+				});
             },
-            async getCity() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`);
+            getCity() {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`).then(response => {
+					FormResume.resumeCity.items = response.data.map(resumeCity => ({
+						id: resumeCity.id,
+						name: resumeCity.name,
+					}));
+					this.$forceUpdate();
+				}, response => {
+					this.$swal({
+						toast: true,
+						position: 'bottom-end',
+						showConfirmButton: false,
+						timer: 4000,
+						type: 'error',
+						title: response.data.message
+					})
+				});
             },
             setImage: function (output) {
                 this.hasImage = true;
@@ -190,7 +290,7 @@
             },
         },
         beforeRouteLeave(to, from, next) {
-            if ((this.formData.resumeCity.length > 0 || this.formData.careerObjective.length > 0 || this.formData.categoriesResume.length > 0) && !this.valid) {
+            if ((this.formData.careerObjective.length > 0 || this.formData.categoriesResume.length > 0) && !this.valid) {
                 next(false);
                 this.$swal({
                     title: 'Вы точно не хотите сохранить резюме?',
