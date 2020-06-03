@@ -7767,6 +7767,74 @@ main {
     font-weight: 700;
 }
 
+.country-select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    width: 200px;
+    height: 34px;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 16px;
+    color: #999;
+    font-size: 16px;
+}
+
+.country-select-active {
+    border-radius: 16px 16px 0 0;
+}
+
+.country-select span {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+}
+
+.country-select span b {
+    border-color: #888 transparent transparent transparent;
+    border-style: solid;
+    border-width: 5px 4px 0 4px;
+    height: 0;
+    right: 5px;
+    margin-left: -4px;
+    margin-top: -2px;
+    position: absolute;
+    top: 50%;
+    width: 0;
+}
+
+.country-select ul {
+    position: absolute;
+    top: 32px;
+    left: -1px;
+    display: none;
+    width: 200px;
+    padding: 0;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    list-style: none;
+    overflow: hidden;
+    z-index: 20;
+}
+
+.country-select ul li a {
+    display: block;
+    width: 100%;
+    padding: 5px 10px;
+    color: #243b9b;
+}
+
+.country-select ul li:hover {
+    background-color: #5897fb;
+}
+
+.country-select ul li:hover a {
+    color: #ffffff;
+}
+
 @media (max-width: 1500px) and (min-width: 576px){
     .home-card.slick-slide {
         height: 200px !important;

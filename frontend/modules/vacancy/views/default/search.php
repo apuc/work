@@ -10,13 +10,13 @@
 /* @var $canonical_rel string */
 
 use common\classes\MoneyFormat;
+use common\helpers\StringHelper;
 use common\models\Category;
 use common\models\City;
 use common\models\EmploymentType;
 use common\models\Vacancy;
 use frontend\assets\MainAsset;
 use frontend\modules\vacancy\classes\VacancyMetaFormer;
-use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
@@ -252,8 +252,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                                      role="presentation"
                                 />
                             </div>
-                            <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$vacancy->main_category_id])?>" class="single-card__title mt5">
-                                <?= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) ?>
+                            <!--<a href="<?/*=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$vacancy->main_category_id])*/?>" class="single-card__title mt5">
+                                <?/*= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) */?>
+                            </a>-->
+                            <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title mt5">
+                                <?= StringHelper::mb_ucfirst( $vacancy->post , MB_CASE_TITLE) ?>
                             </a>
                             <div class="single-card__company">
                                 <p><?= $vacancy->company->name ?>
@@ -311,7 +314,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                                     <?php endif ?>
                                 </div>
                                 <?php if($searchModel->category_ids && count($searchModel->category_ids) === 1):?>
-                                    <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$searchModel->category_ids[0]])?>" class="btn-card btn-red">
+                                   <!-- <a href="<?/*=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$searchModel->category_ids[0]])*/?>" class="btn-card btn-red">
+                                        Посмотреть полностью
+                                    </a>-->
+                                     <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="btn-card btn-red">
                                         Посмотреть полностью
                                     </a>
                                 <?php else: ?>

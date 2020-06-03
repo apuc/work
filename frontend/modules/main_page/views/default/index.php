@@ -22,7 +22,7 @@ use common\models\Resume;
 use common\models\Vacancy;
 use frontend\modules\main_page\classes\MetaFormer;
 use yii\helpers\Html;
-use yii\helpers\StringHelper;
+use common\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\web\View;
 
@@ -49,13 +49,23 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                     <?php endif; ?>
                     <div class="geolocation">
                         <img src="/images/geolocation.png" alt="Геолокация">
-                        <select class="city-header jsCountryHeaderSelect">
-                            <option></option>
-                            <?php foreach ($countries as $country):?>
-                                <option <?= (Yii::$app->request->cookies['country_id'] == (string)$country->id) ? "selected" : '' ?>
-                                        value="<?= $country->id ?>"><?= $country->name ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="country-select">
+                            <span class="jsOpenCountrySelect"><?= $current_country ? $current_country->name : 'Выберите Страну' ?> <b></b></span>
+                            <ul>
+                                <li>
+                                    <a href="/" data-id="" class="jsOpenCountrySelectUrl">
+                                        Выберите Страну
+                                    </a>
+                                </li>
+                                <?php foreach ($countries as $country):?>
+                                    <li>
+                                        <a href="<?= $country->slug ?>" data-id="<?= $country->id ?>" class="jsOpenCountrySelectUrl">
+                                            <?= $country->name ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
                     <?php if ($user && $user->status == 1): ?>
                     <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>
@@ -119,14 +129,23 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 <div class="geolocation">
                     <div class="geolocation__block">
                         <img src="/images/geolocation.png" alt="Геолокация">
-                        <select class="city-header jsCountryHeaderSelect">
-                            <option></option>
-                            <?php /** @var \common\models\City $city */
-                            foreach ($countries as $country):?>
-                                <option <?= (Yii::$app->request->cookies['country_id'] == (string)$country->id) ? "selected" : '' ?>
-                                        value="<?= $country->id ?>"><?= $country->name ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="country-select">
+                            <span class="jsOpenCountrySelect"><?= $current_country ? $current_country->name : 'Выберите Страну' ?> <b></b></span>
+                            <ul>
+                                <li>
+                                    <a href="/" data-id="" class="jsOpenCountrySelectUrl">
+                                        Выберите Страну
+                                    </a>
+                                </li>
+                                <?php foreach ($countries as $country):?>
+                                    <li>
+                                        <a href="<?= $country->slug ?>" data-id="<?= $country->id ?>" class="jsOpenCountrySelectUrl">
+                                            <?= $country->name ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
                     <span class="nhome__form-text">
                         Сейчас на сайте свыше
@@ -200,7 +219,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             </div>
                             <a href="<?= Url::to(['/vacancy/default/view', 'id' => $vacancy->id]) ?>"
                                class="single-card__title"
-                               title="<?= mb_convert_case($vacancy->post, MB_CASE_TITLE) ?>"><?= ucfirst($vacancy->post) ?></a>
+                               title="<?= StringHelper::mb_ucfirst($vacancy->post) ?>"><?= StringHelper::mb_ucfirst($vacancy->post) ?></a>
                             <div class="single-card__info-second">
                                 <span class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd.MM.yyyy, hh:mm') ?></span>
                                 <?php if ($vacancy->views > 0):?>
