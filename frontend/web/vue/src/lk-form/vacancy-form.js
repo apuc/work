@@ -1,5 +1,5 @@
 import Field from '../models/Field';
-import {VTextarea, VTextField, VSelect} from 'vuetify/lib'
+import {VTextarea, VTextField, VSelect, VAutocomplete} from 'vuetify/lib'
 import Category from "../components/Category";
 
 export default {
@@ -7,7 +7,7 @@ export default {
     name: 'vacancyCity',
     label: 'Город*',
     rules: [v => !!v || 'Город обязателен к заполнению'],
-    component: VSelect,
+    component: VAutocomplete,
     items: [
       {
         name: '',
@@ -19,7 +19,7 @@ export default {
     name: 'companyName',
     label: 'Компания*',
     rules: [v => !!v || 'Компания обязателен к заполнению'],
-    component: VSelect,
+    component: VAutocomplete,
     items: [
       {
         name: '',
@@ -122,23 +122,5 @@ export default {
     rules: [],
     counter: 2000,
     component: VTextarea
-  }),
-  vacancyVideo: Object.assign({}, Field, {
-    name: 'vacancyVideo',
-    label: 'Видео о вакансии',
-    rules: [],
-    component: VTextField
-  }),
-  officeAddress: Object.assign({}, Field, {
-    name: 'officeAddress',
-    label: 'Адрес офиса',
-    rules: [],
-    component: VTextField
-  }),
-  houseNumber: Object.assign({}, Field, {
-    name: 'houseNumber',
-    label: 'Номер дома',
-    rules: [],
-    component: VTextField
   }),
 }

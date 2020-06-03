@@ -87,14 +87,14 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                             <?php endif ?>
                         <?php endforeach ?>
                     </div>
-                    <span>Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd.MM.yyyy') ?></span>
+                    <span class="ml0">Добавлено:<br> <?= Yii::$app->formatter->asDate($model->created_at, 'dd.MM.yyyy') ?></span>
                     <div class="single-block__view">
                         <img class="single-block__icon mr5" src="/images/icon-eye.png" alt="Иконка глаз"
                              role="presentation"/>
                         <span><?= $model->views ?></span>
                     </div>
                     <?php if ($model->city0): ?>
-                        <a class="single-block__city d-flex align-items-center ml-auto mt5 mb5"
+                        <a class="single-block__city d-flex align-items-center mt5 mb5"
                            href="<?= Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>">
                             <img class="single-block__icon" src="/images/arr-place.png" alt="Стрелка"
                                  role="presentation"/>

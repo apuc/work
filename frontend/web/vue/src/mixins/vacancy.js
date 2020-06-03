@@ -4,6 +4,7 @@ const vacancy = {
       dataVacancy: [],
       lengthCompany: 0,
       formData: {
+        phone: '',
         vacancyCity: '',
         companyName: [],
         category: {
@@ -20,9 +21,31 @@ const vacancy = {
         experience: '',
         education: '',
         workingConditions: '',
-        vacancyVideo: '',
-        officeAddress: '',
-        houseNumber: '',
+        phoneValid: false
+      },
+      defaultCountry: {
+        iso2: '',
+        dialCode: ''
+      },
+      allCountries: [
+        {
+          areaCodes: null,
+          dialCode: "380",
+          iso2: "UA",
+          name: "Ukraine (Україна)",
+          priority: 0
+        },
+        {
+          areaCodes: null,
+          dialCode: "7",
+          iso2: "RU",
+          name: "Russia (Россия)",
+          priority: 0
+        }
+      ],
+      phone: {
+        text: '',
+        valid: false,
       },
       valid: false
     };
