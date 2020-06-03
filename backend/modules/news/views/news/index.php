@@ -45,7 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'country_id',
                 'value' => function ($model) {
+                if ($model->country){
                     return $model->country->name;
+                }
+                  return '';
                 },
                 'filter' => false,
             ],

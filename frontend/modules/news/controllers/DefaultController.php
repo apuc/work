@@ -28,11 +28,14 @@ class DefaultController extends Controller
             }
             $news = News::find()->where(['country_id' => $model->id])->all();
         }else{
+        $model = null;
         $news = News::find()->all();
         }
-        if ($model){
+        if ($model != null){
             $model1 = $model;
             $model = $model->name;
+        }else{
+            $model1 = $model;
         }
         return $this->render('index', [
             'news' => $news,

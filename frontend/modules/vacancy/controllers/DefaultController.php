@@ -43,7 +43,7 @@ class DefaultController extends Controller
             $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_INACTIVE])->one();
             if($model) {
                 Yii::$app->response->setStatusCode(410);
-                throw new NotFoundHttpException();
+                throw new HttpException(410, 'Вакансия удалена');
             } else
                 throw new NotFoundHttpException();
         }
