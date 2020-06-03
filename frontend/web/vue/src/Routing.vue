@@ -44,7 +44,7 @@
                                 </v-list-tile-title>
                             </template>
                             <template v-if="link.addFlag">
-                                <router-link class="menu-add-link" :to="link.addTo" :title="link.addTitle">
+                                <router-link v-if="link.companiesCount < 1" class="menu-add-link" :to="link.addTo" :title="link.addTitle">
                                     <span>+</span>
                                 </router-link>
                             </template>
@@ -106,7 +106,8 @@
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_vacancy.png',
                         addFlag: true,
                         addTo: '/personal-area/add-vacancy',
-                        addTitle: 'Добавить вакансию'
+                        addTitle: 'Добавить вакансию',
+                        companiesCount: 0
                     },
                     {
                         title: 'Резюме',
@@ -114,7 +115,8 @@
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_resume.png',
                         addFlag: true,
                         addTo: '/personal-area/add-resume',
-                        addTitle: 'Добавить резюме'
+                        addTitle: 'Добавить резюме',
+                        companiesCount: 0
                     },
                     {
                         title: 'Компании',
@@ -122,7 +124,8 @@
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_company.png',
                         addFlag: true,
                         addTo: '/personal-area/add-company',
-                        addTitle: 'Добавить компанию'
+                        addTitle: 'Добавить компанию',
+                        companiesCount: 0
                     },
                     {
                         title: 'Редактировать профиль',
@@ -153,7 +156,7 @@
                 }
             },
             async getUser() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages`)
+                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages,companiesCount`)
             },
         },
         beforeMount() {
@@ -167,6 +170,7 @@
                         this.unreadMessages = response.data[0].user.unreadMessages;
                         this.email = this.email.match(/.+@/)[0];
                         this.email = this.email.slice(0, this.email.length-1);
+                        this.linkMenu[4].companiesCount = response.data[0].companiesCount;
                         localStorage.userId = this.userId;
 
                     }, response => {

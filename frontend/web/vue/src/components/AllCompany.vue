@@ -2,7 +2,7 @@
     <div>
         <v-subheader class="all-head">
             Ваши компании
-            <router-link class="vacancy__link" to="/personal-area/add-company">
+            <router-link v-if="getAllCompany.length <= 1" class="vacancy__link" to="/personal-area/add-company">
                 <v-btn class="vacancy__link">
                     Добавить компанию или частное лицо
                 </v-btn>

@@ -128,6 +128,6 @@ class Employer extends WorkActiveRecord
 
     public function getCompaniesCount()
     {
-        return (int)Company::find()->where(['owner'=>$this->owner])->count();
+        return (int)Company::find()->where(['owner'=>$this->owner])->andWhere(['!=', 'status', 0])->count();
     }
 }
