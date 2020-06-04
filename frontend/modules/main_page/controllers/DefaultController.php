@@ -59,8 +59,6 @@ class DefaultController extends Controller
             Yii::$app->cache->set("main_page_vacancy_count", $vacancy_count, 3600);
         }
         $employer = \Yii::$app->user->isGuest?null:Employer::find()->select(['first_name', 'second_name'])->where(['user_id'=>\Yii::$app->user->id])->one();
-
-        $user = User::find()->where(['id' => \Yii::$app->user->id])->one();
         return $this->render('index', [
             'categories' => $categories,
             'professions' => $professions,
@@ -69,8 +67,7 @@ class DefaultController extends Controller
             'cities' => $cities,
             'countries' => $countries,
             'vacancy_count' => $vacancy_count,
-            'current_country' => $current_country,
-            'user' => $user
+            'current_country' => $current_country
         ]);
     }
 

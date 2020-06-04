@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="companiesCount < 1">
         <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveCheck" @val="valHandler">
 
             <image-uploader
@@ -115,6 +115,7 @@
             Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
             this.inputsDisabled();
             this.getUserData();
+            this.companiesCount = localStorage.companiesCount;
         },
         methods: {
 			changeCountry(data) {

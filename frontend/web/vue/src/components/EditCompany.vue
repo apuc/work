@@ -130,6 +130,7 @@
 							this.formData.companyPhone = '';
 						} else {
 							this.formData.companyPhone = response.data.phone.number;
+							this.formData.phoneValid = true;
 						}
 
 

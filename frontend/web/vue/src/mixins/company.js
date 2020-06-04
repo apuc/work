@@ -1,6 +1,7 @@
 const company = {
   data() {
     return {
+      companiesCount: 0,
       dataCompany: [],
       hasImage: false,
       image: null,
