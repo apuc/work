@@ -175,19 +175,19 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
 <!--                            <button class="btn-card btn-red">Подписаться</button>-->
 <!--                        </form>-->
 <!--                    </div>-->
-
-                    <div class="banner-advertising">
-                        <img src="/images/banner_advertising_image.png" alt="">
-                        <div class="banner-advertising__right">
-                            <h3>Самые актуальные вакансии фирменных магазинов и гипермаркетов “МОЛОКО”</h3>
-                            <div class="banner-advertising__right-bottom">
-                                <img src="/images/banner_logo.png" alt="">
-                                <a href="#" class="btn-card btn-red">
-                                    Посмотреть полностью
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+<!---->
+<!--                    <div class="banner-advertising">-->
+<!--                        <img src="/images/banner_advertising_image.png" alt="">-->
+<!--                        <div class="banner-advertising__right">-->
+<!--                            <h3>Самые актуальные вакансии фирменных магазинов и гипермаркетов “МОЛОКО”</h3>-->
+<!--                            <div class="banner-advertising__right-bottom">-->
+<!--                                <img src="/images/banner_logo.png" alt="">-->
+<!--                                <a href="#" class="btn-card btn-red">-->
+<!--                                    Посмотреть полностью-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
                     <?php if($dataProvider->models):
                         foreach ($dataProvider->models as $vacancy): ?>
