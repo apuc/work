@@ -7927,6 +7927,21 @@ main {
     }
 }
 
+.field-register-form-status {
+    max-width: 420px;
+    width: 100%;
+}
+
+.field-register-form-status label {
+    display: flex;
+    margin: 15px;
+}
+
+.field-register-form-status label input {
+    width: auto;
+    margin: 0 20px 0 0;
+}
+
 /*# sourceMappingURL=styles.css.map */
 
 
