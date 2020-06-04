@@ -116,6 +116,9 @@
                         this.dataResume = response.data;
 
 						this.formData.phone = response.data.phone;
+						if (this.formData.phone.length > 0) {
+							this.formData.phoneValid = true;
+						}
 						this.formData.birth_date = response.data.birth_date;
 
                         this.formData.resumeCity = response.data.city_id;
