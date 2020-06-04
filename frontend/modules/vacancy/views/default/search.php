@@ -148,45 +148,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                         <p>Нет результатов поиска</p>
                     </div>
                     <?php endif ?>
-
-<!--                    <div class="single-card vacancy-day">-->
-<!--                        <img class="vacancy-day__bg-2" src="/images/vacancy_day_bd_2.png" alt="">-->
-<!--                        <img class="vacancy-day__bg-1" src="/images/vacancy_day_bd_1.png" alt="">-->
-<!--                        <div class="single-card__tr">-->
-<!--                        </div>-->
-<!--                        <p class="vacancy-day__head relative-2"><img src="/images/vacancy_day_icon.png" alt=""> Вакансия дня</p>-->
-<!--                        <div class="single-card__header relative-2">-->
-<!--                            <a class="btn-card btn-card-small btn-gray" href="/vacancy/its">ITS</a>-->
-<!--                            <a class="btn-card btn-card-small btn-gray" href="/vacancy/stroitelstvo">Строительство</a>-->
-<!--                            <a class="btn-card btn-card-small btn-gray" href="/vacancy/fdsfsdfsdf">fdsfsdfsdf</a>-->
-<!--                            <a class="btn-card btn-card-small btn-gray" href="/vacancy/sdfsdfsdf">sdfsdfsdf</a>-->
-<!--                            <img class="single-card__image" src="/images/categories/its.svg" alt="Пустая компания" role="presentation">-->
-<!--                        </div>-->
-<!--                        <a href="/vacancy/view/16?referer_category=141" class="single-card__title mt5 relative-2">-->
-<!--                            Asdas                            </a>-->
-<!--                        <div class="single-card__company relative-2">-->
-<!--                            <p>iqwwqdd</p>-->
-<!--                        </div>-->
-<!--                        <div class="single-card__info-second relative-2"><span class="mr10">Добавлено: 21.05.2020</span>-->
-<!--                            <a class="d-flex align-items-center mt5 mb5" href="/vacancy/xmelnickii">-->
-<!--                                <img class="single-card__icon" src="/images/arr-place.png" alt="Стрелка" role="presentation">-->
-<!--                                <span class="ml5">Хмельницкий</span>-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                        <span class="single-card__price relative-2">-->
-<!--                                                                    Зарплата договорная-->
-<!--                                                            </span>-->
-<!--                        <div class="single-card__info relative-2">-->
-<!--                            <p>asdasdsa</p>-->
-<!--                        </div>-->
-<!--                        <div class="single-card__bottom relative-2">-->
-<!--                            <div class="single-card__info__soc">-->
-<!--                            </div>-->
-<!--                            <a href="/vacancy/view/16" class="btn-card btn-red">-->
-<!--                                Посмотреть полностью-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                    </div>-->
 <!---->
 <!--                    <div class="banner-subscription">-->
 <!--                        <img src="/images/banner_image.png" alt="">-->
@@ -230,104 +191,21 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
 
                     <?php if($dataProvider->models):
                         foreach ($dataProvider->models as $vacancy): ?>
-                        <?php /** @var Vacancy $vacancy */ ?>
+
                         <?php
-                        $flag = false;
-                            if($vacancy->company->user->email === "rabotavdnr@mail.ru" && !Yii::$app->user->isguest && Yii::$app->user->identity->email === "test@test.test"){
-                                $flag = true;
-                            }
+                            /** @var Vacancy $vacancy */
+                            $flag = (
+                                    $vacancy->company->user->email === "rabotavdnr@mail.ru"
+                                    && !Yii::$app->user->isguest
+                                    && Yii::$app->user->identity->email === "test@test.test"
+                            )
+                        ?>
+                            <?= $vacancy->is_day_vacancy
+                                ? $this->render('/parts/_vacancy_day', compact('vacancy'))
+                                : $this->render('/parts/_vacancy_standart', compact(['vacancy', 'flag', 'searchModel']))
                             ?>
-                        <div class="single-card" <?=$flag?'style="background-color: #676767"':''?>>
-                            <div class="single-card__tr">
-                            </div>
-                            <div class="single-card__header">
-                                <a class="btn-card btn-card-small btn-gray" href="<?=Vacancy::getSearchPageUrl($vacancy->mainCategory->slug)?>"><?= $vacancy->mainCategory->name ?></a>
-                                <?php foreach ($vacancy->category as $category): ?>
-                                    <?php if($category->id != $vacancy->main_category_id):?>
-                                        <a class="btn-card btn-card-small btn-gray" href="<?=Vacancy::getSearchPageUrl($category->slug)?>"><?= $category->name ?></a>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-                                <img class="single-card__image" src="<?=$vacancy->company->getPhotoOrEmptyPhoto($vacancy->mainCategory)?>"
-                                     alt="<?=$vacancy->company->image_url?('Логотив компани '.$vacancy->company->name):'Пустая компания'?>"
-                                     role="presentation"
-                                />
-                            </div>
-                            <!--<a href="<?/*=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$vacancy->main_category_id])*/?>" class="single-card__title mt5">
-                                <?/*= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) */?>
-                            </a>-->
-                            <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title mt5">
-                                <?= StringHelper::mb_ucfirst( $vacancy->post , MB_CASE_TITLE) ?>
-                            </a>
-                            <div class="single-card__company">
-                                <p><?= $vacancy->company->name ?>
-                                    <?php if($vacancy->company->is_trusted):?>
-                                        <img src="/images/correct.png" alt=Галочка"" id="small-img" role="presentation" title="Проверенная компания"/>
-                                    <?php endif ?>
-                                </p>
-                            </div>
-                            <div class="single-card__info-second"><span
-                                        class="mr10">Добавлено: <?= Yii::$app->formatter->asDate($vacancy->update_time, 'dd.MM.yyyy') ?></span>
-                                <?php if ($vacancy->views > 0):?>
-                                    <div class="single-card__view">
-                                        <img class="single-card__icon mr5" src="/images/icon-eye.png" alt="Иконка глаз"role="presentation"/>
-                                        <span><?= $vacancy->views ?></span>
-                                    </div>
-                                <?php endif ?>
-                                <a class="d-flex align-items-center mt5 mb5" href="<?=Vacancy::getSearchPageUrl(false, $vacancy->city0?$vacancy->city0->slug:false)?>">
-                                    <img class="single-card__icon" src="/images/arr-place.png" alt="Стрелка" role="presentation"/>
-                                    <span class="ml5"><?= $vacancy->city0?$vacancy->city0->name:'' ?></span>
-                                </a>
-                            </div>
-                            <span class="single-card__price">
-                                <?php if($vacancy->min_salary && $vacancy->max_salary):?>
-                                    <?= MoneyFormat::getFormattedAmount($vacancy->min_salary) ?> - <?= MoneyFormat::getFormattedAmount($vacancy->max_salary) ?> ₽
-                                <?php elseif ($vacancy->min_salary):?>
-                                    От <?= MoneyFormat::getFormattedAmount($vacancy->min_salary)?> ₽
-                                <?php elseif ($vacancy->max_salary):?>
-                                    До <?= MoneyFormat::getFormattedAmount($vacancy->max_salary)?> ₽
-                                <?php else: ?>
-                                    Зарплата договорная
-                                <?php endif?>
-                            </span>
-                            <div class="single-card__info">
-                                <p><?= nl2br(StringHelper::truncate($vacancy->responsibilities, 80, '...')) ?></p>
-                            </div>
-                            <div class="single-card__bottom">
-                                <div class="single-card__info__soc">
-                                    <?php if($vacancy->company->hasSocials()): ?>
-                                        <span>Написать работодателю в сетях</span>
-                                        <?php if($vacancy->company->vk):?>
-                                            <a target="_blank" class="vk-bg" rel="nofollow" href="https://vk.com/<?=$vacancy->company->vk?>">
-                                                <img src="/images/vk.svg" alt="Иконка VK" role="presentation"/>
-                                            </a>
-                                        <?php endif ?>
-                                        <?php if($vacancy->company->instagram):?>
-                                            <a target="_blank" class="inst-bg" rel="nofollow" href="https://instagram.com/<?=$vacancy->company->instagram?>">
-                                                <img src="/images/instagram.svg" alt="Иконка instagram" role="presentation"/>
-                                            </a>
-                                        <?php endif ?>
-                                        <?php if($vacancy->company->facebook):?>
-                                            <a target="_blank" class="fb-bg" rel="nofollow" href="https://facebook.com/<?=$vacancy->company->facebook?>">
-                                                <img src="/images/fb.svg" alt="Иконка facebook" role="presentation"/>
-                                            </a>
-                                        <?php endif ?>
-                                    <?php endif ?>
-                                </div>
-                                <?php if($searchModel->category_ids && count($searchModel->category_ids) === 1):?>
-                                   <!-- <a href="<?/*=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$searchModel->category_ids[0]])*/?>" class="btn-card btn-red">
-                                        Посмотреть полностью
-                                    </a>-->
-                                     <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="btn-card btn-red">
-                                        Посмотреть полностью
-                                    </a>
-                                <?php else: ?>
-                                    <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="btn-card btn-red">
-                                        Посмотреть полностью
-                                    </a>
-                                <?php endif ?>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+
                      <?= LinkPager::widget([
                          'pagination' => $dataProvider->pagination,
                          'options' => ['class' => 'search-pagination'],
