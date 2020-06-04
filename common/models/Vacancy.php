@@ -41,6 +41,7 @@ use yii\web\View;
  * @property integer $get_update_id
  * @property integer $views
  * @property string $phone
+ * @property int $is_day_vacancy
  *
  * @property Company $company
  * @property EmploymentType $employment_type
@@ -114,6 +115,9 @@ class Vacancy extends WorkActiveRecord
             [['post', 'education', 'video', 'address', 'home_number', 'phone'], 'string', 'max' => 255],
             [['responsibilities', 'qualification_requirements', 'working_conditions', 'description'], 'string'],
             [['company_id', 'post', 'main_category_id'], 'required'],
+
+            [['is_day_vacancy'], 'default', 'value' => 0],
+            [['is_day_vacancy'], 'in', 'range' => [0,1]]
         ];
     }
 
@@ -152,7 +156,8 @@ class Vacancy extends WorkActiveRecord
             'publisher_id' => 'Опубликовавший',
             'get_update_id' => 'Получить связаные профессии',
             'views' => 'Количество просмотров',
-            'phone' => 'Номер телефона'
+            'phone' => 'Номер телефона',
+            'is_day_vacancy' => 'Вакансия дня'
         ];
     }
 
