@@ -23,6 +23,7 @@
                :attach="input.attach"
                :multiple="input.multiple"
                :chips="input.chips"
+               :autocomplete="false"
                v-model="value[index]"
     >
       {{ input.text }}

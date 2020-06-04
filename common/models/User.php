@@ -44,7 +44,7 @@ class User extends \dektrium\user\models\User implements IdentityInterface
 
     public function fields()
     {
-        return ['id', 'email'];
+        return ['id', 'email', 'status'];
     }
 
     public function extraFields()
