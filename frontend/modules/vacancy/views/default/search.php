@@ -176,21 +176,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
 <!--                        </form>-->
 <!--                    </div>-->
 <!---->
-<!--                    <div class="banner-advertising">-->
-<!--                        <img src="/images/banner_advertising_image.png" alt="">-->
-<!--                        <div class="banner-advertising__right">-->
-<!--                            <h3>Самые актуальные вакансии фирменных магазинов и гипермаркетов “МОЛОКО”</h3>-->
-<!--                            <div class="banner-advertising__right-bottom">-->
-<!--                                <img src="/images/banner_logo.png" alt="">-->
-<!--                                <a href="#" class="btn-card btn-red">-->
-<!--                                    Посмотреть полностью-->
-<!--                                </a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+
 
                     <?php if($dataProvider->models):
-                        foreach ($dataProvider->models as $vacancy): ?>
+                        foreach ($dataProvider->models as $key => $vacancy): ?>
 
                         <?php
                             /** @var Vacancy $vacancy */
@@ -203,6 +192,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                             <?= $vacancy->is_day_vacancy
                                 ? $this->render('/parts/_vacancy_day', compact('vacancy'))
                                 : $this->render('/parts/_vacancy_standart', compact(['vacancy', 'flag', 'searchModel']))
+                            ?>
+
+                            <?= ($key == 5) ?
+                                \frontend\widgets\Banner::widget([
+                                    'categoryId' => $searchModel->current_category ? $searchModel->current_category->id : null,
+                                    'cityId' => $searchModel->current_city ? $searchModel->current_city->id : null,
+                                ]) : '';
                             ?>
                         <?php endforeach; ?>
 
