@@ -27,9 +27,9 @@ use yii\db\ActiveQuery;
  */
 class Banner extends WorkActiveRecord
 {
-    public const STATUS_ACTIVE = 1;
-    public const STATUS_INACTIVE = 0;
-    public const DESCRIPTION_MAX_LENGTH = 125;
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+    const DESCRIPTION_MAX_LENGTH = 125;
 
     /**
      * {@inheritdoc}
