@@ -30,7 +30,7 @@ class BannerService extends Component
     /**
      * @param ActiveRecord $repository
      */
-    public function switchRepository(ActiveRecord $repository) : void
+    public function switchRepository(ActiveRecord $repository)
     {
         $this->repository = $repository;
     }
@@ -94,7 +94,7 @@ class BannerService extends Component
     /**
      * @param $attributes
      */
-    public function updateModelTransaction($attributes) : void
+    public function updateModelTransaction($attributes)
     {
         $transaction = $this->getTransactionAndStart();
 
