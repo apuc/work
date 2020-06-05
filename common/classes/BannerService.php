@@ -110,7 +110,7 @@ class BannerService extends Component
     /**
      * @return Transaction|null
      */
-    private function getTransactionAndStart() : ?Transaction
+    private function getTransactionAndStart()
     {
         return \Yii::$app->db->beginTransaction();
     }
@@ -193,7 +193,7 @@ class BannerService extends Component
      * @param int|null $cityId
      * @return Banner|null
      */
-    public function getRandomBanner(?int $categoryId, ?int $cityId) : ?Banner
+    public function getRandomBanner($categoryId, $cityId)
     {
         /** @todo */
         return $this->repository::findOne(2);
