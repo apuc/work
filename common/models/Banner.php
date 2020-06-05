@@ -66,7 +66,10 @@ class Banner extends WorkActiveRecord
             ['is_active', 'default', 'value' => static::STATUS_INACTIVE],
             ['is_active', 'in', 'range' => [static::STATUS_ACTIVE, static::STATUS_INACTIVE]],
 
-            ['priority', 'integer', 'min' => 1]
+            ['priority', 'integer', 'min' => 1],
+
+            ['logo_url', 'string', 'max' => 255],
+            ['image_url', 'string', 'max' => 255],
         ];
     }
 
