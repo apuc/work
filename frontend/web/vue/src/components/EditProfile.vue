@@ -65,6 +65,7 @@
                         this.formData.email = response.data[0].user.email;
                         if (response.data[0].phone != null) {
                             this.formData.phone = response.data[0].phone.number;
+                            this.formData.phoneValid = true;
                         }
                         this.idEmployer = response.data[0].id;
                     }, response => {

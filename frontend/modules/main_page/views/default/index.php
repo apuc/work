@@ -44,7 +44,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                         <img src="/images/logo-main-small.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
                     </a>
-                    <?php if ($user && $user->status == 1): ?>
+                    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status >= 20): ?>
                     <a class="nhome__nav-item" href="/employer">Работодателю</a>
                     <?php endif; ?>
                     <div class="geolocation">
@@ -67,9 +67,9 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             </ul>
                         </div>
                     </div>
-                    <?php if ($user && $user->status == 1): ?>
+                    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status >= 20): ?>
                     <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>
-                    <?php elseif($user && $user->status == 2): ?>
+                    <?php elseif (!Yii::$app->user->isGuest && Yii::$app->user->identity->status == 10): ?>
                     <a class="nhome__nav-item" href="<?= Vacancy::getSearchPageUrl() ?>">Поиск вакансий</a>
                     <?php else: ?>
                     <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>

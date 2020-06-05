@@ -35,6 +35,9 @@
                 .then(response => {
                         this.dataVacancy = response.data;
                         this.formData.phone = response.data.phone;
+                        if (this.formData.phone.length > 0) {
+                            this.formData.phoneValid = true;
+                        }
                         this.formData.vacancyCity = response.data.city_id;
                         this.formData.companyName = response.data.company_id;
                         this.formData.category.mainCategoriesVacancy = response.data.main_category_id;

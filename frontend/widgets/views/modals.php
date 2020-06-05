@@ -1,11 +1,12 @@
 <?php
 /* @var $login_form \dektrium\user\models\LoginForm */
 
-/* @var $registration_form \dektrium\user\models\RegistrationForm */
+/* @var $registration_form RegUserForm */
 
 use common\models\Resume;
 use common\models\Vacancy;
 use dektrium\user\widgets\Connect;
+use frontend\models\user\RegUserForm;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
@@ -81,7 +82,7 @@ use yii\widgets\ActiveForm;
                 ['inputOptions' => ['class' => 'jsPass', 'placeholder' => 'Пароль']])
                 ->passwordInput()->label(false);
             ?>
-            <?php //$form->field($registration_form, 'status')->radioList( [1 => 'Работодатель', 2 => 'Соискатель'] );?>
+            <?= $form->field($registration_form, 'status')->radioList( [10 => 'Соискатель', 20 => 'Работодатель',  21 => 'Частное лицо'])->label('Выберите тип аккаунта (после регистраации его нельзя будет изменить):');?>
             <?= Html::submitButton('Зарегистрироваться', ['class' => 'jsBtnReg jsBtn']) ?>
             <?php ActiveForm::end(); ?>
             <div class="modal-style__text"><span>Есть учетная запись?</span>

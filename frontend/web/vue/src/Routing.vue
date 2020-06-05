@@ -29,6 +29,7 @@
                 <v-list-tile
                         v-for="link in linkMenu"
                         :key="link.title"
+                        v-if="link.show"
                         :to="link.url"
                         class="menu-hover"
                         @click="getMessage(link.title)"
@@ -44,7 +45,7 @@
                                 </v-list-tile-title>
                             </template>
                             <template v-if="link.addFlag">
-                                <router-link class="menu-add-link" :to="link.addTo" :title="link.addTitle">
+                                <router-link v-if="link.companiesCount < 1" class="menu-add-link" :to="link.addTo" :title="link.addTitle">
                                     <span>+</span>
                                 </router-link>
                             </template>
@@ -92,13 +93,15 @@
                         title: 'Статистика',
                         url: '/personal-area/statistics',
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/analysis.png',
-                        addFlag: false
+                        addFlag: false,
+                        show: true
                     },
                     {
                         title: 'Отклики',
                         url: '/personal-area/my-message',
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/mail.png',
-                        addFlag: false
+                        addFlag: false,
+                        show: true
                     },
                     {
                         title: 'Вакансии',
@@ -106,7 +109,9 @@
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_vacancy.png',
                         addFlag: true,
                         addTo: '/personal-area/add-vacancy',
-                        addTitle: 'Добавить вакансию'
+                        addTitle: 'Добавить вакансию',
+                        companiesCount: 0,
+                        show: true
                     },
                     {
                         title: 'Резюме',
@@ -114,7 +119,9 @@
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_resume.png',
                         addFlag: true,
                         addTo: '/personal-area/add-resume',
-                        addTitle: 'Добавить резюме'
+                        addTitle: 'Добавить резюме',
+                        companiesCount: 0,
+                        show: true
                     },
                     {
                         title: 'Компании',
@@ -122,13 +129,16 @@
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_company.png',
                         addFlag: true,
                         addTo: '/personal-area/add-company',
-                        addTitle: 'Добавить компанию'
+                        addTitle: 'Добавить компанию',
+                        companiesCount: localStorage.companiesCount,
+                        show: true
                     },
                     {
                         title: 'Редактировать профиль',
                         url: '/personal-area/edit-profile',
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/profile.png',
-                        addFlag: false
+                        addFlag: false,
+                        show: true
                     },
                 ],
             }
@@ -153,13 +163,12 @@
                 }
             },
             async getUser() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages`)
+                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages,companiesCount`)
             },
         },
         beforeMount() {
             this.getUser()
                 .then(response => {
-
                         this.firstName = response.data[0].first_name;
                         this.secondName = response.data[0].second_name;
                         this.userId = response.data[0].user_id;
@@ -167,8 +176,17 @@
                         this.unreadMessages = response.data[0].user.unreadMessages;
                         this.email = this.email.match(/.+@/)[0];
                         this.email = this.email.slice(0, this.email.length-1);
-                        localStorage.userId = this.userId;
 
+                        if (response.data[0].user.status == 10) {
+                            this.linkMenu[2].show = false;
+                            this.linkMenu[4].show = false;
+                        }
+                        if (response.data[0].user.status >= 20) {
+                            this.linkMenu[3].show = false;
+                        }
+
+                        localStorage.userId = this.userId;
+                        localStorage.companiesCount = response.data[0].companiesCount;
                     }, response => {
                         this.$swal({
                             toast: true,

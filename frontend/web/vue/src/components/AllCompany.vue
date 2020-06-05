@@ -2,7 +2,7 @@
     <div>
         <v-subheader class="all-head">
             Ваши компании
-            <router-link class="vacancy__link" to="/personal-area/add-company">
+            <router-link v-if="companiesCount < 1" class="vacancy__link" to="/personal-area/add-company">
                 <v-btn class="vacancy__link">
                     Добавить компанию или частное лицо
                 </v-btn>
@@ -94,7 +94,8 @@
                 getAllCompany: [],
                 userID: '',
                 paginationPageCount: 1,
-                paginationCurrentPage: 1
+                paginationCurrentPage: 1,
+                companiesCount: 1
             }
         },
         mounted() {
@@ -103,6 +104,8 @@
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index`)
                 .then(response => {
                         this.getAllCompany = response.data;
+                        localStorage.companiesCount = response.data.length;
+                        this.companiesCount = localStorage.companiesCount;
                         this.getAllCompany.forEach((element) => {
                             let timestamp = element.updated_at;
                             let date = new Date();
@@ -145,6 +148,21 @@
                         this.getAllCompany.splice(index, 1);
                         this.$http.delete(`${process.env.VUE_APP_API_URL}/request/company/` + resumeId)
                             .then(response => {
+                                this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages,companiesCount`)
+                                    .then(response => {
+                                            localStorage.companiesCount = response.data[0].companiesCount;
+                                            this.companiesCount = localStorage.companiesCount;
+                                        }, response => {
+                                            this.$swal({
+                                                toast: true,
+                                                position: 'bottom-end',
+                                                showConfirmButton: false,
+                                                timer: 4000,
+                                                type: 'error',
+                                                title: response.data.message
+                                            })
+                                        }
+                                    );
                                     return response;
                                 }, response => {
                                     this.$swal({
