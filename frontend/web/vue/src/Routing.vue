@@ -63,6 +63,33 @@
                 main
         >
             <v-container>
+                <v-alert
+                        dense
+                        :value="true"
+                        type="warning"
+                        class="main-alert"
+                        v-if="companiesCount > 1"
+                >
+                    <h1>Внимание!</h1>
+                    Мы подготовили для Вас новые функции сайта, которые сделают поиск сотрудников комфортнее.<br>
+                    В связи с этим мы вынеждены с <strong>01.07.2020</strong> ввести ограничение на кол-во компаний на одном аккаунте.<br>
+                    <button type="button" @click="alertFlag = !alertFlag">Подробнее</button><br>
+                    <transition name="fade">
+                        <div v-if="alertFlag">
+                            На аккаунте может быть только одна компания.<br>
+                            <span v-if="companiesCount === 2">
+                                Просим Вас перенести одну из Ваших компаний на другой аккаунт. Все данные будут сохранены и доступны в указанном аккаунте.
+                            </span>
+                            <span v-if="companiesCount > 2">
+                                Просим Вас перенести все компании кроме одной на другие аккаунты. Все данные будут сохранены и доступны в указанных аккаунтах.
+                            </span>
+                            <br>
+                            Для этого нажмите на кнопку "Передать права" и введите Email.<br>
+                            Если не будет найден аккаунт связанный с указанной почтой, он будет создан автоматически. Данные для входа будут отправлены на указанный email!<br>
+                            Если <strong>01.07.2020</strong> на Вашем аккаунте будет более 1 компании, все компании кроме одной, будут удалены. Останется одна случайная компания.<br>
+                        </div>
+                    </transition>
+                </v-alert>
                 <v-layout justify-start menu>
                     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
                 </v-layout>
@@ -80,11 +107,13 @@
         data() {
             return {
                 drawer: true,
+                alertFlag: false,
                 firstName: '',
                 secondName: '',
                 userId: '',
                 email: '',
                 unreadMessages: '',
+                companiesCount: 0,
                 loginImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/login.png',
                 mainImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/main.png',
                 logOutImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/exit.png',
@@ -187,6 +216,7 @@
 
                         localStorage.userId = this.userId;
                         localStorage.companiesCount = response.data[0].companiesCount;
+                        this.companiesCount = response.data[0].companiesCount;
                     }, response => {
                         this.$swal({
                             toast: true,
@@ -205,6 +235,14 @@
     }
 </script>
 <style scoped>
+    .main-alert {
+        width: 100%;
+        border: none;
+    }
+    .main-alert button {
+        text-decoration: underline;
+        outline: none;
+    }
     .container {
         margin: 0 auto;
     }
