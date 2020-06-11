@@ -5,6 +5,7 @@ const newPass = {
                 old_password: '',
                 new_password_1: '',
                 new_password_2: '',
+                phoneValid: true
             },
             show1: false,
             show2: false,

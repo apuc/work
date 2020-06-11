@@ -80,6 +80,9 @@ return [
         'country' => [
             'class' => 'backend\modules\country\Country',
         ],
+        'banner' => [
+            'class' => 'backend\modules\banner\Banner',
+        ]
     ],
     'components' => [
 //        'request' => [

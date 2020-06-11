@@ -34,6 +34,11 @@
                                 </v-list-tile-sub-title>
                                 <v-divider style="width: 100%;"></v-divider>
                             </v-list-tile-content>
+                            <router-link :to="`${companyTransfer}/${item.id}`" v-if="companiesCount > 1">
+                                <v-btn class="vacancy__link">
+                                    Передать компанию
+                                </v-btn>
+                            </router-link>
                             <router-link :to="`${editLink}/${item.id}`">
                                 <v-btn outline small fab
                                        class="edit-btn"
@@ -91,6 +96,7 @@
             return {
                 editLink: '/personal-area/edit-company',
                 companyRight: '/personal-area/company-right',
+                companyTransfer: '/personal-area/company-transfer',
                 getAllCompany: [],
                 userID: '',
                 paginationPageCount: 1,

@@ -2,8 +2,11 @@
 
 namespace frontend\modules\vacancy\controllers;
 
+use common\classes\BannerService;
 use common\classes\Debug;
 use common\models\Action;
+use common\models\Banner;
+use common\models\BannerLocation;
 use common\models\Category;
 use common\models\City;
 use common\models\Country;
@@ -105,6 +108,7 @@ class DefaultController extends Controller
                 Yii::$app->cache->set("search_page_cities_".$searchModel->current_country->name, $cities, 3600);
             }
         }
+
         return $this->render('search', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

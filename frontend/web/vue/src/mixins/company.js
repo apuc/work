@@ -4,6 +4,7 @@ const company = {
       companiesCount: 0,
       dataCompany: [],
       hasImage: false,
+      show: false,
       image: null,
       formData: {
         image_url: '',
