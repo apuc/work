@@ -184,6 +184,8 @@ class CompanyController extends MyActiveController
             if((int)Company::find()->where(['owner'=>$user->id, 'status'=>Company::STATUS_ACTIVE])->count()>0) {
                 throw new UserException('У этого пользователя уже есть компания');
             }
+            if($user->status < 20)
+                throw new UserException('Этот пользователь является соискателем');
             $company->owner = $user->id;
             $company->user_id = $user->id;
             $company->save();
