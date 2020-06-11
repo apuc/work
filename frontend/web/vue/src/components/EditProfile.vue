@@ -122,7 +122,8 @@
                     second_name: this.formData.second_name,
                     birth_date: this.formData.birth_date,
                     email: this.formData.email,
-                    phone: this.formData.phone
+                    phone: this.formData.phone,
+                    phoneValid: this.formData.phoneValid
                 };
 
                 this.$http.patch(`${process.env.VUE_APP_API_URL}/request/employer/` + this.idEmployer, data)

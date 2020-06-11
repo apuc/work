@@ -3,6 +3,7 @@ const resume = {
     return {
       dataResume: [],
       hasImage: false,
+      show: false,
       image: null,
       formData: {
         birth_date: '',
