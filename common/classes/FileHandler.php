@@ -8,7 +8,7 @@ use Yii;
 class FileHandler
 {
     public static function saveFileFromBase64($imageData, $folder){
-        $data = explode(',', $imageData['dataUrl']);
+        $data = explode(',', $imageData);
         $image = base64_decode($data[1]);
         $dir = Yii::getAlias('@frontend/web/media/'.$folder);
         if (!file_exists($dir))
@@ -23,7 +23,11 @@ class FileHandler
         $dir .= '/'.$folder2;
         if (!file_exists($dir))
             mkdir($dir);
-        $file_type = explode('/', $imageData['type'])[1];
+        $file_type = explode('/', $data[0]);
+        $file_type = explode(';', $file_type[1]);
+        $file_type = $file_type[0];
+
+        //$file_type = explode('/', $imageData['type'])[1];
         $file = fopen($dir . '/' . $file_name . '.' . $file_type, "wb");
         fwrite($file, $image);
         fclose($file);
