@@ -42,7 +42,7 @@
         <v-btn
                 :disabled="!valid"
                 color="success"
-                id="main-btn"
+                id="main-btn-pass"
                 @click="validate"
                 type="button"
         >
@@ -91,7 +91,7 @@
                     )
             },
             validate () {
-                let btn = document.getElementById('main-btn');
+                let btn = document.getElementById('main-btn-pass');
                 btn.disabled = true;
                 let valid = this.$refs.form.validate();
                 this.$emit('val', valid);

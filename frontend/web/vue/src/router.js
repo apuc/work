@@ -14,6 +14,7 @@ import EditCompany from './components/EditCompany.vue'
 import EditProfile from './components/EditProfile.vue'
 import CompanyRight from './components/CompanyRight.vue'
 import CompanyTransfer from './components/CompanyTransfer.vue'
+import Updates from './components/Updates.vue'
 
 Vue.use(Router);
 
@@ -107,6 +108,12 @@ export default new Router({
       name: 'company-transfer',
       meta: {title: 'Передать компанию'},
       component: CompanyTransfer
+    },
+    {
+      path: '/personal-area/updates',
+      name: 'updates',
+      meta: {title: 'Обновления'},
+      component: Updates
     }
   ]
 })

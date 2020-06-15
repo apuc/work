@@ -169,6 +169,12 @@
                         addFlag: false,
                         show: true
                     },
+                    {
+                        title: 'Обновления',
+                        url: '/personal-area/updates',
+                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/updates.png',
+                        show: true
+                    },
                 ],
             }
         },
