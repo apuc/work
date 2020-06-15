@@ -210,7 +210,7 @@ class CompanyController extends MyActiveController
                 $employer->save();
                 $token = Token::findOne(['user_id'=>$user->id]);
                 Yii::$app->mailer->viewPath='@common/mail';
-                Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer, 'user'=>$user, 'token'=>$token])
+                Yii::$app->mailer->compose('company_transfer_notification', ['user'=>$user, 'token'=>$token, 'company'=>$company, 'password'=>'g8f74n'])
                     ->setFrom('noreply@rabota.today')
                     ->setTo($user->email)
                     ->setSubject('Спасибо за регистрацию')
