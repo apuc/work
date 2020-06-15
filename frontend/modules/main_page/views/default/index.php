@@ -260,7 +260,10 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
             <span>
                 © 2019–2020 <a href="/">Rabota.today</a>.<br>
                 Сайт поиска работы №1<br>
-                в ДНР и ЛНР
+                <?php if($current_country):?>
+                    в <?=$current_country->name?>
+                <?php endif?>
+<!--                в ДНР и ЛНР-->
             </span>
         </div>
         <div class="nhome__footer-item">
