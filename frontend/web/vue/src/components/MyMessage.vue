@@ -128,6 +128,8 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     export default {
         name: "MyMessage",
         data() {
@@ -142,24 +144,38 @@
         },
         mounted() {
             document.title = this.$route.meta.title;
+            this.readAll();
             this.getIncoming();
-            this.$http.post(`${process.env.VUE_APP_API_URL}/request/message/read-all-messages`)
-                .then(response => {
-                    this.$forceUpdate();
-                        return response;
-                    }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                    }
-                );
         },
         methods: {
+            readAll() {
+                this.$store.dispatch('setReadAll')
+                    .then(data => {
+                        this.$store.dispatch('getUserMe')
+                            .then(data => {
+                                return data;
+                            }).catch(error => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: error.message
+                            })
+                        });
+                        return data;
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
+            },
             removeMessage(index, messageId, type) {
                 let data = {
                     type: '',
@@ -336,6 +352,13 @@
                         }
                     );
             }
+        },
+
+        computed: {
+            ...mapGetters([
+                'userMe',
+                'setReadAll'
+            ])
         }
     }
 </script>

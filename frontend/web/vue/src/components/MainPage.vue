@@ -19,7 +19,7 @@
 
             <v-card
                     class="main-card"
-                    :class="selecetBg(index)"
+                    :class="selectBg(index)"
                     color="#26c6da"
                     dark
                     v-for="(item, itemIndex) in items"
@@ -98,7 +98,7 @@
 
         },
         methods: {
-            selecetBg(cardType) {
+            selectBg(cardType) {
                 const types = {
                     resume: 'main-card_resume',
                     company: 'main-card_company',
