@@ -52,40 +52,23 @@
                 .then(response => {
                         this.dataResume = response.data;
 
-
 						if (response.data.phone != null) {
 							this.formData.phone = response.data.phone;
+						}
+						if (this.formData.phone.length > 0 && response.data.phone != null) {
+							this.formData.phoneValid = true;
 						} else {
-							this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
-									.then(response => {
-												if (response.data[0].phone != null) {
-													this.formData.phone = response.data[0].phone.number;
-													if (this.formData.phone.length === 16) {
-														this.phone.text = '';
-														this.phone.valid = true;
-														this.formData.phoneValid = true;
-													} else {
-														this.phone.text = 'Вы ввели не верный номер телефона';
-														this.phone.valid = false;
-														this.formData.phoneValid = false;
-													}
-												}
-											}, response => {
-												this.$swal({
-													toast: true,
-													position: 'bottom-end',
-													showConfirmButton: false,
-													timer: 4000,
-													type: 'error',
-													title: response.data.message
-												})
-											}
-									)
+							if (this.formData.phone.length === 16) {
+								this.phone.text = '';
+								this.phone.valid = true;
+								this.formData.phoneValid = true;
+							} else {
+								this.phone.text = 'Вы ввели не верный номер телефона';
+								this.phone.valid = false;
+								this.formData.phoneValid = false;
+							}
 						}
 
-						if (this.formData.phone.length > 0) {
-							this.formData.phoneValid = true;
-						}
 						this.formData.birth_date = response.data.birth_date;
 
                         this.formData.resumeCity = response.data.city_id;
