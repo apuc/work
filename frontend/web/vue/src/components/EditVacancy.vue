@@ -34,9 +34,21 @@
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id + '?expand=employment-type,category')
                 .then(response => {
                         this.dataVacancy = response.data;
-                        this.formData.phone = response.data.phone;
-                        if (this.formData.phone.length > 0) {
+                        if (response.data.phone != null) {
+                            this.formData.phone = response.data.phone;
+                        }
+                        if (this.formData.phone.length > 0 && response.data.phone != null) {
                             this.formData.phoneValid = true;
+                        } else {
+                            if (this.formData.phone.length === 16) {
+                                this.phone.text = '';
+                                this.phone.valid = true;
+                                this.formData.phoneValid = true;
+                            } else {
+                                this.phone.text = 'Вы ввели не верный номер телефона';
+                                this.phone.valid = false;
+                                this.formData.phoneValid = false;
+                            }
                         }
                         this.formData.vacancyCity = response.data.city_id;
                         this.formData.companyName = response.data.company_id;
