@@ -4,7 +4,10 @@
 
 use common\models\News;
 use yii\helpers\Url;
-$this->title = $model->title;
+
+$this->title = $model->meta_title;
+$this->registerMetaTag(['name' => 'description', 'content' => $model->meta_description]);
+
 ?>
 <section class="news-view">
     <img class="single-vacancy__dots2" src="/images/bg-dots.png" alt="точки" role="presentation">
@@ -13,12 +16,23 @@ $this->title = $model->title;
         <div class="resume-results">
             <ul class="breadcrumbs">
                 <li>
+                    <a href="<?=Url::to('/')?>">Главная</a>
+                </li>
+                <li>
                     <a href="<?=Url::to('/news/')?>">Все новости</a>
+                </li>
+                <li>
+                    <a href="<?=Url::to('/news/' . $model->country->slug)?>"><?=$model->country->name?></a>
+                </li>
+                <li>
+                  <p>&nbsp;-&nbsp;</p>
                 </li>
                 <!--<li>
                     <a href="#">Помощь</a>
                 </li>-->
-                <li><?=$model->title?></li>
+                <li>
+                    <?=$model->title?>
+                </li>
             </ul>
         </div>
         <div class="news-view__block">
@@ -38,30 +52,30 @@ $this->title = $model->title;
                             <p class="red-line">
                                 <?=$random->description?>
                             </p>
-                            <a href="<?=Url::to(['/news/default/view', 'id'=>$random->id])?>">Читать полностью</a>
+                            <a href="<?=Url::to(['/news/'.$random->slug])?>">Читать полностью</a>
                         </div>
                     </div>
                 </div>
                 <div class="sidebar-inner news-block">
-                    <div class="sr-block news-sr-block">
+                    <!--<div class="sr-block news-sr-block">
                         <span class="image-rabota">Работа Донецк</span>
                         <div class="d-flex flex-column ml15">
                             <p>Работа в Донецке</p>
                             <a href="https://vk.com/rabotad0netsk" target="_blank">https://rabota.today</a>
                         </div>
-                    </div>
-                    <div class="resume-info__soc justify-center">
+                    </div>-->
+                    <!--<div class="resume-info__soc justify-center">
                         <p>Написать компании в сетях</p>
-                        <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/rabotad0netsk">
+                        <a class="vk-bg" rel="nofollow" target="_blank" href="https://vk.com/write-80799057">
                             <img src="/images/vk.svg" alt="Иконка VK" role="presentation"/>
-                        </a>
+                        </a>-->
                         <!--                        <a class="fb-bg" rel="nofollow" target="_blank" href="#">-->
                         <!--                            <img src="/images/fb.svg" alt="Иконка facebook" role="presentation"/>-->
                         <!--                        </a>-->
                         <!--                        <a class="inst-bg" rel="nofollow" target="_blank" href="#">-->
                         <!--                            <img src="/images/instagram.svg" alt="Иконка instagram" role="presentation"/>-->
                         <!--                        </a>-->
-                    </div>
+                    <!--</div>-->
                 </div>
             </div>
         </div>

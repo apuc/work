@@ -8,6 +8,7 @@
 use common\models\Vacancy;
 use frontend\modules\vacancy\classes\VacancyMetaFormer;
 use yii\helpers\StringHelper;
+use yii\helpers\Url;
 
 VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
 ?>
@@ -18,21 +19,51 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
     <div class="container">
         <div class="resume-results">
             <ul class="breadcrumbs">
-                <?php if ($model->city0): ?>
-                    <?php if (isset($model->city0->region->country)):?>
+                 <?php if (isset($model->city0->region->country)):?>
                         <li>
-                            <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) ?>"><?= $model->city0->region->country->name ?></a>
+                          <a href="<?=Url::to('/' . $model->city0->region->country->slug )?>">Работа в <?= $model->city0->region->country->name ?></a>
+                         </li>
+                        <li>
+                            <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) ?>">Вакансии</a>
                         </li>
-                    <?php endif;?>
+                 <?php else:  ?>
+                     <li>
+                         <a href="<?=Url::to('/')?>">Главная</a>
+                     </li>
+                     <li>
+                         <a href="<?=Url::to('/vacancy')?>">Вакансии</a>
+                     </li>
+                 <?php endif;?>
+                <?php if ($model->city0): ?>
+                   <!-- <?php /*if (isset($model->city0->region->country)):*/?>
+                        <li>
+                            <a href="<?/*= Vacancy::getSearchPageUrl(false, false, false, $model->city0->region->country->slug) */?>"><?/*= $model->city0->region->country->name */?></a>
+                        </li>
+                        <li>
+                            <p>&nbsp;-&nbsp;</p>
+                        </li>
+                    --><?php /*endif;*/?>
                     <li>
                         <a href="<?= Vacancy::getSearchPageUrl(false, $model->city0->slug) ?>"><?= $model->city0->name ?></a>
                     </li>
-                <?php endif ?>
-                <?php if ($referer_category): ?>
                     <li>
-                        <a href="<?= Vacancy::getSearchPageUrl($referer_category->slug, $model->city0 ? $model->city0->slug : false) ?>"><?= $referer_category->name ?></a>
+                        <p>&nbsp;-&nbsp;</p>
                     </li>
                 <?php endif ?>
+                <?php /*if ($referer_category): */?><!--
+                    <li>
+                        <a href="<?/*= Vacancy::getSearchPageUrl($referer_category->slug, $model->city0 ? $model->city0->slug : false) */?>"><?/*= $referer_category->name */?></a>
+                    </li>
+                    <li>
+                        <p>&nbsp;-&nbsp;</p>
+                    </li>
+                --><?php /*endif */?>
+                <li>
+                <a href="<?= Vacancy::getSearchPageUrl($model->mainCategory->slug) ?>"><?= $model->mainCategory->name ?></a>
+                </li>
+                <li>
+                    <p>&nbsp;-&nbsp;</p>
+                </li>
                 <li><?= mb_convert_case($model->post, MB_CASE_TITLE) ?></li>
             </ul>
         </div>
@@ -180,7 +211,7 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                         <p>Вакансии из других профобластей</p>
                         <ul>
                            <?php foreach ($model->professions as $profession): ?>
-                               <li><a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a></li>
+                               <li><a href="<?= Vacancy::getSearchPageUrl(false, $model->city0->slug, $profession->slug) ?>"><?= $profession->title ?></a></li>
                             <?php endforeach;?>
                         </ul>
                     </div>

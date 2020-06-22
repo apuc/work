@@ -30,6 +30,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'search_page_header')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'news_meta_title')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'news_meta_description')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'news_meta_header')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'news_about')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'main_page_text')->widget(CKEditor::className(), [
         'editorOptions' => \mihaildev\elfinder\ElFinder::ckeditorOptions('elfinder', [
             'preset' => 'full',
