@@ -2,13 +2,13 @@ import * as type from './types';
 import api from '../../../api';
 
 const actions = {
-    getUserMe({commit}, payload) {
+    getStatistics({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/employer/my-index?expand=phone,user.unreadMessages,companiesCount')
+            api.get('/request/employer/statistics')
                 .then(res => {
-                    commit(type.GET_USER_ME, res.data.models[0]);
-                    resolve(res.data.models[0]);
+                    commit(type.GET_STATISTICS, res.data);
+                    resolve(res.data);
                 })
                 .catch(error => {
                     console.log('Problem', error.message);

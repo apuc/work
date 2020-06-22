@@ -358,7 +358,7 @@
     .menu-notification {
         position: absolute;
         top: 5px;
-        left: 75px;
+        left: 60px;
         width: 15px;
         height: 15px;
         display: flex;

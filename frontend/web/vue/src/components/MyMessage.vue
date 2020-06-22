@@ -8,11 +8,11 @@
         >
             <v-tabs-slider color="black"></v-tabs-slider>
 
-            <v-tab href="#tab-1" @click="getIncoming()">
+            <v-tab href="#tab-1" @click="getIncoming(1)">
                 Входящие
             </v-tab>
 
-            <v-tab href="#tab-2" @click="getOutgoing()">
+            <v-tab href="#tab-2" @click="getOutgoing(1)">
                 Исходящие
             </v-tab>
 
@@ -66,7 +66,7 @@
                                 v-if="paginationPageCountIncoming > 1"
                                 v-model="paginationCurrentPageIncoming"
                                 :length="paginationPageCountIncoming"
-                                @input="changePageIncoming"
+                                @input="getIncoming"
                         ></v-pagination>
                     </div>
                 </v-card>
@@ -117,7 +117,7 @@
                                 v-if="paginationPageCountOutgoing > 1"
                                 v-model="paginationCurrentPageOutgoing"
                                 :length="paginationPageCountOutgoing"
-                                @input="changePageOutgoing"
+                                @input="getOutgoing"
                         ></v-pagination>
                     </div>
                 </v-card>
@@ -142,10 +142,10 @@
                 paginationCurrentPageOutgoing: 1
             }
         },
-        mounted() {
+        created() {
             document.title = this.$route.meta.title;
             this.readAll();
-            this.getIncoming();
+            this.getIncoming(1);
         },
         methods: {
             readAll() {
@@ -155,24 +155,24 @@
                             .then(data => {
                                 return data;
                             }).catch(error => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: error.message
+                                this.$swal({
+                                    toast: true,
+                                    position: 'bottom-end',
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    type: 'error',
+                                    title: error.message
                             })
                         });
                         return data;
                     }).catch(error => {
-                    this.$swal({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        type: 'error',
-                        title: error.message
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: error.message
                     })
                 });
             },
@@ -189,113 +189,31 @@
                     this.messagesOutgoing.splice(index, 1);
                     data.type = type;
                 }
-                this.$http.post(`${process.env.VUE_APP_API_URL}/request/message/delete-message`, data)
-                    .then(response => {
-                            return response;
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    );
+                this.$store.dispatch('messageRemove', data)
+                    .then(data => {
+                        return data;
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
             },
-            getIncoming() {
-                this.messagesIncoming = [];
-                this.paginationPageCountIncoming = 1;
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/message?expand=subject0,sender.employer,subject0_from&type=incoming`,)
-                    .then(response => {
-                            this.messagesIncoming = response.data;
-                            let domen = `${process.env.VUE_APP_API_URL}`;
-                            this.messagesIncoming.forEach((element) => {
-                                if(element.subject_id === null) {
-                                    element.sender = 'Системное сообщение'
-                                }
-                                if (element.subject === 'Resume') {
-                                    element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
-                                    element.subject_from = 'Предлагают вакансию ' + '<span>' + element.subject0_from.post + ' ' + '</span>' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
-                                }
-                                if (element.subject === 'Vacancy') {
-                                    element.subject = 'Отклик на вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.post + '</a>';
-                                    element.subject_from = 'Прилагают резюме ' + '<span>' + element.subject0_from.title + ' ' + '</span>' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
-                                }
-                                let timestamp = element.created_at;
-                                let date = new Date();
-                                date.setTime(timestamp * 1000);
-
-                                let options = {
-                                    year: 'numeric',
-                                    month: 'numeric',
-                                    day: 'numeric',
-                                    hour: 'numeric',
-                                    minute: 'numeric',
-                                };
-                                element.created_at = date.toLocaleString("ru", options);
-                            });
-                            this.paginationPageCountIncoming = response.headers.map['x-pagination-page-count'][0];
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    );
-
-            },
-            getOutgoing() {
-                this.messagesOutgoing = [];
-                this.paginationPageCountOutgoing = 1;
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/message?expand=subject0,receiver.employer,subject0_from&type=outgoing`,)
-                    .then(response => {
-                            this.messagesOutgoing = response.data;
-                            let domen = `${process.env.VUE_APP_API_URL}`;
-                            this.messagesOutgoing.forEach((element) => {
-                                if (element.subject === 'Resume') {
-                                    element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
-                                    element.subject_from = 'Предлагают вакансию ' + '<span>' + element.subject0_from.post + ' ' + '</span>' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
-                                }
-                                if (element.subject === 'Vacancy') {
-                                    element.subject = 'Отклик на вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.post + '</a>';
-                                    element.subject_from = 'Прилагают резюме ' + '<span>' + element.subject0_from.title + ' ' + '</span>' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
-                                }
-                                let timestamp = element.created_at;
-                                let date = new Date();
-                                date.setTime(timestamp * 1000);
-                                let options = {
-                                    year: 'numeric',
-                                    month: 'numeric',
-                                    day: 'numeric',
-                                    hour: 'numeric',
-                                    minute: 'numeric',
-                                };
-                                element.created_at = date.toLocaleString("ru", options);                            });
-                            this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    );
-            },
-            changePageIncoming(paginationCurrentPageIncoming) {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/message?expand=subject0,sender.employer&type=incoming?page=` + paginationCurrentPageIncoming)
-                    .then(response => {
-                        this.messagesIncoming = response.data;
+            getIncoming(page) {
+                this.$store.dispatch('getIncoming', page)
+                    .then(data => {
+                        this.paginationPageCountIncoming = data.pagination.page_count;
+                        this.paginationCurrentPageIncoming = data.pagination.current_page;
+                        this.messagesIncoming = data.models;
                         let domen = `${process.env.VUE_APP_API_URL}`;
                         this.messagesIncoming.forEach((element) => {
+                            if(element.subject_id === null) {
+                                element.sender = 'Системное сообщение'
+                            }
                             if (element.subject === 'Resume') {
                                 element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
                                 element.subject_from = 'Предлагают вакансию ' + '<span>' + element.subject0_from.post + ' ' + '</span>' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
@@ -307,24 +225,33 @@
                             let timestamp = element.created_at;
                             let date = new Date();
                             date.setTime(timestamp * 1000);
-                            element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+
+                            let options = {
+                                year: 'numeric',
+                                month: 'numeric',
+                                day: 'numeric',
+                                hour: 'numeric',
+                                minute: 'numeric',
+                            };
+                            element.created_at = date.toLocaleString("ru", options);
                         });
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    );
+                    }).catch(error => {
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: error.message
+                        })
+                });
             },
-            changePageOutgoing(paginationCurrentPageOutgoing) {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/message?expand=subject0,receiver.employer&type=outgoing?page=` + paginationCurrentPageOutgoing)
-                    .then(response => {
-                        this.messagesOutgoing = response.data;
+            getOutgoing(page) {
+                this.$store.dispatch('getOutgoing', page)
+                    .then(data => {
+                        this.paginationPageCountOutgoing = data.pagination.page_count;
+                        this.paginationCurrentPageOutgoing = data.pagination.current_page;
+                        this.messagesOutgoing = data.models;
                         let domen = `${process.env.VUE_APP_API_URL}`;
                         this.messagesOutgoing.forEach((element) => {
                             if (element.subject === 'Resume') {
@@ -338,26 +265,34 @@
                             let timestamp = element.created_at;
                             let date = new Date();
                             date.setTime(timestamp * 1000);
-                            element.created_at = date.getDate() + '.' + (date.getMonth() + 1 )  + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                            let options = {
+                                year: 'numeric',
+                                month: 'numeric',
+                                day: 'numeric',
+                                hour: 'numeric',
+                                minute: 'numeric',
+                            };
+                            element.created_at = date.toLocaleString("ru", options);
                         });
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    );
-            }
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
+            },
         },
 
         computed: {
             ...mapGetters([
                 'userMe',
-                'setReadAll'
+                'setReadAll',
+                'incoming',
+                'outgoing',
             ])
         }
     }

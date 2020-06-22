@@ -7,9 +7,11 @@ use common\actions\DeleteAction;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\Cors;
+use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 
@@ -25,12 +27,47 @@ class MyActiveController extends ActiveController
             'prepareDataProvider' => function(){
                 $query =$this->modelClass::find();
                 if(in_array('status', $this->modelClass::attributes())){
-                    $query->andWhere(['status'=>1]);
+                    $query->andWhere([($this->modelClass)::tableName().'.status'=>1]);
                 }
-                return new ActiveDataProvider([
+                $dataProvider = Yii::createObject([
+                    'class' => ActiveDataProvider::className(),
                     'query' => $query,
-                    'sort' => []
+                    'pagination' => [],
+                    'sort' => [],
                 ]);
+
+                $expands = explode(',', Yii::$app->request->get('expand'));
+                $models = $dataProvider->getModels();
+                $response = [];
+                /** @var ActiveRecord[] $models */
+                foreach ($models as $i=> $model) {
+                    $response[$i]=ArrayHelper::toArray($model);
+                    foreach ($expands as $expand) {
+                        $exploded = explode('.', $expand);
+                        if(count($exploded)>1) {
+                            $first_item = $exploded[0];
+                            $tmp = $model->$first_item;
+                            $response[$i][$first_item] = ArrayHelper::toArray($tmp);
+                            foreach ($exploded as $j => $item) {
+                                if($j!=0) {
+                                    $tmp = $tmp->$item;
+                                    $response[$i][$first_item][$item]=is_object($tmp)?ArrayHelper::toArray($tmp):$tmp;
+                                }
+                            }
+
+                        } else {
+                            $response[$i][$expand]=$model->$expand;
+                        }
+                    }
+                }
+                $pagination = [
+                    'current_page'=>$dataProvider->getPagination()->getPage()+1,
+                    'page_count'=>$dataProvider->getPagination()->getPageCount(),
+                    'per_page'=>$dataProvider->getPagination()->getPageSize(),
+                    'total_count'=>$dataProvider->getTotalCount(),
+                ];
+
+                return ['pagination'=>$pagination, 'models'=>$response];
             }
         ];
         $actions['delete'] = [
@@ -43,7 +80,7 @@ class MyActiveController extends ActiveController
     }
     /**
      * Запрос, показывающий сущности, принадлежащие пользователю
-     * @return object
+     * @return array
      * @throws HttpException
      * @throws InvalidConfigException
      */
@@ -54,20 +91,55 @@ class MyActiveController extends ActiveController
         if (empty($requestParams)) {
             $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
-        $query = $this->modelClass::find()->where(['owner'=>Yii::$app->user->id]);
+        /** @var ActiveQuery $query */
+        $query = $this->modelClass::find()->where([($this->modelClass)::tableName().'.owner'=>Yii::$app->user->id]);
         if(in_array('status', $this->modelClass::attributes())){
-            $query->andWhere(['!=', 'status', 0]);
+            $query->andWhere(['!=',($this->modelClass)::tableName().'.status', 0]);
         }
-        return Yii::createObject([
+        $dataProvider = Yii::createObject([
             'class' => ActiveDataProvider::className(),
             'query' => $query,
             'pagination' => [
                 'params' => $requestParams,
+                'pageSize' => 10
             ],
             'sort' => [
                 'params' => $requestParams,
             ],
         ]);
+
+        $expands = explode(',', Yii::$app->request->get('expand'));
+        $models = $dataProvider->getModels();
+        $response = [];
+            /** @var ActiveRecord[] $models */
+            foreach ($models as $i=> $model) {
+                $response[$i]=ArrayHelper::toArray($model);
+                foreach ($expands as $expand) {
+                    $exploded = explode('.', $expand);
+                    if(count($exploded)>1) {
+                        $first_item = $exploded[0];
+                        $tmp = $model->$first_item;
+                        $response[$i][$first_item] = ArrayHelper::toArray($tmp);
+                        foreach ($exploded as $j => $item) {
+                            if($j!=0) {
+                                $tmp = $tmp->$item;
+                                $response[$i][$first_item][$item]=is_object($tmp)?ArrayHelper::toArray($tmp):$tmp;
+                            }
+                        }
+
+                    } else {
+                        $response[$i][$expand]=$model->$expand;
+                    }
+                }
+            }
+        $pagination = [
+            'current_page'=>$dataProvider->getPagination()->getPage()+1,
+            'page_count'=>$dataProvider->getPagination()->getPageCount(),
+            'per_page'=>$dataProvider->getPagination()->getPageSize(),
+            'total_count'=>$dataProvider->getTotalCount(),
+        ];
+
+        return ['pagination'=>$pagination, 'models'=>$response];
     }
 
     public function beforeAction($action)
