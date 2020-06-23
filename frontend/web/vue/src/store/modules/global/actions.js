@@ -2,12 +2,12 @@ import * as type from './types';
 import api from '../../../api';
 
 const actions = {
-    getAllResume({commit}, payload) {
+    getCategory({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/resume/my-index?expand=can_update&sort=-update_time&page=' + payload)
+            api.get('/request/category')
                 .then(res => {
-                    commit(type.GET_ALL_RESUME, res.data);
+                    commit(type.GET_CATEGORY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -16,12 +16,12 @@ const actions = {
                 });
         })
     },
-    updateResume({commit}, payload) {
+    getCity({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.post('/request/resume/update-time', {id: payload})
+            api.get('/request/city')
                 .then(res => {
-                    commit(type.UPDATE_RESUME, res.data);
+                    commit(type.GET_CITY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -30,12 +30,12 @@ const actions = {
                 });
         })
     },
-    removeResume({commit}, payload) {
+    getDuties({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.delete('/request/resume/' + payload)
+            api.get('/request/resume/' + payload + '?expand=skills')
                 .then(res => {
-                    commit(type.REMOVE_RESUME, res.data);
+                    commit(type.GET_DUTIES, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -44,12 +44,12 @@ const actions = {
                 });
         })
     },
-    addResume({commit}, payload) {
+    getAllDuties({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.post('/request/resume', payload)
+            api.get('/request/skill?per-page=-1')
                 .then(res => {
-                    commit(type.ADD_RESUME, res.data);
+                    commit(type.GET_ALL_DUTIES, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {

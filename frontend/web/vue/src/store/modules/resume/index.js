@@ -5,6 +5,7 @@ const state = {
     allResume: [],
     updateResume: {},
     removeResume: {},
+    addResume: {},
 };
 
 const mutations = {
@@ -17,6 +18,9 @@ const mutations = {
     [type.REMOVE_RESUME](state, payload) {
         state.removeResume = payload;
     },
+    [type.ADD_RESUME](state, payload) {
+        state.addResume = payload;
+    },
 };
 
 const getters = {
@@ -28,6 +32,9 @@ const getters = {
     },
     removeResume: state => {
         return state.removeResume;
+    },
+    addResume: state => {
+        return state.addResume;
     },
 };
 

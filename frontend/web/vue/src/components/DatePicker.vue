@@ -42,18 +42,31 @@
             }
         },
         mounted() {
-            this.getDate().then(response => {
-                this.birth_date = response.data[0].birth_date;
-            }, response => {
-                this.$swal({
-                    toast: true,
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 4000,
-                    type: 'error',
-                    title: response.data.message
-                })
-            });
+            // this.$store.dispatch('getUserMe', this.$route.params.id)
+            //     .then(data => {
+            //         this.birth_date = data.birth_date;
+            //     }).catch(error => {
+            //     this.$swal({
+            //         toast: true,
+            //         position: 'bottom-end',
+            //         showConfirmButton: false,
+            //         timer: 4000,
+            //         type: 'error',
+            //         title: error.message
+            //     })
+            // });
+            // this.getDate().then(response => {
+            //     this.birth_date = response.data[0].birth_date;
+            // }, response => {
+            //     this.$swal({
+            //         toast: true,
+            //         position: 'bottom-end',
+            //         showConfirmButton: false,
+            //         timer: 4000,
+            //         type: 'error',
+            //         title: response.data.message
+            //     })
+            // });
         },
         watch: {
             menu (val) {
@@ -65,9 +78,9 @@
                 this.$emit('input', birth_date);
                 this.$refs.menu.save(birth_date);
             },
-            async getDate() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index`);
-            },
+            // async getDate() {
+            //     return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index`);
+            // },
         }
     }
 

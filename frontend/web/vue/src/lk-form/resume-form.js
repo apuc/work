@@ -4,13 +4,8 @@ import AddWork from "../components/AddWork";
 import AddEducation from "../components/AddEducation";
 import AddSocial from "../components/AddSocial";
 import DutiesSelect from "../components/DutiesSelect";
-import DatePicker from "../components/DatePicker";
 
 export default {
-  birth_date: Object.assign({}, Field, {
-    rules: [],
-    component: DatePicker
-  }),
   resumeCity: Object.assign({}, Field, {
     name: 'resumeCity',
     label: 'Город*',

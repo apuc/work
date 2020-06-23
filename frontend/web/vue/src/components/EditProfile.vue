@@ -56,6 +56,28 @@
             document.title = this.$route.meta.title;
         },
         mounted() {
+            this.$store.dispatch('getUserMe', this.$route.params.id)
+                .then(data => {
+                    this.dataProfile = data;
+                    this.formData.first_name = data.first_name;
+                    this.formData.second_name = data.second_name;
+                    this.formData.birth_date = data.birth_date;
+                    this.formData.email = data.user.email;
+                    if (data.phone != null) {
+                        this.formData.phone = data.phone.number;
+                        this.formData.phoneValid = true;
+                    }
+                    this.idEmployer = data.id;
+                }).catch(error => {
+                this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: error.message
+                })
+            });
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
                 .then(response => {
                         this.dataProfile = response.data[0];
