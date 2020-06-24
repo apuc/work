@@ -144,8 +144,14 @@ class CompanyController extends MyActiveController
         $this->checkAccess($this->action->id, $model);
         $params = Yii::$app->getRequest()->getBodyParams();
         $model->load($params, '');
-        if(!isset($params['image']['changeImg'])) {
+        if($params['image']){
+            unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
             $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'company');
+        } else {
+            if($model->image_url) {
+                unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
+            }
+            $model->image_url = null;
         }
         $model->user_id = Yii::$app->user->id;
         if($model->save()){

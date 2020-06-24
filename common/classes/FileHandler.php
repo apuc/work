@@ -9,6 +9,9 @@ class FileHandler
 {
     public static function saveFileFromBase64($imageData, $folder){
         $data = explode(',', $imageData);
+        if(count($data)<2) {
+            return $imageData;
+        }
         $image = base64_decode($data[1]);
         $dir = Yii::getAlias('@frontend/web/media/'.$folder);
         if (!file_exists($dir))

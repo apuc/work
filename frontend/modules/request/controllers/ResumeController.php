@@ -46,7 +46,7 @@ class ResumeController extends MyActiveController
         $model->load($params, '');
         $model->years_of_exp = Resume::getFullExperience($params['work']);
         $model->update_time = time();
-        if($params['image']){
+        if(!empty($params['image'])){
             $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'resume');
         }
         $model->employer_id = $employer->id;
@@ -117,8 +117,14 @@ class ResumeController extends MyActiveController
         $employer = Employer::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
 
         $model->load($params, '');
-        if(!isset($params['image']['changeImg'])){
+        if($params['image']){
+            unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
             $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'resume');
+        } else {
+            if($model->image_url) {
+                unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
+            }
+            $model->image_url = null;
         }
         $model->employer_id = $employer->id;
         $model->years_of_exp = Resume::getFullExperience($params['work']);
