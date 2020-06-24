@@ -285,6 +285,8 @@ class Vacancy extends WorkActiveRecord
             $url .= "/$city_slug";
         } else if ($country_slug) {
             $url .= "/$country_slug";
+        } else if ($country_slug) {
+            $url .= "/$country_slug";
         } else if (Yii::$app->request->cookies['country_slug']) {
             $url .= "/".Yii::$app->request->cookies['country_slug'];
         }

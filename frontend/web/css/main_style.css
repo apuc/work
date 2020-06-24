@@ -3941,7 +3941,6 @@ button {
     color: #ffffff;
     background: none;
     border: none;
-    cursor: pointer;
     width: 215px;
     text-align: left; }
 @media (max-width: 1250px) {

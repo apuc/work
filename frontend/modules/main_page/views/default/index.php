@@ -39,24 +39,22 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 <div class="filter-overlay nav-overlay jsNavOverlay">
                 </div>
                 <nav class="nhome__nav jsNavMenu">
-                    <a class="nhome__nav-item nhome__nav-item_logo" href="<?=$current_country?"/$current_country->slug":"/"?>">
+                    <div class="nhome__nav-item nhome__nav-item_logo">
                         <img src="/images/logo-main.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo-main-small.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
-                    </a>
+                    </div>
                     <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status >= 20): ?>
                     <a class="nhome__nav-item" href="/employer">Работодателю</a>
                     <?php endif; ?>
                     <div class="geolocation">
                         <img src="/images/geolocation.png" alt="Геолокация">
                         <div class="country-select">
+                            <?php if($current_country):?>
+                                <a class="remove-country" href="/">+</a>
+                            <?php endif ?>
                             <span class="jsOpenCountrySelect"><?= $current_country ? $current_country->name : 'Выберите Страну' ?> <b></b></span>
                             <ul>
-                                <li>
-                                    <a href="/" data-id="" class="jsOpenCountrySelectUrl">
-                                        Выберите Страну
-                                    </a>
-                                </li>
                                 <?php foreach ($countries as $country):?>
                                     <li>
                                         <a href="<?= $country->slug ?>" data-id="<?= $country->id ?>" class="jsOpenCountrySelectUrl">
@@ -70,10 +68,10 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                     <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status >= 20): ?>
                     <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>
                     <?php elseif (!Yii::$app->user->isGuest && Yii::$app->user->identity->status == 10): ?>
-                    <a class="nhome__nav-item" href="<?= Vacancy::getSearchPageUrl() ?>">Поиск вакансий</a>
+                    <a class="nhome__nav-item" href="<?= Vacancy::getSearchPageUrl(false, false, false, $current_country?$current_country->slug:false) ?>">Поиск вакансий</a>
                     <?php else: ?>
                     <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>
-                    <a class="nhome__nav-item" href="<?= Vacancy::getSearchPageUrl() ?>">Поиск вакансий</a>
+                    <a class="nhome__nav-item" href="<?= Vacancy::getSearchPageUrl(false, false, false, $current_country?$current_country->slug:false) ?>">Поиск вакансий</a>
                     <?php endif; ?>
                     <?php if (Yii::$app->user->isGuest): ?>
                         <button class="nhome__nav-item nav-btn jsLogin">
@@ -111,10 +109,10 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
             </div>
             <div class="nhome__main-content">
                 <div class="nhome__main-content-search">
-                    <?= Html::beginForm([Vacancy::getSearchPageUrl()], 'get', ['class' => 'nhome__form']) ?>
+                    <?= Html::beginForm([Vacancy::getSearchPageUrl(false, false, false, $current_country?$current_country->slug:false)], 'get', ['class' => 'nhome__form']) ?>
                     <span class="nhome__form-text">
                             Сейчас на сайте свыше
-                            <a href="<?= Vacancy::getSearchPageUrl() ?>"
+                            <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $current_country?$current_country->slug:false) ?>"
                                class='white-text'> <?= $vacancy_count ?> вакансий </a>
                         </span>
                     <input name="search_text" class="nhome__form-input" placeholder="Я ищу..." type="text"/>
@@ -124,12 +122,15 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                     ) ?>
                     <?= Html::endForm() ?>
                     <a class="btn btn-red mr20" href="<?= Resume::getSearchPageUrl() ?>">резюме</a>
-                    <a class="btn btn-red" href="<?= Vacancy::getSearchPageUrl() ?>">вакансии</a>
+                    <a class="btn btn-red" href="<?= Vacancy::getSearchPageUrl(false, false, false, $current_country?$current_country->slug:false) ?>">вакансии</a>
                 </div>
                 <div class="geolocation">
                     <div class="geolocation__block">
-                        <img src="/images/geolocation.png" alt="Геолокация">
+                        <img src="/images/geolocation.png" alt="Геолок ация">
                         <div class="country-select">
+                            <?php if($current_country):?>
+                            <a class="remove-country" href="/">+</a>
+                            <?php endif ?>
                             <span class="jsOpenCountrySelect"><?= $current_country ? $current_country->name : 'Выберите Страну' ?> <b></b></span>
                             <ul>
                                 <li>
@@ -169,15 +170,13 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 Сайт поиска работы №1. Выбирайте из <a class="yellow-text"
                                                                    href="<?= Vacancy::getSearchPageUrl() ?>">2000+
                     вакансий</a> и 500+ компаний!<br>
-                <a class="yellow-text" href="/personal-area/add-resume">Разместите резюме</a> и получите приглашения на
+                Разместите резюме и получите приглашения на
                 работу от лучших работодателей.<br>
                 Размещение вакансий и резюме - бесплатно.
                 Размести сегодня - улучши качество жизни завтра!<br>
-                Поиск работы - это <a class="yellow-text" href="/">rabota.today.</a>
+                Поиск работы - это Rabota.today
                 <?php endif ?>
             </div>
-            <!--googleoff: all-->
-            <!--noindex-->
             <div class="nhome__desc desc-mob">
                 <?php if ($current_country):?>
                     <?=$current_country->main_page_mobile_text?>
@@ -186,8 +185,6 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 <a class="yellow-text" href="/">Поиск работы - это rabota.today.</a>
                 <?php endif ?>
             </div>
-            <!--googleoff: all-->
-            <!--noindex-->
             <img class="nhome__main-bottom-img" src="/images/img1.png" alt="Офисный стул" role="presentation"/>
         </div>
     </div>
@@ -239,10 +236,6 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                     </div>
                     <div class="d-flex flex-wrap align-items-center justify-content-start">
                         <a class="btn-card btn-red jsVacancyModal" data-id="<?= $vacancy->id ?>">Откликнуться</a>
-                        <!--                    <a class="single-card__like" href="#">-->
-                        <!--                        <i class="fa fa-heart-o"></i>-->
-                        <!--                        <span>В избранное</span>-->
-                        <!--                    </a>-->
                     </div>
                 </div>
             <?php endforeach ?>
@@ -250,7 +243,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
     </aside>
     <div class="nhome__footer">
         <div class="nhome__footer-left">
-            <a class="footer__craft-link" href="https://web-artcraft.com/" target="_blank">
+            <a class="footer__craft-link" href="https://web-artcraft.com/" target="_blank" rel="nofollow">
                 Разработано CraftGroup
             </a>
             <a class="nhome__footer-left-soc" rel="nofollow" target="_blank" href="https://vk.com/rabotad0netsk">
@@ -258,12 +251,11 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 Напиши нам в соц.сетях
             </a>
             <span>
-                © 2019–2020 <a href="/">Rabota.today</a>.<br>
+                © 2019–2020 Rabota.today.<br>
                 Сайт поиска работы №1<br>
                 <?php if($current_country):?>
                     в <?=$current_country->name?>
                 <?php endif?>
-<!--                в ДНР и ЛНР-->
             </span>
         </div>
         <div class="nhome__footer-item">
@@ -288,9 +280,9 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 <p>Вакансии<br> по категориям <span>300+</span></p>
             </div>
             <?php foreach ($categories as $category):?>
-                <a href="<?= Vacancy::getSearchPageUrl($category->slug) ?>"><?= $category->name ?></a>
+                <a href="<?= Vacancy::getSearchPageUrl($category->slug, false, false, $current_country?$current_country->slug:false) ?>"><?= $category->name ?></a>
             <?php endforeach; ?>
-            <a href="<?= Vacancy::getSearchPageUrl() ?>">все вакансии</a>
+            <a href="<?= Vacancy::getSearchPageUrl(false, false, false, $current_country?$current_country->slug:false) ?>">все вакансии</a>
         </div>
         <div class="nhome__footer-item">
             <div class="nhome__footer-item-head">
@@ -298,7 +290,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 <p>Вакансии<br> по профессиям <span>500+</span></p>
             </div>
             <?php foreach ($professions as $profession):?>
-                <a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a>
+                <a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug, $current_country?$current_country->slug:false) ?>"><?= $profession->title ?></a>
             <?php endforeach; ?>
             <?php if($current_country):?>
                 <a href="<?=Url::toRoute(["/$current_country->slug/professions"])?>">все профессии</a>
