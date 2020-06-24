@@ -8,6 +8,7 @@ use common\models\City;
 use common\models\Country;
 use common\models\Employer;
 use common\models\Professions;
+use common\models\Region;
 use common\models\User;
 use common\models\Vacancy;
 use Yii;
@@ -42,9 +43,21 @@ class DefaultController extends Controller
             $professions = Professions::find()->select(['title', 'slug'])->limit(4)->all();
             Yii::$app->cache->set("main_page_professions", $professions, 3600);
         }
-        if (!$cities = Yii::$app->cache->get("main_page_cities")) {
-            $cities = City::find()->select(['id', 'name', 'slug'])->where(['status' => 1])->orderBy('priority ASC')->all();
-            Yii::$app->cache->set("main_page_cities", $cities, 3600);
+        if(!$current_country) {
+            if (!$cities = Yii::$app->cache->get("main_page_cities")) {
+                $cities = City::find()->select(['id', 'name', 'slug'])->where(['status' => 1])->orderBy('priority ASC')->all();
+                Yii::$app->cache->set("main_page_cities", $cities, 3600);
+            }
+        } else {
+            if (!$cities = Yii::$app->cache->get("main_page_cities_$current_country->slug")) {
+                $cities = City::find()
+                    ->select([
+                        'id'=>City::tableName().'.id',
+                        'name'=>City::tableName().'.name',
+                        'slug'])
+                    ->joinWith('region')->where([City::tableName().'.status' => 1, Region::tableName().'.country_id'=>$current_country->id])->orderBy('priority ASC')->all();
+                Yii::$app->cache->set("main_page_cities_$current_country->slug", $cities, 3600);
+            }
         }
         if (!$countries = Yii::$app->cache->get("main_page_countries")) {
             $countries = Country::find()->select(['id', 'name', 'slug'])->all();
