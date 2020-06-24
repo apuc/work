@@ -6,6 +6,8 @@ const state = {
     updateResume: {},
     removeResume: {},
     addResume: {},
+    resume: {},
+    editResume: {},
 };
 
 const mutations = {
@@ -21,6 +23,12 @@ const mutations = {
     [type.ADD_RESUME](state, payload) {
         state.addResume = payload;
     },
+    [type.GET_RESUME](state, payload) {
+        state.resume = payload;
+    },
+    [type.EDIT_RESUME](state, payload) {
+        state.editResume = payload;
+    },
 };
 
 const getters = {
@@ -35,6 +43,12 @@ const getters = {
     },
     addResume: state => {
         return state.addResume;
+    },
+    resume: state => {
+        return state.resume;
+    },
+    editResume: state => {
+        return state.editResume;
     },
 };
 

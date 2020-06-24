@@ -71,8 +71,6 @@
         name: 'FormResume',
         mixins: [Resume],
         components: {FormTemplate, myUpload},
-		created() {
-		},
         mounted() {
             document.title = this.$route.meta.title;
 			this.getEmploymentType();

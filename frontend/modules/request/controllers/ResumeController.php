@@ -13,6 +13,7 @@ use common\models\ResumeSkill;
 use common\models\Skill;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\base\UserException;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
@@ -95,7 +96,8 @@ class ResumeController extends MyActiveController
                 }
             }
         } elseif ($model->hasErrors()) {
-            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            throw new UserException(json_encode($model->errors));
+//            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
         return $model;
     }

@@ -58,6 +58,34 @@ const actions = {
                 });
         })
     },
+    getResume({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.get('/request/resume/' + payload + '?expand=experience,education,skills,category')
+                .then(res => {
+                    commit(type.GET_RESUME, res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
+    editResume({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.patch('/request/resume/' + payload.id, payload)
+                .then(res => {
+                    commit(type.EDIT_RESUME, res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
 };
 
 export default actions;

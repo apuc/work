@@ -10,6 +10,7 @@ use common\models\Resume;
 use common\models\Vacancy;
 use dektrium\user\models\User;
 use Yii;
+use yii\base\UserException;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
@@ -35,7 +36,7 @@ class EmployerController extends MyActiveController
      */
     public function actionUpdate($id){
         $model = Employer::findOne($id);
-        if(!$model) throw new HttpException(400, 'Ошибка изменения профиля: профиль отсутствует');
+        if(!$model) throw new UserException('Ошибка изменения профиля: профиль отсутствует');
         $this->checkAccess($this->action->id, $model);
         $params = Yii::$app->getRequest()->getBodyParams();
         $model->load($params, '');
@@ -54,7 +55,7 @@ class EmployerController extends MyActiveController
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
         } elseif (!$model->hasErrors()) {
-            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            throw new UserException('Failed to create the object for unknown reason.');
         }
         return $model;
     }
