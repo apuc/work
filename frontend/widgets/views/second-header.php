@@ -34,12 +34,17 @@ use yii\helpers\Url;
                             <img src="/images/logo-main.png" alt="Логотип rabota.today" role="presentation"/>
                             <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
                         </a>
-                        <a class="home__nav-item" href="/employer">Работодателю</a>
-                        <?php if(Yii::$app->controller->uniqueId === "vacancy/default"):?>
+                        <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status >= 20): ?>
+                            <a class="home__nav-item" href="/employer">Работодателю</a>
+                        <?php endif; ?>
+                        <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status >= 20): ?>
+                            <a class="home__nav-item border-top-header" href="<?= Resume::getSearchPageUrl() ?>">Резюме</a>
+                        <?php elseif (!Yii::$app->user->isGuest && Yii::$app->user->identity->status == 10): ?>
                             <a class="home__nav-item border-top-header" href="<?= Vacancy::getSearchPageUrl() ?>">Вакансии</a>
-                        <?php else:?>
-                            <a class="home__nav-item border-top-header"" href="<?= Resume::getSearchPageUrl() ?>">Резюме</a>
-                        <?php endif?>
+                        <?php else: ?>
+                            <a class="home__nav-item border-top-header" href="<?= Resume::getSearchPageUrl() ?>">Резюме</a>
+                            <a class="home__nav-item border-top-header" href="<?= Vacancy::getSearchPageUrl() ?>">Вакансии</a>
+                        <?php endif; ?>
                         <?php
                         if (Yii::$app->user->isGuest): ?>
                             <button class="home__nav-item jsLogin">
@@ -60,7 +65,7 @@ use yii\helpers\Url;
                                 <div class="dropdown__menu jsShowMenu">
                                     <span class="nhome__nav-item mobile-prev jsMenuPrev">Назад</span>
                                     <a class="home__nav-item" href="/personal-area">Личный кабинет</a>
-                                    <a class="home__nav-item" href="<?=Url::to(['/personal-area/my-message'])?>">Сообщения <?=$messages>0?"($messages)":""?></a>
+                                    <a class="home__nav-item" href="<?=Url::to(['/personal-area/my-message'])?>">Отклики <?=$messages>0?"($messages)":""?></a>
                                     <a class="home__nav-item" href="/personal-area/add-vacancy">Добавить вакансию</a>
                                     <a class="home__nav-item" href="/personal-area/add-resume">Добавить резюме</a>
                                     <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>

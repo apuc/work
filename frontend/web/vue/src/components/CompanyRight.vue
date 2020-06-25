@@ -56,7 +56,8 @@
         data() {
             return {
                 formData: {
-                    companyRight: ''
+                    companyRight: '',
+                    phoneValid: true
                 },
                 allUsers: []
             };
@@ -82,7 +83,8 @@
             saveData() {
                 let data = {
                     email: this.formData.companyRight,
-                    company_id: this.$route.params.id
+                    company_id: this.$route.params.id,
+                    phoneValid: this.formData.phoneValid
                 };
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/company/add-user`, data)
                     .then(response => {

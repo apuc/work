@@ -13,6 +13,7 @@ import AllCompany from './components/AllCompany.vue'
 import EditCompany from './components/EditCompany.vue'
 import EditProfile from './components/EditProfile.vue'
 import CompanyRight from './components/CompanyRight.vue'
+import CompanyTransfer from './components/CompanyTransfer.vue'
 
 Vue.use(Router);
 
@@ -100,6 +101,12 @@ export default new Router({
       name: 'company-right',
       meta: {title: 'Доступ к компании'},
       component: CompanyRight
+    },
+    {
+      path: '/personal-area/company-transfer/:id',
+      name: 'company-transfer',
+      meta: {title: 'Передать компанию'},
+      component: CompanyTransfer
     }
   ]
 })

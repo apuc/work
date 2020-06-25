@@ -19,6 +19,17 @@
                 value="tab-1"
         >
             <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" >
+                <vue-tel-input :placeholder="'Номер телефона'"
+                               :defaultCountry="defaultCountry.iso2"
+                               v-model="formData.phone"
+                               :allCountries="allCountries"
+                               :validCharactersOnly="true"
+                               :required="true"
+                               :inputOptions="{ showDialCode: true, tabindex: 0 }"
+                               @country-changed="changeCountry"
+                               @input="onInput"
+                ></vue-tel-input>
+                <p class="custom-error">{{ phone.text }}</p>
             </FormTemplate>
         </v-tab-item>
 
@@ -26,8 +37,6 @@
                 value="tab-2"
         >
                 <NewPassword></NewPassword>
-<!--            <FormTemplate :paramsFile="getFormDataNewPass()" v-model="formDataNewPass" :sendForm="saveDataNewPass" >-->
-<!--            </FormTemplate>-->
         </v-tab-item>
     </v-tabs>
 
@@ -56,6 +65,7 @@
                         this.formData.email = response.data[0].user.email;
                         if (response.data[0].phone != null) {
                             this.formData.phone = response.data[0].phone.number;
+                            this.formData.phoneValid = true;
                         }
                         this.idEmployer = response.data[0].id;
                     }, response => {
@@ -71,13 +81,49 @@
                 )
         },
         methods: {
+            changeCountry(data) {
+                if (data.iso2 === 'UA') {
+                    this.defaultCountry.iso2 = data.iso2;
+                    this.defaultCountry.dialCode = data.dialCode;
+                }
+                if (data.iso2 === 'RU') {
+                    this.defaultCountry.iso2 = data.iso2;
+                    this.defaultCountry.dialCode = data.dialCode;
+                }
+            },
+            onInput() {
+                this.phone.valid = false;
+                if (this.defaultCountry.iso2 === 'UA') {
+                    if (this.formData.phone.length === 16) {
+                        this.phone.text = '';
+                        this.phone.valid = true;
+                        this.formData.phoneValid = true;
+                    } else {
+                        this.phone.text = 'Вы ввели не верный номер телефона';
+                        this.phone.valid = false;
+                        this.formData.phoneValid = false;
+                    }
+                }
+                if (this.defaultCountry.iso2 === 'RU') {
+                    if (this.formData.phone.length === 16) {
+                        this.phone.text = '';
+                        this.phone.valid = true;
+                        this.formData.phoneValid = true;
+                    } else {
+                        this.phone.text = 'Вы ввели не верный номер телефона';
+                        this.phone.valid = false;
+                        this.formData.phoneValid = false;
+                    }
+                }
+            },
             saveData() {
                 let data = {
                     first_name: this.formData.first_name,
                     second_name: this.formData.second_name,
                     birth_date: this.formData.birth_date,
                     email: this.formData.email,
-                    phone: this.formData.phone
+                    phone: this.formData.phone,
+                    phoneValid: this.formData.phoneValid
                 };
 
                 this.$http.patch(`${process.env.VUE_APP_API_URL}/request/employer/` + this.idEmployer, data)

@@ -23,7 +23,6 @@
                     color="#26c6da"
                     dark
                     v-for="(item, itemIndex) in items"
-                    :key="itemIndex"
             >
                 <v-card-text class="headline font-weight-bold">
                     <template v-if="items === allRecords.Vacancy">
