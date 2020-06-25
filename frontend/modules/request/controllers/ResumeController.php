@@ -115,7 +115,8 @@ class ResumeController extends MyActiveController
         $employer = Employer::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
 
         $model->load($params, '');
-        if(!isset($params['image']['changeImg'])){
+
+        if($params['image']){
             $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'resume');
         }
         $model->employer_id = $employer->id;
