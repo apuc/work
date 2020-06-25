@@ -44,9 +44,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                         <img src="/images/logo-main-small.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
                     </div>
-                    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status >= 20): ?>
                     <a class="nhome__nav-item" href="/employer">Работодателю</a>
-                    <?php endif; ?>
                     <div class="geolocation">
                         <img src="/images/geolocation.png" alt="Геолокация">
                         <div class="country-select">
