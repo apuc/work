@@ -81,6 +81,7 @@
                     ],
                     ['label' => 'Профессии', 'url' => ['/professions/professions/index'], 'icon' => 'male'],
                     ['label' => 'Спец. Фильтры', 'url' => ['/spec-filters/spec-filters/index'], 'icon' => 'filter'],
+                    ['label' => 'Обновления', 'url' => ['/update/update/index'], 'icon' => 'pencil'],
                 ],
             ]
         ) ?>
