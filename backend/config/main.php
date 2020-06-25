@@ -80,6 +80,9 @@ return [
         'country' => [
             'class' => 'backend\modules\country\Country',
         ],
+        'update' => [
+            'class' => 'backend\modules\update\Update',
+        ],
     ],
     'components' => [
 //        'request' => [
