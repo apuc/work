@@ -35,13 +35,9 @@ class MainAsset extends AssetBundle
 
     public function init()
     {
-        if(YII_ENV === 'prod') {
-            $this->css = $this->getVersionedFiles($this->cssFiles);
-            $this->js = $this->getVersionedFiles($this->jsFiles);
-        } else {
-            $this->css = $this->cssFiles;
-            $this->js = $this->jsFiles;
-        }
+        $this->css = $this->getVersionedFiles($this->cssFiles);
+        $this->js = $this->getVersionedFiles($this->jsFiles);
+
         parent::init();
     }
 
