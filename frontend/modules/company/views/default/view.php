@@ -53,7 +53,7 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                 </div>
 
                 <p class="content-part__title">
-                    <h1>Работа в <?=$model->name?></h1>
+                    <?=$model->name?>
                     <?php if($model->is_trusted):?>
                         <img src="/images/correct.png" alt=Галочка"" id="small-img" role="presentation" title="Проверенная компания"/>
                     <?php endif ?>
@@ -91,7 +91,7 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                     <?php endif ?>
                 </div>
                 <div class="description">
-                    <h2 style="margin-top: 10px">Открытые вакансии <?=$model->name?></h2>
+                    <h3 style="margin-top: 10px">Открытые вакансии <?=$model->name?></h3>
                     <?php foreach ($model->activeVacancies as $vacancy): ?>
                     <div class="vacancies">
                         <span class="vacancies__img"></span>

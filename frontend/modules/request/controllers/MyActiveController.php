@@ -25,25 +25,12 @@ class MyActiveController extends ActiveController
             'prepareDataProvider' => function(){
                 $query =$this->modelClass::find();
                 if(in_array('status', $this->modelClass::attributes())){
-                    $query->andWhere([($this->modelClass)::tableName().'.status'=>1]);
+                    $query->andWhere(['status'=>1]);
                 }
-                $dataProvider = new ActiveDataProvider([
+                return new ActiveDataProvider([
                     'query' => $query,
                     'sort' => []
                 ]);
-                $expands = explode(',', Yii::$app->request->get('expand'));
-                foreach ($expands as $expand) {
-                    $query->joinWith($expand);
-                }
-                $query->asArray();
-                $models = $dataProvider->getModels();
-                $pagination = [
-                    'current_page'=>$dataProvider->getPagination()->getPage()+1,
-                    'page_count'=>$dataProvider->getPagination()->getPageCount(),
-                    'per_page'=>$dataProvider->getPagination()->getPageSize(),
-                    'total_count'=>$dataProvider->getTotalCount(),
-                ];
-                return ['pagination'=>$pagination, 'models'=>$models];
             }
         ];
         $actions['delete'] = [
@@ -56,7 +43,7 @@ class MyActiveController extends ActiveController
     }
     /**
      * Запрос, показывающий сущности, принадлежащие пользователю
-     * @return array
+     * @return object
      * @throws HttpException
      * @throws InvalidConfigException
      */
@@ -67,11 +54,11 @@ class MyActiveController extends ActiveController
         if (empty($requestParams)) {
             $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
-        $query = $this->modelClass::find()->where([($this->modelClass)::tableName().'.owner'=>Yii::$app->user->id]);
+        $query = $this->modelClass::find()->where(['owner'=>Yii::$app->user->id]);
         if(in_array('status', $this->modelClass::attributes())){
-            $query->andWhere(['!=',($this->modelClass)::tableName().'.status', 0]);
+            $query->andWhere(['!=', 'status', 0]);
         }
-        $dataProvider = Yii::createObject([
+        return Yii::createObject([
             'class' => ActiveDataProvider::className(),
             'query' => $query,
             'pagination' => [
@@ -81,20 +68,6 @@ class MyActiveController extends ActiveController
                 'params' => $requestParams,
             ],
         ]);
-
-        $expands = explode(',', Yii::$app->request->get('expand'));
-        foreach ($expands as $expand) {
-            $query->joinWith($expand);
-        }
-        $query->asArray();
-        $models = $dataProvider->getModels();
-        $pagination = [
-            'current_page'=>$dataProvider->getPagination()->getPage()+1,
-            'page_count'=>$dataProvider->getPagination()->getPageCount(),
-            'per_page'=>$dataProvider->getPagination()->getPageSize(),
-            'total_count'=>$dataProvider->getTotalCount(),
-        ];
-        return ['pagination'=>$pagination, 'models'=>$models];
     }
 
     public function beforeAction($action)

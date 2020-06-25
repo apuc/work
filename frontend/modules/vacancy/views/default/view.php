@@ -211,7 +211,7 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                         <p>Вакансии из других профобластей</p>
                         <ul>
                            <?php foreach ($model->professions as $profession): ?>
-                               <li><a href="<?= Vacancy::getSearchPageUrl(false, $model->city0->slug, $profession->slug) ?>"><?= $profession->title ?></a></li>
+                               <li><a href="<?= Vacancy::getSearchPageUrl(false, false, $profession->slug) ?>"><?= $profession->title ?></a></li>
                             <?php endforeach;?>
                         </ul>
                     </div>
