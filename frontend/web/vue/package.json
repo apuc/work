@@ -9,12 +9,14 @@
   },
   "dependencies": {
     "vue": "^2.6.6",
+    "vue-image-crop-upload": "^2.5.0",
     "vue-image-upload-resize": "^2.0.4",
     "vue-multiselect": "^2.1.6",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
     "vue-select": "^3.1.0",
     "vue-sweetalert2": "^2.0.5",
+    "vue-tel-input": "^4.4.0",
     "vuetify": "^1.5.5",
     "vuex": "^3.0.1"
   },
@@ -27,6 +29,8 @@
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "material-design-icons-iconfont": "^4.0.5",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue-cli-plugin-vuetify": "^0.5.0",

@@ -5,7 +5,9 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
+    <?php if(!Yii::$app->user->isGuest):?>
+        gtag('set', {'user_id': <?=Yii::$app->user->id?>});
+    <?php endif ?>
     gtag('config', 'UA-140244918-1');
 </script>
 <?php endif?>

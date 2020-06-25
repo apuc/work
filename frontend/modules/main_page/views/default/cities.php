@@ -16,8 +16,14 @@ $this->registerMetaTag(['name' => 'description', 'content' => KeyValue::findValu
 
         <div class="container__parts">
 
-            <div class="part">
-                <p class="region"><a href="/vacancy/dnr">Вакансии ДНР</a> ( Донецкая Народная Республика )</p>
+            <div class="part jsCitiesBtn">
+                <div class="part__head">
+                    <div class="part__head-logo">
+                        <img class="part__head-logo-circle" src="/images/cities_circle.png" alt="">
+                        <img class="part__head-logo-blazon" src="/images/cities_dnr.png" alt="">
+                    </div>
+                    <p class="part__head-text"><a href="/vacancy/dnr">Вакансии ДНР</a> <span>(Донецкая Народная Республика)</span></p>
+                </div>
                 <div class="cities">
 
                     <ul>
@@ -34,8 +40,14 @@ $this->registerMetaTag(['name' => 'description', 'content' => KeyValue::findValu
 
             </div>
 
-            <div class="part">
-                <p class="region"><a href="/vacancy/lnr">Вакансии ЛНР</a> ( Луганская Народная Республика )</p>
+            <div class="part jsCitiesBtn">
+                <div class="part__head">
+                    <div class="part__head-logo">
+                        <img class="part__head-logo-circle" src="/images/cities_circle.png" alt="">
+                        <img class="part__head-logo-blazon" src="/images/cities_lnr.png" alt="">
+                    </div>
+                    <p class="part__head-text"><a href="/vacancy/lnr">Вакансии ЛНР</a> <span>(Луганская Народная Республика)</span></p>
+                </div>
                 <div class="cities">
 
                     <ul>

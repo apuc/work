@@ -67,6 +67,7 @@
                     old_password: this.formDataNewPass.old_password,
                     new_password_1: this.formDataNewPass.new_password_1,
                     new_password_2: this.formDataNewPass.new_password_2,
+                    phoneValid: this.formData.phoneValid
                 };
 
                 this.$http.post(`${process.env.VUE_APP_API_URL}/request/security/change-password`, data)

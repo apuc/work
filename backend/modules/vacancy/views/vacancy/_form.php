@@ -73,6 +73,8 @@ use yii\widgets\ActiveForm;
         Vacancy::STATUS_INACTIVE => 'Не активна',
     ]); ?>
 
+    <?=$form->field($model, 'is_day_vacancy')->checkbox(); ?>
+
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>

@@ -42,6 +42,7 @@
                     ],
                     ['label' => 'Резюме', 'url' => ['/resume/resume/index'], 'icon' => 'id-card-o'],
                     ['label' => 'Вакансии', 'url' => ['/vacancy/vacancy/index'], 'icon' => 'address-book-o'],
+                    ['label' => 'Баннеры', 'url' => ['/banner/banner/index'], 'icon' => 'thumb-tack'],
                     [
                         'label' => 'Характеристики', 'url' => '#', 'icon'=>'cog',
                         'items' => [

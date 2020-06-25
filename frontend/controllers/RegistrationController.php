@@ -11,6 +11,7 @@ use dektrium\user\models\RegistrationForm;
 use dektrium\user\models\Token;
 use dektrium\user\models\User;
 use dektrium\user\Module;
+use frontend\models\user\RegUserForm;
 use Yii;
 use yii\base\ViewContextInterface;
 use yii\web\NotFoundHttpException;
@@ -29,7 +30,7 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
     public function actionRegister()
     {
         /** @var RegistrationForm $model */
-        $model = \Yii::createObject(RegistrationForm::className());
+        $model = \Yii::createObject(RegUserForm::className());
         $event = $this->getFormEvent($model);
 
         $this->trigger(self::EVENT_BEFORE_REGISTER, $event);
@@ -37,6 +38,7 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
         $this->performAjaxValidation($model);
         $post = \Yii::$app->request->post();
         $post['register-form']['username'] = $post['register-form']['email'];
+        $post['register-form']['status'] = 0;
         if ($model->load($post) && $model->register()) {
             $this->trigger(self::EVENT_AFTER_REGISTER, $event);
             /** @var User $user */
@@ -54,6 +56,8 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
                 ->setTo($user->email)
                 ->setSubject('Спасибо за регистрацию')
                 ->send();
+        } else {
+            return json_encode($model->errors);
         }
         $url = explode('?', Yii::$app->request->referrer)[0];
         $url.='?message=Ваш аккаунт успешно зарегистрирован, проверьте почту для получения дальнейших инструкций';

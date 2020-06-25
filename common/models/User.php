@@ -9,7 +9,33 @@ use yii\web\IdentityInterface;
  */
 class User extends \dektrium\user\models\User implements IdentityInterface
 {
+
+    const STATUS_EMPLOYER = 1;
+    const STATUS_JOB_SEEKER = 2;
+
     public $loginUrl = '/';
+
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        // add field to scenarios
+        $scenarios['create'][]   = 'status';
+        $scenarios['update'][]   = 'status';
+        $scenarios['register'][] = 'status';
+        return $scenarios;
+    }
+
+    public function rules()
+    {
+        $rules = parent::rules();
+        // add some rules
+        $rules['fieldRequired'] = ['status', 'required'];
+        $rules['fieldLength']   = ['status', 'integer'];
+
+        return $rules;
+    }
+
 
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -18,7 +44,7 @@ class User extends \dektrium\user\models\User implements IdentityInterface
 
     public function fields()
     {
-        return ['id', 'email'];
+        return ['id', 'email', 'status'];
     }
 
     public function extraFields()
@@ -34,5 +60,13 @@ class User extends \dektrium\user\models\User implements IdentityInterface
     public function getUnreadMessages()
     {
         return Message::find()->where(['receiver_id'=>$this->id, 'deleted_by_receiver'=>0, 'is_read'=>0])->count();
+    }
+
+    public static function getStatus($id)
+    {
+        $statuses = [self::STATUS_EMPLOYER => 'Работодатель',
+            self::STATUS_JOB_SEEKER => 'Соискатель'];
+
+        return isset($statuses[$id]) ? $statuses[$id] : null;
     }
 }

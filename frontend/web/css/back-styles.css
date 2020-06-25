@@ -97,3 +97,16 @@
 .geolocation .geolocation__block .select2-container {
   width: 200px !important;
 }
+
+.remove-country {
+  position: absolute;
+  right: 27px;
+  top: 7px;
+  transform: rotate(45deg);
+  width: 20px;
+  height: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

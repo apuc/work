@@ -70,7 +70,6 @@
                     title: response.data.message
                 })
             });
-            console.log(this.$route.name);
             if(this.$route.name == 'edit-vacancy/id') {
                 this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id + '?expand=employment-type,category')
                     .then(response => {

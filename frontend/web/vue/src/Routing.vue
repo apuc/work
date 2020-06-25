@@ -29,6 +29,7 @@
                 <v-list-tile
                         v-for="link in linkMenu"
                         :key="link.title"
+                        v-if="link.show"
                         :to="link.url"
                         class="menu-hover"
                         @click="getMessage(link.title)"
@@ -44,7 +45,7 @@
                                 </v-list-tile-title>
                             </template>
                             <template v-if="link.addFlag">
-                                <router-link class="menu-add-link" :to="link.addTo" :title="link.addTitle">
+                                <router-link v-if="link.companiesCount < 1" class="menu-add-link" :to="link.addTo" :title="link.addTitle">
                                     <span>+</span>
                                 </router-link>
                             </template>
@@ -62,6 +63,33 @@
                 main
         >
             <v-container>
+                <v-alert
+                        dense
+                        :value="true"
+                        type="warning"
+                        class="main-alert"
+                        v-if="companiesCount > 1"
+                >
+                    <h1>Внимание!</h1>
+                    Мы подготовили для Вас новые функции сайта, которые сделают поиск сотрудников комфортнее.<br>
+                    В связи с этим мы вынеждены с <strong>01.07.2020</strong> ввести ограничение на кол-во компаний на одном аккаунте.<br>
+                    <button type="button" @click="alertFlag = !alertFlag">Подробнее</button><br>
+                    <transition name="fade">
+                        <div v-if="alertFlag">
+                            На аккаунте может быть только одна компания.<br>
+                            <span v-if="companiesCount === 2">
+                                Просим Вас перенести одну из Ваших компаний на другой аккаунт. Все данные будут сохранены и доступны в указанном аккаунте.
+                            </span>
+                            <span v-if="companiesCount > 2">
+                                Просим Вас перенести все компании кроме одной на другие аккаунты. Все данные будут сохранены и доступны в указанных аккаунтах.
+                            </span>
+                            <br>
+                            Для этого нажмите на кнопку "Передать права" и введите Email.<br>
+                            Если не будет найден аккаунт связанный с указанной почтой, он будет создан автоматически. Данные для входа будут отправлены на указанный email!<br>
+                            Если <strong>01.07.2020</strong> на Вашем аккаунте будет более 1 компании, все компании кроме одной, будут удалены. Останется одна случайная компания.<br>
+                        </div>
+                    </transition>
+                </v-alert>
                 <v-layout justify-start menu>
                     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
                 </v-layout>
@@ -79,11 +107,13 @@
         data() {
             return {
                 drawer: true,
+                alertFlag: false,
                 firstName: '',
                 secondName: '',
                 userId: '',
                 email: '',
                 unreadMessages: '',
+                companiesCount: 0,
                 loginImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/login.png',
                 mainImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/main.png',
                 logOutImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/exit.png',
@@ -92,13 +122,15 @@
                         title: 'Статистика',
                         url: '/personal-area/statistics',
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/analysis.png',
-                        addFlag: false
+                        addFlag: false,
+                        show: true
                     },
                     {
                         title: 'Отклики',
                         url: '/personal-area/my-message',
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/mail.png',
-                        addFlag: false
+                        addFlag: false,
+                        show: true
                     },
                     {
                         title: 'Вакансии',
@@ -106,7 +138,9 @@
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_vacancy.png',
                         addFlag: true,
                         addTo: '/personal-area/add-vacancy',
-                        addTitle: 'Добавить вакансию'
+                        addTitle: 'Добавить вакансию',
+                        companiesCount: 0,
+                        show: true
                     },
                     {
                         title: 'Резюме',
@@ -114,7 +148,9 @@
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_resume.png',
                         addFlag: true,
                         addTo: '/personal-area/add-resume',
-                        addTitle: 'Добавить резюме'
+                        addTitle: 'Добавить резюме',
+                        companiesCount: 0,
+                        show: true
                     },
                     {
                         title: 'Компании',
@@ -122,13 +158,16 @@
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_company.png',
                         addFlag: true,
                         addTo: '/personal-area/add-company',
-                        addTitle: 'Добавить компанию'
+                        addTitle: 'Добавить компанию',
+                        companiesCount: localStorage.companiesCount,
+                        show: true
                     },
                     {
                         title: 'Редактировать профиль',
                         url: '/personal-area/edit-profile',
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/profile.png',
-                        addFlag: false
+                        addFlag: false,
+                        show: true
                     },
                 ],
             }
@@ -153,13 +192,12 @@
                 }
             },
             async getUser() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages`)
+                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages,companiesCount`)
             },
         },
         beforeMount() {
             this.getUser()
                 .then(response => {
-
                         this.firstName = response.data[0].first_name;
                         this.secondName = response.data[0].second_name;
                         this.userId = response.data[0].user_id;
@@ -167,8 +205,18 @@
                         this.unreadMessages = response.data[0].user.unreadMessages;
                         this.email = this.email.match(/.+@/)[0];
                         this.email = this.email.slice(0, this.email.length-1);
-                        localStorage.userId = this.userId;
 
+                        if (response.data[0].user.status == 10) {
+                            this.linkMenu[2].show = false;
+                            this.linkMenu[4].show = false;
+                        }
+                        if (response.data[0].user.status >= 20) {
+                            this.linkMenu[3].show = false;
+                        }
+
+                        localStorage.userId = this.userId;
+                        localStorage.companiesCount = response.data[0].companiesCount;
+                        this.companiesCount = response.data[0].companiesCount;
                     }, response => {
                         this.$swal({
                             toast: true,
@@ -187,6 +235,14 @@
     }
 </script>
 <style scoped>
+    .main-alert {
+        width: 100%;
+        border: none;
+    }
+    .main-alert button {
+        text-decoration: underline;
+        outline: none;
+    }
     .container {
         margin: 0 auto;
     }

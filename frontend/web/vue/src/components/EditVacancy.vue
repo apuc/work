@@ -1,5 +1,16 @@
 <template>
     <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
+        <vue-tel-input :placeholder="'Номер телефона'"
+                       :defaultCountry="defaultCountry.iso2"
+                       v-model="formData.phone"
+                       :allCountries="allCountries"
+                       :validCharactersOnly="true"
+                       :required="true"
+                       :inputOptions="{ showDialCode: true, tabindex: 0 }"
+                       @country-changed="changeCountry"
+                       @input="onInput"
+        ></vue-tel-input>
+        <p class="custom-error">{{ phone.text }}</p>
     </FormTemplate>
 </template>
 
@@ -12,60 +23,33 @@
         name: 'FormResume',
         mixins: [Vacancy],
         components: {FormTemplate},
+        created() {
+            this.getEmploymentType();
+            this.getCompanyName();
+            this.getExperience();
+            this.getCity();
+        },
         mounted() {
             document.title = this.$route.meta.title;
-            this.getEmploymentType().then(response => {
-                FormVacancy.typeOfEmployment.items = response.data;
-                for (let i = 0; i < response.data.length; i++) {
-                    this.$set(FormVacancy.typeOfEmployment.items, i, response.data[i]);
-                }
-            }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                    });
-            this.getCompanyName().then(response => {
-                FormVacancy.companyName.items = [];
-                for (let i = 0; i < response.data.length; i++) {
-                    if(response.data[i].name) {
-                        FormVacancy.companyName.items.push(response.data[i]);
-                    } else {
-                        FormVacancy.companyName.items.push({name: response.data[i].contact_person, id: response.data[i].id});
-                    }
-                }
-            }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                    });
-            this.getExperience().then(response => {
-                FormVacancy.experience.items = response.data;
-                for (let i = 0; i < response.data.length; i++) {
-                    this.$set(FormVacancy.experience.items, i, response.data[i]);
-                }
-            }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                    });
             this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id + '?expand=employment-type,category')
                 .then(response => {
                         this.dataVacancy = response.data;
+                        if (response.data.phone != null) {
+                            this.formData.phone = response.data.phone;
+                        }
+                        if (this.formData.phone.length > 0 && response.data.phone != null) {
+                            this.formData.phoneValid = true;
+                        } else {
+                            if (this.formData.phone.length === 16) {
+                                this.phone.text = '';
+                                this.phone.valid = true;
+                                this.formData.phoneValid = true;
+                            } else {
+                                this.phone.text = 'Вы ввели не верный номер телефона';
+                                this.phone.valid = false;
+                                this.formData.phoneValid = false;
+                            }
+                        }
                         this.formData.vacancyCity = response.data.city_id;
                         this.formData.companyName = response.data.company_id;
                         this.formData.category.mainCategoriesVacancy = response.data.main_category_id;
@@ -100,25 +84,46 @@
                     })
                     }
                 );
-            this.getCity().then(response => {
-                FormVacancy.vacancyCity.items = response.data.map(vacancyCity => ({
-                    id: vacancyCity.id,
-                    name: vacancyCity.name,
-                }));
-            }, response => {
-                this.$swal({
-                    toast: true,
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 4000,
-                    type: 'error',
-                    title: response.data.message
-                })
-            });
         },
         methods: {
+            changeCountry(data) {
+                if (data.iso2 === 'UA') {
+                    this.defaultCountry.iso2 = data.iso2;
+                    this.defaultCountry.dialCode = data.dialCode;
+                }
+                if (data.iso2 === 'RU') {
+                    this.defaultCountry.iso2 = data.iso2;
+                    this.defaultCountry.dialCode = data.dialCode;
+                }
+            },
+            onInput() {
+                this.phone.valid = false;
+                if (this.defaultCountry.iso2 === 'UA') {
+                    if (this.formData.phone.length === 16) {
+                        this.phone.text = '';
+                        this.phone.valid = true;
+                        this.formData.phoneValid = true;
+                    } else {
+                        this.phone.text = 'Вы ввели не верный номер телефона';
+                        this.phone.valid = false;
+                        this.formData.phoneValid = false;
+                    }
+                }
+                if (this.defaultCountry.iso2 === 'RU') {
+                    if (this.formData.phone.length === 16) {
+                        this.phone.text = '';
+                        this.phone.valid = true;
+                        this.formData.phoneValid = true;
+                    } else {
+                        this.phone.text = 'Вы ввели не верный номер телефона';
+                        this.phone.valid = false;
+                        this.formData.phoneValid = false;
+                    }
+                }
+            },
             saveData() {
                 let data = {
+                    phone: this.formData.phone,
                     city_id: this.formData.vacancyCity,
                     company_id: this.formData.companyName,
                     main_category_id: this.formData.category.mainCategoriesVacancy,
@@ -157,17 +162,78 @@
             getFormData() {
                 return FormVacancy;
             },
-            async getEmploymentType() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employment-type`)
+            getEmploymentType() {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/employment-type`).then(response => {
+                    FormVacancy.typeOfEmployment.items = response.data;
+                    for (let i = 0; i < response.data.length; i++) {
+                        this.$set(FormVacancy.typeOfEmployment.items, i, response.data[i]);
+                    }
+                }, response => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
+                });
             },
-            async getCompanyName() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index`)
+            getCompanyName() {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index`).then(response => {
+                    FormVacancy.companyName.items = [];
+                    for (let i = 0; i < response.data.length; i++) {
+                        if(response.data[i].name) {
+                            FormVacancy.companyName.items.push(response.data[i]);
+                        } else {
+                            FormVacancy.companyName.items.push({name: response.data[i].contact_person, id: response.data[i].id});
+                        }
+                    }
+                }, response => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
+                });
             },
-            async getExperience() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/get-experiences`)
+            getExperience() {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/get-experiences`).then(response => {
+                    FormVacancy.experience.items = response.data;
+                    for (let i = 0; i < response.data.length; i++) {
+                        this.$set(FormVacancy.experience.items, i, response.data[i]);
+                    }
+                }, response => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
+                });
             },
-            async getCity() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`);
+            getCity() {
+                this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`).then(response => {
+                    FormVacancy.vacancyCity.items = response.data.map(vacancyCity => ({
+                        id: vacancyCity.id,
+                        name: vacancyCity.name,
+                    }));
+                    this.$forceUpdate();
+                }, response => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: response.data.message
+                    })
+                });
             },
             valHandler(val) {
                 this.valid = val;
@@ -181,6 +247,7 @@
                 this.dataVacancy.min_salary = '';
             }
             const tmpResume = {
+                'phone': this.formData.phone,
                 'city': this.dataVacancy.city_id,
                 'company_id': this.dataVacancy.company_id,
                 'main_category_id': this.dataVacancy.main_category_id,
@@ -198,6 +265,7 @@
                 'home_number': this.dataVacancy.home_number,
             };
             const tmpFormData = {
+                'phone': this.formData.phone,
                 'city': this.formData.vacancyCity,
                 'company_id': this.formData.companyName,
                 'main_category_id': this.formData.category.mainCategoriesVacancy,

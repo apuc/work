@@ -377,7 +377,17 @@ $(document).ready(function () {
     });
   }
 
-
+  if(window.innerWidth < 992) {
+    $(".jsCitiesBtn .part__head").next().hide();
+    $(".jsCitiesBtn .part__head").click(function () {
+      if ($(this).hasClass("open-services-mob")) {
+        $(".jsCitiesBtn .part__head").removeClass("open-services-mob").next().slideUp()
+      } else {
+        $(".jsCitiesBtn .part__head.open-services-mob").not(this).removeClass("open-services-mob").next().slideUp();
+        $(this).addClass(" open-services-mob").next().slideToggle();
+      }
+    })
+  }
 });
 
 if ($('.jsCitiesSelect').length > 0) {
@@ -400,19 +410,30 @@ if ($('.jsDutiesSelect').length > 0) {
   });
 }
 
-if ($('.jsCountryHeaderSelect').length > 0) {
-  $('.jsCountryHeaderSelect').select2({
-    placeholder: "Выберите Страну",
-    allowClear: true
-  }).on('change', function () {
+if ($('.jsOpenCountrySelect').length > 0) {
+  $('.jsOpenCountrySelect').click(function () {
+    $(this).next().toggle();
+    $('.country-select').toggleClass('country-select-active');
+  });
+  $('.jsOpenCountrySelectUrl').click(function (e) {
+    e.preventDefault();
+    $('.jsOpenCountrySelect').html($(this).html());
+    $('.jsOpenCountrySelect').next().hide();
+    $('.country-select').removeClass('country-select-active');
     $.ajax({
       type: "POST",
       url: "/main_page/default/select-country",
-      data: {country: $(this).val(), _csrf:$('meta[name=csrf-token]').attr("content")},
+      data: {country: $(this).attr('data-id'), _csrf:$('meta[name=csrf-token]').attr("content")},
       success: function (result) {
         window.location.replace('/'+result);
       }
     });
+  });
+  $('body').click(function (e) {
+    if (!$(e.target).closest('div').hasClass('country-select')) {
+      $('.jsOpenCountrySelect').next().hide();
+      $('.country-select').removeClass('country-select-active');
+    }
   });
 }
 

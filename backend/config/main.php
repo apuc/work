@@ -83,6 +83,9 @@ return [
         'update' => [
             'class' => 'backend\modules\update\Update',
         ],
+        'banner' => [
+            'class' => 'backend\modules\banner\Banner',
+        ]
     ],
     'components' => [
 //        'request' => [

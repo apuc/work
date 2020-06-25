@@ -16,6 +16,29 @@ use Yii;
 
 class RegUserForm extends RegistrationForm
 {
+
+    /**
+     * @var string
+     */
+    public $status;
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        $rules = parent::rules();
+        $rules['fieldRequired'] = ['status', 'required'];
+        $rules['fieldLength']   = ['status', 'integer'];
+        return $rules;
+    }
+
+    public function attributeLabels()
+    {
+        $labels = parent::attributeLabels();
+        $labels['status'] = \Yii::t('user', 'Статус');
+        return $labels;
+    }
+
     public function register()
     {
         if (!$this->validate()) {

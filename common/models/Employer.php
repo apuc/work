@@ -71,7 +71,7 @@ class Employer extends WorkActiveRecord
 
     public function extraFields()
     {
-        return ['resume', 'user', 'phone', 'unreadUpdatesCount'];
+        return ['resume', 'user', 'phone', 'companiesCount'];
     }
 
     /**
@@ -126,18 +126,8 @@ class Employer extends WorkActiveRecord
         return date_diff(new DateTime($this->birth_date), date_create('now'))->y;
     }
 
-    /**
-     * @return int
-     * @throws Exception
-     */
-    public function getUnreadUpdatesCount()
+    public function getCompaniesCount()
     {
-        $readUpdatesCount = UserReadEntity::find()
-            ->where([
-                'user_id'=>$this->user_id,
-                'subject'=>'Update',
-            ])->count();
-        $updatesCount = Update::find()->count();
-        return $updatesCount - $readUpdatesCount;
+        return (int)Company::find()->where(['owner'=>$this->owner])->andWhere(['!=', 'status', 0])->count();
     }
 }

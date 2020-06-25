@@ -118,6 +118,12 @@ $this->params['breadcrumbs'][] = $model->post;
                 'attribute' => 'countViews',
                 'label' => 'Просмотры'
             ],
+            [
+                'attribute' => 'is_day_vacancy',
+                'value' => function ($model) {
+                    return $model->is_day_vacancy ? 'Да' : 'Нет';
+                },
+            ],
         ],
     ]) ?>
 
