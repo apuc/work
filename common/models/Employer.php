@@ -64,7 +64,8 @@ class Employer extends WorkActiveRecord
     {
         return [
             [['user_id', 'status', 'created_at', 'updated_at', 'owner'], 'integer'],
-            [['first_name', 'second_name', 'birth_date'], 'string', 'max' => 255],
+            [['first_name', 'second_name'], 'string', 'max' => 255],
+            [['birth_date'], 'date', 'format' => 'php:Y-m-d'],
             [['user_id'], 'required'],
         ];
     }
