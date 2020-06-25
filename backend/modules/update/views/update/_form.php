@@ -1,5 +1,6 @@
 <?php
 
+use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -14,7 +15,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
+    <?php echo $form->field($model, 'text')->widget(CKEditor::className(), [
+        'editorOptions' => \mihaildev\elfinder\ElFinder::ckeditorOptions('elfinder', [
+            'preset' => 'full',
+            'inline' => false,
+            'path' => 'frontend/web/media/upload',
+        ]),
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
