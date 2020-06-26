@@ -20,13 +20,16 @@ class MetaFormer
         $view->registerMetaTag(['name' => 'description', 'content' => $description]);
         $view->registerMetaTag(['name' => 'og:title', 'content' => $title]);
         $view->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
-        $view->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
         $view->registerMetaTag(['name' => 'og:image', 'content' => Yii::$app->urlManager->hostInfo . '/images/og_image.jpg']);
         $view->registerMetaTag(['name' => 'og:description', 'content' => $description]);
-        if($country)
+        if($country) {
             $view->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo.'/'.$country->slug]);
-        else
+            $view->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->request->hostInfo.'/'.$country->slug]);
+        }
+        else {
             $view->registerLinkTag(['rel'=>'canonical', 'href'=>Yii::$app->request->hostInfo]);
+            $view->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
+        }
     }
 
     /**
