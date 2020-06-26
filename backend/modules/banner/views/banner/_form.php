@@ -34,7 +34,7 @@ use common\models\Company;
         'name' => 'Banner[image_url]',
         'id' => 'banner-image_url',
         'template' => '<div class="input-group">{input}<span class="span-btn">{button}</span></div>',
-        'options' => ['class' => 'form-control itemImg', 'maxlength' => '255'],
+        'options' => ['class' => 'form-control itemImg banner_update_on_change', 'maxlength' => '255'],
         'buttonOptions' => ['class' => 'btn btn-primary'],
         'value' => $model->image_url,
         'buttonName' => 'Выбрать фотографию',
@@ -49,18 +49,23 @@ use common\models\Company;
         'name' => 'Banner[logo_url]',
         'id' => 'banner-logo_url',
         'template' => '<div class="input-group">{input}<span class="span-btn">{button}</span></div>',
-        'options' => ['class' => 'form-control itemImg', 'maxlength' => '255'],
+        'options' => ['class' => 'form-control itemImg banner_update_on_change', 'maxlength' => '255'],
         'buttonOptions' => ['class' => 'btn btn-primary'],
         'value' => $model->logo_url,
         'buttonName' => 'Выбрать логотип',
     ]);
     ?>
 
-    <?= $form->field($model, 'description')->textarea() ?>
+    <?= $form->field($model, 'description')->textarea(['class'=>'form-control banner_update_on_change']) ?>
 
     <?= $form->field($model, 'is_active')->checkbox(); ?>
 
     <?= $form->field($model, 'priority')->textInput(); ?>
+
+    <h3>Предпросмотр</h3>
+    <div class="js-banner-preview">
+        <?=\frontend\widgets\Banner::widget(['banner'=>$model])?>
+    </div>
 
     <div id="banner-locations" data-banner-id="<?= $model->id ?>">
     <?php
@@ -114,7 +119,6 @@ use common\models\Company;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>
 
 <?php
@@ -134,6 +138,15 @@ $js = <<<JS
         bannerLocations.append(data);
       });
     })
+    $('.banner_update_on_change').change(function() {
+        var image_url = $('#banner-image_url').val();
+        var logo_url = $('#banner-logo_url').val();
+        var description = $('#banner-description').val();
+        $.get('/secure/banner/banner/preview', {image_url:image_url, logo_url:logo_url, description:description} , function (data) {
+            $('.js-banner-preview').html(data);
+            console.log(data);
+        });
+    });
 JS;
 $this->registerJs($js);
 ?>

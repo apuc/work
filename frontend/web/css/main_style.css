@@ -7719,53 +7719,6 @@ main {
     font-weight: 700;
 }
 
-.banner-advertising {
-    display: flex;
-    align-items: center;
-    width: 650px;
-    margin: 15px 10px;
-    padding: 30px 51px 13px 25px;
-    border-radius: 10px;
-    background-color: #ddf0fb;
-}
-
-.banner-advertising > img {
-    margin-right: 30px;
-}
-
-.banner-advertising__right {
-    display: flex;
-    flex-direction: column;
-}
-
-.banner-advertising__right h3 {
-    margin: 0 0 5px;
-    color: #0f0000;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.banner-advertising__right-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.banner-advertising__right-bottom > img {
-    width: 140px;
-    height: auto;
-    margin-top: 15px;
-}
-
-.banner-advertising__right-bottom .btn-card {
-    margin-top: 15px;
-    border: none;
-    border-radius: 30px;
-    font-size: 16px;
-    font-weight: 700;
-}
-
 .country-select {
     position: relative;
     display: flex;

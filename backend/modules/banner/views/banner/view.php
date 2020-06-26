@@ -15,8 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="vacancy-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
@@ -110,5 +108,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ],
     ]) ?>
-
+    <h3>Предпросмотр</h3>
+    <?=\frontend\widgets\Banner::widget(['banner'=>$model])?>
 </div>
