@@ -131,11 +131,6 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             <?php endif ?>
                             <span class="jsOpenCountrySelect"><?= $current_country ? $current_country->name : 'Выберите Страну' ?> <b></b></span>
                             <ul>
-                                <li>
-                                    <a href="/" data-id="" class="jsOpenCountrySelectUrl">
-                                        Выберите Страну
-                                    </a>
-                                </li>
                                 <?php foreach ($countries as $country):?>
                                     <li>
                                         <a href="<?= $country->slug ?>" data-id="<?= $country->id ?>" class="jsOpenCountrySelectUrl">
