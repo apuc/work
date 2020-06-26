@@ -13,7 +13,7 @@ $sign = md5($merchant_id.':'.$order_amount.':'.$secret_word.':'.$order_id);
     <input type='hidden' name='oa' value='<?=$order_amount?>'>
     <input type='hidden' name='o' value='<?=$order_id?>'>
     <input type='hidden' name='s' value='<?=$sign?>'>
-    <input type='hidden' name='i' value='1'>
+    <input type='hidden' name='i' value='80'>
     <input type='hidden' name='lang' value='ru'>
     <input type='hidden' name='us_login' value='crazykoha@gmail.com'>
     <input type='submit' name='pay' value='Оплатить'>
