@@ -12,6 +12,7 @@ $this->title = "Баннер компании " . $model->company->name;
 $this->params['breadcrumbs'][] = ['label' => 'Баннеры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+$this->registerCssFile('/css/main_style.css');
 ?>
 <div class="vacancy-view">
 
@@ -110,5 +111,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ],
     ]) ?>
-
+    <h2>Предпросмотр</h2>
+    <?=
+        \frontend\widgets\Banner::widget([
+            'banner' => $model
+        ]);
+    ?>
 </div>

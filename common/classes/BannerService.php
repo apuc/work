@@ -196,6 +196,10 @@ class BannerService extends Component
     public function getRandomBanner($categoryId, $cityId)
     {
         /** @todo */
-        return $this->repository::findOne(2);
+        return $this->repository::find()
+            ->joinWith('bannerLocations')
+            ->andFilterWhere(['category_id'=>$categoryId])
+            ->andFilterWhere(['city_id'=>$cityId])
+            ->one();
     }
 }

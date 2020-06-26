@@ -11,14 +11,16 @@ class Banner extends Widget
 
     public $cityId;
 
+    public $banner=null;
+
     public function run()
     {
-        return '';
-        $banner = (new BannerService([
-            'repository' => \common\models\Banner::className(),
-            'locationsRepository' => BannerLocation::className()
-        ]))->getRandomBanner($this->categoryId, $this->cityId);
-
-        return ($banner) ? $this->render('banner', ['model' => $banner]) : '';
+        if(!$this->banner) {
+            $this->banner = (new BannerService([
+                'repository' => \common\models\Banner::className(),
+                'locationsRepository' => BannerLocation::className()
+            ]))->getRandomBanner($this->categoryId, $this->cityId);
+        }
+        return ($this->banner) ? $this->render('banner', ['model' => $this->banner]) : '';
     }
 }

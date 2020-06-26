@@ -148,7 +148,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                         <p>Нет результатов поиска</p>
                     </div>
                     <?php endif ?>
-<!---->
+
 <!--                    <div class="banner-subscription">-->
 <!--                        <img src="/images/banner_image.png" alt="">-->
 <!--                        <div class="banner-subscription__right">-->
@@ -175,7 +175,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
 <!--                            <button class="btn-card btn-red">Подписаться</button>-->
 <!--                        </form>-->
 <!--                    </div>-->
-<!---->
+
 
 
                     <?php if($dataProvider->models):

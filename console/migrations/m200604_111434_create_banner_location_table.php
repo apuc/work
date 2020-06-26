@@ -16,7 +16,7 @@ class m200604_111434_create_banner_location_table extends Migration
             'id' => $this->primaryKey(),
             'banner_id' => $this->integer(11),
             'category_id' => $this->integer(11),
-            'city_id' => $this->integer(11)
+            'city_id' => $this->integer(6)
         ]);
 
         $this->addFkBannerLocationBanner();
