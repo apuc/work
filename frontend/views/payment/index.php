@@ -1,5 +1,5 @@
 <?php
-$merchant_id = '7012';
+$merchant_id = '214123';
 $secret_word = 'm648uqdn';
 $secret_word2 = 'dz5h59co';
 $order_id = '154';

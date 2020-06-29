@@ -4,6 +4,7 @@
 namespace frontend\controllers;
 
 
+use common\models\Test;
 use yii\web\Controller;
 
 class PaymentController extends Controller
@@ -15,6 +16,19 @@ class PaymentController extends Controller
     }
 
     public function actionSuccess() {
-        echo 123;
+        $test = new Test();
+        $test->text = json_encode(\Yii::$app->request->post());
+        $test->save();
+    }
+
+    public function actionFail() {
+        $test = new Test();
+        $test->text = json_encode(\Yii::$app->request->post());
+        $test->save();
+    }
+    public function actionNotificate() {
+        $test = new Test();
+        $test->text = json_encode(\Yii::$app->request->post());
+        $test->save();
     }
 }
