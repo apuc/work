@@ -2026,7 +2026,7 @@ button {
     -webkit-transition: all ease 1s;
     -o-transition: all ease 1s;
     transition: all ease 1s;
-    z-index: 99; }
+    z-index: 9; }
 
 .filter-close {
     position: absolute;
