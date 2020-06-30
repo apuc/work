@@ -21,6 +21,10 @@ class Banner extends Widget
                 'repository' => \common\models\Banner::className(),
                 'locationsRepository' => BannerLocation::className()
             ]))->getRandomBanner($this->categoryId, $this->cityId);
+            if(!$this->cityId && !$this->categoryId)
+                return null;
+            if(!$this->banner)
+                return null;
         }
         $this->view->registerCssFile('/css/banner.css');
         return ($this->banner) ? $this->render('banner', ['model' => $this->banner]) : '';
