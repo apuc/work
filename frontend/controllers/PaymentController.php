@@ -24,18 +24,18 @@ class PaymentController extends Controller
 
     public function actionSuccess() {
         $test = new Test();
-        $test->text = json_encode(\Yii::$app->request->post());
+        $test->text = json_encode(\Yii::$app->request->post() . 'success');
         $test->save();
     }
 
     public function actionFail() {
         $test = new Test();
-        $test->text = json_encode(\Yii::$app->request->post());
+        $test->text = json_encode(\Yii::$app->request->post() . 'fail');
         $test->save();
     }
     public function actionNotificate() {
         $test = new Test();
-        $test->text = json_encode(\Yii::$app->request->post());
+        $test->text = json_encode(\Yii::$app->request->post()) . 'notificate';
         $test->save();
     }
 }
