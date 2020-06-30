@@ -82,7 +82,10 @@ return [
         ],
         'banner' => [
             'class' => 'backend\modules\banner\Banner',
-        ]
+        ],
+        'payment' => [
+            'class' => 'backend\modules\payment\Payment',
+        ],
     ],
     'components' => [
 //        'request' => [
