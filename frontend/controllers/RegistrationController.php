@@ -38,7 +38,6 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
         $this->performAjaxValidation($model);
         $post = \Yii::$app->request->post();
         $post['register-form']['username'] = $post['register-form']['email'];
-        $post['register-form']['status'] = 0;
         if ($model->load($post) && $model->register()) {
             $this->trigger(self::EVENT_AFTER_REGISTER, $event);
             /** @var User $user */
