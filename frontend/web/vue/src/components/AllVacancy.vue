@@ -50,7 +50,7 @@
                                    class="edit-btn"
                                    type="button"
                                    title="Поднять в ТОП"
-                                   @click="updateVacancy(index, item.id)"
+                                   @click="vacancyUpdate(index, item.id)"
                             >
                                 <v-icon>arrow_upward</v-icon>
                             </v-btn>
@@ -58,7 +58,7 @@
                                    class="edit-btn"
                                    type="button"
                                    title="Удалить"
-                                   @click="removeVacancy(index, item.id)"
+                                   @click="vacancyRemove(index, item.id)"
                             >
                                 <v-icon>delete</v-icon>
                             </v-btn>
@@ -72,7 +72,7 @@
                         <v-pagination
                                 v-model="paginationCurrentPage"
                                 :length="paginationPageCount"
-                                @input="changePage"
+                                @input="getVacancy"
                         ></v-pagination>
                     </div>
                 </template>
@@ -93,15 +93,22 @@
                 getAllVacancy: [],
                 paginationPageCount: 1,
                 paginationCurrentPage: 1,
-                dome: ''
+                domen: ''
             }
         },
         created() {
             document.title = this.$route.meta.title;
-            this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/my-index?expand=can_update&sort=-update_time`)
-                .then(response => {
+            this.getResume(1);
+
+        },
+        methods: {
+            getVacancy(page) {
+                this.$store.dispatch('getAllVacancy', page)
+                    .then(data => {
+                        this.paginationCurrentPage = data.pagination.current_page;
+                        this.paginationPageCount = data.pagination.page_count;
                         this.domen = `${process.env.VUE_APP_API_URL}`;
-                        this.getAllVacancy = response.data;
+                        this.getAllVacancy = data.models;
                         this.getAllVacancy.forEach((element) => {
                             let timestamp = element.update_time;
                             let date = new Date();
@@ -115,53 +122,37 @@
                             };
                             element.update_time = date.toLocaleString("ru", options);
                         });
-                        this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
-                    }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                    }
-                );
-
-        },
-        methods: {
-            updateVacancy(index, vacancyId) {
-                this.$http.post(`${process.env.VUE_APP_API_URL}/request/vacancy/update-time`, {id: vacancyId})
-                    .then(response => {
-                            this.getAllVacancy.splice(index, 1);
-                            let newData = response.data;
-                            let date = new Date();
-                            date.setTime(newData.update_time * 1000);
-                            let options = {
-                                year: 'numeric',
-                                month: 'numeric',
-                                day: 'numeric',
-                                hour: 'numeric',
-                                minute: 'numeric',
-                            };
-                            response.data.update_time = date.toLocaleString("ru", options);
-                            ym(53666866,'reachGoal','vacancy_to_top');
-                            this.getAllVacancy.unshift(newData);
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    );
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
             },
-            removeVacancy(index, vacancyId) {
+            vacancyUpdate(index, vacancyId) {
+                this.$store.dispatch('updateResume', vacancyId)
+                    .then(data => {
+                        this.getVacancy(this.paginationCurrentPage);
+                        ym(53666866,'reachGoal','vacancy_to_top');
+                        return data;
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
+            },
+            vacancyRemove(index, vacancyId) {
                 this.$swal({
-                    title: 'Вы точно хотите удалить вакансию?',
+                    title: 'Вы точно хотите удалить резюме?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -170,40 +161,23 @@
                     cancelButtonText: 'Нет'
                 }).then((result) => {
                     if (result.value) {
-                        this.getAllVacancy.splice(index, 1);
-                        this.$http.delete(`${process.env.VUE_APP_API_URL}/request/vacancy/` + vacancyId)
-                            .then(response => {
-                                    return response;
-                                }, response => {
-                                    this.$swal({
-                                        toast: true,
-                                        position: 'bottom-end',
-                                        showConfirmButton: false,
-                                        timer: 4000,
-                                        type: 'error',
-                                        title: response.data.message
-                                    })
-                                }
-                            );
-                    }
-                });
-            },
-            changePage(paginationCurrentPage) {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/my-index?page=` + paginationCurrentPage)
-                    .then(response => {
-                            this.getAllVacancy = response.data;
-                        }, response => {
+                        this.$store.dispatch('removevacancy', resumeId)
+                            .then(data => {
+                                this.getVacancy(this.paginationCurrentPage);
+                                return data;
+                            }).catch(error => {
                             this.$swal({
                                 toast: true,
                                 position: 'bottom-end',
                                 showConfirmButton: false,
                                 timer: 4000,
                                 type: 'error',
-                                title: response.data.message
+                                title: error.message
                             })
-                        }
-                    );
-            }
+                        });
+                    }
+                });
+            },
         },
         filters: {
             capitalize(val) {

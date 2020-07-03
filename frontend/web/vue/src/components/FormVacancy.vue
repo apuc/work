@@ -33,6 +33,7 @@
     import FormVacancy from '../lk-form/vacancy-form';
     import FormTemplate from "./FormTemplate";
     import Vacancy from "../mixins/vacancy";
+    import FormResume from "../lk-form/resume-form";
 
     export default {
         name: "FormVacancy",
@@ -40,9 +41,9 @@
         mixins: [Vacancy],
 
         created() {
-            this.getEmploymentType();
-            this.getCompanyName();
-            this.getExperience();
+            this.getEmployment();
+            this.getNameCompany();
+            this.getExperienceArray();
             this.getUserData();
             this.getCity();
         },
@@ -87,31 +88,31 @@
                 }
             },
             getUserData() {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
-                    .then(response => {
-                            if (response.data[0].phone != null) {
-                                this.formData.phone = response.data[0].phone.number;
-                                if (this.formData.phone.length === 16) {
-                                    this.phone.text = '';
-                                    this.phone.valid = true;
-                                    this.formData.phoneValid = true;
-                                } else {
-                                    this.phone.text = 'Вы ввели не верный номер телефона';
-                                    this.phone.valid = false;
-                                    this.formData.phoneValid = false;
-                                }
+                this.$store.dispatch('getUserMe', this.$route.params.id)
+                    .then(data => {
+                        this.formData.birth_date = data.birth_date;
+                        if (data.phone != null) {
+                            this.formData.phone = data.phone.number;
+                            if (this.formData.phone.length === 16) {
+                                this.phone.text = '';
+                                this.phone.valid = true;
+                                this.formData.phoneValid = true;
+                            } else {
+                                this.phone.text = 'Вы ввели не верный номер телефона';
+                                this.phone.valid = false;
+                                this.formData.phoneValid = false;
                             }
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
                         }
-                    )
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
             },
             saveData() {
                 let data = {
@@ -157,77 +158,84 @@
             getFormData() {
                 return FormVacancy;
             },
-            getEmploymentType() {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/employment-type`).then(response => {
-                    FormVacancy.typeOfEmployment.items = response.data;
-                    for (let i = 0; i < response.data.length; i++) {
-                        this.$set(FormVacancy.typeOfEmployment.items, i, response.data[i]);
-                    }
-                }, response => {
-                    this.$swal({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        type: 'error',
-                        title: response.data.message
-                    })
-                });
-            },
-            getCompanyName() {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index`).then(response => {
-                    this.lengthCompany = response.data.length;
-                    FormVacancy.companyName.items = [];
-                    for (let i = 0; i < response.data.length; i++) {
-                        if(response.data[i].name) {
-                            FormVacancy.companyName.items.push(response.data[i]);
-                        } else {
-                            FormVacancy.companyName.items.push({name: response.data[i].contact_person, id: response.data[i].id});
+            getEmployment() {
+                this.$store.dispatch('getEmploymentType', this.$route.params.id)
+                    .then(data => {
+                        FormVacancy.typeOfEmployment.items = data;
+                        for (let i = 0; i < data.length; i++) {
+                            this.$set(FormVacancy.typeOfEmployment.items, i, data[i]);
                         }
-                    }
-                }, response => {
+                        this.$forceUpdate();
+                    }).catch(error => {
                     this.$swal({
                         toast: true,
                         position: 'bottom-end',
                         showConfirmButton: false,
                         timer: 4000,
                         type: 'error',
-                        title: response.data.message
+                        title: error.message
                     })
                 });
             },
-            getExperience() {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/get-experiences`).then(response => {
-                    FormVacancy.experience.items = response.data;
-                    for (let i = 0; i < response.data.length; i++) {
-                        this.$set(FormVacancy.experience.items, i, response.data[i]);
-                    }
-                }, response => {
+            getNameCompany() {
+                this.$store.dispatch('getCompanyName', this.$route.params.id)
+                    .then(data => {
+                        this.lengthCompany = data.length;
+                        FormVacancy.companyName.items = [];
+                        for (let i = 0; i < data.length; i++) {
+                            if(data[i].name) {
+                                FormVacancy.companyName.items.push(data[i]);
+                            } else {
+                                FormVacancy.companyName.items.push({name: data[i].contact_person, id: data[i].id});
+                            }
+                        }
+                        this.$forceUpdate();
+                    }).catch(error => {
                     this.$swal({
                         toast: true,
                         position: 'bottom-end',
                         showConfirmButton: false,
                         timer: 4000,
                         type: 'error',
-                        title: response.data.message
+                        title: error.message
+                    })
+                });
+            },
+            getExperienceArray() {
+                this.$store.dispatch('getExperience', this.$route.params.id)
+                    .then(data => {
+                        FormVacancy.experience.items = data;
+                        for (let i = 0; i < data.length; i++) {
+                            this.$set(FormVacancy.experience.items, i, data[i]);
+                        }
+                        this.$forceUpdate();
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
                     })
                 });
             },
             getCity() {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`).then(response => {
-                    FormVacancy.vacancyCity.items = response.data.map(vacancyCity => ({
-                        id: vacancyCity.id,
-                        name: vacancyCity.name,
-                    }));
-                    this.$forceUpdate();
-                }, response => {
+                this.$store.dispatch('getCity', this.$route.params.id)
+                    .then(data => {
+                        FormVacancy.vacancyCity.items = data.map(vacancyCity => ({
+                            id: vacancyCity.id,
+                            name: vacancyCity.name,
+                        }));
+                        this.$forceUpdate();
+                    }).catch(error => {
                     this.$swal({
                         toast: true,
                         position: 'bottom-end',
                         showConfirmButton: false,
                         timer: 4000,
                         type: 'error',
-                        title: response.data.message
+                        title: error.message
                     })
                 });
             },

@@ -2,12 +2,12 @@ import * as type from './types';
 import api from '../../../api';
 
 const actions = {
-    getCategory({commit}, payload) {
+    getAllVacancy({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/category')
+            api.get('/request/vacancy/my-index?expand=can_update&sort=-update_time&page=' + payload)
                 .then(res => {
-                    commit(type.GET_CATEGORY, res.data);
+                    commit(type.GET_ALL_VACANCY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -16,12 +16,12 @@ const actions = {
                 });
         })
     },
-    getCategoryById({commit}, payload) {
+    updateVacancy({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/vacancy/' + payload + '?expand=employment-type,category')
+            api.post('/request/vacancy/update-time', {id: payload})
                 .then(res => {
-                    commit(type.GET_CATEGORY_BY_ID, res.data);
+                    commit(type.UPDATE_VACANCY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -30,12 +30,12 @@ const actions = {
                 });
         })
     },
-    getCity({commit}, payload) {
+    removeVacancy({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/city')
+            api.delete('/request/resume/' + payload)
                 .then(res => {
-                    commit(type.GET_CITY, res.data);
+                    commit(type.REMOVE_VACANCY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -44,12 +44,12 @@ const actions = {
                 });
         })
     },
-    getDuties({commit}, payload) {
+    addVacancy({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/resume/' + payload + '?expand=skills')
+            api.post('/request/resume', payload)
                 .then(res => {
-                    commit(type.GET_DUTIES, res.data);
+                    commit(type.ADD_VACANCY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -58,12 +58,12 @@ const actions = {
                 });
         })
     },
-    getAllDuties({commit}, payload) {
+    getVacancy({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/skill?per-page=-1')
+            api.get('/request/resume/' + payload + '?expand=experience,education,skills,category')
                 .then(res => {
-                    commit(type.GET_ALL_DUTIES, res.data);
+                    commit(type.GET_VACANCY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -72,40 +72,12 @@ const actions = {
                 });
         })
     },
-    getEmploymentType({commit}, payload) {
+    editVacancy({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/employment-type')
+            api.patch('/request/resume/' + payload.id, payload)
                 .then(res => {
-                    commit(type.GET_EMPLOYMENT_TYPE, res.data);
-                    resolve(res.data);
-                })
-                .catch(error => {
-                    console.log('Problem', error.message);
-                    reject(error);
-                });
-        })
-    },
-    getCompanyName({commit}, payload) {
-
-        return new Promise((resolve, reject) => {
-            api.get('/request/company/my-index')
-                .then(res => {
-                    commit(type.GET_COMPANY_NAME, res.data);
-                    resolve(res.data);
-                })
-                .catch(error => {
-                    console.log('Problem', error.message);
-                    reject(error);
-                });
-        })
-    },
-    getExperience({commit}, payload) {
-
-        return new Promise((resolve, reject) => {
-            api.get('/request/vacancy/get-experiences')
-                .then(res => {
-                    commit(type.GET_EXPERIENCE, res.data);
+                    commit(type.EDIT_VACANCY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {

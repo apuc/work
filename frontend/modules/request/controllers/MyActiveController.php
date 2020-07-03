@@ -42,21 +42,23 @@ class MyActiveController extends ActiveController
                 /** @var ActiveRecord[] $models */
                 foreach ($models as $i=> $model) {
                     $response[$i]=ArrayHelper::toArray($model);
-                    foreach ($expands as $expand) {
-                        $exploded = explode('.', $expand);
-                        if(count($exploded)>1) {
-                            $first_item = $exploded[0];
-                            $tmp = $model->$first_item;
-                            $response[$i][$first_item] = ArrayHelper::toArray($tmp);
-                            foreach ($exploded as $j => $item) {
-                                if($j!=0) {
-                                    $tmp = $tmp->$item;
-                                    $response[$i][$first_item][$item]=is_object($tmp)?ArrayHelper::toArray($tmp):$tmp;
+                    if(Yii::$app->request->get('expand')) {
+                        foreach ($expands as $expand) {
+                            $exploded = explode('.', $expand);
+                            if(count($exploded)>1) {
+                                $first_item = $exploded[0];
+                                $tmp = $model->$first_item;
+                                $response[$i][$first_item] = ArrayHelper::toArray($tmp);
+                                foreach ($exploded as $j => $item) {
+                                    if($j!=0) {
+                                        $tmp = $tmp->$item;
+                                        $response[$i][$first_item][$item]=is_object($tmp)?ArrayHelper::toArray($tmp):$tmp;
+                                    }
                                 }
-                            }
 
-                        } else {
-                            $response[$i][$expand]=$model->$expand;
+                            } else {
+                                $response[$i][$expand]=$model->$expand;
+                            }
                         }
                     }
                 }
@@ -114,21 +116,23 @@ class MyActiveController extends ActiveController
             /** @var ActiveRecord[] $models */
             foreach ($models as $i=> $model) {
                 $response[$i]=ArrayHelper::toArray($model);
-                foreach ($expands as $expand) {
-                    $exploded = explode('.', $expand);
-                    if(count($exploded)>1) {
-                        $first_item = $exploded[0];
-                        $tmp = $model->$first_item;
-                        $response[$i][$first_item] = ArrayHelper::toArray($tmp);
-                        foreach ($exploded as $j => $item) {
-                            if($j!=0) {
-                                $tmp = $tmp->$item;
-                                $response[$i][$first_item][$item]=is_object($tmp)?ArrayHelper::toArray($tmp):$tmp;
+                if(Yii::$app->request->get('expand')) {
+                    foreach ($expands as $expand) {
+                        $exploded = explode('.', $expand);
+                        if (count($exploded) > 1) {
+                            $first_item = $exploded[0];
+                            $tmp = $model->$first_item;
+                            $response[$i][$first_item] = ArrayHelper::toArray($tmp);
+                            foreach ($exploded as $j => $item) {
+                                if ($j != 0) {
+                                    $tmp = $tmp->$item;
+                                    $response[$i][$first_item][$item] = is_object($tmp) ? ArrayHelper::toArray($tmp) : $tmp;
+                                }
                             }
-                        }
 
-                    } else {
-                        $response[$i][$expand]=$model->$expand;
+                        } else {
+                            $response[$i][$expand] = $model->$expand;
+                        }
                     }
                 }
             }

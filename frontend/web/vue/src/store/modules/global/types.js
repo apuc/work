@@ -1,4 +1,8 @@
 export const GET_CATEGORY = 'GET_CATEGORY';
+export const GET_CATEGORY_BY_ID = 'GET_CATEGORY_BY_ID';
 export const GET_CITY = 'GET_CITY';
 export const GET_DUTIES = 'GET_DUTIES';
 export const GET_ALL_DUTIES = 'GET_ALL_DUTIES';
+export const GET_EMPLOYMENT_TYPE = 'GET_EMPLOYMENT_TYPE';
+export const GET_COMPANY_NAME = 'GET_COMPANY_NAME';
+export const GET_EXPERIENCE = 'GET_EXPERIENCE';

@@ -30,6 +30,8 @@
 </template>
 
 <script>
+    import FormResume from "../lk-form/resume-form";
+
     export default {
         name: "Category",
         data() {
@@ -55,38 +57,45 @@
             }
         },
         mounted() {
-            this.getCategory().then(response => {
-                this.itemsMain = response.data.map(vacancy => ({
-                    id: vacancy.id,
-                    name: vacancy.name,
-                }));
-            }, response => {
-                this.$swal({
-                    toast: true,
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 4000,
-                    type: 'error',
-                    title: response.data.message
-                })
-            });
+            this.getCategory();
             if(this.$route.name == 'edit-vacancy/id') {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/vacancy/` + this.$route.params.id + '?expand=employment-type,category')
-                    .then(response => {
-                            let mainCategoryId = {
-                                mainCategoriesVacancy: response.data.main_category_id,
-                                subcategories: []
-                            };
+                this.$store.dispatch('getCategoryById', this.$route.params.id)
+                    .then(data => {
+                        let mainCategoryId = {
+                            mainCategoriesVacancy: data.main_category_id,
+                            subcategories: []
+                        };
                         this.subcategoriesShow(mainCategoryId);
-                        }, response => {
-                            return response;
-                        }
-                    );
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
             }
         },
         methods: {
             getCategory() {
-                return this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`);
+                this.$store.dispatch('getCategory', this.$route.params.id)
+                    .then(data => {
+                        this.itemsMain = data.map(vacancy => ({
+                            id: vacancy.id,
+                            name: vacancy.name,
+                        }));
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
             },
             subcategoriesShow(data) {
                 let subArray = [...this.itemsMain];

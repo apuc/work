@@ -5,6 +5,7 @@ import user from './modules/user';
 import message from './modules/message';
 import statistics from './modules/statistics';
 import resume from './modules/resume';
+import vacancy from './modules/vacancy';
 
 Vue.use(Vuex);
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         message,
         statistics,
         resume,
+        vacancy,
     },
     strict: false,
 });
