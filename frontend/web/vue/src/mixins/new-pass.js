@@ -4,8 +4,7 @@ const newPass = {
             formDataNewPass: {
                 old_password: '',
                 new_password_1: '',
-                new_password_2: '',
-                phoneValid: true
+                new_password_2: ''
             },
             show1: false,
             show2: false,

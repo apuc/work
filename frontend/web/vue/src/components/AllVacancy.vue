@@ -98,7 +98,7 @@
         },
         created() {
             document.title = this.$route.meta.title;
-            this.getResume(1);
+            this.getVacancy(1);
 
         },
         methods: {
@@ -134,7 +134,7 @@
                 });
             },
             vacancyUpdate(index, vacancyId) {
-                this.$store.dispatch('updateResume', vacancyId)
+                this.$store.dispatch('updateVacancy', vacancyId)
                     .then(data => {
                         this.getVacancy(this.paginationCurrentPage);
                         ym(53666866,'reachGoal','vacancy_to_top');
@@ -161,7 +161,7 @@
                     cancelButtonText: 'Нет'
                 }).then((result) => {
                     if (result.value) {
-                        this.$store.dispatch('removevacancy', resumeId)
+                        this.$store.dispatch('removeVacancy', vacancyId)
                             .then(data => {
                                 this.getVacancy(this.paginationCurrentPage);
                                 return data;

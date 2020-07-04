@@ -9,6 +9,9 @@ const mutations = {
     [type.GET_USER_ME](state, payload) {
         state.userMe = payload;
     },
+    [type.UPDATE_USER_ME](state, payload) {
+        state.userMe = payload;
+    },
 };
 
 const getters = {

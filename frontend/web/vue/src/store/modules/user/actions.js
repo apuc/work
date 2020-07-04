@@ -16,6 +16,34 @@ const actions = {
                 });
         })
     },
+    updateUserMe({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.patch('/request/employer/' + payload.id, payload.data)
+                .then(res => {
+                    commit(type.UPDATE_USER_ME, res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
+    resetPassword({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.post('/request/security/change-password', payload)
+                .then(res => {
+                    commit(type.RESET_PASSWORD, res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
 };
 
 export default actions;

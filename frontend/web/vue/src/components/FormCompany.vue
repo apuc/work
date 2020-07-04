@@ -99,7 +99,7 @@
 				}
 			},
             saveCheck() {
-                if (this.image === null) {
+                if (this.formData.image_url == '') {
                     this.$swal({
                         title: 'Вы уверены что хотите сохранить (компанию/частное лицо) без логотипа? ' +
                             'Логотип увеличит количество просмотров вакансии и поможет найти сотрудниковы быстрее! ' +
@@ -123,7 +123,6 @@
 				}
             },
             saveData() {
-
                 let data = {
                     image: this.formData.image_url,
                     name: this.formData.nameCompany,
@@ -137,35 +136,32 @@
                     contact_person: this.formData.contactPerson,
                     phone: this.formData.companyPhone,
                 };
-                let res;
-                this.$http.post(`${process.env.VUE_APP_API_URL}/request/company`, data)
-                    .then(response => {
-                            this.$router.push('/personal-area/all-company');
-                            res = response;
-                            gtag('event', 'companyAdd', {
-                                'event_category': 'form',
-                                'event_action': 'companyAdd',
-                            });
-                            yaCounter53666866.reachGoal('companyAdd');
-                            return true;
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    )
+				this.$store.dispatch('addCompany', data)
+						.then(data => {
+							this.$router.push('/personal-area/all-company');
+							gtag('event', 'companyAdd', {
+								'event_category': 'form',
+								'event_action': 'companyAdd',
+							});
+							yaCounter53666866.reachGoal('companyAdd');
+							return data;
+						}).catch(error => {
+					this.$swal({
+						toast: true,
+						position: 'bottom-end',
+						showConfirmButton: false,
+						timer: 4000,
+						type: 'error',
+						title: error.message
+					})
+				});
             },
             getUserData() {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
-                    .then(response => {
-                            this.formData.contactPerson = response.data[0].first_name + ' ' + response.data[0].second_name;
-                            if (response.data[0].phone != null) {
-                                this.formData.companyPhone = response.data[0].phone.number;
+				this.$store.dispatch('getUserMe', this.$route.params.id)
+						.then(data => {
+							this.formData.contactPerson = data.first_name + ' ' + data.second_name;
+							if (data.phone != null) {
+								this.formData.companyPhone = data.phone.number;
 								if (this.formData.companyPhone.length === 16) {
 									this.phone.text = '';
 									this.phone.valid = true;
@@ -175,18 +171,17 @@
 									this.phone.valid = false;
 									this.formData.phoneValid = false;
 								}
-                            }
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    )
+							}
+						}).catch(error => {
+					this.$swal({
+						toast: true,
+						position: 'bottom-end',
+						showConfirmButton: false,
+						timer: 4000,
+						type: 'error',
+						title: error.message
+					})
+				});
             },
             getFormData() {
                 return FormCompany;
@@ -251,7 +246,7 @@
             if ((this.formData.nameCompany.length > 0 || this.formData.scopeOfTheCompany.length > 0) && !this.valid) {
                 next(false);
                 this.$swal({
-                    title: 'Вы точно не хотите сохранить резюме?',
+                    title: 'Вы точно не хотите сохранить компанию?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',

@@ -3,6 +3,7 @@ const profile = {
     return {
       dataProfile: [] ,
       idEmployer: '',
+      menu: false,
       formData: {
         first_name: '',
         second_name: '',

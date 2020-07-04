@@ -135,25 +135,22 @@
                     address: this.formData.officeAddress,
                     home_number: this.formData.houseNumber,
                 };
-                let res;
-                this.$http.post(`${process.env.VUE_APP_API_URL}/request/vacancy`, data)
-                    .then(response => {
-                            this.$router.push('/personal-area/all-vacancy');
-                            res = response;
-                            gtag('event', 'vacancyAdd', { 'event_category': 'form', 'event_action': 'vacancyAdd', });
-                            yaCounter53666866.reachGoal('vacancyAdd');
-                            return true;
-                        }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                        }
-                    )
+                this.$store.dispatch('addVacancy', data)
+                    .then(data => {
+                        this.$router.push('/personal-area/all-vacancy');
+                        gtag('event', 'vacancyAdd', { 'event_category': 'form', 'event_action': 'vacancyAdd', });
+                        yaCounter53666866.reachGoal('vacancyAdd');
+                        return data;
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
             },
             getFormData() {
                 return FormVacancy;

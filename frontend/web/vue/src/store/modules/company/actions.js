@@ -2,12 +2,12 @@ import * as type from './types';
 import api from '../../../api';
 
 const actions = {
-    getAllVacancy({commit}, payload) {
+    getAllCompany({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/vacancy/my-index?expand=can_update&sort=-update_time&page=' + payload)
+            api.get('/request/company/my-index?page=' + payload)
                 .then(res => {
-                    commit(type.GET_ALL_VACANCY, res.data);
+                    commit(type.GET_ALL_COMPANY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -16,12 +16,12 @@ const actions = {
                 });
         })
     },
-    updateVacancy({commit}, payload) {
+    removeCompany({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.post('/request/vacancy/update-time', {id: payload})
+            api.delete('/request/company/' + payload)
                 .then(res => {
-                    commit(type.UPDATE_VACANCY, res.data);
+                    commit(type.REMOVE_COMPANY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -30,12 +30,12 @@ const actions = {
                 });
         })
     },
-    removeVacancy({commit}, payload) {
+    addCompany({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.delete('/request/vacancy/' + payload)
+            api.post('/request/company', payload)
                 .then(res => {
-                    commit(type.REMOVE_VACANCY, res.data);
+                    commit(type.ADD_COMPANY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -44,12 +44,12 @@ const actions = {
                 });
         })
     },
-    addVacancy({commit}, payload) {
+    getCompany({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.post('/request/vacancy', payload)
+            api.get('/request/company/' + payload + '?expand=phone')
                 .then(res => {
-                    commit(type.ADD_VACANCY, res.data);
+                    commit(type.GET_COMPANY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -58,12 +58,12 @@ const actions = {
                 });
         })
     },
-    getVacancy({commit}, payload) {
+    editCompany({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/vacancy/' + payload + '?expand=employment-type,category')
+            api.patch('/request/company/' + payload.id, payload.data)
                 .then(res => {
-                    commit(type.GET_VACANCY, res.data);
+                    commit(type.EDIT_COMPANY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
@@ -72,12 +72,40 @@ const actions = {
                 });
         })
     },
-    editVacancy({commit}, payload) {
+    rightCompany({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.patch('/request/vacancy/' + payload.id, payload.data)
+            api.get('/request/company/' + payload + '?expand=users.employer')
                 .then(res => {
-                    commit(type.EDIT_VACANCY, res.data);
+                    commit(type.RIGHT_COMPANY, res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
+    addRightCompany({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.post('/request/company/add-user', payload)
+                .then(res => {
+                    commit(type.ADD_RIGHT_COMPANY, res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
+    removeRightCompany({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.post('/request/company/delete-user', payload)
+                .then(res => {
+                    commit(type.REMOVE_RIGHT_COMPANY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {

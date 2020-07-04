@@ -66,37 +66,35 @@
                 let data = {
                     old_password: this.formDataNewPass.old_password,
                     new_password_1: this.formDataNewPass.new_password_1,
-                    new_password_2: this.formDataNewPass.new_password_2,
-                    phoneValid: this.formData.phoneValid
+                    new_password_2: this.formDataNewPass.new_password_2
                 };
-
-                this.$http.post(`${process.env.VUE_APP_API_URL}/request/security/change-password`, data)
-                    .then(response => {
-                            this.$swal({
-                                title: 'Данные сохранены'
-                            }).then((result) => {
-                                return result;
-                            });
-                            return response;
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    )
+                this.$store.dispatch('resetPassword', data)
+                    .then(data => {
+                        this.$swal({
+                            title: 'Данные сохранены'
+                        }).then((result) => {
+                            return result;
+                        });
+                        return data;
+                    }).catch(error => {
+                        this.$swal({
+                            toast: true,
+                            position: 'bottom-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            type: 'error',
+                            title: error.message
+                        })
+                    });
             },
             validate () {
-                let btn = document.getElementById('main-btn-pass');
+                let btn = document.getElementById('main-btn');
                 btn.disabled = true;
                 let valid = this.$refs.form.validate();
                 this.$emit('val', valid);
                 if (valid) {
                     this.snackbar = true;
+                    btn.disabled = false;
                     this.saveDataNewPass();
                 }
             },
