@@ -26,6 +26,7 @@ use yii\base\InvalidConfigException;
 use yii\base\UserException;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
@@ -48,16 +49,53 @@ class CompanyController extends MyActiveController
         if (empty($requestParams)) {
             $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
-        return Yii::createObject([
+        $query = $this->modelClass::find()->joinWith('userCompany')->where(['or', ['=', 'owner', Yii::$app->user->id], ['=', 'user_company.user_id', Yii::$app->user->id]])->andWhere(['status'=>1]);
+        $dataProvider = Yii::createObject([
             'class' => ActiveDataProvider::className(),
-            'query' => $this->modelClass::find()->joinWith('userCompany')->where(['or', ['=', 'owner', Yii::$app->user->id], ['=', 'user_company.user_id', Yii::$app->user->id]])->andWhere(['status'=>1]),
+            'query' => $query,
             'pagination' => [
                 'params' => $requestParams,
+                'pageSize' => 10
             ],
             'sort' => [
                 'params' => $requestParams,
             ],
         ]);
+
+        $expands = explode(',', Yii::$app->request->get('expand'));
+        $models = $dataProvider->getModels();
+        $response = [];
+        /** @var ActiveRecord[] $models */
+        foreach ($models as $i=> $model) {
+            $response[$i]=ArrayHelper::toArray($model);
+            if(Yii::$app->request->get('expand')) {
+                foreach ($expands as $expand) {
+                    $exploded = explode('.', $expand);
+                    if (count($exploded) > 1) {
+                        $first_item = $exploded[0];
+                        $tmp = $model->$first_item;
+                        $response[$i][$first_item] = ArrayHelper::toArray($tmp);
+                        foreach ($exploded as $j => $item) {
+                            if ($j != 0) {
+                                $tmp = $tmp->$item;
+                                $response[$i][$first_item][$item] = is_object($tmp) ? ArrayHelper::toArray($tmp) : $tmp;
+                            }
+                        }
+
+                    } else {
+                        $response[$i][$expand] = $model->$expand;
+                    }
+                }
+            }
+        }
+        $pagination = [
+            'current_page'=>$dataProvider->getPagination()->getPage()+1,
+            'page_count'=>$dataProvider->getPagination()->getPageCount(),
+            'per_page'=>$dataProvider->getPagination()->getPageSize(),
+            'total_count'=>$dataProvider->getTotalCount(),
+        ];
+
+        return ['pagination'=>$pagination, 'models'=>$response];
     }
 
     public function checkAccess($action, $model = null, $params = [])
@@ -145,7 +183,7 @@ class CompanyController extends MyActiveController
         $params = Yii::$app->getRequest()->getBodyParams();
         $model->load($params, '');
         if($params['image']){
-            unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
+            //unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
             $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'company');
         } else {
             if($model->image_url) {

@@ -91,8 +91,8 @@ const actions = {
         return new Promise((resolve, reject) => {
             api.get('/request/company/my-index')
                 .then(res => {
-                    commit(type.GET_COMPANY_NAME, res.data);
-                    resolve(res.data);
+                    commit(type.GET_COMPANY_NAME, res.data.models);
+                    resolve(res.data.models);
                 })
                 .catch(error => {
                     console.log('Problem', error.message);

@@ -118,7 +118,7 @@ class ResumeController extends MyActiveController
 
         $model->load($params, '');
         if($params['image']){
-            unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
+            //unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
             $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'resume');
         } else {
             if($model->image_url) {

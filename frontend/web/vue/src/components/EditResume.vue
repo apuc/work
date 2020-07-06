@@ -8,8 +8,8 @@
 			<my-upload field="img"
 					   @crop-success="cropSuccess"
 					   v-model="show"
-					   :width="200"
-					   :height="200"
+					   :width="300"
+					   :height="300"
 					   img-format="png"
 					   lang-type="ru"
 			>

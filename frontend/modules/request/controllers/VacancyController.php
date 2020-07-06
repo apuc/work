@@ -11,6 +11,8 @@ use common\models\VacancyCategory;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
@@ -35,23 +37,60 @@ class VacancyController extends MyActiveController
         if (empty($requestParams)) {
             $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
-        return Yii::createObject([
+        $query = $this->modelClass::find()->joinWith(['company', 'company.userCompany'])
+            ->where([
+                'or',
+                ['=', 'vacancy.owner', Yii::$app->user->id],
+                ['=', 'user_company.user_id', Yii::$app->user->id],
+                ['=', 'company.owner', Yii::$app->user->id]
+            ])
+            ->andWhere([Vacancy::tableName().'.status'=>Vacancy::STATUS_ACTIVE]);
+        $dataProvider = Yii::createObject([
             'class' => ActiveDataProvider::className(),
-            'query' => $this->modelClass::find()->joinWith(['company', 'company.userCompany'])
-                ->where([
-                    'or',
-                    ['=', 'vacancy.owner', Yii::$app->user->id],
-                    ['=', 'user_company.user_id', Yii::$app->user->id],
-                    ['=', 'company.owner', Yii::$app->user->id]
-                ])
-            ->andWhere([Vacancy::tableName().'.status'=>Vacancy::STATUS_ACTIVE]),
+            'query' => $query,
             'pagination' => [
                 'params' => $requestParams,
+                'pageSize' => 10
             ],
             'sort' => [
                 'params' => $requestParams,
             ],
         ]);
+
+        $expands = explode(',', Yii::$app->request->get('expand'));
+        $models = $dataProvider->getModels();
+        $response = [];
+        /** @var ActiveRecord[] $models */
+        foreach ($models as $i=> $model) {
+            $response[$i]=ArrayHelper::toArray($model);
+            if(Yii::$app->request->get('expand')) {
+                foreach ($expands as $expand) {
+                    $exploded = explode('.', $expand);
+                    if (count($exploded) > 1) {
+                        $first_item = $exploded[0];
+                        $tmp = $model->$first_item;
+                        $response[$i][$first_item] = ArrayHelper::toArray($tmp);
+                        foreach ($exploded as $j => $item) {
+                            if ($j != 0) {
+                                $tmp = $tmp->$item;
+                                $response[$i][$first_item][$item] = is_object($tmp) ? ArrayHelper::toArray($tmp) : $tmp;
+                            }
+                        }
+
+                    } else {
+                        $response[$i][$expand] = $model->$expand;
+                    }
+                }
+            }
+        }
+        $pagination = [
+            'current_page'=>$dataProvider->getPagination()->getPage()+1,
+            'page_count'=>$dataProvider->getPagination()->getPageCount(),
+            'per_page'=>$dataProvider->getPagination()->getPageSize(),
+            'total_count'=>$dataProvider->getTotalCount(),
+        ];
+
+        return ['pagination'=>$pagination, 'models'=>$response];
     }
 
     /**
