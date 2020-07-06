@@ -34,9 +34,11 @@
             this.$store.dispatch('getVacancy', this.$route.params.id)
                 .then(data => {
                     this.dataVacancy = data;
-                    this.formData.phone = data.phone;
-                    if (this.formData.phone.length > 0) {
-                        this.formData.phoneValid = true;
+                    if (data.phone != null) {
+                        this.formData.phone = data.phone;
+                        if (this.formData.phone.length > 0) {
+                            this.formData.phoneValid = true;
+                        }
                     }
                     this.formData.vacancyCity = data.city_id;
                     this.formData.companyName = data.company_id;
