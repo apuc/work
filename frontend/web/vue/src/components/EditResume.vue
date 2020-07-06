@@ -8,8 +8,8 @@
 			<my-upload field="img"
 					   @crop-success="cropSuccess"
 					   v-model="show"
-					   :width="200"
-					   :height="200"
+					   :width="300"
+					   :height="300"
 					   img-format="png"
 					   lang-type="ru"
 			>
@@ -27,6 +27,35 @@
 					   @input="onInput"
 		></vue-tel-input>
 		<p class="custom-error">{{ phone.text }}</p>
+		<v-menu
+				ref="menu"
+				v-model="menu"
+				:close-on-content-click="false"
+				:nudge-right="40"
+				lazy
+				transition="scale-transition"
+				offset-y
+				full-width
+				min-width="290px"
+		>
+			<template v-slot:activator="{ on }">
+				<v-text-field
+						v-model="formData.birth_date"
+						label="Дата рождения"
+						class="date-label"
+						prepend-icon="event"
+						readonly
+						v-on="on"
+				></v-text-field>
+			</template>
+			<v-date-picker
+					ref="picker"
+					v-model="formData.birth_date"
+					:max="new Date().toISOString().substr(0, 10)"
+					min="1950-01-01"
+					locale="ru-ru"
+			></v-date-picker>
+		</v-menu>
 
     </FormTemplate>
 </template>
@@ -36,95 +65,105 @@
     import FormTemplate from "./FormTemplate";
     import Resume from "../mixins/resume";
 	import myUpload from 'vue-image-crop-upload';
+	import {mapGetters} from 'vuex';
 
     export default {
         name: 'FormResume',
         mixins: [Resume],
         components: {FormTemplate, myUpload},
-		created() {
-			this.getEmploymentType();
-			this.getCity();
-		},
 		mounted() {
             document.title = this.$route.meta.title;
-
-            this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=experience,education,skills,category')
-                .then(response => {
-                        this.dataResume = response.data;
-
-						if (response.data.phone != null) {
-							this.formData.phone = response.data.phone;
-						}
-						if (this.formData.phone.length > 0 && response.data.phone != null) {
-							this.formData.phoneValid = true;
+			this.getEmploymentType();
+			this.getCity();
+			this.$store.dispatch('getResume', this.$route.params.id)
+					.then(data => {
+						this.dataResume = data;
+						if (data.phone != null) {
+							this.formData.phone = data.phone;
 						} else {
-							if (this.formData.phone.length === 16) {
-								this.phone.text = '';
-								this.phone.valid = true;
-								this.formData.phoneValid = true;
-							} else {
-								this.phone.text = 'Вы ввели не верный номер телефона';
-								this.phone.valid = false;
-								this.formData.phoneValid = false;
-							}
+							this.$store.dispatch('getUserMe', this.$route.params.id)
+									.then(data => {
+										if (data.phone != null) {
+											this.formData.phone = data.phone.number;
+											if (this.formData.phone.length === 16) {
+												this.phone.text = '';
+												this.phone.valid = true;
+												this.formData.phoneValid = true;
+											} else {
+												this.phone.text = 'Вы ввели не верный номер телефона';
+												this.phone.valid = false;
+												this.formData.phoneValid = false;
+											}
+										}
+									}).catch(error => {
+								this.$swal({
+									toast: true,
+									position: 'bottom-end',
+									showConfirmButton: false,
+									timer: 4000,
+									type: 'error',
+									title: error.message
+								})
+							});
+						}
+						if (this.formData.phone.length > 0) {
+							this.formData.phoneValid = true;
+						}
+						this.formData.birth_date = data.birth_date;
+
+						this.formData.resumeCity = data.city_id;
+						if (data.image_url) {
+							this.formData.image_url = data.image_url;
+						}
+						this.formData.careerObjective = data.title;
+						this.formData.categoriesResume = data.category;
+						if (data.min_salary) {
+							this.formData.salaryFrom = data.min_salary;
+						}
+						if (data.max_salary) {
+							this.formData.salaryBefore = data.max_salary;
+						}
+						this.formData.aboutMe = data.description;
+						this.formData.addSocial.vkontakte = data.vk;
+						this.formData.addSocial.facebook = data.facebook;
+						this.formData.addSocial.instagram = data.instagram;
+						this.formData.addSocial.skype = data.skype;
+						if (data.education.length > 0) {
+							this.formData.educationBlock = data.education;
+						}
+						if (data.experience.length > 0) {
+							this.formData.workBlock = data.experience;
+						}
+						this.formData.dutiesSelect = data.skills;
+
+						if (data.vk.length > 0 || data.facebook.length > 0 || data.instagram.length > 0 || data.instagram.length > 0) {
+							document.querySelector('.social-block button').click();
 						}
 
-						this.formData.birth_date = response.data.birth_date;
+						let workLength = data.experience.length - 1;
+						for (let i = 0; i < workLength; i++) {
+							document.querySelector('.btnWork').click();
+						}
 
-                        this.formData.resumeCity = response.data.city_id;
-                        if (response.data.image_url) {
-                            this.formData.image_url = response.data.image_url;
-                        }
-                        this.formData.careerObjective = response.data.title;
-                        this.formData.categoriesResume = response.data.category;
-                        if (response.data.min_salary) {
-                            this.formData.salaryFrom = response.data.min_salary;
-                        }
-                        if (response.data.max_salary) {
-                            this.formData.salaryBefore = response.data.max_salary;
-                        }
-                        this.formData.aboutMe = response.data.description;
-                        this.formData.addSocial.vkontakte = response.data.vk;
-                        this.formData.addSocial.facebook = response.data.facebook;
-                        this.formData.addSocial.instagram = response.data.instagram;
-                        this.formData.addSocial.skype = response.data.skype;
-                        if (response.data.education.length > 0) {
-                            this.formData.educationBlock = response.data.education;
-                        }
-                        if (response.data.experience.length > 0) {
-                            this.formData.workBlock = response.data.experience;
-                        }
-                        this.formData.dutiesSelect = response.data.skills;
-
-                        if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
-                            document.querySelector('.social-block button').click();
-                        }
-
-                        let workLength = response.data.experience.length - 1;
-                        for (let i = 0; i < workLength; i++) {
-                            document.querySelector('.btnWork').click();
-                        }
-
-                        let educationLength = response.data.education.length - 1;
-                        for (let i = 0; i < educationLength; i++) {
-                            document.querySelector('.btnEducation').click();
-                        }
-                        if (response.data.status === 1) {
-                        	this.formData.hideResume = false;
+						let educationLength = data.education.length - 1;
+						for (let i = 0; i < educationLength; i++) {
+							document.querySelector('.btnEducation').click();
+						}
+						if (data.status === 1) {
+							this.formData.hideResume = false;
 						} else {
 							this.formData.hideResume = true;
 						}
-                    }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                    }
-                )
+					}).catch(error => {
+				this.$swal({
+					toast: true,
+					position: 'bottom-end',
+					showConfirmButton: false,
+					timer: 4000,
+					type: 'error',
+					title: error.message
+				})
+			});
         },
         methods: {
 			toggleShow() {
@@ -170,6 +209,7 @@
 			},
             saveData() {
                 let data = {
+                	id: this.$route.params.id,
 					phone: this.formData.phone,
 					birth_date: this.formData.birth_date,
 					city_id: this.formData.resumeCity,
@@ -191,57 +231,59 @@
 				if (this.formData.hideResume == true) {
 					data.status = 2;
 				}
-                this.$http.patch(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id, data)
-                    .then(response => {
-                            this.$router.push('/personal-area/all-resume');
-                            return response;
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    )
+				this.$store.dispatch('editResume', data)
+						.then(data => {
+							this.$router.push('/personal-area/all-resume');
+							return data;
+						}).catch(error => {
+					this.$swal({
+						toast: true,
+						position: 'bottom-end',
+						showConfirmButton: false,
+						timer: 4000,
+						type: 'error',
+						title: error.message
+					})
+				});
             },
             getFormData() {
                 return FormResume;
             },
             getEmploymentType() {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/category`).then(response => {
-					FormResume.categoriesResume.items = response.data;
-					for (let i = 0; i < response.data.length; i++) {
-						this.$set(FormResume.categoriesResume.items, i, response.data[i]);
-					}
-				}, response => {
+				this.$store.dispatch('getCategory', this.$route.params.id)
+						.then(data => {
+							FormResume.categoriesResume.items = data.map(resume => ({
+								id: resume.id,
+								name: resume.name,
+							}));
+							this.$forceUpdate();
+						}).catch(error => {
 					this.$swal({
 						toast: true,
 						position: 'bottom-end',
 						showConfirmButton: false,
 						timer: 4000,
 						type: 'error',
-						title: response.data.message
+						title: error.message
 					})
 				});
             },
             getCity() {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/city`).then(response => {
-					FormResume.resumeCity.items = response.data.map(resumeCity => ({
-						id: resumeCity.id,
-						name: resumeCity.name,
-					}));
-					this.$forceUpdate();
-				}, response => {
+				this.$store.dispatch('getCity', this.$route.params.id)
+						.then(data => {
+							FormResume.resumeCity.items = data.map(resumeCity => ({
+								id: resumeCity.id,
+								name: resumeCity.name,
+							}));
+							this.$forceUpdate();
+						}).catch(error => {
 					this.$swal({
 						toast: true,
 						position: 'bottom-end',
 						showConfirmButton: false,
 						timer: 4000,
 						type: 'error',
-						title: response.data.message
+						title: error.message
 					})
 				});
             },
@@ -257,6 +299,17 @@
                 this.valid = val;
             },
         },
+
+		computed: {
+			...mapGetters([
+				'resume',
+			])
+		},
+		watch: {
+			menu (val) {
+				val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+			}
+		},
         beforeRouteLeave(to, from, next) {
             if (this.dataResume.max_salary == null) {
                 this.dataResume.max_salary = '';

@@ -15,10 +15,6 @@ export default {
     rules: [],
     component: VTextField
   }),
-  birth_date: Object.assign({}, Field, {
-    rules: [],
-    component: DatePicker
-  }),
   email: Object.assign({}, Field, {
     name: 'email',
     label: 'Email*',

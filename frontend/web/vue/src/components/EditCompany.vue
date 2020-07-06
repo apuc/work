@@ -8,8 +8,8 @@
 			<my-upload field="img"
 					   @crop-success="cropSuccess"
 					   v-model="show"
-					   :width="200"
-					   :height="200"
+					   :width="300"
+					   :height="300"
 					   img-format="png"
 					   lang-type="ru"
 			>
@@ -46,50 +46,43 @@
         components: {FormTemplate, myUpload},
         mounted() {
             document.title = this.$route.meta.title;
-            this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id + '?expand=phone')
-                .then(response => {
-
-                        this.dataCompany = response.data;
-                        if (response.data.image_url) {
-                            this.formData.image_url = response.data.image_url;
-                        }
-
-                        this.formData.nameCompany = response.data.name;
-                        this.formData.site = response.data.website;
-                        this.formData.scopeOfTheCompany = response.data.activity_field;
-                        this.formData.addSocial.vkontakte = response.data.vk;
-                        this.formData.addSocial.facebook = response.data.facebook;
-                        this.formData.addSocial.instagram = response.data.instagram;
-                        this.formData.addSocial.skype = response.data.skype;
-                        this.formData.aboutCompany = response.data.description;
-                        this.formData.contactPerson = response.data.contact_person;
-                        if(response.data.phone === null) {
+			this.$store.dispatch('getCompany', this.$route.params.id)
+					.then(data => {
+						this.dataCompany = data;
+						if (data.image_url) {
+							this.formData.image_url = data.image_url;
+						}
+						this.formData.nameCompany = data.name;
+						this.formData.site = data.website;
+						this.formData.scopeOfTheCompany = data.activity_field;
+						this.formData.addSocial.vkontakte = data.vk;
+						this.formData.addSocial.facebook = data.facebook;
+						this.formData.addSocial.instagram = data.instagram;
+						this.formData.addSocial.skype = data.skype;
+						this.formData.aboutCompany = data.description;
+						this.formData.contactPerson = data.contact_person;
+						if(data.phone === null) {
 							this.formData.companyPhone = '';
 						} else {
-							this.formData.companyPhone = response.data.phone.number;
+							this.formData.companyPhone = data.phone.number;
 							this.formData.phoneValid = true;
 						}
-
-
-
-                        if (response.data.vk.length > 0 || response.data.facebook.length > 0 || response.data.instagram.length > 0 || response.data.instagram.length > 0) {
-                            document.querySelector('.social-block button').click();
-                        }
-
-                        Object.assign(FormCompany.nameCompany.rules, [v => !!v || 'Название компании обязательно к заполнению']);
-                        Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
-                        this.inputsDisabled();
-                    }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                    }
-                );
+						if (data.vk.length > 0 || data.facebook.length > 0 || data.instagram.length > 0 || data.instagram.length > 0) {
+							document.querySelector('.social-block button').click();
+						}
+						Object.assign(FormCompany.nameCompany.rules, [v => !!v || 'Название компании обязательно к заполнению']);
+						Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
+						this.inputsDisabled();
+					}).catch(error => {
+				this.$swal({
+					toast: true,
+					position: 'bottom-end',
+					showConfirmButton: false,
+					timer: 4000,
+					type: 'error',
+					title: error.message
+				})
+			});
         },
         methods: {
 			toggleShow() {
@@ -147,21 +140,24 @@
                     contact_person: this.formData.contactPerson,
                     phone: this.formData.companyPhone,
                 };
-                this.$http.patch(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id, data)
-                    .then(response => {
-                            this.$router.push('/personal-area/all-company');
-                            return response;
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    )
+				let dataObj = {
+					id: this.$route.params.id,
+					data: data
+				}
+				this.$store.dispatch('editCompany', dataObj)
+						.then(data => {
+							this.$router.push('/personal-area/all-company');
+							return data;
+						}).catch(error => {
+					this.$swal({
+						toast: true,
+						position: 'bottom-end',
+						showConfirmButton: false,
+						timer: 4000,
+						type: 'error',
+						title: error.message
+					})
+				});
             },
             getFormData() {
                 return FormCompany;

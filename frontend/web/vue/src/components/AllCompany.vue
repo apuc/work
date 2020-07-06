@@ -63,7 +63,7 @@
                                    class="edit-btn"
                                    type="button"
                                    title="Удалить"
-                                   @click="removeResume(index, item.id)"
+                                   @click="companyRemove(index, item.id)"
                             >
                                 <v-icon>delete</v-icon>
                             </v-btn>
@@ -77,7 +77,7 @@
                         <v-pagination
                                 v-model="paginationCurrentPage"
                                 :length="paginationPageCount"
-                                @input="changePage"
+                                @input="getCompany"
                         ></v-pagination>
                     </div>
                 </template>
@@ -107,11 +107,19 @@
         mounted() {
             document.title = this.$route.meta.title;
             this.userID = localStorage.userId;
-            this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index`)
-                .then(response => {
-                        this.getAllCompany = response.data;
-                        localStorage.companiesCount = response.data.length;
+            this.getCompany(1);
+
+        },
+        methods: {
+            getCompany(page) {
+                this.$store.dispatch('getAllCompany', page)
+                    .then(data => {
+                        this.paginationCurrentPage = data.pagination.current_page;
+                        this.paginationPageCount = data.pagination.page_count;
+                        this.domen = `${process.env.VUE_APP_API_URL}`;
+                        localStorage.companiesCount = data.models.length;
                         this.companiesCount = localStorage.companiesCount;
+                        this.getAllCompany = data.models;
                         this.getAllCompany.forEach((element) => {
                             let timestamp = element.updated_at;
                             let date = new Date();
@@ -125,22 +133,18 @@
                             };
                             element.updated_at = date.toLocaleString("ru", options);
                         });
-                        this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
-                    }, response => {
+                    }).catch(error => {
                     this.$swal({
                         toast: true,
                         position: 'bottom-end',
                         showConfirmButton: false,
                         timer: 4000,
                         type: 'error',
-                        title: response.data.message
+                        title: error.message
                     })
-                    }
-                );
-
-        },
-        methods: {
-            removeResume(index, resumeId) {
+                });
+            },
+            companyRemove(index, companyId) {
                 this.$swal({
                     title: 'Вы точно хотите удалить компанию?',
                     type: 'warning',
@@ -152,54 +156,36 @@
                 }).then((result) => {
                     if (result.value) {
                         this.getAllCompany.splice(index, 1);
-                        this.$http.delete(`${process.env.VUE_APP_API_URL}/request/company/` + resumeId)
-                            .then(response => {
-                                this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages,companiesCount`)
-                                    .then(response => {
-                                            localStorage.companiesCount = response.data[0].companiesCount;
-                                            this.companiesCount = localStorage.companiesCount;
-                                        }, response => {
-                                            this.$swal({
-                                                toast: true,
-                                                position: 'bottom-end',
-                                                showConfirmButton: false,
-                                                timer: 4000,
-                                                type: 'error',
-                                                title: response.data.message
-                                            })
-                                        }
-                                    );
-                                    return response;
-                                }, response => {
+                        this.$store.dispatch('removeCompany', companyId)
+                            .then(data => {
+                                this.$store.dispatch('getUserMe', this.$route.params.id)
+                                    .then(data => {
+                                        localStorage.companiesCount = data.companiesCount;
+                                        this.companiesCount = localStorage.companiesCount;
+                                    }).catch(error => {
                                     this.$swal({
                                         toast: true,
                                         position: 'bottom-end',
                                         showConfirmButton: false,
                                         timer: 4000,
                                         type: 'error',
-                                        title: response.data.message
+                                        title: error.message
                                     })
-                                }
-                            );
+                                });
+                                return data;
+                            }).catch(error => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: error.message
+                            })
+                        });
                     }
                 });
             },
-            changePage(paginationCurrentPage) {
-                this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/my-index?page=` + paginationCurrentPage)
-                    .then(response => {
-                            this.getAllCompany = response.data;
-                        }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                        }
-                    );
-            }
         }
     }
 </script>

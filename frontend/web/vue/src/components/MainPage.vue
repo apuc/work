@@ -19,7 +19,7 @@
 
             <v-card
                     class="main-card"
-                    :class="selecetBg(index)"
+                    :class="selectBg(index)"
                     color="#26c6da"
                     dark
                     v-for="(item, itemIndex) in items"
@@ -80,25 +80,23 @@
         },
         mounted() {
             document.title = this.$route.meta.title;
-            this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/statistics`)
-                .then(response => {
-                        this.allRecords = response.data;
-                        this.domen = `${process.env.VUE_APP_API_URL}`;
-                    }, response => {
-                    this.$swal({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        type: 'error',
-                        title: response.data.message
-                    })
-                    }
-                );
-
+            this.$store.dispatch('getStatistics')
+                .then(data => {
+                    this.allRecords = data;
+                    this.domen = `${process.env.VUE_APP_API_URL}`;
+                }).catch(error => {
+                this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: error.message
+                })
+            });
         },
         methods: {
-            selecetBg(cardType) {
+            selectBg(cardType) {
                 const types = {
                     resume: 'main-card_resume',
                     company: 'main-card_company',

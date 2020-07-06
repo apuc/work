@@ -64,20 +64,19 @@
         },
         mounted(){
             document.title = this.$route.meta.title;
-            this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id + `?expand=users.employer`)
-                .then(response => {
-                      this.allUsers = response.data.users;
-                    }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                    }
-                )
+            this.$store.dispatch('rightCompany', this.$route.params.id)
+                .then(data => {
+                    this.allUsers = data.users;
+                }).catch(error => {
+                this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: error.message
+                })
+            });
         },
         methods: {
             saveData() {
@@ -86,36 +85,34 @@
                     company_id: this.$route.params.id,
                     phoneValid: this.formData.phoneValid
                 };
-                this.$http.post(`${process.env.VUE_APP_API_URL}/request/company/add-user`, data)
-                    .then(response => {
+                this.$store.dispatch('addRightCompany', data)
+                    .then(data => {
                         this.formData.companyRight = '';
                         let mainBtn = document.querySelector('#main-btn');
                         mainBtn.disabled = false;
-                        this.$http.get(`${process.env.VUE_APP_API_URL}/request/company/` + this.$route.params.id + `?expand=users.employer`)
-                            .then(response => {
-                                    this.allUsers = response.data.users;
-                                }, response => {
-                                    this.$swal({
-                                        toast: true,
-                                        position: 'bottom-end',
-                                        showConfirmButton: false,
-                                        timer: 4000,
-                                        type: 'error',
-                                        title: response.data.message
-                                    })
-                                }
-                            );
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    );
+                        // this.$store.dispatch('rightCompany', this.$route.params.id)
+                        //     .then(data => {
+                        //         this.allUsers = data.users;
+                        //     }).catch(error => {
+                        //     this.$swal({
+                        //         toast: true,
+                        //         position: 'bottom-end',
+                        //         showConfirmButton: false,
+                        //         timer: 4000,
+                        //         type: 'error',
+                        //         title: error.message
+                        //     })
+                        // });
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
 
             },
             getFormData() {
@@ -130,20 +127,19 @@
                         user_id: userId,
                         company_id: this.$route.params.id
                 };
-                this.$http.post(`${process.env.VUE_APP_API_URL}/request/company/delete-user`, data)
-                    .then(response => {
-                            return response;
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    );
+                this.$store.dispatch('removeRightCompany', data)
+                    .then(data => {
+                        return data;
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
             },
         }
     }

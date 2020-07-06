@@ -54,7 +54,7 @@
                                    class="edit-btn"
                                    type="button"
                                    title="Поднять в ТОП"
-                                   @click="updateResume(index, item.id)"
+                                   @click="resumeUpdate(index, item.id)"
                             >
                                 <v-icon>arrow_upward</v-icon>
                             </v-btn>
@@ -62,7 +62,7 @@
                                    class="edit-btn"
                                    type="button"
                                    title="Удалить"
-                                   @click="removeResume(index, item.id)"
+                                   @click="resumeRemove(index, item.id)"
                             >
                                 <v-icon>delete</v-icon>
 
@@ -77,7 +77,7 @@
                         <v-pagination
                                 v-model="paginationCurrentPage"
                                 :length="paginationPageCount"
-                                @input="changePage"
+                                @input="getResume"
                         ></v-pagination>
                     </div>
                 </template>
@@ -103,10 +103,16 @@
         },
         created() {
             document.title = this.$route.meta.title;
-            this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/my-index?expand=can_update&sort=-update_time`)
-                .then(response => {
+            this.getResume(1);
+        },
+        methods: {
+            getResume(page) {
+                this.$store.dispatch('getAllResume', page)
+                    .then(data => {
+                        this.paginationCurrentPage = data.pagination.current_page;
+                        this.paginationPageCount = data.pagination.page_count;
                         this.domen = `${process.env.VUE_APP_API_URL}`;
-                        this.getAllResume = response.data;
+                        this.getAllResume = data.models;
                         this.getAllResume.forEach((element) => {
                             let timestamp = element.update_time;
                             let date = new Date();
@@ -120,51 +126,35 @@
                             };
                             element.update_time = date.toLocaleString("ru", options);
                         });
-                        this.paginationPageCount = response.headers.map['x-pagination-page-count'][0];
-                    }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                    }
-                );
-
-        },
-        methods: {
-            updateResume(index, resumeId) {
-                this.$http.post(`${process.env.VUE_APP_API_URL}/request/resume/update-time`, {id: resumeId})
-                    .then(response => {
-                            this.getAllResume.splice(index, 1);
-                            let newData = response.data;
-                            let date = new Date();
-                            date.setTime(newData.update_time * 1000);
-                            let options = {
-                                year: 'numeric',
-                                month: 'numeric',
-                                day: 'numeric',
-                                hour: 'numeric',
-                                minute: 'numeric',
-                            };
-                            response.data.update_time = date.toLocaleString("ru", options);
-                            ym(53666866,'reachGoal','resume_to_top');
-                            this.getAllResume.unshift(newData);
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    );
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
             },
-            removeResume(index, resumeId) {
+            resumeUpdate(index, resumeId) {
+                this.$store.dispatch('updateResume', resumeId)
+                    .then(data => {
+                        this.getResume(this.paginationCurrentPage);
+                        ym(53666866,'reachGoal','resume_to_top');
+                        return data;
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
+            },
+            resumeRemove(index, resumeId) {
                 this.$swal({
                     title: 'Вы точно хотите удалить резюме?',
                     type: 'warning',
@@ -175,40 +165,23 @@
                     cancelButtonText: 'Нет'
                 }).then((result) => {
                     if (result.value) {
-                        this.getAllResume.splice(index, 1);
-                        this.$http.delete(`${process.env.VUE_APP_API_URL}/request/resume/` + resumeId)
-                            .then(response => {
-                                    return response;
-                                }, response => {
-                                    this.$swal({
-                                        toast: true,
-                                        position: 'bottom-end',
-                                        showConfirmButton: false,
-                                        timer: 4000,
-                                        type: 'error',
-                                        title: response.data.message
-                                    })
-                                }
-                            );
-                    }
-                });
-            },
-            async changePage(paginationCurrentPage) {
-                await this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/my-index?page=` + paginationCurrentPage)
-                    .then(response => {
-                            this.getAllResume = response.data;
-                        }, response => {
+                        this.$store.dispatch('removeResume', resumeId)
+                            .then(data => {
+                                this.getResume(this.paginationCurrentPage);
+                                return data;
+                            }).catch(error => {
                             this.$swal({
                                 toast: true,
                                 position: 'bottom-end',
                                 showConfirmButton: false,
                                 timer: 4000,
                                 type: 'error',
-                                title: response.data.message
+                                title: error.message
                             })
-                        }
-                    );
-            }
+                        });
+                    }
+                });
+            },
         },
         filters: {
             capitalize(val) {
