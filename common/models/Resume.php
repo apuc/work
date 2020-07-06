@@ -99,7 +99,7 @@ class Resume extends WorkActiveRecord
         return [
             [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'notification_status', 'hot', 'city_id'], 'integer'],
             [['title', 'image_url', 'skype', 'instagram', 'facebook', 'vk', 'phone'], 'string', 'max' => 255],
-            [['birth_date'], 'date', 'format' => "Y-m-d"],
+            [['birth_date'], 'date', 'format' => 'php:Y-m-d'],
             [['description'], 'string'],
             [['min_salary', 'max_1salary'], 'safe'],
             [['employer_id', 'title'], 'required'],

@@ -179,6 +179,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
 
 
                     <?php if($dataProvider->models):
+                        $random_key = rand(4, 9);
                         foreach ($dataProvider->models as $key => $vacancy): ?>
 
                         <?php
@@ -194,7 +195,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                                 : $this->render('/parts/_vacancy_standart', compact(['vacancy', 'flag', 'searchModel']))
                             ?>
 
-                            <?= ($key == 5) ?
+                            <?= ($key === $random_key) ?
                                 \frontend\widgets\Banner::widget([
                                     'categoryId' => $searchModel->current_category ? $searchModel->current_category->id : null,
                                     'cityId' => $searchModel->current_city ? $searchModel->current_city->id : null,

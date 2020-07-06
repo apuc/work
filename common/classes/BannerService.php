@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 use yii\db\Transaction;
 
 use yii\helpers\ArrayHelper;
@@ -195,7 +196,12 @@ class BannerService extends Component
      */
     public function getRandomBanner($categoryId, $cityId)
     {
-        /** @todo */
-        return $this->repository::findOne(2);
+        return Banner::find()
+            ->where(['is_active'=>Banner::STATUS_ACTIVE])
+            ->joinWith('bannerLocations')
+            ->andFilterWhere(['category_id'=>$categoryId])
+            ->andFilterWhere(['city_id'=>$cityId])
+            ->orderBy(new Expression('rand()'))
+            ->one();
     }
 }

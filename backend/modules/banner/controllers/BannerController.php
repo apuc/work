@@ -157,6 +157,11 @@ class BannerController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionPreview(){
+        $banner = new \common\models\Banner();
+        $banner->load(Yii::$app->request->get(), '');
+        return \frontend\widgets\Banner::widget(['banner'=>$banner]);
+    }
 
     /**
      * @param int $index

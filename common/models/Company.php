@@ -27,6 +27,7 @@ use yii\db\ActiveRecord;
  * @property integer $owner
  * @property integer $countViews
  * @property bool $is_trusted
+ * @property float $balance
  *
  * @property User $user
  * @property Vacancy[] $vacancy
@@ -73,6 +74,7 @@ class Company extends WorkActiveRecord
             [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person', 'image_url'], 'string', 'max' => 255],
             [['activity_field', 'description'], 'string'],
             [['is_trusted'], 'boolean'],
+            [['balance'], 'number'],
             [['user_id', 'contact_person'], 'required'],
         ];
     }
