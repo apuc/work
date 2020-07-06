@@ -8,13 +8,13 @@
             <v-list class="pa-1">
                 <v-list-tile avatar>
                     <v-list-tile-content>
-                        <v-list-tile-title v-if="firstName.length > 0" class="login-block">
+                        <v-list-tile-title v-if="first_name > 0" class="login-block">
                             <img class="login-image" :src="loginImg" alt="">
-                            {{firstName}} {{secondName}}
+                            {{ userMe.first_name }} {{ userMe.second_name }}
                         </v-list-tile-title>
                         <v-list-tile-title v-else class="login-block">
                             <img class="login-image" :src="loginImg" alt="">
-                            {{email}}
+                            {{ sliceEmail(userMe.user.email) }}
                         </v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
@@ -38,10 +38,10 @@
                         <img :src="link.img" alt="">
                         <v-list-tile-title class="menu-text">
                             {{ link.title }}
-                            <template v-if="link.title === 'Сообщения'">
+                            <template v-if="link.title === 'Отклики'">
                                 <v-list-tile-title v-if="unreadMessages > 0"
                                                    class="menu-notification">
-                                    {{ unreadMessages }}
+                                    {{ userMe.user.unreadMessages }}
                                 </v-list-tile-title>
                             </template>
                             <template v-if="link.addFlag">
@@ -68,7 +68,7 @@
                         :value="true"
                         type="warning"
                         class="main-alert"
-                        v-if="companiesCount > 1"
+                        v-if="userMe.companiesCount > 1"
                 >
                     <h1>Внимание!</h1>
                     Мы подготовили для Вас новые функции сайта, которые сделают поиск сотрудников комфортнее.<br>
@@ -77,10 +77,10 @@
                     <transition name="fade">
                         <div v-if="alertFlag">
                             На аккаунте может быть только одна компания.<br>
-                            <span v-if="companiesCount === 2">
+                            <span v-if="userMe.companiesCount === 2">
                                 Просим Вас перенести одну из Ваших компаний на другой аккаунт. Все данные будут сохранены и доступны в указанном аккаунте.
                             </span>
-                            <span v-if="companiesCount > 2">
+                            <span v-if="userMe.companiesCount > 2">
                                 Просим Вас перенести все компании кроме одной на другие аккаунты. Все данные будут сохранены и доступны в указанных аккаунтах.
                             </span>
                             <br>
@@ -100,6 +100,7 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'App',
@@ -108,12 +109,8 @@
             return {
                 drawer: true,
                 alertFlag: false,
-                firstName: '',
-                secondName: '',
-                userId: '',
-                email: '',
-                unreadMessages: '',
-                companiesCount: 0,
+                first_name: 1,
+                unreadMessages: 0,
                 loginImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/login.png',
                 mainImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/main.png',
                 logOutImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/exit.png',
@@ -169,69 +166,66 @@
                         addFlag: false,
                         show: true
                     },
+                    // {
+                    //     title: 'Обновления',
+                    //     url: '/personal-area/updates',
+                    //     img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/updates.png',
+                    //     show: true
+                    // },
                 ],
             }
         },
         methods: {
-            getMessage(title) {
-                if(title !== 'Сообщения') {
-                    this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages`)
-                        .then(response => {
-                                this.unreadMessages = response.data[0].user.unreadMessages;
-                            }, response => {
-                                this.$swal({
-                                    toast: true,
-                                    position: 'bottom-end',
-                                    showConfirmButton: false,
-                                    timer: 4000,
-                                    type: 'error',
-                                    title: response.data.message
-                                })
-                            }
-                        )
-                }
+            sliceEmail(email) {
+                email = email.match(/.+@/)[0];
+                email = email.slice(0, email.length-1);
+                return email;
             },
-            async getUser() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user.unreadMessages,companiesCount`)
-            },
-        },
-        beforeMount() {
-            this.getUser()
-                .then(response => {
-                        this.firstName = response.data[0].first_name;
-                        this.secondName = response.data[0].second_name;
-                        this.userId = response.data[0].user_id;
-                        this.email = response.data[0].user.email;
-                        this.unreadMessages = response.data[0].user.unreadMessages;
-                        this.email = this.email.match(/.+@/)[0];
-                        this.email = this.email.slice(0, this.email.length-1);
-
-                        if (response.data[0].user.status == 10) {
+            getUser() {
+                this.$store.dispatch('getUserMe', this.$route.params.id)
+                    .then(data => {
+                        if (data.first_name != null) {
+                            this.first_name = data.first_name.length;
+                        } else {
+                            this.first_name = 0;
+                        }
+                        if (data.user.status == 10) {
                             this.linkMenu[2].show = false;
                             this.linkMenu[4].show = false;
                         }
-                        if (response.data[0].user.status >= 20) {
+                        if (data.user.status >= 20) {
                             this.linkMenu[3].show = false;
                         }
-
-                        localStorage.userId = this.userId;
-                        localStorage.companiesCount = response.data[0].companiesCount;
-                        this.companiesCount = response.data[0].companiesCount;
-                    }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
-                    }
-                );
+                        this.unreadMessages = data.user.unreadMessages;
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
+            },
+            getMessage(title) {
+                if(title !== 'Отклики') {
+                    this.getUser();
+                }
+            },
+        },
+        created() {
+            this.getUser();
             if (window.innerWidth < 1265) {
                 this.drawer = false;
             }
         },
+
+        computed: {
+            ...mapGetters([
+                'userMe',
+            ])
+        }
     }
 </script>
 <style scoped>
@@ -364,7 +358,7 @@
     .menu-notification {
         position: absolute;
         top: 5px;
-        left: 75px;
+        left: 60px;
         width: 15px;
         height: 15px;
         display: flex;

@@ -6,7 +6,9 @@ use common\classes\Debug;
 use common\models\Message;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveRecord;
 use yii\filters\auth\HttpBearerAuth;
+use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 
@@ -45,16 +47,51 @@ class MessageController extends MyActiveController
                 $query->andWhere(['sender_id'=>Yii::$app->user->id, 'deleted_by_sender'=>0]);
             }
         }
-        return Yii::createObject([
+        $dataProvider = Yii::createObject([
             'class' => ActiveDataProvider::className(),
             'query' => $query,
             'pagination' => [
                 'params' => $requestParams,
+                'pageSize' => 10
             ],
             'sort' => [
                 'params' => $requestParams,
             ],
         ]);
+        //Debug::dd($dataProvider);
+
+        $expands = explode(',', Yii::$app->request->get('expand'));
+        $models = $dataProvider->getModels();
+        $response = [];
+        /** @var ActiveRecord[] $models */
+        foreach ($models as $i=> $model) {
+            $response[$i]=ArrayHelper::toArray($model);
+            foreach ($expands as $expand) {
+                $exploded = explode('.', $expand);
+                if(count($exploded)>1) {
+                    $first_item = $exploded[0];
+                    $tmp = $model->$first_item;
+                    $response[$i][$first_item] = ArrayHelper::toArray($tmp);
+                    foreach ($exploded as $j => $item) {
+                        if($j!=0) {
+                            $tmp = $tmp->$item;
+                            $response[$i][$first_item][$item]=is_object($tmp)?ArrayHelper::toArray($tmp):$tmp;
+                        }
+                    }
+
+                } else {
+                    $response[$i][$expand]=$model->$expand;
+                }
+            }
+        }
+        $pagination = [
+            'current_page'=>$dataProvider->getPagination()->getPage()+1,
+            'page_count'=>$dataProvider->getPagination()->getPageCount(),
+            'per_page'=>$dataProvider->getPagination()->getPageSize(),
+            'total_count'=>$dataProvider->getTotalCount(),
+        ];
+
+        return ['pagination'=>$pagination, 'models'=>$response];
     }
     /**
      * @param string $action

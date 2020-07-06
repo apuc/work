@@ -33,37 +33,39 @@
             }
         },
         mounted() {
-            this.getAllSkill().then(response => {
-                this.options = response.data;
-                let optAll = this.options;
-                for(let i = 0; i < optAll.length; i++) {
-                    optAll[i]['code'] = optAll[i].id;
-                }
-            }, response => {
+            this.$store.dispatch('getAllDuties', this.$route.params.id)
+                .then(data => {
+                    this.options = data;
+                    let optAll = this.options;
+                    for(let i = 0; i < optAll.length; i++) {
+                        optAll[i]['code'] = optAll[i].id;
+                    }
+                }).catch(error => {
                 this.$swal({
                     toast: true,
                     position: 'bottom-end',
                     showConfirmButton: false,
                     timer: 4000,
                     type: 'error',
-                    title: response.data.message
+                    title: error.message
                 })
             });
             if(this.$route.name === 'edit-resume/id') {
-                this.getSkills().then(response => {
-                    this.dutiesSelect = response.data.skills;
-                    let opt = this.dutiesSelect;
-                    for(let i = 0; i < opt.length; i++) {
-                        opt[i]['code'] = opt[i].id;
-                    }
-                }, response => {
+                this.$store.dispatch('getDuties', this.$route.params.id)
+                    .then(data => {
+                        this.dutiesSelect = data.skills;
+                        let opt = this.dutiesSelect;
+                        for(let i = 0; i < opt.length; i++) {
+                            opt[i]['code'] = opt[i].id;
+                        }
+                    }).catch(error => {
                     this.$swal({
                         toast: true,
                         position: 'bottom-end',
                         showConfirmButton: false,
                         timer: 4000,
                         type: 'error',
-                        title: response.data.message
+                        title: error.message
                     })
                 });
             }
@@ -79,12 +81,6 @@
             },
             pushTags(dutiesSelect) {
                 this.$emit('input', dutiesSelect);
-            },
-            async getAllSkill() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/skill?per-page=-1`);
-            },
-            async getSkills() {
-                return await this.$http.get(`${process.env.VUE_APP_API_URL}/request/resume/` + this.$route.params.id + '?expand=skills');
             },
         }
     }

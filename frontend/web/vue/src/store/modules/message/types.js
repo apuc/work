@@ -1,0 +1,5 @@
+export const SET_READ_ALL = 'SET_READ_ALL';
+export const GET_INCOMING = 'GET_INCOMING';
+export const GET_INCOMING_PAGE = 'GET_INCOMING_PAGE';
+export const GET_OUTGOING = 'GET_OUTGOING';
+export const MESSAGE_REMOVE = 'MESSAGE_REMOVE';

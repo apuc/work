@@ -1,0 +1,6 @@
+export const GET_ALL_VACANCY = 'GET_ALL_VACANCY';
+export const UPDATE_VACANCY = 'UPDATE_VACANCY';
+export const REMOVE_VACANCY = 'REMOVE_VACANCY';
+export const ADD_VACANCY = 'ADD_VACANCY';
+export const GET_VACANCY = 'GET_VACANCY';
+export const EDIT_VACANCY = 'EDIT_VACANCY';

@@ -30,6 +30,35 @@
                                @input="onInput"
                 ></vue-tel-input>
                 <p class="custom-error">{{ phone.text }}</p>
+                <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        lazy
+                        transition="scale-transition"
+                        offset-y
+                        full-width
+                        min-width="290px"
+                >
+                    <template v-slot:activator="{ on }">
+                        <v-text-field
+                                v-model="formData.birth_date"
+                                label="Дата рождения"
+                                class="date-label"
+                                prepend-icon="event"
+                                readonly
+                                v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker
+                            ref="picker"
+                            v-model="formData.birth_date"
+                            :max="new Date().toISOString().substr(0, 10)"
+                            min="1950-01-01"
+                            locale="ru-ru"
+                    ></v-date-picker>
+                </v-menu>
             </FormTemplate>
         </v-tab-item>
 
@@ -56,29 +85,28 @@
             document.title = this.$route.meta.title;
         },
         mounted() {
-            this.$http.get(`${process.env.VUE_APP_API_URL}/request/employer/my-index?expand=phone,user`)
-                .then(response => {
-                        this.dataProfile = response.data[0];
-                        this.formData.first_name = response.data[0].first_name;
-                        this.formData.second_name = response.data[0].second_name;
-                        this.formData.birth_date = response.data[0].birth_date;
-                        this.formData.email = response.data[0].user.email;
-                        if (response.data[0].phone != null) {
-                            this.formData.phone = response.data[0].phone.number;
-                            this.formData.phoneValid = true;
-                        }
-                        this.idEmployer = response.data[0].id;
-                    }, response => {
-                        this.$swal({
-                            toast: true,
-                            position: 'bottom-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            type: 'error',
-                            title: response.data.message
-                        })
+            this.$store.dispatch('getUserMe', this.$route.params.id)
+                .then(data => {
+                    this.dataProfile = data;
+                    this.formData.first_name = data.first_name;
+                    this.formData.second_name = data.second_name;
+                    this.formData.birth_date = data.birth_date;
+                    this.formData.email = data.user.email;
+                    if (data.phone != null) {
+                        this.formData.phone = data.phone.number;
+                        this.formData.phoneValid = true;
                     }
-                )
+                    this.idEmployer = data.id;
+                }).catch(error => {
+                this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: error.message
+                })
+            });
         },
         methods: {
             changeCountry(data) {
@@ -125,32 +153,40 @@
                     phone: this.formData.phone,
                     phoneValid: this.formData.phoneValid
                 };
+                let dateObj = {
+                    id: this.idEmployer,
+                    data: data
+                }
 
-                this.$http.patch(`${process.env.VUE_APP_API_URL}/request/employer/` + this.idEmployer, data)
-                    .then(response => {
-                            this.$swal({
+                this.$store.dispatch('updateUserMe', dateObj)
+                    .then(data => {
+                        this.$swal({
                             title: 'Данные сохранены'
                         }).then((result) => {
-                                if (result.value) {
-                                    this.$router.go();
-                                }
-                            });
-                            return response;
-                        }, response => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: response.data.message
-                            })
-                        }
-                    )
+                            if (result.value) {
+                                this.$router.go();
+                            }
+                        });
+                        return data;
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error.message
+                    })
+                });
             },
             getFormData() {
                 return FormProfile;
             },
+        },
+        watch: {
+            menu (val) {
+                val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+            }
         },
         beforeRouteLeave(to, from, next) {
             if ((this.formData.first_name != this.dataProfile.first_name) ||

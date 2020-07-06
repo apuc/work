@@ -5,6 +5,7 @@ const resume = {
       hasImage: false,
       show: false,
       image: null,
+      menu: false,
       formData: {
         birth_date: '',
         phone: '',

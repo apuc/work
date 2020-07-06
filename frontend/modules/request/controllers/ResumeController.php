@@ -13,6 +13,7 @@ use common\models\ResumeSkill;
 use common\models\Skill;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\base\UserException;
 use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
@@ -45,7 +46,7 @@ class ResumeController extends MyActiveController
         $model->load($params, '');
         $model->years_of_exp = Resume::getFullExperience($params['work']);
         $model->update_time = time();
-        if($params['image']){
+        if(!empty($params['image'])){
             $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'resume');
         }
         $model->employer_id = $employer->id;
@@ -95,7 +96,8 @@ class ResumeController extends MyActiveController
                 }
             }
         } elseif ($model->hasErrors()) {
-            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            throw new UserException(json_encode($model->errors));
+//            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
         return $model;
     }
@@ -115,9 +117,14 @@ class ResumeController extends MyActiveController
         $employer = Employer::findOne(['user_id'=>Yii::$app->user->identity->getId()]);
 
         $model->load($params, '');
-
         if($params['image']){
+            //unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
             $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'resume');
+        } else {
+            if($model->image_url) {
+                unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
+            }
+            $model->image_url = null;
         }
         $model->employer_id = $employer->id;
         $model->years_of_exp = Resume::getFullExperience($params['work']);

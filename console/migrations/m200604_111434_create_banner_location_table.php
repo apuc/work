@@ -12,16 +12,16 @@ class m200604_111434_create_banner_location_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('banner_location', [
-            'id' => $this->primaryKey(),
-            'banner_id' => $this->integer(11),
-            'category_id' => $this->integer(11),
-            'city_id' => $this->integer(11)
-        ]);
-
-        $this->addFkBannerLocationBanner();
-        $this->addFkBannerLocationCategory();
-        $this->addFkBannerLocationCity();
+//        $this->createTable('banner_location', [
+//            'id' => $this->primaryKey(),
+//            'banner_id' => $this->integer(11),
+//            'category_id' => $this->integer(11),
+//            'city_id' => $this->integer(11)
+//        ]);
+//
+//        $this->addFkBannerLocationBanner();
+//        $this->addFkBannerLocationCategory();
+        //$this->addFkBannerLocationCity();
     }
 
 
