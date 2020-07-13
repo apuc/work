@@ -1,5 +1,5 @@
 <template>
-    <div v-if="companiesCount < 1">
+    <div>
         <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveCheck" @val="valHandler">
 
 			<div class="work-image-uploader">
