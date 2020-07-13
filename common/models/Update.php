@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use frontend\models\user\RegUserForm;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -47,6 +48,11 @@ class Update extends \yii\db\ActiveRecord
         ];
     }
 
+    public function extraFields()
+    {
+        return ['is_read'];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -59,5 +65,13 @@ class Update extends \yii\db\ActiveRecord
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата последнего изменения',
         ];
+    }
+
+    public function getIs_read() {
+        return (bool)UpdateUser::findOne(['update_id'=>$this->id, 'user_id'=>Yii::$app->user->id]);
+    }
+
+    public function getUpdateUser() {
+        return $this->hasMany(UpdateUser::className(), ['update_id'=>'id']);
     }
 }

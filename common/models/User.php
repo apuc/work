@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use Yii;
 use yii\web\IdentityInterface;
 /**
  * This is the model class for table "user".
@@ -49,7 +50,7 @@ class User extends \dektrium\user\models\User implements IdentityInterface
 
     public function extraFields()
     {
-        return ['employer', 'unreadMessages'];
+        return ['employer', 'unreadMessages', 'unreadUpdates'];
     }
 
     public function getEmployer()
@@ -60,6 +61,11 @@ class User extends \dektrium\user\models\User implements IdentityInterface
     public function getUnreadMessages()
     {
         return Message::find()->where(['receiver_id'=>$this->id, 'deleted_by_receiver'=>0, 'is_read'=>0])->count();
+    }
+
+    public function getUnreadUpdates()
+    {
+        return Update::find()->count() - UpdateUser::find()->where(['user_id'=>Yii::$app->user->id])->count();
     }
 
     public static function getStatus($id)

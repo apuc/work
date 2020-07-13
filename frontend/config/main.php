@@ -260,6 +260,7 @@ return [
                         'request/vacancy',
                         'request/views',
                         'request/city',
+                        'request/update',
                         'dialog/dialog-message',
                         'dialog/dialog',
                         'dialog/dialog-user',
