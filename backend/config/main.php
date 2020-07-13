@@ -86,6 +86,9 @@ return [
         'payment' => [
             'class' => 'backend\modules\payment\Payment',
         ],
+        'update' => [
+            'class' => 'backend\modules\update\Update',
+        ],
     ],
     'components' => [
 //        'request' => [
