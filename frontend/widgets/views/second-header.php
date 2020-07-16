@@ -87,7 +87,13 @@ use yii\helpers\Url;
                     </a>
                 </div>
                 <div class="home__main-content">
-                    <?= Html::beginForm([Vacancy::getSearchPageUrl()], 'get', ['class' => 'home__form']) ?>
+                    <?php
+                        if(Yii::$app->controller->module->id === 'resume')
+                            $url = Resume::getSearchPageUrl();
+                        else
+                            $url = Vacancy::getSearchPageUrl();
+                    ?>
+                    <?= Html::beginForm([$url], 'get', ['class' => 'home__form']) ?>
                     <input name="search_text" class="home__form-input" placeholder="Я ищу..." type="text"/>
                     <?= Html::submitButton(
                         '<i class="fa fa-search"></i>',
