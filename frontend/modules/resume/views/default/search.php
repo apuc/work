@@ -8,7 +8,6 @@
 /* @var $resumes \yii\data\ActiveDataProvider */
 /* @var $employment_types \common\models\EmploymentType[] */
 /* @var $city \common\models\City */
-/* @var $search_text string */
 /* @var $experience_ids array */
 /* @var $current_category Category|null */
 /* @var $canonical_rel string */
@@ -42,7 +41,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                 <div class="home__aside-header">
                     <h1 class="resume__title"><?=ResumeMetaFormer::getSearchPageHeader($searchModel->current_city, $searchModel->current_category, $searchModel->current_profession)?></h1>
                     <div class="search"><input type="text" placeholder="Поиск" name="resume_search_text"
-                                               <?php if (isset($search_text)): ?>value="<?= $search_text ?>"<?php endif ?>/>
+                                               <?php if (isset($searchModel->search_text)): ?>value="<?= $searchModel->search_text ?>"<?php endif ?>/>
                         <button id="search" class="btn-red"><i class="fa fa-search"></i>
                         </button>
                     </div>
