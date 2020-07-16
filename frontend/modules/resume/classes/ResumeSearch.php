@@ -143,11 +143,11 @@ class ResumeSearch extends Resume
             $query->andWhere($or);
         }
         if ($this->search_text){
-            $query->joinWith(['skill']);
+            $query->joinWith(['skills']);
             $query->andWhere(['or',
                ['like', 'title', $this->search_text],
                ['like', 'description', $this->search_text],
-               ['like', Skill::tableName(). 'name', $this->search_text],
+               ['like', Skill::tableName(). '.name', $this->search_text],
             ]);
         }
         $get = $_GET;
