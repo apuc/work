@@ -5,6 +5,7 @@ namespace frontend\modules\request\controllers;
 use common\models\Update;
 use common\models\UpdateUser;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBearerAuth;
 use yii\rest\ActiveController;
 
@@ -14,6 +15,19 @@ class UpdateController extends ActiveController
     {
         $actions = parent::actions();
         unset($actions['create'], $actions['update'], $actions['delete']);
+        $actions['index'] = [
+            'class' => 'yii\rest\IndexAction',
+            'modelClass' => $this->modelClass,
+            'checkAccess' => [$this, 'checkAccess'],
+            'prepareDataProvider' => function(){
+                return Yii::createObject([
+                    'class' => ActiveDataProvider::className(),
+                    'query' => Update::find()->orderBy('id DESC'),
+                    'pagination' => [],
+                    'sort' => [],
+                ]);
+            }
+        ];
         return $actions;
     }
 
@@ -22,7 +36,6 @@ class UpdateController extends ActiveController
         $behaviors['authenticator'] = [
             'class' => HttpBearerAuth::className(),
         ];
-
         return $behaviors;
     }
 
