@@ -44,6 +44,12 @@
                                     {{ userMe.user.unreadMessages }}
                                 </v-list-tile-title>
                             </template>
+                            <template v-if="link.title === 'Обновления'">
+                                <v-list-tile-title v-if="unreadUpdates > 0"
+                                                   class="menu-notification">
+                                    {{ userMe.user.unreadUpdates }}
+                                </v-list-tile-title>
+                            </template>
                             <template v-if="link.addFlag">
                                 <router-link v-if="link.companiesCount < 1" class="menu-add-link" :to="link.addTo" :title="link.addTitle">
                                     <span>+</span>
@@ -111,6 +117,7 @@
                 alertFlag: false,
                 first_name: 1,
                 unreadMessages: 0,
+                unreadUpdates: 0,
                 loginImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/login.png',
                 mainImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/main.png',
                 logOutImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/exit.png',
@@ -166,12 +173,13 @@
                         addFlag: false,
                         show: true
                     },
-                    // {
-                    //     title: 'Обновления',
-                    //     url: '/personal-area/updates',
-                    //     img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/updates.png',
-                    //     show: true
-                    // },
+                    {
+                        title: 'Обновления',
+                        url: '/personal-area/updates',
+                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/updates.png',
+                        addFlag: false,
+                        show: true
+                    },
                 ],
             }
         },
@@ -197,6 +205,7 @@
                             this.linkMenu[3].show = false;
                         }
                         this.unreadMessages = data.user.unreadMessages;
+                        this.unreadUpdates = data.user.unreadUpdates;
                     }).catch(error => {
                     this.$swal({
                         toast: true,
@@ -356,11 +365,9 @@
         background-color: #deddd9;
     }
     .menu-notification {
-        position: absolute;
-        top: 5px;
-        left: 60px;
-        width: 15px;
-        height: 15px;
+        left: 10px;
+        width: 18px;
+        height: 18px;
         display: flex;
         align-items: center;
         justify-content: center;

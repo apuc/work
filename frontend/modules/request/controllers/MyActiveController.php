@@ -122,7 +122,8 @@ class MyActiveController extends ActiveController
                         if (count($exploded) > 1) {
                             $first_item = $exploded[0];
                             $tmp = $model->$first_item;
-                            $response[$i][$first_item] = ArrayHelper::toArray($tmp);
+                            if(!isset($response[$i][$first_item]))
+                                $response[$i][$first_item] = ArrayHelper::toArray($tmp);
                             foreach ($exploded as $j => $item) {
                                 if ($j != 0) {
                                     $tmp = $tmp->$item;
