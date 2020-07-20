@@ -2,6 +2,7 @@
 
 namespace backend\modules\update\controllers;
 
+use common\models\UpdateUser;
 use Yii;
 use common\models\Update;
 use backend\modules\update\models\UpdateSearch;
@@ -104,7 +105,9 @@ class UpdateController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        UpdateUser::deleteAll(['update_id' => $id]);
+        $model->delete();
 
         return $this->redirect(['index']);
     }
