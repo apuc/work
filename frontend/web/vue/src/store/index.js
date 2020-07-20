@@ -7,6 +7,7 @@ import statistics from './modules/statistics';
 import resume from './modules/resume';
 import vacancy from './modules/vacancy';
 import company from './modules/company';
+import updates from './modules/updates';
 
 Vue.use(Vuex);
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
         resume,
         vacancy,
         company,
+        updates,
     },
     strict: false,
 });

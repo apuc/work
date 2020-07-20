@@ -1,0 +1,2 @@
+export const SET_READ_ALL_UPDATES = 'SET_READ_ALL_UPDATES';
+export const GET_UPDATES = 'GET_UPDATES';
