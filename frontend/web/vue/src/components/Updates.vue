@@ -16,7 +16,7 @@
                         >
                             <v-list-tile-content>
                                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                <v-list-tile-sub-title class="message__text">{{ item.text }}</v-list-tile-sub-title>
+                                <v-list-tile-sub-title class="message__text" v-html="item.text"></v-list-tile-sub-title>
                             </v-list-tile-content>
                             <v-list-tile-action>
                                 <v-list-tile-action-text class="message__data">{{ getDateFormat(item.updated_at) }}</v-list-tile-action-text>
@@ -95,6 +95,9 @@
                 };
                 time = date.toLocaleString("ru", options);
                 return time;
+            },
+            setHTML(text) {
+                return text.innerHtml = text;
             }
         },
 
