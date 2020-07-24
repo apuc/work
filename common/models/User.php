@@ -50,12 +50,17 @@ class User extends \dektrium\user\models\User implements IdentityInterface
 
     public function extraFields()
     {
-        return ['employer', 'unreadMessages', 'unreadUpdates'];
+        return ['employer', 'unreadMessages', 'unreadUpdates', 'company'];
     }
 
     public function getEmployer()
     {
         return $this->hasOne(Employer::className(), ['user_id'=>'id']);
+    }
+
+    public function getCompany()
+    {
+        return $this->hasOne(Company::className(), ['user_id'=>'id']);
     }
 
     public function getUnreadMessages()
