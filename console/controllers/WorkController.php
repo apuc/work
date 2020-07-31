@@ -17,7 +17,7 @@ class WorkController extends Controller
                 SET 
                     `vacancy_renew_count`= `company`.`vacancy_renew_count`+1
                 WHERE
-                    `vacancy_renew_count` < 5
+                    `vacancy_renew_count` < 3
             ")->execute();
             echo "Successfully updated $updated_quantity companies.\n";
         } catch (Exception $e) {
