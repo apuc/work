@@ -1,14 +1,14 @@
 <template>
     <div>
         <v-subheader class="all-head">
-            Ваши компании
+            Ваша компания
             <router-link v-if="companiesCount < 1" class="vacancy__link" to="/personal-area/add-company">
                 <v-btn class="vacancy__link">
                     Добавить компанию или частное лицо
                 </v-btn>
             </router-link>
         </v-subheader>
-        <template v-if="getAllCompany.length === 0">
+        <template v-if="getAllCompany === ''">
             <v-subheader>У вас нет компаний</v-subheader>
         </template>
 
@@ -19,27 +19,25 @@
                     <v-list two-line>
 
                         <v-list-tile
-                                v-for="(item, index) in getAllCompany"
-                                :key="index"
                                 style="margin-top: 20px;"
                         >
                             <v-list-tile-avatar>
-                                <img :src="item.image_url" alt="">
+                                <img :src="getAllCompany.image_url" alt="">
                             </v-list-tile-avatar>
 
                             <v-list-tile-content>
-                                <v-list-tile-title v-if="item.name.length > 0" class="mt-auto mb-auto"> {{ item.name }}</v-list-tile-title>
-                                <v-list-tile-title v-else class="mt-auto mb-auto"> {{ item.contact_person }}</v-list-tile-title>
-                                <v-list-tile-sub-title class="mt-auto mb-auto">Последнее обновление: {{ item.updated_at }}
+                                <v-list-tile-title v-if="getAllCompany.name != ''" class="mt-auto mb-auto"> {{ getAllCompany.name }}</v-list-tile-title>
+                                <v-list-tile-title v-else class="mt-auto mb-auto"> {{ getAllCompany.contact_person }}</v-list-tile-title>
+                                <v-list-tile-sub-title class="mt-auto mb-auto">Последнее обновление: {{ getAllCompany.updated_at }}
                                 </v-list-tile-sub-title>
                                 <v-divider style="width: 100%;"></v-divider>
                             </v-list-tile-content>
-                            <router-link :to="`${companyTransfer}/${item.id}`" v-if="companiesCount > 1">
+                            <router-link :to="`${companyTransfer}/${getAllCompany.id}`" v-if="companiesCount > 1">
                                 <v-btn class="vacancy__link">
                                     Передать компанию
                                 </v-btn>
                             </router-link>
-                            <router-link :to="`${editLink}/${item.id}`">
+                            <router-link :to="`${editLink}/${getAllCompany.id}`">
                                 <v-btn outline small fab
                                        class="edit-btn"
                                        type="button"
@@ -49,7 +47,7 @@
 
                                 </v-btn>
                             </router-link>
-                            <router-link :to="`${companyRight}/${item.id}`" v-if="item.user_id == userID">
+                            <router-link :to="`${companyRight}/${getAllCompany.id}`" v-if="getAllCompany.user_id == userID">
                                 <v-btn outline small fab
                                        class="edit-btn"
                                        type="button"
@@ -59,28 +57,28 @@
 
                                 </v-btn>
                             </router-link>
-                            <v-btn outline small fab
-                                   class="edit-btn"
-                                   type="button"
-                                   title="Удалить"
-                                   @click="companyRemove(index, item.id)"
-                            >
-                                <v-icon>delete</v-icon>
-                            </v-btn>
+<!--                            <v-btn outline small fab-->
+<!--                                   class="edit-btn"-->
+<!--                                   type="button"-->
+<!--                                   title="Удалить"-->
+<!--                                   @click="companyRemove(getAllCompany.id)"-->
+<!--                            >-->
+<!--                                <v-icon>delete</v-icon>-->
+<!--                            </v-btn>-->
                         </v-list-tile>
                     </v-list>
 
                 </div>
 
-                <template v-if="paginationPageCount > 1">
-                    <div class="text-xs-center">
-                        <v-pagination
-                                v-model="paginationCurrentPage"
-                                :length="paginationPageCount"
-                                @input="getCompany"
-                        ></v-pagination>
-                    </div>
-                </template>
+<!--                <template v-if="paginationPageCount > 1">-->
+<!--                    <div class="text-xs-center">-->
+<!--                        <v-pagination-->
+<!--                                v-model="paginationCurrentPage"-->
+<!--                                :length="paginationPageCount"-->
+<!--                                @input="getCompany"-->
+<!--                        ></v-pagination>-->
+<!--                    </div>-->
+<!--                </template>-->
 
             </div>
         </template>
@@ -114,14 +112,13 @@
             getCompany(page) {
                 this.$store.dispatch('getAllCompany', page)
                     .then(data => {
-                        this.paginationCurrentPage = data.pagination.current_page;
-                        this.paginationPageCount = data.pagination.page_count;
                         this.domen = `${process.env.VUE_APP_API_URL}`;
-                        localStorage.companiesCount = data.models.length;
+                        localStorage.companiesCount = 1;
                         this.companiesCount = localStorage.companiesCount;
-                        this.getAllCompany = data.models;
-                        this.getAllCompany.forEach((element) => {
-                            let timestamp = element.updated_at;
+                        this.getAllCompany = data;
+
+                        // this.getAllCompany.forEach((element) => {
+                            let timestamp = this.getAllCompany.updated_at;
                             let date = new Date();
                             date.setTime(timestamp * 1000);
                             let options = {
@@ -131,8 +128,8 @@
                                 hour: 'numeric',
                                 minute: 'numeric',
                             };
-                            element.updated_at = date.toLocaleString("ru", options);
-                        });
+                      this.getAllCompany.updated_at = date.toLocaleString("ru", options);
+                        // });
                     }).catch(error => {
                     this.$swal({
                         toast: true,

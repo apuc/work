@@ -5,7 +5,7 @@ const actions = {
     getAllCompany({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/company/my-index?page=' + payload)
+            api.get('/request/company/my-index')
                 .then(res => {
                     commit(type.GET_ALL_COMPANY, res.data);
                     resolve(res.data);
