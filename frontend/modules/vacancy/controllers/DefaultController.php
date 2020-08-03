@@ -19,6 +19,7 @@ use common\models\Skill;
 use common\models\User;
 use common\models\Vacancy;
 use common\models\Views;
+use common\repositories\ViewRepository;
 use frontend\modules\vacancy\classes\VacancySearch;
 use Swift_Mailer;
 use Swift_Message;
@@ -65,12 +66,7 @@ class DefaultController extends Controller
         $referer_category = false;
         if(Yii::$app->request->get('referer_category'))
             $referer_category = Category::findOne(Yii::$app->request->get('referer_category'));
-        $view = new Views();
-        $view->subject_type = 'Vacancy';
-        $view->subject_id = $model->id;
-        $view->viewer_id = Yii::$app->user->id;
-        $view->dt_view = time();
-        $view->save();
+        ViewRepository::addView($model);
         return $this->render('view', [
             'model' => $model,
             'last_vacancies' => $last_vacancies,
@@ -89,24 +85,23 @@ class DefaultController extends Controller
 
         $canonical_rel = Yii::$app->request->hostInfo.'/vacancy'.($searchModel->first_query_param?('/'.$searchModel->first_query_param):'').($searchModel->second_query_param?('/'.$searchModel->second_query_param):'');
 
-        if (!$categories = Yii::$app->cache->get("search_page_categories")) {
-            $categories = Category::find()->select(['id', 'name', 'slug'])->all();
-            Yii::$app->cache->set("search_page_categories", $categories, 3600);
-        }
-        if (!$employment_types = Yii::$app->cache->get("search_page_employment_types")) {
-            $employment_types = EmploymentType::find()->all();
-            Yii::$app->cache->set("search_page_employment_types", $employment_types, 3600);
-        }
-        if (!$countries = Yii::$app->cache->get("search_page_countries")) {
-            $countries = Country::find()->select(['id', 'name', 'slug'])->all();
-            Yii::$app->cache->set("search_page_countries", $countries, 3600);
-        }
+        $categories = Yii::$app->cache->getOrSet('search_page_categories', function () {
+            return Category::find()->select(['id', 'name', 'slug'])->all();
+        });
+
+        $employment_types = Yii::$app->cache->getOrSet('search_page_employment_types', function () {
+            return EmploymentType::find()->all();
+        });
+
+        $countries = Yii::$app->cache->getOrSet('search_page_countries', function () {
+            return Country::find()->select(['id', 'name', 'slug'])->all();
+        });
+
         $cities = null;
         if($searchModel->current_country) {
-            if (!$cities = Yii::$app->cache->get("search_page_cities_".$searchModel->current_country->name)) {
-                $cities = City::find()->joinWith('region')->where([City::tableName().'.status' => 1, Region::tableName().'.country_id' => $searchModel->current_country->id])->orderBy('priority ASC')->all();
-                Yii::$app->cache->set("search_page_cities_".$searchModel->current_country->name, $cities, 3600);
-            }
+            $cities = Yii::$app->cache->getOrSet("search_page_cities_".$searchModel->current_country->name, function () use ($searchModel) {
+                return City::find()->joinWith('region')->where([City::tableName().'.status' => 1, Region::tableName().'.country_id' => $searchModel->current_country->id])->orderBy('priority ASC')->all();
+            });
         }
 
         return $this->render('search', [

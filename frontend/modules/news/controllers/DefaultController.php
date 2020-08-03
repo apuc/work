@@ -24,7 +24,7 @@ class DefaultController extends Controller
         if ($slug > null){
             $model = Country::find()->where(['slug' => $slug])->one();
             if (!$model) {
-                throw new \yii\web\NotFoundHttpException('404');
+                throw new NotFoundHttpException();
             }
             $news = News::find()->where(['country_id' => $model->id])->all();
         }else{
@@ -55,7 +55,7 @@ class DefaultController extends Controller
          $random = News::find()->orderBy('rand()')->one();
          $model = News::find()->where(['slug' => $slug])->one();
          if (!$model) {
-             throw new \yii\web\NotFoundHttpException('404');
+             throw new NotFoundHttpException();
          }
          return $this->render('view', [
              'model'=>$model,

@@ -4,6 +4,7 @@ namespace frontend\modules\request\controllers;
 
 
 use common\actions\DeleteAction;
+use common\helpers\ApiHelper;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
@@ -29,6 +30,7 @@ class MyActiveController extends ActiveController
                 if(in_array('status', $this->modelClass::attributes())){
                     $query->andWhere([($this->modelClass)::tableName().'.status'=>1]);
                 }
+                /** @var ActiveDataProvider $dataProvider */
                 $dataProvider = Yii::createObject([
                     'class' => ActiveDataProvider::className(),
                     'query' => $query,
@@ -36,40 +38,7 @@ class MyActiveController extends ActiveController
                     'sort' => [],
                 ]);
 
-                $expands = explode(',', Yii::$app->request->get('expand'));
-                $models = $dataProvider->getModels();
-                $response = [];
-                /** @var ActiveRecord[] $models */
-                foreach ($models as $i=> $model) {
-                    $response[$i]=ArrayHelper::toArray($model);
-                    if(Yii::$app->request->get('expand')) {
-                        foreach ($expands as $expand) {
-                            $exploded = explode('.', $expand);
-                            if(count($exploded)>1) {
-                                $first_item = $exploded[0];
-                                $tmp = $model->$first_item;
-                                $response[$i][$first_item] = ArrayHelper::toArray($tmp);
-                                foreach ($exploded as $j => $item) {
-                                    if($j!=0) {
-                                        $tmp = $tmp->$item;
-                                        $response[$i][$first_item][$item]=is_object($tmp)?ArrayHelper::toArray($tmp):$tmp;
-                                    }
-                                }
-
-                            } else {
-                                $response[$i][$expand]=$model->$expand;
-                            }
-                        }
-                    }
-                }
-                $pagination = [
-                    'current_page'=>$dataProvider->getPagination()->getPage()+1,
-                    'page_count'=>$dataProvider->getPagination()->getPageCount(),
-                    'per_page'=>$dataProvider->getPagination()->getPageSize(),
-                    'total_count'=>$dataProvider->getTotalCount(),
-                ];
-
-                return ['pagination'=>$pagination, 'models'=>$response];
+                return ApiHelper::buildMultiResponse($dataProvider, Yii::$app->request->get('expand'));
             }
         ];
         $actions['delete'] = [
@@ -98,6 +67,7 @@ class MyActiveController extends ActiveController
         if(in_array('status', $this->modelClass::attributes())){
             $query->andWhere(['!=',($this->modelClass)::tableName().'.status', 0]);
         }
+        /** @var ActiveDataProvider $dataProvider */
         $dataProvider = Yii::createObject([
             'class' => ActiveDataProvider::className(),
             'query' => $query,
@@ -109,42 +79,7 @@ class MyActiveController extends ActiveController
                 'params' => $requestParams,
             ],
         ]);
-
-        $expands = explode(',', Yii::$app->request->get('expand'));
-        $models = $dataProvider->getModels();
-        $response = [];
-            /** @var ActiveRecord[] $models */
-            foreach ($models as $i=> $model) {
-                $response[$i]=ArrayHelper::toArray($model);
-                if(Yii::$app->request->get('expand')) {
-                    foreach ($expands as $expand) {
-                        $exploded = explode('.', $expand);
-                        if (count($exploded) > 1) {
-                            $first_item = $exploded[0];
-                            $tmp = $model->$first_item;
-                            if(!isset($response[$i][$first_item]))
-                                $response[$i][$first_item] = ArrayHelper::toArray($tmp);
-                            foreach ($exploded as $j => $item) {
-                                if ($j != 0) {
-                                    $tmp = $tmp->$item;
-                                    $response[$i][$first_item][$item] = is_object($tmp) ? ArrayHelper::toArray($tmp) : $tmp;
-                                }
-                            }
-
-                        } else {
-                            $response[$i][$expand] = $model->$expand;
-                        }
-                    }
-                }
-            }
-        $pagination = [
-            'current_page'=>$dataProvider->getPagination()->getPage()+1,
-            'page_count'=>$dataProvider->getPagination()->getPageCount(),
-            'per_page'=>$dataProvider->getPagination()->getPageSize(),
-            'total_count'=>$dataProvider->getTotalCount(),
-        ];
-
-        return ['pagination'=>$pagination, 'models'=>$response];
+        return ApiHelper::buildMultiResponse($dataProvider, Yii::$app->request->get('expand'));
     }
 
     public function beforeAction($action)

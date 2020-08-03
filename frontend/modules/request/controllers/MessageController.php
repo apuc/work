@@ -3,6 +3,7 @@
 namespace frontend\modules\request\controllers;
 
 use common\classes\Debug;
+use common\helpers\ApiHelper;
 use common\models\Message;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -47,6 +48,7 @@ class MessageController extends MyActiveController
                 $query->andWhere(['sender_id'=>Yii::$app->user->id, 'deleted_by_sender'=>0]);
             }
         }
+        /** @var ActiveDataProvider $dataProvider */
         $dataProvider = Yii::createObject([
             'class' => ActiveDataProvider::className(),
             'query' => $query,
@@ -58,42 +60,7 @@ class MessageController extends MyActiveController
                 'params' => $requestParams,
             ],
         ]);
-        //Debug::dd($dataProvider);
-
-        $expands = explode(',', Yii::$app->request->get('expand'));
-        $models = $dataProvider->getModels();
-        $response = [];
-        /** @var ActiveRecord[] $models */
-        foreach ($models as $i=> $model) {
-            $response[$i]=ArrayHelper::toArray($model);
-            foreach ($expands as $expand) {
-                $exploded = explode('.', $expand);
-                if(count($exploded)>1) {
-                    $first_item = $exploded[0];
-                    $tmp = $model->$first_item;
-                    if($tmp) {
-                        $response[$i][$first_item] = ArrayHelper::toArray($tmp);
-                        foreach ($exploded as $j => $item) {
-                            if($j!=0) {
-                                $tmp = $tmp->$item;
-                                $response[$i][$first_item][$item]=is_object($tmp)?ArrayHelper::toArray($tmp):$tmp;
-                            }
-                        }
-                    }
-
-                } else {
-                    $response[$i][$expand]=$model->$expand;
-                }
-            }
-        }
-        $pagination = [
-            'current_page'=>$dataProvider->getPagination()->getPage()+1,
-            'page_count'=>$dataProvider->getPagination()->getPageCount(),
-            'per_page'=>$dataProvider->getPagination()->getPageSize(),
-            'total_count'=>$dataProvider->getTotalCount(),
-        ];
-
-        return ['pagination'=>$pagination, 'models'=>$response];
+        return ApiHelper::buildMultiResponse($dataProvider, Yii::$app->request->get('expand'));
     }
     /**
      * @param string $action

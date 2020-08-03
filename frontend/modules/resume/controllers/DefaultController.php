@@ -13,6 +13,7 @@ use common\models\Skill;
 use common\models\User;
 use common\models\Vacancy;
 use common\models\Views;
+use common\repositories\ViewRepository;
 use frontend\modules\resume\classes\ResumeSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -40,12 +41,7 @@ class DefaultController extends Controller
         $referer_category = false;
         if(Yii::$app->request->get('referer_category'))
             $referer_category = Category::findOne(Yii::$app->request->get('referer_category'));
-        $view = new Views();
-        $view->subject_type = 'Resume';
-        $view->subject_id = $model->id;
-        $view->viewer_id = Yii::$app->user->id;
-        $view->dt_view = time();
-        $view->save();
+        ViewRepository::addView($model);
         return $this->render('view', [
             'model' => $model,
             'referer_category' => $referer_category
@@ -91,8 +87,12 @@ class DefaultController extends Controller
                 $params['category_ids']=[$searchModel->current_category->id];
             }
         $tags = Skill::find()->all();
-        $categories = Category::find()->all();
-        $employment_types = EmploymentType::find()->all();
+        $categories = Yii::$app->cache->getOrSet('search_page_categories', function () {
+            return Category::find()->select(['id', 'name', 'slug'])->all();
+        });
+        $employment_types = Yii::$app->cache->getOrSet('search_page_employment_types', function () {
+            return EmploymentType::find()->all();
+        });
         $cities = City::find()->where(['status' => 1])->orderBy('priority ASC')->all();
 
         return $this->render('search', [

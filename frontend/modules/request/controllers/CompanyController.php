@@ -4,6 +4,7 @@ namespace frontend\modules\request\controllers;
 
 
 use common\classes\FileHandler;
+use common\helpers\ApiHelper;
 use common\models\Company;
 use common\models\Education;
 use common\models\Employer;
@@ -45,61 +46,34 @@ class CompanyController extends MyActiveController
     public function actionMyIndex(){
         if(Yii::$app->user->isGuest)
             throw new UserException('Пользователь не авторизирован', 201);
-        $requestParams = Yii::$app->getRequest()->getBodyParams();
-        if (empty($requestParams)) {
-            $requestParams = Yii::$app->getRequest()->getQueryParams();
-        }
         $query = $this->modelClass::find()->joinWith('userCompany')->where(['or', ['=', 'owner', Yii::$app->user->id], ['=', 'user_company.user_id', Yii::$app->user->id]])->andWhere(['status'=>1]);
         $model = $query->one();
         if(!$model)
             throw new UserException('У вас нет активной компании', 201);
-
-
-        $expands = explode(',', Yii::$app->request->get('expand'));
-        $response=ArrayHelper::toArray($model);
-        if(Yii::$app->request->get('expand')) {
-            foreach ($expands as $expand) {
-                $exploded = explode('.', $expand);
-                if (count($exploded) > 1) {
-                    $first_item = $exploded[0];
-                    $tmp = $model->$first_item;
-                    $response[$first_item] = ArrayHelper::toArray($tmp);
-                    foreach ($exploded as $j => $item) {
-                        if ($j != 0) {
-                            $tmp = $tmp->$item;
-                            $response[$first_item][$item] = is_object($tmp) ? ArrayHelper::toArray($tmp) : $tmp;
-                        }
-                    }
-
-                } else {
-                    $response[$expand] = $model->$expand;
-                }
-            }
-        }
-        return $response;
+        return ApiHelper::buildResponse($model, Yii::$app->request->get('expand', null));
     }
 
     public function checkAccess($action, $model = null, $params = [])
     {
         if($action === 'update' || $action === 'delete'){
             if(Yii::$app->user->isGuest)
-                throw new HttpException(403, 'Вы не авторизированы');
+                throw new UserException(403, 'Вы не авторизированы');
             if(!$model->canAccess(Yii::$app->user->id))
-                throw new HttpException(403, 'У вас нет прав для редактирования этой записи');
+                throw new UserException(403, 'У вас нет прав для редактирования этой записи');
         }
     }
 
     public function actionAddUser(){
         $user=User::find()->where(['email'=>Yii::$app->request->post('email')])->one();
         if(!$user)
-            throw new HttpException(403, 'Такого пользователя не существует');
+            throw new UserException(403, 'Такого пользователя не существует');
         $company=Company::find()->where(['id'=>Yii::$app->request->post('company_id')])->one();
         if(!$company)
-            throw new HttpException(403, 'Такой компании не существует');
+            throw new UserException(403, 'Такой компании не существует');
         if($company->owner!=Yii::$app->user->id)
-            throw new HttpException(403, 'У вас нет прав для совершения этого действия');
+            throw new UserException(403, 'У вас нет прав для совершения этого действия');
         if(UserCompany::find()->where(['user_id'=>$user->id, 'company_id'=>$company->id])->one())
-            throw new HttpException(403, 'Этот пользователь уже добавлен в вашу компанию');
+            throw new UserException(403, 'Этот пользователь уже добавлен в вашу компанию');
         $user_company=new UserCompany();
         $user_company->user_id=$user->id;
         $user_company->company_id=$company->id;
@@ -110,12 +84,12 @@ class CompanyController extends MyActiveController
     public function actionDeleteUser(){
         $company=Company::find()->where(['id'=>Yii::$app->request->post('company_id')])->one();
         if(!$company)
-            throw new HttpException(403, 'Такой компании не существует');
+            throw new UserException(403, 'Такой компании не существует');
         if($company->owner!=Yii::$app->user->id)
-            throw new HttpException(403, 'У вас нет прав для совершения этого действия');
+            throw new UserException(403, 'У вас нет прав для совершения этого действия');
         $user_company=UserCompany::find()->where(['company_id'=>$company->id, 'user_id'=>Yii::$app->request->post('user_id')])->one();
         if(!$user_company)
-            throw new HttpException(403, 'Этот пользователь не включен в вашу компанию');
+            throw new UserException(403, 'Этот пользователь не включен в вашу компанию');
         $user_company->delete();
         return true;
     }
@@ -127,7 +101,7 @@ class CompanyController extends MyActiveController
      */
     public function actionCreate(){
         if(Yii::$app->user->isGuest)
-            throw new HttpException(400, 'Пользователь не авторизирован');
+            throw new UserException(400, 'Пользователь не авторизирован');
         $model = new Company();
         $params = Yii::$app->getRequest()->getBodyParams();
         $model->load($params, '');
@@ -159,7 +133,7 @@ class CompanyController extends MyActiveController
      */
     public function actionUpdate($id){
         $model = Company::findOne($id);
-        if(!$model) throw new HttpException(400, 'Такой компании не существует');
+        if(!$model) throw new UserException(400, 'Такой компании не существует');
         $this->checkAccess($this->action->id, $model);
         $params = Yii::$app->getRequest()->getBodyParams();
         $model->load($params, '');
