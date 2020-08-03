@@ -244,8 +244,7 @@ export default {
       'instagram': this.dataCompany.instagram,
       'skype': this.dataCompany.skype,
       'description': this.dataCompany.description,
-      'contact_person': this.dataCompany.contact_person,
-      'number': this.dataCompany.phone.number
+      'contact_person': this.dataCompany.contact_person
     };
     const tmpFormData = {
       'name': this.formData.nameCompany,
@@ -256,8 +255,7 @@ export default {
       'instagram': this.formData.addSocial.instagram,
       'skype': this.formData.addSocial.skype,
       'description': this.formData.aboutCompany,
-      'contact_person': this.formData.contactPerson,
-      'number': this.formData.companyPhone
+      'contact_person': this.formData.contactPerson
     };
     let formValid = true;
     for (let i in tmpResume) {
