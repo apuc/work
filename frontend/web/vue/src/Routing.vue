@@ -157,8 +157,8 @@
                         show: true
                     },
                     {
-                        title: 'Компании',
-                        url: '/personal-area/all-company',
+                        title: 'Компания',
+                        url: '/personal-area/edit-company',
                         img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_company.png',
                         addFlag: true,
                         addTo: '/personal-area/add-company',
@@ -188,6 +188,21 @@
                 email = email.match(/.+@/)[0];
                 email = email.slice(0, email.length-1);
                 return email;
+            },
+            getCompany() {
+              this.$store.dispatch('getAllCompany')
+                  .then(data => {
+                    localStorage.companyId = data.id;
+                  }).catch(error => {
+                this.$swal({
+                  toast: true,
+                  position: 'bottom-end',
+                  showConfirmButton: false,
+                  timer: 4000,
+                  type: 'error',
+                  title: error.message
+                })
+              });
             },
             getUser() {
                 this.$store.dispatch('getUserMe', this.$route.params.id)
@@ -225,6 +240,7 @@
         },
         created() {
             this.getUser();
+            this.getCompany();
             if (window.innerWidth < 1265) {
                 this.drawer = false;
             }

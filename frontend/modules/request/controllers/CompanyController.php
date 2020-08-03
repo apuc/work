@@ -44,58 +44,39 @@ class CompanyController extends MyActiveController
 
     public function actionMyIndex(){
         if(Yii::$app->user->isGuest)
-            throw new HttpException(201, 'Пользователь не авторизирован');
+            throw new UserException('Пользователь не авторизирован', 201);
         $requestParams = Yii::$app->getRequest()->getBodyParams();
         if (empty($requestParams)) {
             $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
         $query = $this->modelClass::find()->joinWith('userCompany')->where(['or', ['=', 'owner', Yii::$app->user->id], ['=', 'user_company.user_id', Yii::$app->user->id]])->andWhere(['status'=>1]);
-        $dataProvider = Yii::createObject([
-            'class' => ActiveDataProvider::className(),
-            'query' => $query,
-            'pagination' => [
-                'params' => $requestParams,
-                'pageSize' => 10
-            ],
-            'sort' => [
-                'params' => $requestParams,
-            ],
-        ]);
+        $model = $query->one();
+        if(!$model)
+            throw new UserException('У вас нет активной компании', 201);
+
 
         $expands = explode(',', Yii::$app->request->get('expand'));
-        $models = $dataProvider->getModels();
-        $response = [];
-        /** @var ActiveRecord[] $models */
-        foreach ($models as $i=> $model) {
-            $response[$i]=ArrayHelper::toArray($model);
-            if(Yii::$app->request->get('expand')) {
-                foreach ($expands as $expand) {
-                    $exploded = explode('.', $expand);
-                    if (count($exploded) > 1) {
-                        $first_item = $exploded[0];
-                        $tmp = $model->$first_item;
-                        $response[$i][$first_item] = ArrayHelper::toArray($tmp);
-                        foreach ($exploded as $j => $item) {
-                            if ($j != 0) {
-                                $tmp = $tmp->$item;
-                                $response[$i][$first_item][$item] = is_object($tmp) ? ArrayHelper::toArray($tmp) : $tmp;
-                            }
+        $response=ArrayHelper::toArray($model);
+        if(Yii::$app->request->get('expand')) {
+            foreach ($expands as $expand) {
+                $exploded = explode('.', $expand);
+                if (count($exploded) > 1) {
+                    $first_item = $exploded[0];
+                    $tmp = $model->$first_item;
+                    $response[$first_item] = ArrayHelper::toArray($tmp);
+                    foreach ($exploded as $j => $item) {
+                        if ($j != 0) {
+                            $tmp = $tmp->$item;
+                            $response[$first_item][$item] = is_object($tmp) ? ArrayHelper::toArray($tmp) : $tmp;
                         }
-
-                    } else {
-                        $response[$i][$expand] = $model->$expand;
                     }
+
+                } else {
+                    $response[$expand] = $model->$expand;
                 }
             }
         }
-        $pagination = [
-            'current_page'=>$dataProvider->getPagination()->getPage()+1,
-            'page_count'=>$dataProvider->getPagination()->getPageCount(),
-            'per_page'=>$dataProvider->getPagination()->getPageSize(),
-            'total_count'=>$dataProvider->getTotalCount(),
-        ];
-
-        return ['pagination'=>$pagination, 'models'=>$response];
+        return $response;
     }
 
     public function checkAccess($action, $model = null, $params = [])

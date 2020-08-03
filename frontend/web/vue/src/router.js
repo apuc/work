@@ -86,8 +86,8 @@ export default new Router({
       component: AllCompany,
     },
     {
-      path: '/personal-area/edit-company/:id',
-      name: 'edit-company/id',
+      path: '/personal-area/edit-company',
+      name: 'edit-company',
       meta: {title: 'Редактировать компанию'},
       component: EditCompany
     },

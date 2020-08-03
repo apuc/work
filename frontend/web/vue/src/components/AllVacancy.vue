@@ -2,7 +2,7 @@
 
     <div>
         <v-subheader class="all-head">
-            Ваши вакансии
+            Ваши вакансии (Осталось поднятий: {{ vacancyRenew }})
             <router-link class="vacancy__link" to="/personal-area/add-vacancy">
                 <v-btn class="vacancy__link">
                     Добавить вакансию
@@ -46,7 +46,7 @@
                                 </v-btn>
                             </router-link>
                             <v-btn outline small fab
-                                   v-bind:disabled="item.can_update == false"
+                                   v-bind:disabled="item.can_update == false || vacancyRenew === 0"
                                    class="edit-btn"
                                    type="button"
                                    title="Поднять в ТОП"
@@ -93,15 +93,32 @@
                 getAllVacancy: [],
                 paginationPageCount: 1,
                 paginationCurrentPage: 1,
-                domen: ''
+                domen: '',
+                vacancyRenew: 0
             }
         },
         created() {
             document.title = this.$route.meta.title;
             this.getVacancy(1);
+            this.getCompany();
 
         },
         methods: {
+            getCompany() {
+              this.$store.dispatch('getAllCompany')
+                  .then(data => {
+                    this.vacancyRenew = data.vacancy_renew_count;
+                  }).catch(error => {
+                this.$swal({
+                  toast: true,
+                  position: 'bottom-end',
+                  showConfirmButton: false,
+                  timer: 4000,
+                  type: 'error',
+                  title: error.message
+                })
+              });
+            },
             getVacancy(page) {
                 this.$store.dispatch('getAllVacancy', page)
                     .then(data => {
@@ -138,6 +155,7 @@
                     .then(data => {
                         this.getVacancy(this.paginationCurrentPage);
                         ym(53666866,'reachGoal','vacancy_to_top');
+                        this.getCompany();
                         return data;
                     }).catch(error => {
                     this.$swal({
