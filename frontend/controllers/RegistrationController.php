@@ -5,6 +5,7 @@ namespace frontend\controllers;
 
 
 use common\classes\Debug;
+use common\models\Company;
 use common\models\Employer;
 use dektrium\user\models\LoginForm;
 use dektrium\user\models\RegistrationForm;
@@ -48,6 +49,12 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
             $employer->user_id = $user->id;
             $employer->owner = $user->id;
             $employer->save();
+            if($user->status >= 20) {
+                $company = new Company();
+                $company->owner = $user->id;
+                $company->user_id = $user->id;
+                $company->save(false);
+            }
             $token = Token::findOne(['user_id'=>$user->id]);
             Yii::$app->mailer->viewPath='@common/mail';
             Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer, 'user'=>$user, 'token'=>$token])
