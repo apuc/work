@@ -35,7 +35,7 @@
                     [
                         'label' => 'Пользователи', 'url' => '#', 'icon'=>'users',
                         'items' => [
-                            ['label' => 'Пользователи', 'url' => ['/user/admin/index'],  'icon'=>'user-circle '],
+                            ['label' => 'Пользователи', 'url' => ['/user-list/index'],  'icon'=>'user-circle '],
                             ['label' => 'Работодатели', 'url' => ['/company/company/index'], 'icon' => 'empire'],
                             ['label' => 'Сотрудники', 'url' => ['/employer/employer/index'], 'user-o'],
                         ],
