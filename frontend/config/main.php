@@ -20,12 +20,16 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
+        'authManager' => [
+            'class'           => 'yii\rbac\DbManager',
+        ],
         'user' => [
             // following line will restrict access to admin controller from frontend application
             'class' => 'dektrium\user\Module',
             'modelMap' => [
                 'User' => 'common\models\User',
             ],
+            'admins' => ['test@test.test'],
             'as frontend' => 'dektrium\user\filters\FrontendFilter',
             'controllerMap' => [
                 'security' => [
