@@ -170,7 +170,7 @@
             },
             vacancyRemove(index, vacancyId) {
                 this.$swal({
-                    title: 'Вы точно хотите удалить резюме?',
+                    title: 'Вы точно хотите удалить вакансию?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
