@@ -130,14 +130,14 @@ class VacancyController extends MyActiveController
         $model = new Vacancy();
         $params = Yii::$app->getRequest()->getBodyParams();
         if (Yii::$app->user->isGuest) {
-            throw new UserException(400, 'Пользователь не авторизирован');
+            throw new UserException('Пользователь не авторизирован', 400);
         }
         /** @var Company $company */
         $company = Yii::$app->user->identity->company;
         if(!$company)
-            throw new UserException(400, 'У вас нет компании');
+            throw new UserException('У вас нет компании', 400);
         if(!$company->contact_person)
-            throw new UserException(400, 'Заполните компанию');
+            throw new UserException('Заполните компанию', 400);
         $model->load($params, '');
         $model->get_update_id = 1;
         $model->company_id = $company->id;
