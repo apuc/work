@@ -26,9 +26,9 @@ $this->title = Yii::t('user', 'Manage users');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?//= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
-<!---->
-<?//= $this->render('/admin/_menu') ?>
+<?= $this->render("@vendor/dektrium/yii2-user/views/_alert", ['module' => Yii::$app->getModule('user')]) ?>
+
+<?= $this->render("_menu") ?>
 
 <?php Pjax::begin() ?>
 
