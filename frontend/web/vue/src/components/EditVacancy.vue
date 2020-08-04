@@ -41,7 +41,6 @@
                         }
                     }
                     this.formData.vacancyCity = data.city_id;
-                    this.formData.companyName = data.company_id;
                     this.formData.category.mainCategoriesVacancy = data.main_category_id;
                     data.category.forEach((item) => {
                         this.formData.category.subcategories.push(item.id);
@@ -114,7 +113,6 @@
                 let data = {
                     phone: this.formData.phone,
                     city_id: this.formData.vacancyCity,
-                    company_id: this.formData.companyName,
                     main_category_id: this.formData.category.mainCategoriesVacancy,
                     category: this.formData.category.subcategories,
                     post: this.formData.post,
@@ -177,15 +175,8 @@
             getNameCompany() {
                 this.$store.dispatch('getCompanyName', this.$route.params.id)
                     .then(data => {
-                        this.lengthCompany = data.length;
-                        FormVacancy.companyName.items = [];
-                        for (let i = 0; i < data.length; i++) {
-                            if(data[i].name) {
-                                FormVacancy.companyName.items.push(data[i]);
-                            } else {
-                                FormVacancy.companyName.items.push({name: data[i].contact_person, id: data[i].id});
-                            }
-                        }
+
+                      this.companyFlag = data.contact_person;
                         this.$forceUpdate();
                     }).catch(error => {
                     this.$swal({
@@ -249,7 +240,6 @@
             const tmpResume = {
                 'phone': this.formData.phone,
                 'city': this.dataVacancy.city_id,
-                'company_id': this.dataVacancy.company_id,
                 'main_category_id': this.dataVacancy.main_category_id,
                 'post': this.dataVacancy.post,
                 'responsibilities': this.dataVacancy.responsibilities,
@@ -267,7 +257,6 @@
             const tmpFormData = {
                 'phone': this.formData.phone,
                 'city': this.formData.vacancyCity,
-                'company_id': this.formData.companyName,
                 'main_category_id': this.formData.category.mainCategoriesVacancy,
                 'post': this.formData.post,
                 'responsibilities': this.formData.duties,

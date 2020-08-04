@@ -49,12 +49,12 @@ export default new Router({
       meta: {title: 'Создать резюме'},
       component: FormResume
     },
-    {
-      path: '/personal-area/add-company',
-      name: 'add-company',
-      meta: {title: 'Создать компанию или частное лицо'},
-      component: FormCompany
-    },
+    // {
+    //   path: '/personal-area/add-company',
+    //   name: 'add-company',
+    //   meta: {title: 'Создать компанию или частное лицо'},
+    //   component: FormCompany
+    // },
     {
       path: '/personal-area/all-vacancy',
       name: 'all-vacancy',
@@ -79,12 +79,12 @@ export default new Router({
       meta: {title: 'Редактировать резюме'},
       component: EditResume
     },
-    {
-      path: '/personal-area/all-company',
-      name: 'all-company',
-      meta: {title: 'Все компании'},
-      component: AllCompany,
-    },
+    // {
+    //   path: '/personal-area/all-company',
+    //   name: 'all-company',
+    //   meta: {title: 'Все компании'},
+    //   component: AllCompany,
+    // },
     {
       path: '/personal-area/edit-company',
       name: 'edit-company',

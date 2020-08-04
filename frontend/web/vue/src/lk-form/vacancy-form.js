@@ -15,18 +15,18 @@ export default {
       }
     ],
   }),
-  companyName: Object.assign({}, Field, {
-    name: 'companyName',
-    label: 'Компания*',
-    rules: [v => !!v || 'Компания обязателен к заполнению'],
-    component: VAutocomplete,
-    items: [
-      {
-        name: '',
-        id: ''
-      }
-    ]
-  }),
+  // companyName: Object.assign({}, Field, {
+  //   name: 'companyName',
+  //   label: 'Компания*',
+  //   rules: [v => !!v || 'Компания обязателен к заполнению'],
+  //   component: VAutocomplete,
+  //   items: [
+  //     {
+  //       name: '',
+  //       id: ''
+  //     }
+  //   ]
+  // }),
   category: Object.assign({}, Field, {
     component: Category,
     rules: []
