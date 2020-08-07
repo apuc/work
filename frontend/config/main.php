@@ -245,6 +245,7 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule', 'controller' =>
                     [
+                        'request/banner',
                         'request/category',
                         'request/company',
                         'request/dialog',

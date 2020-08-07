@@ -132,4 +132,15 @@ class Banner extends WorkActiveRecord
     {
         return $this->hasMany(BannerLocation::className(), ['banner_id' => 'id'])->inverseOf('banner');
     }
+
+    public function canAccess($user_id){
+        $access=false;
+        foreach ($this->company->userCompany as $user_company){
+            if($user_company->user_id==Yii::$app->user->id)
+                $access=true;
+        }
+        if($this->owner != Yii::$app->user->id && !$access)
+            return false;
+        return true;
+    }
 }
