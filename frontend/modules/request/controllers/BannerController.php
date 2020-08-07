@@ -17,6 +17,7 @@ class BannerController extends MyActiveController
     {
         $actions = parent::actions();
         unset($actions['create'], $actions['update'], $actions['delete'], $actions['index']);
+        return $actions;
     }
 
     public function actionCreate()
