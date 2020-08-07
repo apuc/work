@@ -16,6 +16,9 @@ import CompanyRight from './components/CompanyRight.vue'
 import CompanyTransfer from './components/CompanyTransfer.vue'
 import Updates from './components/Updates.vue'
 import Payment from './components/Payment.vue'
+import AddBanner from './pages/Banners/AddBanner.vue'
+import BannerList from './pages/Banners/BannerList.vue'
+import EditBanner from './pages/Banners/EditBanner.vue'
 
 Vue.use(Router);
 
@@ -121,6 +124,24 @@ export default new Router({
       name: 'payment',
       meta: {title: 'Оплата'},
       component: Payment
+    },
+    {
+      path: '/personal-area/banners',
+      name: 'banners',
+      meta: {title: 'Баннеры'},
+      component: BannerList
+    },
+    {
+      path: '/personal-area/add-banner',
+      name: 'add-banner',
+      meta: {title: 'Добавление баннера'},
+      component: AddBanner
+    },
+    {
+      path: '/personal-area/edit-banner/:id',
+      name: 'edit-banner',
+      meta: {title: 'Редактирование баннер'},
+      component: EditBanner
     },
   ]
 })

@@ -111,4 +111,7 @@
     font-size: 12px;
     color: #ff5252;
   }
+  .all-banners .v-list--two-line .v-list__tile {
+    height: auto !important;
+  }
 </style>
