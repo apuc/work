@@ -15,6 +15,7 @@ import EditProfile from './components/EditProfile.vue'
 import CompanyRight from './components/CompanyRight.vue'
 import CompanyTransfer from './components/CompanyTransfer.vue'
 import Updates from './components/Updates.vue'
+import Payment from './components/Payment.vue'
 
 Vue.use(Router);
 
@@ -114,6 +115,12 @@ export default new Router({
       name: 'updates',
       meta: {title: 'Обновления'},
       component: Updates
-    }
+    },
+    {
+      path: '/personal-area/payment',
+      name: 'payment',
+      meta: {title: 'Оплата'},
+      component: Payment
+    },
   ]
 })

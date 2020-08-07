@@ -88,7 +88,7 @@
                     });
             },
             validate () {
-                let btn = document.getElementById('main-btn');
+                let btn = document.getElementById('main-btn-pass');
                 btn.disabled = true;
                 let valid = this.$refs.form.validate();
                 this.$emit('val', valid);

@@ -18,10 +18,19 @@
                         </v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
-            </v-list>
-
-            <v-list class="pt-0" dense>
                 <v-divider></v-divider>
+            </v-list>
+            <v-list class="pa-1" v-if="userStatus >= 20">
+                <v-list-tile avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title class="login-block">
+                            Баланс: {{ userMe.user.company.balance }} ₽
+                        </v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-divider></v-divider>
+            </v-list>
+            <v-list class="pt-0" dense>
                 <div class="main-page menu-hover">
                     <img :src="mainImg" alt="">
                     <a href="/">Главная</a>
@@ -117,6 +126,7 @@
                 alertFlag: false,
                 first_name: 1,
                 unreadMessages: 0,
+                userStatus: 0,
                 unreadUpdates: 0,
                 loginImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/login.png',
                 mainImg: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/main.png',
@@ -180,6 +190,13 @@
                         addFlag: false,
                         show: true
                     },
+                    {
+                        title: 'Оплата',
+                        url: '/personal-area/payment',
+                        img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/payment.jpg',
+                        addFlag: false,
+                        show: true
+                    },
                 ],
             }
         },
@@ -197,9 +214,11 @@
                         } else {
                             this.first_name = 0;
                         }
+                        this.userStatus = data.user.status;
                         if (data.user.status == 10) {
                             this.linkMenu[2].show = false;
                             this.linkMenu[4].show = false;
+                            this.linkMenu[7].show = false;
                         }
                         if (data.user.status >= 20) {
                             this.linkMenu[3].show = false;
