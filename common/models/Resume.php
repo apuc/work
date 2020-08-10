@@ -86,9 +86,9 @@ class Resume extends WorkActiveRecord
     {
         return [
             TimestampBehavior::className(),
-            'webHook' => ['class'=>WebHookBehavior::className(),
-                'url' => 'https://webhooks.mychannels.gq/rabota/13'
-            ]
+//            'webHook' => ['class'=>WebHookBehavior::className(),
+//                'url' => 'https://webhooks.mychannels.gq/rabota/13'
+//            ]
         ];
     }
     /**
