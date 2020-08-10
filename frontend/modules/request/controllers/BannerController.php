@@ -56,8 +56,9 @@ class BannerController extends MyActiveController
         $model->load($params, '');
         $model->company_id = Yii::$app->user->identity->company->id;
         if($params['image']){
-            unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
-            $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'company_custom');
+            $url = FileHandler::saveFileFromBase64($params['image'], 'company_custom');
+            if($params['image'] !== $url)
+                $model->image_url = $url;
         } else {
             if($model->image_url) {
                 unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->image_url");
@@ -65,8 +66,9 @@ class BannerController extends MyActiveController
             $model->image_url = null;
         }
         if($params['logo']){
-            unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->logo_url");
-            $model->logo_url = FileHandler::saveFileFromBase64($params['image'], 'company_custom');
+            $url = FileHandler::saveFileFromBase64($params['logo'], 'company_custom');
+            if($params['logo'] !== $url)
+                $model->logo_url = $url;
         } else {
             if($model->logo_url) {
                 unlink(Yii::getAlias("@app").DIRECTORY_SEPARATOR."web$model->logo_url");
