@@ -150,7 +150,8 @@ class VacancyController extends Controller
         VacancyProfession::deleteAll(['vacancy_id'=>$id]);
         VacancyCategory::deleteAll(['vacancy_id'=>$id]);
         $this->findModel($id)->delete();
-
+        if(Yii::$app->request->isAjax)
+            return true;
         return $this->redirect(['index']);
     }
 
