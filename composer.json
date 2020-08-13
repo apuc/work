@@ -21,7 +21,7 @@
         "dektrium/yii2-user": "^0.9.14",
         "dektrium/yii2-rbac": "1.0.0-alpha@dev",
         "dmstr/yii2-adminlte-asset": "^2.1",
-        "kartik-v/yii2-widget-datepicker": "@dev",
+        "kartik-v/yii2-widget-datepicker": "^1.4",
         "vision/yii2-private-messages": "^2",
         "phpoffice/phpexcel": "^1.8",
         "eugene-kei/yii2-simple-news": "*",
