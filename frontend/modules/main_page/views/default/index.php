@@ -92,8 +92,11 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                                 <a class="nhome__nav-item" href="<?= Url::to(['/personal_area/default/index']) ?>">Личный
                                     кабинет</a>
                                 <a class="nhome__nav-item" href="<?= Url::to(['/personal-area/my-message']) ?>">Отклики <?= $messages > 0 ? "($messages)" : "" ?></a>
-                                <a class="nhome__nav-item" href="/personal-area/add-vacancy">Добавить вакансию</a>
-                                <a class="nhome__nav-item" href="/personal-area/add-resume">Добавить резюме</a>
+                                <?php if (Yii::$app->user->identity->status >= 20): ?>
+                                    <a class="nhome__nav-item" href="/personal-area/add-vacancy">Добавить вакансию</a>
+                                <?php else: ?>
+                                    <a class="nhome__nav-item" href="/personal-area/add-resume">Добавить резюме</a>
+                                <?php endif; ?>
                                 <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
                                 <?= Html::submitButton(
                                     'Выйти',
