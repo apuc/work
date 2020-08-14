@@ -2,3 +2,6 @@ export const GET_ALL_BANNERS = 'GET_ALL_BANNERS';
 export const ADD_BANNER = 'ADD_BANNER';
 export const GET_BANNER = 'GET_BANNER';
 export const EDIT_BANNER = 'EDIT_BANNER';
+export const REMOVE_BANNER = 'REMOVE_BANNER';
+export const ACTIVATE_BANNER = 'ACTIVATE_BANNER';
+export const GET_BANNER_PRICE = 'GET_BANNER_PRICE';

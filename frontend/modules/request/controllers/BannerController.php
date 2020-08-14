@@ -5,6 +5,10 @@ namespace frontend\modules\request\controllers;
 
 use common\classes\FileHandler;
 use common\models\Banner;
+use common\models\BannerLocation;
+use common\models\Category;
+use common\models\City;
+use common\models\Company;
 use Yii;
 use yii\base\UserException;
 use yii\web\HttpException;
@@ -16,7 +20,7 @@ class BannerController extends MyActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['create'], $actions['update'], $actions['delete'], $actions['index']);
+        unset($actions['create'], $actions['update'], $actions['index']);
         return $actions;
     }
 
@@ -29,7 +33,6 @@ class BannerController extends MyActiveController
         $model = new Banner();
         $params = Yii::$app->getRequest()->getBodyParams();
         $model->load($params, '');
-        $model->is_active = 0;
         $model->company_id = Yii::$app->user->identity->company->id;
         if($params['image']) {
             $model->image_url = FileHandler::saveFileFromBase64($params['image'], 'company_custom');
@@ -42,6 +45,20 @@ class BannerController extends MyActiveController
             $response->setStatusCode(201);
         } elseif (!$model->hasErrors()) {
             throw new UserException('Ошибка при создании баннера.');
+        }
+        if(!isset($params['city_category']) || !is_array($params['city_category']))
+            throw new UserException('Добавьте связь');
+        foreach ($params['city_category'] as $city_category) {
+            $bannerLocation = new BannerLocation();
+            $bannerLocation->banner_id = $model->id;
+            if (City::findOne($city_category['city_id'])) {
+                $bannerLocation->city_id = $city_category['city_id'];
+            } else {
+                throw new UserException("Такого города нет.");
+            }
+            if (Category::findOne($city_category['category_id']))
+                $bannerLocation->category_id = $city_category['category_id'];
+            $bannerLocation->save();
         }
 
         return $model;
@@ -81,6 +98,23 @@ class BannerController extends MyActiveController
         } elseif (!$model->hasErrors()) {
             throw new UserException('Failed to create the object for unknown reason.');
         }
+
+        if(!isset($params['city_category']))
+            throw new UserException('Добавьте связь');
+        BannerLocation::deleteAll(['banner_id'=>$model->id]);
+        foreach ($params['city_category'] as $city_category) {
+            $bannerLocation = new BannerLocation();
+            $bannerLocation->banner_id = $model->id;
+            if (City::findOne($city_category['city_id'])) {
+                $bannerLocation->city_id = $city_category['city_id'];
+            } else {
+                throw new UserException("Такого города нет.");
+            }
+            if (Category::findOne($city_category['category_id']))
+                $bannerLocation->category_id = $city_category['category_id'];
+            $bannerLocation->save();
+        }
+
         return $model;
     }
 
@@ -98,5 +132,55 @@ class BannerController extends MyActiveController
             if(!$model->canAccess(Yii::$app->user->id))
                 throw new UserException('У вас нет прав для редактирования этой записи', 403);
         }
+    }
+
+    public function actionActivate() {
+        if (!Yii::$app->request->post('banner_id') || !$banner = Banner::findOne(Yii::$app->request->post('banner_id'))) {
+            throw new UserException('Такого баннера не существует');
+        }
+        /** @var Company $company */
+        $company = Yii::$app->user->identity->company;
+        if (!$company) {
+            throw new UserException('У вас не прав для совершения этого действия');
+        }
+        $price = 0;
+        foreach ($banner->bannerLocations as $bannerLocation) {
+            if ($bannerLocation->city_id) {
+                $price += 500;
+            } else {
+                throw new UserException("Такого города нет.");
+            }
+            if ($bannerLocation->category_id)
+                $price -= 250;
+        }
+        if ($company->balance < $price) {
+            throw new UserException('У вас недостаточно средств на счету');
+        }
+        $company->balance -= $price;
+        $company->save();
+        if (!$banner->active_until || $banner->active_until < time())
+            $banner->active_until = time() + (86400*30);
+        else
+            $banner->active_until += 86400*30;
+        $banner->save();
+        return true;
+    }
+
+    public function actionGetPrice() {
+        $params = json_decode(Yii::$app->request->getQueryParam('city_category'), true);
+//        print_r($params[0]); die;
+        if(!isset($params))
+            throw new UserException('Добавьте связь');
+        $price = 0;
+        foreach ($params as $city_category) {
+            if (City::findOne($city_category['city_id'])) {
+                $price += 500;
+            } else {
+                throw new UserException("Такого города нет.");
+            }
+            if (Category::findOne($city_category['category_id']))
+                $price -= 250;
+        }
+        return $price;
     }
 }

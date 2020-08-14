@@ -51,7 +51,7 @@
                      class="edit-btn"
                      type="button"
                      title="Удалить"
-                     @click="resumeBanner(index, item.id)"
+                     @click="bannerRemove(index, item.id)"
               >
                 <v-icon>delete</v-icon>
 
@@ -108,7 +108,7 @@ export default {
         })
       });
     },
-    resumeBanner(index, resumeId) {
+    bannerRemove(index, resumeId) {
       this.$swal({
         title: 'Вы точно хотите удалить баннер?',
         type: 'warning',
@@ -119,9 +119,9 @@ export default {
         cancelButtonText: 'Нет'
       }).then((result) => {
         if (result.value) {
-          this.$store.dispatch('removeResume', resumeId)
+          this.$store.dispatch('removeBanner', resumeId)
               .then(data => {
-                this.getResume(this.paginationCurrentPage);
+                this.getBanners(this.paginationCurrentPage);
                 return data;
               }).catch(error => {
             this.$swal({
@@ -203,6 +203,7 @@ a {
 .banner-advertising__right {
   display: flex;
   flex-direction: column;
+    width: 100%;
 }
 .banner-advertising__right h3 {
   margin: 0 0 5px;

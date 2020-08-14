@@ -191,7 +191,7 @@ export default {
         {
           title: 'Баннеры',
           url: '/personal-area/banners',
-          img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/payment.jpg',
+          img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/payban.png',
           addFlag: false,
           show: true
         },

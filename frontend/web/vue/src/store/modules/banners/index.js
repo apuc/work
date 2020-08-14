@@ -4,7 +4,10 @@ import actions from './actions';
 const state = {
     allBanners: [],
     addBanner: {},
-    banner: {}
+    banner: {},
+    removeBanner: {},
+    activateBanner: {},
+    bannerPrice: {},
 };
 
 const mutations = {
@@ -20,6 +23,15 @@ const mutations = {
     [type.EDIT_BANNER](state, payload) {
         state.banner = payload;
     },
+    [type.REMOVE_BANNER](state, payload) {
+        state.removeBanner = payload;
+    },
+    [type.ACTIVATE_BANNER](state, payload) {
+        state.activateBanner = payload;
+    },
+    [type.GET_BANNER_PRICE](state, payload) {
+        state.bannerPrice = payload;
+    },
 };
 
 const getters = {
@@ -31,6 +43,15 @@ const getters = {
     },
     banner: state => {
         return state.banner;
+    },
+    removeBanner: state => {
+        return state.removeBanner;
+    },
+    activateBanner: state => {
+        return state.activateBanner;
+    },
+    bannerPrice: state => {
+        return state.bannerPrice;
     },
 };
 

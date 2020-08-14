@@ -15,7 +15,7 @@ use yii\db\ActiveQuery;
  * @property string $description
  * @property string $image_url
  * @property string $logo_url
- * @property int $is_active
+ * @property int $active_until
  * @property int $priority
  * @property int $owner
  * @property int $created_at
@@ -50,6 +50,11 @@ class Banner extends WorkActiveRecord
         ];
     }
 
+    public function extraFields()
+    {
+        return ['city_category', 'is_active'];
+    }
+
 
     /**
      * {@inheritdoc}
@@ -58,13 +63,11 @@ class Banner extends WorkActiveRecord
     {
         return [
             [['company_id', 'description'], 'required'],
+            [['active_until'], 'integer'],
 
             ['company_id', 'exist', 'targetRelation' => 'company'],
             ['owner', 'exist', 'targetRelation' => 'ownerUser'],
             ['description', 'string', 'max' => static::DESCRIPTION_MAX_LENGTH],
-
-            ['is_active', 'default', 'value' => static::STATUS_INACTIVE],
-            ['is_active', 'in', 'range' => [static::STATUS_ACTIVE, static::STATUS_INACTIVE]],
 
             ['priority', 'integer', 'min' => 1],
 
@@ -131,6 +134,21 @@ class Banner extends WorkActiveRecord
     public function getBannerLocations()
     {
         return $this->hasMany(BannerLocation::className(), ['banner_id' => 'id'])->inverseOf('banner');
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getCity_category()
+    {
+        return $this->hasMany(BannerLocation::className(), ['banner_id' => 'id'])->inverseOf('banner');
+    }
+
+    public function getIs_active()
+    {
+        if ($this->active_until === null || $this->active_until < time())
+            return false;
+        return true;
     }
 
     public function canAccess($user_id){

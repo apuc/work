@@ -33,7 +33,7 @@ const actions = {
     getBanner({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('/request/banner/' + payload)
+            api.get('/request/banner/' + payload + '?expand=city_category,is_active')
                 .then(res => {
                     commit(type.GET_BANNER, res.data);
                     resolve(res.data);
@@ -55,6 +55,48 @@ const actions = {
                 .catch(error => {
                     console.log('Problem', error.message);
                     reject(error);
+                });
+        })
+    },
+    removeBanner({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.delete('/request/banner/' + payload)
+                .then(res => {
+                    commit(type.REMOVE_BANNER, res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
+    activateBanner({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.post('/request/banner/activate', {banner_id: payload})
+                .then(res => {
+                    commit(type.ACTIVATE_BANNER, res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.response.data.message);
+                    reject(error.response.data.message);
+                });
+        })
+    },
+    getBannerPrice({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.get('/request/banner/get-price?city_category=' + payload)
+                .then(res => {
+                    commit(type.GET_BANNER_PRICE, res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.response.data.message);
+                    reject(error.response.data.message);
                 });
         })
     },
