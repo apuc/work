@@ -230,6 +230,7 @@ export default {
             if (data.user.status == 10) {
               this.linkMenu[2].show = false;
               this.linkMenu[4].show = false;
+              this.linkMenu[6].show = false;
               this.linkMenu[7].show = false;
             }
             if (data.user.status >= 20) {
