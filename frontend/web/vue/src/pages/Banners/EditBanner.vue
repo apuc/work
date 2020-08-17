@@ -215,9 +215,22 @@ export default {
             });
         },
         activateBanner() {
-            this.$store.dispatch('activateBanner', this.formData.id)
+            this.$store.dispatch('editBanner', this.formData)
                 .then(data => {
-                    this.getBanner();
+                    this.$store.dispatch('activateBanner', this.formData.id)
+                        .then(data => {
+                            this.getBanner();
+                            return data;
+                        }).catch(error => {
+                            this.$swal({
+                                title: error,
+                                confirmButtonText: 'Пополнить',
+                            }).then((result) => {
+                                if (result.value) {
+                                    this.$router.push('/personal-area/payment');
+                                }
+                            });
+                    });
                     return data;
                 }).catch(error => {
                 this.$swal({
@@ -226,7 +239,7 @@ export default {
                     showConfirmButton: false,
                     timer: 4000,
                     type: 'error',
-                    title: error
+                    title: error.message
                 })
             });
         },
@@ -253,10 +266,6 @@ export default {
                             city_id: city_category.city_id,
                             category_id: city_category.category_id,
                         }));
-                    }
-                    let cityCategoryLength = data.city_category.length - 1;
-                    for (let i = 0; i < data.city_category.length; i++) {
-                        this.addCityCategory();
                     }
                     this.is_active = data.is_active;
                     this.cityCategoryLength = data.city_category.length;

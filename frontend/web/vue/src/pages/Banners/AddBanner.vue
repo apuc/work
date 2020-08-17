@@ -191,7 +191,7 @@ export default {
         saveBanner() {
             this.$store.dispatch('addBanner', this.formData)
                 .then(data => {
-                    this.$router.push('/personal-area/banners');
+                    this.$router.push('/personal-area/edit-banner/' + data.id);
                     return data;
                 }).catch(error => {
                 this.$swal({
