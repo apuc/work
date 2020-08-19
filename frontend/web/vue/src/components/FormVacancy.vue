@@ -91,7 +91,7 @@
                 this.$store.dispatch('getUserMe', this.$route.params.id)
                     .then(data => {
                         this.formData.birth_date = data.birth_date;
-                        if (data.phone != null) {
+                        if (data.phone.number != null) {
                             this.formData.phone = data.phone.number;
                             if (this.formData.phone.length === 16) {
                                 this.phone.text = '';
@@ -102,6 +102,10 @@
                                 this.phone.valid = false;
                                 this.formData.phoneValid = false;
                             }
+                        } else {
+                            this.phone.text = 'Вы ввели не верный номер телефона';
+                            this.phone.valid = false;
+                            this.formData.phoneValid = false;
                         }
                     }).catch(error => {
                     this.$swal({
