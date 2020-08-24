@@ -117,14 +117,14 @@
                        :disabled="cityCategoryFlag"
                        v-if="is_active === false"
                 >
-                    $ Активировать на месяц ({{ price }} ₽)
+                    $ Активировать на 30 дней ({{ price }} ₽)
                 </v-btn>
                 <v-subheader class="widthMC" v-if="is_active === true">Активен до: {{ active_until }}</v-subheader>
                 <v-btn type="button"
                        @click="activateBanner()"
                        v-if="is_active === true"
                 >
-                    $ Продлить на месяц ({{ price }} ₽)
+                    $ Продлить на 30 дней ({{ price }} ₽)
                 </v-btn>
             </template>
         </div>
@@ -217,19 +217,44 @@ export default {
         activateBanner() {
             this.$store.dispatch('editBanner', this.formData)
                 .then(data => {
-                    this.$store.dispatch('activateBanner', this.formData.id)
-                        .then(data => {
-                            this.getBanner();
-                            return data;
-                        }).catch(error => {
-                            this.$swal({
-                                title: error,
-                                confirmButtonText: 'Пополнить',
-                            }).then((result) => {
-                                if (result.value) {
-                                    this.$router.push('/personal-area/payment');
-                                }
+                    this.$swal({
+                        title: 'Вы уверены?',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Да',
+                        cancelButtonText: 'Нет'
+                    }).then((result) => {
+                        if (result.value) {
+                            this.$store.dispatch('activateBanner', this.formData.id)
+                                .then(data => {
+                                    this.getBanner();
+                                    this.$store.dispatch('getUserMe', this.$route.params.id)
+                                        .then(data => {
+                                            return data;
+                                        }).catch(error => {
+                                        this.$swal({
+                                            toast: true,
+                                            position: 'bottom-end',
+                                            showConfirmButton: false,
+                                            timer: 4000,
+                                            type: 'error',
+                                            title: error.message
+                                        })
+                                    });
+                                    return data;
+                                }).catch(error => {
+                                    this.$swal({
+                                        title: error,
+                                        confirmButtonText: 'Пополнить',
+                                    }).then((result) => {
+                                        if (result.value) {
+                                            this.$router.push('/personal-area/payment');
+                                        }
+                                    });
                             });
+                        }
                     });
                     return data;
                 }).catch(error => {

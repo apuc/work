@@ -39,34 +39,52 @@
                                 <v-divider style="width: 100%;"></v-divider>
                                 <span v-if="item.status == 2" class="all-resume-hide">скрыто</span>
                             </v-list-tile-content>
-                            <router-link :to="`${editLink}/${item.id}`">
-                                <v-btn outline small fab
-                                       class="edit-btn"
-                                       type="button"
-                                       title="Редактировать"
-                                >
-                                    <v-icon>edit</v-icon>
 
-                                </v-btn>
-                            </router-link>
-                            <v-btn outline small fab
-                                   v-bind:disabled="item.can_update == false"
-                                   class="edit-btn"
-                                   type="button"
-                                   title="Поднять в ТОП"
-                                   @click="resumeUpdate(index, item.id)"
-                            >
-                                <v-icon>arrow_upward</v-icon>
-                            </v-btn>
-                            <v-btn outline small fab
-                                   class="edit-btn"
-                                   type="button"
-                                   title="Удалить"
-                                   @click="resumeRemove(index, item.id)"
-                            >
-                                <v-icon>delete</v-icon>
-
-                            </v-btn>
+                            <v-menu offset-y>
+                                <template v-slot:activator="{ on }">
+                                    <v-btn
+                                        color="primary"
+                                        dark
+                                        v-on="on"
+                                    >
+                                        <v-icon>menu</v-icon>
+                                    </v-btn>
+                                </template>
+                                <v-list>
+                                    <v-list-tile>
+                                        <router-link :to="`${editLink}/${item.id}`">
+                                            <v-btn
+                                                   class="edit-btn"
+                                                   type="button"
+                                                   title="Редактировать"
+                                            >
+                                                Редактировать
+                                            </v-btn>
+                                        </router-link>
+                                    </v-list-tile>
+                                    <v-list-tile>
+                                        <v-btn
+                                               v-bind:disabled="item.can_update == false"
+                                               class="edit-btn"
+                                               type="button"
+                                               title="Поднять в ТОП"
+                                               @click="resumeUpdate(index, item.id)"
+                                        >
+                                            Поднять в ТОП
+                                        </v-btn>
+                                    </v-list-tile>
+                                    <v-list-tile>
+                                        <v-btn
+                                               class="edit-btn"
+                                               type="button"
+                                               title="Удалить"
+                                               @click="resumeRemove(index, item.id)"
+                                        >
+                                            Удалить
+                                        </v-btn>
+                                    </v-list-tile>
+                                </v-list>
+                            </v-menu>
                         </v-list-tile>
                     </v-list>
 

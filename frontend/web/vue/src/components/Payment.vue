@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-subheader class="all-head">
-            Оплата
+            Пополнить счет
         </v-subheader>
         <form method="get" action="https://www.free-kassa.ru/merchant/cash.php">
             <input type="hidden" name="m" value="214123">

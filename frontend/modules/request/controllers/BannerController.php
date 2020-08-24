@@ -141,7 +141,7 @@ class BannerController extends MyActiveController
         /** @var Company $company */
         $company = Yii::$app->user->identity->company;
         if (!$company) {
-            throw new UserException('У вас не прав для совершения этого действия');
+            throw new UserException('У вас нет прав для совершения этого действия');
         }
         $price = 0;
         foreach ($banner->bannerLocations as $bannerLocation) {

@@ -10,6 +10,7 @@ const state = {
     employmentType: [],
     companyName: [],
     experience: [],
+    servicePrice: [],
 };
 
 const mutations = {
@@ -37,6 +38,9 @@ const mutations = {
     [type.GET_EXPERIENCE](state, payload) {
         state.experience = payload;
     },
+    [type.GET_SERVICE_PRICE](state, payload) {
+        state.servicePrice = payload;
+    },
 };
 
 const getters = {
@@ -63,6 +67,9 @@ const getters = {
     },
     experience: state => {
         return state.experience;
+    },
+    servicePrice: state => {
+        return state.servicePrice;
     },
 };
 

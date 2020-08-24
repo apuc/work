@@ -155,10 +155,10 @@ export default {
           title: 'Вакансии',
           url: '/personal-area/all-vacancy',
           img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_vacancy.png',
-          addFlag: true,
-          addTo: '/personal-area/add-vacancy',
-          addTitle: 'Добавить вакансию',
-          companiesCount: 0,
+          addFlag: false,
+          // addTo: '/personal-area/add-vacancy',
+          // addTitle: 'Добавить вакансию',
+          // companiesCount: 0,
           show: true
         },
         {
@@ -172,8 +172,8 @@ export default {
           show: true
         },
         {
-          title: 'Компании',
-          url: '/personal-area/all-company',
+          title: 'Компания',
+          url: '/personal-area/edit-company',
           img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/all_company.png',
           addFlag: true,
           addTo: '/personal-area/add-company',
@@ -196,7 +196,7 @@ export default {
           show: true
         },
         {
-          title: 'Оплата',
+          title: 'Пополнить счет',
           url: '/personal-area/payment',
           img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/payment.jpg',
           addFlag: false,
