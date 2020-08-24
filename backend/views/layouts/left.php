@@ -35,7 +35,7 @@
                     [
                         'label' => 'Пользователи', 'url' => '#', 'icon'=>'users',
                         'items' => [
-                            ['label' => 'Пользователи', 'url' => ['/user/admin/index'],  'icon'=>'user-circle '],
+                            ['label' => 'Пользователи', 'url' => ['/user-list/index'],  'icon'=>'user-circle '],
                             ['label' => 'Работодатели', 'url' => ['/company/company/index'], 'icon' => 'empire'],
                             ['label' => 'Сотрудники', 'url' => ['/employer/employer/index'], 'user-o'],
                         ],
@@ -57,6 +57,7 @@
                         'items' => [
                             ['label' => 'Валюты Free-Kassa', 'url' => ['/payment/currency/index'], 'icon' => 'money'],
                             ['label' => 'Платежи Free-Kassa', 'url' => ['/payment/free-kassa-payment/index'], 'icon' => 'credit-card'],
+                            ['label' => 'Промокоды', 'url' => ['/payment/promocode/index'], 'icon' => 'credit-card'],
                         ],
                     ],
                     ['label' => 'Категории', 'url' => ['/category/category/index'], 'icon' => 'object-group'],

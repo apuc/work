@@ -2,11 +2,10 @@ const vacancy = {
   data() {
     return {
       dataVacancy: [],
-      lengthCompany: 0,
+      companyFlag: '',
       formData: {
         phone: '',
         vacancyCity: '',
-        companyName: [],
         category: {
           mainCategoriesVacancy: null,
           subcategories: [],

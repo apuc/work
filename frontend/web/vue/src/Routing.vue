@@ -218,6 +218,21 @@ export default {
       email = email.slice(0, email.length - 1);
       return email;
     },
+    getCompany() {
+      this.$store.dispatch('getAllCompany')
+          .then(data => {
+            localStorage.companyId = data.id;
+          }).catch(error => {
+        this.$swal({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 4000,
+          type: 'error',
+          title: error.message
+        })
+      });
+    },
     getUser() {
       this.$store.dispatch('getUserMe', this.$route.params.id)
           .then(data => {

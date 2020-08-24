@@ -34,7 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model)
                 {
                     $company=Company::findOne($model->company_id);
-                    return '<a href="'.\yii\helpers\Url::to(['/company/company/view', 'id' => $company->id]).'">'.$company->name.'</a>';
+                    if($company->name)
+                        return '<a href="'.\yii\helpers\Url::to(['/company/company/view', 'id' => $company->id]).'">'.$company->name.'</a>';
+                    else
+                        return '<a href="'.\yii\helpers\Url::to(['/company/company/view', 'id' => $company->id]).'">'.$company->contact_person.'</a>';
                 },
                 'filter'    => \kartik\select2\Select2::widget(
                     [
@@ -51,14 +54,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'post',
                 'contentOptions' => ['style' => 'white-space: normal;'],
             ],
-            [
-                'attribute' => 'responsibilities',
-                'contentOptions' => ['style' => 'white-space: normal;'],
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return \yii\helpers\StringHelper::truncate($model->responsibilities, 100, '...');
-                },
-            ],
+//            [
+//                'attribute' => 'responsibilities',
+//                'contentOptions' => ['style' => 'white-space: normal;'],
+//                'format' => 'raw',
+//                'value' => function ($model) {
+//                    return \yii\helpers\StringHelper::truncate($model->responsibilities, 100, '...');
+//                },
+//            ],
             [
                 'attribute' => 'employment_type.name',
                 'format' => 'raw',
@@ -69,10 +72,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'min_salary',
             'max_salary',
-            [
-                'attribute' => 'qualification_requirements',
-                'contentOptions' => ['style' => 'white-space: normal;'],
-            ],
+//            [
+//                'attribute' => 'qualification_requirements',
+//                'contentOptions' => ['style' => 'white-space: normal;'],
+//            ],
             [
                 'attribute' => 'city_id',
                 'format' => 'raw',
@@ -103,13 +106,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $result;
                 }
             ],
-            [
-                'attribute' => 'working_conditions',
-                'contentOptions' => ['style' => 'white-space: normal;'],
-            ],
-            'video',
-            'address',
-            'home_number',
+//            [
+//                'attribute' => 'working_conditions',
+//                'contentOptions' => ['style' => 'white-space: normal;'],
+//            ],
             [
                 'attribute' => 'status',
                 'format' => 'raw',
@@ -144,11 +144,28 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 )
             ],
-            /*[
-                'attribute' => 'countViews',
-                'label' => 'Просмотры'
-            ],*/
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons' => [
+                    'delete' => function ($url, $model, $key) {
+                        return Html::button('<span class="glyphicon glyphicon-trash"></span>', ['class'=>'delete_button', 'onclick'=>'return false', 'data-url'=>$url, 'data-key'=>$key]);
+                    },
+                ]
+            ],
         ],
-    ]); ?>
+    ]);
+    $this->registerJs("$('.delete_button').click(function (e) {
+        e.preventDefault();
+        if (confirm('Точно?')) {
+            let url = $(this).attr('data-url');
+            let key = $(this).attr('data-key');
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success: function () {
+                    $('tr[data-key=\"'+key+'\"]').remove();
+                }
+            });
+        }
+    });")?>
 </div>

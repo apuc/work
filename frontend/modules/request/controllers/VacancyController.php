@@ -10,6 +10,7 @@ use common\models\Vacancy;
 use common\models\VacancyCategory;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\base\UserException;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
@@ -129,10 +130,17 @@ class VacancyController extends MyActiveController
         $model = new Vacancy();
         $params = Yii::$app->getRequest()->getBodyParams();
         if (Yii::$app->user->isGuest) {
-            throw new HttpException(400, 'Пользователь не авторизирован');
+            throw new UserException('Пользователь не авторизирован', 400);
         }
+        /** @var Company $company */
+        $company = Yii::$app->user->identity->company;
+        if(!$company)
+            throw new UserException('У вас нет компании', 400);
+        if(!$company->contact_person)
+            throw new UserException('Заполните компанию', 400);
         $model->load($params, '');
         $model->get_update_id = 1;
+        $model->company_id = $company->id;
         $model->update_time = time();
         $model->publisher_id = Yii::$app->user->id;
         if ($model->save()) {
@@ -196,16 +204,19 @@ class VacancyController extends MyActiveController
         $id = Yii::$app->request->post('id');
         $model = Vacancy::findOne($id);
         if (!$model) {
-            throw new HttpException(400, 'Такой вакансии не существует');
+            throw new UserException('Такой вакансии не существует', 400);
         }
         if ($model->owner != Yii::$app->user->id) {
-            throw new HttpException(400, 'У вас нет прав для совершения этого действия');
+            throw new UserException('У вас нет прав для совершения этого действия', 400);
         }
-        if (!$model->can_update) {
-            throw new HttpException(400, 'Достаточно количество времени не прошло');
+        $company = $model->company;
+        if ($company->vacancy_renew_count === 0) {
+            throw new UserException('Достаточно количество времени не прошло', 400);
         }
         $model->update_time = time();
         $model->save();
+        $company->vacancy_renew_count--;
+        $company->save();
         $return = Vacancy::find()->asArray()->where(['id' => $id])->one();
         $return['can_update'] = false;
         return $return;

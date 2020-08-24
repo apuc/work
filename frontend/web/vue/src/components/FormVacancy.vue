@@ -1,10 +1,10 @@
 <template>
     <div>
-        <template v-if="lengthCompany === 0">
-            <v-subheader>Для создания вакансии добавьте компанию или частное лицо </v-subheader>
-            <router-link class="vacancy__link" to="/personal-area/add-company">
+        <template v-if="companyFlag === '' || companyFlag === null">
+            <v-subheader>Для создания вакансии заполните страницу компании</v-subheader>
+            <router-link class="vacancy__link" to="/personal-area/edit-company">
                 <v-btn class="vacancy__link">
-                    Создать
+                    Перейти к компании
                 </v-btn>
             </router-link>
         </template>
@@ -122,7 +122,6 @@
                 let data = {
                     phone: this.formData.phone,
                     city_id: this.formData.vacancyCity,
-                    company_id: this.formData.companyName,
                     main_category_id: this.formData.category.mainCategoriesVacancy,
                     category: this.formData.category.subcategories,
                     post: this.formData.post,
@@ -179,17 +178,9 @@
                 });
             },
             getNameCompany() {
-                this.$store.dispatch('getCompanyName', this.$route.params.id)
+                this.$store.dispatch('getCompanyName')
                     .then(data => {
-                        this.lengthCompany = data.length;
-                        FormVacancy.companyName.items = [];
-                        for (let i = 0; i < data.length; i++) {
-                            if(data[i].name) {
-                                FormVacancy.companyName.items.push(data[i]);
-                            } else {
-                                FormVacancy.companyName.items.push({name: data[i].contact_person, id: data[i].id});
-                            }
-                        }
+                        this.companyFlag = data.contact_person;
                         this.$forceUpdate();
                     }).catch(error => {
                     this.$swal({
@@ -245,7 +236,7 @@
             },
         },
         beforeRouteLeave(to, from, next) {
-            if ((this.formData.vacancyCity.length > 0 || this.formData.companyName.length > 0 || this.formData.post.length > 0 || this.formData.duties.length > 0) && !this.valid) {
+            if ((this.formData.vacancyCity.length > 0 || this.formData.post.length > 0 || this.formData.duties.length > 0) && !this.valid) {
                 next(false);
                 this.$swal({
                     title: 'Вы точно не хотите сохранить резюме?',

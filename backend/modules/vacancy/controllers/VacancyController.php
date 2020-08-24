@@ -3,6 +3,7 @@
 namespace backend\modules\vacancy\controllers;
 
 use common\models\VacancyCategory;
+use common\models\VacancyProfession;
 use dektrium\user\filters\AccessRule;
 use Yii;
 use common\models\Vacancy;
@@ -146,8 +147,11 @@ class VacancyController extends Controller
      */
     public function actionDelete($id)
     {
+        VacancyProfession::deleteAll(['vacancy_id'=>$id]);
+        VacancyCategory::deleteAll(['vacancy_id'=>$id]);
         $this->findModel($id)->delete();
-
+        if(Yii::$app->request->isAjax)
+            return true;
         return $this->redirect(['index']);
     }
 
