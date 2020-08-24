@@ -111,4 +111,14 @@
     font-size: 12px;
     color: #ff5252;
   }
+  .all-banners .v-list--two-line .v-list__tile {
+    height: auto !important;
+  }
+
+  .disabled-banner .v-select__slot {
+      background: #d2d2d2;
+  }
+  .widthMC {
+      width: max-content !important;
+  }
 </style>

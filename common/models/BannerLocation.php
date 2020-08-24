@@ -39,6 +39,8 @@ class BannerLocation extends WorkActiveRecord
     public function rules()
     {
         return [
+            [['banner_id', 'category_id', 'city_id'], 'integer'],
+            [['banner_id', 'city_id'], 'required'],
             ['banner_id', 'exist', 'targetRelation' => 'banner', 'skipOnEmpty' => false],
             ['category_id', 'exist', 'targetRelation' => 'category'],
             ['city_id', 'exist', 'targetRelation' => 'city'],

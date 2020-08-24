@@ -50,7 +50,7 @@ class User extends \dektrium\user\models\User implements IdentityInterface
 
     public function extraFields()
     {
-        return ['employer', 'unreadMessages', 'unreadUpdates'];
+        return ['employer', 'unreadMessages', 'unreadUpdates', 'company'];
     }
 
     public function getEmployer()

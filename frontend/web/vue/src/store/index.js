@@ -8,6 +8,8 @@ import resume from './modules/resume';
 import vacancy from './modules/vacancy';
 import company from './modules/company';
 import updates from './modules/updates';
+import payment from './modules/payment';
+import banners from './modules/banners';
 
 Vue.use(Vuex);
 
@@ -24,6 +26,8 @@ export default new Vuex.Store({
         vacancy,
         company,
         updates,
+        payment,
+        banners,
     },
     strict: false,
 });
