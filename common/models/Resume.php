@@ -34,6 +34,7 @@ use yii\db\ActiveRecord;
  * @property integer $update_time
  * @property string $phone
  * @property integer $birth_date
+ * @property integer $audit_status
  *
  * @property Employer $employer
  * @property EmploymentType $employment_type
@@ -54,6 +55,10 @@ class Resume extends WorkActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_HIDDEN = 2;
 
+    const AUDIT_STATUS_NONE = 0;
+    const AUDIT_STATUS_NEEDED = 1;
+    const AUDIT_STATUS_FINISHED = 2;
+
     const NOTIFICATION_STATUS_OK=0;
     const NOTIFICATION_STATUS_1_WEEK=1;
     const NOTIFICATION_STATUS_2_WEEKS=2;
@@ -64,6 +69,10 @@ class Resume extends WorkActiveRecord
 
     public static $experiences = [
         'Без опыта работы', 'От 1 года', 'От 3 лет', 'От 5 лет'
+    ];
+
+    public static $audit_statuses = [
+        'Не нуждается в аудите', 'Нуждается в аудите', 'Прошло аудит'
     ];
 
     public function getRelateDeleteList()
@@ -97,7 +106,7 @@ class Resume extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'notification_status', 'hot', 'city_id'], 'integer'],
+            [['employer_id', 'status', 'created_at', 'updated_at', 'employment_type_id', 'owner', 'update_time', 'years_of_exp', 'notification_status', 'hot', 'city_id', 'audit_status'], 'integer'],
             [['title', 'image_url', 'skype', 'instagram', 'facebook', 'vk', 'phone'], 'string', 'max' => 255],
             [['birth_date'], 'date', 'format' => 'php:Y-m-d'],
             [['description'], 'string'],
@@ -135,7 +144,8 @@ class Resume extends WorkActiveRecord
             'created_at' => 'Дата создания',
             'updated_at' => 'Изменено',
             'phone' => 'Номер телефона',
-            'birth_date' => 'Дата рождения'
+            'birth_date' => 'Дата рождения',
+            'audit_status' => 'Статус аудита'
         ];
     }
 

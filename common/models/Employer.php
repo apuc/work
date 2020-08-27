@@ -22,6 +22,7 @@ use yii\db\ActiveRecord;
  * @property integer $updated_at
  * @property integer $owner
  * @property integer $age
+ * @property integer $audit_count
  *
  * @property User $user
  * @property Resume[] $resume
@@ -63,7 +64,7 @@ class Employer extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'status', 'created_at', 'updated_at', 'owner'], 'integer'],
+            [['user_id', 'status', 'created_at', 'updated_at', 'owner', 'audit_count'], 'integer'],
             [['first_name', 'second_name'], 'string', 'max' => 255],
             [['birth_date'], 'date', 'format' => "Y-m-d"],
             [['user_id'], 'required'],
@@ -89,7 +90,8 @@ class Employer extends WorkActiveRecord
             'status' => 'Статус',
             'created_at' => 'Дата создания',
             'updated_at' => 'Изменен',
-            'owner' => 'Пользователь'
+            'owner' => 'Пользователь',
+            'audit_count' => 'Количество доступных аудитов резюме'
         ];
     }
 

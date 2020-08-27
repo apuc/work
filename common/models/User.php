@@ -6,7 +6,10 @@ use yii\web\IdentityInterface;
 /**
  * This is the model class for table "user".
  *
+ * @property integer $status
+ *
  * @property Employer $employer
+ * @property Company $company
  */
 class User extends \dektrium\user\models\User implements IdentityInterface
 {

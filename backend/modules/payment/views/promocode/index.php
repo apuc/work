@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Promocode;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -21,6 +22,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'code',
+            [
+                'attribute' => 'usages_left',
+                'value' => function($model) {
+                    if ($model->usages_left === null) {
+                        return 'Неограничено';
+                    }
+                    return $model->usages_left;
+                }
+            ],
+            [
+                'attribute' => 'action',
+                'value' => function($model) {
+                    $actions = Promocode::getActions();
+                    return isset($actions[$model->action])?$actions[$model->action]:null;
+                }
+            ],
             ['attribute' => 'active_until', 'format' => ['date', 'php:d-m-Y']],
             ['attribute' => 'created_at', 'format' => ['date', 'php:d-m-Y']],
 

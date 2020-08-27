@@ -12,8 +12,10 @@ class PromocodeForm extends Promocode
     {
         return [
             [['active_until'], 'date', 'format' => 'php:d-m-Y'],
+            [['usages_left'], 'integer', 'min'=>0],
             [['code'], 'required'],
             [['code'], 'string', 'max' => 50],
+            [['action'], 'string', 'max' => 64],
         ];
     }
 
