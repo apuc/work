@@ -207,4 +207,27 @@ class ResumeController extends MyActiveController
         return $return;
     }
 
+    public function actionAudit(){
+        $id = Yii::$app->request->post('id');
+        $model = Resume::findOne($id);
+        if (!$model) {
+            throw new UserException('Такого резюме не существует');
+        }
+        if (Yii::$app->user->isGuest) {
+            throw new UserException('Вы не авторизованы');
+        }
+        if ($model->owner != Yii::$app->user->id) {
+            throw new UserException('У вас нет прав для совершения этого действия');
+        }
+        $employer = Employer::findOne(['user_id' => Yii::$app->user->id]);
+        if ($employer->audit_count > 0) {
+            $model->audit_status = Resume::AUDIT_STATUS_NEEDED;
+            $model->save();
+            $employer->audit_count--;
+            $employer->save();
+            return true;
+        }
+        throw new UserException('У вас нет возможности заказать аудит резюме');
+    }
+
 }
