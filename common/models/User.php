@@ -6,7 +6,10 @@ use yii\web\IdentityInterface;
 /**
  * This is the model class for table "user".
  *
+ * @property integer $status
+ *
  * @property Employer $employer
+ * @property Company $company
  */
 class User extends \dektrium\user\models\User implements IdentityInterface
 {
@@ -50,7 +53,7 @@ class User extends \dektrium\user\models\User implements IdentityInterface
 
     public function extraFields()
     {
-        return ['employer', 'unreadMessages', 'unreadUpdates'];
+        return ['employer', 'unreadMessages', 'unreadUpdates', 'company'];
     }
 
     public function getEmployer()

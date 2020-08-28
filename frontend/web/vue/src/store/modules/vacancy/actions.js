@@ -86,6 +86,45 @@ const actions = {
                 });
         })
     },
+    buyRenew({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.post('/request/vacancy/buy-renew')
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
+    buyCreate({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.post('/request/vacancy/buy-create')
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
+    vacancyDay({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.post('/request/vacancy/buy-vacancy-day', {vacancy_id: payload})
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
 };
 
 export default actions;

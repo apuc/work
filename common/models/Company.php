@@ -29,6 +29,7 @@ use yii\db\ActiveRecord;
  * @property bool $is_trusted
  * @property float $balance
  * @property integer $vacancy_renew_count
+ * @property integer $create_vacancy
  *
  * @property User $user
  * @property Vacancy[] $vacancy
@@ -71,7 +72,7 @@ class Company extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['user_id', 'status', 'created_at', 'updated_at', 'create_vacancy'], 'integer'],
             [['vacancy_renew_count'], 'integer', 'max' => 255],
             [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person', 'image_url'], 'string', 'max' => 255],
             [['activity_field', 'description'], 'string'],
@@ -108,7 +109,8 @@ class Company extends WorkActiveRecord
             'created_at' => 'Создан',
             'updated_at' => 'Изменен',
             'is_trusted' => 'Доверенная',
-            'vacancy_renew_count' => 'Оставшееся количество подъёмов'
+            'vacancy_renew_count' => 'Оставшееся количество подъёмов',
+            'create_vacancy' => 'Оставшееся количество вакансий'
         ];
     }
 

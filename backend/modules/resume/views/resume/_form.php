@@ -36,8 +36,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'max_salary')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'description')->textarea() ?>
 
     <?= $form->field($model, 'skype')->textInput(['maxlength' => true]) ?>
@@ -71,6 +69,8 @@ use yii\widgets\ActiveForm;
         Resume::STATUS_ACTIVE => 'Активно',
         Resume::STATUS_INACTIVE => 'Не активно',
     ]); ?>
+
+    <?= $form->field($model, 'audit_status')->dropDownList(Resume::$audit_statuses); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>

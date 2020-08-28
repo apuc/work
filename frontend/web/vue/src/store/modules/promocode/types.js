@@ -1,0 +1,1 @@
+export const GET_OPERATIONS = 'GET_OPERATIONS';

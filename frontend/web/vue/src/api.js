@@ -19,7 +19,7 @@ function getCookie(name){
 }
 
 if (location.hostname === "localhost"){
-    params.headers['Authorization'] = 'Bearer gumc81uCjdxD39LMeBz8F3Yq3xMVBfgx';
+    params.headers['Authorization'] = 'Bearer lCLRMuK9jOXl_ZUiHiVO0Lj1mZR9feEg';
 } else {
     let getCookKey = getCookie('key');
     localStorage.localKey = getCookKey;

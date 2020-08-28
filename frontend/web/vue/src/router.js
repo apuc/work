@@ -4,17 +4,23 @@ import MainPage from './components/MainPage.vue'
 import MyMessage from './components/MyMessage.vue'
 import FormVacancy from './components/FormVacancy.vue'
 import FormResume from './components/FormResume.vue'
-import FormCompany from './components/FormCompany.vue'
+// import FormCompany from './components/FormCompany.vue'
 import AllVacancy from './components/AllVacancy.vue'
 import EditVacancy from './components/EditVacancy'
 import AllResume from './components/AllResume.vue'
 import EditResume from './components/EditResume.vue'
-import AllCompany from './components/AllCompany.vue'
+// import AllCompany from './components/AllCompany.vue'
 import EditCompany from './components/EditCompany.vue'
 import EditProfile from './components/EditProfile.vue'
 import CompanyRight from './components/CompanyRight.vue'
 import CompanyTransfer from './components/CompanyTransfer.vue'
 import Updates from './components/Updates.vue'
+import Payment from './components/Payment.vue'
+import AddBanner from './pages/Banners/AddBanner.vue'
+import BannerList from './pages/Banners/BannerList.vue'
+import EditBanner from './pages/Banners/EditBanner.vue'
+import AddPromo from './pages/Promo/AddPromo'
+import Operations from './pages/Operations/Operations'
 
 Vue.use(Router);
 
@@ -114,6 +120,42 @@ export default new Router({
       name: 'updates',
       meta: {title: 'Обновления'},
       component: Updates
-    }
+    },
+    {
+      path: '/personal-area/payment',
+      name: 'payment',
+      meta: {title: 'Оплата'},
+      component: Payment
+    },
+    {
+      path: '/personal-area/banners',
+      name: 'banners',
+      meta: {title: 'Баннеры'},
+      component: BannerList
+    },
+    {
+      path: '/personal-area/add-banner',
+      name: 'add-banner',
+      meta: {title: 'Добавление баннера'},
+      component: AddBanner
+    },
+    {
+      path: '/personal-area/edit-banner/:id',
+      name: 'edit-banner',
+      meta: {title: 'Редактирование баннер'},
+      component: EditBanner
+    },
+    {
+      path: '/personal-area/promo',
+      name: 'promo',
+      meta: {title: 'Промо коды'},
+      component: AddPromo
+    },
+    {
+      path: '/personal-area/operations',
+      name: 'operations',
+      meta: {title: 'Список операций'},
+      component: Operations
+    },
   ]
 })

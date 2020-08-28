@@ -114,6 +114,20 @@ const actions = {
                 });
         })
     },
+    getServicePrice({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.get('/request/service-price')
+                .then(res => {
+                    commit(type.GET_SERVICE_PRICE, res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
 };
 
 export default actions;

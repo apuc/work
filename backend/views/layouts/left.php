@@ -40,7 +40,15 @@
                             ['label' => 'Сотрудники', 'url' => ['/employer/employer/index'], 'user-o'],
                         ],
                     ],
-                    ['label' => 'Резюме', 'url' => ['/resume/resume/index'], 'icon' => 'id-card-o'],
+                    [
+                        'label' => 'Резюме', 'url' => '#', 'icon'=>'id-card-o',
+                        'items' => [
+                            ['label' => 'Все резюме', 'url' => ['/resume/resume/index'], 'icon' => 'id-card-o'],
+                            ['label' => 'Нуждающиеся в аудите', 'url' => ['/resume/resume/index?ResumeSearch[audit_status]='.\common\models\Resume::AUDIT_STATUS_NEEDED], 'icon' => 'id-card-o'],
+                            ['label' => 'Прошедшие аудит', 'url' => ['/resume/resume/index?ResumeSearch[audit_status]='.\common\models\Resume::AUDIT_STATUS_FINISHED], 'icon' => 'id-card-o'],
+
+                        ],
+                    ],
                     ['label' => 'Вакансии', 'url' => ['/vacancy/vacancy/index'], 'icon' => 'address-book-o'],
                     ['label' => 'Баннеры', 'url' => ['/banner/banner/index'], 'icon' => 'thumb-tack'],
                     [

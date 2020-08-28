@@ -6,6 +6,8 @@ namespace frontend\modules\request\controllers;
 use common\classes\Debug;
 use common\models\Category;
 use common\models\Company;
+use common\models\Operation;
+use common\models\ServicePrice;
 use common\models\Vacancy;
 use common\models\VacancyCategory;
 use Yii;
@@ -134,16 +136,21 @@ class VacancyController extends MyActiveController
         }
         /** @var Company $company */
         $company = Yii::$app->user->identity->company;
-        if(!$company)
+        if (!$company)
             throw new UserException('У вас нет компании', 400);
-        if(!$company->contact_person)
+        if (!$company->contact_person)
             throw new UserException('Заполните компанию', 400);
+        if ($company->create_vacancy == 0)
+            throw new UserException('У вас не осталось вакансий', 400);
         $model->load($params, '');
         $model->get_update_id = 1;
         $model->company_id = $company->id;
         $model->update_time = time();
         $model->publisher_id = Yii::$app->user->id;
+        $model->active_until = time() + (86400 * 30);
         if ($model->save()) {
+            $model->company->create_vacancy--;
+            $model->company->save();
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
         } elseif (!$model->hasErrors()) {
@@ -234,5 +241,76 @@ class VacancyController extends MyActiveController
             $id++;
         }
         return $array;
+    }
+
+    public function actionBuyRenew()
+    {
+        if (Yii::$app->user->identity->status < 20) {
+            throw new UserException('Вам не разрешено это действие');
+        }
+        /** @var Company $company */
+        $company = Yii::$app->user->identity->company;
+        if (!$company) {
+            throw new UserException('У вас нет прав для совершения этого действия');
+        }
+        if (!$servicePrice = ServicePrice::findOne(['alias'=>'vacancy_renew'])) {
+            throw new UserException('Ошибка сервера');
+        }
+        if (!$company->balance < $servicePrice->price)
+            throw new UserException('У вас недостаточно средств на счету');
+        $company->balance -= $servicePrice->price;
+        $company->vacancy_renew_count++;
+        $company->save();
+        Operation::createOperation($servicePrice);
+        return true;
+    }
+
+    public function actionBuyCreate()
+    {
+        if (Yii::$app->user->identity->status < 20) {
+            throw new UserException('Вам не разрешено это действие');
+        }
+        /** @var Company $company */
+        $company = Yii::$app->user->identity->company;
+        if (!$company) {
+            throw new UserException('У вас нет прав для совершения этого действия');
+        }
+        if (!$servicePrice = ServicePrice::findOne(['alias'=>'vacancy_create'])) {
+            throw new UserException('Ошибка сервера');
+        }
+        if ($company->balance < $servicePrice->price)
+            throw new UserException('У вас недостаточно средств на счету');
+        $company->balance -= $servicePrice->price;
+        $company->create_vacancy++;
+        $company->save();
+        Operation::createOperation($servicePrice);
+        return true;
+    }
+
+    public function actionBuyVacancyDay()
+    {
+        if (Yii::$app->user->identity->status < 20) {
+            throw new UserException('Вам не разрешено это действие');
+        }
+        /** @var Company $company */
+        $company = Yii::$app->user->identity->company;
+        if (!$company) {
+            throw new UserException('У вас нет прав для совершения этого действия');
+        }
+        if (!$servicePrice = ServicePrice::findOne(['alias'=>'day_vacancy'])) {
+            throw new UserException('Ошибка сервера');
+        }
+        $vacancy_id = Yii::$app->request->getBodyParam('vacancy_id');
+        if (!$vacancy = Vacancy::findOne($vacancy_id))
+            throw new UserException('Такой вакансии не существует');
+        if ($company->balance < $servicePrice->price)
+            throw new UserException('У вас недостаточно средств на счету');
+        $vacancy->day_vacancy_until = time() + (86400*7);
+        $vacancy->save();
+        $company->balance -= $servicePrice->price;
+        $company->save();
+        Operation::createOperation($servicePrice);
+
+        return true;
     }
 }

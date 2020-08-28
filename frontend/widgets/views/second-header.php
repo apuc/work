@@ -11,15 +11,6 @@ use yii\helpers\Url;
 ?>
 
 <header class="header-wrap jsHeaderIndex">
-    <img class="header-wrap__bg"
-         src="<?=!empty(Yii::$app->controller->background_image)?Yii::$app->controller->background_image:'/images/bg_header_vacancies.jpeg'?>"
-         alt="Фоновое изображение"
-    >
-    <img class="header-wrap__emblem"
-         src="<?=!empty(Yii::$app->controller->background_emblem)?Yii::$app->controller->background_emblem:'/images/img2.png'?>"
-         alt="Фоновая эмблема"
-         role="presentation"
-    />
     <div class="container">
         <div class="header">
             <div class="home__main-top">
@@ -86,23 +77,23 @@ use yii\helpers\Url;
                         <img src="/images/logo-main.png" alt="Логотип rabota.today" role="presentation"/>
                     </a>
                 </div>
-                <div class="home__main-content">
-                    <?php
-                        if(Yii::$app->controller->module->id === 'resume')
-                            $url = Resume::getSearchPageUrl();
-                        else
-                            $url = Vacancy::getSearchPageUrl();
-                    ?>
-                    <?= Html::beginForm([$url], 'get', ['class' => 'home__form']) ?>
-                    <input name="search_text" class="home__form-input" placeholder="Я ищу..." type="text"/>
-                    <?= Html::submitButton(
-                        '<i class="fa fa-search"></i>',
-                        ['class' => 'home__search btn-red']
-                    ) ?>
-                    <?= Html::endForm() ?>
-                    <a class="btn btn-red mr20" href="/personal-area/add-resume">разместить резюме</a>
-                    <a class="btn btn-red" href="/personal-area/add-vacancy">создать вакансию</a>
-                </div>
+<!--                <div class="home__main-content">-->
+<!--                    --><?php
+//                        if(Yii::$app->controller->module->id === 'resume')
+//                            $url = Resume::getSearchPageUrl();
+//                        else
+//                            $url = Vacancy::getSearchPageUrl();
+//                    ?>
+<!--                    --><?//= Html::beginForm([$url], 'get', ['class' => 'home__form']) ?>
+<!--                    <input name="search_text" class="home__form-input" placeholder="Я ищу..." type="text"/>-->
+<!--                    --><?//= Html::submitButton(
+//                        '<i class="fa fa-search"></i>',
+//                        ['class' => 'home__search btn-red']
+//                    ) ?>
+<!--                    --><?//= Html::endForm() ?>
+<!--                    <a class="btn btn-red mr20" href="/personal-area/add-resume">разместить резюме</a>-->
+<!--                    <a class="btn btn-red" href="/personal-area/add-vacancy">создать вакансию</a>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
