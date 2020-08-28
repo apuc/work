@@ -77,23 +77,6 @@ use yii\helpers\Url;
                         <img src="/images/logo-main.png" alt="Логотип rabota.today" role="presentation"/>
                     </a>
                 </div>
-<!--                <div class="home__main-content">-->
-<!--                    --><?php
-//                        if(Yii::$app->controller->module->id === 'resume')
-//                            $url = Resume::getSearchPageUrl();
-//                        else
-//                            $url = Vacancy::getSearchPageUrl();
-//                    ?>
-<!--                    --><?//= Html::beginForm([$url], 'get', ['class' => 'home__form']) ?>
-<!--                    <input name="search_text" class="home__form-input" placeholder="Я ищу..." type="text"/>-->
-<!--                    --><?//= Html::submitButton(
-//                        '<i class="fa fa-search"></i>',
-//                        ['class' => 'home__search btn-red']
-//                    ) ?>
-<!--                    --><?//= Html::endForm() ?>
-<!--                    <a class="btn btn-red mr20" href="/personal-area/add-resume">разместить резюме</a>-->
-<!--                    <a class="btn btn-red" href="/personal-area/add-vacancy">создать вакансию</a>-->
-<!--                </div>-->
             </div>
         </div>
     </div>
