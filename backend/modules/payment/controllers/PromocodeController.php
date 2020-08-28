@@ -4,6 +4,7 @@ namespace backend\modules\payment\controllers;
 
 use backend\modules\payment\models\PromocodeForm;
 use backend\modules\payment\models\PromocodeMultipleForm;
+use common\classes\Debug;
 use Yii;
 use common\models\Promocode;
 use yii\data\ActiveDataProvider;
@@ -38,7 +39,7 @@ class PromocodeController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Promocode::find(),
+            'query' => Promocode::find()->orderBy('id DESC'),
         ]);
 
         return $this->render('index', [
@@ -111,6 +112,7 @@ class PromocodeController extends Controller
      */
     public function actionUpdate($id)
     {
+//        Debug::dd(Yii::$app->request->post());
         if(!$model = PromocodeForm::findOne($id))
             throw new NotFoundHttpException('The requested page does not exist.');
 

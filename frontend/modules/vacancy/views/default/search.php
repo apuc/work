@@ -190,7 +190,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                                     && Yii::$app->user->identity->email === "test@test.test"
                             )
                         ?>
-                            <?= $vacancy->is_day_vacancy
+                            <?= $vacancy->day_vacancy_until > time()
                                 ? $this->render('/parts/_vacancy_day', compact('vacancy'))
                                 : $this->render('/parts/_vacancy_standart', compact(['vacancy', 'flag', 'searchModel']))
                             ?>

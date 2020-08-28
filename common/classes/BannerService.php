@@ -197,7 +197,7 @@ class BannerService extends Component
     public function getRandomBanner($categoryId, $cityId)
     {
         return Banner::find()
-            ->where(['is_active'=>Banner::STATUS_ACTIVE])
+            ->where(['>', 'active_until', time()])
             ->joinWith('bannerLocations')
             ->andFilterWhere(['category_id'=>$categoryId])
             ->andFilterWhere(['city_id'=>$cityId])

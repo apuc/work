@@ -27,6 +27,10 @@ class EmployerController extends MyActiveController
         return $actions;
     }
 
+    public function actionMyIndex(){
+        return Employer::find()->where(['user_id'=>Yii::$app->user->id])->one();
+    }
+
     /**
      * @param $id
      * @return Employer
@@ -104,6 +108,14 @@ class EmployerController extends MyActiveController
             ];
         }
         return $result;
+    }
+
+    public function actionGetPaymentHash() {
+        $amount = Yii::$app->request->get('amount');
+        $company = Company::find()->where(['user_id' => Yii::$app->user->id])->one();
+        if(!$company)
+            throw new UserException('У вас нет прав на совершение этого действия');
+        return md5('214123'.':'.$amount.':'.'m648uqdn'.':'.$company->id);
     }
 
 }

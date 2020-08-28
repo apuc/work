@@ -7,6 +7,8 @@ use Yii;
 
 class FileHandler
 {
+    private static $counter = 0;
+
     public static function saveFileFromBase64($imageData, $folder){
         $data = explode(',', $imageData);
         if(count($data)<2) {
@@ -16,7 +18,7 @@ class FileHandler
         $dir = Yii::getAlias('@frontend/web/media/'.$folder);
         if (!file_exists($dir))
             mkdir($dir);
-        $file_name = md5(time().Yii::$app->user->id);
+        $file_name = md5(time().Yii::$app->user->id.self::$counter);
         $folder1 = substr($file_name, 0, 2);
         $folder2 = substr($file_name, 2, 2);
         $file_name = substr($file_name, 4);
@@ -34,6 +36,7 @@ class FileHandler
         $file = fopen($dir . '/' . $file_name . '.' . $file_type, "wb");
         fwrite($file, $image);
         fclose($file);
+        self::$counter++;
         return '/media/'.$folder.'/'.$folder1.'/'.$folder2.'/'.$file_name.'.'.$file_type;
     }
 }
