@@ -328,20 +328,38 @@
                 });
             },
             vacancyDay(vacancyId) {
-                this.$store.dispatch('vacancyDay', vacancyId)
-                    .then(data => {
-                        this.getVacancy(this.paginationCurrentPage);
-                        this.getCompany();
-                        return data;
-                    }).catch(error => {
-                    this.$swal({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        type: 'error',
-                        title: error.message
-                    })
+                let price = 0;
+                this.servicePrice.forEach( (item) => {
+                    if (item.alias === 'day_vacancy') {
+                        price = item.price
+                    }
+                });
+                this.$swal({
+                    title: 'Цена ' + price + ' ₽. Вы уверены?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Да',
+                    cancelButtonText: 'Нет'
+                }).then((result) => {
+                    if (result.value) {
+                        this.$store.dispatch('vacancyDay', vacancyId)
+                            .then(data => {
+                                this.getVacancy(this.paginationCurrentPage);
+                                this.getCompany();
+                                return data;
+                            }).catch(error => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: error.message
+                            })
+                        });
+                    }
                 });
             },
             vacancyUpdate(index, vacancyId) {
