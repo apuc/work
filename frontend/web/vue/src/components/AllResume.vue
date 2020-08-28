@@ -2,6 +2,7 @@
     <div>
         <v-subheader class="all-head">
             Ваши резюме
+            <span v-if="userMe.audit_count > 0" class="audit">( Вы можете заказать аудит резюме <span class="hint" title="Наши специалисты просмотрят ваше резюме и внесут корректировки">?</span>)</span>
             <router-link class="vacancy__link" to="/personal-area/add-resume">
                 <v-btn class="vacancy__link">
                     Добавить резюме
@@ -34,7 +35,8 @@
                                     </a>
                                 </v-list-tile-title>
                                 <v-list-tile-sub-title class="mt-auto mb-auto">Последнее обновление: {{ item.update_time
-                                    }}
+                                    }} <span v-if="item.audit_status === 1">Ожидает аудита</span>
+                                    <span v-if="item.audit_status === 2">Аудит пройден</span>
                                 </v-list-tile-sub-title>
                                 <v-divider style="width: 100%;"></v-divider>
                                 <span v-if="item.status == 2" class="all-resume-hide">скрыто</span>
@@ -73,6 +75,16 @@
                                             Поднять в ТОП
                                         </v-btn>
                                     </v-list-tile>
+                                    <v-list-tile v-if="userMe.audit_count > 0">
+                                        <v-btn
+                                               class="edit-btn"
+                                               type="button"
+                                               title="Заказать аудит"
+                                               @click="purchaseAudit(item.id)"
+                                        >
+                                            Заказать аудит
+                                        </v-btn>
+                                    </v-list-tile>
                                     <v-list-tile>
                                         <v-btn
                                                class="edit-btn"
@@ -107,6 +119,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 
     export default {
         name: "AllResume",
@@ -124,6 +137,34 @@
             this.getResume(1);
         },
         methods: {
+            purchaseAudit(id) {
+                this.$store.dispatch('purchaseAudit', {id: id})
+                    .then(data => {
+                        this.$store.dispatch('getUserMe', this.$route.params.id)
+                            .then(data => {
+                                return data;
+                            }).catch(error => {
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                type: 'error',
+                                title: error.message
+                            })
+                        });
+                        return data;
+                    }).catch(error => {
+                    this.$swal({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        type: 'error',
+                        title: error
+                    })
+                })
+            },
             getResume(page) {
                 this.$store.dispatch('getAllResume', page)
                     .then(data => {
@@ -211,6 +252,12 @@
 
                 return val.charAt(0).toUpperCase() + val.slice(1);
             },
+        },
+
+        computed: {
+            ...mapGetters([
+                'userMe',
+            ])
         }
     }
 </script>
@@ -251,5 +298,23 @@
         line-height: 1;
         border-radius: 6px;
         border: 1px solid rgba(0,0,0,0.12);
+    }
+    .audit {
+        display: flex;
+        align-items: center;
+    }
+    .hint {
+        width: 20px;
+        height: 20px;
+        background: #5055ef;
+        border-radius: 50%;
+        border: 1px solid #000000;
+        cursor: pointer;
+        font-size: 12px;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 10px;
     }
 </style>

@@ -9,6 +9,8 @@ use common\models\BannerLocation;
 use common\models\Category;
 use common\models\City;
 use common\models\Company;
+use common\models\Operation;
+use common\models\ServicePrice;
 use Yii;
 use yii\base\UserException;
 use yii\web\HttpException;
@@ -143,15 +145,18 @@ class BannerController extends MyActiveController
         if (!$company) {
             throw new UserException('У вас нет прав для совершения этого действия');
         }
+        if (!$servicePrice = ServicePrice::findOne(['alias'=>'banner_activate'])) {
+            throw new UserException('Ошибка сервера');
+        }
         $price = 0;
         foreach ($banner->bannerLocations as $bannerLocation) {
             if ($bannerLocation->city_id) {
-                $price += 500;
+                $price += $servicePrice->price*2;
             } else {
                 throw new UserException("Такого города нет.");
             }
             if ($bannerLocation->category_id)
-                $price -= 250;
+                $price -= $servicePrice->price;
         }
         if ($company->balance < $price) {
             throw new UserException('У вас недостаточно средств на счету');
@@ -163,23 +168,26 @@ class BannerController extends MyActiveController
         else
             $banner->active_until += 86400*30;
         $banner->save();
+        Operation::createOperation($servicePrice, $price);
         return true;
     }
 
     public function actionGetPrice() {
         $params = json_decode(Yii::$app->request->getQueryParam('city_category'), true);
-//        print_r($params[0]); die;
+        if (!$servicePrice = ServicePrice::findOne(['alias'=>'banner_activate'])) {
+            throw new UserException('Ошибка сервера');
+        }
         if(!isset($params))
             throw new UserException('Добавьте связь');
         $price = 0;
         foreach ($params as $city_category) {
             if (City::findOne($city_category['city_id'])) {
-                $price += 500;
+                $price += $servicePrice->price * 2;
             } else {
                 throw new UserException("Такого города нет.");
             }
             if (Category::findOne($city_category['category_id']))
-                $price -= 250;
+                $price -= $servicePrice->price;
         }
         return $price;
     }

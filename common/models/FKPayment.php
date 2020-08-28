@@ -15,6 +15,7 @@ use Yii;
  * @property string $phone Телефон плательщика
  * @property int $currency_id Электронная валюта
  * @property string $sign Подпись
+ * @property int $date Дата
  *
  * @property Company $company
  */
@@ -36,7 +37,7 @@ class FKPayment extends \yii\db\ActiveRecord
         return [
             [['amount', 'operation_number'], 'required'],
             [['amount'], 'number'],
-            [['operation_number', 'company_id', 'currency_id'], 'integer'],
+            [['operation_number', 'company_id', 'currency_id', 'date'], 'integer'],
             [['email', 'phone', 'sign'], 'string', 'max' => 255],
             [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']],
         ];
@@ -56,6 +57,7 @@ class FKPayment extends \yii\db\ActiveRecord
             'phone' => 'Телефон плательщика',
             'currency_id' => 'Электронная валюта',
             'sign' => 'Подпись',
+            'date' => 'Дата',
         ];
     }
 

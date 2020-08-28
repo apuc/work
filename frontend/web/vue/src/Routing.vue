@@ -203,6 +203,20 @@ export default {
           show: true
         },
         {
+          title: 'Промо коды',
+          url: '/personal-area/promo',
+          img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/promo.png',
+          addFlag: false,
+          show: true
+        },
+        {
+          title: 'Список операций',
+          url: '/personal-area/operations',
+          img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/lists.png',
+          addFlag: false,
+          show: true
+        },
+        {
           title: 'Обновления',
           url: '/personal-area/updates',
           img: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/updates.png',
@@ -247,6 +261,7 @@ export default {
               this.linkMenu[4].show = false;
               this.linkMenu[6].show = false;
               this.linkMenu[7].show = false;
+              this.linkMenu[9].show = false;
             }
             if (data.user.status >= 20) {
               this.linkMenu[3].show = false;

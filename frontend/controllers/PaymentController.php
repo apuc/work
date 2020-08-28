@@ -38,7 +38,8 @@ class PaymentController extends Controller
             'currency_id' => $data['CUR_ID'],
             'amount' => $data['AMOUNT'],
             'operation_number' => $data['intid'],
-            'sign' => $data['SIGN']
+            'sign' => $data['SIGN'],
+            'date' => time()
         ], '');
         if($payment->sign === md5($this->merchant_id.':'.$payment->amount.':'.$this->secret_word2.':'.$payment->company_id)) {
             if($payment->save() && $company = Company::findOne($payment->company_id)) {

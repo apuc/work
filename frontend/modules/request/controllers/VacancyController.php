@@ -6,6 +6,7 @@ namespace frontend\modules\request\controllers;
 use common\classes\Debug;
 use common\models\Category;
 use common\models\Company;
+use common\models\Operation;
 use common\models\ServicePrice;
 use common\models\Vacancy;
 use common\models\VacancyCategory;
@@ -256,6 +257,7 @@ class VacancyController extends MyActiveController
         $company->balance -= $servicePrice->price;
         $company->vacancy_renew_count++;
         $company->save();
+        Operation::createOperation($servicePrice);
         return true;
     }
 
@@ -275,6 +277,7 @@ class VacancyController extends MyActiveController
         $company->balance -= $servicePrice->price;
         $company->create_vacancy++;
         $company->save();
+        Operation::createOperation($servicePrice);
         return true;
     }
 
@@ -298,6 +301,8 @@ class VacancyController extends MyActiveController
         $vacancy->save();
         $company->balance -= $servicePrice->price;
         $company->save();
+        Operation::createOperation($servicePrice);
+
         return true;
     }
 }
