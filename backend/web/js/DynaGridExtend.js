@@ -1,11 +1,6 @@
 $(document).ready(function () {
     $('.kv-row-checkbox').change(function () {
-        let deleteButton = $('#grid-delete-button');
-        if ($(".kv-row-checkbox:checked").length === 0) {
-            deleteButton.prop('disabled', true);
-        } else {
-            deleteButton.prop('disabled', false);
-        }
+        $('#grid-delete-button').prop('disabled', $(".kv-row-checkbox:checked").length === 0);
     });
     $('#grid-delete-button').click(function () {
         let ids = [];
