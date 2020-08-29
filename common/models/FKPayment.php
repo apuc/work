@@ -36,6 +36,7 @@ class FKPayment extends \yii\db\ActiveRecord
     {
         return [
             [['amount', 'operation_number'], 'required'],
+            [['sign'], 'unique'],
             [['amount'], 'number'],
             [['operation_number', 'company_id', 'currency_id', 'date'], 'integer'],
             [['email', 'phone', 'sign'], 'string', 'max' => 255],
