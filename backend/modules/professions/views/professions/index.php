@@ -1,50 +1,72 @@
 <?php
 
+use kartik\dynagrid\DynaGrid;
+use kartik\grid\GridView;
 use yii\helpers\Html;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\modules\professions\models\ProfessionsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Professions';
+$this->title = 'Профессии';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="professions-index">
 
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Добавить', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            //'id',
-            'title',
-            'slug',
-            'genitive',
-            [
-                'header' => 'Статус',
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{change}',
-                'buttons' => [
-                    'change' => function ($url,$model) {
-                    if ($model->status == 1){
-                        return Html::a('Скрыть', $url, ['class' => 'ajax-status', 'data-id' => $model->id, 'data-status' => '0']);
-                    }else{
-                        return Html::a('Показать', $url, ['class' => 'ajax-status', 'data-id' => $model->id, 'data-status' => '1']);
-                    }
-                    },
-                ],
+    <?php
+    $columns = [
+        ['class'=>'kartik\grid\SerialColumn', 'order'=>DynaGrid::ORDER_FIX_LEFT],
+        'title',
+        'slug',
+        'genitive',
+        [
+            'header' => 'Статус',
+            'class' => 'yii\grid\ActionColumn',
+            'template' => '{change}',
+            'buttons' => [
+                'change' => function ($url,$model) {
+                if ($model->status == 1){
+                    return Html::a('Скрыть', $url, ['class' => 'ajax-status', 'data-id' => $model->id, 'data-status' => '0']);
+                }else{
+                    return Html::a('Показать', $url, ['class' => 'ajax-status', 'data-id' => $model->id, 'data-status' => '1']);
+                }
+                },
             ],
-            'instrumental',
-
-            ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+        'instrumental',
+        [
+            'class'=>'kartik\grid\ActionColumn',
+            'dropdown'=>false,
+            'order'=>DynaGrid::ORDER_FIX_RIGHT
+        ],
+        ['class'=>'kartik\grid\CheckboxColumn', 'order'=>DynaGrid::ORDER_FIX_RIGHT],
+    ];
+
+    echo DynaGrid::widget([
+        'columns'=>$columns,
+        'storage'=>DynaGrid::TYPE_SESSION,
+        'theme'=>'panel-info',
+        'showPersonalize'=>true,
+        'gridOptions'=>[
+            'dataProvider'=>$dataProvider,
+            'filterModel'=>$searchModel,
+            'showPageSummary'=>true,
+            'floatHeader'=>true,
+            'pjax'=>true,
+            'responsiveWrap'=>false,
+            'panel'=> [
+                'heading'=>'<h3 class="panel-title">Профессии</h3>'
+            ],
+            'toolbar' =>  [
+                ['content'=>
+                    Html::button('<i class="fa fa-plus"></i>', ['type'=>'button', 'title'=>'Добавить', 'class'=>'btn btn-success']) . ' '.
+                    Html::a('<i class="fa fa-repeat"></i>', [''], ['data-pjax'=>0, 'class' => 'btn btn-outline-secondary', 'title'=>'Сбросить фильтры'])
+                ],
+                ['content'=>'{dynagridFilter}{dynagridSort}{dynagrid}'],
+                '{export}',
+            ]
+        ],
+        'options'=>['id'=>'dynagrid-1']
+    ]);
+    ?>
 </div>

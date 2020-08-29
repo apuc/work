@@ -17,6 +17,14 @@ return [
 //            // following line will restrict access to profile, recovery, registration and settings controllers from backend
 //
 //        ],
+        'dynagrid'=> [
+            'class'=>'\kartik\dynagrid\Module',
+            // other module settings
+        ],
+        'gridview'=> [
+            'class'=>'\kartik\grid\Module',
+            // other module settings
+        ],
         'company' => [
             'class' => 'backend\modules\company\Company',
         ],
