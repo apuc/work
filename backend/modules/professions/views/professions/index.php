@@ -54,12 +54,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'floatHeader'=>true,
             'pjax'=>true,
             'responsiveWrap'=>false,
+            'floatHeaderOptions' => [
+                'scrollingTop' => '0',
+            ],
             'panel'=> [
                 'heading'=>'<h3 class="panel-title">Профессии</h3>'
             ],
             'toolbar' =>  [
                 ['content'=>
-                    Html::button('<i class="fa fa-plus"></i>', ['type'=>'button', 'title'=>'Добавить', 'class'=>'btn btn-success']) . ' '.
+                    Html::button('Удалить выбранные <i class="fa fa-trash"></i>', [
+                        'type' => 'button',
+                        'title' => 'Удалить все',
+                        'class' => 'btn btn-danger',
+                        'id' => 'grid-delete-button',
+                        'disabled' => true,
+                        'data-url' => '/secure/professions/professions/batch-delete'
+                    ]) .
+                    Html::button('<i class="fa fa-plus"></i>', ['type'=>'button', 'title'=>'Добавить', 'class'=>'btn btn-success']) .
                     Html::a('<i class="fa fa-repeat"></i>', [''], ['data-pjax'=>0, 'class' => 'btn btn-outline-secondary', 'title'=>'Сбросить фильтры'])
                 ],
                 ['content'=>'{dynagridFilter}{dynagridSort}{dynagrid}'],

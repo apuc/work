@@ -19,7 +19,7 @@ return [
 //        ],
         'dynagrid'=> [
             'class'=>'\kartik\dynagrid\Module',
-            // other module settings
+            'defaultPageSize'=>20,
         ],
         'gridview'=> [
             'class'=>'\kartik\grid\Module',
