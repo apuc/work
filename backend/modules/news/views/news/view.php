@@ -7,14 +7,21 @@ use yii\widgets\DetailView;
 /* @var $model common\models\News */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'News', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Новости', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
+<style>
+    table {
+        width: 1000px;
+    }
+    tr {
+        width: 500px;
+    }
+</style>
 <div class="news-view">
 
     <p>
-        <?= Html::a('Список', ['index'], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -30,8 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title:ntext',
+            [
+                'attribute' => 'description',
+                'contentOptions' => ['style'=>'white-space: normal;']
+            ],
             'description:ntext',
-            'content:ntext',
+            'content:html',
             [
                 'attribute' => 'status',
                 'value' => function ($model) {

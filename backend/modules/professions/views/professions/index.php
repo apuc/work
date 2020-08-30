@@ -2,6 +2,7 @@
 
 use kartik\dynagrid\DynaGrid;
 use yii\helpers\Html;
+use yii\widgets\Breadcrumbs;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\modules\professions\models\ProfessionsSearch */
@@ -9,6 +10,7 @@ use yii\helpers\Html;
 
 $this->title = 'Профессии';
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['exclude_breadcrumbs'][] = true;
 ?>
 <div class="professions-index">
 
@@ -24,11 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'template' => '{change}',
             'buttons' => [
                 'change' => function ($url,$model) {
-                if ($model->status == 1){
-                    return Html::a('Скрыть', $url, ['class' => 'ajax-status', 'data-id' => $model->id, 'data-status' => '0']);
-                }else{
-                    return Html::a('Показать', $url, ['class' => 'ajax-status', 'data-id' => $model->id, 'data-status' => '1']);
-                }
+                    if ($model->status == 1) {
+                        return Html::a('Скрыть', $url, ['class' => 'ajax-status', 'data-id' => $model->id, 'data-status' => '0']);
+                    } else {
+                        return Html::a('Показать', $url, ['class' => 'ajax-status', 'data-id' => $model->id, 'data-status' => '1']);
+                    }
                 },
             ],
         ],
@@ -49,7 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'gridOptions'=>[
             'dataProvider'=>$dataProvider,
             'filterModel'=>$searchModel,
-            'showPageSummary'=>true,
             'floatHeader'=>true,
             'pjax'=>true,
             'responsiveWrap'=>false,
@@ -57,7 +58,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'scrollingTop' => '0',
             ],
             'panel'=> [
-                'heading'=>'<h3 class="panel-title">Профессии</h3>'
+                'heading'=>Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                    'options' => [
+                        'class' => 'breadcrumb',
+                        'style' => 'float:none; position:initial'
+                    ]
+                ])
             ],
             'toolbar' =>  [
                 ['content'=>
@@ -69,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'disabled' => true,
                         'data-url' => '/secure/professions/professions/batch-delete'
                     ]) .
-                    Html::button('<i class="fa fa-plus"></i>', ['type'=>'button', 'title'=>'Добавить', 'class'=>'btn btn-success']) .
+                    Html::a('<i class="fa fa-plus"></i>', ['/professions/professions/create'], ['title'=>'Добавить', 'class'=>'btn btn-success']) .
                     Html::a('<i class="fa fa-repeat"></i>', [''], ['data-pjax'=>0, 'class' => 'btn btn-outline-secondary', 'title'=>'Сбросить фильтры'])
                 ],
                 ['content'=>'{dynagridFilter}{dynagridSort}{dynagrid}'],

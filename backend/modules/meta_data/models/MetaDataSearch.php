@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
 
 /**
  * @property string $category_string
+ * @property string $profession_string
  */
 class MetaDataSearch extends MetaData
 {
@@ -84,8 +85,7 @@ class MetaDataSearch extends MetaData
             ->andFilterWhere(['like', 'resume_meta_title_with_city', $this->resume_meta_title_with_city])
             ->andFilterWhere(['like', 'resume_meta_description_with_city', $this->resume_meta_description_with_city])
             ->andFilterWhere(['like', 'resume_header_with_city', $this->resume_header_with_city])
-            ->andFilterWhere(['like', 'resume_bottom_text', $this->resume_bottom_text])
-            ->andFilterWhere(['like', 'category.name', $this->category_string]);
+            ->andFilterWhere(['like', 'resume_bottom_text', $this->resume_bottom_text]);
 
         return $dataProvider;
     }
