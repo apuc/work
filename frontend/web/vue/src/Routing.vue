@@ -232,21 +232,6 @@ export default {
       email = email.slice(0, email.length - 1);
       return email;
     },
-    getCompany() {
-      this.$store.dispatch('getAllCompany')
-          .then(data => {
-            localStorage.companyId = data.id;
-          }).catch(error => {
-        this.$swal({
-          toast: true,
-          position: 'bottom-end',
-          showConfirmButton: false,
-          timer: 4000,
-          type: 'error',
-          title: error.message
-        })
-      });
-    },
     getUser() {
       this.$store.dispatch('getUserMe', this.$route.params.id)
           .then(data => {
@@ -266,6 +251,7 @@ export default {
             if (data.user.status >= 20) {
               this.linkMenu[3].show = false;
             }
+            localStorage.setItem('companyId', data.user.company.id);
             this.unreadMessages = data.user.unreadMessages;
             this.unreadUpdates = data.user.unreadUpdates;
           }).catch(error => {

@@ -45,46 +45,61 @@ export default {
   mixins: [Company],
   components: {FormTemplate, myUpload},
   mounted() {
-    document.title = this.$route.meta.title;
-    this.$store.dispatch('getCompany', localStorage.companyId)
-        .then(data => {
-          this.dataCompany = data;
-          if (data.image_url) {
-            this.formData.image_url = data.image_url;
-          }
-          this.formData.nameCompany = data.name;
-          this.formData.site = data.website;
-          this.formData.scopeOfTheCompany = data.activity_field;
-          this.formData.addSocial.vkontakte = data.vk;
-          this.formData.addSocial.facebook = data.facebook;
-          this.formData.addSocial.instagram = data.instagram;
-          this.formData.addSocial.skype = data.skype;
-          this.formData.aboutCompany = data.description;
-          this.formData.contactPerson = data.contact_person;
-          if (data.phone === null) {
-            this.formData.companyPhone = '';
-          } else {
-            this.formData.companyPhone = data.phone.number;
-            this.formData.phoneValid = true;
-          }
-          if (data.vk || data.facebook || data.instagram || data.instagram) {
-            document.querySelector('.social-block button').click();
-          }
-          Object.assign(FormCompany.nameCompany.rules, [v => !!v || 'Название компании обязательно к заполнению']);
-          Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
-          this.inputsDisabled();
-        }).catch(error => {
-      this.$swal({
-        toast: true,
-        position: 'bottom-end',
-        showConfirmButton: false,
-        timer: 4000,
-        type: 'error',
-        title: error.message
-      })
-    });
+    this.getCompany();
   },
-  methods: {
+methods: {
+  getCompany() {
+      this.$store.dispatch('getAllCompany')
+          .then(data => {
+              localStorage.setItem('companyId', data.id);
+              this.$store.dispatch('getCompany', localStorage.companyId)
+                  .then(data => {
+                      this.dataCompany = data;
+                      if (data.image_url) {
+                          this.formData.image_url = data.image_url;
+                      }
+                      this.formData.nameCompany = data.name;
+                      this.formData.site = data.website;
+                      this.formData.scopeOfTheCompany = data.activity_field;
+                      this.formData.addSocial.vkontakte = data.vk;
+                      this.formData.addSocial.facebook = data.facebook;
+                      this.formData.addSocial.instagram = data.instagram;
+                      this.formData.addSocial.skype = data.skype;
+                      this.formData.aboutCompany = data.description;
+                      this.formData.contactPerson = data.contact_person;
+                      if (data.phone === null) {
+                          this.formData.companyPhone = '';
+                      } else {
+                          this.formData.companyPhone = data.phone.number;
+                          this.formData.phoneValid = true;
+                      }
+                      if (data.vk || data.facebook || data.instagram || data.instagram) {
+                          document.querySelector('.social-block button').click();
+                      }
+                      Object.assign(FormCompany.nameCompany.rules, [v => !!v || 'Название компании обязательно к заполнению']);
+                      Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
+                      this.inputsDisabled();
+                  }).catch(error => {
+                  this.$swal({
+                      toast: true,
+                      position: 'bottom-end',
+                      showConfirmButton: false,
+                      timer: 4000,
+                      type: 'error',
+                      title: error.message
+                  })
+              });
+          }).catch(error => {
+          this.$swal({
+              toast: true,
+              position: 'bottom-end',
+              showConfirmButton: false,
+              timer: 4000,
+              type: 'error',
+              title: error.message
+          })
+      });
+  },
     toggleShow() {
       this.show = !this.show;
     },
