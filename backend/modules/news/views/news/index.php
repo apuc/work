@@ -147,7 +147,7 @@ $this->params['exclude_breadcrumbs'][] = true;
                 '{export}',
             ]
         ],
-        'options'=>['id'=>'dynagrid-1']
+        'options'=>['id'=>'dynagrid-news']
     ]);
     ?>
 </div>

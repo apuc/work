@@ -74,16 +74,16 @@ $this->params['exclude_breadcrumbs'][] = true;
                         'class' => 'btn btn-danger',
                         'id' => 'grid-delete-button',
                         'disabled' => true,
-                        'data-url' => '/secure/professions/professions/batch-delete'
+                        'data-url' => '/secure/news/news/batch-delete'
                     ]) .
-                    Html::a('<i class="fa fa-plus"></i>', ['/professions/professions/create'], ['title'=>'Добавить', 'class'=>'btn btn-success']) .
+                    Html::a('<i class="fa fa-plus"></i>', ['/news/news/create'], ['title'=>'Добавить', 'class'=>'btn btn-success']) .
                     Html::a('<i class="fa fa-repeat"></i>', [''], ['data-pjax'=>0, 'class' => 'btn btn-outline-secondary', 'title'=>'Сбросить фильтры'])
                 ],
                 ['content'=>'{dynagridFilter}{dynagridSort}{dynagrid}'],
                 '{export}',
             ]
         ],
-        'options'=>['id'=>'dynagrid-1']
+        'options'=>['id'=>'dynagrid-professions']
     ]);
     ?>
 </div>

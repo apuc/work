@@ -3,7 +3,7 @@ use yii\widgets\Breadcrumbs;
 use dmstr\widgets\Alert;
 
 ?>
-<div class="content-wrapper">
+<div class="content-wrapper container" style="width: auto;">
     <section class="content-header">
         <?php
         if(!isset($this->params['exclude_breadcrumbs'])) {

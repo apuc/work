@@ -11,14 +11,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Новости', 'url' => ['index'
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<style>
-    table {
-        width: 1000px;
-    }
-    tr {
-        width: 500px;
-    }
-</style>
 <div class="news-view">
 
     <p>
