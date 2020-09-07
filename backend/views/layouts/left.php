@@ -63,7 +63,6 @@
                     [
                         'label' => 'Платежи', 'url' => '#', 'icon' => 'envelope',
                         'items' => [
-                            ['label' => 'Валюты Free-Kassa', 'url' => ['/payment/currency/index'], 'icon' => 'money'],
                             ['label' => 'Платежи Free-Kassa', 'url' => ['/payment/free-kassa-payment/index'], 'icon' => 'credit-card'],
                             ['label' => 'Промокоды', 'url' => ['/payment/promocode/index'], 'icon' => 'credit-card'],
                         ],

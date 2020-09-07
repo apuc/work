@@ -94,9 +94,6 @@ $this->params['exclude_breadcrumbs'][] = true;
             'dropdown'=>false,
             'order'=>DynaGrid::ORDER_FIX_RIGHT,
             'template' => '{view} {update}',
-            'deleteOptions' => [
-                'title' => 'Скрыть'
-            ]
         ],
         ['class'=>'kartik\grid\CheckboxColumn', 'order'=>DynaGrid::ORDER_FIX_RIGHT],
     ];

@@ -14,6 +14,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
     <label class="control-label" for="city-image">Фотография(398*387)</label>
     <div class="media__upload_img"><img src="<?= $model->image; ?>" width="100px"/></div>
     <?=InputFile::widget([
@@ -48,7 +49,6 @@ use yii\widgets\ActiveForm;
         'buttonName' => 'Выбрать иконку',
     ]);
     ?>
-    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
     <p>
         Для мета полей, учитывающих город: {city}: город, {region}: регион
