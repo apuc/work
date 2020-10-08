@@ -20,7 +20,8 @@ class AppAsset extends AssetBundle
         'js/jquery.cookie.js',
         'js/plugins/datepicker/bootstrap-datepicker.js',
         'js/plugins/timepicker/bootstrap-timepicker.min.js',
-        'js/script.js'
+        'js/script.js',
+        'js/DynaGridExtend.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

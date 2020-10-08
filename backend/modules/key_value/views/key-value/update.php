@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Изменить переменную: ' . $model->key;
 $this->params['breadcrumbs'][] = ['label' => 'Переменные', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->key, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Изменить';
 ?>
 <div class="key-value-update">

@@ -58,18 +58,21 @@ class City extends WorkActiveRecord
     public function attributeLabels()
     {
         return [
+            'name' => 'Название',
             'region_id' => 'Область',
             'image' => 'Фотография',
             'slug' => 'Slug',
-            'meta_title' => 'vacancy meta title',
-            'meta_description' => 'Vacancy meta description',
-            'header' => 'h1 заголовок вакансий',
+            'prepositional' => 'Родительный падеж',
+            'meta_title' => 'Заголовок страницы вакансий',
+            'meta_description' => 'Описание страницы вакансий',
+            'header' => 'h1 заголовок страницы вакансий',
             'bottom_text' => 'Текст страницы поиска вакансий',
-            'resume_meta_title' => 'Resume meta title',
-            'resume_meta_description' => 'Resume meta description',
-            'resume_header' => 'h1 заголовок резюме',
+            'resume_meta_title' => 'Заголовок страницы резюме',
+            'resume_meta_description' => 'Описание страницы вакансий',
+            'resume_header' => 'h1 заголовок страницы резюме',
             'resume_bottom_text' => 'Текст страницы поиска резюме',
-            'priority' => 'Приоритет сортировки'
+            'priority' => 'Приоритет сортировки',
+            'status' => 'Статус'
         ];
     }
 
