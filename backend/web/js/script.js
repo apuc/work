@@ -278,11 +278,6 @@ $(document).ready(function () {
         });
     });
 
-    $('#dt_public_time').clockpicker({
-        autoclose: true,
-        'default': 'now'
-    });
-
     $('.dt_public_box_link a').on('click', function (e) {
         e.preventDefault();
         $('.dt_public_box').slideToggle();
@@ -326,10 +321,6 @@ $(document).ready(function () {
     });
 
     var elt = $('#all_cats');
-    elt.tagsinput({
-        itemValue: 'value',
-        itemText: 'text'
-    });
 
     if ($('*').is('#_cats')) {
         var arr = JSON.parse($('#_cats').val());

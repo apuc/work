@@ -4,6 +4,7 @@ namespace backend\modules\cities\controllers;
 
 use backend\modules\cities\models\CitiesSearch;
 use common\models\City;
+use common\models\News;
 use dektrium\user\filters\AccessRule;
 use Yii;
 use yii\filters\AccessControl;
@@ -94,9 +95,33 @@ class CitiesController extends Controller
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->status = City::TYPE_HIDDEN;
+        $model->save();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionBatchDelete()
+    {
+        if (Yii::$app->request->isAjax) {
+            $ids = Yii::$app->request->getBodyParam('ids');
+            if ($ids) {
+                City::updateAll(['status' => City::TYPE_HIDDEN], ['id'=>$ids]);
+            }
+        }
+        return true;
+    }
+
+    public function actionBatchRestore()
+    {
+        if (Yii::$app->request->isAjax) {
+            $ids = Yii::$app->request->getBodyParam('ids');
+            if ($ids) {
+                City::updateAll(['status' => City::TYPE_SHOWN], ['id'=>$ids]);
+            }
+        }
+        return true;
     }
 
     protected function findModel($id)

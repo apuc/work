@@ -15,44 +15,62 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Вы уверены что хотите удалить эту страну?',
-                'method' => 'post',
+    </p>
+    <div class="col col-lg-4">
+        <h3>Основная информация</h3>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'name',
+                'slug',
             ],
         ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'name',
-            'slug',
-            'meta_title',
-            'meta_description:ntext',
-            'meta_header',
-            'search_page_title',
-            'search_page_header',
-            'search_page_description',
-            [
-                'attribute' => 'main_page_text',
-                'format' => 'html'
+        <h3>Мета данные страницы поиска</h3>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'search_page_title',
+                'search_page_header',
+                'search_page_description',
             ],
-            [
-                'attribute' => 'main_page_mobile_text',
-                'format' => 'html'
+        ]) ?>
+        <h3>Мета данные страницы новостей</h3>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'news_meta_title',
+                'news_meta_description',
+                'news_meta_header',
+                'news_about',
             ],
-            [
-                'attribute' => 'main_page_background_image',
-                'format' => 'image',
+        ]) ?>
+    </div>
+    <div class="col col-lg-5">
+        <h3>Мета данные главной страницы</h3>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'meta_title',
+                'meta_description:ntext',
+                'meta_header',
+                [
+                    'attribute' => 'main_page_text',
+                    'format' => 'html'
+                ],
+                [
+                    'attribute' => 'main_page_mobile_text',
+                    'format' => 'html'
+                ],
+                [
+                    'attribute' => 'main_page_background_image',
+                    'format' => ['image',['width'=>'100','height'=>'100']],
+                ],
+                [
+                    'attribute' => 'main_page_emblem',
+                    'format' => ['image',['height'=>'200']],
+                ],
             ],
-            [
-                'attribute' => 'main_page_emblem',
-                'format' => 'image',
-            ],
-        ],
-    ]) ?>
+        ]) ?>
+    </div>
 
 </div>

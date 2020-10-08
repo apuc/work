@@ -2,6 +2,8 @@
 
 namespace backend\modules\professions\controllers;
 
+use common\models\MetaData;
+use common\models\VacancyProfession;
 use Yii;
 use backend\modules\professions\models\Professions;
 use backend\modules\professions\models\ProfessionsSearch;
@@ -37,7 +39,6 @@ class ProfessionsController extends Controller
     {
         $searchModel = new ProfessionsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         $model = Professions::find()->all();
 
         return $this->render('index', [
@@ -110,7 +111,8 @@ class ProfessionsController extends Controller
      */
     public function actionDelete($id)
     {
-        \common\models\MetaData::deleteAll(['profession_id'=>$id]);
+        MetaData::deleteAll(['profession_id'=>$id]);
+        VacancyProfession::deleteAll(['profession_id'=>$id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -145,6 +147,19 @@ class ProfessionsController extends Controller
                 $e = "no";
             }
             echo json_encode($e);
+    }
+
+    public function actionBatchDelete()
+    {
+        if (Yii::$app->request->isAjax) {
+            $ids = Yii::$app->request->getBodyParam('ids');
+            if ($ids) {
+                MetaData::deleteAll(['profession_id'=>$ids]);
+                VacancyProfession::deleteAll(['profession_id'=>$ids]);
+                Professions::deleteAll(['id'=>$ids]);
+            }
+        }
+        return true;
     }
 
 }

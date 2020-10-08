@@ -71,7 +71,7 @@ class News extends \yii\db\ActiveRecord
             'title' => 'Название',
             'description' => 'Описание',
             'content' => 'Содержание',
-            'status' => 'Status',
+            'status' => 'Статус',
             'dt_create' => 'Дата создание',
             'dt_update' => 'Дата редактирования',
             'dt_public' => 'Дата публикации',
@@ -80,7 +80,7 @@ class News extends \yii\db\ActiveRecord
             'meta_title' => 'Заголовок страницы',
             'meta_description' => 'Описание страницы',
             'meta_header' => 'h1 заголовок страницы',
-            'slug' => 'SLUG'
+            'slug' => 'Slug'
         ];
     }
 
