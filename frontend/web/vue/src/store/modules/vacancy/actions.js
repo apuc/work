@@ -12,7 +12,7 @@ const actions = {
                 })
                 .catch(error => {
                     console.log('Problem', error.message);
-                    reject(error);
+                    reject(error.response.data.message);
                 });
         })
     },
@@ -26,7 +26,7 @@ const actions = {
                 })
                 .catch(error => {
                     console.log('Problem', error.message);
-                    reject(error);
+                    reject(error.response.data.message);
                 });
         })
     },
@@ -40,7 +40,7 @@ const actions = {
                 })
                 .catch(error => {
                     console.log('Problem', error.message);
-                    reject(error);
+                    reject(error.response.data.message);
                 });
         })
     },
@@ -54,7 +54,7 @@ const actions = {
                 })
                 .catch(error => {
                     console.log('Problem', error.message);
-                    reject(error);
+                    reject(error.response.data.message);
                 });
         })
     },
@@ -68,7 +68,7 @@ const actions = {
                 })
                 .catch(error => {
                     console.log('Problem', error.message);
-                    reject(error);
+                    reject(error.response.data.message);
                 });
         })
     },
@@ -82,7 +82,7 @@ const actions = {
                 })
                 .catch(error => {
                     console.log('Problem', error.message);
-                    reject(error);
+                    reject(error.response.data.message);
                 });
         })
     },
@@ -95,7 +95,7 @@ const actions = {
                 })
                 .catch(error => {
                     console.log('Problem', error.message);
-                    reject(error);
+                    reject(error.response.data.message);
                 });
         })
     },
@@ -108,7 +108,7 @@ const actions = {
                 })
                 .catch(error => {
                     console.log('Problem', error.message);
-                    reject(error);
+                    reject(error.response.data.message);
                 });
         })
     },
@@ -121,7 +121,7 @@ const actions = {
                 })
                 .catch(error => {
                     console.log('Problem', error.message);
-                    reject(error);
+                    reject(error.response.data.message);
                 });
         })
     },
