@@ -227,7 +227,7 @@ return [
                 'personal-area/<action>/<id>' => 'personal_area/default/index',
                 'personal-area' => 'personal_area/default/index',
                 'cities' => 'main_page/default/city',
-                '<country_slug:(dnr|lnr)>/professions' => 'main_page/default/professions',
+                '<country_slug:(dnr|lnr|rostovskaya-oblast)>/professions' => 'main_page/default/professions',
                 'professions' => 'main_page/default/professions',
                 'sitemap.xml' => 'sitemap/index',
                 'other.xml' => 'sitemap/other',
@@ -272,7 +272,7 @@ return [
                     ],
                     'pluralize'=>false
                 ],
-                '<country_slug:(dnr|lnr)>' => 'main_page/default/index',
+                '<country_slug:(dnr|lnr|rostovskaya-oblast)>' => 'main_page/default/index',
 
             ],
         ],
