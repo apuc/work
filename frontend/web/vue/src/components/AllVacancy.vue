@@ -171,7 +171,7 @@
                         showConfirmButton: false,
                         timer: 4000,
                         type: 'error',
-                        title: error.message
+                        title: error
                     })
                 });
             },
@@ -205,19 +205,26 @@
                                         showConfirmButton: false,
                                         timer: 4000,
                                         type: 'error',
-                                        title: error.message
+                                        title: error
                                     })
                                 });
                                 return data;
                             }).catch(error => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: error.message
-                            })
+                              if (error === 'У вас недостаточно средств на счету') {
+                                this.$swal({
+                                  title: 'Недостаточно средств на счету',
+                                  type: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonColor: '#3085d6',
+                                  cancelButtonColor: '#d33',
+                                  confirmButtonText: 'Пополнить счет',
+                                  cancelButtonText: 'Отмена'
+                                }).then((result) => {
+                                  if (result.value) {
+                                    this.$router.push({name: 'payment'});
+                                  }
+                                });
+                              }
                         });
                     }
                 });
@@ -252,19 +259,26 @@
                                         showConfirmButton: false,
                                         timer: 4000,
                                         type: 'error',
-                                        title: error.message
+                                        title: error
                                     })
                                 });
                                 return data;
                             }).catch(error => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: error.message
-                            })
+                            if (error === 'У вас недостаточно средств на счету') {
+                              this.$swal({
+                                title: 'Недостаточно средств на счету',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Пополнить счет',
+                                cancelButtonText: 'Отмена'
+                              }).then((result) => {
+                                if (result.value) {
+                                  this.$router.push({name: 'payment'});
+                                }
+                              });
+                            }
                         });
                     }
                 });
