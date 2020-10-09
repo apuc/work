@@ -112,6 +112,18 @@ class UpdateController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionBatchDelete()
+    {
+        if (Yii::$app->request->isAjax) {
+            $ids = Yii::$app->request->getBodyParam('ids');
+            if ($ids) {
+                UpdateUser::deleteAll(['update_id' => $ids]);
+                Update::deleteAll(['id'=>$ids]);
+            }
+        }
+        return true;
+    }
+
     /**
      * Finds the Update model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

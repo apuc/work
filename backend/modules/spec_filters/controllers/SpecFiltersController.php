@@ -97,6 +97,17 @@ class SpecFiltersController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionBatchDelete()
+    {
+        if (Yii::$app->request->isAjax) {
+            $ids = Yii::$app->request->getBodyParam('ids');
+            if ($ids) {
+                SpecFilters::deleteAll(['id'=>$ids]);
+            }
+        }
+        return true;
+    }
+
     /**
      * @param $id
      * @return SpecFilters|null

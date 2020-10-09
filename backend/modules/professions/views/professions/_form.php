@@ -12,16 +12,18 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <div class="col col-lg-4">
+        <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'genitive')->textInput(['maxlength' => true]) ?>
+    </div>
 
-    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+    <div class="col col-lg-4">
+        <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'instrumental')->textInput(['maxlength' => true]) ?>
+    </div>
 
-    <?= $form->field($model, 'genitive')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'instrumental')->textInput(['maxlength' => true]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <div class="col col-lg-12">
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

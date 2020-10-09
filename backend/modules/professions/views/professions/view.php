@@ -11,6 +11,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Профессии', 'url' => ['in
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
+<style>
+    table.detail-view th {
+        width: 20%;
+    }
+
+    table.detail-view td {
+        width: 80%;
+    }
+</style>
 <div class="professions-view">
 
     <h1><?= Html::encode($this->title) ?></h1>

@@ -71,3 +71,7 @@
 .hidden {
     display: none;
 }
+
+.breadcrumb {
+    background: none !important;
+}
