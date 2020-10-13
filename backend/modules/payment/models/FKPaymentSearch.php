@@ -41,7 +41,7 @@ class FKPaymentSearch extends FKPayment
      */
     public function search($params)
     {
-        $query = FKPayment::find();
+        $query = FKPayment::find()->orderBy('id DESC');
 
         // add conditions that should always apply here
 
