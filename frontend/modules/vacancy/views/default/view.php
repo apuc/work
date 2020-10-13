@@ -108,7 +108,7 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
 <!--                    --><?php //endforeach;?>
 <!--                </div>-->
                 <h1 class="single-block__head" itemprop="title">
-                    <?= StringHelper::mb_ucfirst($model->post) ?>
+                    <?= StringHelper::mb_ucfirst(mb_strtolower($model->post)) ?>
                 </h1>
                 <span itemprop="baseSalary" itemscope="" itemtype="http://schema.org/MonetaryAmount">
                     <meta itemprop="currency" content="RUB">
