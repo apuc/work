@@ -287,6 +287,33 @@ class VacancyController extends MyActiveController
         return true;
     }
 
+    public function actionProlong()
+    {
+        $id = Yii::$app->request->post('id');
+        $model = Vacancy::findOne($id);
+        if (!$model) {
+            throw new UserException('Такой вакансии не существует', 400);
+        }
+        if ($model->owner != Yii::$app->user->id) {
+            throw new UserException('У вас нет прав для совершения этого действия', 400);
+        }
+        $company = $model->company;
+        if ($company->create_vacancy === 0) {
+            throw new UserException('У вас нет возможности создавать или продлевать вакансии', 401);
+        }
+        if ($model->active_until < time()) {
+            $model->active_until = time()+(86400*30);
+        } else {
+            $model->active_until += 86400*30;
+        }
+        $model->save();
+        $company->create_vacancy--;
+        $company->save();
+        $return = Vacancy::find()->asArray()->where(['id' => $id])->one();
+        $return['can_update'] = false;
+        return $return;
+    }
+
     public function actionBuyVacancyDay()
     {
         if (Yii::$app->user->identity->status < 20) {
