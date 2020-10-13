@@ -154,7 +154,7 @@ class Company extends WorkActiveRecord
      */
     public function getActiveVacancies()
     {
-        return $this->getVacancy()->andWhere(['status'=>Vacancy::STATUS_ACTIVE]);
+        return $this->getVacancy()->andWhere(['status'=>Vacancy::STATUS_ACTIVE])->andWhere(['>', Vacancy::tableName().'.active_until', time()]);
     }
 
     /**
