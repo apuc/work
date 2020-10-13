@@ -166,7 +166,7 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                     <div class="single-block__description">
                         <h3 class="single-block__description-head">Описание вакансии
                         </h3>
-                        <p class="single-block__requirements-text"><?= $model->description ?></p>
+                        <p class="single-block__requirements-text"><?= nl2br($model->description) ?></p>
                     </div>
                 <?php endif ?>
                 <?php if ($model->qualification_requirements): ?>
