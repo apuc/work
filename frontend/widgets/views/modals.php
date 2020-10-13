@@ -99,7 +99,11 @@ use yii\widgets\ActiveForm;
         </div>
         <?php if (!Yii::$app->user->isGuest):?>
             <?php /** @var Vacancy[] $vacancies */
-            $vacancies = Vacancy::find()->select(['id', 'post'])->where(['owner'=> Yii::$app->user->id, 'status'=>Vacancy::STATUS_ACTIVE])->all()?>
+            $vacancies = Vacancy::find()
+                ->select(['id', 'post'])
+                ->where(['owner'=> Yii::$app->user->id, 'status'=>Vacancy::STATUS_ACTIVE])
+                ->andWhere(['>', Vacancy::tableName().'.active_until', time()])
+                ->all()?>
             <div class="modal-style modal-send-message jsModalMessage">
                 <?php if($vacancies):?>
                 <p>Сообщение</p>

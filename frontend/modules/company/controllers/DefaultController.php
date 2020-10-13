@@ -26,7 +26,12 @@ class DefaultController extends Controller
         $model = Company::find()->where(['id'=>$id, 'status'=>Company::STATUS_ACTIVE])->andWhere(['!=', 'name', ''])->andWhere(['!=', 'name', 'null'])->one();
         if(!$model)
             throw new NotFoundHttpException();
-        $last_vacancies = Vacancy::find()->where(['status'=>Vacancy::STATUS_ACTIVE])->limit(2)->orderBy('update_time DESC')->all();
+        $last_vacancies = Vacancy::find()
+            ->where(['status'=>Vacancy::STATUS_ACTIVE])
+            ->andWhere(['>', Vacancy::tableName().'.active_until', time()])
+            ->limit(2)
+            ->orderBy('update_time DESC')
+            ->all();
         $view = new Views();
         $view->subject_type = 'Company';
         $view->subject_id = $model->id;
