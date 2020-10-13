@@ -28,8 +28,8 @@ use yii\helpers\Url;
              role="presentation"
         />
     </div>
-    <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title mt5 relative-2">
-        <?= StringHelper::mb_ucfirst(mb_strtolower($vacancy->post) , MB_CASE_TITLE) ?>
+    <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title mt5 relative-2" title="<?=StringHelper::mb_ucfirst(mb_strtolower($vacancy->post))?>">
+        <?= StringHelper::mb_ucfirst(mb_strtolower($vacancy->post)) ?>
     </a>
     <div class="single-card__company relative-2">
         <p>

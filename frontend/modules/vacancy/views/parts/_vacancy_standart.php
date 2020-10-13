@@ -28,8 +28,8 @@ use yii\helpers\Url;
     <!--<a href="<?/*=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id, 'referer_category'=>$vacancy->main_category_id])*/?>" class="single-card__title mt5">
                                 <?/*= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) */?>
                             </a>-->
-    <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title mt5">
-        <?= StringHelper::mb_ucfirst(mb_strtolower($vacancy->post) , MB_CASE_TITLE) ?>
+    <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title mt5" title="<?= StringHelper::mb_ucfirst(mb_strtolower($vacancy->post)) ?>">
+        <?= StringHelper::mb_ucfirst(mb_strtolower($vacancy->post)) ?>
     </a>
     <div class="single-card__company">
         <p><?= $vacancy->company->name ?>
