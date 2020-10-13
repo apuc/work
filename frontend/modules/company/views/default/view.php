@@ -95,7 +95,7 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                     <?php foreach ($model->activeVacancies as $vacancy): ?>
                     <div class="vacancies">
                         <span class="vacancies__img"></span>
-                        <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="vacancies__active"><?= StringHelper::mb_ucfirst(mb_strtolower($vacancy->post) , MB_CASE_TITLE) ?></a>
+                        <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="vacancies__active"><?= StringHelper::mb_ucfirst(mb_strtolower($vacancy->post)) ?></a>
                         <p class="vacancies__title"><?=$vacancy->employment_type?$vacancy->employment_type->name.', т':'Т'?>ребуемый опыт работы: <?=$vacancy->work_experience?Vacancy::$experiences[$vacancy->work_experience]:'Не имеет значения'?></p>
                     </div>
                     <?php endforeach ?>
@@ -158,7 +158,7 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                                 />
                                 <div class="last-vacancy__top">
                                     <div class="last-vacancy__cat-city"><a class="btn-card btn-card-small btn-gray" href="<?=Vacancy::getSearchPageUrl($vacancy->mainCategory->slug)?>"><?=$vacancy->mainCategory->name?></a>
-                                    </div><a class="last-vacancy__title" href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" title="Дизайнер презентаций"><?= StringHelper::mb_ucfirst(mb_strtolower($vacancy->post) , MB_CASE_TITLE) ?></a>
+                                    </div><a class="last-vacancy__title" href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" title="Дизайнер презентаций"><?= StringHelper::mb_ucfirst(mb_strtolower($vacancy->post)) ?></a>
                                 </div>
                             </div>
                             <div class="last-vacancy__info">
