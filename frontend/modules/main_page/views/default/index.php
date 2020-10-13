@@ -212,7 +212,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             </div>
                             <a href="<?= Url::to(['/vacancy/default/view', 'id' => $vacancy->id]) ?>"
                                class="single-card__title"
-                               title="<?= StringHelper::mb_ucfirst($vacancy->post) ?>"><?= StringHelper::mb_ucfirst($vacancy->post) ?></a>
+                               title="<?= StringHelper::mb_ucfirst(strtolower($vacancy->post)) ?>"><?= StringHelper::mb_ucfirst(strtolower($vacancy->post)) ?></a>
                             <div class="single-card__info-second">
                                 <span class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd.MM.yyyy, hh:mm') ?></span>
                                 <?php if ($vacancy->views > 0):?>
