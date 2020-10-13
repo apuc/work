@@ -78,7 +78,11 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
                             <?php $email = User::findOne($model->owner)->email;?>
                             <span><a href="mailto:<?=$email?>"><?=$email?></a><br>
                                 <?php if($model->website):?>
-                                    <a href="<?=$model->website?>"  target="_blank" rel="ugc"><?=$model->website?></a></span>
+                                    <?php if(str_contains($model->website, 'http://') || str_contains($model->website, 'https://')): ?>
+                                        <a href="<?=$model->website?>"  target="_blank" rel="ugc"><?=str_replace(['http://', 'https://'],'',$model->website)?></a></span>
+                                    <?php else: ?>
+                                        <a href="http://<?=$model->website?>"  target="_blank" rel="ugc"><?=$model->website?></a></span>
+                                    <?php endif; ?>
                                 <?php endif ?>
                             <span></span>
                         </div>
