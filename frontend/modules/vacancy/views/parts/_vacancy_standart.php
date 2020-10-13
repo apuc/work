@@ -29,7 +29,7 @@ use yii\helpers\Url;
                                 <?/*= mb_convert_case ( $vacancy->post , MB_CASE_TITLE) */?>
                             </a>-->
     <a href="<?=Url::toRoute(['/vacancy/default/view', 'id'=>$vacancy->id])?>" class="single-card__title mt5">
-        <?= StringHelper::mb_ucfirst( $vacancy->post , MB_CASE_TITLE) ?>
+        <?= StringHelper::mb_ucfirst(mb_strtolower($vacancy->post) , MB_CASE_TITLE) ?>
     </a>
     <div class="single-card__company">
         <p><?= $vacancy->company->name ?>
