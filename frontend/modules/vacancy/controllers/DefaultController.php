@@ -41,9 +41,9 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         /** @var Vacancy $model */
-        $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->with('mainCategory')->one();
+        $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->andWhere(['>', Vacancy::tableName().'.active_until', time()])->with('mainCategory')->one();
         if(!$model) {
-            $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_INACTIVE])->one();
+            $model = Vacancy::find()->where(['id'=>$id])->one();
             if($model) {
                 Yii::$app->response->setStatusCode(410);
                 throw new HttpException(410, 'Вакансия удалена');
@@ -57,6 +57,7 @@ class DefaultController extends Controller
                 'main_category_id' => $model->main_category_id
             ])
             ->andWhere(['!=', Vacancy::tableName().'.id', $model->id])
+            ->andWhere(['>', Vacancy::tableName().'.active_until', time()])
             ->andFilterWhere(['city_id'=>$model->city_id])
             ->orderBy('update_time DESC')
             ->with(['mainCategory', 'company'])

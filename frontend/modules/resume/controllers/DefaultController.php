@@ -56,7 +56,10 @@ class DefaultController extends Controller
         $post = Yii::$app->request->post();
         /** @var Resume $resume */
         $resume = Resume::findOne($post['resume_resume_id']);
-        $vacancy = Vacancy::findOne($post['resume_vacancy_id']);
+        $vacancy = Vacancy::find()
+            ->where(['id' => $post['resume_vacancy_id']])
+            ->andWhere(['>', Vacancy::tableName().'.active_until', time()])
+            ->one();
         if($resume && $vacancy ){
             $message = new Message();
             $message->text = $post['resume_message'];
