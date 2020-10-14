@@ -51,7 +51,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             <?php if($current_country):?>
                                 <a class="remove-country" href="/">+</a>
                             <?php endif ?>
-                            <span class="jsOpenCountrySelect"><?= $current_country ? $current_country->name : 'Выберите Страну' ?> <b></b></span>
+                            <span class="jsOpenCountrySelect"><?= $current_country ? $current_country->name : 'Выберите Регион' ?> <b></b></span>
                             <ul>
                                 <?php foreach ($countries as $country):?>
                                     <li>
@@ -132,7 +132,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             <?php if($current_country):?>
                             <a class="remove-country" href="/">+</a>
                             <?php endif ?>
-                            <span class="jsOpenCountrySelect"><?= $current_country ? $current_country->name : 'Выберите Страну' ?> <b></b></span>
+                            <span class="jsOpenCountrySelect"><?= $current_country ? $current_country->name : 'Выберите Регион' ?> <b></b></span>
                             <ul>
                                 <?php foreach ($countries as $country):?>
                                     <li>
