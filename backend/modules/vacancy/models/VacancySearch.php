@@ -8,16 +8,20 @@ use common\models\Vacancy;
 
 /**
  * VacancySearch represents the model behind the search form of `common\models\Vacancy`.
+ *
+ *
+ * @property integer $category_id
  */
 class VacancySearch extends Vacancy
 {
+    public $category_id;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'company_id', 'city_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'created_at', 'updated_at', 'publisher_id'], 'integer'],
+            [['id', 'company_id', 'city_id', 'min_salary', 'max_salary', 'employment_type_id', 'status', 'created_at', 'updated_at', 'publisher_id', 'category_id'], 'integer'],
             [['post', 'responsibilities', 'qualification_requirements', 'work_experience', 'education', 'working_conditions', 'video', 'address', 'home_number'], 'safe'],
         ];
     }
@@ -69,6 +73,10 @@ class VacancySearch extends Vacancy
             'updated_at' => $this->updated_at,
             'publisher_id' => $this->publisher_id,
         ]);
+        if ($this->category_id) {
+            $query->joinWith('vacancy_category');
+            $query->andWhere(['or', ['main_category_id'=>$this->category_id], ['vacancy_category.category_id' => $this->category_id]]);
+        }
 
         $query->andFilterWhere(['like', 'post', $this->post])
             ->andFilterWhere(['like', 'responsibilities', $this->responsibilities])

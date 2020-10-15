@@ -90,16 +90,21 @@ class VacancyController extends Controller
     {
         $model = new Vacancy();
         $post = Yii::$app->request->post();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if($post['Vacancy']['category']){
-                foreach ($post['Vacancy']['category'] as $category){
-                    $resume_category = new VacancyCategory();
-                    $resume_category->vacancy_id = $model->id;
-                    $resume_category->category_id = $category;
-                    $resume_category->save();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->get_update_id = 1;
+            $model->owner = $model->company->owner;
+            $model->publisher_id = $model->company->owner;
+            if ($model->save()) {
+                if($post['Vacancy']['category']){
+                    foreach ($post['Vacancy']['category'] as $category){
+                        $vacancy_category = new VacancyCategory();
+                        $vacancy_category->vacancy_id = $model->id;
+                        $vacancy_category->category_id = $category;
+                        $vacancy_category->save();
+                    }
                 }
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -153,6 +158,19 @@ class VacancyController extends Controller
         if(Yii::$app->request->isAjax)
             return true;
         return $this->redirect(['index']);
+    }
+
+    public function actionBatchDelete()
+    {
+        if (Yii::$app->request->isAjax) {
+            $ids = Yii::$app->request->getBodyParam('ids');
+            if ($ids) {
+                VacancyProfession::deleteAll(['vacancy_id'=>$ids]);
+                VacancyCategory::deleteAll(['vacancy_id'=>$ids]);
+                Vacancy::deleteAll(['id'=>$ids]);
+            }
+        }
+        return true;
     }
 
     /**

@@ -3,6 +3,7 @@
 use common\models\Company;
 use common\models\Vacancy;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -35,17 +36,21 @@ $this->params['breadcrumbs'][] = $model->post;
             [
                 'label' => 'Работодатель',
                 'format' => 'html',
-                'value' => function($model)
+                'value' => function(Vacancy $model)
                 {
-                    $company=Company::findOne($model->company_id);
-                    return '<a href="'.\yii\helpers\Url::to(['/company/company/view', 'id' => $company->id]).'">'.$company->name.'</a>';
+                    $url = Url::to(['/company/company/view', 'id' => $model->company_id]);
+                    return Html::a($model->company->name?:$model->company->contact_person, $url);
                 },
             ],
             'post',
-            'responsibilities:ntext',
+            [
+                'attribute' => 'city0.name',
+                'label' => 'Город'
+            ],
             'employment_type.name',
             'min_salary',
             'max_salary',
+            'responsibilities:ntext',
             'qualification_requirements',
             'description',
             'work_experience',
@@ -61,9 +66,6 @@ $this->params['breadcrumbs'][] = $model->post;
                 }
             ],
             'working_conditions',
-            'video',
-            'address',
-            'home_number',
             [
                 'label' => 'Умения',
                 'value' => function($model){
@@ -85,7 +87,7 @@ $this->params['breadcrumbs'][] = $model->post;
                 'value' => function ($model) {
                     switch ($model->status){
                         case Vacancy::STATUS_ACTIVE: return 'Активна';
-                        case Vacancy::STATUS_INACTIVE: return 'Не активна';
+                        default: return 'Не активна';
                     }
                 },
             ],
@@ -119,9 +121,9 @@ $this->params['breadcrumbs'][] = $model->post;
                 'label' => 'Просмотры'
             ],
             [
-                'attribute' => 'is_day_vacancy',
-                'value' => function ($model) {
-                    return $model->is_day_vacancy ? 'Да' : 'Нет';
+                'attribute' => 'day_vacancy_until',
+                'value' => function (Vacancy $model) {
+                    return $model->day_vacancy_until > time() ? 'Да' : 'Нет';
                 },
             ],
         ],
