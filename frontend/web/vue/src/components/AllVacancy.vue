@@ -51,7 +51,8 @@
                                 </v-list-tile-title>
                                 <v-list-tile-sub-title class="mt-auto mb-auto">
                                     Последнее поднятие: {{ item.update_time }}
-                                    Активна до: {{ item.active_until }}
+                                    <span v-if="isVacancyActive(item.active_until)">Активна до: {{ item.active_until }}</span>
+                                    <span v-else class="vacancy__inactive">Неактивна</span>
                                     <span v-if="item.day_vacancy_until != 0">Вакансия дня до: {{ item.day_vacancy_until }}</span>
                                 </v-list-tile-sub-title>
                                 <v-divider style="width: 100%;"></v-divider>
@@ -110,9 +111,20 @@
                                             Удалить
                                         </v-btn>
                                     </v-list-tile>
+                                  <v-list-tile>
+                                    <v-btn
+                                        class="edit-btn"
+                                        type="button"
+                                        title="Удалить"
+                                        @click="vacancyAddTime(item,index)"
+                                    >
+                                      <span v-if="isVacancyActive(item.active_until)">Продлить </span>
+                                      <span v-else>Активировать&nbsp;</span>
+                                      <span>на 30 дней</span>
+                                    </v-btn>
+                                  </v-list-tile>
                                 </v-list>
                             </v-menu>
-
                         </v-list-tile>
                     </v-list>
 
@@ -422,6 +434,34 @@
                     }
                 });
             },
+            isVacancyActive(itemDate){
+              return this.parseDate(new Date().toLocaleString().slice(0,-3)) < this.parseDate(itemDate)
+            },
+            async vacancyAddTime(item,index){
+              let date = this.parseDate(item.active_until)
+              try {
+                await this.$store.dispatch('prolongVacancy', {
+                  id: item.id,
+                  index: index,
+                  item: item,
+                  active_until: new Date(date.setMonth(date.getMonth() + 1)).toLocaleString().slice(0, -3)
+                })
+              }
+              catch (e) {
+                console.log(e)
+                return
+              }
+              this.vacancyCreate--
+            },
+          parseDate(dateString) {
+            //"17.01.2021, 16:39" ожидается на ввод
+            if (!dateString) return new Date();
+            const regexp = /(\d+).(\d+).(\d+),\s(\d+):(\d+)/;
+            if(!regexp.test(dateString)) throw new Error('date string format error');
+            const d =regexp.exec(dateString);
+            if (d[3].length == 2) d[3] = `20${d[3]}`;
+            return new Date(d[3], d[2] - 1, d[1], d[4], d[5]);
+          },
         },
         filters: {
             capitalize(val) {
@@ -465,5 +505,8 @@
     .buy-vacancy-renew {
         max-width: 28px;
         min-width: 28px;
+    }
+    .vacancy__inactive{
+        color:red;
     }
 </style>

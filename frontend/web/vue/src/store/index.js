@@ -13,7 +13,7 @@ import banners from './modules/banners';
 import promocode from './modules/promocode';
 import purchaseAudit from './modules/purchaseAudit';
 import operations from './modules/operations';
-
+import notifications from './modules/notifications'
 Vue.use(Vuex);
 
 Vue.config.debug = true;
@@ -34,6 +34,7 @@ export default new Vuex.Store({
         promocode,
         purchaseAudit,
         operations,
+        notifications
     },
     strict: false,
 });
