@@ -16,15 +16,15 @@
                 <v-subheader class="main-head">Компании</v-subheader>
                 <v-subheader v-if="allRecords.Company.length === 0">У вас нет компаний</v-subheader>
             </template>
-
+    <div v-for="(item, itemIndex) in items" class="vacancy__wrapper">
             <v-card
                     class="main-card"
                     :class="selectBg(index)"
                     color="#26c6da"
                     dark
-                    v-for="(item, itemIndex) in items"
+                    elevation="10"
             >
-                <v-card-text class="headline font-weight-bold">
+                <v-card-text class="headline font-weight-bold card-text">
                     <template v-if="items === allRecords.Vacancy">
                         <a :href="domen + '/vacancy/view/' + item.id" target="_blank" class="statistics-link">
                         {{ item.name }}
@@ -41,27 +41,37 @@
                         </a>
                     </template>
                 </v-card-text>
-
-                <v-card-actions>
-                    <v-list-tile class="grow">
-                        <v-layout
-                                align-center
-                                justify-end
-                        >
-                            <v-icon class="mr-1">remove_red_eye</v-icon>
-                            <span class="subheading mr-2">{{ item.views }}</span>
-                            <span class="mr-1">·</span>
-                            <v-icon class="mr-1">phone</v-icon>
-                            <span class="subheading mr-2">{{ item.click_phone_count }}</span>
-                            <span class="mr-1">·</span>
-                            <router-link to="/personal-area/my-message" class="statistics-link">
-                            <v-icon class="mr-1">message</v-icon>
-                            <span class="subheading">{{ item.responses }}</span>
-                            </router-link>
-                        </v-layout>
-                    </v-list-tile>
-                </v-card-actions>
             </v-card>
+            <v-list-tile class="grow">
+              <img :src="imgDots" alt="" class="img__dots">
+              <v-layout
+                  class="icons__wrapper"
+                  align-center
+                  justify-end
+              >
+                <div class="ellipsis__wrapper">
+                <div class="icon__ellipsis">
+                  <v-icon class="mr-1">remove_red_eye</v-icon>
+                </div>
+                <span class="subheading mr-2">{{ item.views }}</span>
+                </div>
+                <div class="ellipsis__wrapper">
+                  <div class="icon__ellipsis">
+                    <v-icon class="mr-1">phone</v-icon>
+                  </div>
+                  <span class="subheading mr-2">{{ item.click_phone_count }}</span>
+                </div>
+                <router-link to="/personal-area/my-message" class="statistics-link">
+                <div class="ellipsis__wrapper">
+                  <div class="icon__ellipsis">
+                    <v-icon class="mr-1">message</v-icon>
+                  </div>
+                  <span class="subheading mr-2">{{ item.responses }}</span>
+                </div>
+                </router-link>
+              </v-layout>
+            </v-list-tile>
+          </div>
         </template>
 
     </div>
@@ -73,7 +83,8 @@
         data() {
             return {
                 allRecords: [],
-                domen: ''
+                domen: '',
+                imgDots: process.env.VUE_APP_API_URL + '/vue/public/lk-image/dots.png',
             }
         },
         computed: {
@@ -111,7 +122,51 @@
     }
 </script>
 
-<style >
+<style scoped>
+/*.card-text{*/
+/*  margin-top: 120px;*/
+/*}*/
+.img__dots{
+  position: absolute;
+  height: 50px;
+  z-index: 1;
+  bottom: 24px;
+}
+.icons__wrapper{
+  position: absolute;
+  right: -30px;
+}
+.ellipsis__wrapper{
+  display: flex;
+}
+.ellipsis__wrapper span{
+  align-self: flex-end;
+}
+.icon__ellipsis{
+  width: 25px;
+  justify-content: center;
+  display: flex;
+  border-radius: 50%;
+  box-shadow: 2px 2px 3px 0 grey;
+  /*box-shadow: 0 0 10px 0px black;*/
+  align-items: center;
+  height: 25px;
+  margin-right: 8px;
+  margin-top: 30px;
+}
+.icon__ellipsis .v-icon{
+  width: 13px;
+  margin-right: 0 !important;
+  height: 8px;
+  transform: scale(.6);
+  align-self: center;
+  color: red
+}
+.vacancy__wrapper{
+  display: flex;
+  flex-direction: column;
+  margin-right: 1.5rem;
+}
     .main-block {
         display: flex;
         flex-wrap: wrap;
@@ -125,26 +180,32 @@
         border-bottom: 1px solid rgba(0,0,0,0.54);
     }
     .main-card {
-        width: 23%;
+        width: 100%;
         margin-right: 20px;
-        margin-bottom: 20px;
+        /*margin-bottom: 20px;*/
+        border-radius: 33px;
+        min-width: 251px;
+        z-index: 2;
+        max-width: 271px;
+
     }
     .main-card_resume {
         display: flex;
         flex-direction: column;
         min-height: 160px;
-        background-color: #0000FF !important;
+        background-color: #0253a3 !important;
     }
     .main-card_vacancy {
         display: flex;
         flex-direction: column;
         min-height: 160px;
-        background-color: #FF0000 !important;
+        background-color: #1772cc !important;
     }
     .main-card_company {
         display: flex;
         flex-direction: column;
         min-height: 160px;
+        background-color: #398cdd;
     }
     .main-card_resume .v-card__actions,
     .main-card_vacancy .v-card__actions,
