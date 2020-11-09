@@ -9,7 +9,15 @@ const actions = {
             payload.item.active_until = payload.active_until;
             commit(type.UPDATE_VACANCY_IN_ALL_VACANCY,{index: payload.index,item: payload.item});
         } catch (e){
-            await dispatch('state/VIEW_NOTIFICATION',e);
+            this.$swal({
+                title: 'Недостаточно средств на счету',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Пополнить счет',
+                cancelButtonText: 'Отмена'
+            })
             console.log('Problem', e.message);
             throw (e);
         }

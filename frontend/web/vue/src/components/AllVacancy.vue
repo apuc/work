@@ -118,7 +118,7 @@
                                         title="Удалить"
                                         @click="vacancyAddTime(item,index)"
                                     >
-                                      <span v-if="isVacancyActive(item.active_until)">Продлить </span>
+                                      <span v-if="isVacancyActive(item.active_until)">Продлить&nbsp;</span>
                                       <span v-else>Активировать&nbsp;</span>
                                       <span>на 30 дней</span>
                                     </v-btn>
@@ -377,12 +377,12 @@
                                 return data;
                             }).catch(error => {
                             this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
+                                // toast: true,
+                                // position: 'bottom-end',
                                 showConfirmButton: false,
                                 timer: 4000,
                                 type: 'error',
-                                title: error.message
+                                title: error
                             })
                         });
                     }
@@ -448,6 +448,19 @@
                 })
               }
               catch (e) {
+                this.$swal({
+                  title: 'Недостаточно средств на счету',
+                  type: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Пополнить счет',
+                  cancelButtonText: 'Отмена'
+                }).then((result) => {
+                  if (result.value) {
+                    this.$router.push({name: 'payment'});
+                  }
+                });
                 console.log(e)
                 return
               }

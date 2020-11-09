@@ -137,6 +137,12 @@
 
                 this.$store.dispatch('editVacancy', dataObj)
                     .then(data => {
+                        this.$swal({
+                          showConfirmButton: false,
+                          timer: 4000,
+                          type: 'success',
+                          title: 'Данные сохранены',
+                        })
                         this.$router.push('/personal-area/all-vacancy');
                         return data;
                     }).catch(error => {
