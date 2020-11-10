@@ -1,7 +1,6 @@
 <template>
     <div class="main-block">
         <template v-for="(items, index) in allRecords">
-
             <template v-if="items === allRecords.Resume">
                 <v-subheader class="main-head">Резюме</v-subheader>
                 <v-subheader  v-if="allRecords.Resume.length === 0">У вас нет резюме</v-subheader>
@@ -16,6 +15,7 @@
                 <v-subheader class="main-head">Компании</v-subheader>
                 <v-subheader v-if="allRecords.Company.length === 0">У вас нет компаний</v-subheader>
             </template>
+          <div class="card__statistic__wrapper" >
     <div v-for="(item, itemIndex) in items" class="vacancy__wrapper">
             <v-card
                     class="main-card"
@@ -24,7 +24,7 @@
                     dark
                     elevation="10"
             >
-                <v-card-text class="headline font-weight-bold card-text">
+                <v-card-text class="headline font-weight-bold card-text" style="word-break: break-all;">
                     <template v-if="items === allRecords.Vacancy">
                         <a :href="domen + '/vacancy/view/' + item.id" target="_blank" class="statistics-link">
                         {{ item.name }}
@@ -71,6 +71,12 @@
                 </router-link>
               </v-layout>
             </v-list-tile>
+        <div class="card__about mt-4"><p class="mb-0">Обновлено 30 июля 2020 в 15:51</p>
+  <p class="mb-0">Доступно только по <a href="">прямой ссылке</a></p></div>
+          </div>
+          </div>
+          <div>
+            <v-btn class="btn__statistic">СОЗДАТЬ ВАКАНСИЮ</v-btn>
           </div>
         </template>
 
@@ -123,9 +129,28 @@
 </script>
 
 <style scoped>
-/*.card-text{*/
-/*  margin-top: 120px;*/
-/*}*/
+.btn__statistic {
+  background-color: #dd3d34 !important;
+  border-radius: 20px;
+  height: 40px;
+  max-width: 192px;
+  color: white;
+}
+.card__about{
+    line-height: 25px !important;
+    margin-bottom: 0 !important;
+    font-size: 19px;
+    font-family: Muller, serif;
+  padding: 0 16px;
+}
+.card__about     a{
+  color: #64d0fd;
+}
+.card__statistic__wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
 .img__dots{
   position: absolute;
   height: 50px;
@@ -133,8 +158,8 @@
   bottom: 24px;
 }
 .icons__wrapper{
-  position: absolute;
-  right: -30px;
+  //position: absolute;
+  //right: -30px;
 }
 .ellipsis__wrapper{
   display: flex;
@@ -165,7 +190,9 @@
 .vacancy__wrapper{
   display: flex;
   flex-direction: column;
-  margin-right: 1.5rem;
+  padding-right: 20px;
+
+  padding-bottom: 1rem;
 }
     .main-block {
         display: flex;
@@ -180,14 +207,13 @@
         border-bottom: 1px solid rgba(0,0,0,0.54);
     }
     .main-card {
-        width: 100%;
-        margin-right: 20px;
+        width: 350px;
+        //width: 100%;
         /*margin-bottom: 20px;*/
         border-radius: 33px;
         min-width: 251px;
         z-index: 2;
-        max-width: 271px;
-
+        //max-width: 271px;
     }
     .main-card_resume {
         display: flex;
@@ -216,6 +242,9 @@
         .main-card {
             width: 30%;
         }
+      .card__about{
+        font-size: 14px;
+      }
     }
     @media (max-width: 960px) {
         .main-card {

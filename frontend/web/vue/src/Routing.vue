@@ -23,8 +23,11 @@
       <v-list class="pa-1" v-if="userStatus >= 20">
         <v-list-tile avatar>
           <v-list-tile-content>
-            <v-list-tile-title class="login-block">
+            <v-list-tile-title class="login-block" >
               Баланс: {{ userMe.user.company.balance }} ₽
+              <v-btn class="btn__statistic">
+                <span style="font-size: 11px; color: white;">Пополнить</span>
+              </v-btn>
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
@@ -286,6 +289,12 @@ export default {
 }
 </script>
 <style scoped>
+.btn__statistic {
+  background-color: #dd3d34 !important;
+  border-radius: 20px;
+  height: 40px;
+  max-width: 130px;
+}
 .main-alert {
   width: 100%;
   border: none;
@@ -401,6 +410,8 @@ export default {
 .login-block {
   display: flex;
   align-items: center;
+  height: 40px;
+  justify-content: space-between;
 }
 
 .login-image {
