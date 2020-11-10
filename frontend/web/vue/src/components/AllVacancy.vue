@@ -2,7 +2,8 @@
 
     <div>
         <v-subheader class="all-head">
-            Ваши вакансии (Осталось поднятий: {{ vacancyRenew }}
+          <div class="vacancy__block__wrapper">
+            <div class="vacancy__title">Ваши вакансии</div> <span class="vacancy__wrapper__bracket">(</span>Осталось поднятий: {{ vacancyRenew }}
             <v-btn small color="primary"
                    class="buy-vacancy-renew"
                    type="button"
@@ -11,7 +12,9 @@
             >
                 <v-icon dark>add</v-icon>
             </v-btn>
-            ,
+          </div>
+            <span class="comma">,</span>
+          <div class="vacancy__block__wrapper">
             Осталось вакансий: {{ vacancyCreate }}
             <v-btn small color="primary"
                    class="buy-vacancy-renew"
@@ -21,7 +24,8 @@
             >
                 <v-icon dark>add</v-icon>
             </v-btn>
-            )
+            <span class="vacancy__wrapper__bracket">)</span>
+          </div>
             <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
                 <v-btn class="vacancy__link">
                     Добавить вакансию
@@ -505,6 +509,10 @@
         padding: 0;
         font-size: 22px;
         color: rgba(0, 0, 0, .74);
+        display: flex;
+        flex-wrap: wrap;
+        height: auto;
+
     }
 
     .all-head a {
@@ -521,5 +529,21 @@
     }
     .vacancy__inactive{
         color:red;
+    }
+    .vacancy__block__wrapper{
+      display: flex;
+      align-items: center
+    }
+    @media (max-width: 425px){
+      .comma{
+        display: none;
+      }
+      .vacancy__wrapper__bracket{
+        display: none;
+      }
+      .vacancy__block__wrapper{
+        display: flex;
+        flex-wrap: wrap;
+      }
     }
 </style>
