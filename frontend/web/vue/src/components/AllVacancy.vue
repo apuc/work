@@ -1,549 +1,667 @@
 <template>
 
-    <div>
-        <v-subheader class="all-head">
-          <div class="vacancy__block__wrapper">
-            <div class="vacancy__title">Ваши вакансии</div> <span class="vacancy__wrapper__bracket">(</span>Осталось поднятий: {{ vacancyRenew }}
-            <v-btn small color="primary"
-                   class="buy-vacancy-renew"
-                   type="button"
-                   title="Купить поднятие"
-                   @click="buyVacancyRenew"
-            >
-                <v-icon dark>add</v-icon>
-            </v-btn>
-          </div>
-            <span class="comma">,</span>
-          <div class="vacancy__block__wrapper">
-            Осталось вакансий: {{ vacancyCreate }}
-            <v-btn small color="primary"
-                   class="buy-vacancy-renew"
-                   type="button"
-                   title="Купить вакансию"
-                   @click="buyVacancyCreate"
-            >
-                <v-icon dark>add</v-icon>
-            </v-btn>
-            <span class="vacancy__wrapper__bracket">)</span>
-          </div>
-            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
-                <v-btn class="vacancy__link">
-                    Добавить вакансию
-                </v-btn>
-            </router-link>
-        </v-subheader>
-        <template v-if="getAllVacancy.length === 0">
-            <v-subheader>У вас нет вакансий</v-subheader>
-        </template>
+  <div>
+    <v-subheader class="all-head">
+      <div class="vacancy__block__wrapper">
+        <div class="vacancy__title">Ваши вакансии</div>
+        <span class="vacancy__wrapper__bracket">(</span>Осталось поднятий: {{ vacancyRenew }}
+        <v-btn small color="primary"
+               class="buy-vacancy-renew"
+               type="button"
+               title="Купить поднятие"
+               @click="buyVacancyRenew"
+        >
+          <v-icon dark>add</v-icon>
+        </v-btn>
+      </div>
+      <span class="comma">,</span>
+      <div class="vacancy__block__wrapper">
+        Осталось вакансий: {{ vacancyCreate }}
+        <v-btn small color="primary"
+               class="buy-vacancy-renew"
+               type="button"
+               title="Купить вакансию"
+               @click="buyVacancyCreate"
+        >
+          <v-icon dark>add</v-icon>
+        </v-btn>
+        <span class="vacancy__wrapper__bracket">)</span>
+      </div>
+      <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
+        <v-btn class="vacancy__link">
+          Добавить вакансию
+        </v-btn>
+      </router-link>
+    </v-subheader>
+    <template v-if="getAllVacancy.length === 0">
+      <v-subheader>У вас нет вакансий</v-subheader>
+    </template>
 
-        <template v-else>
-            <div>
-                <div class="all-resume">
-
-                    <v-list two-line>
-
-                        <v-list-tile
-                                v-for="(item, index) in getAllVacancy"
-                                :key="index"
-                                style="margin-top: 20px;"
-                        >
-                            <v-list-tile-content>
-                                <v-list-tile-title class="mt-auto mb-auto">
-                                    <a :href="domen + '/vacancy/view/' + item.id" target="_blank">
-                                        {{ item.post | capitalize }}
-                                    </a>
-                                </v-list-tile-title>
-                                <v-list-tile-sub-title class="mt-auto mb-auto">
-                                    Последнее поднятие: {{ item.update_time }}
-                                    <span v-if="isVacancyActive(item.active_until)">Активна до: {{ item.active_until }}</span>
-                                    <span v-else class="vacancy__inactive">Неактивна</span>
-                                    <span v-if="item.day_vacancy_until != 0">Вакансия дня до: {{ item.day_vacancy_until }}</span>
-                                </v-list-tile-sub-title>
-                                <v-divider style="width: 100%;"></v-divider>
-                            </v-list-tile-content>
-                            <v-menu offset-y>
-                                <template v-slot:activator="{ on }">
-                                    <v-btn
-                                        color="primary"
-                                        dark
-                                        v-on="on"
-                                    >
-                                        <v-icon>menu</v-icon>
-                                    </v-btn>
-                                </template>
-                                <v-list>
-                                    <v-list-tile>
-                                        <router-link :to="`${editLink}/${item.id}`">
-                                            <v-btn
-                                                   class="edit-btn"
-                                                   type="button"
-                                                   title="Редактировать"
-                                            >
-                                                Редактировать
-                                            </v-btn>
-                                        </router-link>
-                                    </v-list-tile>
-                                    <v-list-tile>
-                                        <v-btn
-                                               :disabled="dateNow < item.vacancy_day_timestamp"
-                                               class="edit-btn"
-                                               type="button"
-                                               title="Поднять в ТОП"
-                                               @click="vacancyDay(item.id)"
-                                        >
-                                            Сделать вакансией дня
-                                        </v-btn>
-                                    </v-list-tile>
-                                    <v-list-tile>
-                                        <v-btn
-                                               v-bind:disabled="item.can_update == false || vacancyRenew === 0"
-                                               class="edit-btn"
-                                               type="button"
-                                               title="Поднять в ТОП"
-                                               @click="vacancyUpdate(index, item.id)"
-                                        >
-                                            Поднять в ТОП
-                                        </v-btn>
-                                    </v-list-tile>
-                                    <v-list-tile>
-                                        <v-btn
-                                               class="edit-btn"
-                                               type="button"
-                                               title="Удалить"
-                                               @click="vacancyRemove(index, item.id)"
-                                        >
-                                            Удалить
-                                        </v-btn>
-                                    </v-list-tile>
-                                  <v-list-tile>
-                                    <v-btn
-                                        class="edit-btn"
-                                        type="button"
-                                        title="Удалить"
-                                        @click="vacancyAddTime(item,index)"
-                                    >
-                                      <span v-if="isVacancyActive(item.active_until)">Продлить&nbsp;</span>
-                                      <span v-else>Активировать&nbsp;</span>
-                                      <span>на 30 дней</span>
-                                    </v-btn>
-                                  </v-list-tile>
-                                </v-list>
-                            </v-menu>
-                        </v-list-tile>
-                    </v-list>
-
+    <template v-else>
+      <div class="resume__container">
+        <div class="resume__item" v-for="(item, index) in getAllVacancy" :key="index">
+          <a class="resume__title" :href="domen + '/vacancy/view/' + item.id" target="_blank">
+            {{ item.post | capitalize }}
+          </a>
+          <h4 class="resume__subtitle">Последнее поднятие: <span class="subtitle__last-up">{{ item.update_time }}</span>
+            <span v-if="isVacancyActive(item.active_until)">Активна до: <span class="subtitle__active">{{ item.active_until }}</span></span>
+            <span v-else class="vacancy__inactive">Неактивна</span>
+            <span v-if="item.day_vacancy_until !== 0">Вакансия дня до: {{ item.day_vacancy_until }}</span>
+            <hr style="margin-right: 30px;margin-top: 5px;">
+            <div class="resume__actions">
+              <div class="resume__actions_group">
+                <div class="resume__actions__item" @click="vacancyDay(item.id)" :class="{disabled__item: dateNow < item.vacancy_day_timestamp}">
+                  <img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b>
                 </div>
-
-                <template v-if="paginationPageCount > 1">
-                    <div class="text-xs-center">
-                        <v-pagination
-                                v-model="paginationCurrentPage"
-                                :length="paginationPageCount"
-                                @input="getVacancy"
-                        ></v-pagination>
-                    </div>
-                </template>
-
+                <div class="resume__actions__item" :class="{disabled__item: item.can_update === false || vacancyRenew === 0}"><img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b></div>
+              </div>
+              <!--            <div>-->
+              <router-link :to="`${editLink}/${item.id}`">
+                <div class="resume__actions__item">
+                  <img :src="editIcon" alt="" class="actions_icons"> <span>Редактировать вакансию</span>
+                </div>
+              </router-link>
+              <div class="resume__actions__item" @click="vacancyRemove(index, item.id)">
+                <img :src="deleteIcon" alt="" class="actions_icons"> <span>Удалить вакансию</span>
+              </div>
+              <!--            </div>-->
             </div>
+        </div>
+        <div class="resume__item free__vacancy">
+          <div class="resume__actions" style="margin-top: 74px;">
+            <div class="resume__actions_group">
+              <div class="resume__actions__item"><img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b></div>
+              <div class="resume__actions__item"><img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b></div>
+            </div>
+            <!--            <div>-->
+            <div class="resume__actions__item">
+              <img :src="editIcon" alt="" class="actions_icons"> <span>Редактировать вакансию</span>
+            </div>
+            <div class="resume__actions__item">
+              <img :src="deleteIcon" alt="" class="actions_icons"> <span>Удалить вакансию</span>
+            </div>
+            <!--            </div>-->
+          </div>
+          <div class="hover__vacancy">
+            <h2 class="hover__vacancy__title">+ БЕСПЛАТНАЯ ВАКАНСИЯ</h2>
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
+            <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn">Создать вакансию</v-btn>
+            </router-link>
+          </div>
+        </div>
+        <div class="resume__item add__vacancy">
+          <h2 class="add__vacancy__title">ДОБАВИТЬ ЕЩЁ ВАКАНСИЮ</h2>
+          <p v-if="vacancyCreate===0"><span style="color:#dd3d34;font-weight: 600;">Лимит вакансий исчерпан.</span> <span style="font-weight: 600;">Цена дополнительной вакансии 200 руб.</span></p>
+          <div style="margin-top: 30px;">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
+            <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn">Создать вакансию</v-btn>
+            </router-link>
+            <p class="add__vacancy_text">* В месяц пользователям система даёт 3 бесплатных вакансии</p>
+          </div>
+        </div>
+      </div>
+      <div>
+
+        <template v-if="paginationPageCount > 1">
+          <div class="text-xs-center">
+            <v-pagination
+                v-model="paginationCurrentPage"
+                :length="paginationPageCount"
+                @input="getVacancy"
+            ></v-pagination>
+          </div>
         </template>
-    </div>
+
+      </div>
+    </template>
+  </div>
 
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
+import {mapGetters} from 'vuex';
 
-    export default {
-        name: "AllResume",
-        data() {
-            return {
-                editLink: '/personal-area/edit-vacancy',
-                getAllVacancy: [],
-                paginationPageCount: 1,
-                paginationCurrentPage: 1,
-                domen: '',
-                vacancyRenew: 0,
-                vacancyCreate: 0,
-                servicePrice: [],
-                dateNow: 0
-            }
-        },
-        created() {
-            document.title = this.$route.meta.title;
-            this.getVacancy(1);
-            this.getCompany();
-            this.getPrice();
-            this.dateNow = Math.floor(Date.now() / 1000);
-        },
-        methods: {
-            getPrice() {
-                this.$store.dispatch('getServicePrice')
-                    .then(data => {
-                        this.servicePrice = data;
-                    }).catch(error => {
-                    this.$swal({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        type: 'error',
-                        title: error
-                    })
-                });
-            },
-            buyVacancyRenew() {
-                let price = 0;
-                this.servicePrice.forEach( (item) => {
-                    if (item.alias === 'vacancy_renew') {
-                        price = item.price
-                    }
-                });
-                this.$swal({
-                    title: 'Цена ' + price + ' ₽. Вы уверены?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Да',
-                    cancelButtonText: 'Нет'
-                }).then((result) => {
-                    if (result.value) {
-                        this.$store.dispatch('buyRenew')
-                            .then(data => {
-                                this.getCompany();
-                                this.$store.dispatch('getUserMe', this.$route.params.id)
-                                    .then(data => {
-                                        return data;
-                                    }).catch(error => {
-                                    this.$swal({
-                                        toast: true,
-                                        position: 'bottom-end',
-                                        showConfirmButton: false,
-                                        timer: 4000,
-                                        type: 'error',
-                                        title: error
-                                    })
-                                });
-                                return data;
-                            }).catch(error => {
-                              if (error === 'У вас недостаточно средств на счету') {
-                                this.$swal({
-                                  title: 'Недостаточно средств на счету',
-                                  type: 'warning',
-                                  showCancelButton: true,
-                                  confirmButtonColor: '#3085d6',
-                                  cancelButtonColor: '#d33',
-                                  confirmButtonText: 'Пополнить счет',
-                                  cancelButtonText: 'Отмена'
-                                }).then((result) => {
-                                  if (result.value) {
-                                    this.$router.push({name: 'payment'});
-                                  }
-                                });
-                              }
-                        });
-                    }
-                });
-            },
-            buyVacancyCreate() {
-                let price = 0;
-                this.servicePrice.forEach( (item) => {
-                    if (item.alias === 'vacancy_create') {
-                        price = item.price
-                    }
-                });
-                this.$swal({
-                    title: 'Цена ' + price + ' ₽. Вы уверены?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Да',
-                    cancelButtonText: 'Нет'
-                }).then((result) => {
-                    if (result.value) {
-                        this.$store.dispatch('buyCreate')
-                            .then(data => {
-                                this.getCompany();
-                                this.$store.dispatch('getUserMe', this.$route.params.id)
-                                    .then(data => {
-                                        return data;
-                                    }).catch(error => {
-                                    this.$swal({
-                                        toast: true,
-                                        position: 'bottom-end',
-                                        showConfirmButton: false,
-                                        timer: 4000,
-                                        type: 'error',
-                                        title: error
-                                    })
-                                });
-                                return data;
-                            }).catch(error => {
-                            if (error === 'У вас недостаточно средств на счету') {
-                              this.$swal({
-                                title: 'Недостаточно средств на счету',
-                                type: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'Пополнить счет',
-                                cancelButtonText: 'Отмена'
-                              }).then((result) => {
-                                if (result.value) {
-                                  this.$router.push({name: 'payment'});
-                                }
-                              });
-                            }
-                        });
-                    }
-                });
-            },
-            getCompany() {
-              this.$store.dispatch('getAllCompany')
-                  .then(data => {
-                    this.vacancyRenew = data.vacancy_renew_count;
-                    this.vacancyCreate = data.create_vacancy;
-                  }).catch(error => {
-                this.$swal({
-                  toast: true,
-                  position: 'bottom-end',
-                  showConfirmButton: false,
-                  timer: 4000,
-                  type: 'error',
-                  title: error.message
-                })
-              });
-            },
-            getVacancy(page) {
-                this.$store.dispatch('getAllVacancy', page)
-                    .then(data => {
-                        this.paginationCurrentPage = data.pagination.current_page;
-                        this.paginationPageCount = data.pagination.page_count;
-                        this.domen = `${process.env.VUE_APP_API_URL}`;
-                        this.getAllVacancy = data.models;
-                        this.getAllVacancy.forEach((element) => {
-                            let timestamp = element.update_time;
-                            let timestampDay = element.day_vacancy_until;
-                            element.vacancy_day_timestamp = timestampDay;
-                            let timestampActive = element.active_until;
-                            let date = new Date();
-                            let dateDay = new Date();
-                            let dateActive = new Date();
-                            date.setTime(timestamp * 1000);
-                            dateDay.setTime(timestampDay * 1000);
-                            dateActive.setTime(timestampActive * 1000);
-                            let options = {
-                                year: 'numeric',
-                                month: 'numeric',
-                                day: 'numeric',
-                                hour: 'numeric',
-                                minute: 'numeric',
-                            };
-                            element.update_time = date.toLocaleString("ru", options);
-                            element.active_until = dateActive.toLocaleString("ru", options);
-                            if (element.day_vacancy_until != 0) {
-                                element.day_vacancy_until = dateDay.toLocaleString("ru", options);
-                            }
-                        });
-                    }).catch(error => {
-                    this.$swal({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        type: 'error',
-                        title: error.message
-                    })
-                });
-            },
-            vacancyDay(vacancyId) {
-                let price = 0;
-                this.servicePrice.forEach( (item) => {
-                    if (item.alias === 'day_vacancy') {
-                        price = item.price
-                    }
-                });
-                this.$swal({
-                    title: 'Цена ' + price + ' ₽. Вы уверены?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Да',
-                    cancelButtonText: 'Нет'
-                }).then((result) => {
-                    if (result.value) {
-                        this.$store.dispatch('vacancyDay', vacancyId)
-                            .then(data => {
-                                this.getVacancy(this.paginationCurrentPage);
-                                this.getCompany();
-                                return data;
-                            }).catch(error => {
-                            this.$swal({
-                                // toast: true,
-                                // position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: error
-                            })
-                        });
-                    }
-                });
-            },
-            vacancyUpdate(index, vacancyId) {
-                this.$store.dispatch('updateVacancy', vacancyId)
-                    .then(data => {
-                        this.getVacancy(this.paginationCurrentPage);
-                        ym(53666866,'reachGoal','vacancy_to_top');
-                        this.getCompany();
-                        return data;
-                    }).catch(error => {
-                    this.$swal({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        type: 'error',
-                        title: error.message
-                    })
-                });
-            },
-            vacancyRemove(index, vacancyId) {
-                this.$swal({
-                    title: 'Вы точно хотите удалить вакансию?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Да',
-                    cancelButtonText: 'Нет'
-                }).then((result) => {
-                    if (result.value) {
-                        this.$store.dispatch('removeVacancy', vacancyId)
-                            .then(data => {
-                                this.getVacancy(this.paginationCurrentPage);
-                                return data;
-                            }).catch(error => {
-                            this.$swal({
-                                toast: true,
-                                position: 'bottom-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                type: 'error',
-                                title: error.message
-                            })
-                        });
-                    }
-                });
-            },
-            isVacancyActive(itemDate){
-              return this.parseDate(new Date().toLocaleString().slice(0,-3)) < this.parseDate(itemDate)
-            },
-            async vacancyAddTime(item,index){
-              let date = this.parseDate(item.active_until)
-              try {
-                await this.$store.dispatch('prolongVacancy', {
-                  id: item.id,
-                  index: index,
-                  item: item,
-                  active_until: new Date(date.setMonth(date.getMonth() + 1)).toLocaleString().slice(0, -3)
-                })
-              }
-              catch (e) {
-                this.$swal({
-                  title: 'Недостаточно средств на счету',
-                  type: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Пополнить счет',
-                  cancelButtonText: 'Отмена'
-                }).then((result) => {
-                  if (result.value) {
-                    this.$router.push({name: 'payment'});
-                  }
-                });
-                console.log(e)
-                return
-              }
-              this.vacancyCreate--
-            },
-          parseDate(dateString) {
-            //"17.01.2021, 16:39" ожидается на ввод
-            if (!dateString) return new Date();
-            const regexp = /(\d+).(\d+).(\d+),\s(\d+):(\d+)/;
-            if(!regexp.test(dateString)) throw new Error('date string format error');
-            const d =regexp.exec(dateString);
-            if (d[3].length == 2) d[3] = `20${d[3]}`;
-            return new Date(d[3], d[2] - 1, d[1], d[4], d[5]);
-          },
-        },
-        filters: {
-            capitalize(val) {
-                if (!val) {
-                    return '';
-                }
-
-                val = val.toString();
-
-                return val.charAt(0).toUpperCase() + val.slice(1);
-            },
-        },
+export default {
+  name: "AllResume",
+  data() {
+    return {
+      editLink: '/personal-area/edit-vacancy',
+      getAllVacancy: [],
+      paginationPageCount: 1,
+      paginationCurrentPage: 1,
+      domen: '',
+      vacancyRenew: 0,
+      vacancyCreate: 0,
+      servicePrice: [],
+      dateNow: 0,
+      editIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/pencil.svg',
+      deleteIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/remove.svg',
+      crownIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/crown.svg',
+      topLeftIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/top-left.svg',
     }
+  },
+  created() {
+    document.title = this.$route.meta.title;
+    this.getVacancy(1);
+    this.getCompany();
+    this.getPrice();
+    this.dateNow = Math.floor(Date.now() / 1000);
+  },
+  methods: {
+    getPrice() {
+      this.$store.dispatch('getServicePrice')
+      .then(data => {
+        this.servicePrice = data;
+      }).catch(error => {
+        this.$swal({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 4000,
+          type: 'error',
+          title: error
+        })
+      });
+    },
+    buyVacancyRenew() {
+      let price = 0;
+      this.servicePrice.forEach((item) => {
+        if (item.alias === 'vacancy_renew') {
+          price = item.price
+        }
+      });
+      this.$swal({
+        title: 'Цена ' + price + ' ₽. Вы уверены?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет'
+      }).then((result) => {
+        if (result.value) {
+          this.$store.dispatch('buyRenew')
+          .then(data => {
+            this.getCompany();
+            this.$store.dispatch('getUserMe', this.$route.params.id)
+            .then(data => {
+              return data;
+            }).catch(error => {
+              this.$swal({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 4000,
+                type: 'error',
+                title: error
+              })
+            });
+            return data;
+          }).catch(error => {
+            if (error === 'У вас недостаточно средств на счету') {
+              this.$swal({
+                title: 'Недостаточно средств на счету',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Пополнить счет',
+                cancelButtonText: 'Отмена'
+              }).then((result) => {
+                if (result.value) {
+                  this.$router.push({name: 'payment'});
+                }
+              });
+            }
+          });
+        }
+      });
+    },
+    buyVacancyCreate() {
+      let price = 0;
+      this.servicePrice.forEach((item) => {
+        if (item.alias === 'vacancy_create') {
+          price = item.price
+        }
+      });
+      this.$swal({
+        title: 'Цена ' + price + ' ₽. Вы уверены?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет'
+      }).then((result) => {
+        if (result.value) {
+          this.$store.dispatch('buyCreate')
+          .then(data => {
+            this.getCompany();
+            this.$store.dispatch('getUserMe', this.$route.params.id)
+            .then(data => {
+              return data;
+            }).catch(error => {
+              this.$swal({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 4000,
+                type: 'error',
+                title: error
+              })
+            });
+            return data;
+          }).catch(error => {
+            if (error === 'У вас недостаточно средств на счету') {
+              this.$swal({
+                title: 'Недостаточно средств на счету',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Пополнить счет',
+                cancelButtonText: 'Отмена'
+              }).then((result) => {
+                if (result.value) {
+                  this.$router.push({name: 'payment'});
+                }
+              });
+            }
+          });
+        }
+      });
+    },
+    getCompany() {
+      this.$store.dispatch('getAllCompany')
+      .then(data => {
+        this.vacancyRenew = data.vacancy_renew_count;
+        this.vacancyCreate = data.create_vacancy;
+      }).catch(error => {
+        this.$swal({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 4000,
+          type: 'error',
+          title: error.message
+        })
+      });
+    },
+    getVacancy(page) {
+      this.$store.dispatch('getAllVacancy', page)
+      .then(data => {
+        this.paginationCurrentPage = data.pagination.current_page;
+        this.paginationPageCount = data.pagination.page_count;
+        this.domen = `${process.env.VUE_APP_API_URL}`;
+        this.getAllVacancy = data.models;
+        this.getAllVacancy.forEach((element) => {
+          let timestamp = element.update_time;
+          let timestampDay = element.day_vacancy_until;
+          element.vacancy_day_timestamp = timestampDay;
+          let timestampActive = element.active_until;
+          let date = new Date();
+          let dateDay = new Date();
+          let dateActive = new Date();
+          date.setTime(timestamp * 1000);
+          dateDay.setTime(timestampDay * 1000);
+          dateActive.setTime(timestampActive * 1000);
+          let options = {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+          };
+          element.update_time = date.toLocaleString("ru", options);
+          element.active_until = dateActive.toLocaleString("ru", options);
+          if (element.day_vacancy_until != 0) {
+            element.day_vacancy_until = dateDay.toLocaleString("ru", options);
+          }
+        });
+      }).catch(error => {
+        this.$swal({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 4000,
+          type: 'error',
+          title: error.message
+        })
+      });
+    },
+    vacancyDay(vacancyId) {
+      let price = 0;
+      this.servicePrice.forEach((item) => {
+        if (item.alias === 'day_vacancy') {
+          price = item.price
+        }
+      });
+      this.$swal({
+        title: 'Цена ' + price + ' ₽. Вы уверены?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет'
+      }).then((result) => {
+        if (result.value) {
+          this.$store.dispatch('vacancyDay', vacancyId)
+          .then(data => {
+            this.getVacancy(this.paginationCurrentPage);
+            this.getCompany();
+            return data;
+          }).catch(error => {
+            this.$swal({
+              // toast: true,
+              // position: 'bottom-end',
+              showConfirmButton: false,
+              timer: 4000,
+              type: 'error',
+              title: error
+            })
+          });
+        }
+      });
+    },
+    vacancyUpdate(index, vacancyId) {
+      this.$store.dispatch('updateVacancy', vacancyId)
+      .then(data => {
+        this.getVacancy(this.paginationCurrentPage);
+        ym(53666866, 'reachGoal', 'vacancy_to_top');
+        this.getCompany();
+        return data;
+      }).catch(error => {
+        this.$swal({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 4000,
+          type: 'error',
+          title: error.message
+        })
+      });
+    },
+    vacancyRemove(index, vacancyId) {
+      this.$swal({
+        title: 'Вы точно хотите удалить вакансию?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет'
+      }).then((result) => {
+        if (result.value) {
+          this.$store.dispatch('removeVacancy', vacancyId)
+          .then(data => {
+            this.getVacancy(this.paginationCurrentPage);
+            return data;
+          }).catch(error => {
+            this.$swal({
+              toast: true,
+              position: 'bottom-end',
+              showConfirmButton: false,
+              timer: 4000,
+              type: 'error',
+              title: error.message
+            })
+          });
+        }
+      });
+    },
+    isVacancyActive(itemDate) {
+      return this.parseDate(new Date().toLocaleString().slice(0, -3)) < this.parseDate(itemDate)
+    },
+    async vacancyAddTime(item, index) {
+      let date = this.parseDate(item.active_until)
+      try {
+        await this.$store.dispatch('prolongVacancy', {
+          id: item.id,
+          index: index,
+          item: item,
+          active_until: new Date(date.setMonth(date.getMonth() + 1)).toLocaleString().slice(0, -3)
+        })
+      } catch (e) {
+        this.$swal({
+          title: 'Недостаточно средств на счету',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Пополнить счет',
+          cancelButtonText: 'Отмена'
+        }).then((result) => {
+          if (result.value) {
+            this.$router.push({name: 'payment'});
+          }
+        });
+        console.log(e)
+        return
+      }
+      this.vacancyCreate--
+    },
+    parseDate(dateString) {
+      //"17.01.2021, 16:39" ожидается на ввод
+      if (!dateString) return new Date();
+      const regexp = /(\d+).(\d+).(\d+),\s(\d+):(\d+)/;
+      if (!regexp.test(dateString)) throw new Error('date string format error');
+      const d = regexp.exec(dateString);
+      if (d[3].length == 2) d[3] = `20${d[3]}`;
+      return new Date(d[3], d[2] - 1, d[1], d[4], d[5]);
+    },
+  },
+  filters: {
+    capitalize(val) {
+      if (!val) {
+        return '';
+      }
+
+      val = val.toString();
+
+      return val.charAt(0).toUpperCase() + val.slice(1);
+    },
+  },
+}
 </script>
 
 <style scoped>
-    .all-resume .theme--light.v-list {
-        background-color: transparent;
-    }
+.disabled__item {
+  filter: opacity(0.5);
+  cursor: initial !important;
+}
 
-    a {
-        text-decoration: none;
-    }
+.my-btn {
+  max-width: 192px !important;
+  height: 40px;
+  width: 192px;
+}
 
-    .all-head {
-        margin-top: 10px;
-        margin-bottom: 15px;
-        padding: 0;
-        font-size: 22px;
-        color: rgba(0, 0, 0, .74);
-        display: flex;
-        flex-wrap: wrap;
-        height: auto;
+.add__vacancy_text {
+  width: 234px !important;
+  display: inline-block;
+  margin: 0;
+  font-weight: 500;
+  font-family: 'Muller', sans-serif;
+}
 
-    }
+.add__vacancy {
+  padding-top: 45px !important;
+  padding-left: 40px
+}
 
-    .all-head a {
-        margin-left: 15px;
-    }
+.add__vacancy__title {
+  color: #1976d2;
+  margin-bottom: 20px;
+  font-family: 'Muller', sans-serif;
+  font-weight: 800;
+}
 
-    .all-head a button {
-        text-transform: none !important;
-    }
+.add__vacancy_btn {
+  text-transform: initial;
+  margin-bottom: 24px !important;
+  margin-right: 31px;
+  /*margin-top: 25px;*/
+  /*margin-top: 30px;*/
+}
 
-    .buy-vacancy-renew {
-        max-width: 28px;
-        min-width: 28px;
-    }
-    .vacancy__inactive{
-        color:red;
-    }
-    .vacancy__block__wrapper{
-      display: flex;
-      align-items: center
-    }
-    @media (max-width: 425px){
-      .comma{
-        display: none;
-      }
-      .vacancy__wrapper__bracket{
-        display: none;
-      }
-      .vacancy__block__wrapper{
-        display: flex;
-        flex-wrap: wrap;
-      }
-    }
+.free__vacancy {
+  position: relative;
+}
+
+.hover__vacancy {
+  padding-top: 35px;
+  padding-left: 40px;
+  position: absolute;
+  width: 100%;
+  /*background-color: #eaeaea;*/
+  background-color: rgba(234, 234, 234, .8);
+  max-width: 591px;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.hover__vacancy_btn {
+  text-transform: initial;
+  margin-top: 25px;
+  font-family: 'Muller', sans-serif;
+}
+
+.hover__vacancy__title {
+  color: #dd3d34;
+  font-family: 'Muller', sans-serif;
+}
+
+/*.free__vacancy:before{*/
+/*  content: '';*/
+/*  position: absolute;*/
+/*  width: 100%;*/
+/*  background-color: #eaeaea;*/
+/*  !*max-width: 591px;*!*/
+/*  !*height: 100%*!*/
+
+/*}*/
+.resume__container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.resume__actions_group {
+  width: 50%;
+}
+
+.resume__actions__item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+  color: initial;
+  /*font-family: 'Muller', sans-serif;*/
+}
+
+.resume__actions__item:hover {
+  cursor: pointer;
+}
+
+.resume__actions__item span {
+  font-weight: 500;
+}
+
+.resume__actions__item img {
+  margin-right: 15px;
+}
+
+.resume__actions {
+  display: flex;
+  /*justify-content: center;*/
+  align-items: center;
+  margin-top: 30px;
+}
+
+.resume__title {
+  margin-bottom: 10px;
+  color: #3c8ad8;
+  font-size: 18px;
+  font-family: 'Muller', sans-serif;
+}
+
+.resume__subtitle {
+  margin-bottom: 6px;
+  color: #989898;
+  /*font-family: 'Muller', sans-serif;*/
+}
+
+.resume__item {
+  width: 100%;
+  max-width: 591px;
+  min-height: 215px;
+  border: 1px solid #e8e8e8;
+  padding-top: 21px;
+  padding-left: 27px;
+  margin-bottom: 23px;
+  margin-right: 27px;
+}
+
+.actions_icons {
+  width: 31px;
+  height: 31px;
+}
+
+.all-resume .theme--light.v-list {
+  background-color: transparent;
+}
+
+a {
+  text-decoration: none;
+}
+
+.all-head {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding: 0;
+  font-size: 22px;
+  color: rgba(0, 0, 0, .74);
+  display: flex;
+  flex-wrap: wrap;
+  height: auto;
+
+}
+
+.all-head a {
+  margin-left: 15px;
+}
+
+.all-head a button {
+  text-transform: none !important;
+}
+
+.buy-vacancy-renew {
+  max-width: 28px;
+  min-width: 28px;
+}
+
+.vacancy__inactive {
+  color: red;
+}
+
+.vacancy__block__wrapper {
+  display: flex;
+  align-items: center
+}
+
+@media (max-width: 425px) {
+  .comma {
+    display: none;
+  }
+
+  .vacancy__wrapper__bracket {
+    display: none;
+  }
+
+  .vacancy__block__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
 </style>
