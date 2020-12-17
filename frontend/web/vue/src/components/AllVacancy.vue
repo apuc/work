@@ -34,20 +34,54 @@
       </router-link>
     </v-subheader>
     <template v-if="getAllVacancy.length === 0">
-      <v-subheader>У вас нет вакансий</v-subheader>
+      <div class='vacancy__container_empty' v-if="getAllVacancy.length===0">
+        <div class="resume__item free__vacancy">
+          <div class="resume__actions" style="margin-top: 74px;">
+            <div class="resume__actions_group">
+              <div class="resume__actions__item"><img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b></div>
+              <div class="resume__actions__item"><img :src="topLeftIcon" alt="" class="actions_icons"><span>Поднять</span> <span style="font-weight: bold;"> в топ</span></div>
+            </div>
+            <!--            <div>-->
+            <div class="resume__actions__item">
+              <img :src="editIcon" alt="" class="actions_icons"> <span>Редактировать вакансию</span>
+            </div>
+            <div class="resume__actions__item">
+              <img :src="deleteIcon" alt="" class="actions_icons"> <span>Удалить вакансию</span>
+            </div>
+            <!--            </div>-->
+          </div>
+          <div class="hover__vacancy">
+            <h2 class="hover__vacancy__title">+ БЕСПЛАТНАЯ ВАКАНСИЯ</h2>
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
+              <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn">Создать вакансию</v-btn>
+            </router-link>
+          </div>
+        </div>
+        <div class="resume__item add__vacancy">
+          <h2 class="add__vacancy__title">ДОБАВИТЬ ЕЩЁ ВАКАНСИЮ</h2>
+          <p v-if="vacancyCreate===0"><span style="color:#dd3d34;font-weight: 600;">Лимит вакансий исчерпан.</span>
+            <span style="font-weight: 600;">Цена дополнительной вакансии {{ servicePrice[2] }} руб.</span>
+            <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn" @click="buyVacancyCreate">Купить вакансию</v-btn>
+          </p>
+          <div style="margin-top: 30px;">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
+              <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn">Создать вакансию</v-btn>
+            </router-link>
+            <p class="add__vacancy_text">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
+          </div>
+        </div>
+      </div>
     </template>
 
     <template v-else>
       <div class="resume__container">
-        <div class="resume__item" v-for="(item, index) in getAllVacancy" :key="index">
+        <div class="resume__item" v-for="(item, index) in getAllVacancy" :key="index" :style="isVacancyActive(item.active_until)? {backgroundColor: 'initial'} : {backgroundColor: '#e1ecf6'}">
           <a class="resume__title" :href="domen + '/vacancy/view/' + item.id" target="_blank">
             {{ item.post | capitalize }}
           </a>
           <h4 class="resume__subtitle">
             Последнее поднятие: <span class="subtitle__last-up">{{ item.update_time }} </span>
           </h4>
-          <span v-if="isVacancyActive(item.active_until)"> Активна до: <span class="subtitle__active">{{ item.active_until }}</span></span>
-          <span v-else class="vacancy__inactive">Неактивна</span>
           <span v-if="item.day_vacancy_until !== 0">Вакансия дня до: {{ item.day_vacancy_until }}</span>
           <hr style="margin-right: 30px;margin-top: 5px;">
           <div class="resume__actions">
@@ -56,8 +90,7 @@
                 <img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b>
               </div>
               <div class="resume__actions__item" :class="{disabled__item: item.can_update === false || vacancyRenew === 0}">
-                <img :src="topLeftIcon" alt="" class="actions_icons">Поднять
-                <b> в топ</b></div>
+                <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b></div>
             </div>
             <!--            <div>-->
             <router-link :to="`${editLink}/${item.id}`">
@@ -70,18 +103,14 @@
             </div>
             <!--            </div>-->
           </div>
-          <hr style="margin-right: 30px;margin-top: 5px;">
-          <v-btn
-              class="edit-btn my-2"
-              color="primary"
-              type="button"
-              title="Удалить"
-              @click="vacancyAddTime(item,index)"
-          >
-            <span v-if="isVacancyActive(item.active_until)">Продлить&nbsp;</span>
-            <span v-else>Активировать&nbsp;</span>
-            <span>на 30 дней</span>
-          </v-btn>
+          <p class="mt-6" style="font-weight: 600;">
+            Ваша вакансия
+            <span v-if="isVacancyActive(item.active_until)"  style="font-weight: 800"> Активна до: <span class="subtitle__active">{{ item.active_until }}</span></span>
+            <span v-else class="vacancy__inactive">НЕ активна</span>
+            <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2;    font-size: 11px;    font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate">
+              ПРОДЛИТЬ ВАКАНСИЮ
+            </v-btn>
+          </p>
         </div>
         <div class="resume__item free__vacancy">
           <div class="resume__actions" style="margin-top: 74px;">
@@ -485,6 +514,11 @@ export default {
 </script>
 
 <style scoped>
+.vacancy__container_empty {
+  display: flex;
+  flex-direction: column;
+}
+
 .disabled__item {
   filter: opacity(0.5);
   cursor: initial !important;
@@ -506,7 +540,7 @@ export default {
 
 .add__vacancy {
   padding-top: 45px !important;
-  padding-left: 40px
+  padding-left: 40px !important;
 }
 
 .add__vacancy__title {
@@ -607,7 +641,11 @@ export default {
 
 .resume__subtitle {
   margin-bottom: 6px;
-  color: #989898;
+  font-size: 15px;
+  font-weight: 400;
+  margin-top: 8px;
+  /*color: #989898;*/
+  color: #9aa4ae;
   /*font-family: 'Muller', sans-serif;*/
 }
 
