@@ -17,6 +17,9 @@ const mutations = {
     [type.UPDATE_VACANCY](state, payload) {
         state.updateVacancy = payload;
     },
+    [type.UPDATE_VACANCY_IN_ALL_VACANCY](state,payload){
+      state.allVacancy[payload.index] = payload.item;
+    },
     [type.REMOVE_VACANCY](state, payload) {
         state.removeVacancy = payload;
     },
