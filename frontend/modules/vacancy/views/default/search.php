@@ -193,8 +193,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                             )
                         ?>
                         <?php if($i === 3):?>
-                            <a href="https://ru.jooble.org/">
-                                <img style="max-width: 650px; margin: 15px 10px;" src="/images/jooble.png"/>
+                            <a class="jooble_image" href="https://ru.jooble.org/">
+                                <img src="/images/jooble.png"/>
                             </a>
                         <?php endif ?>
                             <?= $vacancy->day_vacancy_until > time()
