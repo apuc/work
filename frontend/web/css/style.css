@@ -18109,3 +18109,13 @@ address p {
   font-size: 30px;
   text-align: center;
 }
+.jooble_image {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.jooble_image img{
+  max-width: 100%;
+}

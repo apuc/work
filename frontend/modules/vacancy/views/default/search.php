@@ -180,9 +180,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
 
                     <?php if($dataProvider->models):
                         $random_key = rand(4, 9);
+                        $i = 0;
                         foreach ($dataProvider->models as $key => $vacancy): ?>
 
                         <?php
+                            $i++;
                             /** @var Vacancy $vacancy */
                             $flag = (
                                     $vacancy->company->user->email === "rabotavdnr@mail.ru"
@@ -190,6 +192,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                                     && Yii::$app->user->identity->email === "test@test.test"
                             )
                         ?>
+                        <?php if($i === 3):?>
+                            <a class="jooble_image" href="https://ru.jooble.org/">
+                                <img src="/images/jooble.png"/>
+                            </a>
+                        <?php endif ?>
                             <?= $vacancy->day_vacancy_until > time()
                                 ? $this->render('/parts/_vacancy_day', compact('vacancy'))
                                 : $this->render('/parts/_vacancy_standart', compact(['vacancy', 'flag', 'searchModel']))
@@ -244,276 +251,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                     <?php endif; ?>
 
                 </div>
-<!--                <div class="soc-sidebar" id="sidebar-vr">-->
-<!--                    <div class="sidebar-inner">-->
-<!--                        <p class="vr-head">Прямой эфир-->
-<!--                        </p>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="vr-card">-->
-<!--                            <div class="vr-card__head">-->
-<!--                                <div class="vr-card__head-image"><img src="/images/vr_card_image.png" alt=""-->
-<!--                                                                      role="presentation"/>-->
-<!--                                </div>-->
-<!--                                <div class="vr-card__name-time">-->
-<!--                                    <p class="vr-card__name">Дмитрий Иванов-->
-<!--                                    </p><span class="vr-card__time">2 минуты назад</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <p class="vr-card__text">-->
-<!--                                Ресторану-пивоварне «Beerstown” требуются официанты. Проживание желательно в-->
-<!--                                Будённовскомили Пролетарском р-не г.Донецка. Все вопросы по телефону: 071-310-69-69-->
-<!--                            </p>-->
-<!--                            <div class="vr-card__bottom"><span><img src="/images/like.svg" alt=""-->
-<!--                                                                    role="presentation"/>Нравится 96</span><span><img-->
-<!--                                            src="/images/chat.svg" alt=""-->
-<!--                                            role="presentation"/>Комментировать 5</span><span><img-->
-<!--                                            src="/images/speaker-side-view.svg" alt=""-->
-<!--                                            role="presentation"/>4</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
         </div>
     </div>
