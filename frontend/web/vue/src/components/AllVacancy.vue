@@ -706,7 +706,14 @@ a {
   display: flex;
   align-items: center
 }
-
+@media(max-width:560px){
+  .resume__actions {
+    flex-wrap: wrap
+  }
+  .resume__actions__item:first-child{
+    width: max-content;
+  }
+}
 @media (max-width: 425px) {
   .comma {
     display: none;
