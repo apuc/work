@@ -7,6 +7,7 @@
             <input type="hidden" name="m" value="214123">
             <v-text-field
                     v-model="formData.amount"
+                    prefix="₽"
                     name="oa"
                     label="Сумма"
                     @input="getHash"
