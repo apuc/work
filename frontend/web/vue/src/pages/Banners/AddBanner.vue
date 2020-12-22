@@ -231,7 +231,6 @@ export default {
     border-radius: 10px;
     background-color: #ddf0fb;
     box-sizing: inherit;
-    display: none !important;
 }
 
 .banner-advertising > img {
