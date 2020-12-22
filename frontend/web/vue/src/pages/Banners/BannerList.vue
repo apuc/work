@@ -30,7 +30,7 @@
                     <h3>{{ item.description }}</h3>
                     <div class="banner-advertising__right-bottom">
                       <img :src="domen + item.logo_url" alt="">
-                      <a href="/secure/company/default/view" class="btn-card btn-red">
+                      <a href="/secure/company/default/view" class="btn-card btn-red" style="display: none">
                         Посмотреть полностью
                       </a>
                     </div>

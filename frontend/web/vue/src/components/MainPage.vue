@@ -3,16 +3,19 @@
         <template v-for="(items, index) in allRecords">
             <template v-if="items === allRecords.Resume">
                 <v-subheader class="main-head">Резюме</v-subheader>
+                <hr class="hr">
                 <v-subheader  v-if="allRecords.Resume.length === 0">У вас нет резюме</v-subheader>
             </template>
 
             <template v-else-if="items === allRecords.Vacancy">
                 <v-subheader class="main-head">Вакансии</v-subheader>
+                <hr class="hr">
                 <v-subheader v-if="allRecords.Vacancy.length === 0">У вас нет вакансий</v-subheader>
             </template>
 
             <template v-else-if="items === allRecords.Company">
                 <v-subheader class="main-head">Компании</v-subheader>
+                <hr class="hr">
                 <v-subheader v-if="allRecords.Company.length === 0">У вас нет компаний</v-subheader>
             </template>
           <div class="card__statistic__wrapper" >
@@ -22,28 +25,37 @@
                     :class="selectBg(index)"
                     color="#26c6da"
                     dark
-                    elevation="10"
+                    :style="items === allRecords.Vacancy ? {backgroundColor: '#26c6da !important'} : items === allRecords.Company ? {backgroundColor: '#1772cc !important'} : {backgroundColor:'#1772cc !important'}"
             >
-                <v-card-text class="headline font-weight-bold card-text" style="word-break: break-all;">
+<!--              :style="{ items === allRecordes.Vacancy ? backgroundColor : '#26c6da' : items=== allRecords.Resume ? backgroundColor: '#1772cc': backgroundColor: ''}"-->
+              <v-card-text class="headline font-weight-bold card-text" style="word-break: break-all;">
                     <template v-if="items === allRecords.Vacancy">
+                      <p class="card__statistic_title">
+                      <img :src="vacancyIcon" alt="">
                         <a :href="domen + '/vacancy/view/' + item.id" target="_blank" class="statistics-link">
                         {{ item.name }}
                         </a>
+                      </p>
                     </template>
                     <template v-else-if="items === allRecords.Resume">
+                      <p class="card__statistic_title">
+                      <img :src="vacancyIcon" alt="">
                         <a :href="domen + '/resume/view/' + item.id" target="_blank" class="statistics-link">
                             {{ item.name }}
                         </a>
+                      </p>
                     </template>
                     <template v-else-if="items === allRecords.Company">
+                      <p class="card__statistic_title">
+                      <img :src="companyIcon" alt="">
                         <a :href="domen + '/company/view/' + item.id" target="_blank" class="statistics-link">
                             {{ item.name }}
                         </a>
+                      </p>
                     </template>
                 </v-card-text>
             </v-card>
             <v-list-tile class="grow">
-              <img :src="imgDots" alt="" class="img__dots">
               <v-layout
                   class="icons__wrapper"
                   align-center
@@ -71,7 +83,7 @@
                 </router-link>
               </v-layout>
             </v-list-tile>
-        <div class="card__about mt-4"><p class="mb-0">Обновлено 30 июля 2020 в 15:51</p>
+        <div class="card__about"><p class="mb-0">Обновлено 30 июля 2020 в 15:51</p>
   <p class="mb-0">Доступно только по <a href="">прямой ссылке</a></p></div>
           </div>
           </div>
@@ -91,6 +103,8 @@
                 allRecords: [],
                 domen: '',
                 imgDots: process.env.VUE_APP_API_URL + '/vue/public/lk-image/dots.png',
+                vacancyIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/information.png',
+                companyIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/business-and-trade.png',
             }
         },
         computed: {
@@ -129,6 +143,11 @@
 </script>
 
 <style scoped>
+.hr{
+  width: 100%;
+  max-width: 350px;
+  margin-bottom: 25px;
+}
 .btn__statistic {
   background-color: #dd3d34 !important;
   border-radius: 20px;
@@ -139,23 +158,26 @@
 .card__about{
     line-height: 25px !important;
     margin-bottom: 0 !important;
-    font-size: 19px;
-    font-family: Muller, serif;
-  padding: 0 16px;
+    font-family: 'Muller Regular', sans-serif !important;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0 16px;
+    text-align: end;
 }
 .card__about     a{
-  color: #64d0fd;
+  color: #00b4ff;
 }
 .card__statistic__wrapper{
   display: flex;
   flex-wrap: wrap;
   width: 100%;
 }
-.img__dots{
-  position: absolute;
-  height: 50px;
-  z-index: 1;
-  bottom: 24px;
+.card__statistic_title{
+  display: flex;
+  align-items: center;
+}
+.card__statistic_title img{
+  margin-right: 15px;
 }
 .icons__wrapper{
   //position: absolute;
@@ -171,13 +193,11 @@
   width: 25px;
   justify-content: center;
   display: flex;
-  border-radius: 50%;
-  box-shadow: 2px 2px 3px 0 grey;
   /*box-shadow: 0 0 10px 0px black;*/
   align-items: center;
   height: 25px;
   margin-right: 8px;
-  margin-top: 30px;
+  /*margin-top: 30px;*/
 }
 .icon__ellipsis .v-icon{
   width: 13px;
@@ -204,13 +224,13 @@
         padding: 0;
         font-size: 20px;
         font-weight: 700;
-        border-bottom: 1px solid rgba(0,0,0,0.54);
+        /*border-bottom: 1px solid rgba(0,0,0,0.54);*/
     }
     .main-card {
         width: 350px;
         //width: 100%;
         /*margin-bottom: 20px;*/
-        border-radius: 33px;
+        border-radius: 10px;
         min-width: 251px;
         z-index: 2;
         //max-width: 271px;
