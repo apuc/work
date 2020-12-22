@@ -704,7 +704,8 @@ a {
 
 .vacancy__block__wrapper {
   display: flex;
-  align-items: center
+  align-items: center;
+  flex-wrap: inherit;
 }
 @media(max-width:560px){
   .resume__actions {
@@ -712,6 +713,9 @@ a {
   }
   .resume__actions__item:first-child{
     width: max-content;
+  }
+  .resume__item{
+    padding-right: 27px;
   }
 }
 @media (max-width: 425px) {
