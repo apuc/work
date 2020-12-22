@@ -224,7 +224,8 @@ export default {
 .banner-advertising {
     display: flex;
     align-items: center;
-    width: 650px;
+    width: 100%;
+    max-width: 650px;
     margin: 15px 10px;
     padding: 30px 51px 13px 25px;
     border-radius: 10px;
