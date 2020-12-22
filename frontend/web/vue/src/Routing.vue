@@ -25,7 +25,7 @@
           <v-list-tile-content>
             <v-list-tile-title class="login-block" >
               Баланс: {{ userMe.user.company.balance }} ₽
-              <v-btn class="btn__statistic">
+              <v-btn class="btn__statistic" to="/personal-area/payment">
                 <span style="font-size: 11px; color: white;">Пополнить</span>
               </v-btn>
             </v-list-tile-title>
