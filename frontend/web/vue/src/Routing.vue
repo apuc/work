@@ -81,7 +81,7 @@
         wrap
         main
     >
-      <v-container>
+      <v-container  class="my__container">
         <v-alert
             dense
             :value="true"
@@ -289,6 +289,10 @@ export default {
 }
 </script>
 <style scoped>
+.my__container{
+  /*padding: 0 !important;*/
+  max-width: initial !important;
+}
 .btn__statistic {
   background-color: #dd3d34 !important;
   border-radius: 20px;
