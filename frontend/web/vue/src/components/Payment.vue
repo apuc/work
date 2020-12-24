@@ -1,7 +1,7 @@
 <template>
   <div class="container__inner">
-    <div class="balance__container">
-      <!--        Micro_Chip-->
+    <div>
+    <div class="balance__container" :style="{'background-image': `url(${patternLayer})`} ">
       <h4 class="balance__title">
         <img :src="microChipIcon" alt="">
         <p>Пополнить счет</p>
@@ -41,6 +41,8 @@
         Перейти к оплате
       </v-btn>
     </div>
+      <a href="" class="question__link">Есть вопросы? Напиши нам в соц.сетях <img :src="vkIcon" alt=""></a>
+    </div>
     <div class="additional__services">
       <h5 class="services_title">Прайс услуг</h5>
       <div class="additional__services_inner">
@@ -70,6 +72,8 @@ export default {
     companyId: 0,
     hash: '',
     microChipIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/Micro_Chip.png',
+    vkIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/vk-256x256.png',
+    patternLayer: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/Pattern_Layer.png',
   }),
   mounted() {
     this.$store.dispatch('getUserMe', this.$route.params.id)
@@ -117,6 +121,25 @@ export default {
 </script>
 
 <style scoped>
+.question__link{
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  color: #000104;
+  font-family: "Muller Medium", inherit;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  text-align: left;
+  /* Text style for "Есть вопро" */
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: normal;
+justify-content: end;
+}
+.question__link img{
+  margin-left: 15px;
+}
 .container__inner {
   display: flex;
   flex-wrap: wrap;
@@ -165,6 +188,7 @@ export default {
 
 .balance__form {
   padding: 23px 119px 31px 27px;
+  background-color: white;
 }
 
 .balance__btn {
