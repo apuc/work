@@ -93,7 +93,7 @@
                 <h3>{{ formData.description }}</h3>
                 <div class="banner-advertising__right-bottom">
                     <img :src="formData.logo" alt="">
-                    <a href="/secure/company/default/view" class="btn-card btn-red">
+                    <a href="/" class="btn-card btn-red">
                         Посмотреть полностью
                     </a>
                 </div>
