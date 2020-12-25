@@ -62,13 +62,10 @@
         return this.paramsFile;
       },
       validate () {
-        let btn = document.getElementById('main-btn');
-        btn.disabled = true;
         let valid = this.$refs.form.validate();
         this.$emit('val', valid);
         if (valid && this.value.phoneValid) {
           this.snackbar = true;
-          btn.disabled = false;
           this.sendForm();
         }
       },
