@@ -60,7 +60,7 @@
         <div class="resume__item add__vacancy">
           <h2 class="add__vacancy__title">ДОБАВИТЬ ЕЩЁ ВАКАНСИЮ</h2>
           <p v-if="vacancyCreate===0"><span style="color:#dd3d34;font-weight: 600;">Лимит вакансий исчерпан.</span>
-            <span style="font-weight: 600;">Цена дополнительной вакансии {{ servicePrice[2] }} руб.</span>
+            <span style="font-weight: 600;" v-if="servicePrice[2]">Цена дополнительной вакансии {{ servicePrice[2].price }} руб.</span>
             <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn" @click="buyVacancyCreate">Купить вакансию</v-btn>
           </p>
           <div style="margin-top: 30px;">

@@ -88,7 +88,7 @@
           </div>
           </div>
           <div>
-            <v-btn class="btn__statistic">СОЗДАТЬ ВАКАНСИЮ</v-btn>
+            <v-btn class="btn__statistic" to="/personal-area/add-vacancy">СОЗДАТЬ ВАКАНСИЮ</v-btn>
           </div>
         </template>
 
