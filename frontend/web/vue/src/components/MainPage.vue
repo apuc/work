@@ -147,6 +147,7 @@
   width: 100%;
   max-width: 350px;
   margin-bottom: 25px;
+  height: 1px;
 }
 .btn__statistic {
   background-color: #dd3d34 !important;
