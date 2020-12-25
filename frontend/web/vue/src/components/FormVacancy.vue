@@ -233,6 +233,7 @@
             },
             valHandler(val) {
                 this.valid = val;
+                this.onInput();
             },
         },
         beforeRouteLeave(to, from, next) {
