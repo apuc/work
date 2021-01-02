@@ -2,34 +2,23 @@
 
 namespace frontend\modules\vacancy\controllers;
 
-use common\classes\BannerService;
-use common\classes\Debug;
 use common\models\Action;
-use common\models\Banner;
-use common\models\BannerLocation;
 use common\models\Category;
 use common\models\City;
 use common\models\Country;
 use common\models\EmploymentType;
 use common\models\Message;
-use common\models\Professions;
 use common\models\Region;
 use common\models\Resume;
-use common\models\Skill;
 use common\models\User;
 use common\models\Vacancy;
 use common\models\Views;
 use frontend\modules\vacancy\classes\VacancySearch;
-use Swift_Mailer;
-use Swift_Message;
-use Swift_SmtpTransport;
 use Yii;
-use yii\data\ActiveDataProvider;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class DefaultController extends Controller
 {
@@ -38,17 +27,31 @@ class DefaultController extends Controller
     public $background_image;
     public $background_emblem;
 
-    public function actionView($id)
+    /**
+     * @param $id
+     * @return string
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     */
+    public function actionView($id): string
     {
         /** @var Vacancy $model */
-        $model = Vacancy::find()->where(['id'=>$id, 'status'=>Vacancy::STATUS_ACTIVE])->andWhere(['>', Vacancy::tableName().'.active_until', time()])->with('mainCategory')->one();
-        if(!$model) {
+        $model = Vacancy::find()
+            ->where([
+                'id'=>$id,
+                'status'=>Vacancy::STATUS_ACTIVE
+            ])
+            ->andWhere(['>', Vacancy::tableName().'.active_until', time()])
+            ->with('mainCategory')
+            ->one();
+        if (!$model) {
             $model = Vacancy::find()->where(['id'=>$id])->one();
-            if($model) {
+            if ($model) {
                 Yii::$app->response->setStatusCode(410);
                 throw new HttpException(410, 'Вакансия удалена');
-            } else
+            } else {
                 throw new NotFoundHttpException();
+            }
         }
         $last_vacancies = Vacancy::find()
             ->select(['id', 'main_category_id', 'company_id', 'post', 'responsibilities'])
@@ -63,15 +66,16 @@ class DefaultController extends Controller
             ->with(['mainCategory', 'company'])
             ->limit(2)
             ->all();
-        $referer_category = false;
-        if(Yii::$app->request->get('referer_category'))
-            $referer_category = Category::findOne(Yii::$app->request->get('referer_category'));
+
+        $referer_category = Category::findOne(Yii::$app->request->get('referer_category'));
+
         $view = new Views();
         $view->subject_type = 'Vacancy';
         $view->subject_id = $model->id;
         $view->viewer_id = Yii::$app->user->id;
         $view->dt_view = time();
         $view->save();
+
         return $this->render('view', [
             'model' => $model,
             'last_vacancies' => $last_vacancies,
@@ -79,35 +83,45 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionSearch()
+    /**
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionSearch(): string
     {
         $searchModel = new VacancySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->get());
-        if($searchModel->current_city)
+        if ($searchModel->current_city) {
             $this->background_image = $searchModel->current_city->image;
-        if($searchModel->current_category)
+        }
+        if ( $searchModel->current_category) {
             $this->background_emblem = $searchModel->current_category->image;
+        }
 
         $canonical_rel = Yii::$app->request->hostInfo.'/vacancy'.($searchModel->first_query_param?('/'.$searchModel->first_query_param):'').($searchModel->second_query_param?('/'.$searchModel->second_query_param):'');
 
-        if (!$categories = Yii::$app->cache->get("search_page_categories")) {
-            $categories = Category::find()->select(['id', 'name', 'slug'])->all();
-            Yii::$app->cache->set("search_page_categories", $categories, 3600);
-        }
-        if (!$employment_types = Yii::$app->cache->get("search_page_employment_types")) {
-            $employment_types = EmploymentType::find()->all();
-            Yii::$app->cache->set("search_page_employment_types", $employment_types, 3600);
-        }
-        if (!$countries = Yii::$app->cache->get("search_page_countries")) {
-            $countries = Country::find()->select(['id', 'name', 'slug'])->all();
-            Yii::$app->cache->set("search_page_countries", $countries, 3600);
-        }
+        $categories = Yii::$app->cache->getOrSet('search_page_categories', function () {
+            return Category::find()->select(['id', 'name', 'slug'])->all();
+        });
+        $employment_types =  Yii::$app->cache->getOrSet('search_page_employment_types', function () {
+            return EmploymentType::find()->all();
+        });
+        $countries =  Yii::$app->cache->getOrSet('search_page_countries', function () {
+            return Country::find()->select(['id', 'name', 'slug'])->all();
+        });
+
         $cities = null;
-        if($searchModel->current_country) {
-            if (!$cities = Yii::$app->cache->get("search_page_cities_".$searchModel->current_country->name)) {
-                $cities = City::find()->joinWith('region')->where([City::tableName().'.status' => 1, Region::tableName().'.country_id' => $searchModel->current_country->id])->orderBy('priority ASC')->all();
-                Yii::$app->cache->set("search_page_cities_".$searchModel->current_country->name, $cities, 3600);
-            }
+        if ($searchModel->current_country) {
+            $cities = Yii::$app->cache->getOrSet("search_page_cities_".$searchModel->current_country->name, function () use ($searchModel) {
+                return City::find()
+                    ->joinWith('region')
+                    ->where([
+                        City::tableName().'.status' => 1,
+                        Region::tableName().'.country_id' => $searchModel->current_country->id
+                    ])
+                    ->orderBy('priority ASC')
+                    ->all();
+            });
         }
 
         return $this->render('search', [
@@ -121,7 +135,10 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionSendMessage()
+    /**
+     * @return Response
+     */
+    public function actionSendMessage(): Response
     {
         $post = Yii::$app->request->post();
         $resume = Resume::findOne($post['vacancy_resume_id']);
@@ -148,12 +165,17 @@ class DefaultController extends Controller
         return $this->redirect($url);
     }
 
-    public function actionClickPhone() {
-        if(Yii::$app->request->isAjax && Yii::$app->request->isPost) {
-            if(!$id = Yii::$app->request->post('id')) {
+    /**
+     * @throws HttpException
+     */
+    public function actionClickPhone()
+    {
+        if (Yii::$app->request->isAjax && Yii::$app->request->isPost) {
+            if (!$id = Yii::$app->request->post('id')) {
                 throw new HttpException(404, 'Not Found');
-            } else if (Vacancy::findOne(intval($id))){
-                if($action = Action::find()->where(['type'=>'click_phone', 'subject'=>'vacancy', 'subject_id'=>$id])->one()) {
+            } else if (Vacancy::findOne(intval($id))) {
+                /** @var Action $action */
+                if ($action = Action::find()->where(['type'=>'click_phone', 'subject'=>'vacancy', 'subject_id'=>$id])->one()) {
                     $action->count++;
                     $action->save();
                 } else {
@@ -172,18 +194,27 @@ class DefaultController extends Controller
         }
     }
 
-    public function actionCities(){
+    /**
+     * @return false|string
+     */
+    public function actionCities()
+    {
         $country_slug = Yii::$app->request->get('slug');
+        /** @var Country $country */
         $country = Country::find()->where(['slug'=>$country_slug])->one();
-        if($country)
-            $cities = City::find()
-                ->select([City::tableName().'.id', City::tableName().'.slug', City::tableName().'.name', 'region_id'])
+        if (!$country) {
+            return false;
+        }
+        $cities = Yii::$app->cache->getOrSet("search_page_cities_".$country->name, function () use ($country) {
+            return City::find()
                 ->joinWith('region')
-                ->where([City::tableName().'.status' => 1, Region::tableName().'.country_id' => $country->id])
+                ->where([
+                    City::tableName().'.status' => 1,
+                    Region::tableName().'.country_id' => $country->id
+                ])
                 ->orderBy('priority ASC')
                 ->all();
-        else
-            return false;
+        });
         return $this->renderAjax('city_select', [
             'cities' => $cities
         ]);
