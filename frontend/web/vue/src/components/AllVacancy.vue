@@ -92,7 +92,7 @@
               <div class="resume__actions__item disabled__item" v-if="item.can_update === false || vacancyRenew === 0">
                 <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
               </div>
-              <div v-else  @click="vacancyUpdate(index, item.id)" class="resume__actions__item">
+              <div v-else @click="vacancyUpdate(index, item.id)" class="resume__actions__item">
                 <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
               </div>
             </div>
@@ -109,7 +109,7 @@
           </div>
           <p class="mt-6" style="font-weight: 600;">
             Ваша вакансия
-            <span v-if="isVacancyActive(item.active_until)"  style="font-weight: 800"> Активна до: <span class="subtitle__active">{{ item.active_until }}</span></span>
+            <span v-if="isVacancyActive(item.active_until)" style="font-weight: 800"> Активна до: <span class="subtitle__active">{{ item.active_until }}</span></span>
             <span v-else class="vacancy__inactive">НЕ активна</span>
             <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2;    font-size: 11px;    font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate">
               ПРОДЛИТЬ ВАКАНСИЮ
@@ -417,22 +417,37 @@ export default {
       });
     },
     vacancyUpdate(index, vacancyId) {
-      this.$store.dispatch('updateVacancy', vacancyId)
-      .then(data => {
-        this.getVacancy(this.paginationCurrentPage);
-        ym(53666866, 'reachGoal', 'vacancy_to_top');
-        this.getCompany();
-        return data;
-      }).catch(error => {
-        this.$swal({
-          toast: true,
-          position: 'bottom-end',
-          showConfirmButton: false,
-          timer: 4000,
-          type: 'error',
-          title: error
-        })
-      });
+      this.$swal({
+        title: 'Вы уверены, что хотите использовать поднятие?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет'
+      }).then((result) => {
+            if (result.value) {
+              this.$store.dispatch('updateVacancy', vacancyId)
+              .then(data => {
+                this.getVacancy(this.paginationCurrentPage);
+                ym(53666866, 'reachGoal', 'vacancy_to_top');
+                this.getCompany();
+                return data;
+              }).catch(error => {
+                this.$swal({
+                  toast: true,
+                  position: 'bottom-end',
+                  showConfirmButton: false,
+                  timer: 4000,
+                  type: 'error',
+                  title: error
+                })
+              });
+            }
+          }
+      )
+
+
     },
     vacancyRemove(index, vacancyId) {
       this.$swal({
@@ -711,17 +726,21 @@ a {
   align-items: center;
   flex-wrap: inherit;
 }
-@media(max-width:560px){
+
+@media (max-width: 560px) {
   .resume__actions {
     flex-wrap: wrap
   }
-  .resume__actions__item:first-child{
+
+  .resume__actions__item:first-child {
     width: max-content;
   }
-  .resume__item{
+
+  .resume__item {
     padding-right: 27px;
   }
 }
+
 @media (max-width: 425px) {
   .comma {
     display: none;
