@@ -89,8 +89,12 @@
               <div class="resume__actions__item" @click="vacancyDay(item.id)" :class="{disabled__item: dateNow < item.vacancy_day_timestamp}">
                 <img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b>
               </div>
-              <div class="resume__actions__item" :class="{disabled__item: item.can_update === false || vacancyRenew === 0}">
-                <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b></div>
+              <div class="resume__actions__item disabled__item" v-if="item.can_update === false || vacancyRenew === 0">
+                <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
+              </div>
+              <div v-else  @click="vacancyUpdate" class="resume__actions__item">
+                <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
+              </div>
             </div>
             <!--            <div>-->
             <router-link :to="`${editLink}/${item.id}`">
