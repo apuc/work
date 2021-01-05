@@ -214,7 +214,7 @@ justify-content: end;
 }
 
 .currency__char {
-  width: 1px;
+  width: 10px;
   min-width: 15px;
 }
 
