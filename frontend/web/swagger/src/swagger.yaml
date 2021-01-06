@@ -1,0 +1,840 @@
+---
+openapi: 3.0.0
+info:
+  title: Channels API
+  description: 'Для работы с API всегда нужно в заголовках отправлять параметры авторизации:
+    <b>Authorization: Bearer eyJ0eXAiOiJKV1QiLC...</b> Кроме запросов регистрации
+    и получения Token'
+  version: 1.0.0
+host: work.loc
+basePath: "/request"
+tags:
+  - name: Вакансии
+    description: Операции с вакансиями
+  - name: Группы
+    description: Операции с группами
+  - name: Каналы
+    description: Операции с каналами
+  - name: Аватарки
+    description: Операции с аватарками
+  - name: Пользователи
+    description: Операции с пользователями
+  - name: Сообщения
+    description: Операции с сообщениями
+  - name: Аттачменты к сообщениями
+    description: Операции с аттачментами к сообщениям
+  - name: Ссылки
+    description: Парсинг ссылок на мета теги
+schemes:
+  - http
+  - https
+security:
+  - bearerAuth: []
+consumes:
+  - application/json
+  - application/xml
+produces:
+  - application/json
+  - application/xml
+paths:
+  "/request/vacancy/{vacancy_id}":
+    get:
+      summary: Просмотр одной вакансии
+      description: 'Для того что-бы посмотреть вакансию, нужно отпрвавить <br>GET</b>
+        запрос на <b>/request/vacancy/{vacancy_id}</b>. Также существует необязательный
+        параметр <b>expand</b> в который через запятую можно вводить параметры <br>
+        Список параметров: <br> - views0 - информация о просмотрах данной вакансии<br>
+        - countViews - информация о суммарном количестве промотров<br> - company -
+        информация о компании разместившей вакансию<br> - employment_type - информация
+        о виде занятости<br> - vacancy_skill - требуемые навыки<br> - category - категория
+        вакансии<br> - can_update - возможность поднятия вакансии выше в списке'
+      tags:
+        - Вакансии
+      parameters:
+        - name: id
+          in: path
+          description: Vacancy ID
+          schema:
+            type: integer
+            format: int64
+        - name: expand
+          in: query
+          description: Expand
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Vacancy"
+  "/request/vacancy/my-index":
+    get:
+      summary: Просмотр всех вакансий текущего пользователя
+      description: 'Для того что-бы посмотреть вакансию, нужно отпрвавить <br>GET</b>
+        запрос на <b>/request/vacancy/my-index</b>. Также существует необязательный
+        параметр <b>expand</b> в который через запятую можно вводить параметры <br>
+        Список параметров: <br> - views0 - информация о просмотрах данной вакансии<br>
+        - countViews - информация о суммарном количестве промотров<br> - company -
+        информация о компании разместившей вакансию<br> - employment_type - информация
+        о виде занятости<br> - vacancy_skill - требуемые навыки<br> - category - категория
+        вакансии<br> - can_update - возможность поднятия вакансии выше в списке'
+      tags:
+        - Вакансии
+      parameters:
+        - name: expand
+          in: query
+          description: Expand
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Vacancy"
+  "/request/vacancy/create":
+    post:
+      summary: Добавление вакансии
+      description: Для того, чтобы добавить новую вакансию, необходимо отправить <b>POST</b>
+        запрос на <b>/request/vacancy/create</b>
+      tags:
+        - Вакансии
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company_id:
+                  type: integer
+                  example: ''
+                post:
+                  type: string
+                  example: ''
+                responsibilities:
+                  type: string
+                  example: ''
+                min_salary:
+                  type: integer
+                  example: ''
+                max_salary:
+                  type: integer
+                  example: ''
+                qualification_requirements:
+                  type: string
+                  example: ''
+                work_experience:
+                  type: string
+                  example: ''
+                education:
+                  type: string
+                  example: ''
+                category:
+                  type: array
+                  items:
+                    type: integer
+                working_conditions:
+                  type: string
+                  example: ''
+                video:
+                  type: string
+                  example: ''
+                city:
+                  type: string
+                  example: ''
+                address:
+                  type: string
+                  example: ''
+                home_number:
+                  type: integer
+                  example: ''
+                employment_type_id:
+                  type: integer
+                  example: ''
+                status:
+                  type: integer
+                  example: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Vacancy_create"
+  "/request/vacancy/update":
+    put:
+      summary: Редактирование вакансии
+      description: Для того чтобы редактировать вакансию, необходимо отправить <b>PUT</b>
+        запрос на <b>/request/vacancy/update</b>
+      tags:
+        - Вакансии
+      parameters:
+        - name: id
+          in: query
+          description: Vacancy_ID
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company_id:
+                  type: integer
+                  example: ''
+                post:
+                  type: string
+                  example: ''
+                responsibilities:
+                  type: string
+                  example: ''
+                min_salary:
+                  type: integer
+                  example: ''
+                max_salary:
+                  type: integer
+                  example: ''
+                qualification_requirements:
+                  type: string
+                  example: ''
+                work_experience:
+                  type: string
+                  example: ''
+                education:
+                  type: string
+                  example: ''
+                category:
+                  type: array
+                  items:
+                    type: integer
+                working_conditions:
+                  type: string
+                  example: ''
+                video:
+                  type: string
+                  example: ''
+                city:
+                  type: string
+                  example: ''
+                address:
+                  type: string
+                  example: ''
+                home_number:
+                  type: integer
+                  example: ''
+                employment_type_id:
+                  type: integer
+                  example: ''
+                status:
+                  type: integer
+                  example: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Vacancy_create"
+  "/request/vacancy/delete":
+    delete:
+      summary: Удаление  вакансии
+      description: Для того, чтобы удалить вакансию, необходимо отправить <b>DELETE</b>
+        запрос на <b>/request/vacancy/delete</b>
+      tags:
+        - Вакансии
+      parameters:
+        - name: id
+          in: query
+          description: Vacancy_ID
+          schema:
+            type: integer
+            format: integer
+      responses:
+        '200':
+          description: OK
+  "/user/search_request={request}&page={page}":
+    get:
+      summary: Поиск пользователей
+      description: Для того, чтобы искать пользователей, необходимо отправить <b>GET</b>
+        запрос на <b>/v1/user/search_request={request}&page={page}</b>.</br>Поиск
+        происходит по email и username
+      tags:
+        - Пользователи
+      security:
+        - Bearer: []
+      parameters:
+        - name: request
+          in: path
+          description: Строка запроса на поиск пользователей
+          schema:
+            type: string
+        - name: page
+          in: path
+          description: Количество ответов
+          schema:
+            type: integer
+            min: 1
+      responses:
+        '200':
+          description: OK
+  "/user/profile/{user_id}":
+    put:
+      summary: Редактирование профиля
+      description: Для того, чтобы редактировать пользователя, необходимо отправить
+        <b>PUT</b> запрос на <b>/v1/user/profile/{user_id}</b>
+      tags:
+        - Пользователи
+      security:
+        - Bearer: []
+      parameters:
+        - name: user_id
+          in: path
+          schema:
+            type: string
+          description: User ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                avatar_id:
+                  type: integer
+                  format: int64
+          application/xml:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                avatar_id:
+                  type: integer
+                  format: int64
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                avatar_id:
+                  type: integer
+                  format: int64
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+  "/group":
+    get:
+      summary: Получение групп пользователя
+      description: Для получения групп пользователя необходимо отправить <b>GET</b>
+        запрос на <b>/v1/group</b>
+      tags:
+        - Группы
+      security:
+        - Bearer: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            "$ref": "#/components/schemas/Group"
+    post:
+      summary: Добавление группы
+      description: Для того, чтобы добавить группу, необходимо отправить POST запрос
+        на /v1/group
+      tags:
+        - Группы
+      security:
+        - Bearer: []
+      parameters:
+        - name: title
+          in: formData
+          description: Название группы
+          required: true
+          schema:
+            type: string
+        - name: slug
+          in: formData
+          description: URL группы
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: formData
+          description: Статус группы (активная / не активная)
+          required: true
+          schema:
+            type: string
+            enum:
+              - active
+              - disable
+            default: active
+        - name: owner_id
+          in: formData
+          description: Идентификатор создателя группы
+          required: true
+          schema:
+            type: integer
+        - name: user_ids
+          in: formData
+          description: Массив пользователей группы
+          schema:
+            type: array
+            items:
+              type: integer
+            minItems: 1
+        - name: avatar
+  "/single-link":
+    get:
+      summary: Мета данные простой (одной) ссылки
+      description: Получить мета данные (название сайта, описание, иконка) по ссылке
+      tags:
+        - Ссылки
+      parameters:
+        - in: query
+          name: link
+          required: true
+          schema:
+            type: string
+            example: https://laravel.com
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Link"
+      security:
+        - Bearer: []
+  "/text-link":
+    get:
+      summary: Мета данные всех ссылок в сообщении
+      description: Получить мета данные (название сайта, описание, иконка) по всем
+        ссылкам в сообщении
+      tags:
+        - Ссылки
+      parameters:
+        - in: query
+          name: link
+          required: true
+          schema:
+            type: string
+            example: Laravel документация по ссылке https://laravel.com
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Link"
+      security:
+        - Bearer: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Vacancy_create:
+      type: object
+      properties:
+        company_id:
+          type: integer
+          description: ID компании разместившей вакансию
+        post:
+          type: string
+          description: Титульное название
+        responsibilities:
+          type: string
+          description: Обязанности
+        min_salary:
+          type: integer
+          description: Минимальная зарплата
+        max_salary:
+          type: integer
+          description: Максимальная зарплата
+        qualification_requirements:
+          type: string
+          description: Квалификационные требования
+        work_experience:
+          type: integer
+          description: Требуемый опыт работы
+        education:
+          type: string
+          description: Образование
+        working_conditions:
+          type: string
+          description: Условия труда
+        video:
+          type: string
+          description: Видео о вакансии
+        city:
+          type: string
+          description: Город
+        address:
+          type: string
+          description: Аддрес
+        home_number:
+          type: string
+          description: Номер дома
+        employment_type_id:
+          type: integer
+          description: Тип работы
+        views:
+          type: integer
+          description: Количество просмотров
+        status:
+          type: integer
+          description: Статус
+      example:
+        company_id: 18
+        post: PHP Разработчик
+        responsibilities: Разработка сайтов
+        min_salary: 15000
+        max_salary: 30000
+        qualification_requirements: PHP, JS, HTML/CSS
+        work_experience: 1
+        education: Не требуется
+        category:
+          - 1
+          - 2
+        working_conditions: 8 часов в день/5 дней в неделю
+        video: Ссылка на видео
+        city: Донецк
+        address: бул. Пушкина
+        home_number: 128
+        employment_type_id: 3
+        status: 1
+    Vacancy:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID вакансии
+        company_id:
+          type: integer
+          description: ID компании разместившей вакансию
+        post:
+          type: string
+          description: Титульное название
+        responsibilities:
+          type: string
+          description: Обязанности
+        min_salary:
+          type: integer
+          description: Минимальная зарплата
+        max_salary:
+          type: integer
+          description: Максимальная зарплата
+        qualification_requirements:
+          type: string
+          description: Квалификационные требования
+        work_experience:
+          type: integer
+          description: Требуемый опыт работы
+        education:
+          type: string
+          description: Образование
+        working_conditions:
+          type: string
+          description: Условия труда
+        video:
+          type: string
+          description: Видео о вакансии
+        city:
+          type: string
+          description: Город
+        address:
+          type: string
+          description: Аддрес
+        home_number:
+          type: string
+          description: Номер дома
+        employment_type_id:
+          type: integer
+          description: Тип работы
+        views:
+          type: integer
+          description: Количество просмотров
+        status:
+          type: integer
+          description: Статус
+        created_at:
+          type: integer
+          description: Дата создания
+        updated_at:
+          type: integer
+          description: Дата редактирования
+        owner:
+          type: integer
+          description: Количество владельцев
+        update_time:
+          type: integer
+          description: Время поднятия
+      example:
+        id: 5
+        company_id: 1
+        post: PHP Developer
+        responsibilities: Разработка сайтов
+        min_salary: 15000
+        max_salary: 30000
+        qualification_requirements: PHP, JS, HTML/CSS
+        work_experience: От 1 года
+        education: Не требуется
+        working_conditions: 8 часов в день/5 дней в неделю
+        video: Ссылка на видео
+        city: Донецк
+        address: бул. Пушкина
+        home_number: 128
+        employment_type_id: 3
+        views: 148
+        status: 1
+        created_at: 1555327833
+        updated_at: 1565008907
+        owner: 4
+        update_time:
+    RegistrationForm:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Отображаемое имя на сайте
+        password:
+          type: string
+          description: Пароль пользователя
+        password_confirmation:
+          type: string
+          description: Подтверждение пароля пользователя
+        email:
+          type: string
+          format: email
+          description: Email, указанный при регистрации
+      required:
+        - username
+        - password
+        - password_confirmation
+        - email
+      example:
+        username: Jessica Smith
+        password: 1234qwer
+        password_confirmation: 1234qwer
+        email: jessica@gmail.com
+      xml:
+        name: RegistrationForm
+    LoginForm:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          enum:
+            - password
+            - refresh_token
+          default: password
+          description: Тип запроса токена
+        client_id:
+          type: integer
+          description: Идентификатор клиента (генерируется по запросу)
+        client_secret:
+          type: string
+          description: Ключ клиента (генерируется по запросу)
+        username:
+          type: string
+          format: email
+          description: Email пользователя
+        password:
+          type: string
+          description: Пароль пользователя
+        refresh_token:
+          type: string
+          description: refresh token полученый при авторизации
+        scope:
+          type: string
+      required:
+        - grant_type
+        - client_id
+        - client_secret
+      example:
+        grant_type: password
+        client_id: 1
+        client_secret: HJnYUlzOSXOxoIc15HMlxUJb1SNzaeYKn0tSMBls
+        username: jessica@gmail.com
+        password: 1234qwer
+        refresh_token: oIc15HMlxUJb1SNzaeYKn0tSMBls...
+    xml:
+      name: LoginForm
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Отображаемое имя на сайте
+          example: Jessica Smith
+        password:
+          type: string
+          description: Пароль пользователя
+          password: 1234qwer
+        password_confirmation:
+          type: string
+          description: Подтверждение пароля пользователя
+          password_confirmation: 1234qwer
+        email:
+          type: string
+          format: email
+          description: Email, указанный при регистрации
+          email: jessica@gmail.com
+        avatar:
+          "$ref": "#/components/schemas/Avatar"
+      required:
+        - username
+        - password
+        - password_confirmation
+        - email
+      xml:
+        name: User
+    Avatar:
+      type: object
+      properties:
+        avatar_id:
+          type: integer
+          format: int64
+          description: Avatar ID
+        origin:
+          type: string
+          description: Ссылка на аватарку
+        average:
+          type: string
+          description: Ссылка на аватарку среднего размера
+        small:
+          type: string
+          description: Ссылка на аватарку уменьшенного размера
+        status:
+          type: string
+          enum:
+            - active
+            - disable
+      example:
+        origin: http://files.newchannels.loc/img/channel/0/04/04882234d9761dc7072283ba61e2c29b.jpg
+        average: http://files.newchannels.loc/img/channel/0/04/04882234d9761dc7072283ba61e2c29b_400.jpg
+        small: http://files.newchannels.loc/img/channel/0/04/04882234d9761dc7072283ba61e2c29b_150.jpg
+      xml:
+        name: Avatar
+    Group:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Название группы
+        slug:
+          type: integer
+          format: int64
+          description: URL группы
+        status:
+          type: string
+          enum:
+            - active
+            - disable
+          default: active
+          description: Статус группы (active / disable)
+        owner_id:
+          type: integer
+          format: int64
+          description: Идентификатор создателя группы
+        avatar:
+          type: integer
+          format: int64
+          allowEmpty: true
+      required:
+        - title
+        - slug
+        - status
+        - owner_id
+      xml:
+        name: Group
+    Channel:
+      type: object
+      properties:
+        channel_id:
+          type: integer
+          format: int64
+          example: 6
+        title:
+          type: string
+          example: Mr.
+        slug:
+          type: string
+          example: mr
+        status:
+          type: string
+          enum:
+            - active
+            - disable
+          default: active
+          example: active
+        type:
+          type: string
+          enum:
+            - chat
+            - wall
+          default: chat
+          example: chat
+        private:
+          type: integer
+          enum:
+            - 0
+            - 1
+          default: 1
+          example: 1
+        owner_id:
+          type: integer
+          format: int64
+          example: 2
+        user_count:
+          type: integer
+          format: int64
+          example: 3
+        avatar:
+          type: array
+          items:
+            type: integer
+          minItems: 1
+      xml:
+        name: Channel
+    Link:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL сайта
+          example: https://laravel.com/
+        title:
+          type: string
+          description: Заголовок сайта
+          example: Laravel - The PHP Framework For Web Artisans
+        description:
+          type: string
+          description: Описание сайта
+          example: Laravel - The PHP framework for web artisans
+        icon:
+          type: string
+          description: Лого сайта
+          example: "/assets/img/laravel-logo-white.png"
+        base:
+          type: string
+          description: Доменное имя сайта
+          example: laravel.com
+      xml:
+        name: Link
