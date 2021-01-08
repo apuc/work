@@ -30,16 +30,16 @@
             label="Email"
             :rules="[v => /.+@.+/.test(v) || 'Email должен быть правильным']"
         ></v-text-field>
+        <v-btn
+            class="balance__btn"
+            :disabled="hash === '' && (formData.amount === '' || formData.amount === 0)"
+            name="pay"
+            light
+            type="submit"
+        >
+          Перейти к оплате
+        </v-btn>
       </form>
-      <v-btn
-          class="balance__btn"
-          :disabled="hash === '' && (formData.amount === '' || formData.amount === 0)"
-          name="pay"
-          light
-          type="submit"
-      >
-        Перейти к оплате
-      </v-btn>
     </div>
       <a href="" class="question__link">Есть вопросы? Напиши нам в соц.сетях <img :src="vkIcon" alt=""></a>
     </div>
