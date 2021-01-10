@@ -10,8 +10,8 @@ const actions = {
             commit(type.UPDATE_VACANCY_IN_ALL_VACANCY,{index: payload.index,item: payload.item});
         } catch (e){
             this.$swal({
-                title: 'Недостаточно средств на счету',
-                type: 'warning',
+                title: 'У вас недостаточно средств на счету',
+                type: 'error',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
