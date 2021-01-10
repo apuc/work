@@ -288,6 +288,47 @@ export default {
   }
 }
 </script>
+<style>
+/*<!--Вместо css loaderOptions at vue.config-->*/
+.swal2-actions{
+  position: absolute;
+  bottom: -57px;
+  left: 0;
+}
+.swal2-confirm {
+  /*height: 40px !important;*/
+  border-radius: 20px !important;
+  background-color: #0f477e !important;
+  color: #ffffff !important;
+  font-family: "Muller Extra Bold" !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  letter-spacing: normal !important;
+  line-height: 40px !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+  /* Text style for "П, ополнит" */
+  font-style: normal !important;
+  letter-spacing: 1.1px !important;
+  line-height: normal !important;
+  padding: 15px 37px 15px 37px !important;
+  margin-right: 24px;
+}
+.swal2-styled{
+  height: 40px !important;
+  border-radius: 20px !important;
+  padding: 15px 37px 15px 37px !important;
+  outline: none !important;
+  font-size: 11px !important;
+  text-transform: uppercase;
+}
+.swal2-cancel{
+  /*height: 40px !important;*/
+  border-radius: 20px !important;
+  background-color: #454242 !important;
+  padding: 15px 37px 15px 37px !important;
+}
+</style>
 <style scoped>
 .my__container{
   /*padding: 0 !important;*/

@@ -41,7 +41,7 @@
         </v-btn>
       </form>
     </div>
-      <a href="" class="question__link">Есть вопросы? Напиши нам в соц.сетях <img :src="vkIcon" alt=""></a>
+      <a href="https://vk.com/rabotad0netsk" class="question__link">Есть вопросы? Напиши нам в соц.сетях <img :src="vkIcon" alt=""></a>
     </div>
     <div class="additional__services">
       <h5 class="services_title">Прайс услуг</h5>

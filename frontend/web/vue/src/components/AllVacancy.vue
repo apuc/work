@@ -34,8 +34,8 @@
       </router-link>
     </v-subheader>
     <template v-if="getAllVacancy.length === 0">
-      <div class='vacancy__container_empty' v-if="getAllVacancy.length===0">
-        <div class="resume__item free__vacancy">
+      <div class='vacancy__container_empty' v-if="getAllVacancy.length === 0">
+        <div class="resume__item free__vacancy" v-if="getAllVacancy.length<2">
           <div class="resume__actions" style="margin-top: 74px;">
             <div class="resume__actions_group">
               <div class="resume__actions__item"><img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b></div>
@@ -59,12 +59,15 @@
         </div>
         <div class="resume__item add__vacancy">
           <h2 class="add__vacancy__title">ДОБАВИТЬ ЕЩЁ ВАКАНСИЮ</h2>
-          <p v-if="vacancyCreate===0"><span style="color:#dd3d34;font-weight: 600;">Лимит вакансий исчерпан.</span>
+          <div v-if="vacancyCreate===0"><span style="color:#dd3d34;font-weight: 600;">Лимит вакансий исчерпан.</span>
             <span style="font-weight: 600;" v-if="servicePrice[2]">Цена дополнительной вакансии {{ servicePrice[2].price }} руб.</span>
-            <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn" @click="buyVacancyCreate">Купить вакансию</v-btn>
-          </p>
-          <div style="margin-top: 30px;">
-            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
+            <div >
+              <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn" @click="buyVacancyCreate">Купить вакансию</v-btn>
+              <p class="add__vacancy_text" style="margin-top: 30px;">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
+            </div>
+          </div>
+          <div style="margin-top: 30px;" v-if="vacancyCreate > 0">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy" >
               <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn">Создать вакансию</v-btn>
             </router-link>
             <p class="add__vacancy_text">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
@@ -116,7 +119,7 @@
             </v-btn>
           </p>
         </div>
-        <div class="resume__item free__vacancy">
+        <div class="resume__item free__vacancy" v-if="getAllVacancy.length<2">
           <div class="resume__actions" style="margin-top: 74px;">
             <div class="resume__actions_group">
               <div class="resume__actions__item"><img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b></div>
@@ -140,12 +143,15 @@
         </div>
         <div class="resume__item add__vacancy">
           <h2 class="add__vacancy__title">ДОБАВИТЬ ЕЩЁ ВАКАНСИЮ</h2>
-          <p v-if="vacancyCreate===0"><span style="color:#dd3d34;font-weight: 600;">Лимит вакансий исчерпан.</span>
+          <div v-if="vacancyCreate===0"><span style="color:#dd3d34;font-weight: 600;">Лимит вакансий исчерпан.</span>
             <span style="font-weight: 600;" v-if="servicePrice[2]">Цена дополнительной вакансии {{ servicePrice[2].price }} руб.</span>
-            <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn" @click="buyVacancyCreate">Купить вакансию</v-btn>
-          </p>
-          <div style="margin-top: 30px;">
-            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
+            <div >
+            <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn" @click="buyVacancyCreate">Купить вакансию</v-btn>
+            <p class="add__vacancy_text" style="margin-top: 30px;">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
+            </div>
+          </div>
+          <div style="margin-top: 30px;" v-if="vacancyCreate > 0">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy" >
               <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn">Создать вакансию</v-btn>
             </router-link>
             <p class="add__vacancy_text">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
@@ -252,8 +258,8 @@ export default {
           }).catch(error => {
             if (error === 'У вас недостаточно средств на счету') {
               this.$swal({
-                title: 'Недостаточно средств на счету',
-                type: 'warning',
+                title: 'У вас недостаточно средств на счету',
+                type: 'error',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
@@ -306,8 +312,8 @@ export default {
           }).catch(error => {
             if (error === 'У вас недостаточно средств на счету') {
               this.$swal({
-                title: 'Недостаточно средств на счету',
-                type: 'warning',
+                title: 'У вас недостаточно средств на счету',
+                type: 'error',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
@@ -491,8 +497,8 @@ export default {
         })
       } catch (e) {
         this.$swal({
-          title: 'Недостаточно средств на счету',
-          type: 'warning',
+          title: 'У вас недостаточно средств на счету',
+          type: 'error',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
