@@ -267,7 +267,7 @@ export default {
                 cancelButtonText: 'Отмена'
               }).then((result) => {
                 if (result.value) {
-                  this.$router.push({name: 'payment'});
+                  this.$router.push({name: 'payment',query: { price: price }});
                 }
               });
             }
@@ -321,7 +321,7 @@ export default {
                 cancelButtonText: 'Отмена'
               }).then((result) => {
                 if (result.value) {
-                  this.$router.push({name: 'payment'});
+                  this.$router.push({name: 'payment',query: { price: price }});
                 }
               });
             }
@@ -411,10 +411,12 @@ export default {
             return data;
           }).catch(error => {
             this.$swal({
-              // toast: true,
-              // position: 'bottom-end',
-              showConfirmButton: false,
-              timer: 4000,
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Пополнить счет',
+              cancelButtonText: 'Отмена',
+              showConfirmButton: true,
               type: 'error',
               title: error
             })
@@ -487,6 +489,7 @@ export default {
       return this.parseDate(new Date().toLocaleString().slice(0, -3)) < this.parseDate(itemDate)
     },
     async vacancyAddTime(item, index) {
+      console.log(item,index,'itemindex')
       let date = this.parseDate(item.active_until)
       try {
         await this.$store.dispatch('prolongVacancy', {

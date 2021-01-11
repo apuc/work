@@ -9,13 +9,14 @@
       <form class="balance__form" method="get" action="https://www.free-kassa.ru/merchant/cash.php">
         <input type="hidden" name="m" value="214123">
         <div class="d-flex">
+<!--          :rules="[rules.minValue]"-->
           <v-text-field
               v-model="formData.amount"
               name="oa"
               label="Сумма"
               @input="getHash"
-              :rules="[v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')]"
               style="width: 80%;"
+              type="number"
           ></v-text-field>
           <v-spacer></v-spacer>
           <v-text-field prefix="₽" class="currency__char"
@@ -46,13 +47,10 @@
     <div class="additional__services">
       <h5 class="services_title">Прайс услуг</h5>
       <div class="additional__services_inner">
-        <div v-for="i in 6" :key="i" class="additional__services_item">
-          <h5 class="services_item-title">Продление вакансии</h5>
-          <p class="services_item-text">* В месяц пользователям система
-            дает 3 бесплатных вакансии</p>
-          <p class="services_item-price">Цена 200 руб
-
-          </p>
+        <div v-for="i in blocks" :key="i" class="additional__services_item" style="max-height: 193px;">
+          <h5 class="services_item-title">{{i.title}}</h5>
+          <p class="services_item-text" style="height: 30px">{{i.addInfo}}</p>
+          <p class="services_item-price">Цена {{ i.price }} руб          </p>
         </div>
       </div>
     </div>
@@ -65,6 +63,28 @@ import {mapGetters} from 'vuex';
 export default {
   name: "Payment",
   data: () => ({
+    blocks:[
+      {
+        title: 'Добавить вакансию',
+        price: '200',
+        addInfo: '* В месяц пользователям система дает 3 бесплатных вакансии',
+      },
+      {
+        title: 'Добавить поднятие',
+        price: '100',
+      },
+      // {
+      //   title: 'Тариф «Стандарт+»',
+      //   price: '200',
+      //   list:
+      // }
+    ],
+    // rules:{
+    //   // minValue: (value)=>+value>499 || 'Минимум 500 рублей'
+    //   minValue: (v) => {
+    //     console.log(/^0*\/gm/.test(v),v,+'0001','hhmhm')
+    //     return ((/^0*\/gm/).test(v) && +v>0) || 'Не должно начинаться с нуля'}
+    // },
     formData: {
       amount: ''
     },
@@ -76,6 +96,8 @@ export default {
     patternLayer: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/Pattern_Layer.png',
   }),
   mounted() {
+    if(this.$route.query.price)
+      this.formData.amount = parseInt(this.$route.query.price,10)
     this.$store.dispatch('getUserMe', this.$route.params.id)
     .then(data => {
       this.email = data.user.email;
@@ -93,7 +115,7 @@ export default {
   },
   methods: {
     getHash() {
-      if (this.formData.amount > 0) {
+      if (this.formData.amount > 0 && /^[1-9]+$/.test(this.formData.amount)) {
         this.$store.dispatch('sendPayment', this.formData)
         .then(data => {
           this.hash = data;
