@@ -128,6 +128,28 @@ import {mapGetters} from 'vuex';
 export default {
   name: 'App',
   components: {},
+  mounted() {
+      window['yandexChatWidgetCallback'] = function() {
+        try {
+          window.yandexChatWidget = new Ya.ChatWidget({
+            guid: '32c7f20c-e2f8-4b8e-95c6-e2c5c4b865a7',
+            buttonText: 'Служба поддержки Rabota.Today',
+            title: 'Чат',
+            theme: 'light',
+            collapsedDesktop: 'never',
+            collapsedTouch: 'always'
+          });
+        } catch(e) {
+          console.log(e,'YA routing')
+        }
+      };
+      var n = document.getElementsByTagName('script')[0],
+          s = document.createElement('script');
+      s.async = true;
+      s.charset = 'UTF-8';
+      s.src = 'https://yastatic.net/s3/chat/widget.js';
+      n.parentNode.insertBefore(s, n);
+  },
   data() {
     return {
       drawer: true,

@@ -178,7 +178,9 @@
 				this.$store.dispatch('addResume', data)
 						.then(data => {
 							gtag('event', 'rezumeAdd', {'event_category': 'form', 'event_action': 'rezumeAdd',});
-							yaCounter53666866.reachGoal('rezumeAdd');
+							if(yaCounter53666866) {
+                yaCounter53666866.reachGoal('rezumeAdd');
+              }
 							this.$router.push('/personal-area/all-resume');
 							return data;
 						}).catch(error => {
