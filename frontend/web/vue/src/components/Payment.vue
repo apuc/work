@@ -115,7 +115,7 @@ export default {
   },
   methods: {
     getHash() {
-      if (this.formData.amount > 0 && /^[1-9]+$/.test(this.formData.amount)) {
+      if (this.formData.amount > 0) {
         this.$store.dispatch('sendPayment', this.formData)
         .then(data => {
           this.hash = data;
