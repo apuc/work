@@ -86,10 +86,6 @@
         <div class="card__about"><p class="mb-0">Обновлено 30 июля 2020 в 15:51</p>
   <p class="mb-0">Доступно только по <a href="">прямой ссылке</a></p></div>
           </div>
-          </div>
-          <div>
-            <v-btn class="btn__statistic" to="/personal-area/add-vacancy">СОЗДАТЬ ВАКАНСИЮ</v-btn>
-          </div>
         </template>
 
     </div>
@@ -148,13 +144,6 @@
   max-width: 350px;
   margin-bottom: 25px;
   height: 1px;
-}
-.btn__statistic {
-  background-color: #dd3d34 !important;
-  border-radius: 20px;
-  height: 40px;
-  max-width: 192px;
-  color: white;
 }
 .card__about{
     line-height: 25px !important;

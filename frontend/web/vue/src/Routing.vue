@@ -150,6 +150,13 @@ export default {
       s.src = 'https://yastatic.net/s3/chat/widget.js';
       n.parentNode.insertBefore(s, n);
   },
+  async created() {
+    await this.getUser();
+    if(this.userMe.user.status!==10)
+      this.linkMenu.splice(0,1)
+    if (window.innerWidth < 1265)
+      this.drawer = false;
+  },
   data() {
     return {
       drawer: true,
@@ -257,8 +264,8 @@ export default {
       email = email.slice(0, email.length - 1);
       return email;
     },
-    getUser() {
-      this.$store.dispatch('getUserMe', this.$route.params.id)
+    async getUser() {
+      await this.$store.dispatch('getUserMe', this.$route.params.id)
           .then(data => {
             if (data.first_name != null) {
               this.first_name = data.first_name.length;
@@ -296,12 +303,6 @@ export default {
       }
     },
   },
-  created() {
-    this.getUser();
-    if (window.innerWidth < 1265) {
-      this.drawer = false;
-    }
-  },
 
   computed: {
     ...mapGetters([
@@ -312,6 +313,9 @@ export default {
 </script>
 <style>
 /*<!--Вместо css loaderOptions at vue.config-->*/
+.swal2-bottom-end{
+  z-index: 9999999999999999999 !important;
+}
 .swal2-actions{
   position: absolute;
   bottom: -57px;
