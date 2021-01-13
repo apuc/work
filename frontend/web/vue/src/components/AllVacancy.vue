@@ -491,6 +491,12 @@ export default {
     async vacancyAddTime(item, index) {
       console.log(item,index,'itemindex')
       let date = this.parseDate(item.active_until)
+      let price = 0;
+      this.servicePrice.forEach((item) => {
+        if (item.alias === 'vacancy_create') {
+          price = item.price
+        }
+      });
       try {
         await this.$store.dispatch('prolongVacancy', {
           id: item.id,
@@ -509,7 +515,7 @@ export default {
           cancelButtonText: 'Отмена'
         }).then((result) => {
           if (result.value) {
-            this.$router.push({name: 'payment'});
+            this.$router.push({name: 'payment',query: { price: price }});
           }
         });
         console.log(e)

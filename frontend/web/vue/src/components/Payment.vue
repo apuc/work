@@ -9,14 +9,15 @@
       <form class="balance__form" method="get" action="https://www.free-kassa.ru/merchant/cash.php">
         <input type="hidden" name="m" value="214123">
         <div class="d-flex">
-<!--          :rules="[rules.minValue]"-->
           <v-text-field
               v-model="formData.amount"
               name="oa"
               label="Сумма"
               @input="getHash"
+              :rules="[rules.required]"
               style="width: 80%;"
               type="number"
+              min="1"
           ></v-text-field>
           <v-spacer></v-spacer>
           <v-text-field prefix="₽" class="currency__char"
@@ -33,7 +34,7 @@
         ></v-text-field>
         <v-btn
             class="balance__btn"
-            :disabled="hash === '' && (formData.amount === '' || formData.amount === 0)"
+            :disabled="hash === '' && (formData.amount === '' || formData.amount<1 || isNaN(formData.amount))"
             name="pay"
             light
             type="submit"
@@ -47,7 +48,7 @@
     <div class="additional__services">
       <h5 class="services_title">Прайс услуг</h5>
       <div class="additional__services_inner">
-        <div v-for="i in blocks" :key="i" class="additional__services_item" style="max-height: 193px;">
+        <div v-for="i in blocks" :key="i" class="additional__services_item" >
           <h5 class="services_item-title">{{i.title}}</h5>
           <p class="services_item-text" style="height: 30px">{{i.addInfo}}</p>
           <p class="services_item-price">Цена {{ i.price }} руб          </p>
@@ -65,13 +66,24 @@ export default {
   data: () => ({
     blocks:[
       {
-        title: 'Добавить вакансию',
+        title: 'Поднять вакансию в топ',
         price: '200',
-        addInfo: '* В месяц пользователям система дает 3 бесплатных вакансии',
+        addInfo: 'Увеличить входящий поток резюме на вашу вакансию',
       },
       {
-        title: 'Добавить поднятие',
+        title: 'Дополнительная вакансия',
+        addInfo: 'Максимум откликов в течение месяца. Идеально подходит для сложного подбора',
         price: '100',
+      },
+      {
+        title: 'Сделать вакансией дня',
+        addInfo: 'По нашим подсчетам, количество откликов с выделением вакансии увеличивается в два раза',
+        price: '150',
+      },
+      {
+        title: 'Продлить существующую вакансию',
+        addInfo: 'Вакансия будет повторно опубликована в течение месяца',
+        price: '200',
       },
       // {
       //   title: 'Тариф «Стандарт+»',
@@ -79,12 +91,9 @@ export default {
       //   list:
       // }
     ],
-    // rules:{
-    //   // minValue: (value)=>+value>499 || 'Минимум 500 рублей'
-    //   minValue: (v) => {
-    //     console.log(/^0*\/gm/.test(v),v,+'0001','hhmhm')
-    //     return ((/^0*\/gm/).test(v) && +v>0) || 'Не должно начинаться с нуля'}
-    // },
+    rules:{
+      required: (value) => !!value || "Обязательное поле.",
+    },
     formData: {
       amount: ''
     },
@@ -114,7 +123,11 @@ export default {
     });
   },
   methods: {
-    getHash() {
+    getHash(e) {
+      if(parseInt(e)===0)
+        this.$set(this.formData,'amount',1)
+      else
+        this.$set(this.formData,'amount',parseInt(this.formData.amount,10))
       if (this.formData.amount > 0) {
         this.$store.dispatch('sendPayment', this.formData)
         .then(data => {
@@ -255,6 +268,7 @@ justify-content: end;
 }
 
 .additional__services_item {
+  position: relative;
   width: 100%;
   max-width: 355px;
   min-height: 193px;
@@ -288,6 +302,8 @@ justify-content: end;
 }
 
 .services_item-price {
+  position: absolute;
+  bottom: 0;
   color: #000000;
   font-family: "Muller Bold", inherit;
   font-size: 17px;
