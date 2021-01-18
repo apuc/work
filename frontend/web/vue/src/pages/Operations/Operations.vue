@@ -38,7 +38,9 @@ export default {
         return {
         }
     },
-
+    created(){
+      document.title = this.$route.meta.title;
+    },
     mounted() {
         this.$store.dispatch('getOperations')
             .then(data => {

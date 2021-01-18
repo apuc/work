@@ -39,8 +39,10 @@
             return {
             }
         },
-
-        mounted() {
+        created() {
+          document.title = this.$route.meta.title;
+        },
+      mounted() {
             this.$store.dispatch('getUpdates')
                 .then(data => {
                     return data;

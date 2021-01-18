@@ -28,6 +28,9 @@
 <script>
 export default {
     name: "AddPromo",
+    created(){
+      document.title = this.$route.meta.title;
+    },
     data: () => ({
         formData: {
             promocode: ''
