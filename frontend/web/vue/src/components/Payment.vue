@@ -122,6 +122,9 @@ export default {
       })
     });
   },
+  created(){
+    document.title = this.$route.meta.title;
+  },
   methods: {
     getHash(e) {
       if(parseInt(e)===0)
