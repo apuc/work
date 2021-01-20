@@ -52,8 +52,11 @@ class DefaultController extends Controller
 
      public function actionView($slug = null)
      {
-         $random = News::find()->orderBy('rand()')->one();
          $model = News::find()->where(['slug' => $slug])->one();
+         $random = News::find()
+             ->orderBy('rand()')
+             ->where(['<>', 'id', $model->id])
+             ->one();
          if (!$model) {
              throw new \yii\web\NotFoundHttpException('404');
          }
