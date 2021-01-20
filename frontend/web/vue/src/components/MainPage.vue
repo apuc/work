@@ -207,6 +207,7 @@
     .main-block {
         display: flex;
         flex-wrap: wrap;
+        flex-direction: column;
     }
     .main-head {
         width: 100%;

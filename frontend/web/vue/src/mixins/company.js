@@ -24,8 +24,8 @@ const company = {
         phoneValid: false
       },
       defaultCountry: {
-        iso2: '',
-        dialCode: ''
+        iso2: 'UA',
+        dialCode: '380'
       },
       allCountries: [
         {

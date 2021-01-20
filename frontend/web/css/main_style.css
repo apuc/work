@@ -4419,7 +4419,11 @@ button {
     font-size: 16px;
     color: #2a2a2a;
     font-weight: 800;
-    text-decoration: none; }
+    text-decoration: none;
+}
+.home-card .single-card__title::first-letter{
+    text-transform: capitalize;
+}
 @media (max-width: 1500px) {
     .home-card .single-card__title {
         width: 210px; } }
