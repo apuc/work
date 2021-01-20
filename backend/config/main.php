@@ -13,17 +13,12 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
-//        'security' => [
-//            // following line will restrict access to profile, recovery, registration and settings controllers from backend
-//
-//        ],
         'dynagrid'=> [
             'class'=>'\kartik\dynagrid\Module',
             'defaultPageSize'=>20,
         ],
         'gridview'=> [
             'class'=>'\kartik\grid\Module',
-            // other module settings
         ],
         'company' => [
             'class' => 'backend\modules\company\Company',
@@ -100,16 +95,7 @@ return [
         ],
     ],
     'components' => [
-//        'request' => [
-//            'csrfParam' => '_csrf-backend',
-//        ],
-//        'security' => [
-//            'identityClass' => 'common\models\User',
-//            'enableAutoLogin' => true,
-//            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
-//        ],
         'session' => [
-            // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
         ],
         'log' => [
@@ -133,7 +119,6 @@ return [
         ],
         'request' => [
             'baseUrl' => '/secure',
-            //'class' => 'frontend\components\LangRequest',
         ],
         'urlManagerFrontend' => [
             'class' => 'yii\web\UrlManager',

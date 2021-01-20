@@ -136,12 +136,15 @@ class VacancyController extends MyActiveController
         }
         /** @var Company $company */
         $company = Yii::$app->user->identity->company;
-        if (!$company)
+        if (!$company) {
             throw new UserException('У вас нет компании', 400);
-        if (!$company->contact_person)
+        }
+        if (!$company->contact_person) {
             throw new UserException('Заполните компанию', 400);
-        if ($company->create_vacancy == 0)
+        }
+        if ($company->create_vacancy == 0 && $company->unlimited_vacancies_until < time()) {
             throw new UserException('У вас не осталось вакансий', 400);
+        }
         $model->load($params, '');
         $model->get_update_id = 1;
         $model->company_id = $company->id;
@@ -289,8 +292,7 @@ class VacancyController extends MyActiveController
 
     public function actionProlong()
     {
-        $id = Yii::$app->request->post('id');
-        $model = Vacancy::findOne($id);
+        $model = Vacancy::findOne(Yii::$app->request->post('id'));
         if (!$model) {
             throw new UserException('Такой вакансии не существует', 400);
         }
@@ -298,7 +300,7 @@ class VacancyController extends MyActiveController
             throw new UserException('У вас нет прав для совершения этого действия', 400);
         }
         $company = $model->company;
-        if ($company->create_vacancy === 0) {
+        if ($company->create_vacancy === 0 && $company->unlimited_vacancies_until < time()) {
             throw new UserException('У вас нет возможности создавать или продлевать вакансии', 401);
         }
         if ($model->active_until < time()) {
@@ -307,14 +309,20 @@ class VacancyController extends MyActiveController
             $model->active_until += 86400*30;
         }
         $model->save();
-        $company->create_vacancy--;
-        $company->save();
-        $return = Vacancy::find()->asArray()->where(['id' => $id])->one();
+        if ($company->unlimited_vacancies_until < time()) {
+            $company->create_vacancy--;
+            $company->save();
+        }
+        $return = ArrayHelper::toArray($model);
         $return['can_update'] = false;
         return $return;
     }
 
-    public function actionBuyVacancyDay()
+    /**
+     * @return bool
+     * @throws UserException
+     */
+    public function actionBuyVacancyDay(): bool
     {
         if (Yii::$app->user->identity->status < 20) {
             throw new UserException('Вам не разрешено это действие');
@@ -339,5 +347,38 @@ class VacancyController extends MyActiveController
         Operation::createOperation($servicePrice);
 
         return true;
+    }
+
+    /**
+     * @return array|bool|ActiveRecord
+     * @throws UserException
+     */
+    public function actionAnchorVacancy()
+    {
+        if (Yii::$app->user->identity->status < 20) {
+            throw new UserException('Вам не разрешено это действие');
+        }
+        /** @var Company $company */
+        $company = Yii::$app->user->identity->company;
+        if (!$company) {
+            throw new UserException('У вас нет прав для совершения этого действия');
+        }
+        if ($company->raise_with_anchor_until < time() || $company->raise_with_anchor_count < 1) {
+            throw new UserException('Для поднятия вакансии с закреплением необходимо приобрести тариф.');
+        }
+        $vacancy_id = Yii::$app->request->getBodyParam('vacancy_id');
+        if (!$vacancy = Vacancy::findOne($vacancy_id)) {
+            throw new UserException('Такой вакансии не существует');
+        }
+
+        $vacancy->anchored_until = time() + 86400;
+        $vacancy->save();
+
+        $company->raise_with_anchor_count--;
+        $company->save();
+
+        $return = ArrayHelper::toArray($vacancy);
+        $return['can_update'] = false;
+        return $return;
     }
 }

@@ -3,12 +3,14 @@
 namespace backend\modules\company\controllers;
 
 use common\classes\Debug;
+use common\classes\tariff\TariffFactory;
 use common\models\Phone;
 use dektrium\user\filters\AccessRule;
 use Yii;
 use common\models\Company;
 use backend\modules\company\models\CompanySearch;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -132,6 +134,22 @@ class CompanyController extends Controller
     }
 
     /**
+     * Updates an existing Company model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionServices(int $id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('services', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
      * Deletes an existing Company model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -159,5 +177,19 @@ class CompanyController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * @throws BadRequestHttpException
+     */
+    public function actionActivateTariff()
+    {
+        if (!$company = Company::findOne(Yii::$app->request->post('company_id'))) {
+            throw new BadRequestHttpException("Такой компании не существует");
+        }
+        $tariffFactory = new TariffFactory();
+        $tariff = $tariffFactory->getTariffByName(Yii::$app->request->post('tariff'), $company);
+        $tariff->activate();
+        return $this->redirect(['services', 'id' => $company->id]);
     }
 }
