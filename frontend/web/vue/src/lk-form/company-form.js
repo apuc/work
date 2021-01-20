@@ -1,15 +1,8 @@
 import Field from '../models/Field';
-import {VTextarea, VTextField, VCheckbox} from 'vuetify/lib'
+import {VTextarea, VTextField} from 'vuetify/lib'
 import AddSocial from "../components/AddSocial";
 
 export default {
-  privatePerson: Object.assign({}, Field, {
-    name: 'privatePerson',
-    label: 'Частное лицо',
-    rules: [],
-    class: 'privatePerson',
-    component: VCheckbox
-  }),
   nameCompany: Object.assign({}, Field, {
     name: 'nameCompany',
     label: 'Название компании*',

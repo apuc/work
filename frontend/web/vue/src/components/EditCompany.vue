@@ -78,7 +78,6 @@ methods: {
                       }
                       Object.assign(FormCompany.nameCompany.rules, [v => !!v || 'Название компании обязательно к заполнению']);
                       Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
-                      this.inputsDisabled();
                   }).catch(error => {
                   this.$swal({
                       toast: true,
@@ -189,64 +188,9 @@ methods: {
         img.classList.add('hide');
       }
     },
-    inputsDisabled() {
-      let check = document.querySelector('.privatePerson .v-input__slot');
-      let inputCheck = check.querySelector('input');
-      let allInputs = document.querySelectorAll('.jsCompanyInput');
-      let nameCompany = document.getElementById('nameCompany');
-      let site = document.getElementById('site');
-      let scopeOfTheCompany = document.getElementById('scopeOfTheCompany');
-      let aboutCompany = document.getElementById('aboutCompany');
-
-      check.addEventListener('click', () => {
-        if (this.formData.privatePerson == true) {
-          this.formData.nameCompany = '';
-          this.formData.site = '';
-          this.formData.scopeOfTheCompany = '';
-          this.formData.aboutCompany = '';
-
-          for (let i = 0; i < allInputs.length; i++) {
-            allInputs[i].classList.add('opacity');
-          }
-          nameCompany.disabled = true;
-          site.disabled = true;
-          scopeOfTheCompany.disabled = true;
-          aboutCompany.disabled = true;
-          FormCompany.nameCompany.rules = [];
-          FormCompany.scopeOfTheCompany.rules = [];
-          let elem = document.getElementById('main-btn');
-          elem.disabled = false;
-          elem.classList.remove('v-btn--disabled');
-          elem.classList.remove('success--text');
-          elem.classList.add('success');
-        } else {
-          for (let i = 0; i < allInputs.length; i++) {
-            allInputs[i].classList.remove('opacity');
-          }
-          nameCompany.disabled = false;
-          site.disabled = false;
-          scopeOfTheCompany.disabled = false;
-          aboutCompany.disabled = false;
-          Object.assign(FormCompany.nameCompany.rules, [v => !!v || 'Название компании обязательно к заполнению']);
-          Object.assign(FormCompany.scopeOfTheCompany.rules, [v => !!v || 'Сфера деятельности компании обязателена к заполнению']);
-          let elem = document.getElementById('main-btn');
-          elem.disabled = false;
-          elem.classList.remove('v-btn--disabled');
-          elem.classList.remove('success--text');
-          elem.classList.add('success');
-        }
-      });
-      if (this.formData.nameCompany === '' || this.formData.nameCompany === null) {
-        let inputSlot = document.querySelector('.v-input--selection-controls__ripple');
-        inputSlot.click();
-        setTimeout(function () {
-          // inputSlot.click();
-          check.click();
-        }, 1);
-      }
-    },
     valHandler(val) {
       this.valid = val;
+      this.onInput();
     },
   },
   beforeRouteLeave(to, from, next) {
