@@ -30,6 +30,9 @@ use yii\db\ActiveRecord;
  * @property float $balance
  * @property integer $vacancy_renew_count
  * @property integer $create_vacancy
+ * @property integer $unlimited_vacancies_until
+ * @property integer $raise_with_anchor_count
+ * @property integer $raise_with_anchor_until
  *
  * @property User $user
  * @property Vacancy[] $vacancy
@@ -72,7 +75,7 @@ class Company extends WorkActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'status', 'created_at', 'updated_at', 'create_vacancy'], 'integer'],
+            [['user_id', 'status', 'created_at', 'updated_at', 'create_vacancy', 'unlimited_vacancies_until', 'raise_with_anchor_count', 'raise_with_anchor_until'], 'integer'],
             [['vacancy_renew_count'], 'integer', 'max' => 255],
             [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person', 'image_url'], 'string', 'max' => 255],
             [['activity_field', 'description'], 'string'],
@@ -110,7 +113,8 @@ class Company extends WorkActiveRecord
             'updated_at' => 'Изменен',
             'is_trusted' => 'Доверенная',
             'vacancy_renew_count' => 'Оставшееся количество подъёмов',
-            'create_vacancy' => 'Оставшееся количество вакансий'
+            'create_vacancy' => 'Оставшееся количество вакансий',
+            'unlimited_vacancies_until' => 'Безлимитные вакансии до'
         ];
     }
 

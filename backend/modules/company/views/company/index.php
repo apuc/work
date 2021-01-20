@@ -102,7 +102,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 ], [ 'class' => 'form-control', 'prompt' => '' ] ),
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'backend\modules\company\columns\CompanyActionColumn',
+            ],
         ],
     ]); ?>
     </div>

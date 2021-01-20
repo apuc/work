@@ -82,10 +82,10 @@ class VacancySearch extends Vacancy
     {
         $query = Vacancy::find()
             ->joinWith(['category', 'company', 'city0', 'mainCategory as mainCategory'])
-            ->select(['vacancy.id', 'main_category_id', 'company_id', 'city_id', 'post', 'update_time', 'views', 'min_salary', 'max_salary', 'responsibilities', 'day_vacancy_until', 'active_until'])
+            ->select(['vacancy.id', 'main_category_id', 'company_id', 'city_id', 'post', 'update_time', 'views', 'min_salary', 'max_salary', 'responsibilities', 'day_vacancy_until', 'active_until', 'anchored_until'])
             ->where([Vacancy::tableName().'.status' => Vacancy::STATUS_ACTIVE])
             ->andWhere(['>', Vacancy::tableName().'.active_until', time()])
-            ->orderBy('update_time DESC')
+            ->orderBy('anchored_until DESC, update_time DESC')
             ->distinct();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
