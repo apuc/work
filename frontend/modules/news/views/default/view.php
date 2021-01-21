@@ -4,11 +4,17 @@
 
 use common\models\News;
 use yii\helpers\Url;
+use yii2mod\comments\widgets\Comment;
 
 $this->title = $model->meta_title;
 $this->registerMetaTag(['name' => 'description', 'content' => $model->meta_description]);
 
 ?>
+<style>
+    .title-block .h3-body-title {
+        float: unset;
+    }
+</style>
 <section class="news-view">
     <img class="single-vacancy__dots2" src="/images/bg-dots.png" alt="точки" role="presentation">
     <div class="single-vacancy__circle"></div>
@@ -78,6 +84,11 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->meta_descr
                     <!--</div>-->
                 </div>
             </div>
+        </div>
+        <div class="comment-container" style="">
+        <?= Comment::widget([
+            'model' => $model,
+        ]); ?>
         </div>
     </div>
 </section>

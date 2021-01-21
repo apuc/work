@@ -16,12 +16,15 @@ return [
     ],
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'language' => 'ru-RU',
+    'language' => 'ru',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
         'authManager' => [
             'class'           => 'yii\rbac\DbManager',
+        ],
+        'comment' => [
+            'class' => 'yii2mod\comments\Module',
         ],
         'user' => [
             // following line will restrict access to admin controller from frontend application
