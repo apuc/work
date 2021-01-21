@@ -13,22 +13,30 @@ class MainAsset extends AssetBundle
 
     public $baseUrl = '@web';
 
+    /**
+     * @var string[] Ключ - полноценный файл, значение - минифицированный.
+     * Если файл имеет только минифицированную версию - необходимо дублировать.
+     */
     public $cssFiles = [
-        'css/main_style.min.css',
-        'css/style.min.css',
-        'font-awesome-4.7.0/css/font-awesome.min.css',
-        'js/select2/select2.min.css',
-        'css/bootstrap-grid.min.css',
-        'js/slick/slick.min.css',
-        'css/back-styles.min.css',
+        'css/main_style.css' => 'css/main_style.min.css',
+        'css/style.css' => 'css/style.min.css',
+        'font-awesome-4.7.0/css/font-awesome.min.css' => 'font-awesome-4.7.0/css/font-awesome.min.css',
+        'js/select2/select2.min.css' => 'js/select2/select2.min.css',
+        'css/bootstrap-grid.min.css' => 'css/bootstrap-grid.min.css',
+        'js/slick/slick.css' => 'js/slick/slick.min.css',
+        'css/back-styles.css' => 'css/back-styles.min.css',
     ];
 
+    /**
+     * @var string[] Ключ - полноценный файл, значение - минифицированный.
+     * Если файл имеет только минифицированную версию - необходимо дублировать.
+     */
     public $jsFiles = [
-        'js/resizeSensor.js',
-        'js/jquery.sticky-kit.min.js',
-        'js/slick/slick.min.js',
-        'js/select2/select2.min.js',
-        'js/script.min.js',
+        'js/resizeSensor.js' => 'js/resizeSensor.min.js',
+        'js/jquery.sticky-kit.js' => 'js/jquery.sticky-kit.min.js',
+        'js/slick/slick.min.js' => 'js/slick/slick.min.js',
+        'js/select2/select2.min.js' => 'js/select2/select2.min.js',
+        'js/script.js' => 'js/script.min.js',
     ];
 
     public $depends = [
@@ -45,23 +53,21 @@ class MainAsset extends AssetBundle
 
     /**
      * Если окружение prod используем минифицированные файлы
-     * Для инификации файлов используется команда php yii minify
+     * Для минификации файлов используется команда php yii minify
      * В остальных случаях используем обычные файлы
      * @param array $files
      * @return array
      */
     public function getVersionedFiles(array $files): array
     {
-        $out = [];
         if (YII_ENV === 'prod') {
+            $out = [];
             foreach ($files as $file) {
                 $filePath = \Yii::getAlias('@webroot/' . $file);
                 $out[] = $file . (is_file($filePath) ? '?v='.filemtime($filePath) : '');
             }
         } else {
-            foreach ($files as $file) {
-                $out[] = str_replace('.min', '', $file);
-            }
+            $out = array_keys($files);
         }
         return $out;
     }
