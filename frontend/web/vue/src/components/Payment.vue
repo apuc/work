@@ -105,8 +105,10 @@ export default {
     patternLayer: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/Pattern_Layer.png',
   }),
   mounted() {
-    if(this.$route.query.price)
-      this.formData.amount = parseInt(this.$route.query.price,10)
+    if(this.$route.query.price){
+      this.$set(this.formData,'amount',parseInt(this.$route.query.price,10))
+      this.getHash(parseInt(this.$route.query.price,10))
+    }
     this.$store.dispatch('getUserMe', this.$route.params.id)
     .then(data => {
       this.email = data.user.email;
