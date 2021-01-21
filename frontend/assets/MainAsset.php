@@ -5,12 +5,14 @@ namespace frontend\assets;
 use yii\web\AssetBundle;
 
 /**
- * Main frontend application asset bundle.
+ * Главные зависимости сайта.
  */
 class MainAsset extends AssetBundle
 {
     public $basePath = '@webroot';
+
     public $baseUrl = '@web';
+
     public $cssFiles = [
         'css/main_style.min.css',
         'css/style.min.css',
@@ -20,17 +22,17 @@ class MainAsset extends AssetBundle
         'js/slick/slick.min.css',
         'css/back-styles.min.css',
     ];
+
     public $jsFiles = [
         'js/resizeSensor.js',
         'js/jquery.sticky-kit.min.js',
         'js/slick/slick.min.js',
         'js/select2/select2.min.js',
         'js/script.min.js',
-        //'https://vk.com/js/api/openapi.js?165',
     ];
+
     public $depends = [
         'yii\web\YiiAsset',
-        //'yii\bootstrap\BootstrapAsset',
     ];
 
     public function init()
@@ -41,15 +43,26 @@ class MainAsset extends AssetBundle
         parent::init();
     }
 
-    public function getVersionedFiles($files)
+    /**
+     * Если окружение prod используем минифицированные файлы
+     * Для инификации файлов используется команда php yii minify
+     * В остальных случаях используем обычные файлы
+     * @param array $files
+     * @return array
+     */
+    public function getVersionedFiles(array $files): array
     {
         $out = [];
-
-        foreach ($files as $file) {
-            $filePath = \Yii::getAlias('@webroot/' . $file);
-            $out[] = $file . (is_file($filePath) ? '?v='.filemtime($filePath) : '');
+        if (YII_ENV === 'prod') {
+            foreach ($files as $file) {
+                $filePath = \Yii::getAlias('@webroot/' . $file);
+                $out[] = $file . (is_file($filePath) ? '?v='.filemtime($filePath) : '');
+            }
+        } else {
+            foreach ($files as $file) {
+                $out[] = str_replace('.min', '', $file);
+            }
         }
-
         return $out;
     }
 }
