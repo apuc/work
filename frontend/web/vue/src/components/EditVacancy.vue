@@ -143,7 +143,7 @@
                           type: 'success',
                           title: 'Данные сохранены',
                         })
-                        this.$router.push('/personal-area/all-vacancy');
+                        this.$router.push('/personal-area/statistics');
                         return data;
                     }).catch(error => {
                     this.$swal({
