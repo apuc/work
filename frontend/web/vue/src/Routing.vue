@@ -152,8 +152,6 @@ export default {
   },
   async created() {
     await this.getUser();
-    if(this.userMe.user.status!==10)
-      this.linkMenu.splice(0,1)
     if (window.innerWidth < 1265)
       this.drawer = false;
   },
@@ -282,6 +280,7 @@ export default {
             }
             if (data.user.status >= 20) {
               this.linkMenu[3].show = false;
+              this.linkMenu[0].show = false
             }
             localStorage.setItem('companyId', data.user.company.id);
             this.unreadMessages = data.user.unreadMessages;
