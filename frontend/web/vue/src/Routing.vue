@@ -280,7 +280,6 @@ export default {
             }
             if (data.user.status >= 20) {
               this.linkMenu[3].show = false;
-              this.linkMenu[0].show = false
             }
             localStorage.setItem('companyId', data.user.company.id);
             this.unreadMessages = data.user.unreadMessages;
