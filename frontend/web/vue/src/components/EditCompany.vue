@@ -165,6 +165,7 @@ export default {
         this.$swal({
           title: 'Данные сохранены'
         }).then((result) => {
+          this.$router.push({name: 'statistics'})
           return result;
         });
         return data;
