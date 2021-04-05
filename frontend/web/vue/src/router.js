@@ -29,7 +29,7 @@ export default new Router({
   routes: [
     {
       path: '/personal-area/',
-      redirect: '/personal-area/all-vacancy'
+      redirect: '/personal-area/statistics'
     },
     {
       path: '/personal-area/statistics',

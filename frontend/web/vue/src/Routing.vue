@@ -152,8 +152,6 @@ export default {
   },
   async created() {
     await this.getUser();
-    if(this.userMe.user.status!==10)
-      this.linkMenu.splice(0,1)
     if (window.innerWidth < 1265)
       this.drawer = false;
   },

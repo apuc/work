@@ -1,13 +1,13 @@
 <template>
     <div class="main-block">
         <template v-for="(items, index) in allRecords">
-            <template v-if="items === allRecords.Resume">
+            <template v-if="items === allRecords.Resume && user.status===10">
                 <v-subheader class="main-head">Резюме</v-subheader>
                 <hr class="hr">
                 <v-subheader  v-if="allRecords.Resume.length === 0">У вас нет резюме</v-subheader>
             </template>
 
-            <template v-else-if="items === allRecords.Vacancy">
+            <template v-else-if="items === allRecords.Vacancy && user.status>=20">
                 <v-subheader class="main-head">Вакансии</v-subheader>
                 <hr class="hr">
                 <v-subheader v-if="allRecords.Vacancy.length === 0">У вас нет вакансий</v-subheader>
@@ -19,73 +19,122 @@
                 <v-subheader v-if="allRecords.Company.length === 0">У вас нет компаний</v-subheader>
             </template>
           <div class="card__statistic__wrapper" >
-    <div v-for="(item, itemIndex) in items" class="vacancy__wrapper">
-            <v-card
+            <template v-if="user.status===10">
+            <div v-for="(item, itemIndex) in items" class="vacancy__wrapper">
+              <v-card
+                      class="main-card"
+                      :class="selectBg(index)"
+                      color="#26c6da"
+                      dark
+                      :style="items === allRecords.Vacancy ? {backgroundColor: '#26c6da !important'} : items === allRecords.Company ? {backgroundColor: '#1772cc !important'} : {backgroundColor:'#1772cc !important'}"
+              >
+  <!--              :style="{ items === allRecordes.Vacancy ? backgroundColor : '#26c6da' : items=== allRecords.Resume ? backgroundColor: '#1772cc': backgroundColor: ''}"-->
+                <v-card-text class="headline font-weight-bold card-text" style="word-break: break-all;">
+                      <template v-if="items === allRecords.Resume">
+                        <p class="card__statistic_title">
+                        <img :src="vacancyIcon" alt="">
+                          <a :href="domen + '/resume/view/' + item.id" target="_blank" class="statistics-link">
+                              {{ item.name }}
+                          </a>
+                        </p>
+                      </template>
+                  </v-card-text>
+              </v-card>
+              <v-list-tile class="grow">
+                <v-layout
+                    class="icons__wrapper"
+                    align-center
+                    justify-end
+                >
+                  <div class="ellipsis__wrapper">
+                  <div class="icon__ellipsis">
+                    <v-icon class="mr-1">remove_red_eye</v-icon>
+                  </div>
+                  <span class="subheading mr-2">{{ item.views }}</span>
+                  </div>
+                  <div class="ellipsis__wrapper">
+                    <div class="icon__ellipsis">
+                      <v-icon class="mr-1">phone</v-icon>
+                    </div>
+                    <span class="subheading mr-2">{{ item.click_phone_count }}</span>
+                  </div>
+                  <router-link to="/personal-area/my-message" class="statistics-link">
+                  <div class="ellipsis__wrapper">
+                    <div class="icon__ellipsis">
+                      <v-icon class="mr-1">message</v-icon>
+                    </div>
+                    <span class="subheading mr-2">{{ item.responses }}</span>
+                  </div>
+                  </router-link>
+                </v-layout>
+              </v-list-tile>
+              <div class="card__about">
+                <p class="mb-0">Обновлено 30 июля 2020 в 15:51</p>
+                <p class="mb-0">Доступно только по <a href="">прямой ссылке</a></p>
+              </div>
+            </div>
+            </template>
+            <template v-else-if="items!==allRecords.Resume">
+              <div v-for="(item, itemIndex) in items" class="vacancy__wrapper">
+                <v-card
                     class="main-card"
                     :class="selectBg(index)"
                     color="#26c6da"
                     dark
                     :style="items === allRecords.Vacancy ? {backgroundColor: '#26c6da !important'} : items === allRecords.Company ? {backgroundColor: '#1772cc !important'} : {backgroundColor:'#1772cc !important'}"
-            >
-<!--              :style="{ items === allRecordes.Vacancy ? backgroundColor : '#26c6da' : items=== allRecords.Resume ? backgroundColor: '#1772cc': backgroundColor: ''}"-->
-              <v-card-text class="headline font-weight-bold card-text" style="word-break: break-all;">
+                >
+                  <!--              :style="{ items === allRecordes.Vacancy ? backgroundColor : '#26c6da' : items=== allRecords.Resume ? backgroundColor: '#1772cc': backgroundColor: ''}"-->
+                  <v-card-text class="headline font-weight-bold card-text" style="word-break: break-all;">
                     <template v-if="items === allRecords.Vacancy">
                       <p class="card__statistic_title">
-                      <img :src="vacancyIcon" alt="">
+                        <img :src="vacancyIcon" alt="">
                         <a :href="domen + '/vacancy/view/' + item.id" target="_blank" class="statistics-link">
-                        {{ item.name }}
-                        </a>
-                      </p>
-                    </template>
-                    <template v-else-if="items === allRecords.Resume">
-                      <p class="card__statistic_title">
-                      <img :src="vacancyIcon" alt="">
-                        <a :href="domen + '/resume/view/' + item.id" target="_blank" class="statistics-link">
-                            {{ item.name }}
+                          {{ item.name }}
                         </a>
                       </p>
                     </template>
                     <template v-else-if="items === allRecords.Company">
                       <p class="card__statistic_title">
-                      <img :src="companyIcon" alt="">
+                        <img :src="companyIcon" alt="">
                         <a :href="domen + '/company/view/' + item.id" target="_blank" class="statistics-link">
-                            {{ item.name }}
+                          {{ item.name }}
                         </a>
                       </p>
                     </template>
-                </v-card-text>
-            </v-card>
-            <v-list-tile class="grow">
-              <v-layout
-                  class="icons__wrapper"
-                  align-center
-                  justify-end
-              >
-                <div class="ellipsis__wrapper">
-                <div class="icon__ellipsis">
-                  <v-icon class="mr-1">remove_red_eye</v-icon>
-                </div>
-                <span class="subheading mr-2">{{ item.views }}</span>
-                </div>
-                <div class="ellipsis__wrapper">
-                  <div class="icon__ellipsis">
-                    <v-icon class="mr-1">phone</v-icon>
-                  </div>
-                  <span class="subheading mr-2">{{ item.click_phone_count }}</span>
-                </div>
-                <router-link to="/personal-area/my-message" class="statistics-link">
-                <div class="ellipsis__wrapper">
-                  <div class="icon__ellipsis">
-                    <v-icon class="mr-1">message</v-icon>
-                  </div>
-                  <span class="subheading mr-2">{{ item.responses }}</span>
-                </div>
-                </router-link>
-              </v-layout>
-            </v-list-tile>
-        <div class="card__about"><p class="mb-0">Обновлено 30 июля 2020 в 15:51</p>
-  <p class="mb-0">Доступно только по <a href="">прямой ссылке</a></p></div>
-          </div>
+                  </v-card-text>
+                </v-card>
+                <v-list-tile class="grow">
+                  <v-layout
+                      class="icons__wrapper"
+                      align-center
+                      justify-end
+                  >
+                    <div class="ellipsis__wrapper">
+                      <div class="icon__ellipsis">
+                        <v-icon class="mr-1">remove_red_eye</v-icon>
+                      </div>
+                      <span class="subheading mr-2">{{ item.views }}</span>
+                    </div>
+                    <div class="ellipsis__wrapper">
+                      <div class="icon__ellipsis">
+                        <v-icon class="mr-1">phone</v-icon>
+                      </div>
+                      <span class="subheading mr-2">{{ item.click_phone_count }}</span>
+                    </div>
+                    <router-link to="/personal-area/my-message" class="statistics-link">
+                      <div class="ellipsis__wrapper">
+                        <div class="icon__ellipsis">
+                          <v-icon class="mr-1">message</v-icon>
+                        </div>
+                        <span class="subheading mr-2">{{ item.responses }}</span>
+                      </div>
+                    </router-link>
+                  </v-layout>
+                </v-list-tile>
+                <div class="card__about"><p class="mb-0">Обновлено 30 июля 2020 в 15:51</p>
+                  <p class="mb-0">Доступно только по <a href="">прямой ссылке</a></p></div>
+              </div>
+            </template>
         </template>
 
     </div>
@@ -105,7 +154,8 @@
         },
         computed: {
         },
-        mounted() {
+        async mounted() {
+          this.user = (await this.$store.dispatch('getUserMe', this.$route.params.id)).user
             document.title = this.$route.meta.title;
             this.$store.dispatch('getStatistics')
                 .then(data => {
