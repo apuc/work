@@ -192,11 +192,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
                                     && Yii::$app->user->identity->email === "test@test.test"
                             )
                         ?>
-                        <?php if($i === 3):?>
-                            <a class="jooble_image" href="https://ru.jooble.org/">
-                                <img src="/images/jooble.png"/>
-                            </a>
-                        <?php endif ?>
                             <?= $vacancy->day_vacancy_until > time()
                                 ? $this->render('/parts/_vacancy_day', compact('vacancy'))
                                 : $this->render('/parts/_vacancy_standart', compact(['vacancy', 'flag', 'searchModel']))
