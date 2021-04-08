@@ -95,7 +95,7 @@ class MyActiveController extends ActiveController
         }
         /** @var ActiveQuery $query */
         $query = $this->modelClass::find()->where([($this->modelClass)::tableName().'.owner'=>Yii::$app->user->id]);
-        if(in_array('status', $this->modelClass::attributes())){
+        if(in_array('status', $this->modelClass::getTableSchema()->columns)){
             $query->andWhere(['!=',($this->modelClass)::tableName().'.status', 0]);
         }
         $dataProvider = Yii::createObject([
