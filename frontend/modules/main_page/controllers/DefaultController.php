@@ -2,6 +2,7 @@
 
 namespace frontend\modules\main_page\controllers;
 
+use common\classes\Debug;
 use common\models\Category;
 use common\models\City;
 use common\models\Country;
@@ -9,7 +10,10 @@ use common\models\Employer;
 use common\models\Professions;
 use common\models\Region;
 use common\models\Vacancy;
+use common\models\Company;
 use Yii;
+use yii\db\Expression;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -29,14 +33,14 @@ class DefaultController extends Controller
         $this->layout = '@frontend/views/layouts/main-page-layout.php';
 
         $categories = Yii::$app->cache->getOrSet('main_page_categories', function () {
-            return Category::find()->with(['vacancyCategories'])->select(['name', 'slug'])->limit(4)->all();
+            return Category::find()->with(['vacancyCategories'])->select(['name', 'slug'])->limit(10)->all();
         });
         $professions = Yii::$app->cache->getOrSet('main_page_professions', function () {
-            return Professions::find()->select(['title', 'slug'])->limit(4)->all();
+            return Professions::find()->select(['title', 'slug'])->limit(10)->all();
         });
         if (!$current_country) {
             $cities = Yii::$app->cache->getOrSet('main_page_cities', function () {
-                return City::find()->select(['id', 'name', 'slug'])->where(['status' => 1])->orderBy('priority ASC')->all();
+                return City::find()->select(['id', 'name', 'slug'])->where(['status' => 1])->orderBy('priority ASC')->limit(10)->all();
             });
         } else {
             $cities = Yii::$app->cache->getOrSet("main_page_cities_$current_country->slug", function () use ($current_country) {
@@ -50,6 +54,7 @@ class DefaultController extends Controller
                         City::tableName().'.status' => 1,
                         Region::tableName().'.country_id'=>$current_country->id
                     ])
+                    ->limit(10)
                     ->orderBy('priority ASC')
                     ->all();
             });
@@ -65,11 +70,23 @@ class DefaultController extends Controller
                 ->orderBy('id DESC')
                 ->all();
         });
+        $companyTable = Company::tableName();
+        $vacancyTable = Vacancy::tableName();
+        $companies = Yii::$app->cache->getOrSet('main_page_companies', function () use ($vacancyTable, $companyTable){
+            return (new Query())->from($companyTable)
+                ->limit(6)
+                ->leftJoin($vacancyTable, "`$vacancyTable`.`company_id` = `$companyTable`.`id`")
+                ->select(["$companyTable.id", 'image_url', 'vacancies_count' => "COUNT($vacancyTable.company_id)"])
+                ->orderBy(new Expression('rand()'))
+                ->groupBy(["$vacancyTable.company_id", "$companyTable.id", 'image_url'])
+                ->where([">", "$vacancyTable.status", Vacancy::STATUS_INACTIVE])
+                ->all();
+        });
         $vacancy_count = Yii::$app->cache->getOrSet('main_page_vacancy_count', function () {
             return Vacancy::find()->count();
         });
         $employer = \Yii::$app->user->isGuest?null:Employer::find()->select(['first_name', 'second_name'])->where(['user_id'=>\Yii::$app->user->id])->one();
-        return $this->render('index', [
+        return $this->render('index_new', [
             'categories' => $categories,
             'professions' => $professions,
             'vacancies' => $vacancies,
@@ -77,7 +94,8 @@ class DefaultController extends Controller
             'cities' => $cities,
             'countries' => $countries,
             'vacancy_count' => $vacancy_count,
-            'current_country' => $current_country
+            'current_country' => $current_country,
+            'companies' => $companies
         ]);
     }
 

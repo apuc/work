@@ -1,0 +1,61 @@
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: url('/fonts/main_page/Montserrat-Bold.ttf') format('truetype'),
+    url('/fonts/main_page/Montserrat-Bold.woff') format('woff'),
+    url('/fonts/main_page/Montserrat-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: url('/fonts/main_page/Montserrat-Regular.ttf') format('truetype'),
+    url('/fonts/main_page/Montserrat-Regular.woff') format('woff'),
+    url('/fonts/main_page/Montserrat-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MullerBold';
+    src: url('/fonts/main_page/MullerBold.ttf') format('truetype'),
+    url('/fonts/main_page/MullerBold.woff') format('woff'),
+    url('/fonts/main_page/MullerBold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MullerExtraBold';
+    src: url('/fonts/main_page/MullerExtraBold.ttf') format('truetype'),
+    url('/fonts/main_page/MullerExtraBold.woff') format('woff'),
+    url('/fonts/main_page/MullerExtraBold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MullerMedium';
+    src: url('/fonts/main_page/MullerMedium.ttf') format('truetype'),
+    url('/fonts/main_page/MullerMedium.woff') format('woff'),
+    url('/fonts/main_page/MullerMedium.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MullerRegular';
+    src: url('/fonts/main_page/MullerRegular.ttf') format('truetype'),
+    url('/fonts/main_page/MullerRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Muller';
+    src: url('/fonts/main_page/ofont.ru_Muller.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+

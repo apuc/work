@@ -1,0 +1,731 @@
+button {
+  border: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #FFFFFF;
+
+}
+
+.menu_logo-visible {
+  display: none;
+}
+
+.background__pointer_right {
+  position: absolute;
+  right: 0;
+  top: -200px;
+  z-index: -1;
+
+}
+
+.background__pointer_left {
+  position: absolute;
+  top: -200px;
+  z-index: -1;
+}
+
+.header-wrap__navParent {
+  display: flex;
+}
+
+.header-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 105px;
+}
+
+.nav-logo > a {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: auto 20px;
+  text-decoration: underline;
+  font-family: MullerExtraBold, sans-serif;
+  color: #dd3d34;
+}
+
+.nav-logo {
+  display: flex;
+  margin: auto;
+}
+
+.navigation > a {
+  margin: 0 15px;
+  text-decoration: none;
+  font-family: MullerMedium, sans-serif;
+  /* height: 13px;*/
+  font-size: 15px;
+}
+
+.nav-pa {
+  display: flex;
+  align-items: center;
+  margin: 5px auto;
+}
+
+.nav-pa > a {
+  margin: 5px;
+  text-decoration: none;
+  font-family: MullerRegular, sans-serif;
+  font-size: 15px;
+}
+
+.fa-search:before {
+  color: white;
+}
+
+.abstract {
+  border-radius: 18px;
+  background-color: #dd3d34;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 12px;
+  font-family: MullerRegular, sans-serif;
+  color: #ffffff;
+  white-space: nowrap;
+  transition: background-color 0.5s;
+  width: 140px;
+  text-align: center;
+}
+
+.disable {
+  pointer-events: none; /* делаем элемент неактивным для взаимодействия */
+  cursor: default; /*  курсор в виде стрелки */
+  background-color: #464646;
+}
+
+.abstract:hover {
+  background-color: #941515;
+  transition: background-color 0.5s;
+
+}
+
+.search {
+  background-image: url("../img/bacgroundHeader1.jpg");
+  border-radius: 0 33px 0 0;
+  height: 90px;
+  width: 95%;
+  position: relative;
+  z-index: 5;
+  max-width: 1838px;
+
+}
+
+.searchCity {
+  margin: 15px 30px 0;
+  position: relative;
+  white-space: nowrap;
+}
+
+.searchCity__input {
+  position: relative;
+}
+
+
+.searchCity::before {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: -1px;
+  padding: 23px 247px;
+  border-radius: 50px;
+  border: 1px solid #636467;
+}
+
+.searchCity__select {
+  appearance: none;
+  width: 200px;
+}
+
+.searchCity__button_color > img {
+  position: relative;
+  top: 1px;
+}
+
+.searchCity > .searchCity__button_color {
+  background-color: #dd3d34;
+  transition: background-color 0.5s;
+  padding: 6px 13px;
+}
+
+.searchCity > .searchCity__button_color:hover {
+  background-color: #941515;
+  transition: background-color 0.5s;
+}
+
+.searchCity > * {
+  position: relative;
+  border-radius: 50px;
+  border: none;
+  padding: 10px 15px;
+  margin: 7px;
+  z-index: 60;
+}
+
+.search-p {
+  color: white;
+  font-family: MullerRegular, sans-serif, sans-serif;
+  font-size: 17px;
+  text-align: center;
+  padding: 25px 0 18px;
+}
+
+.formSearch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 15px 20px;
+}
+
+.searchCity > button {
+  position: absolute;
+  right: 0;
+  background-color: #FFFFFF;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 90;
+}
+
+.searchCity > .fa .fa-times {
+  font-family: MullerBold, sans-serif;
+}
+
+.border > button {
+  font-family: MullerExtraBold, sans-serif;
+  margin-top: 10px;
+  border-radius: 50px;
+  color: #ffffff;
+  padding: 10px 25px;
+  border: none;
+  background-color: #dd3d34;
+  width: 200px;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+.border > button:hover {
+  background-color: #941515;
+  transition: background-color 0.5s;
+}
+
+.searchVacancy {
+  width: 450px
+}
+
+.border {
+  margin: 0 20px;
+  border-radius: 50px;
+  border: 1px solid #636467;
+  padding: 0 7px 8px;
+}
+
+.iconChair {
+  position: absolute;
+  top: 15px;
+  left: 5%;
+}
+
+.navigation_active:after {
+  content: '';
+  border: 12px solid transparent;
+  border-bottom: 12px solid #444a99;
+  position: absolute;
+  left: 50%;
+  margin-left: -12px;
+  bottom: -41px;
+  width: 0;
+}
+
+.presentation {
+  background-image: url("../img/treugol.svg");
+}
+
+.navigation_active {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  position: relative;
+  padding: 5px 0;
+  /*width: 300px;*/
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.way {
+  margin: 20px 0 0 13.7%;
+}
+
+.way > * {
+  font-family: MullerRegular, sans-serif;
+}
+
+.way > ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 10px 0 10px 5px;
+}
+
+.way__link {
+  list-style-type: none;
+  color: #30408d;
+  white-space: normal;
+}
+
+
+.way > ul > li > a {
+  text-decoration: none;
+  border: none;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.way > ul > li > a > svg {
+  margin: 0 10px -5px 10px;
+}
+
+.activeBtn {
+  position: absolute;
+  z-index: 2;
+}
+
+.navigation {
+  margin: auto 60px;
+  display: flex;
+  align-items: center;
+}
+
+.border_before {
+  padding: 10px 20px;
+  text-align: center;
+  position: relative;
+  border-radius: 18px;
+  background-color: #dd3d34;
+  text-decoration: none;
+  font-size: 12px;
+  font-family: MullerBold, sans-serif;
+  color: #ffffff;
+  white-space: nowrap;
+  transition: background-color 0.5s;
+  height: 20px;
+  min-width: 195px;
+  margin-top: 13px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.border_before:hover {
+  background-color: #941515;
+  transition: background-color 0.5s;
+}
+
+.border_before::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -9px;
+  padding: 25px 125px;
+  border-radius: 50px;
+  border: 1px solid #636467;
+
+}
+
+.filter-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #282828;
+  opacity: 0;
+  -webkit-transition: all ease 1s;
+  -o-transition: all ease 1s;
+  transition: all ease 1s;
+  z-index: -1;
+}
+
+.active-filter-overlay {
+  opacity: .38;
+  -webkit-transition: all ease 1s;
+  -o-transition: all ease 1s;
+  transition: all ease 1s;
+  z-index: 998;
+}
+
+.nav-overlay {
+  display: none;
+}
+
+.header-wrap__button_menu {
+  display: none;
+
+}
+
+.formSearch__select {
+  width: 280px;
+  margin-top: 14px;
+  position: relative;
+  z-index: 1;
+  margin-left: 5px;
+
+}
+
+.formSearch__select:before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -8px;
+  padding: 23px 149px;
+  border-radius: 50px;
+  border: 1px solid #636467;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear {
+  margin-right: 0 !important;
+  height: 12px !important;
+  padding-right: 9px !important;
+}
+
+.select2-container--default .select2-selection--single {
+  border: none !important;
+}
+
+.select2-selection__placeholder {
+
+}
+
+.select2-dropdown {
+  border: none !important;
+}
+
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  font-family: MullerBold, sans-serif !important;
+  font-size: 14px !important;
+  color: black !important;
+  display: contents !important;
+
+}
+
+.select2-selection {
+  width: 285px !important;
+  border-radius: 50px !important;
+  padding: 10px;
+  line-height: 12px !important;
+  height: 35px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 12px !important;
+}
+
+.select2-container--default .select2-results > .select2-results__options {
+  font-family: MullerRegular, sans-serif !important;
+  font-size: 14px !important;
+}
+
+.select2-selection__arrow {
+  display: none;
+}
+
+.searchCity__select {
+  margin-top: 16px;
+}
+
+@media (max-width: 1365px) {
+
+  .menu_logo-visible {
+    display: block;
+  }
+
+  .header-wrap__button_menu {
+    display: block;
+    margin: 60px 0 0 35px;
+    cursor: pointer;
+    z-index: 1000;
+    position: fixed;
+    left: 0;
+  }
+
+  .header-wrap__navParent {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 350px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: #374398;
+    color: #000;
+    transform: translateX(-200%);
+    transition: all ease 1s;
+    z-index: 999;
+  }
+
+  .active-nav {
+    transform: translateX(0);
+  }
+
+  .nav-logo > a {
+
+  }
+
+  .nav-logo {
+    display: flex;
+    /* margin: 55px 0 35px 11%;*/
+ /*   flex-direction: column;
+    align-items: center;
+    margin: 10px auto;*/
+  }
+
+  .navigation > a {
+
+    /*font-size: 28px;*/
+    color: #FFFFFF;
+    height: auto;
+
+  }
+
+  .navigation {
+    display: flex;
+    flex-direction: column;
+    margin: 140px 0 0 0;
+  }
+
+  .menu_logo-visible {
+    margin: 150px 0 45px 35px;
+  }
+
+  .nav-pa > a {
+    margin: 5px 15px;
+
+  }
+
+  .nav-pa {
+    display: flex;
+    align-items: center;
+    /*  margin: 0 0 0 9%;*/
+  }
+
+  .navigation_active {
+    text-align: left;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .navigation_active:after {
+    text-align: left;
+    border: none;
+  }
+
+  .aside__side-bar__button__checkbox {
+    margin-left: 10px;
+  }
+
+  .search {
+    width: 100%;
+    background-size: cover;
+  }
+
+  .iconChair {
+    display: none;
+  }
+
+
+  .way {
+    margin-left: 5px;
+  }
+}
+
+@media (max-width: 1103px) {
+  .border > button {
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  .formSearch__select {
+    width: 230px;
+  }
+
+  .searchVacancy {
+    width: 250px
+  }
+
+  .nav-logo > a {
+    font-size: 30px;
+    line-height: 60px;
+  }
+
+  .nav-logo {
+
+       flex-direction: column;
+       align-items: center;
+       margin: 10px auto;
+  }
+
+  .header-wrap {
+    justify-content: flex-start;
+    flex-direction: column;
+    height: 225px;
+  }
+
+  .searchCity::before {
+    content: '';
+    padding: 23px 147px;
+
+  }
+
+  .searchCity {
+    margin: 15px 20px 0;
+  }
+
+  .select2-selection {
+    width: 230px !important;
+  }
+
+  .formSearch__select:before {
+    padding: 23px 122px;
+  }
+}
+
+@media (max-width: 900px) {
+  .iconChair {
+    display: none;
+  }
+
+}
+
+@media (max-width: 844px) {
+  .searchCity > .searchCity__button_color {
+    right: -60px;
+  }
+
+  .searchVacancy {
+    width: 190px;
+  }
+
+
+  .searchCity::before {
+    content: '';
+    padding: 23px 117px;
+  }
+
+  .border_before {
+    display: none;
+  }
+
+  /*  .formSearch {
+        justify-content: flex-start;
+    }*/
+
+
+}
+
+@media (max-width: 620px) {
+  .header-wrap__button_menu {
+    margin: 10px 0 0 4px;
+  }
+
+
+  .formSearch__select {
+    margin: 35px 0 0 -50px;
+
+  }
+
+  .search {
+    height: 150px;
+  }
+
+  .way {
+    margin: 0;
+  }
+
+  .way__link > a > span {
+    white-space: normal;
+  }
+
+  .way > ul > li > a > svg {
+    margin: 0 10px -5px 0;
+
+  }
+
+  .nav-pa {
+    margin: auto;
+  }
+
+  .searchCity > .searchCity__button_color {
+    right: 0;
+  }
+
+  .nav-pa > a {
+    margin: 5px;
+  }
+
+  .nav-logo {
+    margin: 25px auto 0;
+  }
+
+  .formSearch {
+    flex-direction: column;
+  }
+
+  .search-p {
+    font-size: 14px;
+    padding: 20px 0 0;
+    margin: 0 10px -10px;
+  }
+
+  .searchVacancy {
+    width: 250px;
+  }
+
+  .searchCity::before {
+    padding: 23px 147px;
+  }
+
+  .select2 .select2-container .select2-container--default {
+    width: 250px !important;
+  }
+
+  .select2-selection {
+    width: 285px !important;
+  }
+
+  .formSearch__select:before {
+    padding: 23px 149px;
+  }
+
+
+}
+@media (max-width: 550px) {
+  .abstract {
+    padding: 10px 5px;
+  }
+}
+
+
+@media (max-width: 420px) {
+  /*.nav-logo {
+    margin: 20px 2px 0;
+  }
+
+  .nav-logo > a {
+    margin: 45px 5px 0;
+    font-size: 12px;
+  }*/
+
+  .nav-pa > a {
+    font-size: 13px;
+   /* line-height: 20px;*/
+  }
+
+}
+
+
+
+

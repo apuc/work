@@ -3,15 +3,13 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use frontend\assets\MainAsset;
-use frontend\widgets\Footer;
+use frontend\assets\MainPageAsset;
 use frontend\widgets\GoogleAnalytics;
-use frontend\widgets\Modals;
 use frontend\widgets\VKPixel;
 use frontend\widgets\YandexMetrika;
 use yii\helpers\Html;
 
-MainAsset::register($this);
+MainPageAsset::register($this);
 Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
 ?>
 <?php $this->beginPage() ?>
@@ -30,11 +28,8 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
     <?=VKPixel::widget()?>
 </head>
 <body>
-<div class="root">
 <?php $this->beginBody() ?>
-    <?=$content?>
-</div>
-<?=Modals::widget();?>
+<?=$content?>
 <?php $this->endBody() ?>
 </body>
 

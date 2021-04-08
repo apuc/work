@@ -1,0 +1,188 @@
+/* ============================================================
+  NAV
+============================================================ */
+
+
+@media all and (min-width: 600px) {
+  nav.cmn-overlays-nav ul {
+    padding-left: 1px;
+  }
+  nav.cmn-overlays-nav li {
+    float: left;
+    width: 50%;
+  }
+  nav.cmn-overlays-nav li:nth-child(2n+1) {
+    margin: 0 1px 1px -1px;
+  }
+}
+/* ============================================================
+  SECTIONS
+============================================================ */
+.section_modal {
+  position: fixed;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.8);
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+.section_modal.active {
+  z-index: 100000;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  opacity: 1;
+}
+
+.section_modal .content {
+  border-radius: 10px;
+  position: absolute;
+  top:20px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 40px;
+  background-color: #fff;
+  opacity: 0;
+  -webkit-transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  -o-transform: translateX(-100%);
+  transform: translateX(-100%);
+  -webkit-transition: opacity 0.2s, -webkit-transform 0.2s;
+  -moz-transition: opacity 0.2s, -moz-transform 0.2s;
+  -o-transition: opacity 0.2s, -o-transform 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
+  -webkit-transition-delay: 0.2s;
+  -moz-transition-delay: 0.2s;
+  -o-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+}
+.section_modal .content a.close {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 25px;
+  color: #bababa;
+  font: Muller, sans-serif;
+}
+
+
+
+.section_modal.active .content {
+  opacity: 1;
+  -webkit-transform: translateX(0);
+  -moz-transform: translateX(0);
+  -ms-transform: translateX(0);
+  -o-transform: translateX(0);
+  transform: translateX(0);
+}
+
+/* ============================================================
+  ARTICLES
+============================================================ */
+
+
+article h2 {
+  margin-bottom: 10px;
+  color: #323232;
+  font-family: "Oswald", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 18px;
+}
+article p {
+  margin-bottom: 20px;
+}
+article p:last-child {
+  margin-bottom: 0;
+}
+
+
+
+
+.section_modal .content-reg{
+  border-radius: 10px;
+  position: absolute;
+  top: 20px;
+  overflow-y: scroll;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 40px;
+  background-color: #fff;
+  opacity: 0;
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+  transform: translateY(-100%);
+  -webkit-transition: opacity 0.2s, -webkit-transform 0.2s;
+  -moz-transition: opacity 0.2s, -moz-transform 0.2s;
+  -o-transition: opacity 0.2s, -o-transform 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
+  -webkit-transition-delay: 0.2s;
+  -moz-transition-delay: 0.2s;
+  -o-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+}
+
+
+.section_modal .content-resume{
+  border-radius: 10px;
+  position: absolute;
+  top: 190px;
+  bottom: 190px;
+  left: 20px;
+  right: 20px;
+  margin: 0 auto;
+  max-width: 600px;
+  height: 200px;
+  padding: 40px;
+  background-color: #fff;
+  opacity: 0;
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+  transform: translateY(-100%);
+  -webkit-transition: opacity 0.2s, -webkit-transform 0.2s;
+  -moz-transition: opacity 0.2s, -moz-transform 0.2s;
+  -o-transition: opacity 0.2s, -o-transform 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
+  -webkit-transition-delay: 0.2s;
+  -moz-transition-delay: 0.2s;
+  -o-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+}
+
+
+.link__ {
+  color: #182c93;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.link__:hover {
+  color: black;
+}
+

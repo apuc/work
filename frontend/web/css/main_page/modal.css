@@ -1,0 +1,300 @@
+/* No CSS *//*# sourceMappingURL=modal.css.map */
+
+.modal-style > p {
+    font-family: 'Muller';
+    display: block;
+    margin: 0 0 40px;
+    font-weight: 700;
+    font-size: 42px;
+    color: #262626;
+    text-align: center;
+}
+
+.modal-style {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 70px 100px 45px; }
+@media (max-width: 1200px) {
+    .modal-style {
+        padding: 40px; } }
+@media (max-width: 576px) {
+    .modal-style {
+        padding: 30px 10px 10px; } }
+.modal-style h2 {
+    margin-top: 0;
+    margin-bottom: 40px;
+    font-weight: 700;
+    font-size: 42px;
+    color: #262626;
+    text-align: center; }
+.modal-style form {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
+.modal-style form .select2-container {
+    width: 100% !important;
+    margin-bottom: 15px !important; }
+.modal-style form .select2-container.select2-container--default .select2-selection--single {
+    -webkit-box-shadow: 0 0 59px rgba(40, 40, 40, 0.05) !important;
+    box-shadow: 0 0 59px rgba(40, 40, 40, 0.05) !important;
+    border-radius: 35px !important;
+    border: 1px solid #e8e8e8 !important;
+    background-color: #ffffff !important; }
+.modal-style form .select2-container.select2-container--default .select2-selection--single .select2-selection__rendered {
+    padding: 0 0 0 17px !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: #000000 !important; }
+.modal-style form .select2-container.select2-container--default .select2-selection--single .select2-selection__rendered .select2-selection__placeholder {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: #000000 !important; }
+.modal-style form > span {
+    margin: 0 auto 10px 0;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000; }
+.modal-style form input {
+    width: 420px;
+    margin-bottom: 25px;
+    padding: 20px 0 20px 40px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #a8a8a8 !important;
+    -webkit-box-shadow: 0 0 59px rgba(40, 40, 40, 0.05);
+    box-shadow: 0 0 59px rgba(40, 40, 40, 0.05);
+    border-radius: 10px;
+    border: 1px solid #e8e8e8;
+    background-color: #ffffff !important; }
+@media (max-width: 1200px) {
+    .modal-style form input {
+        width: 350px; } }
+@media (max-width: 576px) {
+    .modal-style form input {
+        width: 300px; } }
+.modal-style form textarea {
+    max-width: 420px;
+    width: 100%;
+    padding: 20px 20px 20px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000 !important;
+    -webkit-box-shadow: 0 0 59px rgba(40, 40, 40, 0.05);
+    box-shadow: 0 0 59px rgba(40, 40, 40, 0.05);
+    border-radius: 10px;
+    border: 1px solid #e8e8e8;
+    background-color: #ffffff !important; }
+.modal-style form button {
+    position: relative;
+    width: 250px;
+    height: 50px;
+    margin-top: 20px;
+    margin-bottom: 45px;
+    font-weight: 700;
+    font-size: 17px;
+    color: #f7fafb;
+    text-transform: uppercase;
+    background-color: #ff000c;
+    border-radius: 26px;
+    border: none;
+    -webkit-box-shadow: -1px 5px 13px rgba(19, 19, 19, 0.34);
+    box-shadow: -1px 5px 13px rgba(19, 19, 19, 0.34);
+    outline: none;
+    cursor: pointer; }
+.modal-style form button:before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -55px;
+    width: 30px;
+    height: 30px;
+    background: url("/images/main_page/arrow.png") no-repeat 50% 50%;
+    background-size: contain; }
+@media (max-width: 576px) {
+    .modal-style form button:before {
+        display: none; } }
+.modal-style__text {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center; }
+.modal-style__text span {
+    margin-right: 20px;
+    font-weight: 400;
+    font-size: 21px;
+    color: #010000; }
+@media (max-width: 1200px) {
+    .modal-style__text span {
+        font-size: 18px; } }
+@media (max-width: 576px) {
+    .modal-style__text span {
+        margin-right: 0; } }
+.modal-style__text button {
+    margin: 0 10px;
+    font-weight: 400;
+    font-size: 21px;
+    text-decoration: underline;
+    color: #0d5ecc;
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer; }
+@media (max-width: 1200px) {
+    .modal-style__text button {
+        font-size: 18px; } }
+.modal-style__circle {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 40px;
+    background-color: rgba(246, 26, 36, 0.2);
+    border-radius: 50%; }
+.modal-style__circle__center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    background-color: rgba(246, 26, 36, 0.5);
+    border-radius: 50%; }
+.modal-style__circle__center img {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    padding: 20px;
+    background-color: #ff000c;
+    border-radius: 50%; }
+.modal-style__error-text {
+    display: block;
+    width: 390px;
+    font-size: 21px;
+    font-weight: 400;
+    color: #a8a8a8;
+    text-align: center; }
+
+    .modal-login {
+        display: none; }
+    @media (max-height: 480px) {
+        .modal-login {
+            height: 100vh;
+            overflow: scroll; } }
+    
+    .modal-reg {
+        display: none; }
+    @media (max-height: 650px) {
+        .modal-reg {
+            height: 100vh;
+            overflow: scroll; } }
+    
+    .modal-send-message {
+        display: none; }
+    @media (max-height: 650px) {
+        .modal-send-message {
+            height: 100vh;
+            overflow: scroll; } }
+    
+    .modal-error {
+        display: none; }
+    
+    .modal-success {
+        display: none;
+        padding: 40px 40px 0; }
+    .modal-success h2 {
+        font-size: 22px; }
+    
+    .modal-h2 {
+        font-size: 22px !important; }
+
+
+    
+        .modal-style form button:before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: -55px;
+            width: 30px;
+            height: 30px;
+            background: url('/images/main_page/arrow.png') no-repeat 50% 50%;
+            background-size: contain;
+        }
+
+
+        .auth-icon {
+            display: block;
+            width: 37px;
+            height: 37px;
+            background: url('/images/main_page/vk.png') no-repeat;
+            border-radius: 3px;
+           margin-right: 35px;
+        }
+
+       
+
+        .field-register-form-status label {
+            display: flex;
+            margin: 15px;
+        }
+
+
+        .field-register-form-status label input {
+            width: auto;
+            margin: 0 20px 0 0;
+        }
+
+
+        
+
+        .reg_link {
+    text-align: center;
+    margin: 0 10px;
+    font-weight: 400;
+    font-size: 21px;
+    text-decoration: underline;
+    color: #0d5ecc;
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+    display: block;
+    }
