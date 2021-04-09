@@ -148,7 +148,7 @@ body {
 .searchCity > .searchCity__button_color {
   background-color: #dd3d34;
   transition: background-color 0.5s;
-  padding: 6px 13px;
+  padding: 10px 13px;
 }
 
 .searchCity > .searchCity__button_color:hover {
@@ -309,7 +309,7 @@ body {
   color: #ffffff;
   white-space: nowrap;
   transition: background-color 0.5s;
-  height: 20px;
+  height: 40px;
   min-width: 195px;
   margin-top: 13px;
   line-height: 20px;

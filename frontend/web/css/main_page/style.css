@@ -157,7 +157,7 @@ article p:last-child {
   margin: 0 auto;
   max-width: 600px;
   height: 200px;
-  padding: 40px;
+  padding: 6px;
   background-color: #fff;
   opacity: 0;
   -webkit-transform: translateY(-100%);

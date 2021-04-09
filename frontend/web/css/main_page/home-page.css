@@ -32,8 +32,8 @@
 #button-10 .knobs:before, #button-10 .knobs:after, #button-10 .knobs span {
   position: absolute;
   top: 0;
-  width: 100px;
-  height: 15px;
+  width: 137px;
+  height: 37px;
   font-size: 15px;
   font-weight: bold;
   text-align: center;
@@ -618,6 +618,7 @@ li {
 .home-kard__img {
   margin: auto;
   flex-basis: 20%;
+  max-width: 50px;
 }
 
 .home-kard_fire {
