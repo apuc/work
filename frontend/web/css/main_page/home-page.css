@@ -150,6 +150,7 @@
 
 .container.header {
   margin-bottom: 50px;
+  margin-left: 30px;
 }
 
 .iconChair {
@@ -565,15 +566,22 @@ li {
   margin-top: 25px;
 }
 
+.slider__wrapp {
+  width: 500px;
+}
+
 .block-company {
   display: flex;
   flex-wrap: wrap;
+  margin-left: 80px;
 }
 
 .block-company__single-company {
   flex-basis: 50%;
   text-align: center;
   margin: 25px 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .block-company__single-company_description {
@@ -625,8 +633,8 @@ li {
 
 
 .block-company__single-company__image {
-  max-width: 200px;
-  height: 150px;
+  max-width: 259px;
+  height: 167px;
 }
 
 .home-kard_fire {
@@ -985,6 +993,7 @@ li {
 
   .container.header {
     /*  margin-bottom: 10px;*/
+
   }
 
 }

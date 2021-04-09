@@ -371,7 +371,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
     <section class="container__section">
         <div class="content-wrapper">
             <div class="content-wrapper__middle-content">
-                <div>
+                <div class="slider__wrapp">
                     <p class="slider__city-description">Вакансии дня</p>
 
                     <div class="slider swiper-container">
