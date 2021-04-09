@@ -619,6 +619,14 @@ li {
   margin: auto;
   flex-basis: 20%;
   max-width: 50px;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+
+.block-company__single-company__image {
+  max-width: 200px;
+  height: 150px;
 }
 
 .home-kard_fire {

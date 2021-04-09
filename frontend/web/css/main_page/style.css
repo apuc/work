@@ -20,6 +20,7 @@
 ============================================================ */
 .section_modal {
   position: fixed;
+  top: -1000px;
   opacity: 0;
   background: rgba(0, 0, 0, 0.8);
   -webkit-transition: opacity 0.2s;
