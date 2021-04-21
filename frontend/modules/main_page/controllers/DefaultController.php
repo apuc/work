@@ -33,14 +33,14 @@ class DefaultController extends Controller
         $this->layout = '@frontend/views/layouts/main-page-layout.php';
 
         $categories = Yii::$app->cache->getOrSet('main_page_categories', function () {
-            return Category::find()->with(['vacancyCategories'])->select(['name', 'slug'])->limit(10)->all();
+            return Category::find()->with(['vacancyCategories'])->select(['name', 'slug'])->limit(4)->all();
         });
         $professions = Yii::$app->cache->getOrSet('main_page_professions', function () {
-            return Professions::find()->select(['title', 'slug'])->limit(10)->all();
+            return Professions::find()->select(['title', 'slug'])->limit(4)->all();
         });
         if (!$current_country) {
             $cities = Yii::$app->cache->getOrSet('main_page_cities', function () {
-                return City::find()->select(['id', 'name', 'slug'])->where(['status' => 1])->orderBy('priority ASC')->limit(10)->all();
+                return City::find()->select(['id', 'name', 'slug'])->where(['status' => 1])->orderBy('priority ASC')->limit(4)->all();
             });
         } else {
             $cities = Yii::$app->cache->getOrSet("main_page_cities_$current_country->slug", function () use ($current_country) {
@@ -54,7 +54,7 @@ class DefaultController extends Controller
                         City::tableName().'.status' => 1,
                         Region::tableName().'.country_id'=>$current_country->id
                     ])
-                    ->limit(10)
+                    ->limit(4)
                     ->orderBy('priority ASC')
                     ->all();
             });

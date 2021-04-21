@@ -389,12 +389,12 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                                     <p class="home-kard__info_description"><?=$vacancy->post?></p><br>
                                     <span class="home-kard__info_salary">
                                         <?=$vacancy->getMoneyString()?>
-                                        <?php if ($vacancy->hot == 1): ?>
+<!--                                        --><?php //if ($vacancy->hot == 1): ?>
                                         <span  class="home-kard_fire">
-                                            <img class="home-kard_fire_img" src="images/main_page/cd-burn.svg" alt="">
+                                            <img class="home-kard_fire_img" src="/images/main_page/cd-burn.svg" alt="">
                                             <p class="home-kard_fire_text">Горячая вакансия</p>
                                         </span>
-                                        <?php endif; ?>
+<!--                                        --><?php //endif; ?>
                                     </span>
 
                                     <p class="home-kard__info_company"><?=$vacancy->company->name?></p>
@@ -474,7 +474,6 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                                 <ul class="content-block-list">
                                     <?php foreach ($cities as $city): ?>
                                         <li class="content-list"><a href="<?= Vacancy::getSearchPageUrl(false, $city->slug) ?>"> <?= $city->name ?></a></li>
-                                        <a href="<?= Vacancy::getSearchPageUrl(false, $city->slug) ?>"><?= $city->name ?></a>
                                     <?php endforeach; ?>
                                     <li class="content-list content-list_all-vacansy"><a href="">все города</a></li>
                                 </ul>
