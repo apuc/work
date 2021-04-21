@@ -1,3 +1,41 @@
+
+window.onload = function () {
+
+
+/** Перенос текста в другой блок home-page */
+function transferEl(el, parentEl, minWidth, maxWidth) {
+  let width = window.innerWidth;
+
+  if (el && parentEl) { 	/** проверка на существование элементов */
+  width <= minWidth ? parentEl.appendChild(el) : false;
+    width >= maxWidth ? parentEl.appendChild(el) : false
+  }
+}
+
+let secondParentEl = document.querySelector(".content-wrapper__search-job__content-block-text");
+let el = document.querySelector(".content-wrapper__search-job__content-block-footer-text");
+let parentEl = document.querySelector(".content-wrapper__search-job-content-inner__button-parent");
+transferEl(el, parentEl, "973");
+transferEl(el, secondParentEl, "550");
+
+/** Смена роли кнопки поиска */
+let searchVacancy = document.querySelector('[data-search]');
+let toggleRole = document.querySelector("#toggleRole");
+if (toggleRole) {
+  toggleRole.addEventListener("change", () => {
+    if (toggleRole.checked) {
+      (searchVacancy) ? searchVacancy.innerHTML = "НАЙТИ СОТРУДНИОВ" : false;
+    } else {
+      (searchVacancy) ? searchVacancy.innerHTML = "НАЙТИ ВАКАНСИИ" : false;
+    }
+  });
+}
+};
+
+
+
+
+
 'use strict';
 
 // if (document.querySelector('.overlay')) {
@@ -60,6 +98,11 @@
 //     }
 //   }
 // }
+
+
+
+
+
 
 if ($('.home__slider').length > 0) {
   $('.home__slider').slick({

@@ -87,9 +87,9 @@
   background-size: cover;
   position: relative;
   z-index: 2;
-
-
 }
+
+
 
 
 
@@ -600,6 +600,14 @@ li {
 .block-company__single-company_description-color {
   color: #2c398b;
   font-size: 13px;
+}
+
+.block-company__single-company_description-color:hover {
+  cursor: pointer;
+}
+
+.company__text {
+  color: black;
 }
 
 

@@ -426,7 +426,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                             <img class="block-company__single-company__image" src="https://i.pinimg.com/originals/d3/71/d1/d371d1231aafbc9703426615aaca3da8.jpg">
                             <p class="block-company__single-company_description">
                                 <span class="block-company__single-company_description-color"><?=$company['vacancies_count']?> вакансий</span>
-                                компании
+                                <span class="company__text">компании</span>
                             </p>
                         </a>
                         <?php endforeach; ?>
