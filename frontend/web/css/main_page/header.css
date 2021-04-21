@@ -100,6 +100,8 @@ body {
 .abstract:hover {
   background-color: #941515;
   transition: background-color 0.5s;
+  color: white;
+  text-decoration: none;
 
 }
 
@@ -325,6 +327,8 @@ body {
 
 .border_before:hover {
   background-color: #941515;
+  color: white;
+  text-decoration: none;
   transition: background-color 0.5s;
 }
 

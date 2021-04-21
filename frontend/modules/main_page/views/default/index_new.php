@@ -391,7 +391,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                                         <?=$vacancy->getMoneyString()?>
                                         <?php if ($vacancy->hot == 1): ?>
                                         <span  class="home-kard_fire">
-                                            <img class="home-kard_fire_img" src="/images/main_page/cd-burn.svg" alt="">
+                                            <img class="home-kard_fire_img" src="images/main_page/cd-burn.svg" alt="">
                                             <p class="home-kard_fire_text">Горячая вакансия</p>
                                         </span>
                                         <?php endif; ?>

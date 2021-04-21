@@ -70,7 +70,7 @@
 }
 
 #button-10 .checkbox:checked + .knobs:before {
-  left: 140px;
+  left: 142px;
   background-color: #30408d;
   color: #fff;
 }
@@ -88,7 +88,12 @@
   position: relative;
   z-index: 2;
 
+
 }
+
+
+
+
 
 .background__pointer_right {
   position: absolute;
@@ -155,7 +160,7 @@
 
 .iconChair {
   position: absolute;
-  top: 60px;
+  top: 83px;
   left: 1%;
   z-index: 0;
 }
@@ -588,11 +593,13 @@ li {
   font-family: MullerMedium, sans-serif;
   font-size: 12px;
   float: right;
-  margin-right: 55px;
+  margin-top: 5px;
+  margin-right: -46px;
 }
 
 .block-company__single-company_description-color {
   color: #2c398b;
+  font-size: 13px;
 }
 
 
