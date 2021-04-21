@@ -21,7 +21,7 @@
       <div class="card__statistic__wrapper" >
         <template v-if="user.status===10">
           <div v-for="(item, itemIndex) in items" class="vacancy__wrapper">
-            <v-card
+            <v-cardmain-card
                 class="main-card"
                 :class="selectBg(index)"
                 color="#26c6da"
@@ -39,7 +39,7 @@
                   </p>
                 </template>
               </v-card-text>
-            </v-card>
+            </v-cardmain-card>
             <v-list-tile class="grow">
               <v-layout
                   class="icons__wrapper"
@@ -140,8 +140,8 @@
 
 
 
-              {{ valueDateObject.hours }} :
-              {{ valueDateObject.minutes }}
+              {{ valueDateObject.hours }} ч.
+              {{ valueDateObject.minutes }} м.
 
 
             </p>
@@ -181,11 +181,12 @@ export default {
   async mounted() {
     this.user = (await this.$store.dispatch('getUserMe', this.$route.params.id)).user
     this.valueDateObject.dateRegVacancy = this.user.company.created_at;
-
+    console.log(this.user);
     document.title = this.$route.meta.title;
     this.$store.dispatch('getStatistics')
         .then(data => {
           this.allRecords = data;
+          console.log(this.allRecords);
           this.domen = `${process.env.VUE_APP_API_URL}`;
         }).catch(error => {
       this.$swal({
