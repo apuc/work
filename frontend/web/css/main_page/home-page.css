@@ -655,8 +655,8 @@ li {
 .home-kard_fire {
   z-index: 1;
   position: absolute;
-  left: 7%;
-  top: -6px;
+  left: 32%;
+  top: -2px;
   display: flex;
   align-items: center;
   max-width: 100px;
