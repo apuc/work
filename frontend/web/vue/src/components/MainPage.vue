@@ -247,12 +247,10 @@ export default {
   },
   async mounted() {
     this.user = (await this.$store.dispatch('getUserMe', this.$route.params.id)).user
-    console.log(this.user);
     document.title = this.$route.meta.title;
     this.$store.dispatch('getStatistics')
         .then(data => {
           this.allRecords = data;
-          console.log(this.allRecords);
           this.dateRegVacancy = this.allRecords.Vacancy;
           this.domen = `${process.env.VUE_APP_API_URL}`;
         }).catch(error => {
