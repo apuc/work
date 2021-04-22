@@ -91,6 +91,7 @@ class EmployerController extends MyActiveController
             $result['Resume'][]=[
                 'id' => $resume->id,
                 'name' => $resume->title,
+                'created_at' => $resume->created_at,
                 'views' => $resume->countViews,
                 'responses' => $responses,
                 'click_phone_count' => $resume->clickPhoneCount
