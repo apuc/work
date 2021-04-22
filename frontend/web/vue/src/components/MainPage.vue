@@ -69,8 +69,37 @@
               </v-layout>
             </v-list-tile>
             <div class="card__about">
-              <p class="mb-0">Обновлено 30 июля 2020 в 15:51</p>
-              <p class="mb-0">Доступно только по <a href="">прямой ссылке</a></p>
+              <p class="mb-0">Обновлено
+
+
+
+                {{
+                  new Date (item.created_at * 1000).getDate()
+                }}
+
+
+                {{
+                  mnth[new Date (item.created_at * 1000).getMonth() + 1]
+                }}
+
+                {{
+                  new Date (item.created_at * 1000).getFullYear()
+                }} г
+
+
+
+                {{
+                  new Date (item.created_at * 1000).getHours()
+                }} ч
+
+
+                {{
+                  new Date (item.created_at * 1000).getMinutes()
+                }} м
+
+
+              </p>
+              <p class="mb-0">Доступно только по <a :href="domen + '/resume/view/' + item.id" target="_blank">прямой ссылке</a></p>
             </div>
           </div>
         </template>
@@ -135,7 +164,7 @@
 <!--            {{ getRegDateVacancy() }}-->
 
             <div class="card__about" >
-              <p class="mb-0">
+              <p class="mb-0" v-if="typeof item.created_at == 'number' ">
 
 
                 {{
@@ -179,7 +208,7 @@
 
 
             </p>
-              <p class="mb-0">Доступно только по <a href="">прямой ссылке</a></p></div>
+              <p class="mb-0">Доступно только по <a :href="domen + '/vacancy/view/' + item.id" target="_blank">прямой ссылке</a></p></div>
           </div>
         </template>
     </template>
@@ -218,13 +247,13 @@ export default {
   },
   async mounted() {
     this.user = (await this.$store.dispatch('getUserMe', this.$route.params.id)).user
-
+    console.log(this.user);
     document.title = this.$route.meta.title;
     this.$store.dispatch('getStatistics')
         .then(data => {
           this.allRecords = data;
+          console.log(this.allRecords);
           this.dateRegVacancy = this.allRecords.Vacancy;
-          console.log(this.allRecords.Vacancy);
           this.domen = `${process.env.VUE_APP_API_URL}`;
         }).catch(error => {
       this.$swal({
