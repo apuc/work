@@ -79,6 +79,7 @@ class EmployerController extends MyActiveController
                 'id' => $vacancy->id,
                 'name' => $vacancy->post,
                 'views' => $vacancy->views,
+                'created_at' => $vacancy->created_at,
                 'responses' => $responses,
                 'click_phone_count' => $vacancy->clickPhoneCount
             ];
