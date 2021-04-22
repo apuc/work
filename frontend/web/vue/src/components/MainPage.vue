@@ -21,7 +21,7 @@
       <div class="card__statistic__wrapper" >
         <template v-if="user.status===10">
           <div v-for="(item, itemIndex) in items" class="vacancy__wrapper">
-            <v-card
+            <v-cardmain-card
                 class="main-card"
                 :class="selectBg(index)"
                 color="#26c6da"
@@ -39,7 +39,7 @@
                   </p>
                 </template>
               </v-card-text>
-            </v-card>
+            </v-cardmain-card>
             <v-list-tile class="grow">
               <v-layout
                   class="icons__wrapper"
@@ -131,17 +131,51 @@
                 </router-link>
               </v-layout>
             </v-list-tile>
-            {{ getRegDateVacancy() }}
-            <div class="card__about"><p class="mb-0">
-              {{ valueDateObject.day }}
-              {{ mnth[valueDateObject.month] }}
-              {{ valueDateObject.year }}
+
+<!--            {{ getRegDateVacancy() }}-->
+
+            <div class="card__about" >
+              <p class="mb-0">
+
+
+                {{
+                  new Date (item.created_at * 1000).getDate()
+                }}
+
+
+                {{
+                  mnth[new Date (item.created_at * 1000).getMonth() + 1]
+                }}
+
+                {{
+                  new Date (item.created_at * 1000).getFullYear()
+                }} г
+
+
+
+                {{
+                  new Date (item.created_at * 1000).getHours()
+                }} ч
+
+
+                {{
+                  new Date (item.created_at * 1000).getMinutes()
+                }} м
 
 
 
 
-              {{ valueDateObject.hours }} :
-              {{ valueDateObject.minutes }}
+
+
+<!--              {{ valueDateObject.day }}-->
+<!--              {{ mnth[valueDateObject.month] }}-->
+<!--              {{ valueDateObject.year }}-->
+
+
+
+
+<!--              {{ valueDateObject.hours }} ч.-->
+<!--              {{ valueDateObject.minutes }} м.-->
 
 
             </p>
@@ -159,15 +193,19 @@ export default {
   data() {
     return {
       mnth: [null, "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
-      valueDateObject: {
-        dateRegVacancy: null,
-        day: null,
-        month: null,
-        year: null,
-        hours: null,
-        minutes: null,
-        seconds: null,
-      },
+      dateRegVacancy: null,
+
+      // valueDateObject: {
+      //   dateRegVacancy: null,
+      //   day: null,
+      //   month: null,
+      //   year: null,
+      //   hours: null,
+      //   minutes: null,
+      //   seconds: null,
+      // },
+
+
 
       allRecords: [],
       domen: '',
@@ -180,12 +218,13 @@ export default {
   },
   async mounted() {
     this.user = (await this.$store.dispatch('getUserMe', this.$route.params.id)).user
-    this.valueDateObject.dateRegVacancy = this.user.company.created_at;
 
     document.title = this.$route.meta.title;
     this.$store.dispatch('getStatistics')
         .then(data => {
           this.allRecords = data;
+          this.dateRegVacancy = this.allRecords.Vacancy;
+          console.log(this.allRecords.Vacancy);
           this.domen = `${process.env.VUE_APP_API_URL}`;
         }).catch(error => {
       this.$swal({
@@ -200,21 +239,22 @@ export default {
   },
   methods: {
 
-    getRegDateVacancy () {
-      let date = new Date (this.valueDateObject.dateRegVacancy * 1000);
-
-
-
-
-      this.valueDateObject.day = date.getDay();
-      this.valueDateObject.month = date.getMonth() + 1;
-      this.valueDateObject.year = date.getFullYear();
-
-      this.valueDateObject.hours = date.getHours();
-      this.valueDateObject.minutes = date.getMinutes();
-      this.valueDateObject.seconds = date.getSeconds();
-
-    },
+    // getRegDateVacancy () {
+    //
+    //
+    //   let date = new Date (this.valueDateObject.dateRegVacancy * 1000);
+    //
+    //
+    //
+    //   this.valueDateObject.day = date.getDay();
+    //   this.valueDateObject.month = date.getMonth() + 1;
+    //   this.valueDateObject.year = date.getFullYear();
+    //
+    //   this.valueDateObject.hours = date.getHours();
+    //   this.valueDateObject.minutes = date.getMinutes();
+    //   this.valueDateObject.seconds = date.getSeconds();
+    //
+    // },
 
 
     selectBg(cardType) {
