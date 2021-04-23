@@ -21,6 +21,7 @@ use common\models\KeyValue;
 use common\models\Resume;
 use frontend\assets\MainAsset;
 use frontend\modules\resume\classes\ResumeMetaFormer;
+use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\LinkPager;
@@ -163,11 +164,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/resume_search.js', ['de
                                             <h3>
                                                 <?php if($searchModel->category_ids && count($searchModel->category_ids) === 1):?>
                                                 <a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id, 'referer_category'=>$searchModel->category_ids[0]])?>">
-                                                    <?= mb_convert_case ( $resume->title , MB_CASE_TITLE) ?>
+                                                    <?= StringHelper::mb_ucfirst(mb_strtolower ( $resume->title)) ?>
                                                 </a>
                                                 <?php else: ?>
                                                 <a href="<?=Url::toRoute(['/resume/default/view', 'id'=>$resume->id])?>">
-                                                    <?= mb_convert_case ( $resume->title , MB_CASE_TITLE) ?>
+                                                    <?= StringHelper::mb_ucfirst(mb_strtolower ( $resume->title)) ?>
                                                 </a>
                                                 <?php endif ?>
                                             </h3>
