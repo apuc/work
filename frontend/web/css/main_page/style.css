@@ -47,7 +47,8 @@
   right: 20px;
   margin: 0 auto;
   max-width: 500px;
-  padding: 40px;
+  padding: 0px;
+  height: 670px;
   background-color: #fff;
   opacity: 0;
   -webkit-transform: translateX(-100%);
@@ -83,7 +84,7 @@
   cursor: pointer;
   text-decoration: none;
   font-size: 25px;
-  color: #bababa;
+  color: #100d0d;
   font: Muller, sans-serif;
 }
 

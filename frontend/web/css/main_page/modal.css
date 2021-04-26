@@ -138,7 +138,7 @@
     -ms-flex-pack: center;
     justify-content: center; }
 .modal-style__text span {
-    margin-right: 20px;
+    margin-right: -9px;
     font-weight: 400;
     font-size: 21px;
     color: #010000; }
