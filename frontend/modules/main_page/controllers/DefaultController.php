@@ -69,7 +69,7 @@ class DefaultController extends Controller
                 ->limit(10)
                 ->orderBy('id DESC')
                 ->all();
-        });
+        },3600);
         $companyTable = Company::tableName();
         $vacancyTable = Vacancy::tableName();
         $companies = Yii::$app->cache->getOrSet('main_page_companies', function () use ($vacancyTable, $companyTable){
