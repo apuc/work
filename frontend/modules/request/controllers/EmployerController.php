@@ -79,6 +79,7 @@ class EmployerController extends MyActiveController
                 'id' => $vacancy->id,
                 'name' => $vacancy->post,
                 'views' => $vacancy->views,
+                'created_at' => $vacancy->created_at,
                 'responses' => $responses,
                 'click_phone_count' => $vacancy->clickPhoneCount
             ];
@@ -90,6 +91,7 @@ class EmployerController extends MyActiveController
             $result['Resume'][]=[
                 'id' => $resume->id,
                 'name' => $resume->title,
+                'created_at' => $resume->created_at,
                 'views' => $resume->countViews,
                 'responses' => $responses,
                 'click_phone_count' => $resume->clickPhoneCount

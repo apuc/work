@@ -33,7 +33,7 @@ ResumeMetaFormer::registerResumeViewPageTags($this, $model);
                             <a href="<?= Resume::getSearchPageUrl($referer_category->slug) ?>"><?= $referer_category->name ?></a>
                         </li>
                     <?php endif ?>
-                    <li><?= mb_convert_case($model->title, MB_CASE_TITLE) ?></li>
+                    <li><?= StringHelper::mb_ucfirst(mb_strtolower($model->title)) ?></li>
                 </ul>
                 <div class="resume-results__date">
                     <p>Резюме от</p>
@@ -58,7 +58,7 @@ ResumeMetaFormer::registerResumeViewPageTags($this, $model);
                     <h1 class="resume-top__head">Резюме: <?= $model->employer->first_name . ' ' . $model->employer->second_name ?>
                     </h1>
                     <h3 class="resume-description__text">
-                        <?= mb_convert_case($model->title, MB_CASE_TITLE) ?>
+                        <?= StringHelper::mb_ucfirst(mb_strtolower($model->title)) ?>
                     </h3>
                     <span class="resume-top__price">
                         <?php if ($model->min_salary > 0 && $model->max_salary > 0): ?>
