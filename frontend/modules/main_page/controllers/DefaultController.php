@@ -64,7 +64,7 @@ class DefaultController extends Controller
                 ->limit(10)
                 ->orderBy('id DESC')
                 ->all();
-        });
+        },3600);
         $vacancy_count = Yii::$app->cache->getOrSet('main_page_vacancy_count', function () {
             return Vacancy::find()->count();
         });
