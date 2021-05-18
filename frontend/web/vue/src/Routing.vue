@@ -263,7 +263,7 @@ export default {
       return email;
     },
     async getUser() {
-      await this.$store.dispatch('getUserMe', this.$route.params.id)
+      await this.$store.dispatch('getUserMe')
           .then(data => {
             if (data.first_name != null) {
               this.first_name = data.first_name.length;
@@ -281,7 +281,7 @@ export default {
             if (data.user.status >= 20) {
               this.linkMenu[3].show = false;
             }
-            localStorage.setItem('companyId', data.user.company.id);
+            if (data.user.company !== null) localStorage.setItem('companyId', data.user.company.id);
             this.unreadMessages = data.user.unreadMessages;
             this.unreadUpdates = data.user.unreadUpdates;
           }).catch(error => {

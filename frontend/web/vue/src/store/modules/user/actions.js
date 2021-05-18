@@ -2,7 +2,7 @@ import * as type from './types';
 import api from '../../../api';
 
 const actions = {
-    getUserMe({commit}, payload) {
+    getUserMe({commit}) {
 
         return new Promise((resolve, reject) => {
             api.get('/request/employer/my-index?expand=phone,user.unreadMessages,user.unreadUpdates,user.company,companiesCount')
