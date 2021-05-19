@@ -203,39 +203,44 @@
                     })
                 });
             },
-            getIncoming(page) {
-                this.$store.dispatch('getIncoming', page)
+            async getIncoming(page) {
+                await this.$store.dispatch('getIncoming', page)
                     .then(data => {
                         this.paginationPageCountIncoming = data.pagination.page_count;
                         this.paginationCurrentPageIncoming = data.pagination.current_page;
                         this.messagesIncoming = data.models;
                         let domen = `${process.env.VUE_APP_API_URL}`;
-                        this.messagesIncoming.forEach((element) => {
-                            if(element.subject_id === null) {
-                                element.sender = 'Системное сообщение'
+                        if (this.messagesIncoming !== null) {
+                          this.messagesIncoming.forEach((element) => {
+                            if (element.hasOwnProperty('sender') === false) {
+                              element.sender = 'Системное сообщение'
+                            } else {
+                              if (element.subject === 'Resume' && element.subject0 !== null) {
+                                element.subject = 'Отклик на резюме ' + '<a href="' + domen + '/resume/view/' + element.subject_id + '" class="message-link" target="_blank">' + element.subject0.title + '</a>';
+                                element.subject_from = 'Предлагают вакансию ' + '<span>' + element.subject0_from.post + ' ' + '</span>' + '<a href="' + domen + '/vacancy/view/' + element.subject_from_id + '" class="message-button" target="_blank">Посмотреть</a>';
+                              }
+                              if (element.subject === 'Vacancy' && element.subject0 !== null) {
+                                element.subject = 'Отклик на вакансию ' + '<a href="' + domen + '/vacancy/view/' + element.subject_id + '" class="message-link" target="_blank">' + element.subject0.post + '</a>';
+                                element.subject_from = 'Прилагают резюме ' + '<span>' + element.subject0_from.title + ' ' + '</span>' + '<a href="' + domen + '/resume/view/' + element.subject_from_id + '" class="message-button" target="_blank">Посмотреть</a>';
+                              }
                             }
-                            if (element.subject === 'Resume') {
-                                element.subject = 'Отклик на резюме ' + '<a href="'+domen+'/resume/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.title + '</a>';
-                                element.subject_from = 'Предлагают вакансию ' + '<span>' + element.subject0_from.post + ' ' + '</span>' + '<a href="'+domen+'/vacancy/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
-                            }
-                            if (element.subject === 'Vacancy') {
-                                element.subject = 'Отклик на вакансию ' + '<a href="'+domen+'/vacancy/view/'+element.subject_id+'" class="message-link" target="_blank">' + element.subject0.post + '</a>';
-                                element.subject_from = 'Прилагают резюме ' + '<span>' + element.subject0_from.title + ' ' + '</span>' + '<a href="'+domen+'/resume/view/'+element.subject_from_id+'" class="message-button" target="_blank">Посмотреть</a>';
-                            }
+
                             let timestamp = element.created_at;
                             let date = new Date();
                             date.setTime(timestamp * 1000);
 
                             let options = {
-                                year: 'numeric',
-                                month: 'numeric',
-                                day: 'numeric',
-                                hour: 'numeric',
-                                minute: 'numeric',
+                              year: 'numeric',
+                              month: 'numeric',
+                              day: 'numeric',
+                              hour: 'numeric',
+                              minute: 'numeric',
                             };
                             element.created_at = date.toLocaleString("ru", options);
-                        });
+                          });
+                        }
                     }).catch(error => {
+                      console.error(error)
                         this.$swal({
                             toast: true,
                             position: 'bottom-end',

@@ -65,6 +65,7 @@ class MessageController extends MyActiveController
         $response = [];
         /** @var ActiveRecord[] $models */
         foreach ($models as $i=> $model) {
+            if ($model->sender_id != null && (!$model->subject0 || !$model->subject0_from)) continue;
             $response[$i]=ArrayHelper::toArray($model);
             foreach ($expands as $expand) {
                 $exploded = explode('.', $expand);

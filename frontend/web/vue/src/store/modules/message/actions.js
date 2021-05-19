@@ -2,7 +2,7 @@ import * as type from './types';
 import api from '../../../api';
 
 const actions = {
-    setReadAll({commit}, payload) {
+    setReadAll({commit}) {
 
         return new Promise((resolve, reject) => {
             api.post('/request/message/read-all-messages')
