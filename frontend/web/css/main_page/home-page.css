@@ -674,7 +674,7 @@ li {
 }
 
 .home-kard_fire_img {
-  max-width: 22px;
+  min-width: 22px;
   max-height: 22px;
   margin: 0 10px 0 75px
 }
@@ -780,7 +780,7 @@ li {
 
   .nav-pa {
     flex-direction: column;
-    margin: 120px 0 0 20px;
+    margin: 20px 0 0 20px;
     align-items: flex-start;
   }
 
