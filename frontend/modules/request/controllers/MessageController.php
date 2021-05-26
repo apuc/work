@@ -95,7 +95,7 @@ class MessageController extends MyActiveController
             'total_count'=>$dataProvider->getTotalCount(),
         ];
 
-        return json_encode(['pagination'=>$pagination, 'models'=>ArrayHelper::toArray($response, [], true)]);
+        return ['pagination'=>$pagination, 'hren'=>ArrayHelper::toArray($response, [], true)];
     }
     /**
      * @param string $action
