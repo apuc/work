@@ -78,13 +78,12 @@ class MessageController extends MyActiveController
                             if($j!=0) {
                                 $tmp = $tmp->$item;
                                 $response[$i][$first_item][$item]=is_object($tmp)?ArrayHelper::toArray($tmp):$tmp;
-                                Debug::prn(123);
                             }
                         }
                     }
 
                 } else {
-                    $response[$i][$expand]=$model->$expand;
+                    $response[$i][$expand]=is_object($model->$expand)?ArrayHelper::toArray($model->$expand):$model->$expand;
                 }
             }
         }
