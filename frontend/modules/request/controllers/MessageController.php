@@ -62,7 +62,7 @@ class MessageController extends MyActiveController
 
         $expands = explode(',', Yii::$app->request->get('expand'));
         $models = $dataProvider->getModels();
-        $response = [];
+        $response = array();
         /** @var ActiveRecord[] $models */
         foreach ($models as $i=> $model) {
             if ($model->sender_id != null && (!$model->subject0 || !$model->subject0_from)) continue;
@@ -78,12 +78,13 @@ class MessageController extends MyActiveController
                             if($j!=0) {
                                 $tmp = $tmp->$item;
                                 $response[$i][$first_item][$item]=is_object($tmp)?ArrayHelper::toArray($tmp):$tmp;
+                                Debug::prn(123);
                             }
                         }
                     }
 
                 } else {
-                    $response[$i][$expand]=is_object($model->$expand)?ArrayHelper::toArray($model->$expand):$model->$expand;
+                    $response[$i][$expand]=$model->$expand;
                 }
             }
         }
