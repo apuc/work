@@ -94,6 +94,7 @@ class MessageController extends MyActiveController
             'per_page'=>$dataProvider->getPagination()->getPageSize(),
             'total_count'=>$dataProvider->getTotalCount(),
         ];
+        Debug::dd($response);
 
         return ['pagination'=>$pagination, 'models'=>ArrayHelper::toArray($response, [], true)];
     }
