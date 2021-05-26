@@ -208,7 +208,7 @@
                     .then(data => {
                         this.paginationPageCountIncoming = data.pagination.page_count;
                         this.paginationCurrentPageIncoming = data.pagination.current_page;
-                        this.messagesIncoming = data.models;
+                        this.messagesIncoming = Object.assign([], data.models);
                         let domen = `${process.env.VUE_APP_API_URL}`;
                         if (this.messagesIncoming !== null && this.messagesIncoming.length > 0) {
                           this.messagesIncoming.forEach((element) => {
@@ -256,7 +256,7 @@
                     .then(data => {
                       this.paginationPageCountOutgoing = data.pagination.page_count;
                       this.paginationCurrentPageOutgoing = data.pagination.current_page;
-                      this.messagesOutgoing = data.models;
+                      this.messagesOutgoing = Object.assign([], data.models);
                       let domen = `${process.env.VUE_APP_API_URL}`;
                       if (this.messagesOutgoing !== null && this.messagesOutgoing.length > 0) {
                         this.messagesOutgoing.forEach((element) => {
