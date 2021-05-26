@@ -95,7 +95,7 @@ class MessageController extends MyActiveController
             'total_count'=>$dataProvider->getTotalCount(),
         ];
 
-        return ['pagination'=>$pagination, 'models'=>(array)$response];
+        return ['pagination'=>$pagination, 'models'=>(array)$response, 'wwkdbc' => "hhhhhh"];
     }
     /**
      * @param string $action
