@@ -206,6 +206,7 @@
             async getIncoming(page) {
                 await this.$store.dispatch('getIncoming', page)
                     .then(data => {
+                      console.log(data)
                         this.paginationPageCountIncoming = data.pagination.page_count;
                         this.paginationCurrentPageIncoming = data.pagination.current_page;
                         this.messagesIncoming = data.models;
