@@ -211,7 +211,7 @@
                         this.messagesIncoming = data.models;
                         let domen = `${process.env.VUE_APP_API_URL}`;
                         console.log(this.messagesIncoming)
-                        if (this.messagesIncoming !== null && this.messagesIncoming.length > 0) {
+                        if (this.messagesIncoming !== null && Object.keys(this.messagesIncoming).length > 0) {
                           this.messagesIncoming.forEach((element) => {
                             if (element.hasOwnProperty('sender') === false) {
                               element.sender = 'Системное сообщение'
@@ -260,7 +260,7 @@
                       this.messagesOutgoing = data.models;
                       let domen = `${process.env.VUE_APP_API_URL}`;
                       console.log(this.messagesOutgoing)
-                      if (this.messagesOutgoing !== null && this.messagesOutgoing.length > 0) {
+                      if (this.messagesOutgoing !== null && Object.keys(this.messagesOutgoing).length > 0) {
                         this.messagesOutgoing.forEach((element) => {
                           if (element.subject === 'Resume') {
                             element.subject = 'Отклик на резюме ' + '<a href="' + domen + '/resume/view/' + element.subject_id + '" class="message-link" target="_blank">' + element.subject0.title + '</a>';
