@@ -78,7 +78,6 @@ class MessageController extends MyActiveController
                             if($j!=0) {
                                 $tmp = $tmp->$item;
                                 $response[$i][$first_item][$item]=is_object($tmp)?ArrayHelper::toArray($tmp):$tmp;
-                                Debug::prn(123);
                             }
                         }
                     }
@@ -95,7 +94,7 @@ class MessageController extends MyActiveController
             'total_count'=>$dataProvider->getTotalCount(),
         ];
 
-        return ['pagination'=>$pagination, 'hren'=>ArrayHelper::toArray($response, [], true)];
+        return ['pagination'=>$pagination, 'models'=>array_values($response)];
     }
     /**
      * @param string $action
