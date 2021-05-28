@@ -37,7 +37,7 @@
   font-size: 15px;
   font-weight: bold;
   text-align: center;
-  padding: 10px 20px;
+  padding: 8px 20px;
   border-radius: 9px;
   transition: 0.3s ease all;
 }
@@ -155,7 +155,7 @@
 
 .container.header {
   margin-bottom: 50px;
-  margin-left: 30px;
+  margin-left: 0;
 }
 
 .iconChair {

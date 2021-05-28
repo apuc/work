@@ -182,6 +182,8 @@ article p:last-child {
   color: #182c93;
   cursor: pointer;
   text-decoration: none;
+  font-weight: 600;
+  margin-right: 4px;
 }
 
 .link__:hover {
