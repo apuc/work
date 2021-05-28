@@ -62,9 +62,10 @@ class MessageController extends MyActiveController
 
         $expands = explode(',', Yii::$app->request->get('expand'));
         $models = $dataProvider->getModels();
-        $response = [];
+        $response = array();
         /** @var ActiveRecord[] $models */
         foreach ($models as $i=> $model) {
+            if ($model->sender_id != null && (!$model->subject0 || !$model->subject0_from)) continue;
             $response[$i]=ArrayHelper::toArray($model);
             foreach ($expands as $expand) {
                 $exploded = explode('.', $expand);
@@ -93,7 +94,7 @@ class MessageController extends MyActiveController
             'total_count'=>$dataProvider->getTotalCount(),
         ];
 
-        return ['pagination'=>$pagination, 'models'=>$response];
+        return ['pagination'=>$pagination, 'models'=>array_values($response)];
     }
     /**
      * @param string $action

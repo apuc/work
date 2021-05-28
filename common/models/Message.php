@@ -98,12 +98,14 @@ class Message extends WorkActiveRecord
             return $this->hasOne(Resume::className(), ['id'=>'subject_id']);
         if($this->subject === self::SUBJECT_VACANCY)
             return $this->hasOne(Vacancy::className(), ['id'=>'subject_id']);
+        return null;
     }
     public function getSubject0_from(){
         if($this->subject_from === self::SUBJECT_RESUME)
             return $this->hasOne(Resume::className(), ['id'=>'subject_from_id']);
         if($this->subject_from === self::SUBJECT_VACANCY)
             return $this->hasOne(Vacancy::className(), ['id'=>'subject_from_id']);
+        return null;
     }
 
 }
