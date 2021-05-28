@@ -5,7 +5,7 @@
     display: block;
     margin: 0 0 40px;
     font-weight: 700;
-    font-size: 42px;
+    font-size: 26px;
     color: #262626;
     text-align: center;
 }
@@ -21,7 +21,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 70px 100px 45px; }
+    padding: 10px 100px 45px; }
 @media (max-width: 1200px) {
     .modal-style {
         padding: 40px; } }
@@ -71,8 +71,9 @@
     color: #000000; }
 .modal-style form input {
     width: 420px;
-    margin-bottom: 25px;
+    margin-bottom: 5px;
     padding: 20px 0 20px 40px;
+    max-height: 46px;
     font-size: 16px;
     font-weight: 400;
     color: #a8a8a8 !important;
@@ -102,9 +103,9 @@
 .modal-style form button {
     position: relative;
     width: 250px;
-    height: 50px;
-    margin-top: 20px;
-    margin-bottom: 45px;
+    height: 46px;
+    margin-top: 0px;
+    margin-bottom: 15px;
     font-weight: 700;
     font-size: 17px;
     color: #f7fafb;
@@ -133,7 +134,7 @@
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
-    flex-direction: column;
+    flex-direction: row;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
@@ -289,7 +290,7 @@
 
         .reg_link {
     text-align: center;
-    margin: 0 10px;
+    margin-bottom: 19px;
     font-weight: 400;
     font-size: 21px;
     text-decoration: underline;

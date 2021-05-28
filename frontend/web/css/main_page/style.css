@@ -124,7 +124,7 @@ article p:last-child {
   border-radius: 10px;
   position: absolute;
   top: 20px;
-  overflow-y: scroll;
+  height: 90%;
   bottom: 20px;
   left: 20px;
   right: 20px;
@@ -159,7 +159,7 @@ article p:last-child {
   margin: 0 auto;
   max-width: 600px;
   height: 200px;
-  padding: 6px;
+  padding: 24px;
   background-color: #fff;
   opacity: 0;
   -webkit-transform: translateY(-100%);
