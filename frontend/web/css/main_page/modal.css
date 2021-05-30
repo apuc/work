@@ -3,7 +3,6 @@
 .modal-style > p {
     font-family: 'Muller';
     display: block;
-    margin: 0 0 40px;
     font-weight: 700;
     font-size: 26px;
     color: #262626;
@@ -227,8 +226,7 @@
         display: none; }
     @media (max-height: 650px) {
         .modal-reg {
-            height: 100vh;
-            overflow: scroll; } }
+            height: 100vh; } }
     
     .modal-send-message {
         display: none; }
