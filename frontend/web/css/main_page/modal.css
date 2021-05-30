@@ -20,10 +20,10 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 10px 100px 45px; }
+    padding: 10px 0px 0px; }
 @media (max-width: 1200px) {
     .modal-style {
-        padding: 40px; } }
+        padding: 26px; } }
 @media (max-width: 576px) {
     .modal-style {
         padding: 30px 10px 10px; } }
@@ -139,7 +139,12 @@
     justify-content: center;
     align-items: center;
 }
-.modal-style__text span {
+@media (min-width: 1365px) {
+    .modal-style__text {
+        margin-top: 20px;
+    }
+}
+.modal-style__text span {   
     margin-right: -9px;
     font-weight: 400;
     font-size: 21px;
@@ -274,7 +279,7 @@
 
         .field-register-form-status label {
             display: flex;
-            margin: 15px;
+            margin: 5px;
         }
 
 
@@ -288,7 +293,6 @@
 
         .reg_link {
     text-align: center;
-    margin-bottom: 19px;
     font-weight: 400;
     font-size: 21px;
     text-decoration: underline;
@@ -298,4 +302,10 @@
     outline: none;
     cursor: pointer;
     display: block;
+    }
+
+    @media (max-width: 1365px) {
+        .reg_link {
+            margin-bottom: 20px;
+        }
     }
