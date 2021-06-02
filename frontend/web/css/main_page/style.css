@@ -22,7 +22,7 @@
   position: fixed;
   top: -1000px;
   opacity: 0;
-  background: rgb(0 1 0 / 37%);
+  background: rgb(0 1 0 / 21%);
   -webkit-transition: opacity 0.2s;
   -moz-transition: opacity 0.2s;
   -o-transition: opacity 0.2s;
