@@ -28,7 +28,7 @@
         <span class="vacancy__wrapper__bracket">)</span>
       </div>
       <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
-        <v-btn class="vacancy__link" v-if="timestemp > new Date()">
+        <v-btn class="vacancy__link" v-if="timestemp < new Date()">
           Добавить вакансию
         </v-btn>
       </router-link>
@@ -152,7 +152,7 @@
           </div>
           <div style="margin-top: 30px;" v-if="vacancyCreate > 0">
             <router-link class="vacancy__link" to="/personal-area/add-vacancy" >
-              <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn" v-if="timestemp > new Date()">Создать вакансию</v-btn>
+              <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn" v-if="timestemp < new Date()">Создать вакансию</v-btn>
             </router-link>
             <p class="add__vacancy_text">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
           </div>
