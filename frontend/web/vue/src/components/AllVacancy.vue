@@ -16,7 +16,7 @@
       </div>
       <span class="comma">,</span>
       <div class="vacancy__block__wrapper">
-        <div v-if="vacancyCreate == 0">
+        <div v-if="timestemp !== null && timestemp > Date.now()/1000">
           Бесконечные вакансии до {{ new Date (timestemp * 1000).getDate() }} {{ mnth[new Date (timestemp * 1000).getMonth() + 1] }}
         </div>
         <div v-else>
@@ -32,7 +32,7 @@
         </v-btn>
         <span class="vacancy__wrapper__bracket">)</span>
       </div>
-      <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
+      <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
         <v-btn class="vacancy__link">
           Добавить вакансию
         </v-btn>
