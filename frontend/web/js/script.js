@@ -264,10 +264,6 @@ $(document).ready(function () {
     $('.jsModalLogin').fadeOut(1);
     $('.jsModalReg').fadeIn();
   });
-  $('.jsLoginForm').click(function () {
-    $('.jsModalReg').fadeOut(1);
-    $('.jsModalLogin').fadeIn();
-  });
   $('.jsForgotPass').click(function () {
     $('.jsModalLogin').fadeOut(1);
     $('.jsForgotPassModal').fadeIn();

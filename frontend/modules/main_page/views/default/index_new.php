@@ -224,7 +224,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
 
                             <nav class="nav-pa cmn-overlays-nav">
                                 <div class="clearfix">
-                                    <a href="#empty" class="jsLoginForm reg_link">Войти</a>
+                                    <a href="#empty" class="reg_link">Войти</a>
                                 </div>
                             </nav>
 
