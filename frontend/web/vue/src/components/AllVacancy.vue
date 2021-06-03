@@ -16,7 +16,12 @@
       </div>
       <span class="comma">,</span>
       <div class="vacancy__block__wrapper">
-        Осталось вакансий: {{ vacancyCreate }}
+        <div v-if="timestemp !== null && timestemp > Date.now()/1000">
+          Бесконечные вакансии до {{ new Date (timestemp * 1000).getDate() }} {{ mnth[new Date (timestemp * 1000).getMonth() + 1] }}
+        </div>
+        <div v-else>
+          Осталось вакансий: {{ vacancyCreate }}
+        </div>
         <v-btn small color="primary"
                class="buy-vacancy-renew"
                type="button"
@@ -27,7 +32,7 @@
         </v-btn>
         <span class="vacancy__wrapper__bracket">)</span>
       </div>
-      <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
+      <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
         <v-btn class="vacancy__link">
           Добавить вакансию
         </v-btn>
@@ -52,7 +57,7 @@
           </div>
           <div class="hover__vacancy">
             <h2 class="hover__vacancy__title">+ БЕСПЛАТНАЯ ВАКАНСИЯ</h2>
-            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
               <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn">Создать вакансию</v-btn>
             </router-link>
           </div>
@@ -66,7 +71,7 @@
               <p class="add__vacancy_text" style="margin-top: 30px;">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
             </div>
           </div>
-          <div style="margin-top: 30px;" v-if="vacancyCreate > 0">
+          <div style="margin-top: 30px;" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
             <router-link class="vacancy__link" to="/personal-area/add-vacancy" >
               <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn">Создать вакансию</v-btn>
             </router-link>
@@ -136,7 +141,7 @@
           </div>
           <div class="hover__vacancy">
             <h2 class="hover__vacancy__title">+ БЕСПЛАТНАЯ ВАКАНСИЯ</h2>
-            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
               <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn">Создать вакансию</v-btn>
             </router-link>
           </div>
@@ -150,7 +155,7 @@
             <p class="add__vacancy_text" style="margin-top: 30px;">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
             </div>
           </div>
-          <div style="margin-top: 30px;" v-if="vacancyCreate > 0">
+          <div style="margin-top: 30px;" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
             <router-link class="vacancy__link" to="/personal-area/add-vacancy" >
               <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn">Создать вакансию</v-btn>
             </router-link>
@@ -183,6 +188,8 @@ export default {
   name: "AllResume",
   data() {
     return {
+      mnth: [null, "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
+      timestemp: null,
       editLink: '/personal-area/edit-vacancy',
       getAllVacancy: [],
       paginationPageCount: 1,
@@ -203,9 +210,16 @@ export default {
     this.getVacancy(1);
     this.getCompany();
     this.getPrice();
+    this.getUser();
     this.dateNow = Math.floor(Date.now() / 1000);
   },
   methods: {
+    async getUser() {
+      await this.$store.dispatch('getUserMe')
+          .then(data => {
+            this.timestemp = data.user.company.unlimited_vacancies_until;
+          })
+    },
     getPrice() {
       this.$store.dispatch('getServicePrice')
       .then(data => {

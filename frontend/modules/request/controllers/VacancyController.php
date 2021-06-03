@@ -152,7 +152,8 @@ class VacancyController extends MyActiveController
         $model->publisher_id = Yii::$app->user->id;
         $model->active_until = time() + (86400 * 30);
         if ($model->save()) {
-            $model->company->create_vacancy--;
+            if (($model->company->unlimited_vacancies_until == null || $model->company->unlimited_vacancies_until < time()))
+                $model->company->create_vacancy--;
             $model->company->save();
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
