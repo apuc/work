@@ -26,19 +26,23 @@
     section.addEventListener("click", function(e) {
       e.preventDefault();
       if (e.target.tagName == "SECTION") {
-        if (classie.has(section, "active")) {
-          classie.remove(section, "active");
-        }
+        removeModalWindow();
       }
     });
 
     /* listen for close clicks on the close button */
     close.addEventListener("click", function(e) {
       e.preventDefault();
-      if (classie.has(section, "active")) {
-        classie.remove(section, "active");
-      }
+      removeModalWindow();
+      // if (classie.has(section, "active")) {
+      //   classie.remove(section, "active");
+      //   $('.section_modal').removeClass('active');
+      // }
     });
+
+    const removeModalWindow = () => {
+      $('.section_modal').removeClass('active');
+    };
 
   });
 

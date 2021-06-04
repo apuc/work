@@ -22,12 +22,12 @@
   position: fixed;
   top: -1000px;
   opacity: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgb(0 1 0 / 21%);
   -webkit-transition: opacity 0.2s;
   -moz-transition: opacity 0.2s;
   -o-transition: opacity 0.2s;
   transition: opacity 0.2s;
-}
+} 
 .section_modal.active {
   z-index: 100000;
   top: 0;
@@ -92,13 +92,18 @@
 
 .section_modal.active .content {
   opacity: 1;
+  padding: 57px;
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);
   -ms-transform: translateX(0);
   -o-transform: translateX(0);
   transform: translateX(0);
 }
-
+@media (max-width: 485px) {
+  .section_modal.active .content {
+    padding: 45px;
+  }
+}
 /* ============================================================
   ARTICLES
 ============================================================ */
@@ -124,7 +129,6 @@ article p:last-child {
   border-radius: 10px;
   position: absolute;
   top: 20px;
-  height: 90%;
   bottom: 20px;
   left: 20px;
   right: 20px;
