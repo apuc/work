@@ -771,7 +771,11 @@ a {
 }
 
 .wrapp_tarif_block {
-  display: flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+
 }
 
 @media (max-width: 560px) {
