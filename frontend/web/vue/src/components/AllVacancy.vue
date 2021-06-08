@@ -159,7 +159,7 @@
             </router-link>
           </div>
         </div>
-        <div class="resume__item add__vacancy" v-if="getAllVacancy.length !== 0">
+        <div class="resume__item add__vacancy" v-if="timestemp === null && timestemp < Date.now()/1000">
           <h2 class="add__vacancy__title">ДОБАВИТЬ ЕЩЁ ВАКАНСИЮ</h2>
           <div v-if="vacancyCreate===0"><span style="color:#dd3d34;font-weight: 600;">Лимит вакансий исчерпан.</span>
             <span style="font-weight: 600;" v-if="servicePrice[2]">Цена дополнительной вакансии {{ servicePrice[2].price }} руб.</span>
