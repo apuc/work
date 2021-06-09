@@ -16,25 +16,38 @@
       </div>
       <span class="comma">,</span>
       <div class="vacancy__block__wrapper">
-        <div v-if="timestemp !== null && timestemp > Date.now()/1000">
-          Бесконечные вакансии до {{ new Date (timestemp * 1000).getDate() }} {{ mnth[new Date (timestemp * 1000).getMonth() + 1] }}
+        <div v-if="timestemp !== null && timestemp > Date.now()/1000" class="wrapp_tarif_block">
+            Бесконечные вакансии до {{ new Date (timestemp * 1000).getDate() }} {{ mnth[new Date (timestemp * 1000).getMonth() + 1] }}
+          <div title="Вам подключен тариф стандартный">
+            <v-btn small color="primary"
+              class="buy-vacancy-renew"
+              type="button"
+              @click="buyVacancyCreate"
+              :disabled="isButtonDisabled"
+            >
+              <v-icon dark>add</v-icon>
+            </v-btn>
+          </div>
         </div>
+
         <div v-else>
           Осталось вакансий: {{ vacancyCreate }}
-        </div>
-        <v-btn small color="primary"
+          <v-btn small color="primary"
                class="buy-vacancy-renew"
                type="button"
                title="Купить вакансию"
                @click="buyVacancyCreate"
-        >
-          <v-icon dark>add</v-icon>
-        </v-btn>
+               :disabled="!isButtonDisabled"
+               >
+              <v-icon dark>add</v-icon>
+          </v-btn>
+        </div>
+        
         <span class="vacancy__wrapper__bracket">)</span>
       </div>
       <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
         <v-btn class="vacancy__link">
-          Добавить вакансию
+          Создать вакансию
         </v-btn>
       </router-link>
     </v-subheader>
@@ -62,7 +75,7 @@
             </router-link>
           </div>
         </div>
-        <div class="resume__item add__vacancy">
+        <div class="resume__item add__vacancy" >
           <h2 class="add__vacancy__title">ДОБАВИТЬ ЕЩЁ ВАКАНСИЮ</h2>
           <div v-if="vacancyCreate===0"><span style="color:#dd3d34;font-weight: 600;">Лимит вакансий исчерпан.</span>
             <span style="font-weight: 600;" v-if="servicePrice[2]">Цена дополнительной вакансии {{ servicePrice[2].price }} руб.</span>
@@ -146,7 +159,7 @@
             </router-link>
           </div>
         </div>
-        <div class="resume__item add__vacancy">
+        <div class="resume__item add__vacancy" v-if="timestemp === null && timestemp < Date.now()/1000">
           <h2 class="add__vacancy__title">ДОБАВИТЬ ЕЩЁ ВАКАНСИЮ</h2>
           <div v-if="vacancyCreate===0"><span style="color:#dd3d34;font-weight: 600;">Лимит вакансий исчерпан.</span>
             <span style="font-weight: 600;" v-if="servicePrice[2]">Цена дополнительной вакансии {{ servicePrice[2].price }} руб.</span>
@@ -188,6 +201,7 @@ export default {
   name: "AllResume",
   data() {
     return {
+      isButtonDisabled: true,
       mnth: [null, "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
       timestemp: null,
       editLink: '/personal-area/edit-vacancy',
@@ -754,6 +768,14 @@ a {
   display: flex;
   align-items: center;
   flex-wrap: inherit;
+}
+
+.wrapp_tarif_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+
 }
 
 @media (max-width: 560px) {
