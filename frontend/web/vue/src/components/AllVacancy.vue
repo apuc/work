@@ -70,7 +70,7 @@
           </div>
           <div class="hover__vacancy">
             <h2 class="hover__vacancy__title">+ БЕСПЛАТНАЯ ВАКАНСИЯ</h2>
-            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
               <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn">Создать вакансию</v-btn>
             </router-link>
           </div>
@@ -84,7 +84,7 @@
               <p class="add__vacancy_text" style="margin-top: 30px;">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
             </div>
           </div>
-          <div style="margin-top: 30px;" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
+          <div style="margin-top: 30px;" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
             <router-link class="vacancy__link" to="/personal-area/add-vacancy" >
               <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn">Создать вакансию</v-btn>
             </router-link>
@@ -113,7 +113,13 @@
               <div class="resume__actions__item disabled__item" v-if="item.can_update === false || vacancyRenew === 0">
                 <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
               </div>
-              <div v-else @click="vacancyUpdate(index, item.id)" class="resume__actions__item">
+              <div class="resume__actions__item fixing_item" @click="onAnchor(item.id)" v-if="item.anchored_until !== null && item.anchored_until < Date.now()/1000">
+                <img :src="fixIcon" alt="" class="actions_icons">Закрепить <b> вакансию</b>
+              </div>
+              <div class="resume__actions__item fixing_item" v-else>
+                <img :src="fixIcon" alt="" class="actions_icons">Вакансия <b> закреплена</b>
+              </div>
+              <div v-if="item.can_update === true" @click="vacancyUpdate(index, item.id)" class="resume__actions__item">
                 <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
               </div>
             </div>
@@ -154,7 +160,7 @@
           </div>
           <div class="hover__vacancy">
             <h2 class="hover__vacancy__title">+ БЕСПЛАТНАЯ ВАКАНСИЯ</h2>
-            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
               <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn">Создать вакансию</v-btn>
             </router-link>
           </div>
@@ -168,7 +174,7 @@
             <p class="add__vacancy_text" style="margin-top: 30px;">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
             </div>
           </div>
-          <div style="margin-top: 30px;" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
+          <div style="margin-top: 30px;" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
             <router-link class="vacancy__link" to="/personal-area/add-vacancy" >
               <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn">Создать вакансию</v-btn>
             </router-link>
@@ -217,6 +223,7 @@ export default {
       deleteIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/remove.svg',
       crownIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/crown.svg',
       topLeftIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/top-left.svg',
+      fixIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/fixing.svg',
     }
   },
   created() {
@@ -451,6 +458,9 @@ export default {
           });
         }
       });
+    },
+    onAnchor(vacancyId) {
+      this.$store.dispatch('onAnchor', vacancyId)
     },
     vacancyUpdate(index, vacancyId) {
       this.$swal({

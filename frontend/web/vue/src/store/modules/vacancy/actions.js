@@ -145,6 +145,19 @@ const actions = {
                 });
         })
     },
+    onAnchor({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.post('/request/vacancy/anchor-vacancy', {vacancy_id: payload})
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error.response.data.message);
+                });
+        })
+    },
 };
 
 export default actions;
