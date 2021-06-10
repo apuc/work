@@ -113,7 +113,7 @@
               <div class="resume__actions__item disabled__item" v-if="item.can_update === false || vacancyRenew === 0">
                 <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
               </div>
-              <div class="resume__actions__item fixing_item" @click="onAnchor(item.id)" v-if="item.anchored_until !== null && item.anchored_until < Date.now()/1000">
+              <div class="resume__actions__item fixing_item" @click="onAnchor(item.id)" v-if="(item.anchored_until === null || item.anchored_until < Date.now()/1000) && onAnchorFlag === false">
                 <img :src="fixIcon" alt="" class="actions_icons">Закрепить <b> вакансию</b>
               </div>
               <div class="resume__actions__item fixing_item" v-else>
@@ -212,6 +212,7 @@ export default {
       timestemp: null,
       editLink: '/personal-area/edit-vacancy',
       getAllVacancy: [],
+      onAnchorFlag: false,
       paginationPageCount: 1,
       paginationCurrentPage: 1,
       domen: '',
@@ -460,6 +461,7 @@ export default {
       });
     },
     onAnchor(vacancyId) {
+      this.onAnchorFlag = true;
       this.$store.dispatch('onAnchor', vacancyId)
     },
     vacancyUpdate(index, vacancyId) {
