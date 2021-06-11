@@ -68,9 +68,9 @@
             </div>
             <!--            </div>-->
           </div>
-          <div class="hover__vacancy">
+          <div class="hover__vacancy" v-if="timestemp === null || timestemp < Date.now()/1000">
             <h2 class="hover__vacancy__title">+ БЕСПЛАТНАЯ ВАКАНСИЯ</h2>
-            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy">
               <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn">Создать вакансию</v-btn>
             </router-link>
           </div>
@@ -158,9 +158,9 @@
             </div>
             <!--            </div>-->
           </div>
-          <div class="hover__vacancy">
+          <div class="hover__vacancy" v-if="timestemp === null || timestemp < Date.now()/1000">
             <h2 class="hover__vacancy__title">+ БЕСПЛАТНАЯ ВАКАНСИЯ</h2>
-            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy">
               <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn">Создать вакансию</v-btn>
             </router-link>
           </div>
