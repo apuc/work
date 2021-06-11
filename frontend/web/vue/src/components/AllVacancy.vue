@@ -143,7 +143,7 @@
             </v-btn>
           </p>
         </div>
-        <div class="resume__item free__vacancy" v-if="getAllVacancy.length<2">
+        <div class="resume__item free__vacancy" v-if="getAllVacancy.length<2 (timestemp === null && timestemp < Date.now()/1000)">
           <div class="resume__actions" style="margin-top: 74px;">
             <div class="resume__actions_group">
               <div class="resume__actions__item"><img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b></div>
