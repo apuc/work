@@ -2,6 +2,7 @@
 
 namespace frontend\modules\vacancy\controllers;
 
+use common\classes\Debug;
 use common\models\Action;
 use common\models\Category;
 use common\models\City;
@@ -91,13 +92,20 @@ class DefaultController extends Controller
     {
         $searchModel = new VacancySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->get());
+        $anchored = Vacancy::find()->where(['>', 'anchored_until', time()]);
+        $anchored_vacancies = [];
         if ($searchModel->current_city) {
+            $anchored->andwhere(['city_id' => $searchModel->current_city->id]);
             $this->background_image = $searchModel->current_city->image;
         }
-        if ( $searchModel->current_category) {
+        if ($searchModel->current_category) {
+            $anchored->andwhere(['main_category_id' => $searchModel->current_category->id]);
             $this->background_emblem = $searchModel->current_category->image;
         }
 
+        if($searchModel->current_category || $searchModel->current_city) {
+            $anchored_vacancies = $anchored->orderBy('RAND()')->limit(5)->all();
+        }
         $canonical_rel = Yii::$app->request->hostInfo.'/vacancy'.($searchModel->first_query_param?('/'.$searchModel->first_query_param):'').($searchModel->second_query_param?('/'.$searchModel->second_query_param):'');
 
         $categories = Yii::$app->cache->getOrSet('search_page_categories', function () {
@@ -131,7 +139,8 @@ class DefaultController extends Controller
             'categories' => $categories,
             'employment_types' => $employment_types,
             'countries' => $countries,
-            'canonical_rel' => $canonical_rel
+            'canonical_rel' => $canonical_rel,
+            'anchored_vacancies' => $anchored_vacancies
         ]);
     }
 
