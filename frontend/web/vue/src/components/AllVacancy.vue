@@ -113,14 +113,15 @@
               <div class="resume__actions__item disabled__item" v-if="item.can_update === false || vacancyRenew === 0">
                 <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
               </div>
-              <div class="resume__actions__item fixing_item" @click="onAnchor(item.id)" v-if="(item.anchored_until === null || item.anchored_until < Date.now()/1000) && onAnchorFlag === false">
+              <div v-if="item.can_update === true" @click="vacancyUpdate(index, item.id)" class="resume__actions__item">
+                <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
+              </div>
+              <div class="resume__actions__item fixing_item" @click="onAnchor(item.id, item)"
+                   v-if="canBeAnchored(item.anchored_until)">
                 <img :src="fixIcon" alt="" class="actions_icons">Закрепить <b> вакансию</b>
               </div>
               <div class="resume__actions__item fixing_item" v-else>
                 <img :src="fixIcon" alt="" class="actions_icons">Вакансия <b> закреплена</b>
-              </div>
-              <div v-if="item.can_update === true" @click="vacancyUpdate(index, item.id)" class="resume__actions__item">
-                <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
               </div>
             </div>
             <!--            <div>-->
@@ -224,7 +225,7 @@ export default {
       deleteIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/remove.svg',
       crownIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/crown.svg',
       topLeftIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/top-left.svg',
-      fixIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/fixing.svg',
+      fixIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/anchoring.svg',
     }
   },
   created() {
@@ -460,9 +461,17 @@ export default {
         }
       });
     },
+    /**
+     * Закрепление вакансии по айди
+     * @param vacancyId
+     */
     onAnchor(vacancyId) {
-      this.onAnchorFlag = true;
-      this.$store.dispatch('onAnchor', vacancyId)
+      this.$store.dispatch('onAnchor', vacancyId).then(() => {
+        this.getVacancy(this.paginationCurrentPage);
+      })
+    },
+    canBeAnchored(anchored_until) {
+      return anchored_until === null || anchored_until < Date.now()/1000
     },
     vacancyUpdate(index, vacancyId) {
       this.$swal({
