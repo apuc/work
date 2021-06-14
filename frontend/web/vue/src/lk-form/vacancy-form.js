@@ -120,7 +120,7 @@ export default {
     name: 'workingConditions',
     label: 'Условия работы',
     rules: [],
-    counter: 2000,
+    counter: 10000,
     component: VTextarea
   }),
 }

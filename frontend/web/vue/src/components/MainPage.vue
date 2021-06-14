@@ -121,6 +121,11 @@
                       {{ item.name }}
                     </a>
                   </p>
+                  <div class="block_edit">
+                    <router-link :to="`${editLink}/${item.id}`">
+                        <img :src="editIcon" alt="" class="actions_icons"> 
+                    </router-link>
+                  </div>
                 </template>
                 <template v-else-if="items === allRecords.Company">
                   <p class="card__statistic_title">
@@ -221,6 +226,7 @@ export default {
   name: "MainPage",
   data() {
     return {
+      editLink: '/personal-area/edit-vacancy',
       mnth: [null, "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
       dateRegVacancy: null,
 
@@ -241,6 +247,7 @@ export default {
       imgDots: process.env.VUE_APP_API_URL + '/vue/public/lk-image/dots.png',
       vacancyIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/information.png',
       companyIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/business-and-trade.png',
+      editIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/pencil.svg',
     }
   },
   computed: {
@@ -366,6 +373,22 @@ export default {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+}
+.block_edit {
+  display: flex;
+  justify-content: flex-end;
+}
+.actions_icons {
+  min-width: 35px;
+  position: absolute;
+  margin-left: -30px;
+}
+.actions_icons:hover {
+  cursor: pointer;
+}
+.text_edit_vacancy {
+  text-decoration: none;
+  font-size: 0.8em;
 }
 .main-head {
   width: 100%;
