@@ -37,6 +37,11 @@
                       {{ item.name }}
                     </a>
                   </p>
+                  <div class="block_edit">
+                    <router-link :to="`${editResume}/${item.id}`">
+                      <img :src="editIcon" class="pencil_icon"> 
+                    </router-link>
+                  </div>
                 </template>
               </v-card-text>
             </v-cardmain-card>
@@ -70,34 +75,21 @@
             </v-list-tile>
             <div class="card__about">
               <p class="mb-0">Обновлено
-
-
-
                 {{
                   new Date (item.created_at * 1000).getDate()
                 }}
-
-
                 {{
                   mnth[new Date (item.created_at * 1000).getMonth() + 1]
                 }}
-
                 {{
                   new Date (item.created_at * 1000).getFullYear()
                 }} г
-
-
-
                 {{
                   new Date (item.created_at * 1000).getHours()
                 }} ч
-
-
                 {{
                   new Date (item.created_at * 1000).getMinutes()
                 }} м
-
-
               </p>
               <p class="mb-0">Доступно только по <a :href="domen + '/resume/view/' + item.id" target="_blank">прямой ссылке</a></p>
             </div>
@@ -122,8 +114,8 @@
                     </a>
                   </p>
                   <div class="block_edit">
-                    <router-link :to="`${editLink}/${item.id}`">
-                        <img :src="editIcon" alt="" class="actions_icons"> 
+                    <router-link :to="`${editVacancy}/${item.id}`">
+                        <img :src="editIcon" alt="" class="pencil_icon"> 
                     </router-link>
                   </div>
                 </template>
@@ -226,7 +218,8 @@ export default {
   name: "MainPage",
   data() {
     return {
-      editLink: '/personal-area/edit-vacancy',
+      editVacancy: '/personal-area/edit-vacancy',
+      editResume: '/personal-area/edit-resume',
       mnth: [null, "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
       dateRegVacancy: null,
 
@@ -378,10 +371,8 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
-.actions_icons {
-  min-width: 35px;
-  position: absolute;
-  margin-left: -30px;
+.pencil_icon {
+  min-width: 25px;
 }
 .actions_icons:hover {
   cursor: pointer;

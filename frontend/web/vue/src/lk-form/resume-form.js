@@ -79,7 +79,7 @@ export default {
     name: 'aboutMe',
     label: 'О себе',
     rules: [],
-    counter: 2000,
+    counter: 10000,
     component: VTextarea
   }),
   hideResume: Object.assign({}, Field, {
