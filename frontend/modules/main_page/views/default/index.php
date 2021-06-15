@@ -40,7 +40,6 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 </div>
                 <nav class="nhome__nav jsNavMenu">
                     <div class="nhome__nav-item nhome__nav-item_logo">
-                        <img src="/images/logo-main.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo-main-small.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
                     </div>
@@ -71,6 +70,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                     <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>
                     <a class="nhome__nav-item" href="<?= Vacancy::getSearchPageUrl(false, false, false, $current_country?$current_country->slug:false) ?>">Поиск вакансий</a>
                     <?php endif; ?>
+                    <a class="nhome__nav-item" href="/news/">Новости</a>
                     <?php if (Yii::$app->user->isGuest): ?>
                         <button class="nhome__nav-item nav-btn jsLogin">
                             Вход
