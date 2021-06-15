@@ -2,6 +2,7 @@
 
 namespace frontend\modules\news\controllers;
 
+use common\classes\Debug;
 use common\models\Country;
 use common\models\News;
 use yii\web\Controller;
@@ -26,10 +27,10 @@ class DefaultController extends Controller
             if (!$model) {
                 throw new \yii\web\NotFoundHttpException('404');
             }
-            $news = News::find()->where(['country_id' => $model->id])->all();
+            $news = News::find()->where(['country_id' => $model->id])->orderBy('id DESC')->all();
         }else{
         $model = null;
-        $news = News::find()->all();
+        $news = News::find()->orderBy('id DESC')->all();
         }
         if ($model != null){
             $model1 = $model;
