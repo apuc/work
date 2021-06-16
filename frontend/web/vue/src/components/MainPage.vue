@@ -37,6 +37,11 @@
                       {{ item.name }}
                     </a>
                   </p>
+                  <div class="block_edit">
+                    <router-link :to="`${editResume}/${item.id}`">
+                      <img :src="editIcon" class="pencil_icon"> 
+                    </router-link>
+                  </div>
                 </template>
               </v-card-text>
             </v-cardmain-card>
@@ -70,34 +75,21 @@
             </v-list-tile>
             <div class="card__about">
               <p class="mb-0">Обновлено
-
-
-
                 {{
                   new Date (item.created_at * 1000).getDate()
                 }}
-
-
                 {{
                   mnth[new Date (item.created_at * 1000).getMonth() + 1]
                 }}
-
                 {{
                   new Date (item.created_at * 1000).getFullYear()
                 }} г
-
-
-
                 {{
                   new Date (item.created_at * 1000).getHours()
                 }} ч
-
-
                 {{
                   new Date (item.created_at * 1000).getMinutes()
                 }} м
-
-
               </p>
               <p class="mb-0">Доступно только по <a :href="domen + '/resume/view/' + item.id" target="_blank">прямой ссылке</a></p>
             </div>
@@ -121,6 +113,11 @@
                       {{ item.name }}
                     </a>
                   </p>
+                  <div class="block_edit">
+                    <router-link :to="`${editVacancy}/${item.id}`">
+                        <img :src="editIcon" alt="" class="pencil_icon"> 
+                    </router-link>
+                  </div>
                 </template>
                 <template v-else-if="items === allRecords.Company">
                   <p class="card__statistic_title">
@@ -221,6 +218,8 @@ export default {
   name: "MainPage",
   data() {
     return {
+      editVacancy: '/personal-area/edit-vacancy',
+      editResume: '/personal-area/edit-resume',
       mnth: [null, "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
       dateRegVacancy: null,
 
@@ -241,6 +240,7 @@ export default {
       imgDots: process.env.VUE_APP_API_URL + '/vue/public/lk-image/dots.png',
       vacancyIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/information.png',
       companyIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/business-and-trade.png',
+      editIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/pencil.svg',
     }
   },
   computed: {
@@ -366,6 +366,20 @@ export default {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+}
+.block_edit {
+  display: flex;
+  justify-content: flex-end;
+}
+.pencil_icon {
+  min-width: 25px;
+}
+.actions_icons:hover {
+  cursor: pointer;
+}
+.text_edit_vacancy {
+  text-decoration: none;
+  font-size: 0.8em;
 }
 .main-head {
   width: 100%;
