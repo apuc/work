@@ -57,8 +57,12 @@ use yii\helpers\Url;
                                     <span class="nhome__nav-item mobile-prev jsMenuPrev">Назад</span>
                                     <a class="home__nav-item" href="/personal-area">Личный кабинет</a>
                                     <a class="home__nav-item" href="<?=Url::to(['/personal-area/my-message'])?>">Отклики <?=$messages>0?"($messages)":""?></a>
+                                    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status >= 20): ?>
                                     <a class="home__nav-item" href="/personal-area/add-vacancy">Добавить вакансию</a>
+                                    <?php endif; ?>
+                                    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status < 20): ?>
                                     <a class="home__nav-item" href="/personal-area/add-resume">Добавить резюме</a>
+                                    <?php endif; ?>
                                     <?= Html::beginForm(['/user/security/logout'], 'post', ['class' => 'form-logout']) ?>
                                     <?= Html::submitButton(
                                         'Выйти',
