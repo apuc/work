@@ -40,6 +40,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                 </div>
                 <nav class="nhome__nav jsNavMenu">
                     <div class="nhome__nav-item nhome__nav-item_logo">
+                        <img src="/images/logo-main.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo-main-small.png" alt="Логотип rabota.today" role="presentation"/>
                         <img src="/images/logo_mob.png" alt="Логотип rabota.today" role="presentation"/>
                     </div>
