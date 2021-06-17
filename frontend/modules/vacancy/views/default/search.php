@@ -4,6 +4,7 @@
 /* @var $searchModel \frontend\modules\vacancy\classes\VacancySearch */
 /* @var $dataProvider \yii\data\ActiveDataProvider */
 /* @var $cities City[] */
+/* @var $anchored_vacancies Vacancy[] */
 /* @var $categories Category[] */
 /* @var $employment_types EmploymentType[] */
 /* @var $countries \common\models\Country[] */
@@ -176,6 +177,33 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/vacancy_search.min.js',
 <!--                        </form>-->
 <!--                    </div>-->
 <!---->
+
+                    <?php if (!empty($anchored_vacancies)):
+                    $random_key = rand(4, 9);
+                    $i = 0;
+                    foreach ($anchored_vacancies as $key => $vacancy): ?>
+
+                        <?php
+                        $i++;
+                        /** @var Vacancy $vacancy */
+                        $flag = (
+                            $vacancy->company->user->email === "rabotavdnr@mail.ru"
+                            && !Yii::$app->user->isguest
+                            && Yii::$app->user->identity->email === "test@test.test"
+                        )
+                        ?>
+                        <?= $vacancy->day_vacancy_until > time()
+                            ? $this->render('/parts/_vacancy_day', compact('vacancy'))
+                            : $this->render('/parts/_vacancy_standart', compact(['vacancy', 'flag', 'searchModel']))
+                        ?>
+
+                        <?= ($key === $random_key) ?
+                            \frontend\widgets\Banner::widget([
+                                'categoryId' => $searchModel->current_category ? $searchModel->current_category->id : null,
+                                'cityId' => $searchModel->current_city ? $searchModel->current_city->id : null,
+                            ]) : '';
+                        ?>
+                    <?php endforeach; endif;?>
 
 
                     <?php if($dataProvider->models):
