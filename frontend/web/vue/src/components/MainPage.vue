@@ -445,5 +445,6 @@ export default {
   align-items: center;
   color: inherit;
   text-decoration: none;
+  min-height: 100px;
 }
 </style>
