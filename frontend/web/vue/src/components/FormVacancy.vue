@@ -240,7 +240,7 @@
             if ((this.formData.vacancyCity.length > 0 || this.formData.post.length > 0 || this.formData.duties.length > 0) && !this.valid) {
                 next(false);
                 this.$swal({
-                    title: 'Вы точно не хотите сохранить резюме?',
+                    title: 'Вы точно не хотите сохранить вакансию?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
