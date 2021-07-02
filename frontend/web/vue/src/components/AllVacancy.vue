@@ -110,19 +110,21 @@
               <div class="resume__actions__item" @click="vacancyDay(item.id)" :class="{disabled__item: dateNow < item.vacancy_day_timestamp}">
                 <img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b>
               </div>
-              <div class="resume__actions__item disabled__item" v-if="item.can_update === false || vacancyRenew === 0">
+              <div v-if="item.can_update && vacancyRenew > 0" @click="vacancyUpdate(index, item.id)" class="resume__actions__item">
                 <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
               </div>
-              <div v-if="item.can_update === true" @click="vacancyUpdate(index, item.id)" class="resume__actions__item">
+              <div v-else class="resume__actions__item disabled__item" >
                 <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
               </div>
-              <div class="resume__actions__item fixing_item" @click="onAnchor(item.id, item)"
-                   v-if="canBeAnchored(item.anchored_until)">
-                <img :src="fixIcon" alt="" class="actions_icons">Закрепить <b> вакансию</b>
-              </div>
-              <div class="resume__actions__item fixing_item" v-else>
-                <img :src="fixIcon" alt="" class="actions_icons">Вакансия <b> закреплена</b>
-              </div>
+              <template v-if="canBeFixing">
+                <div class="resume__actions__item fixing_item" @click="onAnchor(item.id, item)"
+                     v-if="canBeAnchored(item.anchored_until)">
+                  <img :src="fixIcon" alt="" class="actions_icons">Закрепить <b> вакансию</b>
+                </div>
+                <div class="resume__actions__item fixing_item" v-else>
+                  <img :src="fixIcon" alt="" class="actions_icons">Вакансия <b> закреплена</b>
+                </div>
+              </template>
             </div>
             <!--            <div>-->
             <router-link :to="`${editLink}/${item.id}`">
@@ -202,7 +204,6 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
 
 export default {
   name: "AllResume",
@@ -221,6 +222,7 @@ export default {
       vacancyCreate: 0,
       servicePrice: [],
       dateNow: 0,
+      raiseWithAnchorCount: null, // оставшееся ко-во закрепов
       editIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/pencil.svg',
       deleteIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/remove.svg',
       crownIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/crown.svg',
@@ -236,11 +238,20 @@ export default {
     this.getUser();
     this.dateNow = Math.floor(Date.now() / 1000);
   },
+  computed: {
+    /**
+     *  Проверка на возможность пользователя закреплять вакансии
+     */
+    canBeFixing(){
+      return this.timestemp !== null && this.timestemp > Date.now()/1000 && this.raiseWithAnchorCount !== null && this.raiseWithAnchorCount > 0
+    }
+  },
   methods: {
     async getUser() {
       await this.$store.dispatch('getUserMe')
           .then(data => {
             this.timestemp = data.user.company.unlimited_vacancies_until;
+            this.raiseWithAnchorCount = data.user.company.raise_with_anchor_count;
           })
     },
     getPrice() {

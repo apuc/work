@@ -6,13 +6,11 @@
         <hr class="hr">
         <v-subheader  v-if="allRecords.Resume.length === 0">У вас нет резюме</v-subheader>
       </template>
-
       <template v-else-if="items === allRecords.Vacancy && user.status>=20">
         <v-subheader class="main-head">Вакансии</v-subheader>
         <hr class="hr">
         <v-subheader v-if="allRecords.Vacancy.length === 0">У вас нет вакансий</v-subheader>
       </template>
-
       <template v-else-if="items === allRecords.Company">
         <v-subheader class="main-head">Компании</v-subheader>
         <hr class="hr">
@@ -20,7 +18,7 @@
       </template>
       <div class="card__statistic__wrapper" >
         <template v-if="user.status===10">
-          <div v-for="(item, itemIndex) in items" class="vacancy__wrapper">
+          <div v-for="(item) in items" class="vacancy__wrapper">
             <v-cardmain-card
                 class="main-card"
                 :class="selectBg(index)"
@@ -39,7 +37,7 @@
                   </p>
                   <div class="block_edit">
                     <router-link :to="`${editResume}/${item.id}`">
-                      <img :src="editIcon" class="pencil_icon"> 
+                      <img :src="editIcon" class="pencil_icon">
                     </router-link>
                   </div>
                 </template>
@@ -75,28 +73,33 @@
             </v-list-tile>
             <div class="card__about">
               <p class="mb-0">Обновлено
+
                 {{
                   new Date (item.created_at * 1000).getDate()
                 }}
+
                 {{
                   mnth[new Date (item.created_at * 1000).getMonth() + 1]
                 }}
                 {{
                   new Date (item.created_at * 1000).getFullYear()
                 }} г
+
                 {{
                   new Date (item.created_at * 1000).getHours()
                 }} ч
+
                 {{
                   new Date (item.created_at * 1000).getMinutes()
                 }} м
+
               </p>
               <p class="mb-0">Доступно только по <a :href="domen + '/resume/view/' + item.id" target="_blank">прямой ссылке</a></p>
             </div>
           </div>
         </template>
         <template v-else-if="items!==allRecords.Resume">
-          <div v-for="(item, itemIndex) in items" class="vacancy__wrapper">
+          <div v-for="(item) in items" class="vacancy__wrapper">
             <v-card
                 class="main-card"
                 :class="selectBg(index)"
@@ -115,7 +118,7 @@
                   </p>
                   <div class="block_edit">
                     <router-link :to="`${editVacancy}/${item.id}`">
-                        <img :src="editIcon" alt="" class="pencil_icon"> 
+                        <img :src="editIcon" alt="" class="pencil_icon">
                     </router-link>
                   </div>
                 </template>
@@ -163,11 +166,9 @@
             <div class="card__about" >
               <p class="mb-0" v-if="typeof item.created_at == 'number' ">
 
-
                 {{
                   new Date (item.created_at * 1000).getDate()
                 }}
-
 
                 {{
                   mnth[new Date (item.created_at * 1000).getMonth() + 1]
@@ -176,8 +177,6 @@
                 {{
                   new Date (item.created_at * 1000).getFullYear()
                 }} г
-
-
 
                 {{
                   new Date (item.created_at * 1000).getHours()
@@ -188,28 +187,19 @@
                   new Date (item.created_at * 1000).getMinutes()
                 }} м
 
-
-
-
-
-
 <!--              {{ valueDateObject.day }}-->
 <!--              {{ mnth[valueDateObject.month] }}-->
 <!--              {{ valueDateObject.year }}-->
 
-
-
-
 <!--              {{ valueDateObject.hours }} ч.-->
 <!--              {{ valueDateObject.minutes }} м.-->
-
-
             </p>
-              <p class="mb-0">Доступно только по <a :href="domen + '/vacancy/view/' + item.id" target="_blank">прямой ссылке</a></p></div>
+              <p class="mb-0">Доступно только по <a :href="domen + '/vacancy/view/' + item.id" target="_blank">прямой ссылке</a></p>
+            </div>
           </div>
         </template>
+      </div>
     </template>
-
   </div>
 </template>
 
@@ -222,19 +212,6 @@ export default {
       editResume: '/personal-area/edit-resume',
       mnth: [null, "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
       dateRegVacancy: null,
-
-      // valueDateObject: {
-      //   dateRegVacancy: null,
-      //   day: null,
-      //   month: null,
-      //   year: null,
-      //   hours: null,
-      //   minutes: null,
-      //   seconds: null,
-      // },
-
-
-
       allRecords: [],
       domen: '',
       imgDots: process.env.VUE_APP_API_URL + '/vue/public/lk-image/dots.png',
@@ -265,25 +242,6 @@ export default {
     });
   },
   methods: {
-
-    // getRegDateVacancy () {
-    //
-    //
-    //   let date = new Date (this.valueDateObject.dateRegVacancy * 1000);
-    //
-    //
-    //
-    //   this.valueDateObject.day = date.getDay();
-    //   this.valueDateObject.month = date.getMonth() + 1;
-    //   this.valueDateObject.year = date.getFullYear();
-    //
-    //   this.valueDateObject.hours = date.getHours();
-    //   this.valueDateObject.minutes = date.getMinutes();
-    //   this.valueDateObject.seconds = date.getSeconds();
-    //
-    // },
-
-
     selectBg(cardType) {
       const types = {
         resume: 'main-card_resume',
@@ -329,8 +287,7 @@ export default {
   margin-right: 15px;
 }
 .icons__wrapper{
-//position: absolute;
-//right: -30px;
+  /* position: absolute; right: -30px; */
 }
 .ellipsis__wrapper{
   display: flex;

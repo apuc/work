@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 let params = {
-    baseURL: `${process.env.VUE_APP_API_URL}`,
     headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -19,7 +18,8 @@ function getCookie(name){
 }
 
 if (location.hostname === "localhost"){
-    params.headers['Authorization'] = 'Bearer lCLRMuK9jOXl_ZUiHiVO0Lj1mZR9feEg';
+    params.headers['Authorization'] = 'Bearer cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW';
+    // cohyaUjkCjZxiaOYLTeS_X4zGo3_fSEW - старый
 } else {
     let getCookKey = getCookie('key');
     localStorage.localKey = getCookKey;

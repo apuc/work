@@ -8,7 +8,7 @@ const outputPath = path.resolve(__dirname, 'dist');
 module.exports = {
   mode: 'development',
   entry: {
-    app: './src/index.js',
+    app: './src/index.js'
   },
   module: {
     rules: [
@@ -23,9 +23,10 @@ module.exports = {
         test: /\.css$/,
         use: [
           { loader: 'style-loader' },
-          { loader: 'css-loader' },
+          { loader: 'css-loader' }
         ]
-      }
+      },
+
     ]
   },
   plugins: [
@@ -35,7 +36,8 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         // Copy the Swagger OAuth2 redirect file to the project root;
-        // that file handles the OAuth2 redirect after authenticating the end-user.
+        // that file handles the OAuth2 redirect after authenticating
+        // the end-user.
         from: 'node_modules/swagger-ui/dist/oauth2-redirect.html',
         to: './'
       }
@@ -46,6 +48,6 @@ module.exports = {
   ],
   output: {
     filename: '[name].bundle.js',
-    path: outputPath,
+    path: outputPath
   }
 };
