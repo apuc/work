@@ -83,7 +83,7 @@ use yii\widgets\ActiveForm;
                 ->passwordInput()->label(false);
             ?>
             <?= $form->field($registration_form, 'status')->radioList( [10 => 'Соискатель', 20 => 'Работодатель',  21 => 'Частное лицо'])->label('Выберите тип аккаунта (после регистраации его нельзя будет изменить):');?>
-            <div class="g-recaptcha" data-sitekey="6LdiO3sbAAAAAAUO9ZUAlgxw0qBq1AYDrLSN-M42"></div>
+            <?= $form->field($registration_form, 'reCaptcha')->widget(\himiklab\yii2\recaptcha\ReCaptcha2::className())->label(false) ?>
             <?= Html::submitButton('Зарегистрироваться', ['class' => 'jsBtnReg jsBtn']) ?>
             <?php ActiveForm::end(); ?>
             <div class="modal-style__text"><span>Есть учетная запись?</span>

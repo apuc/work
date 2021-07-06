@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "35e1a556e9b33f1bdddf1a1121bbabc2",
+    "content-hash": "f861592fe901918f5ae76880c3ef3089",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -223,7 +223,7 @@
             "version": "v3.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
+                "url": "git@github.com:twbs/bootstrap.git",
                 "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {
@@ -319,7 +319,7 @@
             "version": "1.5.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:vitalets/x-editable.git",
+                "url": "https://github.com/vitalets/x-editable.git",
                 "reference": "f32802f48a33b8a7ec9cca32eec4ca844b7d39b2"
             },
             "dist": {
@@ -901,6 +901,54 @@
                 "icon"
             ],
             "time": "2016-10-24T15:52:54+00:00"
+        },
+        {
+            "name": "himiklab/yii2-recaptcha-widget",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/himiklab/yii2-recaptcha-widget.git",
+                "reference": "341ae7e19e12783f3dfd8984a49185e0a44021ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/himiklab/yii2-recaptcha-widget/zipball/341ae7e19e12783f3dfd8984a49185e0a44021ea",
+                "reference": "341ae7e19e12783f3dfd8984a49185e0a44021ea",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.11",
+                "yiisoft/yii2-httpclient": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.34"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "himiklab\\yii2\\recaptcha\\": "src/",
+                    "himiklab\\yii2\\recaptcha\\tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "HimikLab",
+                    "homepage": "https://github.com/himiklab/"
+                }
+            ],
+            "description": "Yii2 Google reCAPTCHA v2 and v3 widget",
+            "keywords": [
+                "captcha",
+                "google",
+                "recaptcha",
+                "widget",
+                "yii2"
+            ],
+            "time": "2019-05-14T07:40:36+00:00"
         },
         {
             "name": "kartik-v/yii2-bootstrap4-dropdown",
@@ -4135,7 +4183,6 @@
                 "faker",
                 "fixtures"
             ],
-            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {
@@ -6737,7 +6784,6 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.0",
-        "ext-intl": "*",
         "ext-json": "*"
     },
     "platform-dev": [],
