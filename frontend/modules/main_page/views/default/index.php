@@ -4,6 +4,7 @@
 /* @var $categories Category[] */
 /* @var $professions Professions[] */
 /* @var $vacancies Vacancy[] */
+/* @var $vacancies_day Vacancy[] */
 /* @var $cities City[] */
 /* @var $countries Country[] */
 /* @var $vacancy_count integer */
@@ -190,6 +191,51 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
             <h3 class="nhome__aside-header-vacancy">Вакансии дня</h3>
         </div>
         <div class="home__slider">
+            <?php foreach ($vacancies_day as $vacancy): ?>
+                <div class="single-card home-card">
+                    <div class="single-card__tr">
+                    </div>
+                    <div class="single-card__header">
+                        <img src="<?= $vacancy->company->getPhotoOrEmptyPhoto($vacancy->mainCategory) ?>" alt="Логотип <?=$vacancy->company->name?>" role="presentation"/>
+                        <div class="single-card__top">
+                            <div class="single-card__cat-city">
+                                <a class="btn-card btn-card-small btn-gray" href="<?= Url::to(["/vacancy/".$vacancy->mainCategory->slug]) ?>">
+                                    <?= $vacancy->mainCategory->name ?>
+                                </a>
+                                <?php if ($city = $vacancy->city0): ?>
+                                    <a class="d-flex align-items-center home-city"
+                                       href="<?= Url::to(["/vacancy/$city->slug"]) ?>">
+                                        <img class="single-card__icon" src="/images/arr-place.png" alt="Стрелка"
+                                             role="presentation"/>
+                                        <span class="ml5"><?= $city->name ?></span>
+                                    </a>
+                                <?php endif ?>
+                            </div>
+                            <a href="<?= Url::to(['/vacancy/default/view', 'id' => $vacancy->id]) ?>"
+                               class="single-card__title"
+                               title="<?= StringHelper::mb_ucfirst(strtolower($vacancy->post)) ?>"><?= StringHelper::mb_ucfirst(strtolower($vacancy->post)) ?></a>
+                            <div class="single-card__info-second">
+                                <span class="mr10">Добавлено: <?= Yii::$app->formatter->asTime($vacancy->created_at, 'dd.MM.yyyy, hh:mm') ?></span>
+                                <?php if ($vacancy->views > 0):?>
+                                    <div class="single-card__view">
+                                        <img class="single-card__icon mr5" src="/images/icon-eye.png" alt="иконка глаз" role="presentation"/>
+                                        <span><?= $vacancy->views ?></span>
+                                    </div>
+                                <?php endif ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-card__info">
+                        <?php if ($vacancy->employment_type): ?>
+                            <p><?= $vacancy->employment_type->name ?>.</p>
+                        <?php endif ?>
+                        <p><?= StringHelper::truncate($vacancy->responsibilities, 80, '...') ?></p>
+                    </div>
+                    <div class="d-flex flex-wrap align-items-center justify-content-start">
+                        <a class="btn-card btn-red jsVacancyModal" data-id="<?= $vacancy->id ?>">Откликнуться</a>
+                    </div>
+                </div>
+            <?php endforeach ?>
             <?php foreach ($vacancies as $vacancy): ?>
                 <div class="single-card home-card">
                     <div class="single-card__tr">

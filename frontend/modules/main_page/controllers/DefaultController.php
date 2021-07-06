@@ -85,6 +85,7 @@ class DefaultController extends Controller
         return $this->render('index', [
             'categories' => $categories,
             'professions' => $professions,
+            'vacancies_day' => $vacancies_day,
             'vacancies' => $vacancies,
             'employer' => $employer,
             'cities' => $cities,
