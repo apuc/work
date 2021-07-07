@@ -60,20 +60,11 @@
 //     }
 //   }
 // }
-console.log(grecaptcha)
 var onloadCallback = function() {
   grecaptcha.render('myCaptcha', {
     'sitekey' : '6LdiO3sbAAAAAAUO9ZUAlgxw0qBq1AYDrLSN-M42'
   });
 };
-
-const btn = document.querySelector('.jsBtnReg')
-btn.addEventListener('click', function (event) {
-  const resp = grecaptcha.getResponse()
-  if (resp.length === '') {
-    event.preventDefault()
-  }
-})
 
 if ($('.home__slider').length > 0) {
   $('.home__slider').slick({
@@ -332,8 +323,17 @@ $(document).ready(function () {
   //     scrollTop: $(".scroll").offset().top-50
   //   }, 2000);
   // }
-  $('#registration-form').submit(function(){
-    gtag('event', 'register', { 'event_category': 'form', 'event_action': 'register', }); yaCounter53666866.reachGoal('register');
+  $('#registration-form').submit(function(event){
+    event.preventDefault()
+    const resp = grecaptcha.getResponse()
+    console.log(resp)
+    if (resp === '') {
+      console.log(123)
+      return false
+    }else {
+      gtag('event', 'register', {'event_category': 'form', 'event_action': 'register',});
+      yaCounter53666866.reachGoal('register');
+    }
   });
   $('#reset_token_form').submit(function (e) {
     e.preventDefault();
