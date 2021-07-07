@@ -325,9 +325,7 @@ $(document).ready(function () {
   // }
   $('#registration-form').submit(function(){
     const resp = grecaptcha.getResponse()
-    console.log(resp)
     if (resp === '') {
-      console.log(123)
       return false
     }else {
       gtag('event', 'register', {'event_category': 'form', 'event_action': 'register',});
