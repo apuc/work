@@ -323,8 +323,7 @@ $(document).ready(function () {
   //     scrollTop: $(".scroll").offset().top-50
   //   }, 2000);
   // }
-  $('#registration-form').submit(function(event){
-    event.preventDefault()
+  $('#registration-form').submit(function(){
     const resp = grecaptcha.getResponse()
     console.log(resp)
     if (resp === '') {
