@@ -68,8 +68,11 @@ var onloadCallback = function() {
 };
 
 const btn = document.querySelector('.jsBtnReg')
-btn.addEventListener('click', function () {
-  console.log(grecaptcha.getResponse())
+btn.addEventListener('click', function (event) {
+  const resp = grecaptcha.getResponse()
+  if (resp.length === '') {
+    event.preventDefault()
+  }
 })
 
 if ($('.home__slider').length > 0) {
