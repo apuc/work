@@ -60,6 +60,13 @@
 //     }
 //   }
 // }
+console.log(321)
+
+var onloadCallback = function() {
+  grecaptcha.render('myCaptcha', {
+    'sitekey' : '6LdiO3sbAAAAAAUO9ZUAlgxw0qBq1AYDrLSN-M42'
+  });
+};
 
 if ($('.home__slider').length > 0) {
   $('.home__slider').slick({

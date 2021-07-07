@@ -30,7 +30,6 @@ class RegUserForm extends RegistrationForm
         $rules = parent::rules();
         $rules['fieldRequired'] = ['status', 'required'];
         $rules['fieldLength']   = ['status', 'integer'];
-        $rules['reCaptcha'] = [['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator2::className(), 'uncheckedMessage' => 'Пожалуйста подтвердите что вы не робот.'];
         return $rules;
     }
 

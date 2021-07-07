@@ -32,12 +32,13 @@ class MainAsset extends AssetBundle
      * Если файл имеет только минифицированную версию - необходимо дублировать.
      */
     public $jsFiles = [
+        'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' => 'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit',
+        'https://www.google.com/recaptcha/api.js' => 'https://www.google.com/recaptcha/api.js',
         'js/resizeSensor.js' => 'js/resizeSensor.min.js',
         'js/jquery.sticky-kit.js' => 'js/jquery.sticky-kit.min.js',
         'js/slick/slick.min.js' => 'js/slick/slick.min.js',
         'js/select2/select2.min.js' => 'js/select2/select2.min.js',
         'js/script.js' => 'js/script.min.js',
-        'https://www.google.com/recaptcha/api.js' => 'https://www.google.com/recaptcha/api.js',
     ];
 
     public $depends = [
