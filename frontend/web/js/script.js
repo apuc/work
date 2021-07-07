@@ -60,13 +60,17 @@
 //     }
 //   }
 // }
-
+console.log(grecaptcha)
 var onloadCallback = function() {
   grecaptcha.render('myCaptcha', {
     'sitekey' : '6LdiO3sbAAAAAAUO9ZUAlgxw0qBq1AYDrLSN-M42'
   });
-  console.log(grecaptcha.getResponse())
 };
+
+const btn = document.querySelector('.jsBtnReg')
+btn.addEventListener('click', function () {
+  console.log(grecaptcha.getResponse())
+})
 
 if ($('.home__slider').length > 0) {
   $('.home__slider').slick({
