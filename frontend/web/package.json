@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.html",
   "dependencies": {
-    "chart.js": "2.6.0",
+    "chart.js": "2.9.4",
     "del": "2.2.2",
     "jquery": "3.2.1",
     "material-components-web": "^0.27.0",
