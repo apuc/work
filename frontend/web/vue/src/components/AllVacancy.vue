@@ -53,7 +53,7 @@
     </v-subheader>
     <template v-if="getAllVacancy.length === 0">
       <div class='vacancy__container_empty' v-if="getAllVacancy.length === 0">
-        <div class="resume__item free__vacancy" v-if="getAllVacancy.length<2">
+        <div class="resume__item free__vacancy" v-if="getAllVacancy.length<2 && (timestemp === null && timestemp < Date.now()/1000)">
           <div class="resume__actions" style="margin-top: 74px;">
             <div class="resume__actions_group">
               <div class="resume__actions__item"><img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b></div>
@@ -68,14 +68,14 @@
             </div>
             <!--            </div>-->
           </div>
-          <div class="hover__vacancy">
+          <div class="hover__vacancy" v-if="timestemp === null || timestemp < Date.now()/1000">
             <h2 class="hover__vacancy__title">+ БЕСПЛАТНАЯ ВАКАНСИЯ</h2>
-            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy">
               <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn">Создать вакансию</v-btn>
             </router-link>
           </div>
         </div>
-        <div class="resume__item add__vacancy" >
+        <div class="resume__item add__vacancy" v-if="timestemp === null || timestemp < Date.now()/1000">
           <h2 class="add__vacancy__title">ДОБАВИТЬ ЕЩЁ ВАКАНСИЮ</h2>
           <div v-if="vacancyCreate===0"><span style="color:#dd3d34;font-weight: 600;">Лимит вакансий исчерпан.</span>
             <span style="font-weight: 600;" v-if="servicePrice[2]">Цена дополнительной вакансии {{ servicePrice[2].price }} руб.</span>
@@ -84,7 +84,7 @@
               <p class="add__vacancy_text" style="margin-top: 30px;">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
             </div>
           </div>
-          <div style="margin-top: 30px;" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
+          <div style="margin-top: 30px;" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
             <router-link class="vacancy__link" to="/personal-area/add-vacancy" >
               <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn">Создать вакансию</v-btn>
             </router-link>
@@ -110,12 +110,21 @@
               <div class="resume__actions__item" @click="vacancyDay(item.id)" :class="{disabled__item: dateNow < item.vacancy_day_timestamp}">
                 <img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b>
               </div>
-              <div class="resume__actions__item disabled__item" v-if="item.can_update === false || vacancyRenew === 0">
+              <div v-if="item.can_update && vacancyRenew > 0" @click="vacancyUpdate(index, item.id)" class="resume__actions__item">
                 <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
               </div>
-              <div v-else @click="vacancyUpdate(index, item.id)" class="resume__actions__item">
+              <div v-else class="resume__actions__item disabled__item" >
                 <img :src="topLeftIcon" alt="" class="actions_icons">Поднять <b> в топ</b>
               </div>
+              <template v-if="canBeFixing">
+                <div class="resume__actions__item fixing_item" @click="onAnchor(item.id, item)"
+                     v-if="canBeAnchored(item.anchored_until)">
+                  <img :src="fixIcon" alt="" class="actions_icons">Закрепить <b> вакансию</b>
+                </div>
+                <div class="resume__actions__item fixing_item" v-else>
+                  <img :src="fixIcon" alt="" class="actions_icons">Вакансия <b> закреплена</b>
+                </div>
+              </template>
             </div>
             <!--            <div>-->
             <router-link :to="`${editLink}/${item.id}`">
@@ -137,7 +146,7 @@
             </v-btn>
           </p>
         </div>
-        <div class="resume__item free__vacancy" v-if="getAllVacancy.length<2">
+        <div class="resume__item free__vacancy" v-if="getAllVacancy.length<2 && (timestemp === null && timestemp < Date.now()/1000)">
           <div class="resume__actions" style="margin-top: 74px;">
             <div class="resume__actions_group">
               <div class="resume__actions__item"><img :src="crownIcon" alt="" class="actions_icons">Сделать <b> вакансией дня</b></div>
@@ -152,9 +161,9 @@
             </div>
             <!--            </div>-->
           </div>
-          <div class="hover__vacancy">
+          <div class="hover__vacancy" v-if="timestemp === null || timestemp < Date.now()/1000">
             <h2 class="hover__vacancy__title">+ БЕСПЛАТНАЯ ВАКАНСИЯ</h2>
-            <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
+            <router-link class="vacancy__link" to="/personal-area/add-vacancy">
               <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn">Создать вакансию</v-btn>
             </router-link>
           </div>
@@ -168,7 +177,7 @@
             <p class="add__vacancy_text" style="margin-top: 30px;">* В месяц пользователям система даёт 1 бесплатную вакансию</p>
             </div>
           </div>
-          <div style="margin-top: 30px;" v-if="vacancyCreate > 0 || (timestemp == null && timestemp > Date.now)">
+          <div style="margin-top: 30px;" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
             <router-link class="vacancy__link" to="/personal-area/add-vacancy" >
               <v-btn round color="#dd3d34" dark class="add__vacancy_btn mt-0 ml-0 my-btn">Создать вакансию</v-btn>
             </router-link>
@@ -195,7 +204,6 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
 
 export default {
   name: "AllResume",
@@ -206,6 +214,7 @@ export default {
       timestemp: null,
       editLink: '/personal-area/edit-vacancy',
       getAllVacancy: [],
+      onAnchorFlag: false,
       paginationPageCount: 1,
       paginationCurrentPage: 1,
       domen: '',
@@ -213,10 +222,12 @@ export default {
       vacancyCreate: 0,
       servicePrice: [],
       dateNow: 0,
+      raiseWithAnchorCount: null, // оставшееся ко-во закрепов
       editIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/pencil.svg',
       deleteIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/remove.svg',
       crownIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/crown.svg',
       topLeftIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/top-left.svg',
+      fixIcon: `${process.env.VUE_APP_API_URL}` + '/vue/public/lk-image/anchoring.svg',
     }
   },
   created() {
@@ -227,11 +238,20 @@ export default {
     this.getUser();
     this.dateNow = Math.floor(Date.now() / 1000);
   },
+  computed: {
+    /**
+     *  Проверка на возможность пользователя закреплять вакансии
+     */
+    canBeFixing(){
+      return this.timestemp !== null && this.timestemp > Date.now()/1000 && this.raiseWithAnchorCount !== null && this.raiseWithAnchorCount > 0
+    }
+  },
   methods: {
     async getUser() {
       await this.$store.dispatch('getUserMe')
           .then(data => {
             this.timestemp = data.user.company.unlimited_vacancies_until;
+            this.raiseWithAnchorCount = data.user.company.raise_with_anchor_count;
           })
     },
     getPrice() {
@@ -451,6 +471,18 @@ export default {
           });
         }
       });
+    },
+    /**
+     * Закрепление вакансии по айди
+     * @param vacancyId
+     */
+    onAnchor(vacancyId) {
+      this.$store.dispatch('onAnchor', vacancyId).then(() => {
+        this.getVacancy(this.paginationCurrentPage);
+      })
+    },
+    canBeAnchored(anchored_until) {
+      return anchored_until === null || anchored_until < Date.now()/1000
     },
     vacancyUpdate(index, vacancyId) {
       this.$swal({

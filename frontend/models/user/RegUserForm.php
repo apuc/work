@@ -17,6 +17,7 @@ use Yii;
 class RegUserForm extends RegistrationForm
 {
 
+    public $reCaptcha;
     /**
      * @var string
      */

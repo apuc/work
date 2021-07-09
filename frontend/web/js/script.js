@@ -60,6 +60,11 @@
 //     }
 //   }
 // }
+var onloadCallback = function() {
+  grecaptcha.render('myCaptcha', {
+    'sitekey' : '6LdiO3sbAAAAAAUO9ZUAlgxw0qBq1AYDrLSN-M42'
+  });
+};
 
 if ($('.home__slider').length > 0) {
   $('.home__slider').slick({
@@ -319,7 +324,13 @@ $(document).ready(function () {
   //   }, 2000);
   // }
   $('#registration-form').submit(function(){
-    gtag('event', 'register', { 'event_category': 'form', 'event_action': 'register', }); yaCounter53666866.reachGoal('register');
+    const resp = grecaptcha.getResponse()
+    if (resp === '') {
+      return false
+    }else {
+      gtag('event', 'register', {'event_category': 'form', 'event_action': 'register',});
+      yaCounter53666866.reachGoal('register');
+    }
   });
   $('#reset_token_form').submit(function (e) {
     e.preventDefault();

@@ -133,6 +133,12 @@ return [
 //        'request' => [
 //            'csrfParam' => '_csrf-frontend',
 //        ],
+        'reCaptcha' => [
+            'class' => 'himiklab\yii2\recaptcha\ReCaptchaConfig',
+            'name' => 'reCaptcha',
+            'siteKeyV2' => '6LdiO3sbAAAAAAUO9ZUAlgxw0qBq1AYDrLSN-M42',
+            'secretV2' => '6LdiO3sbAAAAAAPv7bqoIO4QBQERr1QVH1Ijr5Ge',
+        ],
         'mymessages' => [
             //Обязательно
             'class' => 'vision\messages\components\MyMessages',

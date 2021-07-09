@@ -2,6 +2,7 @@
 
 namespace frontend\modules\main_page\controllers;
 
+use common\classes\Debug;
 use common\models\Category;
 use common\models\City;
 use common\models\Country;
@@ -57,14 +58,26 @@ class DefaultController extends Controller
         $countries = Yii::$app->cache->getOrSet('main_page_countries', function () {
             return Country::find()->select(['id', 'name', 'slug'])->all();
         });
-        $vacancies = Yii::$app->cache->getOrSet('main_page_vacancies', function () {
+        $vacancies_day = Yii::$app->cache->getOrSet('main_page_vacancies_day', function () {
             return Vacancy::find()
                 ->with(['employment_type', 'company', 'mainCategory', 'city0'])
                 ->where(['status'=>Vacancy::STATUS_ACTIVE])
+                ->andWhere(['>=', 'day_vacancy_until', time()])
                 ->limit(10)
                 ->orderBy('id DESC')
                 ->all();
         },3600);
+        $diff = 10 - count($vacancies_day);
+        $vacancies = Yii::$app->cache->getOrSet('main_page_vacancies', function () use ($diff){
+            return Vacancy::find()
+                ->with(['employment_type', 'company', 'mainCategory', 'city0'])
+                ->where(['status'=>Vacancy::STATUS_ACTIVE])
+                ->andWhere(['<', 'day_vacancy_until', time()])
+                ->limit($diff)
+                ->orderBy('id DESC')
+                ->all();
+            }, 3600);
+//        Debug::dd($vacancies);
         $vacancy_count = Yii::$app->cache->getOrSet('main_page_vacancy_count', function () {
             return Vacancy::find()->count();
         });
@@ -72,6 +85,7 @@ class DefaultController extends Controller
         return $this->render('index', [
             'categories' => $categories,
             'professions' => $professions,
+            'vacancies_day' => $vacancies_day,
             'vacancies' => $vacancies,
             'employer' => $employer,
             'cities' => $cities,

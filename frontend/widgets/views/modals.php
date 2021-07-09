@@ -83,7 +83,8 @@ use yii\widgets\ActiveForm;
                 ->passwordInput()->label(false);
             ?>
             <?= $form->field($registration_form, 'status')->radioList( [10 => 'Соискатель', 20 => 'Работодатель',  21 => 'Частное лицо'])->label('Выберите тип аккаунта (после регистраации его нельзя будет изменить):');?>
-            <?= Html::submitButton('Зарегистрироваться', ['class' => 'jsBtnReg jsBtn']) ?>
+                <div id="myCaptcha"></div>
+            <?= Html::submitButton('Зарегистрироваться', ['class' => 'jsBtnReg jsBtn', "value" => "getResponse"]) ?>
             <?php ActiveForm::end(); ?>
             <div class="modal-style__text"><span>Есть учетная запись?</span>
                 <button class="jsLoginForm">Войти</button>
