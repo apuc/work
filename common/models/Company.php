@@ -37,6 +37,8 @@ use yii\db\ActiveRecord;
  * @property User $user
  * @property Vacancy[] $vacancy
  * @property Vacancy[] $activeVacancies
+ * @property userCompany[] $userCompany
+ * @property User[] $users
  * @property Phone $phone
  * @property int $clickPhoneCount
  */

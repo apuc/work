@@ -68,7 +68,15 @@ use yii\widgets\ActiveForm;
         Company::STATUS_ACTIVE => 'Активен',
         Company::STATUS_INACTIVE => 'Не активен',
     ]); ?>
-
+    <?=$form->field($model, 'users')->widget(Select2::className(),
+        [
+            'data' => ArrayHelper::map(\common\models\User::find()->where(['status' => 20])->all(), 'id', 'email'),
+            'options' => ['placeholder' => 'Начните вводить email пользователя ...', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]
+    )?>
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
