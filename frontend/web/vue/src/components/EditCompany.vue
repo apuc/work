@@ -1,4 +1,5 @@
 <template>
+  <div>
   <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler" :isPrivatePerson="formData.privatePerson">
 
     <div class="work-image-uploader">
@@ -32,6 +33,8 @@
     </template>
 
   </FormTemplate>
+  <FormAddHr />
+  </div>
 </template>
 
 <script>
@@ -39,11 +42,12 @@ import FormCompany from '../lk-form/company-form';
 import FormTemplate from "./FormTemplate";
 import Company from "../mixins/company";
 import myUpload from 'vue-image-crop-upload';
+import FormAddHr from "./FormAddHr";
 
 export default {
   name: 'FormResume',
   mixins: [Company],
-  components: {FormTemplate, myUpload},
+  components: {FormAddHr, FormTemplate, myUpload},
   mounted() {
     this.getCompany();
   },
@@ -212,7 +216,7 @@ export default {
           for (let i = 0; i < allInputs.length; i++) {
             allInputs[i].classList.add('opacity');
           }
-          console.log(scopeOfTheCompany.parentNode.parentNode.parentNode.parentNode)
+          //console.log(scopeOfTheCompany.parentNode.parentNode.parentNode.parentNode)
           nameCompany.parentNode.parentNode.parentNode.parentNode.style.display = 'none';
           site.parentNode.parentNode.parentNode.parentNode.style.display = 'none';
           scopeOfTheCompany.parentNode.parentNode.parentNode.parentNode.style.display = 'none';

@@ -72,6 +72,20 @@ const actions = {
                 });
         })
     },
+    addHr({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.post('/registration/register-hr', payload)
+                .then(res => {
+                    console.log(res);
+                    //resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error);
+                });
+        })
+    },
     rightCompany({commit}, payload) {
 
         return new Promise((resolve, reject) => {
