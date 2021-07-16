@@ -87,6 +87,40 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
         $url.='?message=Ваш аккаунт успешно зарегистрирован, проверьте почту для получения дальнейших инструкций';
         return $this->redirect($url);
     }
+
+    public function actionRegisterHr()
+    {
+        /** @var RegistrationForm $model */
+        $model = \Yii::createObject(RegUserForm::className());
+        $event = $this->getFormEvent($model);
+
+        $this->trigger(self::EVENT_BEFORE_REGISTER, $event);
+
+        $this->performAjaxValidation($model);
+        $post = \Yii::$app->request->post();
+        $post['register-form']['username'] = $post['register-form']['email'];
+        if ($model->load($post) && $model->register()) {
+            $this->trigger(self::EVENT_AFTER_REGISTER, $event);
+            /** @var User $user */
+            $user = User::find()->where(['email' => $post['register-form']['email']])->one();
+            $employer = new Employer();
+            $employer->first_name = $post['first_name'];
+            $employer->second_name = $post['second_name'];
+            $employer->user_id = $user->id;
+            $employer->owner = $user->id;
+            $employer->save();
+            $token = Token::findOne(['user_id'=>$user->id]);
+            Yii::$app->mailer->viewPath='@common/mail';
+            Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer, 'user'=>$user, 'token'=>$token])
+                ->setFrom('noreply@rabota.today')
+                ->setTo($user->email)
+                ->setSubject('Спасибо за регистрацию')
+                ->send();
+        } else {
+            return json_encode($model->errors);
+        }
+        return 'Ваш аккаунт успешно зарегистрирован, проверьте почту для получения дальнейших инструкций';
+    }
     /**
      * Confirms user's account. If confirmation was successful logs the user and shows success message. Otherwise
      * shows error message.
