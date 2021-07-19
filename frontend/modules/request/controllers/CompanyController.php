@@ -3,6 +3,7 @@
 namespace frontend\modules\request\controllers;
 
 
+use common\classes\Debug;
 use common\classes\FileHandler;
 use common\models\Company;
 use common\models\Education;
@@ -17,11 +18,13 @@ use common\models\Vacancy;
 use common\models\VacancyCategory;
 use common\models\VacancySkill;
 use dektrium\user\events\FormEvent;
+use dektrium\user\models\RegistrationForm;
 use dektrium\user\models\Token;
 use dektrium\user\models\User;
 use frontend\controllers\RegistrationController;
 use frontend\models\user\RegUserForm;
 use Yii;
+use yii\base\BaseObject;
 use yii\base\InvalidConfigException;
 use yii\base\UserException;
 use yii\data\ActiveDataProvider;
@@ -254,5 +257,37 @@ class CompanyController extends MyActiveController
             VacancySkill::updateAll(['owner'=>$user->id], ['vacancy_id' => $vacancy_ids]);
         }
         return 'success';
+    }
+
+    public function actionRegisterHr()
+    {
+        if (Yii::$app->request->post()) {
+            /** @var User $model */
+            $model = new User;
+            $post = \Yii::$app->request->post();
+            $model->username = $post['email'];
+            $model->email = $post['email'];
+            $model->password_hash = Yii::$app->getSecurity()->generatePasswordHash($post['password']);
+            $model->status = 22;
+            $model->confirmed_at = time();
+            if ($model->save()) {
+                $employer = new Employer();
+                $employer->first_name = $post['first_name'];
+                $employer->second_name = $post['second_name'];
+                $employer->user_id = $model->id;
+                $employer->owner = $model->id;
+                $employer->save();
+                $uc = new UserCompany();
+                $uc->user_id = $model->id;
+                $uc->company_id = $post['company_id'];
+                if ($uc->save()) {
+                    return json_encode('Ваш hr-менеджер успешно зарегистрирован.');
+                } else {
+                    return json_encode($uc->errors);
+                }
+            } else {
+                return json_encode($model->errors);
+            }
+        }
     }
 }

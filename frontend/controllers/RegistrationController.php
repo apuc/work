@@ -87,6 +87,7 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
         $url.='?message=Ваш аккаунт успешно зарегистрирован, проверьте почту для получения дальнейших инструкций';
         return $this->redirect($url);
     }
+
     /**
      * Confirms user's account. If confirmation was successful logs the user and shows success message. Otherwise
      * shows error message.

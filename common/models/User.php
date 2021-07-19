@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\classes\Debug;
 use Yii;
 use yii\web\IdentityInterface;
 /**
@@ -16,6 +17,11 @@ class User extends \dektrium\user\models\User implements IdentityInterface
 
     const STATUS_EMPLOYER = 1;
     const STATUS_JOB_SEEKER = 2;
+
+    const JOB_SEEKER = 10;
+    const EMPLOYER = 20;
+    const EMPLOYER_PRIVAT = 21;
+    const EMPLOYER_HR = 22;
 
     public $loginUrl = '/';
 
@@ -63,7 +69,19 @@ class User extends \dektrium\user\models\User implements IdentityInterface
 
     public function getCompany()
     {
+        if ($this->status == self::EMPLOYER_HR) {
+            $userCompany = UserCompany::find()->where(['user_id' => $this->id])->one();
+            return Company::find()->where(['id' => $userCompany->company_id]);
+        }
         return $this->hasOne(Company::className(), ['user_id'=>'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserCompany()
+    {
+        return $this->hasMany(UserCompany::className(), ['user_id' => 'id']);
     }
 
     public function getUnreadMessages()

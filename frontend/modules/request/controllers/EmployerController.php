@@ -72,7 +72,14 @@ class EmployerController extends MyActiveController
         throw new HttpException(404, 'Not found');
         $result = ['Vacancy'=>[], 'Resume'=>[]];
         /** @var Vacancy[] $vacancies */
-        $vacancies = Vacancy::find()->where(['owner'=>\Yii::$app->user->id, 'status'=>Vacancy::STATUS_ACTIVE])->all();
+        $vacancies = Vacancy::find()->joinWith(['company', 'company.userCompany'])
+            ->where([
+                'or',
+                ['=', 'vacancy.owner', Yii::$app->user->id],
+                ['=', 'user_company.user_id', Yii::$app->user->id],
+                ['=', 'company.owner', Yii::$app->user->id]
+            ])
+            ->andWhere([Vacancy::tableName().'.status'=>Vacancy::STATUS_ACTIVE])->all();
         foreach ($vacancies as $vacancy){
             $responses = Message::find()->where(['subject'=>'Vacancy', 'subject_id'=>$vacancy->id])->count();
             $result['Vacancy'][]=[
