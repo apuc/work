@@ -75,7 +75,7 @@ const actions = {
     addHr({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.post('/registration/register-hr', payload)
+            api.post('/request/company/register-hr', payload)
                 .then(res => {
                     console.log(res);
                     //resolve(res.data);

@@ -3,25 +3,25 @@
     <p class="registration__title">Добавить HR менеджера:</p>
     <input type="hidden" name="_csrf" :value="csrf">
     <div class="form-group ">
-      <input v-model="name"
-             @focus="showNameError = false"
+      <input v-model="first_name"
+             @focus="showFirstNameError = false"
              class="input-style"
              type="text"
              name="first_name"
              placeholder="Имя"
       >
-      <span v-if="showNameError" class="help-block">Необходимо заполнить поле Имя.</span>
+      <span v-if="showFirstNameError" class="help-block">Необходимо заполнить поле Имя.</span>
     </div>
     <div class="form-group">
       <input
-          v-model="surname"
-          @focus="showSurnameError = false"
+          v-model="second_name"
+          @focus="showSecondNameError = false"
           class="input-style"
           type="text"
           name="second_name"
           placeholder="Фамилия"
       >
-      <span v-if="showSurnameError" class="help-block">Необходимо заполнить поле Фамилия.</span>
+      <span v-if="showSecondNameError" class="help-block">Необходимо заполнить поле Фамилия.</span>
     </div>
 
     <div class="form-group ">
@@ -51,14 +51,20 @@ export default {
   name: 'FormAddHr',
   data(){
     return {
-      name: '',
-      surname: '',
+      first_name: '',
+      second_name: '',
       email: '',
       password: '',
       showPasswordError: false,
-      showNameError: false,
-      showSurnameError: false,
+      showFirstNameError: false,
+      showSecondNameError: false,
       showEmailError: false
+    }
+  },
+  props: {
+    company: {
+      type: Object,
+      default: () => {}
     }
   },
   computed: {
@@ -72,12 +78,12 @@ export default {
   },
   methods: {
     validate () {
-      if(this.name.length <= 3 ){
-        this.showNameError = true;
+      if(this.first_name.length <= 3 ){
+        this.showFirstNameError = true;
         return false
       }
-      if(this.surname.length <= 3){
-        this.showSurnameError = true;
+      if(this.second_name.length <= 3){
+        this.showSecondNameError = true;
         return false
       }
       if(this.email.length === 0){
@@ -85,7 +91,7 @@ export default {
         return false
       }
       if(this.password.length > 0){
-        this.submitAction( { name: this.name, surname: this.surname, email: this.email, password: this.password } )
+        this.submitAction( { first_name: this.first_name, second_name: this.second_name, email: this.email, password: this.password, company_id: this.company.id  } )
       }
       else {
         this.showPasswordError = true;
@@ -97,9 +103,9 @@ export default {
       })
     },
     clear () {
-      this.name = ''
+      this.first_name = ''
       this.email = ''
-      this.surname = ''
+      this.second_name = ''
       this.password = ''
     },
   },

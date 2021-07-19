@@ -33,7 +33,7 @@
     </template>
 
   </FormTemplate>
-  <FormAddHr />
+  <FormAddHr :company="dataCompany" />
   </div>
 </template>
 
