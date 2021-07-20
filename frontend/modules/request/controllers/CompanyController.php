@@ -262,6 +262,11 @@ class CompanyController extends MyActiveController
     public function actionRegisterHr()
     {
         if (Yii::$app->request->post()) {
+            $company=Company::find()->where(['id'=>Yii::$app->request->post('company_id')])->one();
+            if(!$company)
+                throw new HttpException(403, 'Такой компании не существует');
+            if($company->owner!=Yii::$app->user->id)
+                throw new HttpException(403, 'У вас нет прав для совершения этого действия');
             /** @var User $model */
             $model = new User;
             $post = \Yii::$app->request->post();
