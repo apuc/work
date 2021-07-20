@@ -5,10 +5,13 @@ namespace backend\modules\company\controllers;
 use common\classes\Debug;
 use common\classes\tariff\TariffFactory;
 use common\models\Phone;
+use common\models\User;
+use common\models\UserCompany;
 use dektrium\user\filters\AccessRule;
 use Yii;
 use common\models\Company;
 use backend\modules\company\models\CompanySearch;
+use yii\base\BaseObject;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -91,7 +94,16 @@ class CompanyController extends Controller
     public function actionCreate()
     {
         $model = new Company();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $post = Yii::$app->request->post();
+        if ($model->load($post) && $model->save()) {
+            if ($post['Company']['users']) {
+                foreach ($post['Company']['users'] as $usr){
+                    $userCompany = new UserCompany();
+                    $userCompany->company_id = $model->id;
+                    $userCompany->user_id = $usr;
+                    $userCompany->save();
+                }
+            }
             $phone = new Phone();
             $phone->company_id = $model->id;
             $phone->number = Yii::$app->request->post('phone_number');
@@ -114,8 +126,23 @@ class CompanyController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $post = Yii::$app->request->post();
+        if ($model->load($post) && $model->save()) {
+            if ($post['Company']['users']) {
+                foreach ($model->userCompany as $usr){
+                    $usr->delete();
+                }
+                foreach ($post['Company']['users'] as $usr){
+                    $userCompany = new UserCompany();
+                    $userCompany->company_id = $model->id;
+                    $userCompany->user_id = $usr;
+                    $userCompany->save();
+                }
+            } else{
+                foreach ($model->userCompany as $usr){
+                    $usr->delete();
+                }
+            }
             if($model->phone) {
                 $model->phone->number = Yii::$app->request->post('phone_number');
                 $model->phone->save();

@@ -54,6 +54,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'contact_person',
             'phone.number',
             [
+                'label' => 'Пользователи',
+                'value' => function ($model) {
+                    $multiple_res = '';
+                    foreach($model->users as $user){
+                        $multiple_res .= ($multiple_res?', ':'').$user->email;
+                    }
+                    return $multiple_res;
+                },
+            ],
+            [
                 'attribute' => 'is_trusted',
                 'value' => function ($model) {
                     switch ($model->is_trusted){
