@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn>
+    <v-btn @click="$router.push('/personal-area/add-HR')">
       Добавить пользователя
     </v-btn>
     <ul class="collection">

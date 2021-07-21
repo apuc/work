@@ -4,6 +4,7 @@ import MainPage from './components/MainPage.vue'
 import MyMessage from './components/MyMessage.vue'
 import FormVacancy from './components/FormVacancy.vue'
 import FormResume from './components/FormResume.vue'
+import FormAddHr from './components/FormAddHr.vue'
 // import FormCompany from './components/FormCompany.vue'
 import AllVacancy from './components/AllVacancy.vue'
 import EditVacancy from './components/EditVacancy'
@@ -162,6 +163,12 @@ export default new Router({
       name: 'users-company',
       meta: {title: 'Страница пользователей компаний'},
       component: UsersCompany
+    },
+    {
+      path: '/personal-area/add-HR',
+      name: 'add-HR',
+      meta: {title: 'Страница пользователей компаний'},
+      component: FormAddHr
     },
   ]
 })
