@@ -66,6 +66,11 @@ class VacancyController extends MyActiveController
         /** @var ActiveRecord[] $models */
         foreach ($models as $i=> $model) {
             $response[$i]=ArrayHelper::toArray($model);
+            if (($response[$i]['active_until'] - time()) <= 1296000) {
+                $response[$i]['to_prolong'] = 1;
+            } else {
+                $response[$i]['to_prolong'] = 0;
+            }
             if(Yii::$app->request->get('expand')) {
                 foreach ($expands as $expand) {
                     $exploded = explode('.', $expand);
