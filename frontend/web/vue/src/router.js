@@ -21,7 +21,7 @@ import BannerList from './pages/Banners/BannerList.vue'
 import EditBanner from './pages/Banners/EditBanner.vue'
 import AddPromo from './pages/Promo/AddPromo'
 import Operations from './pages/Operations/Operations'
-
+import UsersCompany from './pages/UsersCompany/UsersCompany'
 Vue.use(Router);
 
 export default new Router({
@@ -156,6 +156,12 @@ export default new Router({
       name: 'operations',
       meta: {title: 'Список операций'},
       component: Operations
+    },
+    {
+      path: '/personal-area/users-company',
+      name: 'users-company',
+      meta: {title: 'Страница пользователей компаний'},
+      component: UsersCompany
     },
   ]
 })

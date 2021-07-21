@@ -6,6 +6,11 @@
       <v-btn @click="toggleShow">
         Выбрать фото
       </v-btn>
+      <router-link to="/personal-area/users-company" class="link_users_company">
+        <v-btn>
+          Доступ к компании
+        </v-btn>
+      </router-link>
       <my-upload field="img"
                  @crop-success="cropSuccess"
                  v-model="show"
@@ -313,5 +318,7 @@ export default {
 </script>
 
 <style>
-
+.link_users_company {
+  text-decoration: none;
+}
 </style>
