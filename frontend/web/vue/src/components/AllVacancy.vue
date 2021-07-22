@@ -45,6 +45,7 @@
         
         <span class="vacancy__wrapper__bracket">)</span>
       </div>
+
       <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
         <v-btn class="vacancy__link">
           Создать вакансию
@@ -137,14 +138,21 @@
             </div>
             <!--            </div>-->
           </div>
-          <p class="mt-6" style="font-weight: 600;">
+          <div class="mt-6" style="font-weight: 600;">
             Ваша вакансия
-            <span v-if="isVacancyActive(item.active_until)" style="font-weight: 800"> Активна до: <span class="subtitle__active">{{ item.active_until }}</span></span>
-            <span v-else class="vacancy__inactive">НЕ активна</span>
-            <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2;    font-size: 11px;    font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate">
-              ПРОДЛИТЬ ВАКАНСИЮ
-            </v-btn>
-          </p>
+            <div v-if="isVacancyActive(item.active_until)">
+              <span style="font-weight: 800"> Активна до: <span class="subtitle__active">{{ item.active_until }}</span></span>
+              <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate">
+                ПРОДЛИТЬ ВАКАНСИЮ
+              </v-btn>
+            </div>
+            <div v-else>
+              <span class="vacancy__inactive">НЕ активна</span>
+              <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: rgb(189 189 189); font-size: 11px; font-weight: 600;margin-left: 30px;">
+                ПРОДЛИТЬ ВАКАНСИЮ
+              </v-btn>
+            </div>
+          </div>
         </div>
         <div class="resume__item free__vacancy" v-if="getAllVacancy.length<2 && (timestemp === null && timestemp < Date.now()/1000)">
           <div class="resume__actions" style="margin-top: 74px;">
@@ -331,7 +339,7 @@ export default {
         }
       });
       this.$swal({
-        title: 'Цена ' + price + ' ₽. Вы уверены?',
+        title: 'Хотите купить вакансию ?',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
