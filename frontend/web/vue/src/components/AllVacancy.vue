@@ -339,7 +339,7 @@ export default {
         }
       });
       this.$swal({
-        title: 'Хотите купить вакансию ?',
+        title: 'У вас будет списана вакансия. Вы уверены ?',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
