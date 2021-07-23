@@ -348,7 +348,7 @@ export default {
         cancelButtonText: 'Нет'
       }).then((result) => {
         if (result.value) {
-          this.$store.dispatch('buyCreate')
+          this.$store.dispatch('prolongVacancy')
           .then(data => {
             this.getCompany();
             this.$store.dispatch('getUserMe', this.$route.params.id)
