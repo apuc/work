@@ -309,6 +309,9 @@ class VacancyController extends MyActiveController
         if ($company->create_vacancy === 0 && $company->unlimited_vacancies_until < time()) {
             throw new UserException('У вас нет возможности создавать или продлевать вакансии', 401);
         }
+        if (($model->active_until - time()) > 1296000) {
+            throw new UserException('Прошло недостаточно времени для продления', 401);
+        }
         if ($model->active_until < time()) {
             $model->active_until = time()+(86400*30);
         } else {
