@@ -400,7 +400,7 @@ export default {
         }
       });
       this.$swal({
-        title: 'Цена ' + price + ' ₽. Вы уверены?',
+        title: 'Хотите купить вакансию ? Цена ' + price + ' ₽',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
