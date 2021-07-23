@@ -142,13 +142,13 @@
             Ваша вакансия
             <div v-if="isVacancyActive(item.active_until)">
               <span style="font-weight: 800"> Активна до: <span class="subtitle__active">{{ item.active_until }}</span></span>
-              <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate">
+              <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: rgb(189 189 189);; font-size: 11px; font-weight: 600;margin-left: 30px;">
                 ПРОДЛИТЬ ВАКАНСИЮ
               </v-btn>
             </div>
             <div v-else>
               <span class="vacancy__inactive">НЕ активна</span>
-              <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: rgb(189 189 189); font-size: 11px; font-weight: 600;margin-left: 30px;">
+              <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate">
                 ПРОДЛИТЬ ВАКАНСИЮ
               </v-btn>
             </div>
