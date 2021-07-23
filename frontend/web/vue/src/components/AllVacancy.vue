@@ -340,6 +340,15 @@ export default {
         if (item.alias === 'vacancy_create') {
           price = item.price
         }
+      });
+      this.$swal({
+        title: 'У вас будет списана вакансия. Вы уверены ?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет'
       }).then((result) => {
         if (result.value) {
           this.$store.dispatch('prolongVacancy', vacancyId)
