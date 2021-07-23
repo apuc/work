@@ -122,7 +122,7 @@ const actions = {
     buyCreate({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.post('/request/vacancy/buy-create')
+            api.post('/request/vacancy/prolong')
                 .then(res => {
                     resolve(res.data);
                 })
