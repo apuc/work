@@ -149,12 +149,12 @@
             <div v-else>
               <span class="vacancy__inactive">НЕ активна</span>
               <div v-if="(timestemp == null || timestemp < Date.now()/1000) && vacancyCreate == 0">
-                <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="warningNotVacancyCreate(item.id)">
+                <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate">
                   ПРОДЛИТЬ ВАКАНСИЮ
                 </v-btn>
               </div>
               <div v-else>
-                <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate(item.id)">
+                <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="prolongVacancyCreate(item.id)">
                   ПРОДЛИТЬ ВАКАНСИЮ
                 </v-btn>
               </div>
@@ -338,7 +338,7 @@ export default {
         }
       });
     },
-    warningNotVacancyCreate(vacancyId) {
+    prolongVacancyCreate(vacancyId) {
       let price = 0;
       this.servicePrice.forEach((item) => {
         if (item.alias === 'vacancy_create') {
@@ -346,7 +346,7 @@ export default {
         }
       });
       this.$swal({
-        title: 'Хотите купить вакансию ?',
+        title: 'У вас будет списана вакансия. Вы уверены ?',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -392,7 +392,7 @@ export default {
         }
       });
     },
-    buyVacancyCreate(vacancyId) {
+    buyVacancyCreate() {
       let price = 0;
       this.servicePrice.forEach((item) => {
         if (item.alias === 'vacancy_create') {
@@ -400,7 +400,7 @@ export default {
         }
       });
       this.$swal({
-        title: 'У вас будет списана вакансия. Вы уверены ?',
+        title: 'Хотите купить вакансию ?',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -409,7 +409,7 @@ export default {
         cancelButtonText: 'Нет'
       }).then((result) => {
         if (result.value) {
-          this.$store.dispatch('prolongVacancy', vacancyId)
+          this.$store.dispatch('buyCreate')
           .then(data => {
             this.getCompany();
             this.$store.dispatch('getUserMe', this.$route.params.id)
