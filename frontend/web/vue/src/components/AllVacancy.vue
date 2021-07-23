@@ -148,7 +148,7 @@
             </div>
             <div v-else>
               <span class="vacancy__inactive">НЕ активна</span>
-              <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate">
+              <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate(item.id)">
                 ПРОДЛИТЬ ВАКАНСИЮ
               </v-btn>
             </div>
@@ -331,7 +331,7 @@ export default {
         }
       });
     },
-    buyVacancyCreate() {
+    buyVacancyCreate(vacancyId) {
       let price = 0;
       this.servicePrice.forEach((item) => {
         if (item.alias === 'vacancy_create') {
@@ -348,7 +348,7 @@ export default {
         cancelButtonText: 'Нет'
       }).then((result) => {
         if (result.value) {
-          this.$store.dispatch('buyCreate')
+          this.$store.dispatch('prolongVacancy', vacancyId)
           .then(data => {
             this.getCompany();
             this.$store.dispatch('getUserMe', this.$route.params.id)

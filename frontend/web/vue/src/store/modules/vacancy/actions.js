@@ -2,9 +2,9 @@ import * as type from './types';
 import api from '../../../api';
 
 const actions = {
-    async prolongVacancy({commit,dispatch},payload){
+    async prolongVacancy({commit}, payload){
         try {
-            await api.post('/request/vacancy/prolong', {id: payload.id});
+            await api.post('/request/vacancy/prolong', {id: payload});
             payload.item.update_time = new Date().toLocaleString().slice(0,-3);
             payload.item.active_until = payload.active_until;
             commit(type.UPDATE_VACANCY_IN_ALL_VACANCY,{index: payload.index,item: payload.item});
@@ -122,7 +122,7 @@ const actions = {
     buyCreate({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.post('/request/vacancy/prolong')
+            api.post('/request/vacancy/buy-create')
                 .then(res => {
                     resolve(res.data);
                 })
