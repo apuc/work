@@ -148,9 +148,16 @@
             </div>
             <div v-else>
               <span class="vacancy__inactive">НЕ активна</span>
-              <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate(item.id)">
-                ПРОДЛИТЬ ВАКАНСИЮ
-              </v-btn>
+              <div v-if="(timestemp == null || timestemp < Date.now()/1000) && vacancyCreate == 0">
+                <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="warningNotVacancyCreate(item.id)">
+                  ПРОДЛИТЬ ВАКАНСИЮ
+                </v-btn>
+              </div>
+              <div v-else>
+                <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate(item.id)">
+                  ПРОДЛИТЬ ВАКАНСИЮ
+                </v-btn>
+              </div>
             </div>
           </div>
         </div>
@@ -312,6 +319,60 @@ export default {
             });
             return data;
           }).catch(error => {
+            if (error === 'У вас недостаточно средств на счету') {
+              this.$swal({
+                title: 'У вас недостаточно средств на счету',
+                type: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Пополнить счет',
+                cancelButtonText: 'Отмена'
+              }).then((result) => {
+                if (result.value) {
+                  this.$router.push({name: 'payment',query: { price: price }});
+                }
+              });
+            }
+          });
+        }
+      });
+    },
+    warningNotVacancyCreate(vacancyId) {
+      let price = 0;
+      this.servicePrice.forEach((item) => {
+        if (item.alias === 'vacancy_create') {
+          price = item.price
+        }
+      });
+      this.$swal({
+        title: 'Хотите купить вакансию ?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет'
+      }).then((result) => {
+        if (result.value) {
+          this.$store.dispatch('prolongVacancy', vacancyId)
+              .then(data => {
+                this.getCompany();
+                this.$store.dispatch('getUserMe', this.$route.params.id)
+                    .then(data => {
+                      return data;
+                    }).catch(error => {
+                  this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: error
+                  })
+                });
+                return data;
+              }).catch(error => {
             if (error === 'У вас недостаточно средств на счету') {
               this.$swal({
                 title: 'У вас недостаточно средств на счету',

@@ -5,6 +5,9 @@ const actions = {
     async prolongVacancy({commit}, payload){
         try {
             await api.post('/request/vacancy/prolong', {id: payload});
+            payload.item.update_time = new Date().toLocaleString().slice(0,-3);
+            payload.item.active_until = payload.active_until;
+            commit(type.UPDATE_VACANCY_IN_ALL_VACANCY,{index: payload.index,item: payload.item});
         } catch (e){
             this.$swal({
                 title: 'У вас недостаточно средств на счету',
