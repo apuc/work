@@ -138,18 +138,20 @@
             </div>
             <!--            </div>-->
           </div>
-          <div class="mt-6" style="font-weight: 600;">
-            Ваша вакансия
-            <div v-if="isVacancyActive(item.active_until)">
+          <div class="vacancy-status-container" style="font-weight: 600;">
+            <span class="mr-10">Ваша вакансия</span>
+            <template v-if="isVacancyActive(item.active_until)">
               <span style="font-weight: 800"> Активна до: <span class="subtitle__active">{{ item.active_until }}</span></span>
-            </div>
-            <div v-else>
+            </template>
+            <template v-else>
               <span class="vacancy__inactive">НЕ активна</span>
-            </div>
-            <v-btn v-if="item.to_prolong === 0" round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="checkProlong(item.id)">
+            </template>
+            <v-btn v-if="item.to_prolong === 0" round class="prolong-btn btn-disabled hover__vacancy_btn my-btn mt-0"
+                   @click="checkProlong(item.id)">
               ПРОДЛИТЬ ВАКАНСИЮ
             </v-btn>
-            <v-btn v-else round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2; font-size: 11px; font-weight: 600;margin-left: 30px;" @click="checkProlong(item.id)">
+            <v-btn v-else round class="prolong-btn hover__vacancy_btn my-btn mt-0"
+                   @click="checkProlong(item.id)">
               ПРОДЛИТЬ ВАКАНСИЮ
             </v-btn>
           </div>
@@ -348,40 +350,7 @@ export default {
         cancelButtonText: 'Нет'
       }).then((result) => {
         if (result.value) {
-          this.$store.dispatch('prolongVacancy', vacancyId)
-              .then(data => {
-                this.getCompany();
-                this.$store.dispatch('getUserMe', this.$route.params.id)
-                    .then(data => {
-                      return data;
-                    }).catch(error => {
-                  this.$swal({
-                    toast: true,
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 4000,
-                    type: 'error',
-                    title: error
-                  })
-                });
-                return data;
-              }).catch(error => {
-            if (error === 'У вас недостаточно средств на счету') {
-              this.$swal({
-                title: 'У вас недостаточно средств на счету',
-                type: 'error',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Пополнить счет',
-                cancelButtonText: 'Отмена'
-              }).then((result) => {
-                if (result.value) {
-                  this.$router.push({name: 'payment',query: { price: price }});
-                }
-              });
-            }
-          });
+          this.prolongVacancyQuery(vacancyId)
         }
       });
     },
@@ -393,41 +362,46 @@ export default {
           this.warningNotVacancyCreate()
         }
       } else {
-        this.$store.dispatch('prolongVacancy', vacancyId)
-            .then(data => {
-              this.getCompany();
-              this.$store.dispatch('getUserMe', this.$route.params.id)
-                  .then(data => {
-                    return data;
-                  }).catch(error => {
-                this.$swal({
-                  toast: true,
-                  position: 'bottom-end',
-                  showConfirmButton: false,
-                  timer: 4000,
-                  type: 'error',
-                  title: error
-                })
-              });
-              return data;
-            }).catch(error => {
-          if (error === 'У вас недостаточно средств на счету') {
-            this.$swal({
-              title: 'У вас недостаточно средств на счету',
-              type: 'error',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Пополнить счет',
-              cancelButtonText: 'Отмена'
-            }).then((result) => {
-              if (result.value) {
-                this.$router.push({name: 'payment',query: { price: price }});
-              }
-            });
-          }
-        });
+        this.prolongVacancyQuery(vacancyId)
       }
+    },
+    async prolongVacancyQuery(vacancyId){
+      await this.$store.dispatch('prolongVacancy', vacancyId)
+          .then(data => {
+            this.getCompany();
+            this.$store.dispatch('getUserMe', this.$route.params.id)
+                .then(data => {
+                  return data;
+                }).catch(error => {
+              this.$swal({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 4000,
+                type: 'error',
+                title: error
+              })
+            });
+            this.getVacancy(this.paginationCurrentPage)
+            return data;
+          }).catch(error => {
+        if (error === 'У вас недостаточно средств на счету') {
+          this.$swal({
+            title: 'У вас недостаточно средств на счету',
+            type: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Пополнить счет',
+            cancelButtonText: 'Отмена'
+          }).then((result) => {
+            if (result.value) {
+              this.$router.push({name: 'payment',query: { price: price }});
+            }
+          });
+        }
+      });
+
     },
     buyVacancyCreate() {
       let price = 0;
@@ -767,7 +741,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .vacancy__container_empty {
   display: flex;
   flex-direction: column;
@@ -968,6 +942,32 @@ a {
     align-items: center;
     margin-left: 5px;
 
+}
+
+.prolong-btn{
+  background-color: #1976d2 !important; ;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 0 auto;
+}
+
+.btn-disabled{
+  opacity: .5;
+  pointer-events: none;
+  &:hover{
+    cursor: not-allowed;
+  }
+}
+
+.vacancy-status-container{
+  display: flex;
+  align-items: center;
+  padding: 0 20px 10px 0;
+}
+
+.mr-10{
+  margin-right: 10px;
 }
 
 @media (max-width: 560px) {
