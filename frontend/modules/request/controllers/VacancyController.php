@@ -66,6 +66,11 @@ class VacancyController extends MyActiveController
         /** @var ActiveRecord[] $models */
         foreach ($models as $i=> $model) {
             $response[$i]=ArrayHelper::toArray($model);
+            if (($response[$i]['active_until'] - time()) <= 1296000) {
+                $response[$i]['to_prolong'] = 1;
+            } else {
+                $response[$i]['to_prolong'] = 0;
+            }
             if(Yii::$app->request->get('expand')) {
                 foreach ($expands as $expand) {
                     $exploded = explode('.', $expand);
@@ -303,6 +308,9 @@ class VacancyController extends MyActiveController
         $company = $model->company;
         if ($company->create_vacancy === 0 && $company->unlimited_vacancies_until < time()) {
             throw new UserException('У вас нет возможности создавать или продлевать вакансии', 401);
+        }
+        if (($model->active_until - time()) > 1296000) {
+            throw new UserException('Прошло недостаточно времени для продления', 401);
         }
         if ($model->active_until < time()) {
             $model->active_until = time()+(86400*30);
