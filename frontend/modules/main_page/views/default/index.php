@@ -72,6 +72,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
                     <a class="nhome__nav-item" href="<?= Resume::getSearchPageUrl() ?>">Поиск резюме</a>
                     <a class="nhome__nav-item" href="<?= Vacancy::getSearchPageUrl(false, false, false, $current_country?$current_country->slug:false) ?>">Поиск вакансий</a>
                     <?php endif; ?>
+                    <a class="nhome__nav-item" href="/news/">Новости</a>
                     <?php if (Yii::$app->user->isGuest): ?>
                         <button class="nhome__nav-item nav-btn jsLogin">
                             Вход

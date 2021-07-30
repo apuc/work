@@ -3346,7 +3346,7 @@ button {
     position: relative;
     z-index: 1;
     width: 550px;
-    padding: 25px 24px 25px 17px; }
+    padding: 44px 24px 25px 17px; }
 @media (max-width: 1500px) {
     .nhome__aside {
         width: 460px; } }
@@ -3936,13 +3936,12 @@ button {
     .nhome__nav span {
         color: #000000; } }
 .nhome__nav-item {
-    padding: 3px 20px;
+    padding: 3px 18px;
     font-size: 16px;
     font-weight: 800;
     color: #ffffff;
     background: none;
     border: none;
-    width: 215px;
     text-align: left; }
 @media (max-width: 1250px) {
     .nhome__nav-item {

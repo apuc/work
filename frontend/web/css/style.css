@@ -18065,11 +18065,11 @@ address p {
   }
 }
 
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
   .nhome__nav-item {
     width: 190px;
   }
-}
+} */
 
 .nhome-white-line:nth-child(1) .nhome-white-line__square {
   left: 0;

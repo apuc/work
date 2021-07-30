@@ -12,6 +12,9 @@ php yii minify - enter every time scripts or styles change
 
 import database
 
+migrations for comments extension:
+https://github.com/yii2mod/yii2-comments
+
 In **frontend/web/vue/.env.local**
 change your app url
 
