@@ -7280,6 +7280,22 @@ main {
     font-weight: 800;
 }
 
+.news-item__description{
+    position: relative;
+}
+
+.news-item__view{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+}
+
+.news-item__view > i{
+    font-size: 18px
+}
+
 .news-item h2 img {
     margin-left: 15px;
 }
