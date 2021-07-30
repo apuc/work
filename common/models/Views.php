@@ -22,6 +22,7 @@ class Views extends \yii\db\ActiveRecord
 {
     const TYPE_RESUME = 'Resume';
     const TYPE_VACANCY = 'Vacancy';
+    const TYPE_NEW = 'New';
 
     /**
      * {@inheritdoc}
@@ -90,12 +91,13 @@ class Views extends \yii\db\ActiveRecord
         return [
             self::TYPE_RESUME => 'Resume',
             self::TYPE_VACANCY => 'Vacancy',
+            self::TYPE_NEW => 'new',
         ];
     }
 
     public function getSubjectName()
     {
-        if ($this->subject_type == 'Vacancy') {
+        if ($this->subject_type == self::TYPE_VACANCY) {
             $vacancy = Vacancy::find()->where(['id' => $this->subject_id])->one();
             if(!empty($vacancy)) {
                 return $vacancy->post;
@@ -103,8 +105,16 @@ class Views extends \yii\db\ActiveRecord
             return false;
         }
 
-        if ($this->subject_type == 'Resume') {
+        if ($this->subject_type == self::TYPE_RESUME) {
             $resume = Resume::find()->where(['id' => $this->subject_id])->one();
+            if(!empty($resume)) {
+                return $resume->title;
+            }
+            return false;
+        }
+
+        if ($this->subject_type == self::TYPE_NEW) {
+            $resume = News::find()->where(['id' => $this->subject_id])->one();
             if(!empty($resume)) {
                 return $resume->title;
             }

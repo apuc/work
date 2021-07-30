@@ -4,6 +4,9 @@ namespace frontend\modules\news\controllers;
 
 use common\models\Country;
 use common\models\News;
+use common\models\Views;
+use Yii;
+use yii\base\BaseObject;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -60,6 +63,12 @@ class DefaultController extends Controller
          if (!$model) {
              throw new \yii\web\NotFoundHttpException('404');
          }
+         $view = new Views();
+         $view->subject_type = 'New';
+         $view->subject_id = $model->id;
+         $view->viewer_id = Yii::$app->user->id;
+         $view->dt_view = time();
+         $view->save();
          return $this->render('view', [
              'model'=>$model,
              'random'=>$random,
