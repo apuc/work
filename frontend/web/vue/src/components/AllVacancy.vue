@@ -355,7 +355,7 @@ export default {
       });
     },
     checkProlong(vacancyId) {
-      if (this.timestemp === null || this.timestemp < Date.now/1000 ) {
+      if (this.timestemp === null || this.timestemp < Date.now()/1000 ) {
         if (this.vacancyCreate > 0) {
           this.prolongVacancyCreate(vacancyId)
         } else {
