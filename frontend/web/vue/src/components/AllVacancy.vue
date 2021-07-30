@@ -45,6 +45,7 @@
         
         <span class="vacancy__wrapper__bracket">)</span>
       </div>
+
       <router-link class="vacancy__link" to="/personal-area/add-vacancy" v-if="vacancyCreate > 0 || (timestemp !== null && timestemp > Date.now()/1000)">
         <v-btn class="vacancy__link">
           Создать вакансию
@@ -137,14 +138,23 @@
             </div>
             <!--            </div>-->
           </div>
-          <p class="mt-6" style="font-weight: 600;">
-            Ваша вакансия
-            <span v-if="isVacancyActive(item.active_until)" style="font-weight: 800"> Активна до: <span class="subtitle__active">{{ item.active_until }}</span></span>
-            <span v-else class="vacancy__inactive">НЕ активна</span>
-            <v-btn round color="#dd3d34" dark class="hover__vacancy_btn my-btn mt-0" style="background-color: #1976d2;    font-size: 11px;    font-weight: 600;margin-left: 30px;" @click="buyVacancyCreate">
+          <div class="vacancy-status-container" style="font-weight: 600;">
+            <span class="mr-10">Ваша вакансия</span>
+            <template v-if="isVacancyActive(item.active_until)">
+              <span style="font-weight: 800"> Активна до: <span class="subtitle__active">{{ item.active_until }}</span></span>
+            </template>
+            <template v-else>
+              <span class="vacancy__inactive">НЕ активна</span>
+            </template>
+            <v-btn v-if="item.to_prolong === 0" round class="prolong-btn btn-disabled hover__vacancy_btn my-btn mt-0"
+                   @click="checkProlong(item.id)">
               ПРОДЛИТЬ ВАКАНСИЮ
             </v-btn>
-          </p>
+            <v-btn v-else round class="prolong-btn hover__vacancy_btn my-btn mt-0"
+                   @click="checkProlong(item.id)">
+              ПРОДЛИТЬ ВАКАНСИЮ
+            </v-btn>
+          </div>
         </div>
         <div class="resume__item free__vacancy" v-if="getAllVacancy.length<2 && (timestemp === null && timestemp < Date.now()/1000)">
           <div class="resume__actions" style="margin-top: 74px;">
@@ -323,6 +333,76 @@ export default {
         }
       });
     },
+    prolongVacancyCreate(vacancyId) {
+      let price = 0;
+      this.servicePrice.forEach((item) => {
+        if (item.alias === 'vacancy_create') {
+          price = item.price
+        }
+      });
+      this.$swal({
+        title: 'У вас будет списана вакансия. Вы уверены ?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет'
+      }).then((result) => {
+        if (result.value) {
+          this.prolongVacancyQuery(vacancyId)
+        }
+      });
+    },
+    checkProlong(vacancyId) {
+      if (this.timestemp === null || this.timestemp < Date.now()/1000 ) {
+        if (this.vacancyCreate > 0) {
+          this.prolongVacancyCreate(vacancyId)
+        } else {
+          this.warningNotVacancyCreate()
+        }
+      } else {
+        this.prolongVacancyQuery(vacancyId)
+      }
+    },
+    async prolongVacancyQuery(vacancyId){
+      await this.$store.dispatch('prolongVacancy', vacancyId)
+          .then(data => {
+            this.getCompany();
+            this.$store.dispatch('getUserMe', this.$route.params.id)
+                .then(data => {
+                  return data;
+                }).catch(error => {
+              this.$swal({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 4000,
+                type: 'error',
+                title: error
+              })
+            });
+            this.getVacancy(this.paginationCurrentPage)
+            return data;
+          }).catch(error => {
+        if (error === 'У вас недостаточно средств на счету') {
+          this.$swal({
+            title: 'У вас недостаточно средств на счету',
+            type: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Пополнить счет',
+            cancelButtonText: 'Отмена'
+          }).then((result) => {
+            if (result.value) {
+              this.$router.push({name: 'payment',query: { price: price }});
+            }
+          });
+        }
+      });
+
+    },
     buyVacancyCreate() {
       let price = 0;
       this.servicePrice.forEach((item) => {
@@ -331,7 +411,7 @@ export default {
         }
       });
       this.$swal({
-        title: 'Цена ' + price + ' ₽. Вы уверены?',
+        title: 'Хотите купить вакансию ? Цена ' + price + ' ₽',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -358,6 +438,60 @@ export default {
             });
             return data;
           }).catch(error => {
+            if (error === 'У вас недостаточно средств на счету') {
+              this.$swal({
+                title: 'У вас недостаточно средств на счету',
+                type: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Пополнить счет',
+                cancelButtonText: 'Отмена'
+              }).then((result) => {
+                if (result.value) {
+                  this.$router.push({name: 'payment',query: { price: price }});
+                }
+              });
+            }
+          });
+        }
+      });
+    },
+    warningNotVacancyCreate() {
+      let price = 0;
+      this.servicePrice.forEach((item) => {
+        if (item.alias === 'vacancy_create') {
+          price = item.price
+        }
+      });
+      this.$swal({
+        title: 'На вашем балансе недостаточно вакансий. Для продления необходимо приобрести вакансию. Цена' + price + ' ₽.',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет'
+      }).then((result) => {
+        if (result.value) {
+          this.$store.dispatch('buyCreate')
+              .then(data => {
+                this.getCompany();
+                this.$store.dispatch('getUserMe', this.$route.params.id)
+                    .then(data => {
+                      return data;
+                    }).catch(error => {
+                  this.$swal({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    type: 'error',
+                    title: error
+                  })
+                });
+                return data;
+              }).catch(error => {
             if (error === 'У вас недостаточно средств на счету') {
               this.$swal({
                 title: 'У вас недостаточно средств на счету',
@@ -607,7 +741,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .vacancy__container_empty {
   display: flex;
   flex-direction: column;
@@ -808,6 +942,32 @@ a {
     align-items: center;
     margin-left: 5px;
 
+}
+
+.prolong-btn{
+  background-color: #1976d2 !important; ;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 0 auto;
+}
+
+.btn-disabled{
+  opacity: .5;
+  pointer-events: none;
+  &:hover{
+    cursor: not-allowed;
+  }
+}
+
+.vacancy-status-container{
+  display: flex;
+  align-items: center;
+  padding: 0 20px 10px 0;
+}
+
+.mr-10{
+  margin-right: 10px;
 }
 
 @media (max-width: 560px) {

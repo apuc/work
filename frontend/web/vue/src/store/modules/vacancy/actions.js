@@ -2,25 +2,17 @@ import * as type from './types';
 import api from '../../../api';
 
 const actions = {
-    async prolongVacancy({commit,dispatch},payload){
-        try {
-            await api.post('/request/vacancy/prolong', {id: payload.id});
-            payload.item.update_time = new Date().toLocaleString().slice(0,-3);
-            payload.item.active_until = payload.active_until;
-            commit(type.UPDATE_VACANCY_IN_ALL_VACANCY,{index: payload.index,item: payload.item});
-        } catch (e){
-            this.$swal({
-                title: 'У вас недостаточно средств на счету',
-                type: 'error',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Пополнить счет',
-                cancelButtonText: 'Отмена'
-            })
-            console.log('Problem', e.message);
-            throw (e);
-        }
+    prolongVacancy({commit}, payload){
+        return new Promise((resolve, reject) => {
+            api.post('/request/vacancy/prolong', {id: payload})
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.message);
+                    reject(error.response.data.message);
+                });
+        });
     },
     getAllVacancy({commit}, payload) {
 
