@@ -2,10 +2,12 @@
 /** @var News[] $news */
 /** @var  array[] $model */
 /** @var  array[] $model1 */
+/** @var \yii\data\Pagination $pagination */
 
 
 use common\models\News;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 if ($model){
     $model = '<li>' . $model .'</li>';
@@ -47,11 +49,15 @@ if ($model){
                     <h2><?=$new->title?></h2>
                     <div class="news-items-img__block">
                         <img src="<?=$new->img?>" alt="">
-                        <div>
+                        <div class="news-item__description">
                             <p class="red-line">
                                 <?=$new->description?>
                             </p>
                             <a href="<?=Url::to(['/news/'.$new->slug])?>">Читать полностью</a>
+                            <span class="news-item__view">
+                                <i data-v-57635269="" aria-hidden="true" class="v-icon mr-1 material-icons theme--light">remove_red_eye</i>
+                                <span><?= $new->views; ?></span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -115,6 +121,14 @@ if ($model){
                 </div>
             </div>
         </div>
-
+        <?= LinkPager::widget([
+            'pagination' => $pagination,
+            'options' => ['class' => 'search-pagination'],
+            'maxButtonCount' => 5,
+            'firstPageLabel' => '<<',
+            'lastPageLabel' => '>>',
+            'nextPageLabel' => '>',
+            'prevPageLabel' => '<',
+        ]); ?>
     </div>
 </section>

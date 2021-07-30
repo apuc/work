@@ -19,10 +19,13 @@ use yii\behaviors\SluggableBehavior;
  * @property int $dt_update
  * @property int $dt_public
  * @property int $country_id
+ * @property int $views
  * @property string $meta_title
  * @property string $meta_description
  * @property string $meta_header
  * @property string $slug
+ *
+ * @property integer $countViews
  */
 class News extends \yii\db\ActiveRecord
 {
@@ -57,8 +60,13 @@ class News extends \yii\db\ActiveRecord
         return [
             [['title', 'content', 'meta_title', 'meta_description', 'meta_header'/*, 'slug'*/], 'required'],
             [['title', 'description', 'content', 'img', 'meta_title', 'meta_description', 'meta_header', 'slug'], 'string'],
-            [['status', 'dt_create', 'dt_update', 'dt_public', 'country_id'], 'integer'],
+            [['status', 'dt_create', 'dt_update', 'dt_public', 'country_id', 'views'], 'integer'],
         ];
+    }
+
+    public function extraFields()
+    {
+        return ['views0', 'countViews'];
     }
 
     /**
@@ -80,7 +88,8 @@ class News extends \yii\db\ActiveRecord
             'meta_title' => 'Заголовок страницы',
             'meta_description' => 'Описание страницы',
             'meta_header' => 'h1 заголовок страницы',
-            'slug' => 'Slug'
+            'slug' => 'Slug',
+            'views' => 'Количество просмотров'
         ];
     }
 
@@ -137,4 +146,13 @@ class News extends \yii\db\ActiveRecord
         return $country;
     }
 
+    public function getViews0()
+    {
+        return $this->hasMany(Views::className(), ['subject_id' => 'id'])->where(['subject_type' => 'New']);
+    }
+
+    public function getCountViews()
+    {
+        return Views::find()->where(['subject_id' => $this->id])->andWhere(['subject_type' => 'New'])->count();
+    }
 }

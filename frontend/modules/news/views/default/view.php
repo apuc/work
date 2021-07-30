@@ -46,6 +46,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->meta_descr
             <div class="news-view__block-text">
                 <?=$model->content?>
             </div>
+            <span class="news-view__count-views" >Просмотров: <?= $model->views ?></span>
         </div>
         <div class="news-view__interesting">
             <h2>Вам может быть интересно</h2>

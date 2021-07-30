@@ -20,7 +20,7 @@
                         item-value="id"
                         attach
                         chips
-                        label="Подкатегории"
+                        label="Дополнительные категории"
                         multiple
                         :rules="[v => v.length < 4  || 'Не больше трех категорий']"
                 ></v-select>
