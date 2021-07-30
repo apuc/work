@@ -2,8 +2,13 @@
 
 namespace frontend\modules\news\controllers;
 
+use common\classes\Debug;
 use common\models\Country;
 use common\models\News;
+use common\models\Views;
+use Yii;
+use yii\base\BaseObject;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -21,15 +26,32 @@ class DefaultController extends Controller
 
     public function actionIndex($slug = null)
     {
+        $page = Yii::$app->request->get('page')? Yii::$app->request->get('page') : 1;
         if ($slug > null){
             $model = Country::find()->where(['slug' => $slug])->one();
             if (!$model) {
                 throw new \yii\web\NotFoundHttpException('404');
             }
-            $news = News::find()->where(['country_id' => $model->id])->all();
+            $news = News::find();
+            $pagination = new Pagination([
+                'totalCount' => $news->count(),
+                'pageSize' => 10,
+                'defaultPageSize' => 10,
+                'pageSizeParam' => false,
+                'page' => $page - 1,
+            ]);
+            $news = $news->where(['country_id' => $model->id])->offset($pagination->offset)->limit($pagination->limit)->all();
         }else{
         $model = null;
-        $news = News::find()->all();
+        $news = News::find();
+            $pagination = new Pagination([
+                'totalCount' => $news->count(),
+                'pageSize' => 10,
+                'defaultPageSize' => 10,
+                'pageSizeParam' => false,
+                'page' => $page - 1,
+            ]);
+        $news = $news->offset($pagination->offset)->limit($pagination->limit)->all();
         }
         if ($model != null){
             $model1 = $model;
@@ -40,7 +62,8 @@ class DefaultController extends Controller
         return $this->render('index', [
             'news' => $news,
             'model' => $model,
-            'model1' => $model1
+            'model1' => $model1,
+            'pagination' => $pagination
         ]);
     }
 
@@ -60,6 +83,12 @@ class DefaultController extends Controller
          if (!$model) {
              throw new \yii\web\NotFoundHttpException('404');
          }
+         $view = new Views();
+         $view->subject_type = 'New';
+         $view->subject_id = $model->id;
+         $view->viewer_id = Yii::$app->user->id;
+         $view->dt_view = time();
+         $view->save();
          return $this->render('view', [
              'model'=>$model,
              'random'=>$random,

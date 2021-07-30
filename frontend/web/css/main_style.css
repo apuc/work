@@ -7380,6 +7380,7 @@ main {
 }
 
 .news-view__block {
+    position: relative;
     padding: 35px 30px 25px 45px;
     background-color: #ffffff;
 }
@@ -7390,6 +7391,14 @@ main {
     font-size: 24px;
     font-weight: 900;
     text-align: center;
+}
+
+.news-view__count-views{
+    position: absolute;
+    right: 15px;
+    bottom: 5px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .news-view__block-text img {
