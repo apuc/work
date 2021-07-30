@@ -40,10 +40,10 @@ class DefaultController extends Controller
             if (!$model) {
                 throw new \yii\web\NotFoundHttpException('404');
             }
-            $news = $news->where(['country_id' => $model->id])->offset($pagination->offset)->limit($pagination->limit)->all();
+            $news = $news->where(['country_id' => $model->id])->offset($pagination->offset)->limit($pagination->limit)->orderBy('id DESC')->all();
         }else{
         $model = null;
-        $news = $news->offset($pagination->offset)->limit($pagination->limit)->all();
+        $news = $news->offset($pagination->offset)->limit($pagination->limit)->orderBy('id DESC')->all();
         }
         if ($model != null){
             $model1 = $model;
