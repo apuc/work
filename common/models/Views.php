@@ -91,7 +91,7 @@ class Views extends \yii\db\ActiveRecord
         return [
             self::TYPE_RESUME => 'Resume',
             self::TYPE_VACANCY => 'Vacancy',
-            self::TYPE_NEW => 'new',
+            self::TYPE_NEW => 'New',
         ];
     }
 
