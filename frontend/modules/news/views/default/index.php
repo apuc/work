@@ -56,7 +56,9 @@ if ($model){
                             <a href="<?=Url::to(['/news/'.$new->slug])?>">Читать полностью</a>
                             <span class="news-item__view">
                                 <i data-v-57635269="" aria-hidden="true" class="v-icon mr-1 material-icons theme--light">remove_red_eye</i>
-                                <span><?= $new->views; ?></span>
+                                <span class="mr-1"><?= $new->views; ?></span>
+                                <i data-v-57635269="" aria-hidden="true" class="v-icon mr-1 material-icons theme--light">message</i>
+                                <span><?= $new->getCountComments(); ?></span>
                             </span>
                         </div>
                     </div>
