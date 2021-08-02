@@ -109,7 +109,7 @@ $this->params['exclude_breadcrumbs'][] = true;
                 if ($model->getCountComments()) {
                     return $model->getCountComments();
                 }
-                return '';
+                return 0;
             },
         ],
 
