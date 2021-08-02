@@ -30,6 +30,15 @@ class CountryController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        if ($action->id == 'update') {
+            $this->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * Lists all Country models.
      * @return mixed
@@ -85,6 +94,7 @@ class CountryController extends Controller
      */
     public function actionUpdate($id)
     {
+
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

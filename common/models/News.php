@@ -5,6 +5,8 @@ namespace common\models;
 use common\models\TagsRelation;
 use Yii;
 use yii\behaviors\SluggableBehavior;
+use yii\db\Query;
+use yii2mod\comments\widgets\Comment;
 
 /**
  * This is the model class for table "news".
@@ -154,5 +156,15 @@ class News extends \yii\db\ActiveRecord
     public function getCountViews()
     {
         return Views::find()->where(['subject_id' => $this->id])->andWhere(['subject_type' => 'New'])->count();
+    }
+
+    public function getComments()
+    {
+        return (new Query())->from('comment')->where(['entityId' => $this->id])->all();
+    }
+
+    public function getCountComments()
+    {
+        return (new Query())->from('comment')->where(['entityId' => $this->id])->count();
     }
 }

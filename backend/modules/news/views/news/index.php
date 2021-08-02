@@ -17,7 +17,7 @@ $this->params['exclude_breadcrumbs'][] = true;
 <div class="news-index">
     <?php
     $columns = [
-        ['class'=>'kartik\grid\SerialColumn', 'order'=>DynaGrid::ORDER_FIX_LEFT],
+        ['class' => 'kartik\grid\SerialColumn', 'order' => DynaGrid::ORDER_FIX_LEFT],
         [
             'attribute' => 'title',
             'contentOptions' => ['style' => 'white-space: normal;'],
@@ -45,7 +45,7 @@ $this->params['exclude_breadcrumbs'][] = true;
         [
             'attribute' => 'country_id',
             'value' => function ($model) {
-                if ($model->country){
+                if ($model->country) {
                     return $model->country->name;
                 }
                 return '';
@@ -100,29 +100,43 @@ $this->params['exclude_breadcrumbs'][] = true;
         ],
 
         [
-            'class'=>'kartik\grid\ActionColumn',
-            'dropdown'=>false,
-            'order'=>DynaGrid::ORDER_FIX_RIGHT
+            'attribute' => 'views'
         ],
-        ['class'=>'kartik\grid\CheckboxColumn', 'order'=>DynaGrid::ORDER_FIX_RIGHT],
+
+        [
+            'attribute' => 'Комментариев',
+            'value' => function ($model) {
+                if ($model->getCountComments()) {
+                    return $model->getCountComments();
+                }
+                return '';
+            },
+        ],
+
+        [
+            'class' => 'kartik\grid\ActionColumn',
+            'dropdown' => false,
+            'order' => DynaGrid::ORDER_FIX_RIGHT
+        ],
+        ['class' => 'kartik\grid\CheckboxColumn', 'order' => DynaGrid::ORDER_FIX_RIGHT],
     ];
 
     echo DynaGrid::widget([
-        'columns'=>$columns,
-        'storage'=>DynaGrid::TYPE_SESSION,
-        'theme'=>'panel-info',
-        'showPersonalize'=>true,
-        'gridOptions'=>[
-            'dataProvider'=>$dataProvider,
-            'filterModel'=>$searchModel,
-            'floatHeader'=>true,
-            'pjax'=>true,
-            'responsiveWrap'=>false,
+        'columns' => $columns,
+        'storage' => DynaGrid::TYPE_SESSION,
+        'theme' => 'panel-info',
+        'showPersonalize' => true,
+        'gridOptions' => [
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'floatHeader' => true,
+            'pjax' => true,
+            'responsiveWrap' => false,
             'floatHeaderOptions' => [
                 'scrollingTop' => '0',
             ],
-            'panel'=> [
-                'heading'=>Breadcrumbs::widget([
+            'panel' => [
+                'heading' => Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                     'options' => [
                         'class' => 'breadcrumb',
@@ -130,8 +144,8 @@ $this->params['exclude_breadcrumbs'][] = true;
                     ]
                 ])
             ],
-            'toolbar' =>  [
-                ['content'=>
+            'toolbar' => [
+                ['content' =>
                     Html::button('Удалить выбранные <i class="fa fa-trash"></i>', [
                         'type' => 'button',
                         'title' => 'Удалить все',
@@ -140,14 +154,14 @@ $this->params['exclude_breadcrumbs'][] = true;
                         'disabled' => true,
                         'data-url' => '/secure/news/news/batch-delete'
                     ]) .
-                    Html::a('<i class="fa fa-plus"></i>', ['/news/news/create'], ['title'=>'Добавить', 'class'=>'btn btn-success']) .
-                    Html::a('<i class="fa fa-repeat"></i>', [''], ['data-pjax'=>0, 'class' => 'btn btn-outline-secondary', 'title'=>'Сбросить фильтры'])
+                    Html::a('<i class="fa fa-plus"></i>', ['/news/news/create'], ['title' => 'Добавить', 'class' => 'btn btn-success']) .
+                    Html::a('<i class="fa fa-repeat"></i>', [''], ['data-pjax' => 0, 'class' => 'btn btn-outline-secondary', 'title' => 'Сбросить фильтры'])
                 ],
-                ['content'=>'{dynagridFilter}{dynagridSort}{dynagrid}'],
+                ['content' => '{dynagridFilter}{dynagridSort}{dynagrid}'],
                 '{export}',
             ]
         ],
-        'options'=>['id'=>'dynagrid-news']
+        'options' => ['id' => 'dynagrid-news']
     ]);
     ?>
 </div>
