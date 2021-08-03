@@ -121,6 +121,12 @@ class CompanyController extends MyActiveController
         if(!$user_company)
             throw new HttpException(403, 'Этот пользователь не включен в вашу компанию');
         $user_company->delete();
+        $employer = Employer::find()->where(['user_id' => Yii::$app->request->post('user_id')])->one();
+        if ($employer)
+            $employer->delete();
+        $user = User::find()->where(['id' => Yii::$app->request->post('user_id')])->one();
+        if ($user)
+            $user->delete();
         return true;
     }
 
@@ -291,7 +297,8 @@ class CompanyController extends MyActiveController
                 return json_encode($uc->errors);
             }
         } else {
-            return json_encode($model->errors);
+            if ($model->errors)
+                throw new HttpException(403, 'Пользователь с таким e-mail`ом уже существует');
         }
     }
 
@@ -302,6 +309,6 @@ class CompanyController extends MyActiveController
             throw new HttpException(403, 'Такой компании не существует');
         if ($company->owner != Yii::$app->user->id)
             throw new HttpException(403, 'У вас нет прав для совершения этого действия');
-        return json_encode($company->users);
+        return $company->users;
     }
 }

@@ -38,7 +38,6 @@
     </template>
 
   </FormTemplate>
-<!--  <FormAddHr :company="dataCompany" />-->
   </div>
 </template>
 
@@ -47,12 +46,12 @@ import FormCompany from '../lk-form/company-form';
 import FormTemplate from "./FormTemplate";
 import Company from "../mixins/company";
 import myUpload from 'vue-image-crop-upload';
-import FormAddHr from "./FormAddHr";
+
 
 export default {
   name: 'FormResume',
   mixins: [Company],
-  components: {FormAddHr, FormTemplate, myUpload},
+  components: { FormTemplate, myUpload},
   mounted() {
     this.getCompany();
   },
