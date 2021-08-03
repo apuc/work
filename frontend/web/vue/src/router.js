@@ -4,6 +4,7 @@ import MainPage from './components/MainPage.vue'
 import MyMessage from './components/MyMessage.vue'
 import FormVacancy from './components/FormVacancy.vue'
 import FormResume from './components/FormResume.vue'
+import FormAddHr from './components/FormAddHr.vue'
 // import FormCompany from './components/FormCompany.vue'
 import AllVacancy from './components/AllVacancy.vue'
 import EditVacancy from './components/EditVacancy'
@@ -21,7 +22,7 @@ import BannerList from './pages/Banners/BannerList.vue'
 import EditBanner from './pages/Banners/EditBanner.vue'
 import AddPromo from './pages/Promo/AddPromo'
 import Operations from './pages/Operations/Operations'
-
+import UsersCompany from './pages/UsersCompany/UsersCompany'
 Vue.use(Router);
 
 export default new Router({
@@ -156,6 +157,18 @@ export default new Router({
       name: 'operations',
       meta: {title: 'Список операций'},
       component: Operations
+    },
+    {
+      path: '/personal-area/users-company',
+      name: 'users-company',
+      meta: {title: 'Страница пользователей компаний'},
+      component: UsersCompany
+    },
+    {
+      path: '/personal-area/add-HR',
+      name: 'add-HR',
+      meta: {title: 'Страница пользователей компаний'},
+      component: FormAddHr
     },
   ]
 })

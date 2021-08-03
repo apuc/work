@@ -77,12 +77,11 @@ const actions = {
         return new Promise((resolve, reject) => {
             api.post('/request/company/register-hr', payload)
                 .then(res => {
-                    console.log(res);
-                    //resolve(res.data);
+                    resolve(res.data);
                 })
                 .catch(error => {
-                    console.log('Problem', error.message);
-                    reject(error);
+                    console.log('Problem:', error.response.data.message);
+                    reject(error.response.data);
                 });
         })
     },
@@ -119,12 +118,25 @@ const actions = {
         return new Promise((resolve, reject) => {
             api.post('/request/company/delete-user', payload)
                 .then(res => {
-                    commit(type.REMOVE_RIGHT_COMPANY, res.data);
                     resolve(res.data);
                 })
                 .catch(error => {
                     console.log('Problem', error.message);
                     reject(error);
+                });
+        })
+    },
+    getCompanyUsers({commit}, payload) {
+
+        return new Promise((resolve, reject) => {
+            api.post('/request/company/added-users', payload)
+                .then(res => {
+                    commit(type.COMPANY_USERS, res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    console.log('Problem', error.response.data.message);
+                    reject(error.response.data);
                 });
         })
     },

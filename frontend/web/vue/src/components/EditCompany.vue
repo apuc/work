@@ -6,6 +6,11 @@
       <v-btn @click="toggleShow">
         Выбрать фото
       </v-btn>
+      <router-link to="/personal-area/users-company" class="link_users_company">
+        <v-btn>
+          Доступ к компании
+        </v-btn>
+      </router-link>
       <my-upload field="img"
                  @crop-success="cropSuccess"
                  v-model="show"
@@ -33,7 +38,6 @@
     </template>
 
   </FormTemplate>
-<!--  <FormAddHr :company="dataCompany" />-->
   </div>
 </template>
 
@@ -42,12 +46,12 @@ import FormCompany from '../lk-form/company-form';
 import FormTemplate from "./FormTemplate";
 import Company from "../mixins/company";
 import myUpload from 'vue-image-crop-upload';
-import FormAddHr from "./FormAddHr";
+
 
 export default {
   name: 'FormResume',
   mixins: [Company],
-  components: {FormAddHr, FormTemplate, myUpload},
+  components: { FormTemplate, myUpload},
   mounted() {
     this.getCompany();
   },
@@ -313,5 +317,7 @@ export default {
 </script>
 
 <style>
-
+.link_users_company {
+  text-decoration: none;
+}
 </style>

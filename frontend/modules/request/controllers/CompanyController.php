@@ -45,7 +45,8 @@ class CompanyController extends MyActiveController
         return $actions;
     }
 
-    public function actionMyIndex(){
+    public function actionMyIndex()
+    {
         if(Yii::$app->user->isGuest)
             throw new UserException('Пользователь не авторизирован', 201);
         $requestParams = Yii::$app->getRequest()->getBodyParams();
@@ -120,6 +121,12 @@ class CompanyController extends MyActiveController
         if(!$user_company)
             throw new HttpException(403, 'Этот пользователь не включен в вашу компанию');
         $user_company->delete();
+        $employer = Employer::find()->where(['user_id' => Yii::$app->request->post('user_id')])->one();
+        if ($employer)
+            $employer->delete();
+        $user = User::find()->where(['id' => Yii::$app->request->post('user_id')])->one();
+        if ($user)
+            $user->delete();
         return true;
     }
 
@@ -261,38 +268,47 @@ class CompanyController extends MyActiveController
 
     public function actionRegisterHr()
     {
-        if (Yii::$app->request->post()) {
-            $company=Company::find()->where(['id'=>Yii::$app->request->post('company_id')])->one();
-            if(!$company)
-                throw new HttpException(403, 'Такой компании не существует');
-            if($company->owner!=Yii::$app->user->id)
-                throw new HttpException(403, 'У вас нет прав для совершения этого действия');
-            /** @var User $model */
-            $model = new User;
-            $post = \Yii::$app->request->post();
-            $model->username = $post['email'];
-            $model->email = $post['email'];
-            $model->password_hash = Yii::$app->getSecurity()->generatePasswordHash($post['password']);
-            $model->status = 22;
-            $model->confirmed_at = time();
-            if ($model->save()) {
-                $employer = new Employer();
-                $employer->first_name = $post['first_name'];
-                $employer->second_name = $post['second_name'];
-                $employer->user_id = $model->id;
-                $employer->owner = $model->id;
-                $employer->save();
-                $uc = new UserCompany();
-                $uc->user_id = $model->id;
-                $uc->company_id = $post['company_id'];
-                if ($uc->save()) {
-                    return json_encode('Ваш hr-менеджер успешно зарегистрирован.');
-                } else {
-                    return json_encode($uc->errors);
-                }
+        $company = Company::find()->where(['id' => Yii::$app->request->post('company_id')])->one();
+        if (!$company)
+            throw new HttpException(403, 'Такой компании не существует');
+        if ($company->owner != Yii::$app->user->id)
+            throw new HttpException(403, 'У вас нет прав для совершения этого действия');
+        /** @var User $model */
+        $model = new User;
+        $post = \Yii::$app->request->post();
+        $model->username = $post['email'];
+        $model->email = $post['email'];
+        $model->password_hash = Yii::$app->getSecurity()->generatePasswordHash($post['password']);
+        $model->status = 22;
+        $model->confirmed_at = time();
+        if ($model->save()) {
+            $employer = new Employer();
+            $employer->first_name = $post['first_name'];
+            $employer->second_name = $post['second_name'];
+            $employer->user_id = $model->id;
+            $employer->owner = $model->id;
+            $employer->save();
+            $uc = new UserCompany();
+            $uc->user_id = $model->id;
+            $uc->company_id = $post['company_id'];
+            if ($uc->save()) {
+                return json_encode('Ваш hr-менеджер успешно зарегистрирован.');
             } else {
-                return json_encode($model->errors);
+                return json_encode($uc->errors);
             }
+        } else {
+            if ($model->errors)
+                throw new HttpException(403, 'Пользователь с таким e-mail`ом уже существует');
         }
+    }
+
+    public function actionAddedUsers()
+    {
+        $company = Company::find()->where(['id' => Yii::$app->request->post('company_id')])->one();
+        if (!$company)
+            throw new HttpException(403, 'Такой компании не существует');
+        if ($company->owner != Yii::$app->user->id)
+            throw new HttpException(403, 'У вас нет прав для совершения этого действия');
+        return $company->users;
     }
 }

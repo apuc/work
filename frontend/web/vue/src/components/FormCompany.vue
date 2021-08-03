@@ -6,6 +6,9 @@
 				<v-btn @click="toggleShow">
 					Выбрать фото
 				</v-btn>
+        <v-btn>
+          Доступ к компании
+        </v-btn>
 				<my-upload field="img"
 						   @crop-success="cropSuccess"
 						   v-model="show"
