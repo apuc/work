@@ -83,13 +83,17 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => $description]);
 						<img src="/images/partners/matrix.png" alt="Matrix">
 					</div>
 
-					<div class="employer_partners_logo_item">
-						<img src="/images/partners/a.png" alt="SMM Academy">
-					</div>
+                    <div class="employer_partners_logo_item">
+                        <img src="/images/partners/Dinastia.png" style="" alt="Династия">
+                    </div>
 
 					<div class="employer_partners_logo_item">
 						<img src="/images/partners/crb-dnr.png" alt="Центральный Республиканский Банк">
 					</div>
+
+                    <div class="employer_partners_logo_item">
+                        <img src="/images/partners/goodzone.jpg" alt="GoodZone">
+                    </div>
 
 					<div class="employer_partners_logo_item">
 						<img src="/images/partners/moloko.png" alt="Геркулес">

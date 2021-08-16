@@ -7125,6 +7125,7 @@ main {
     justify-content: center;
     flex-wrap: wrap; }
 .employer_partners_logo_item {
+    max-width: 200px;
     position: relative;
     margin: auto 15px;
     padding: 15px 0; }
