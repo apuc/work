@@ -6,9 +6,12 @@ use common\classes\Debug;
 use common\models\Country;
 use common\models\News;
 use common\models\Views;
+use DateTime;
 use Yii;
 use yii\base\BaseObject;
 use yii\data\Pagination;
+use yii\helpers\StringHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -105,6 +108,47 @@ class DefaultController extends Controller
         } else {
             throw new \yii\web\NotFoundHttpException('404');
         }
+    }
+
+    public function actionRss()
+    {
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => News::find()
+                ->where(['<', 'dt_public', time()])
+                ->orderBy(['dt_public' => SORT_DESC])->limit(20),
+
+        ]);
+
+        $response = Yii::$app->getResponse();
+        $headers = $response->getHeaders();
+
+        $headers->set('Content-Type', 'application/rss+xml; charset=utf-8');
+
+        $response->content = \Zelenin\yii\extensions\Rss\RssView::widget([
+            'dataProvider' => $dataProvider,
+            'channel' => [
+                'title' => 'Новостная лента портала Rabota.Today',
+                'link' => Url::toRoute('/', true),
+                'description' => 'Rabota.Today – интернет-портал для поиска работы. В новостном разделе регулярно публикуется поучительный контент о персонале, начальстве, деньгах, собеседованиях, нюансах трудовых будней и тематические развлекательные статьи. Следи за обновлениями – держи руку на пульсе HR-сферы!',
+                'language' => Yii::$app->language
+            ],
+            'items' => [
+                'title' => function ($model, $widget) {
+                    return $model->title;
+                },
+                'description' => function ($model, $widget) {
+                    return StringHelper::truncateWords($model->description, 50);
+                },
+                'link' => function ($model, $widget) {
+                    return Url::toRoute(['/news/'.$model->slug], true);
+                },
+                'pubDate' => function ($model, $widget) {
+                    $date = DateTime::createFromFormat('d-m-Y', $model->dt_public);
+
+                    return $date->format(DATE_RSS);
+                },
+            ]
+        ]);
     }
 
 }
