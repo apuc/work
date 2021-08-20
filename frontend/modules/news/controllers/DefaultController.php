@@ -112,43 +112,41 @@ class DefaultController extends Controller
 
     public function actionRss()
     {
-        $dataProvider = new \yii\data\ActiveDataProvider([
-            'query' => News::find()
-                ->where(['<', 'dt_public', time()])
-                ->orderBy(['dt_public' => SORT_DESC])->limit(20),
 
-        ]);
+        $news = News::find()
+            ->where(['<', 'dt_public', time()])
+            ->orderBy(['dt_public' => SORT_DESC])
+            ->limit(20)
+            ->all();
+        $feed = new \kavalar\Feed;
 
-        $response = Yii::$app->getResponse();
-        $headers = $response->getHeaders();
+        $feed->addChannel('https://rabota.today/news-rss');
 
-        $headers->set('Content-Type', 'application/rss+xml; charset=utf-8');
+// required channel elements
+        $feed
+            ->addChannelTitle('Новостная лента портала Rabota.Today')
+            ->addChannelLink(Url::toRoute('/', true))
+            ->addChannelDescription('Rabota.Today – интернет-портал для поиска работы. В новостном разделе регулярно публикуется поучительный контент о персонале, начальстве, деньгах, собеседованиях, нюансах трудовых будней и тематические развлекательные статьи. Следи за обновлениями – держи руку на пульсе HR-сферы!');
 
-        $response->content = \Zelenin\yii\extensions\Rss\RssView::widget([
-            'dataProvider' => $dataProvider,
-            'channel' => [
-                'title' => 'Новостная лента портала Rabota.Today',
-                'link' => Url::toRoute('/', true),
-                'description' => 'Rabota.Today – интернет-портал для поиска работы. В новостном разделе регулярно публикуется поучительный контент о персонале, начальстве, деньгах, собеседованиях, нюансах трудовых будней и тематические развлекательные статьи. Следи за обновлениями – держи руку на пульсе HR-сферы!',
-                'language' => Yii::$app->language
-            ],
-            'items' => [
-                'title' => function ($model, $widget) {
-                    return $model->title;
-                },
-                'description' => function ($model, $widget) {
-                    return StringHelper::truncateWords($model->description, 50);
-                },
-                'link' => function ($model, $widget) {
-                    return Url::toRoute(['/news/'.$model->slug], true);
-                },
-                'pubDate' => function ($model, $widget) {
-                    $date = DateTime::createFromFormat('d-m-Y', $model->dt_public);
+// optional channel elements
+        $feed
+            ->addChannelLanguage(Yii::$app->language);
 
-                    return $date->format(DATE_RSS);
-                },
-            ]
-        ]);
+        foreach ($news as $new) {
+            $feed->addItem();
+            $feed->addItemAttribute('turbo', 'true');
+// title or description are required
+            $feed
+                ->addItemTitle($new->title)
+                ->addItemDescription($new->description);
+
+            $feed
+                ->addItemLink(Url::toRoute(['/news/'.$new->slug],true), true)
+                ->addItemGuid(Url::toRoute(['/news/'.$new->slug],true), true)
+                ->addItemPubDate($new->dt_public); // timestamp/strtotime/DateTime
+        }
+
+        echo $feed;
     }
 
 }

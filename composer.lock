@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7093e39eafb7e5bc1e3fab6c2e470d23",
+    "content-hash": "931a7e87e9162adb5b457b491732f7d1",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -1395,6 +1395,53 @@
                 }
             ],
             "time": "2020-09-28T15:15:52+00:00"
+        },
+        {
+            "name": "kavalar/rss-gen",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/apuc/rss-gen.git",
+                "reference": "f92cb848dfbd557c0c03c7fe8c1d85c207b02ace"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/apuc/rss-gen/zipball/f92cb848dfbd557c0c03c7fe8c1d85c207b02ace",
+                "reference": "f92cb848dfbd557c0c03c7fe8c1d85c207b02ace",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kavalar\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill B",
+                    "homepage": "https://web-artcraft.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP class for generating of RSS feeds. Full support of [RSSboard specification](http://www.rssboard.org/rss-specification)",
+            "homepage": "https://github.com/apuc/RSS-Generator",
+            "keywords": [
+                "feed",
+                "generator",
+                "rss"
+            ],
+            "support": {
+                "issues": "https://github.com/apuc/rss-gen/issues",
+                "source": "https://github.com/apuc/rss-gen/tree/1.0"
+            },
+            "time": "2021-08-20T11:06:22+00:00"
         },
         {
             "name": "matthiasmullie/minify",
@@ -3762,95 +3809,6 @@
                 "yii2"
             ],
             "time": "2018-09-23T22:00:47+00:00"
-        },
-        {
-            "name": "zelenin/rss-generator",
-            "version": "2.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zelenin/RSS-Generator.git",
-                "reference": "c32e22a61e529fdb0363ea6c3d98d1071f082eee"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zelenin/RSS-Generator/zipball/c32e22a61e529fdb0363ea6c3d98d1071f082eee",
-                "reference": "c32e22a61e529fdb0363ea6c3d98d1071f082eee",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Zelenin\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Aleksandr Zelenin",
-                    "email": "aleksandr@zelenin.me",
-                    "homepage": "http://zelenin.me",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP class for generating of RSS feeds. Full support of [RSSboard specification](http://www.rssboard.org/rss-specification)",
-            "homepage": "https://github.com/zelenin/RSS-Generator",
-            "keywords": [
-                "feed",
-                "generator",
-                "rss"
-            ],
-            "time": "2014-11-15T00:00:00+00:00"
-        },
-        {
-            "name": "zelenin/yii2-rss",
-            "version": "0.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zelenin/yii2-rss.git",
-                "reference": "5250810b1604df68dbf8cc271a94fa86e31903db"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zelenin/yii2-rss/zipball/5250810b1604df68dbf8cc271a94fa86e31903db",
-                "reference": "5250810b1604df68dbf8cc271a94fa86e31903db",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "~2",
-                "zelenin/rss-generator": "~2.1@stable"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "Zelenin\\yii\\extensions\\Rss\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Aleksandr Zelenin",
-                    "email": "aleksandr@zelenin.me",
-                    "homepage": "http://zelenin.me",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Yii2 RSS extension adds RSS-feed to your site",
-            "homepage": "https://github.com/zelenin/yii2-rss",
-            "keywords": [
-                "feed",
-                "rss",
-                "yii2"
-            ],
-            "time": "2015-11-05T20:51:41+00:00"
         }
     ],
     "packages-dev": [
@@ -6854,5 +6812,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.1.0"
 }
