@@ -112,12 +112,15 @@ class DefaultController extends Controller
 
     public function actionRss()
     {
-
         $news = News::find()
             ->where(['<', 'dt_public', time()])
             ->orderBy(['dt_public' => SORT_DESC])
             ->limit(20)
             ->all();
+        $response = Yii::$app->getResponse();
+        $headers = $response->getHeaders();
+
+        $headers->set('Content-Type', 'application/rss+xml; charset=utf-8');
         $feed = new \kavalar\Feed;
 
         $feed->addChannel('https://rabota.today/news-rss');
@@ -146,7 +149,7 @@ class DefaultController extends Controller
                 ->addItemPubDate($new->dt_public); // timestamp/strtotime/DateTime
         }
 
-        echo $feed;
+        $response->content = $feed;
     }
 
 }
