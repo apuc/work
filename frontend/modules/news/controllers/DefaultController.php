@@ -137,6 +137,47 @@ class DefaultController extends Controller
 
         foreach ($news as $new) {
             $feed->addItem();
+// title or description are required
+            $feed
+                ->addItemTitle($new->title)
+                ->addItemDescription($new->description);
+
+            $feed
+                ->addItemLink(Url::toRoute(['/news/'.$new->slug],true), true)
+                ->addItemGuid(Url::toRoute(['/news/'.$new->slug],true), true)
+                ->addItemPubDate($new->dt_public); // timestamp/strtotime/DateTime
+        }
+
+        $response->content = $feed;
+    }
+
+    public function actionYandexTurbo()
+    {
+        $news = News::find()
+            ->where(['<', 'dt_public', time()])
+            ->orderBy(['dt_public' => SORT_DESC])
+            ->limit(20)
+            ->all();
+        $response = Yii::$app->getResponse();
+        $headers = $response->getHeaders();
+
+        $headers->set('Content-Type', 'application/rss+xml; charset=utf-8');
+        $feed = new \kavalar\Feed;
+
+        $feed->addChannel('https://rabota.today/news-rss');
+
+// required channel elements
+        $feed
+            ->addChannelTitle('Новостная лента портала Rabota.Today')
+            ->addChannelLink(Url::toRoute('/', true))
+            ->addChannelDescription('Rabota.Today – интернет-портал для поиска работы. В новостном разделе регулярно публикуется поучительный контент о персонале, начальстве, деньгах, собеседованиях, нюансах трудовых будней и тематические развлекательные статьи. Следи за обновлениями – держи руку на пульсе HR-сферы!');
+
+// optional channel elements
+        $feed
+            ->addChannelLanguage(Yii::$app->language);
+
+        foreach ($news as $new) {
+            $feed->addItem();
             $feed->addItemAttribute('turbo', 'true');
 // title or description are required
             $feed
@@ -147,6 +188,7 @@ class DefaultController extends Controller
                 ->addItemLink(Url::toRoute(['/news/'.$new->slug],true), true)
                 ->addItemGuid(Url::toRoute(['/news/'.$new->slug],true), true)
                 ->addItemPubDate($new->dt_public); // timestamp/strtotime/DateTime
+            $feed->addItemElement('turbo:content', $new->content, []);
         }
 
         $response->content = $feed;
