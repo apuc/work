@@ -1,6 +1,8 @@
 <?php
 
 use common\models\KeyValue;
+use common\models\Logo;
+
 $this->title = KeyValue::findValueByKey('employer_page_title') ?: 'Работодателям - Поиск сотрудников на сайте rabota.today';
 $description = KeyValue::findValueByKey('employer_page_description') ?: 'Информация для работодателей, сайт поиска работы №1. Размещение вакансии, наши партнеры!';
 
@@ -10,6 +12,7 @@ $this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
 $this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
 $this->registerMetaTag(['name' => 'og:image', 'content' => '/images/og_image.jpg']);
 $this->registerMetaTag(['name' => 'og:description', 'content' => $description]);
+/* @var $logos Logo[] */
 ?>
 <main>
 		<div class="background">
@@ -75,33 +78,40 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => $description]);
 				</header>
 				<div class="employer_partners_logo">
 
-					<div class="employer_partners_logo_item">
-						<img src="/images/partners/Donbass_post.png" alt="Почта Донбасса">
-					</div>
-
-					<div class="employer_partners_logo_item">
-						<img src="/images/partners/matrix.png" alt="Matrix">
-					</div>
-
-					<div class="employer_partners_logo_item">
-						<img src="/images/partners/a.png" alt="SMM Academy">
-					</div>
-
-					<div class="employer_partners_logo_item">
-						<img src="/images/partners/crb-dnr.png" alt="Центральный Республиканский Банк">
-					</div>
-
-					<div class="employer_partners_logo_item">
-						<img src="/images/partners/moloko.png" alt="Геркулес">
-					</div>
-
-					<div class="employer_partners_logo_item">
-						<img src="/images/partners/galaxy.png" alt="Галактика">
-					</div>
-
-					<div class="employer_partners_logo_item">
-						<img src="/images/partners/family_quarter.png" alt="Семейный квартал">
-					</div>
+                    <?php
+                    foreach ($logos as $logo):
+                    ?>
+                        <div class="employer_partners_logo_item">
+                            <?= $logo->company? '<a href="/company/view/' . $logo->company->id . '">' : '' ?><img src="<?= $logo->image ?>" alt="<?= $logo->company->name ?>"><?= $logo->company? '</a>' : ''?>
+                        </div>
+                    <?php endforeach;?>
+<!--					<div class="employer_partners_logo_item">-->
+<!--                        <img src="/images/partners/Donbass_post.png" alt="Почта Донбасса">-->
+<!--					</div>-->
+<!---->
+<!--					<div class="employer_partners_logo_item">-->
+<!--						<img src="/images/partners/matrix.png" alt="Matrix">-->
+<!--					</div>-->
+<!---->
+<!--					<div class="employer_partners_logo_item">-->
+<!--						<img src="/images/partners/a.png" alt="SMM Academy">-->
+<!--					</div>-->
+<!---->
+<!--					<div class="employer_partners_logo_item">-->
+<!--						<img src="/images/partners/crb-dnr.png" alt="Центральный Республиканский Банк">-->
+<!--					</div>-->
+<!---->
+<!--					<div class="employer_partners_logo_item">-->
+<!--						<img src="/images/partners/moloko.png" alt="Геркулес">-->
+<!--					</div>-->
+<!---->
+<!--					<div class="employer_partners_logo_item">-->
+<!--						<img src="/images/partners/galaxy.png" alt="Галактика">-->
+<!--					</div>-->
+<!---->
+<!--					<div class="employer_partners_logo_item">-->
+<!--						<img src="/images/partners/family_quarter.png" alt="Семейный квартал">-->
+<!--					</div>-->
 				</div>
 			</div>
 
