@@ -93,6 +93,9 @@ return [
         'update' => [
             'class' => 'backend\modules\update\Update',
         ],
+        'logo' => [
+            'class' => 'backend\modules\logo\Logo',
+        ],
     ],
     'components' => [
         'session' => [
