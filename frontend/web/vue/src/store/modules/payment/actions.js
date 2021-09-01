@@ -5,7 +5,7 @@ const actions = {
     sendPayment({commit}, payload) {
 
         return new Promise((resolve, reject) => {
-            api.get('request/employer/get-payment-hash?amount=' + payload.amount)
+            api.get('/request/employer/get-payment-hash?amount=' + payload.amount)
                 .then(res => {
                     commit(type.SEND_PAYMENT, res.data);
                     resolve(res.data);

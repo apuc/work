@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "676fdbde13033a707a28be0d33df6188",
+    "content-hash": "931a7e87e9162adb5b457b491732f7d1",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -223,7 +223,7 @@
             "version": "v3.4.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:twbs/bootstrap.git",
+                "url": "https://github.com/twbs/bootstrap.git",
                 "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {
@@ -304,7 +304,7 @@
             "version": "v1.3.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bestiejs/punycode.js.git",
+                "url": "git@github.com:bestiejs/punycode.js.git",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "dist": {
@@ -1395,6 +1395,53 @@
                 }
             ],
             "time": "2020-09-28T15:15:52+00:00"
+        },
+        {
+            "name": "kavalar/rss-gen",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/apuc/rss-gen.git",
+                "reference": "f92cb848dfbd557c0c03c7fe8c1d85c207b02ace"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/apuc/rss-gen/zipball/f92cb848dfbd557c0c03c7fe8c1d85c207b02ace",
+                "reference": "f92cb848dfbd557c0c03c7fe8c1d85c207b02ace",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kavalar\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill B",
+                    "homepage": "https://web-artcraft.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP class for generating of RSS feeds. Full support of [RSSboard specification](http://www.rssboard.org/rss-specification)",
+            "homepage": "https://github.com/apuc/RSS-Generator",
+            "keywords": [
+                "feed",
+                "generator",
+                "rss"
+            ],
+            "support": {
+                "issues": "https://github.com/apuc/rss-gen/issues",
+                "source": "https://github.com/apuc/rss-gen/tree/1.0"
+            },
+            "time": "2021-08-20T11:06:22+00:00"
         },
         {
             "name": "matthiasmullie/minify",
@@ -6765,5 +6812,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.1.0"
 }

@@ -69,6 +69,7 @@ $this->params['exclude_breadcrumbs'][] = true;
         ],
         [
             'attribute' => 'slug',
+            'contentOptions' => ['style' => 'white-space: normal; max-width: 300px;'],
         ],
         [
             'attribute' => 'status',

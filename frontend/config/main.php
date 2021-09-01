@@ -253,6 +253,8 @@ return [
                 'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
                 '/news/<slug>' => 'news/default/search',
                 '/news' => 'news/default/index',
+                '/news-rss' => 'news/default/rss',
+                '/yandex-turbo' => 'news/default/yandex-turbo',
                 'vacancy/click-phone'=>'vacancy/default/click-phone',
                 'cities_by_country_id'=>'vacancy/default/cities',
                 [
