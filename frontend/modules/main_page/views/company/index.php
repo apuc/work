@@ -82,7 +82,7 @@ $this->registerMetaTag(['name' => 'og:description', 'content' => $description]);
                     foreach ($logos as $logo):
                     ?>
                         <div class="employer_partners_logo_item">
-                            <?= $logo->company? '<a href="/company/view/' . $logo->company->id . '">' : '' ?><img src="<?= $logo->image ?>" alt="<?= $logo->company->name ?>"><?= $logo->company? '</a>' : ''?>
+                            <?= $logo->company? '<a href="/company/view/' . $logo->company->id . '">' : '' ?><img src="<?= $logo->image ?>" alt="<?= $logo->company? $logo->company->name : ''?>"><?= $logo->company? '</a>' : ''?>
                         </div>
                     <?php endforeach;?>
 <!--					<div class="employer_partners_logo_item">-->
