@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['style' => 'white-space: normal;'],
                 'format'    => 'text',
                 'value' => function ($model) {
-                    return $model->company->name;
+                    return $model->company ? $model->company->name : 'еще нет';
                 },
             ],
             [
