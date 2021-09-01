@@ -91,7 +91,7 @@
   }
   .work-image-uploader {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     margin-bottom: 20px;
   }

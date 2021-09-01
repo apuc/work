@@ -35,18 +35,23 @@
              type="password" class="input-style" placeholder="Пароль">
       <span v-if="showPasswordError" class="help-block">Необходимо заполнить «Пароль».</span>
     </div>
+    <div class="d-flex">
+      <v-btn class="form-submit" color="success" type="submit">
+        Сохранить
+      </v-btn>
+      <v-btn class="form-submit" color="primary" type="button"
+        @click="$router.go(-1)"
+      >
+        Вернуться
+      </v-btn>
+    </div>
 
-    <v-btn
-        class="form-submit"
-        color="success"
-        type="submit"
-    >
-      Сохранить
-    </v-btn>
   </form>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: 'FormAddHr',
   data(){
@@ -61,12 +66,6 @@ export default {
       showEmailError: false
     }
   },
-  props: {
-    company: {
-      type: Object,
-      default: () => {}
-    }
-  },
   computed: {
     csrf() {
       const name = '_csrf';
@@ -74,10 +73,13 @@ export default {
           "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
       ))
       return matches ? decodeURIComponent(matches[1]) : undefined
-    }
+    },
+    ...mapGetters([
+      "allCompany"
+    ])
   },
   methods: {
-    validate () {
+    async validate () {
       if(this.first_name.length <= 3 ){
         this.showFirstNameError = true;
         return false
@@ -91,16 +93,41 @@ export default {
         return false
       }
       if(this.password.length > 0){
-        this.submitAction( { first_name: this.first_name, second_name: this.second_name, email: this.email, password: this.password, company_id: this.company.id  } )
+        if(this.allCompany.id === undefined) await this.$store.dispatch('getAllCompany');
+        this.submitAction( {
+          first_name: this.first_name,
+          second_name: this.second_name,
+          email: this.email,
+          password: this.password,
+          company_id: this.allCompany.id
+        } )
       }
       else {
         this.showPasswordError = true;
       }
     },
-    submitAction (payload) {
-      this.$store.dispatch('addHr', payload).then(() => {
+    async submitAction (payload) {
+      await this.$store.dispatch('addHr', payload).then(() => {
         this.clear();
-      })
+        this.$store.dispatch('getCompanyUsers', {'company_id': this.allCompany.id })
+        this.$swal({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 4000,
+          type: 'success',
+          title: 'Менеджер добавлен успешно',
+        })
+      }).catch(error => {
+        this.$swal({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 4000,
+          type: 'warning',
+          title: error.message
+        })
+      });
     },
     clear () {
       this.first_name = ''

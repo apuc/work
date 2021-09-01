@@ -8,6 +8,7 @@ const state = {
     company: {},
     editCompany: {},
     companyRight: [],
+    companyUsers: null
 };
 
 const mutations = {
@@ -32,6 +33,9 @@ const mutations = {
     [type.ADD_RIGHT_COMPANY](state, payload) {
         state.companyRight.push(payload);
     },
+    [type.COMPANY_USERS](state, payload) {
+        state.companyUsers = payload;
+    },
 };
 
 const getters = {
@@ -53,6 +57,9 @@ const getters = {
     companyRight: state => {
         return state.companyRight;
     },
+    companyUsers: state => {
+        return state.companyUsers;
+    }
 };
 
 export default {

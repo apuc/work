@@ -51,6 +51,7 @@
                     ],
                     ['label' => 'Вакансии', 'url' => ['/vacancy/vacancy/index'], 'icon' => 'address-book-o'],
                     ['label' => 'Баннеры', 'url' => ['/banner/banner/index'], 'icon' => 'thumb-tack'],
+                    ['label' => 'Логотипы для компаний', 'url' => ['/logo/logo/index'], 'icon' => 'bookmark'],
                     [
                         'label' => 'Характеристики', 'url' => '#', 'icon'=>'cog',
                         'items' => [
