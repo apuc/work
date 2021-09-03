@@ -37,7 +37,8 @@ class StatisticController extends Controller
             ->all();
         $cities = [];
         foreach ($vacancies as $vacancy) {
-            $cities[] = $vacancy->city0->name;
+            if ($vacancy->city0)
+                $cities[] = $vacancy->city0->name;
         }
         $cities = array_count_values($cities);
         foreach ($cities as $key => $city) {
