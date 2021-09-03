@@ -35,6 +35,7 @@ use yii\db\ActiveRecord;
  * @property string $phone
  * @property integer $birth_date
  * @property integer $audit_status
+ * @property integer $views
  *
  * @property Employer $employer
  * @property EmploymentType $employment_type

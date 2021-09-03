@@ -126,4 +126,31 @@ class Views extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(),['id' => 'viewer_id']);
     }
+
+    public function getSubject()
+    {
+        if ($this->subject_type == self::TYPE_VACANCY) {
+            $vacancy = Vacancy::find()->where(['id' => $this->subject_id])->one();
+            if(!empty($vacancy)) {
+                return $vacancy;
+            }
+            return false;
+        }
+
+        if ($this->subject_type == self::TYPE_RESUME) {
+            $resume = Resume::find()->where(['id' => $this->subject_id])->one();
+            if(!empty($resume)) {
+                return $resume;
+            }
+            return false;
+        }
+
+        if ($this->subject_type == self::TYPE_NEW) {
+            $resume = News::find()->where(['id' => $this->subject_id])->one();
+            if (!empty($resume)) {
+                return $resume->title;
+            }
+            return false;
+        }
+    }
 }
