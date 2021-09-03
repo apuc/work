@@ -33,6 +33,16 @@ class ViewController extends Controller
         }
     }
 
+    public function actionIndexResumes() {
+        $views = (new Query())->from(Views::tableName())->select(['subject_id', 'count(subject_id)'])->where(['subject_type'=>'Resume', 'indexed'=>0])->groupBy('subject_id')->all();
+        foreach ($views as $view) {
+            $connection = Yii::$app->getDb();
+            $command = $connection->createCommand("update resume set views=views+".$view['count(subject_id)']." where id=".$view['subject_id'])->query();
+            echo "ID: ".$view['subject_id'] . "---> +" . $view['count(subject_id)']."\n";
+            Views::updateAll(['indexed'=>1], ['subject_type'=>'Resume', 'subject_id'=>$view['subject_id'], 'indexed'=>0]);
+        }
+    }
+
 
     /**
      * Просмотр новых вакансий
