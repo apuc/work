@@ -2,7 +2,7 @@
   <v-form
     ref="form"
     v-model="valid"
-    lazy-validation
+
   >
     <slot />
     <component v-for="(input, index) in formTemplate()"
@@ -62,6 +62,7 @@
         return this.paramsFile;
       },
       validate () {
+        this.valid = false;
         let valid = this.$refs.form.validate();
         this.$emit('val', valid);
         if (valid && this.value.phoneValid) {
