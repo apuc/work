@@ -49,8 +49,8 @@ use yii\widgets\ActiveForm;
             <?php ActiveForm::end(); ?>
             <div class="modal-style__text">
                 <button class="jsForgotPass">Забыли пароль?</button>
-<!--                <button class="jsRegForm">Зарегистрироваться-->
-<!--                </button>-->
+                <button class="jsRegForm">Зарегистрироваться
+                </button>
             </div>
         </div>
         <div class="modal-style modal-error jsForgotPassModal">
