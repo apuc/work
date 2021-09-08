@@ -42,14 +42,14 @@ export default {
   salaryFrom: Object.assign({}, Field, {
     name: 'salaryFrom',
     label: 'Зарплата в месяц от',
-    rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
+    rules: [v => ( v === '' ) || ( v.length <= 11 && new RegExp('^\\d*(\\.\\d+)?$').test(v) ) || 'Только цифры, не более 11 символов'],
     component: VTextField,
     prefix: "₽"
   }),
   salaryBefore: Object.assign({}, Field, {
     name: 'salaryBefore',
     label: 'Зарплата в месяц до',
-    rules: [v => (v === '') || (/^\d+[\.,]{0,1}\d+$/.test(v) || 'Только цифры')],
+    rules: [v => ( v === '' ) || ( v.length <= 11 && new RegExp('^\\d*(\\.\\d+)?$').test(v) ) || 'Только цифры, не более 11 символов'],
     component: VTextField,
     prefix: "₽"
   }),
