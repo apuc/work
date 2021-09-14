@@ -100,6 +100,7 @@ if ($model){
                             </div>
                         </div>
                     </div>
+                    <p class="link-dzen">Мы в <a href="https://zen.yandex.ru/rabotatoday">Яндекс Дзен</a></p>
                 </div>
             </aside>
             <div class="last-vacancy mob-last-vacancy news-block">

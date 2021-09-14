@@ -5028,6 +5028,17 @@ button {
 .pc-last-vacancy .last-vacancy__head {
     margin: 40px 0 20px; }
 
+.link-dzen {
+    text-align: center;
+    text-decoration: none;
+    color: #ff0200;
+    font-size: 20px;
+}
+
+.link-dzen a {
+    text-decoration: underline;
+}
+
 .single-block__soc {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
