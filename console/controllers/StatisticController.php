@@ -90,6 +90,7 @@ class StatisticController extends Controller
             ->where(['subject_type' => 'Resume'])
             ->andWhere(['>=', 'dt_view', $start_date])
             ->andWhere(['<=', 'dt_view', $end_date])
+            ->andWhere(['is_real' => 1])
             ->andWhere(['indexed' => 1])
             ->all();
         $res = [];
@@ -111,6 +112,7 @@ class StatisticController extends Controller
             ->where(['subject_type' => 'Vacancy'])
             ->andWhere(['>=', 'dt_view', $start_date])
             ->andWhere(['<=', 'dt_view', $end_date])
+            ->andWhere(['is_real' => 1])
             ->andWhere(['indexed' => 1])
             ->all();
         $res = [];
