@@ -62,10 +62,10 @@
         return this.paramsFile;
       },
       validate () {
-        this.valid = false;
         let valid = this.$refs.form.validate();
         this.$emit('val', valid);
         if (valid && this.value.phoneValid) {
+          this.valid = false;
           this.snackbar = true;
           this.sendForm();
         }
