@@ -32,7 +32,6 @@
     <slot name="bottom" />
 
     <v-btn
-      :disabled="valid"
       color="success"
       id="main-btn"
       @click="validate"
