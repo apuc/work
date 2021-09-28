@@ -11,7 +11,7 @@
         <template v-else>
             <FormTemplate :paramsFile="getFormData()" v-model="formData" :sendForm="saveData" @val="valHandler">
 
-                <vue-tel-input :placeholder="'Номер телефона'"
+                <vue-tel-input placeholder="Номер телефона"
                                :defaultCountry="defaultCountry.iso2"
                                v-model="formData.phone"
                                :allCountries="allCountries"

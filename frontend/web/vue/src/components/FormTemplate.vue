@@ -2,7 +2,7 @@
   <v-form
     ref="form"
     v-model="valid"
-    lazy-validation
+
   >
     <slot />
     <component v-for="(input, index) in formTemplate()"
@@ -32,7 +32,6 @@
     <slot name="bottom" />
 
     <v-btn
-      :disabled="!valid"
       color="success"
       id="main-btn"
       @click="validate"
@@ -65,6 +64,7 @@
         let valid = this.$refs.form.validate();
         this.$emit('val', valid);
         if (valid && this.value.phoneValid) {
+          this.valid = false;
           this.snackbar = true;
           this.sendForm();
         }
