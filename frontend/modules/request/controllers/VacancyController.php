@@ -265,7 +265,7 @@ class VacancyController extends MyActiveController
         if (!$servicePrice = ServicePrice::findOne(['alias'=>'vacancy_renew'])) {
             throw new UserException('Ошибка сервера');
         }
-        if (!$company->balance < $servicePrice->price)
+        if ($company->balance < $servicePrice->price)
             throw new UserException('У вас недостаточно средств на счету');
         $company->balance -= $servicePrice->price;
         $company->vacancy_renew_count++;
