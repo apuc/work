@@ -160,7 +160,7 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
             <?php else:?>
                 <img class="nhome__main-gerb" src="/images/gerb-doneck-z1.png" alt="Герб Донецка" role="presentation"/>
             <?php endif ?>
-            <h1 class="<?=$current_country?'nhome__custom-title':'nhome__title'?>"><?=$current_country?$current_country->meta_header:"Работа"?></h1>
+            <h1 class="<?=$current_country?'nhome__custom-title':'nhome__title'?> <?= $current_country && iconv_strlen($current_country->meta_header) > 12 ? 'nhome__title--small' : ''?>"><?=$current_country?$current_country->meta_header:"Работа"?></h1>
             <div class="nhome__desc desc-pc">
                 <?php if ($current_country):?>
                     <?=$current_country->main_page_text?>
