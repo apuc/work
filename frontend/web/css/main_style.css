@@ -3703,6 +3703,11 @@ button {
     line-height: 0.8;
     text-transform: uppercase;
     z-index: 2; }
+
+.nhome__title--small {
+    max-width: 1000px;
+    font-size: 75px;}
+
 @media (max-width: 1850px) {
     .nhome__title {
         font-size: 220px; } }
