@@ -2,6 +2,7 @@
 
 namespace frontend\modules\request\controllers;
 
+use common\models\LoginForm;
 use dektrium\user\helpers\Password;
 use frontend\modules\request\models\PasswordRestore;
 use Yii;
@@ -10,13 +11,14 @@ use yii\web\HttpException;
 
 class SecurityController extends Controller
 {
-    public function actionChangePassword() {
+    public function actionChangePassword()
+    {
         $params = Yii::$app->request->post();
-        if(Yii::$app->user->isGuest)
+        if (Yii::$app->user->isGuest)
             throw new HttpException(500, 'Ошибка');
         $password_restore = new PasswordRestore();
-        if($password_restore->load($params, '') && $password_restore->validate()) {
-            if(Password::validate($password_restore->old_password, Yii::$app->user->identity->password_hash)) {
+        if ($password_restore->load($params, '') && $password_restore->validate()) {
+            if (Password::validate($password_restore->old_password, Yii::$app->user->identity->password_hash)) {
                 Yii::$app->user->identity->password_hash = Password::hash($password_restore->new_password_1);
                 Yii::$app->user->identity->save();
                 return true;
@@ -27,4 +29,27 @@ class SecurityController extends Controller
             return $password_restore->errors;
         }
     }
+
+    public function actionLogin()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+            return [
+                'access_token' => Yii::$app->user->identity->getAuthKey(),
+                'token_type' => 'Bearer',
+                'expires_in' => 'TODO', //TODO изменить после реализации обновления токена
+            ];
+        } else {
+            return [
+                'status' => 'authentication failed',
+                'errors' => $model->getErrors()
+            ];
+        }
+    }
+
 }
