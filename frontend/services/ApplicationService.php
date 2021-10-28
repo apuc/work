@@ -1,7 +1,10 @@
 <?php
 
+namespace frontend\services;
+
 use common\models\User;
 use dektrium\user\helpers\Password;
+use Yii;
 
 class ApplicationService
 {

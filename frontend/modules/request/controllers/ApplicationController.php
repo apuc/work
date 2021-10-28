@@ -2,17 +2,19 @@
 
 namespace frontend\modules\request\controllers;
 
+use common\classes\Debug;
 use yii\rest\Controller;
 use Yii;
-use ApplicationService;
+use frontend\services\ApplicationService;
 
 class ApplicationController extends Controller
 {
     /** @var ApplicationService */
     private $applicationService;
 
-    public function __constructor()
+    public function init()
     {
+        parent::init();
         $this->applicationService = new ApplicationService();
     }
 
