@@ -30,35 +30,4 @@ class SecurityController extends Controller
             return $password_restore->errors;
         }
     }
-
-    //TODO вынести в отдельный файл
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $login = Yii::$app->request->getBodyParam('login');
-        $password = Yii::$app->request->getBodyParam('password');
-
-        /** @var User $user */
-        $user = User::find()->where(['username' => $login])->one();
-
-        if (isset($user) && Password::validate($password, $user->password_hash)) {
-
-            Yii::$app->user->login($user);
-
-            return [
-                'access_token' => Yii::$app->user->identity->getAuthKey(),
-                'token_type' => 'Bearer',
-                'expires_in' => 'TODO', //TODO изменить после реализации обновления токена
-            ];
-        } else {
-            return [
-                'status' => 'authentication failed',
-                'errors' => ''
-            ];
-        }
-    }
-
 }
