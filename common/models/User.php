@@ -4,6 +4,7 @@ namespace common\models;
 use common\classes\Debug;
 use Yii;
 use yii\web\IdentityInterface;
+
 /**
  * This is the model class for table "user".
  *
@@ -54,7 +55,7 @@ class User extends \dektrium\user\models\User implements IdentityInterface
 
     public function fields()
     {
-        return ['id', 'email', 'status'];
+        return ['id', 'email', 'status', 'refresh_token', 'refresh_expiration_time', 'access_expiration_time'];
     }
 
     public function extraFields()
