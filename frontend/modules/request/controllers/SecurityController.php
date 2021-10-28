@@ -3,6 +3,7 @@
 namespace frontend\modules\request\controllers;
 
 use common\models\LoginForm;
+use common\models\User;
 use dektrium\user\helpers\Password;
 use frontend\modules\request\models\PasswordRestore;
 use Yii;
@@ -30,14 +31,22 @@ class SecurityController extends Controller
         }
     }
 
+    //TODO вынести в отдельный файл
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        $login = Yii::$app->request->getBodyParam('login');
+        $password = Yii::$app->request->getBodyParam('password');
+
+        /** @var User $user */
+        $user = User::find()->where(['username' => $login])->one();
+
+        if (isset($user) && Password::validate($password, $user->password_hash)) {
+
+            Yii::$app->user->login($user);
 
             return [
                 'access_token' => Yii::$app->user->identity->getAuthKey(),
@@ -47,7 +56,7 @@ class SecurityController extends Controller
         } else {
             return [
                 'status' => 'authentication failed',
-                'errors' => $model->getErrors()
+                'errors' => ''
             ];
         }
     }
