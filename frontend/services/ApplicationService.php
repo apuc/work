@@ -21,7 +21,7 @@ class ApplicationService
      */
     public function login($username, $password): bool
     {
-        $this->user = User::find()->where(['username' => $username])->one();
+        $this->user = User::findOne(['username' => $username]);
 
         if(isset($this->user) && Password::validate($password, $this->user->password_hash)){
             Yii::$app->user->login($this->user);
