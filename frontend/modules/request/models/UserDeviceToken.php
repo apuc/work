@@ -43,6 +43,21 @@ class UserDeviceToken extends ActiveRecord
         return ['user'];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'user_id' => 'Пользователь',
+            'device_id' => 'Идентификатор девайса',
+            'access_token' => 'Токен доступа',
+            'access_token_expiration_time' => 'Срок действительности токена доступа',
+            'refresh_token' => 'Токен обновления для токена доступа',
+            'refresh_token_expiration_time' => 'Срок действительности токена обновления'
+        ];
+    }
+
     public function getUser()
     {
         return $this->hasOne(User::class, ['user_id' => 'id']);
