@@ -2,6 +2,7 @@
 
 namespace frontend\modules\request\models;
 
+use common\models\base\WorkActiveRecord;
 use common\models\User;
 use DateTimeInterface;
 use yii\db\ActiveRecord;
@@ -19,11 +20,11 @@ use yii\db\ActiveRecord;
  *
  * @property User $user Владелец токена
  **/
-class UserDeviceToken extends ActiveRecord
+class UserDeviceToken extends WorkActiveRecord
 {
 
     //TODO
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
 
