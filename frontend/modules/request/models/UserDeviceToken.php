@@ -2,6 +2,7 @@
 
 namespace frontend\modules\request\models;
 
+use common\models\User;
 use DateTimeInterface;
 use yii\db\ActiveRecord;
 
@@ -19,11 +20,29 @@ use yii\db\ActiveRecord;
 class UserDeviceToken extends ActiveRecord
 {
 
+    //TODO
+    public function rules()
+    {
+        $rules = parent::rules();
+
+        return $rules;
+    }
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'user_device_token';
+    }
+
+    public function extraFields()
+    {
+        return ['user'];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['user_id' => 'id']);
     }
 }
