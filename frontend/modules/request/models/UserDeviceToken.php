@@ -16,6 +16,8 @@ use yii\db\ActiveRecord;
  * @property DateTimeInterface $access_token_expiration_time Срок действительности токена доступа
  * @property string $refresh_token unique | Токен обновления для токена доступа
  * @property DateTimeInterface $refresh_token_expiration_time Срок действительности токена обновления
+ *
+ * @property User $user Владелец токена
  **/
 class UserDeviceToken extends ActiveRecord
 {
@@ -31,12 +33,12 @@ class UserDeviceToken extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'user_device_token';
     }
 
-    public function extraFields()
+    public function extraFields(): array
     {
         return ['user'];
     }
