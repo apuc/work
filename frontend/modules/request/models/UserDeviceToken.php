@@ -14,9 +14,9 @@ use yii\db\ActiveRecord;
  * @property integer $user_id
  * @property string $device_id unique
  * @property string $access_token unique | Токен доступа
- * @property DateTimeInterface $access_token_expiration_time Срок действительности токена доступа
+ * @property int $access_token_expiration_time timestamp | Срок действительности токена доступа
  * @property string $refresh_token unique | Токен обновления для токена доступа
- * @property DateTimeInterface $refresh_token_expiration_time Срок действительности токена обновления
+ * @property int $refresh_token_expiration_time timestamp | Срок действительности токена обновления
  *
  * @property User $user Владелец токена
  **/
