@@ -3,6 +3,9 @@
 namespace frontend\modules\request\controllers;
 
 use common\classes\Debug;
+use dektrium\user\models\Token;
+use frontend\modules\request\models\UserDeviceToken;
+use frontend\services\TokenService;
 use yii\rest\Controller;
 use Yii;
 use frontend\services\ApplicationService;
@@ -21,9 +24,12 @@ class ApplicationController extends Controller
 
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        $token = UserDeviceToken::findOne(['user_id' => 7000000]);
+        var_dump($token);die;
+
+//        if (!Yii::$app->user->isGuest) {
+//            return $this->goHome();
+//        }
 
         $username = Yii::$app->request->getBodyParam('login');
         $password = Yii::$app->request->getBodyParam('password');
