@@ -1,5 +1,5 @@
 # Аутентификация
-
+___
 ## Первый логин
 <table>
     <tr>
@@ -30,7 +30,7 @@
   "refresh_token_expiration_time": "Время истечения токена, int->timestamp"
 }
 ```
-
+___
 ## Последующие запросы
 В заголовке запроса передаётся Bearer токен
 <table>
@@ -52,6 +52,7 @@
   "message": "access_token expired, please refresh it"
 }
 ```
+___
 ## Обновление токена
 <table>
     <tr>
