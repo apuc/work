@@ -8,7 +8,7 @@ ___
     </tr>
     <tr>
         <td> POST </td>
-        <td> /api/v1/TODO </td>
+        <td> /api/v1/login </td>
     </tr>
 </table>
 
@@ -61,7 +61,7 @@ ___
     </tr>
     <tr>
         <td> POST </td>
-        <td> /api/v1/TODO </td>
+        <td> /api/v1/refresh_token </td>
     </tr>
 </table>
 
