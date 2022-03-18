@@ -15,9 +15,9 @@ class m220316_093034_create_user_device_token_table extends Migration
         $this->createTable('{{%user_device_token}}', [
             'user_id' => $this->integer(11),
             'device_id' => $this->string(256),
-            'access_token' => $this->string(512),
+            'access_token' => $this->string(2048),  // по требованиям OAuth 2.0
             'access_token_expiration_time' => $this->timestamp(),
-            'refresh_token' => $this->string(512),
+            'refresh_token' => $this->string(512),  // по требованиям OAuth 2.0
             'refresh_token_expiration_time' => $this->timestamp(),
         ]);
         $this->addPrimaryKey('user_device_token', 'user_device_token', ['user_id', 'device_id']);
