@@ -3,18 +3,20 @@
 namespace frontend\modules\request\controllers;
 
 use frontend\services\TokenService;
-use yii\rest\Controller;
 use Yii;
 use frontend\services\ApplicationService;
 use yii\web\Response;
 
-class ApplicationController extends Controller
+/**
+ * @author Alex Korona
+ */
+class ApplicationController extends ApiParentController
 {
     /** @var ApplicationService */
     private $applicationService;
     private $tokenService;
 
-    protected function verbs()
+    protected function verbs(): array
     {
         return [
             'login' => ['POST'],
@@ -67,7 +69,7 @@ class ApplicationController extends Controller
         $refreshToken = Yii::$app->request->getBodyParam('refresh_token');
         $device_id = Yii::$app->request->getBodyParam('device_id');
 
-        if($token = $this->tokenService->regenerateAccessToken($username, $device_id, $refreshToken)){
+        if ($token = $this->tokenService->regenerateAccessToken($username, $device_id, $refreshToken)) {
             return $this->asJson([
                 'access_token' => $token->access_token,
                 'access_token_expiration_time' => $token->access_token_expiration_time,
