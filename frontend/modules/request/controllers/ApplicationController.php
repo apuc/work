@@ -17,6 +17,7 @@ class ApplicationController extends Controller
     {
         return [
             'login' => ['POST'],
+            'refresh-token' => ['POST']
         ];
     }
 
@@ -35,17 +36,34 @@ class ApplicationController extends Controller
         $device_id = Yii::$app->request->getBodyParam('device_id');
 
         if (isset($device_id) && $this->applicationService->login($username, $password)) {
-            $usedDeviceToken = $this->tokenService->generateNewTokens($this->applicationService->user, $device_id);
+            $userDeviceToken = $this->tokenService->generateNewTokens($this->applicationService->user, $device_id);
 
             return $this->asJson([
-                'access_token' => $usedDeviceToken->access_token,
-                'access_token_expiration_time' => $usedDeviceToken->access_token_expiration_time,
-                'refresh_token' => $usedDeviceToken->refresh_token,
-                'refresh_token_expiration_time' => $usedDeviceToken->refresh_token_expiration_time
+                'access_token' => $userDeviceToken->access_token,
+                'access_token_expiration_time' => $userDeviceToken->access_token_expiration_time,
+                'refresh_token' => $userDeviceToken->refresh_token,
+                'refresh_token_expiration_time' => $userDeviceToken->refresh_token_expiration_time
             ]);
         } else {
             return $this->asJson([
                 'status' => 'authentication failed',
+            ])->setStatusCode(401);
+        }
+    }
+
+    public function actionRefreshToken(){
+        $username = Yii::$app->request->getBodyParam('username');
+        $refreshToken = Yii::$app->request->getBodyParam('refresh_token');
+        $device_id = Yii::$app->request->getBodyParam('device_id');
+
+        if($token = $this->tokenService->regenerateAccessToken($username, $device_id, $refreshToken)){
+            return $this->asJson([
+                'access_token' => $token->access_token,
+                'access_token_expiration_time' => $token->access_token_expiration_time,
+            ]);
+        } else {
+            return $this->asJson([
+                'message' => implode('.', $this->tokenService->errors)
             ])->setStatusCode(401);
         }
     }
