@@ -25,8 +25,7 @@ class ApplicationService
 
         if(
             isset($this->user) &&
-            Password::validate($password, $this->user->password_hash) &&
-            Password::hash($password) == $this->user->password_hash
+            Password::validate($password, $this->user->password_hash)
         ){
             Yii::$app->user->login($this->user);
             return true;
