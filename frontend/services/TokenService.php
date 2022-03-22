@@ -11,6 +11,8 @@ class TokenService
 {
     const ACCESS_TOKEN_EXPIRE_TIME = 86400; // день
     const REFRESH_TOKEN_EXPIRE_TIME = 2592000; // месяц
+    const ACCESS_TOKEN_LENGTH = 1024; // в символах
+    const REFRESH_TOKEN_LENGTH = 256; // в символах
 
 
     /**
@@ -18,7 +20,7 @@ class TokenService
      * @param string $device_id
      * @throws Exception
      */
-    public function generateNewTokens(User $user, string $device_id)
+    public function generateNewTokens(User $user, string $device_id): UserDeviceToken
     {
         $token = UserDeviceToken::findOne(['user_id' => $user->id, 'device_id' => $device_id]);
 
@@ -30,6 +32,8 @@ class TokenService
         $this->generateAccessToken($token);
         $this->generateRefreshToken($token);
         $token->save();
+
+        return $token;
     }
 
     /**
@@ -63,7 +67,7 @@ class TokenService
      */
     private function generateAccessToken(UserDeviceToken $token)
     {
-        $token->access_token = Yii::$app->getSecurity()->generateRandomString();
+        $token->access_token = Yii::$app->getSecurity()->generateRandomString(self::ACCESS_TOKEN_LENGTH);
         $token->access_token_expiration_time = time() + self::ACCESS_TOKEN_EXPIRE_TIME;
     }
 
@@ -73,7 +77,7 @@ class TokenService
      */
     private function generateRefreshToken(UserDeviceToken $token)
     {
-        $token->refresh_token = Yii::$app->getSecurity()->generateRandomString();
+        $token->refresh_token = Yii::$app->getSecurity()->generateRandomString(self::REFRESH_TOKEN_LENGTH);
         $token->access_token_expiration_time = time() + self::REFRESH_TOKEN_EXPIRE_TIME;
     }
 }
