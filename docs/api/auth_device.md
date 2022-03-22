@@ -8,7 +8,7 @@ ___
     </tr>
     <tr>
         <td> POST </td>
-        <td> /api/v1/login </td>
+        <td> /request/application/login </td>
     </tr>
 </table>
 
