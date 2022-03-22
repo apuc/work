@@ -6,6 +6,7 @@ use frontend\services\TokenService;
 use yii\rest\Controller;
 use Yii;
 use frontend\services\ApplicationService;
+use yii\web\Response;
 
 class ApplicationController extends Controller
 {
@@ -28,8 +29,12 @@ class ApplicationController extends Controller
         $this->tokenService = new TokenService();
     }
 
-
-    public function actionLogin()
+    /**
+     * Логин
+     *
+     * @return Response
+     */
+    public function actionLogin(): Response
     {
         $username = Yii::$app->request->getBodyParam('login');
         $password = Yii::$app->request->getBodyParam('password');
@@ -51,7 +56,13 @@ class ApplicationController extends Controller
         }
     }
 
-    public function actionRefreshToken(){
+    /**
+     * Обновление токена доступа
+     *
+     * @return Response
+     */
+    public function actionRefreshToken(): Response
+    {
         $username = Yii::$app->request->getBodyParam('username');
         $refreshToken = Yii::$app->request->getBodyParam('refresh_token');
         $device_id = Yii::$app->request->getBodyParam('device_id');
