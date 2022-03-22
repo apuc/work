@@ -61,13 +61,15 @@ ___
     </tr>
     <tr>
         <td> POST </td>
-        <td> /api/v1/refresh_token </td>
+        <td> /request/application/refresh-token </td>
     </tr>
 </table>
 
 **Тело запроса**
 ```json
-{    
+{
+  "username" : "Имя/Логин",
+  "device_id" : "Имя устройства", 
   "refresh_token": "Токен обновления, строка"
 }
 ```
