@@ -1,8 +1,9 @@
 <?php
 
-namespace frontend\modules\request\controllers;
+namespace frontend\modules\request\controllers\api\v1;
 
 use frontend\services\TokenService;
+use yii\rest\Controller;
 use Yii;
 use frontend\services\ApplicationService;
 use yii\web\Response;
@@ -10,7 +11,7 @@ use yii\web\Response;
 /**
  * @author Alex Korona
  */
-class ApplicationController extends ApiParentController
+class ApplicationController extends Controller
 {
     /** @var ApplicationService */
     private $applicationService;
