@@ -10,7 +10,7 @@ use yii\base\Exception;
 class TokenService
 {
     const ACCESS_TOKEN_EXPIRE_TIME = 86400; // день
-    const REFRESH_TOKEN_EXPIRE_TIME = 2592000; // месяц
+    const REFRESH_TOKEN_EXPIRE_TIME = 2592000; // 30 дней
     const ACCESS_TOKEN_LENGTH = 1024; // в символах
     const REFRESH_TOKEN_LENGTH = 256; // в символах
 
@@ -78,6 +78,6 @@ class TokenService
     private function generateRefreshToken(UserDeviceToken $token)
     {
         $token->refresh_token = Yii::$app->getSecurity()->generateRandomString(self::REFRESH_TOKEN_LENGTH);
-        $token->access_token_expiration_time = time() + self::REFRESH_TOKEN_EXPIRE_TIME;
+        $token->refresh_token_expiration_time = time() + self::REFRESH_TOKEN_EXPIRE_TIME;
     }
 }
