@@ -49,7 +49,7 @@ ___
 **status:** 401
 ```json
 {
-  "message": "access_token expired, please refresh it"
+  "message": "refresh_token expired, please refresh it"
 }
 ```
 ___

@@ -63,7 +63,7 @@ class TokenService
         }
 
         if($token->refresh_token_expiration_time < time()){
-            $this->errors[] = 'access_token expired, please refresh it';
+            $this->errors[] = 'refresh_token expired, please refresh it';
 
             return false;
         }
