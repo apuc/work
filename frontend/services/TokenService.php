@@ -14,10 +14,13 @@ class TokenService
     const ACCESS_TOKEN_LENGTH = 1024; // в символах
     const REFRESH_TOKEN_LENGTH = 256; // в символах
 
+    public $errors = [];
+
 
     /**
      * @param User $user
      * @param string $device_id
+     * @return UserDeviceToken
      * @throws Exception
      */
     public function generateNewTokens(User $user, string $device_id): UserDeviceToken
@@ -37,28 +40,38 @@ class TokenService
     }
 
     /**
-     * @param User $user
+     * @param string $username
      * @param string $device_id
      * @param string $refresh_token
      * @return false|UserDeviceToken|null
      * @throws Exception
      */
-    public function regenerateAccessToken(User $user, string $device_id, string $refresh_token)
+    public function regenerateAccessToken(string $username, string $device_id, string $refresh_token)
     {
-        $token = UserDeviceToken::findOne(['user_id' => $user->id, 'device_id' => $device_id]);
+        if (!$user = User::findOne(['username' => $username])) {
+            $this->errors[] = 'User didnt found';
 
-        if (!isset($token)) {
-            if ($refresh_token === $token->refresh_token) {
-                $this->generateAccessToken($token);
-                $token->save();
-
-                return $token;
-            }
-
-            return false; //todo log: "trying to get access token with wrong refresh token"
+            return false;
         }
 
-        return false; //todo log?
+        $token = UserDeviceToken::findOne(['user_id' => $user->id, 'device_id' => $device_id]);
+
+        if ( !(isset($token) && $refresh_token === $token->refresh_token) ) {
+            $this->errors[] = 'Wrong refresh token, device_id or username';
+
+            return false;
+        }
+
+        if($token->refresh_token_expiration_time < time()){
+            $this->errors[] = 'access_token expired, please refresh it';
+
+            return false;
+        }
+
+        $this->generateAccessToken($token);
+        $token->save();
+
+        return $token;
     }
 
     /**
