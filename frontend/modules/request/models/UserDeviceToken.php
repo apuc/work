@@ -26,9 +26,7 @@ class UserDeviceToken extends WorkActiveRecord
     //TODO
     public function rules(): array
     {
-        $rules = parent::rules();
-
-        return $rules;
+        return parent::rules();
     }
 
     /**
