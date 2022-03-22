@@ -14,31 +14,30 @@ class ApplicationController extends Controller
 {
     /** @var ApplicationService */
     private $applicationService;
+    private $tokenService;
 
     public function init()
     {
         parent::init();
         $this->applicationService = new ApplicationService();
+        $this->tokenService = new TokenService();
     }
 
 
     public function actionLogin()
     {
-        $token = UserDeviceToken::findOne(['user_id' => 7000000]);
-        var_dump($token);die;
-
-//        if (!Yii::$app->user->isGuest) {
-//            return $this->goHome();
-//        }
-
         $username = Yii::$app->request->getBodyParam('login');
         $password = Yii::$app->request->getBodyParam('password');
+        $device_id = Yii::$app->request->getBodyParam('device_id');
 
-        if ($this->applicationService->login($username, $password)) {
+        if (isset($device_id) && $this->applicationService->login($username, $password)) {
+            $usedDeviceToken = $this->tokenService->generateNewTokens($this->applicationService->user, $device_id);
+
             return [
-                'access_token' => Yii::$app->user->identity->getAuthKey(),
-                'token_type' => 'Bearer',
-                'expires_in' => 'TODO', //TODO изменить после реализации обновления токена
+                'access_token' => $usedDeviceToken->access_token,
+                'access_token_expiration_time' => $usedDeviceToken->access_token_expiration_time,
+                'refresh_token' => $usedDeviceToken->refresh_token,
+                'refresh_token_expiration_time' => $usedDeviceToken->refresh_token_expiration_time
             ];
         } else {
             return [
