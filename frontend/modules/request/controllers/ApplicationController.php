@@ -2,9 +2,6 @@
 
 namespace frontend\modules\request\controllers;
 
-use common\classes\Debug;
-use dektrium\user\models\Token;
-use frontend\modules\request\models\UserDeviceToken;
 use frontend\services\TokenService;
 use yii\rest\Controller;
 use Yii;
@@ -15,6 +12,13 @@ class ApplicationController extends Controller
     /** @var ApplicationService */
     private $applicationService;
     private $tokenService;
+
+    protected function verbs()
+    {
+        return [
+            'login' => ['POST'],
+        ];
+    }
 
     public function init()
     {
@@ -33,17 +37,16 @@ class ApplicationController extends Controller
         if (isset($device_id) && $this->applicationService->login($username, $password)) {
             $usedDeviceToken = $this->tokenService->generateNewTokens($this->applicationService->user, $device_id);
 
-            return [
+            return $this->asJson([
                 'access_token' => $usedDeviceToken->access_token,
                 'access_token_expiration_time' => $usedDeviceToken->access_token_expiration_time,
                 'refresh_token' => $usedDeviceToken->refresh_token,
                 'refresh_token_expiration_time' => $usedDeviceToken->refresh_token_expiration_time
-            ];
+            ]);
         } else {
-            return [
+            return $this->asJson([
                 'status' => 'authentication failed',
-                'errors' => ''
-            ];
+            ])->setStatusCode(401);
         }
     }
 }
