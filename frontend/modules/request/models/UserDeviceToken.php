@@ -64,6 +64,6 @@ class UserDeviceToken extends WorkActiveRecord
 
     public static function findByAccessTokenAndDeviceId($access_token, $device_id)
     {
-        return UserDeviceToken::findOne(['access_token' => $access_token, 'device_id' => $device_id]);
+        return UserDeviceToken::findOne(['access_token' => $access_token, 'device_id' => md5($device_id)]);
     }
 }
