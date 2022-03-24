@@ -7,6 +7,10 @@
 Когда срок действия токена истёк, необходимо получить новый токен доступа с помощью токена обновления `refresh_token`.<br>
 Токен обновления так же имеет время истечения `refresh_token_expiration_time`, в таком случае необходима повторная аутентификация.
 
+### Middleware-like ###
+Чтобы реализовать api-контроллер, необходимо его унаследовать от  `frontend/modules/request/controllers/api/v1/ApiParentController.php`.<br>
+С помощью фильтра `frontend/modules/request/filters/AccessTokenAuth.php` происходит обработка запроса перед его попадаем в экшен контроллера. 
+
 ## Таблица ##
 **user_device_token**
 <table>
