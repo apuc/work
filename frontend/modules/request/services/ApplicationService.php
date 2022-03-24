@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\services;
+namespace frontend\modules\request\services;
 
 use common\models\User;
 use dektrium\user\helpers\Password;
