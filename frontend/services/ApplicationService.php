@@ -47,7 +47,8 @@ class ApplicationService
      */
     public function loginByAccessToken($access_token)
     {
-        $token = UserDeviceToken::findOne($access_token);
+        $token = UserDeviceToken::findOne(['access_token' => $access_token]);
+
         if($token){
             $this->user = $token->getUser();
             Yii::$app->user->login($this->user);
