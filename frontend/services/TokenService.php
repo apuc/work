@@ -7,6 +7,11 @@ use frontend\modules\request\models\UserDeviceToken;
 use Yii;
 use yii\base\Exception;
 
+/**
+ * Сервис отвечает за генерацию и обновление токенов
+ *
+ * @author Alex Korona
+ */
 class TokenService
 {
     const ACCESS_TOKEN_EXPIRE_TIME = 86400; // день
