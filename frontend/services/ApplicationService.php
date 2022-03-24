@@ -50,7 +50,7 @@ class ApplicationService
         $token = UserDeviceToken::findOne(['access_token' => $access_token]);
 
         if($token){
-            $this->user = $token->getUser();
+            $this->user = User::findOne($token->user_id);
             Yii::$app->user->login($this->user);
         }
 
