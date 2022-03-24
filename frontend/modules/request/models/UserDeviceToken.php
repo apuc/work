@@ -22,8 +22,6 @@ use yii\db\ActiveRecord;
  **/
 class UserDeviceToken extends WorkActiveRecord
 {
-
-    //TODO
     public function rules(): array
     {
         return parent::rules();
@@ -55,11 +53,6 @@ class UserDeviceToken extends WorkActiveRecord
             'refresh_token' => 'Токен обновления для токена доступа',
             'refresh_token_expiration_time' => 'Срок действительности токена обновления'
         ];
-    }
-
-    public function getUser()
-    {
-        return $this->hasOne(User::class, ['user_id' => 'id']);
     }
 
     public static function findByAccessTokenAndDeviceId($access_token, $device_id)
