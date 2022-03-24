@@ -14,6 +14,6 @@ class TestController extends ApiParentController
 
     public function actionTest()
     {
-        return $this->asJson(\Yii::$app->getRequest());
+        return $this->asJson(\Yii::$app->user);
     }
 }

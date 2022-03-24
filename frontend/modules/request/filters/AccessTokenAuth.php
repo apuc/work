@@ -2,7 +2,7 @@
 
 namespace frontend\modules\request\filters;
 
-use frontend\services\ApplicationService;
+use frontend\modules\request\services\ApplicationService;
 use yii\filters\auth\HttpBearerAuth;
 use yii\web\UnauthorizedHttpException;
 
