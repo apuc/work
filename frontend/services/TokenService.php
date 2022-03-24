@@ -30,7 +30,7 @@ class TokenService
         if (!isset($token)) {
             $token = new UserDeviceToken();
             $token->user_id = $user->getId();
-            $token->device_id = $device_id;
+            $token->device_id = md5($device_id);
         }
         $this->generateAccessToken($token);
         $this->generateRefreshToken($token);
