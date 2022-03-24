@@ -9,7 +9,7 @@
 
 ### Middleware-like ###
 Чтобы реализовать api-контроллер, необходимо его унаследовать от  `frontend/modules/request/controllers/api/v1/ApiParentController.php`.<br>
-С помощью фильтра `frontend/modules/request/filters/AccessTokenAuth.php` происходит обработка запроса перед его попадаем в экшен контроллера. 
+С помощью фильтра `frontend/modules/request/filters/AccessTokenAuth.php` происходит обработка запроса перед его попадаем в экшен контроллера, по аналогии с middleware в Laravel. 
 
 ## Таблица ##
 **user_device_token**
