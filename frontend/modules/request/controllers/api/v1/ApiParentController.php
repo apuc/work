@@ -2,7 +2,7 @@
 
 namespace frontend\modules\request\controllers\api\v1;
 
-use AccessTokenAuth;
+use frontend\modules\request\filters\AccessTokenAuth;
 use yii\rest\Controller;
 
 /**
