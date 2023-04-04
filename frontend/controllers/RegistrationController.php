@@ -76,7 +76,7 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
             $token = Token::findOne(['user_id'=>$user->id]);
             Yii::$app->mailer->viewPath='@common/mail';
             Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer, 'user'=>$user, 'token'=>$token])
-                ->setFrom('noreply@rabota.today')
+                ->setFrom(Yii::$app->params['senderEmail'])
                 ->setTo($user->email)
                 ->setSubject('Спасибо за регистрацию')
                 ->send();

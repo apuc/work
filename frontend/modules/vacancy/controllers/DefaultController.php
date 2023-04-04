@@ -164,7 +164,7 @@ class DefaultController extends Controller
             $message->save();
             Yii::$app->mailer->compose('vacancy_like',
                 ['resume' => $resume, 'vacancy' => $vacancy, 'text' => $message->text])
-                ->setFrom('noreply@rabota.today')
+                ->setFrom(Yii::$app->params['senderEmail'])
                 ->setTo(User::findOne($vacancy->owner)->email)
                 ->setSubject('Ответ на вашу вакансию ' . $vacancy->post . '.')
                 ->send();

@@ -108,7 +108,7 @@ class MailDelivery extends SendMail
                 'variable' => $options['variable'],
                 'id' => $user->user_id
             ])
-                ->setFrom('noreply@rabota.today')
+                ->setFrom(Yii::$app->params['senderEmail'])
                 ->setSubject($user->subject)
                 ->setTo($user->email)->send();
             $user->status = 1;

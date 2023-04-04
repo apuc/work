@@ -131,7 +131,7 @@ class SendController extends Controller
                 break;
         }
         Yii::$app->mailer->compose($template, ['model'=>$model])
-            ->setFrom('noreply@rabota.today')
+            ->setFrom(Yii::$app->params['senderEmail'])
             ->setTo(User::findOne($model->owner)->email)
             ->setSubject($title)
             ->send();

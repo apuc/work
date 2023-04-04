@@ -79,7 +79,7 @@ return [
                             Yii::$app->mailer->viewPath='@common/mail';
                             $token = Token::findOne(['user_id'=>Yii::$app->user->id]);
                             Yii::$app->mailer->compose('registration_notification', ['employer'=>$employer, 'user'=>Yii::$app->user->identity, 'token'=>null])
-                                ->setFrom('noreply@rabota.today')
+                                ->setFrom(Yii::$app->params['senderEmail'])
                                 ->setTo(Yii::$app->user->identity->email)
                                 ->setSubject('Спасибо за регистрацию')
                                 ->send();

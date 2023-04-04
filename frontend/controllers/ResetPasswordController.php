@@ -40,7 +40,7 @@ class ResetPasswordController extends Controller
         }
         Yii::$app->mailer->viewPath='@common/mail';
         Yii::$app->mailer->compose('passwordResetToken-html', ['token'=>$token])
-            ->setFrom('noreply@rabota.today')
+            ->setFrom(Yii::$app->params['senderEmail'])
             ->setTo($user->email)
             ->setSubject('Спасибо за регистрацию')
             ->send();

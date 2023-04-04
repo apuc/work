@@ -73,7 +73,7 @@ class DefaultController extends Controller
             $message->save();
             Yii::$app->mailer->compose('company_like',
                 ['resume' => $resume, 'company' => $company, 'text' => $message->text])
-                ->setFrom('noreply@rabota.today')
+                ->setFrom(Yii::$app->params['senderEmail'])
                 ->setTo(User::findOne($company->owner)->email)
                 ->setSubject('Кто-то хочет работать в вашей компании "'.$company->name.'"')
                 ->send();
