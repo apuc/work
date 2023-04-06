@@ -21,6 +21,7 @@ Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="mykassa-verification" content="f11816c8f45eb021130d15e76e4d0c17" />
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
