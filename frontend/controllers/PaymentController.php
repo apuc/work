@@ -7,6 +7,7 @@ namespace frontend\controllers;
 use common\classes\Debug;
 use common\models\Company;
 use common\models\FKPayment;
+use common\models\MkPayment;
 use common\models\Test;
 use yii\web\Controller;
 
@@ -15,6 +16,7 @@ class PaymentController extends Controller
     public $merchant_id = 214123;
     public $secret_word = 'm648uqdn';
     public $secret_word2 = 'dz5h59co';
+    public $secret_mk = 'EyJawIQthJGlqRD49v';
 
     public $layout = '@frontend/views/layouts/main-layout.php';
 
@@ -44,6 +46,35 @@ class PaymentController extends Controller
         if($payment->sign === md5($this->merchant_id.':'.$payment->amount.':'.$this->secret_word2.':'.$payment->company_id)) {
             if($payment->save() && $company = Company::findOne($payment->company_id)) {
                 $company->balance += $payment->amount;
+                $company->save();
+            }
+        }
+    }
+
+
+    public function actionNotificateMyKassa() {
+        $data = \Yii::$app->request->post();
+        $paymentMk = new MkPayment();
+        $paymentMk->load([
+            'transaction_id' => $data['id'],
+            'payment' => $data['payment'],
+            'merchant' => $data['merchant'],
+            'amount' => $data['amount'],
+            'sign' => $data['sign'],
+            'email' => $data['email'],
+            'company_id'=> $data['company_id'],
+            'date' => time()
+        ], '');
+        $array = array (
+            $this->secret_mk,
+            $merchant = $data['merchant'],
+            $payment  = $data['payment'],
+            $amount   = $data['amount']
+        );
+        $sign = md5 ( implode ( ':', $array ));
+        if($paymentMk->sign === $sign) {
+            if($paymentMk->save() && $company = Company::findOne($paymentMk->company_id)) {
+                $company->balance += $paymentMk->amount;
                 $company->save();
             }
         }
