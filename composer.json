@@ -24,7 +24,6 @@
         "kartik-v/yii2-widget-datepicker": "^1.4",
         "vision/yii2-private-messages": "^2",
         "phpoffice/phpexcel": "^1.8",
-        "eugene-kei/yii2-simple-news": "*",
         "mihaildev/yii2-ckeditor": "*",
         "mihaildev/yii2-elfinder": "^1.3",
         "wapmorgan/morphos": "^3.2",
@@ -50,6 +49,9 @@
         "process-timeout": 1800,
         "fxp-asset": {
             "enabled": false
+        },
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
         }
     },
     "repositories": [
