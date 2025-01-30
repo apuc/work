@@ -15,6 +15,7 @@ use yii\widgets\ActiveForm;
 <div class="company-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?= $form->field($model, 'user_id')->textInput(['maxlength' => true]) ?>
 
 <!--    --><?php //= $form->field($model, 'user_id')->widget(Select2::className(),
 //        [
