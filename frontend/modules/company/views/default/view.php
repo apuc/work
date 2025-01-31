@@ -67,14 +67,14 @@ $months = array(1 => 'января', 'февраля', 'марта', 'апрел
 
                         <img class="content-part__logo" src="<?=$model->image_url?>" alt="" role="presentation"/>
                     </div>
-                    <div class="content-part__block">
-                        <div class="central" style="align-items: center;">
+                    <div>
+                        <div style="align-items: center;">
                             <img src="/images/chip.png" alt="Чип" role="presentation"/>
                             <span><?=StringHelper::truncate($model->activity_field, 130, '...')?></span>
                         </div>
                     </div>
-                    <div class="content-part__block">
-                        <div class="right">
+                    <div>
+                        <div >
                             <?php $email = User::findOne($model->owner)->email;?>
                             <span><a href="mailto:<?=$email?>"><?=$email?></a><br>
                                 <?php if($model->website):?>

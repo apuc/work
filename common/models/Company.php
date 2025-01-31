@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property string $facebook
  * @property string $instagram
  * @property string $skype
+ * @property string $email
  * @property string $description
  * @property string $contact_person
  * @property integer $status
@@ -79,7 +80,7 @@ class Company extends WorkActiveRecord
         return [
             [['user_id', 'status', 'created_at', 'updated_at', 'create_vacancy', 'unlimited_vacancies_until', 'raise_with_anchor_count', 'raise_with_anchor_until'], 'integer'],
             [['vacancy_renew_count'], 'integer', 'max' => 255],
-            [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person', 'image_url'], 'string', 'max' => 255],
+            [['name', 'website', 'vk', 'facebook', 'instagram', 'skype', 'contact_person', 'image_url', 'email'], 'string', 'max' => 255],
             [['activity_field', 'description'], 'string'],
             [['is_trusted'], 'boolean'],
             [['balance'], 'number'],
@@ -108,6 +109,7 @@ class Company extends WorkActiveRecord
             'facebook' => 'Facebook',
             'instagram' => 'Instagram',
             'skype' => 'Skype',
+            'email' => 'Email',
             'description' => 'О компании',
             'contact_person' => 'Контактное лицо',
             'status' => 'Статус',
