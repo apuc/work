@@ -128,7 +128,7 @@ class CompanyController extends Controller
         $model = $this->findModel($id);
         $post = Yii::$app->request->post();
         if ($model->load($post) && $model->save()) {
-            if ($post['Company']['users']) {
+            if (isset($post['Company']['users'])) {
                 foreach ($model->userCompany as $usr){
                     $usr->delete();
                 }
