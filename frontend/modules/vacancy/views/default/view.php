@@ -262,13 +262,13 @@ VacancyMetaFormer::registerVacancyViewPageTags($this, $model);
                                     <p><strong>Контактное лицо:</strong><?/*= $model->company->contact_person */?>
                                     </p>
                                 </li>-->
-                                <?php if ($model->publisher->employer->phone): ?>
+                                <?php if ($model->phone): ?>
                                     <li class="sr-block__text__phone">
                                         <img src="/images/phone.svg" alt="Телефон" role="presentation"/>
                                         <div>
                                             <strong>Телефон:</strong>
                                             <a class="hide-phone jsShowPhone"
-                                               href="tel:<?= $model->publisher->employer->phone->number ?>"><?= $model->publisher->employer->phone->number ?></a>
+                                               href="tel:<?= $model->phone ?>"><?= $model->phone ?></a>
                                             <button
                                                     data-id="<?= $model->id ?>"
                                                     data-type="vacancy"
