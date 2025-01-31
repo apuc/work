@@ -96,7 +96,7 @@ class CompanyController extends Controller
         $model = new Company();
         $post = Yii::$app->request->post();
         if ($model->load($post) && $model->save()) {
-            if ($post['Company']['users']) {
+            if (isset($post['Company']['users'])) {
                 foreach ($post['Company']['users'] as $usr){
                     $userCompany = new UserCompany();
                     $userCompany->company_id = $model->id;
