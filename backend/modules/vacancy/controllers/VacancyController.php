@@ -97,6 +97,7 @@ class VacancyController extends Controller
             $model->publisher_id = $model->company->owner;
             $model->anchored_until = strtotime($model->anchored_until);
             $model->active_until = strtotime($model->active_until);
+            $model->update_time = time();
             if ($model->save()) {
                 if($post['Vacancy']['category']){
                     foreach ($post['Vacancy']['category'] as $category){
@@ -129,6 +130,7 @@ class VacancyController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->active_until = strtotime($model->active_until);
             $model->anchored_until = strtotime($model->anchored_until);
+            $model->update_time = time();
             $model->save();
             if($post['Vacancy']['category']){
                 foreach($model->vacancy_category as $category){
