@@ -2,6 +2,7 @@
 
 namespace backend\modules\vacancy\controllers;
 
+use common\classes\Debug;
 use common\models\VacancyCategory;
 use common\models\VacancyProfession;
 use dektrium\user\filters\AccessRule;
@@ -94,6 +95,8 @@ class VacancyController extends Controller
             $model->get_update_id = 1;
             $model->owner = $model->company->owner;
             $model->publisher_id = $model->company->owner;
+            $model->anchored_until = strtotime($model->anchored_until);
+            $model->active_until = strtotime($model->active_until);
             if ($model->save()) {
                 if($post['Vacancy']['category']){
                     foreach ($post['Vacancy']['category'] as $category){
@@ -123,7 +126,10 @@ class VacancyController extends Controller
     {
         $model = $this->findModel($id);
         $post = Yii::$app->request->post();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->active_until = strtotime($model->active_until);
+            $model->anchored_until = strtotime($model->anchored_until);
+            $model->save();
             if($post['Vacancy']['category']){
                 foreach($model->vacancy_category as $category){
                     $category->delete();

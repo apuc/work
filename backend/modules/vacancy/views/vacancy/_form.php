@@ -76,6 +76,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'working_conditions')->textarea() ?>
 
+    <?= $form->field($model, 'active_until')->textInput(['type' => 'date', 'value' => date("Y-m-d", $model->active_until)]) ?>
+
+    <?= $form->field($model, 'anchored_until')->textInput(['type' => 'date', 'value' => date("Y-m-d", $model->anchored_until)]) ?>
+
+    <?= $form->field($model, 'phone')->textInput() ?>
+
+    <?= $form->field($model, "hot")->checkbox(); ?>
+
     <?= $form->field($model, 'status')->dropDownList([
         Vacancy::STATUS_ACTIVE => 'Активна',
         Vacancy::STATUS_INACTIVE => 'Не активна',
