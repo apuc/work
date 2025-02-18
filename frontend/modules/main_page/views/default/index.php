@@ -286,10 +286,10 @@ $background_image = $current_country?('..'.$current_country->main_page_backgroun
     </aside>
     <div class="nhome__footer">
         <div class="nhome__footer-left">
-            <a class="footer__craft-link" href="https://web-artcraft.com/" target="_blank" rel="nofollow">
-                Разработано CraftGroup
+            <a class="footer__craft-link" href="https://itguild.info" target="_blank" rel="nofollow">
+                Разработано ItGuild
             </a>
-            <a class="nhome__footer-left-soc" rel="nofollow" target="_blank" href="https://vk.com/rabotad0netsk">
+            <a class="nhome__footer-left-soc" rel="nofollow" target="_blank" href="https://vk.com/rabota_today_dnr">
                 <img class="vk-bg" src="/images/vk.svg" alt="Иконка VK" role="presentation">Есть вопросы?<br>
                 Напиши нам в соц.сетях
             </a>
