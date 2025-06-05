@@ -146,11 +146,11 @@ class VacancyMetaFormer
         }
         $view->title = $title;
         $view->registerMetaTag(['name' => 'description', 'content' => $description]);
-        $view->registerMetaTag(['name' => 'og:title', 'content' => $title]);
-        $view->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
-        $view->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-        $view->registerMetaTag(['name' => 'og:image', 'content' => $vacancy->company->image_url ?: '/images/og_image.jpg']);
-        $view->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::truncate($vacancy->qualification_requirements, 100, '...')]);
+        $view->registerMetaTag(['property' => 'og:title', 'content' => $title]);
+        $view->registerMetaTag(['property' => 'og:type', 'content' => 'website']);
+        $view->registerMetaTag(['property' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
+        $view->registerMetaTag(['property' => 'og:image', 'content' => $vacancy->company->image_url ?: '/images/og_image.jpg']);
+        $view->registerMetaTag(['property' => 'og:description', 'content' => StringHelper::truncate($vacancy->qualification_requirements, 100, '...')]);
         $view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->hostInfo . '/vacancy/view/' . $vacancy->id]);
     }
 }

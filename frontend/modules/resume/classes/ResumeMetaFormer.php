@@ -120,11 +120,11 @@ class ResumeMetaFormer
         $view->registerMetaTag(['name' => 'description', 'content' => 'Резюме ' . $resume->employer->second_name . ' ' . $resume->employer->first_name .
             ', на должность ' . $resume->title . '. Опыт работы: ' . $exp . '. ' .
             ' Размещено ' . Yii::$app->formatter->asDate($resume->update_time, 'dd.MM.yyyy')]);
-        $view->registerMetaTag(['name' => 'og:title', 'content' => $resume->title]);
-        $view->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
-        $view->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
-        $view->registerMetaTag(['name' => 'og:image', 'content' => $resume->image_url ?: '/images/og_image.jpg']);
-        $view->registerMetaTag(['name' => 'og:description', 'content' => StringHelper::truncate($resume->description, 100, '...')]);
+        $view->registerMetaTag(['property' => 'og:title', 'content' => $resume->title]);
+        $view->registerMetaTag(['property' => 'og:type', 'content' => 'website']);
+        $view->registerMetaTag(['property' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
+        $view->registerMetaTag(['property' => 'og:image', 'content' => $resume->image_url ?: '/images/og_image.jpg']);
+        $view->registerMetaTag(['property' => 'og:description', 'content' => StringHelper::truncate($resume->description, 100, '...')]);
         $view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->hostInfo . '/resume/view/' . $resume->id]);
 
     }
