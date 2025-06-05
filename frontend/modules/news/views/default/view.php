@@ -3,11 +3,18 @@
 /** @var News $random */
 
 use common\models\News;
+use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use yii2mod\comments\widgets\Comment;
 
 $this->title = $model->meta_title;
 $this->registerMetaTag(['name' => 'description', 'content' => $model->meta_description]);
+$this->registerMetaTag(['property' => 'og:title', 'content' => $model->title]);
+$this->registerMetaTag(['property' => 'og:type', 'content' => 'website']);
+$this->registerMetaTag(['property' => 'og:url', 'content' => Yii::$app->urlManager->hostInfo]);
+$this->registerMetaTag(['property' => 'og:image', 'content' => $model->img ?: '/images/og_image.jpg']);
+$this->registerMetaTag(['property' => 'og:description', 'content' => StringHelper::truncate($model->meta_description, 100, '...')]);
+$this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->request->hostInfo . '/news/' . $model->id]);
 
 ?>
 <style>
@@ -54,7 +61,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->meta_descr
                 <div class="news-item">
                     <h2><?=$random->title?></h2>
                     <div class="news-items-img__block">
-                        <img src="<?=$random->img?>" style="width: 250px;" alt="">
+                        <img src="<?= $random->img?>" style="width: 250px;" alt="">
                         <div>
                             <p class="red-line">
                                 <?=$random->description?>
