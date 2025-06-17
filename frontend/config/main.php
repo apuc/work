@@ -257,6 +257,7 @@ return [
                 '/yandex-turbo' => 'news/default/yandex-turbo',
                 'vacancy/click-phone'=>'vacancy/default/click-phone',
                 'cities_by_country_id'=>'vacancy/default/cities',
+                'vacancy-doneck-2025' => 'vacancy/default/dn2025',
                 [
                     'class' => 'yii\rest\UrlRule', 'controller' =>
                     [

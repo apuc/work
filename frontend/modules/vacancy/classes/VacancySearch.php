@@ -97,9 +97,9 @@ class VacancySearch extends Vacancy
             return $dataProvider;
         }
 
-        $this->category_ids = json_decode($this->category_ids);
-        $this->employment_type_ids = json_decode($this->employment_type_ids);
-        $this->experience_ids = json_decode($this->experience_ids);
+        $this->category_ids = $this->category_ids !== null ? json_decode($this->category_ids, true) : null;
+        $this->employment_type_ids = $this->employment_type_ids !== null ? json_decode($this->employment_type_ids, true) : null;
+        $this->experience_ids = $this->experience_ids !== null ? json_decode($this->experience_ids, true) : null;
         if($this->second_query_param) {
             $this->current_city = City::findOne(['slug'=>$this->first_query_param]);
             if(!$this->current_city)
